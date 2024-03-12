@@ -1,7 +1,8 @@
+import 'package:core/interface/button/dev_button_models.dart';
 import 'package:core/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:core/interface/interface.dart';
 
 import '../widgets/mensa_header.dart';
 
@@ -46,6 +47,7 @@ class MensaContentView extends StatelessWidget {
               },
               child: const Text('System'),
             ),
+            DevButton(onPressed: () => {}, text: 'This is the Text yo', type: DevButtonType.PRIMARY,),
           ],
         ),
       ],

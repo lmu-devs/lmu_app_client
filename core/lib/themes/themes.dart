@@ -13,6 +13,12 @@ class AppTheme {
       color: ColorPrimitives.white,
       elevation: 0.0,
     ),
+    buttonTheme: const ButtonThemeData(
+      buttonColor: ColorPrimitives.lmuGreen140,
+    ),
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: ColorPrimitives.lmuGreen140,
+    ),
   );
   static ThemeData dark = ThemeData(
     colorScheme: ColorSchemes.dark,

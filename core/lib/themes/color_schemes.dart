@@ -13,7 +13,7 @@ class ColorSchemes {
   static const ColorScheme dark = ColorScheme.dark(
     primary: Color(0xFF59AE6B),
     secondary: Color.fromARGB(234, 234, 223, 23),
-    background: Colors.black,
+    background: ColorPrimitives.grey700,
     onBackground: Colors.grey,
   );
 }
