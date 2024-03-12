@@ -2,10 +2,8 @@ import 'package:core/themes/styling/shadows.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import '../../themes/color_primitives.dart';
-import '../../themes/styling/shadows_styles.dart';
-import 'package:figma_squircle/figma_squircle.dart';
 import '../definitions.dart';
-
+import 'package:core/vibration/vibration.dart';
 
 class DevButton extends StatelessWidget {
   final String? text;
@@ -104,7 +102,6 @@ class DevButton extends StatelessWidget {
     return Opacity(
       opacity: state == ElementState.disabled ? 0.48 : 1,
       child: Container(
-
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           boxShadow: Shadows.getShadow(

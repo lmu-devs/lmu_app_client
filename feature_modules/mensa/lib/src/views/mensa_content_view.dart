@@ -2,8 +2,8 @@ import 'package:core/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:core/interface/interface.dart';
-
 import '../widgets/mensa_header.dart';
+import 'package:core/vibration/vibration.dart';
 
 class MensaContentView extends StatelessWidget {
   const MensaContentView({
@@ -49,12 +49,12 @@ class MensaContentView extends StatelessWidget {
           ],
         ),
             DevButton(
-              onPressed: () => {},
+              onPressed: () => {VibrationPatterns.vibrate(VibrationType.success)},
               text: 'This is the Text yo',
               type: ElementType.primary,
             ),
             DevButton(
-              onPressed: () => {},
+              onPressed: () => {VibrationPatterns.vibrate(VibrationType.error)},
               text: 'This is the Text yo',
               type: ElementType.secondary,
               size: ElementSize.large,
