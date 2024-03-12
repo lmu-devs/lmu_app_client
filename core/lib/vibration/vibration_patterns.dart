@@ -19,7 +19,7 @@ class VibrationPatterns {
         break;
       case VibrationType.success:
         HapticFeedback.mediumImpact();
-        sleep(const Duration(milliseconds: 130));
+        sleep(const Duration(milliseconds: 140));
         HapticFeedback.heavyImpact();
         break;
     }
