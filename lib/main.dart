@@ -2,9 +2,16 @@ import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mensa/mensa.dart';
+import 'package:provider/provider.dart';
+import 'package:core/themes/theme_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(), // Corrected
+      child: const MyApp(),
+    ),
+  );
 }
 
 final routeConfig = GoRouter(
@@ -55,6 +62,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: routeConfig,
       title: 'LMU App',
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: Provider.of<ThemeProvider>(context).themeMode,
     );
   }
 }
