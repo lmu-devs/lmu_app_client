@@ -17,7 +17,7 @@ class MensaCubit extends Cubit<MensaState> {
       final result = await mensaRepository.getMensa();
 
       // Mock data loading delay
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
 
       emit(MensaLoadSuccess(mensaData: result));
     } catch (e) {

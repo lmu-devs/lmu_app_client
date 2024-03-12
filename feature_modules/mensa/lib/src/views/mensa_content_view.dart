@@ -1,4 +1,3 @@
-import 'package:core/interface/button/dev_button_models.dart';
 import 'package:core/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +16,7 @@ class MensaContentView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         const MensaHeader(),
         Center(
@@ -47,9 +46,19 @@ class MensaContentView extends StatelessWidget {
               },
               child: const Text('System'),
             ),
-            DevButton(onPressed: () => {}, text: 'This is the Text yo', type: DevButtonType.PRIMARY,),
           ],
         ),
+            DevButton(
+              onPressed: () => {},
+              text: 'This is the Text yo',
+              type: ElementType.primary,
+            ),
+            DevButton(
+              onPressed: () => {},
+              text: 'This is the Text yo',
+              type: ElementType.secondary,
+              size: ElementSize.large,
+            ),
       ],
     );
   }

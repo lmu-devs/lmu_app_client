@@ -19,18 +19,22 @@ class ColorPrimitives {
 
   // Grayscale colors
   static const Color white = Color(0xFFffffff);
-  static const Color grey = Color(0xFFf8f8f8);
-  static const Color grey0 = Color(0xFFdcdddc);
+  static const Color grey = Color(0xFFF5F5F5);
+  static const Color grey0 = Color(0xFFE6E6E6);
   static const Color grey100 = Color(0xFFbabcba);
   static const Color grey200 = Color(0xFF999c9a);
   static const Color grey300 = Color(0xFF797d7a);
   static const Color grey400 = Color(0xFF5b5f5c);
-  static const Color grey500 = Color(0xFF414442);
-  static const Color grey600 = Color(0xFF292c2a);
-  static const Color grey700 = Color(0xFF1D1D1D);
+  static const Color grey500 = Color(0xFF242424);
+  static const Color grey600 = Color(0xFF1D1D1D);
+  static const Color grey700 = Color(0xFF131313);
   static const Color grey800 = Color(0xFF030303);
 
   // Transparent colors
   static const Color trspBlack = Color(0x00000000);
   static const Color trspWhite = Color(0x00ffffff);
+
+  ColorSwatch lmuSwatch = ColorSwatch(0xFF1D1D1D, {
+    
+  });
 }

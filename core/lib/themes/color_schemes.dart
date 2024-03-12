@@ -3,17 +3,20 @@ import 'color_primitives.dart';
 
 class ColorSchemes {
   static const ColorScheme light = ColorScheme.light(
-      primary: Color(0xFF1b9945),
-      secondary: Color.fromARGB(234, 234, 223, 23),
-      background: ColorPrimitives.grey,
+      background: ColorPrimitives.grey0,
+      primary: ColorPrimitives.lmuGreen70,
+      onPrimary: ColorPrimitives.white,
+      secondary: ColorPrimitives.grey,
+      onSecondary: ColorPrimitives.grey600,
       onBackground: Colors.grey,
       surface: ColorPrimitives.white,
+      
       brightness: Brightness.light);
 
   static const ColorScheme dark = ColorScheme.dark(
-    primary: Color(0xFF59AE6B),
-    secondary: Color.fromARGB(234, 234, 223, 23),
     background: ColorPrimitives.grey700,
+    primary: ColorPrimitives.lmuGreen70,
+    secondary: ColorPrimitives.grey600,
     onBackground: Colors.grey,
   );
 }

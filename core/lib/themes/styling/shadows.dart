@@ -1,49 +1,79 @@
-// lib/themes/styling/shadows.dart
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
+import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
+import './shadows_styles.dart';
+import '../../interface/definitions.dart';
 
-enum ButtonType { PRIMARY, SECONDARY }
-enum ThemeMode { LIGHT, DARK }
+enum ShadowType { levitated, indented }
 
-class ShadowStyles {
-  static BoxShadow _primaryLight = BoxShadow(
-    color: Colors.grey[300]!,
-    blurRadius: 10,
-    offset: Offset(2, 2),
-  );
-
-  static BoxShadow _primaryDark = BoxShadow(
-    color: Colors.grey[700]!,
-    blurRadius: 10,
-    offset: Offset(2, 2),
-  );
-
-  static BoxShadow _secondaryLight = BoxShadow(
-    color: Colors.blue[200]!,
-    blurRadius: 5,
-    offset: Offset(2, 2),
-  );
-
-  static BoxShadow _secondaryDark = BoxShadow(
-    color: Colors.blue[800]!,
-    blurRadius: 5,
-    offset: Offset(2, 2),
-  );
-
-  static List<BoxShadow> getShadow({required ButtonType type, required ThemeMode theme}) {
-    switch (theme) {
-      case ThemeMode.LIGHT:
+class Shadows {
+  static List<BoxShadow> getShadow({
+    required Brightness mode,
+    required ElementType type,
+    required ShadowType shadowType,
+  }) {
+    switch (mode) {
+      case Brightness.dark:
         switch (type) {
-          case ButtonType.PRIMARY:
-            return [_primaryLight];
-          case ButtonType.SECONDARY:
-            return [_secondaryLight];
+          case ElementType.primary:
+            return shadowType == ShadowType.levitated
+                ? [
+                    ShadowStyles.darkPrimaryLevitatedOutside,
+                    ShadowStyles.darkPrimaryLevitatedInside
+                  ]
+                : [
+                    const BoxShadow(
+                      color: Color.fromRGBO(255, 255, 255, 0.25),
+                      blurRadius: 1,
+                      offset: Offset(0, -1),
+                      inset: true,
+                    )
+                  ];
+          case ElementType.secondary:
+            return shadowType == ShadowType.levitated
+                ? [
+                    ShadowStyles.darkSecondaryLevitatedOutside,
+                    ShadowStyles.darkSecondaryLevitatedInside
+                  ]
+                : [
+                    const BoxShadow(
+                        color: Color.fromRGBO(255, 255, 255, 0.25),
+                        blurRadius: 1,
+                        offset: Offset(0, -1),
+                        inset: true)
+                  ];
+          default:
+            return [];
         }
-      case ThemeMode.DARK:
+      case Brightness.light:
         switch (type) {
-          case ButtonType.PRIMARY:
-            return [_primaryDark];
-          case ButtonType.SECONDARY:
-            return [_secondaryDark];
+          case ElementType.primary:
+            return shadowType == ShadowType.levitated
+                ? [
+                    ShadowStyles.lightPrimaryLevitatedInside,
+                    ShadowStyles.lightPrimaryLevitatedInside2
+                  ]
+                : [
+                    const BoxShadow(
+                        color: Color.fromRGBO(255, 255, 255, 0.8),
+                        blurRadius: 1,
+                        offset: Offset(0, -1),
+                        inset: true)
+                  ];
+          case ElementType.secondary:
+            return shadowType == ShadowType.levitated
+                ? [
+                    ShadowStyles.lightSecondaryLevitatedOutside,
+                    ShadowStyles.lightSecondaryLevitatedInside
+                  ]
+                : [
+                    const BoxShadow(
+                        color: Color.fromRGBO(255, 255, 255, 0.8),
+                        blurRadius: 1,
+                        offset: Offset(0, -1),
+                        inset: true)
+                  ];
+          default:
+            return [];
         }
     }
   }
