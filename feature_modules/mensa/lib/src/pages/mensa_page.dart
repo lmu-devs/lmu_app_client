@@ -24,21 +24,6 @@ class MensaPage extends StatelessWidget {
           },
         ),
       ),
-      appBar: AppBar(),
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 0,
-
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            label: 'Mensa',
-            icon: Icon(Icons.restaurant_menu_rounded),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.developer_mode_rounded),
-            label: 'LMU Developers',
-          ),
-        ],
-      )
     );
   }
 }

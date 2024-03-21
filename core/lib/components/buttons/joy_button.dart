@@ -1,11 +1,10 @@
-import 'package:core/themes/styling/shadows.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
-import '../../themes/color_primitives.dart';
-import '../definitions.dart';
-import 'package:core/vibration/vibration.dart';
 
-class DevButton extends StatelessWidget {
+import '../../themes/themes.dart';
+import '../definitions.dart';
+
+class JoyButton extends StatelessWidget {
   final String? text;
   final VoidCallback onPressed;
   final Widget? leftIcon;
@@ -21,7 +20,7 @@ class DevButton extends StatelessWidget {
   final bool removePaddings;
   final MainAxisAlignment horizontalAlignment;
 
-  DevButton({
+  JoyButton({
     super.key,
     this.text,
     required this.onPressed,
@@ -104,10 +103,8 @@ class DevButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          boxShadow: Shadows.getShadow(
-              mode: Theme.of(context).brightness,
-              type: type,
-              shadowType: ShadowType.levitated),
+          // boxShadow:
+          //     Shadows.getShadow(mode: Theme.of(context).brightness, type: type, shadowType: ShadowType.levitated),
           color: background,
         ),
         clipBehavior: Clip.antiAlias,
@@ -138,11 +135,7 @@ class DevButton extends StatelessWidget {
                           : size == ElementSize.medium
                               ? 1
                               : 8)
-                      : (size == ElementSize.large
-                          ? 20
-                          : (size == ElementSize.small && text == null
-                              ? 8
-                              : 16))),
+                      : (size == ElementSize.large ? 20 : (size == ElementSize.small && text == null ? 8 : 16))),
               removePaddings ? 0 : (size == ElementSize.small ? 8 : 16),
               removePaddings
                   ? 0
@@ -152,11 +145,7 @@ class DevButton extends StatelessWidget {
                           : size == ElementSize.medium
                               ? 16
                               : 8)
-                      : (size == ElementSize.large
-                          ? 20
-                          : (size == ElementSize.small && text == null
-                              ? 8
-                              : 16))),
+                      : (size == ElementSize.large ? 20 : (size == ElementSize.small && text == null ? 8 : 16))),
               removePaddings ? 0 : (size == ElementSize.small ? 8 : 16),
             ),
             child: Row(

@@ -1,3 +1,4 @@
+import 'package:core/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -7,7 +8,7 @@ class MensaHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.go('/'),
+      onTap: () => context.go(RouteNames.mensaDetails),
       child: Container(
         width: 50,
         height: 50,

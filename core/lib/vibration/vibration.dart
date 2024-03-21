@@ -1,3 +1,3 @@
 library vibrations;
 
-export './vibration_patterns.dart';
+export 'vibration_patterns.dart';

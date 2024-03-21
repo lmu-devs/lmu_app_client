@@ -1,9 +1,8 @@
-import 'package:core/themes/theme_provider.dart';
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:core/interface/interface.dart';
+
 import '../widgets/mensa_header.dart';
-import 'package:core/vibration/vibration.dart';
 
 class MensaContentView extends StatelessWidget {
   const MensaContentView({
@@ -27,38 +26,35 @@ class MensaContentView extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () => {
-                Provider.of<ThemeProvider>(context, listen: false)
-                    .setThemeMode(ThemeMode.light) // For dark theme
+                Provider.of<ThemeProvider>(context, listen: false).setThemeMode(ThemeMode.light) // For dark theme
               },
               child: const Text('Light'),
             ),
             ElevatedButton(
               onPressed: () => {
-                Provider.of<ThemeProvider>(context, listen: false)
-                    .setThemeMode(ThemeMode.dark) // For light theme
+                Provider.of<ThemeProvider>(context, listen: false).setThemeMode(ThemeMode.dark) // For light theme
               },
               child: const Text('Dark'),
             ),
             ElevatedButton(
               onPressed: () => {
-                Provider.of<ThemeProvider>(context, listen: false)
-                    .setThemeMode(ThemeMode.system) // For system theme
+                Provider.of<ThemeProvider>(context, listen: false).setThemeMode(ThemeMode.system) // For system theme
               },
               child: const Text('System'),
             ),
           ],
         ),
-            DevButton(
-              onPressed: () => {VibrationPatterns.vibrate(VibrationType.success)},
-              text: 'This is the Text yo',
-              type: ElementType.primary,
-            ),
-            DevButton(
-              onPressed: () => {VibrationPatterns.vibrate(VibrationType.error)},
-              text: 'This is the Text yo',
-              type: ElementType.secondary,
-              size: ElementSize.large,
-            ),
+        JoyButton(
+          onPressed: () => {VibrationPatterns.vibrate(VibrationType.success)},
+          text: 'This is the Text yo',
+          type: ElementType.primary,
+        ),
+        JoyButton(
+          onPressed: () => {VibrationPatterns.vibrate(VibrationType.error)},
+          text: 'This is the Text yo',
+          type: ElementType.secondary,
+          size: ElementSize.large,
+        ),
       ],
     );
   }

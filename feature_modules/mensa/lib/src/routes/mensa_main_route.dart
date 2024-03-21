@@ -2,17 +2,17 @@ import 'package:core/core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'bloc/mensa_cubit/cubit.dart';
-import 'pages/mensa_page.dart';
-import 'repository/repository.dart';
+import '../bloc/mensa_cubit/cubit.dart';
+import '../pages/mensa_page.dart';
+import '../repository/repository.dart';
 
-class MensaModule extends StatelessWidget {
-  const MensaModule({
+class MensaMainRoute extends StatelessWidget {
+  const MensaMainRoute({
     required this.arguments,
     super.key,
   });
 
-  final MensaRouteArguments arguments;
+  final MensaRouteArguments? arguments;
 
   @override
   Widget build(BuildContext context) {
