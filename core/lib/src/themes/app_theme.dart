@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'color_primitives.dart';
 import 'color_schemes.dart';
+import 'text_themes.dart';
 
 class AppTheme {
   static ThemeData light = ThemeData(
@@ -12,6 +13,10 @@ class AppTheme {
       color: ColorPrimitives.white,
       elevation: 0.0,
     ),
+    textTheme: getBaseTextTheme(
+      "Inter",
+      ColorSchemes.light,
+    ),
   );
 
   static ThemeData dark = ThemeData(
@@ -19,6 +24,10 @@ class AppTheme {
     cardTheme: const CardTheme(
       color: ColorPrimitives.grey700,
       elevation: 0.0,
+    ),
+    textTheme: getBaseTextTheme(
+      "Inter",
+      ColorSchemes.light,
     ),
   );
 }

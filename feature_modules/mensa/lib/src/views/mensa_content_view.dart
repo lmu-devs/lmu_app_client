@@ -1,4 +1,5 @@
-import 'package:core/core.dart';
+import 'package:core/components.dart';
+import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,9 @@ class MensaContentView extends StatelessWidget {
         const MensaHeader(),
         Center(
           child: Text(mensaData),
+        ),
+        JoyText.body(
+          "234234",
         ),
         ButtonBar(
           alignment: MainAxisAlignment.center,

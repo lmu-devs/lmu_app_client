@@ -1,4 +1,4 @@
-import 'package:core/core.dart';
+import 'package:core/components.dart';
 import 'package:flutter/material.dart';
 
 class MensaDetailsPage extends StatelessWidget {

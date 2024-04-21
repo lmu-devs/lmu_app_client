@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
-import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 
 import '../../themes/themes.dart';
-import '../definitions.dart';
 
+// ignore: must_be_immutable
 class JoyButton extends StatelessWidget {
   final String? text;
   final VoidCallback onPressed;
@@ -101,13 +100,13 @@ class JoyButton extends StatelessWidget {
     return Opacity(
       opacity: state == ElementState.disabled ? 0.48 : 1,
       child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          // boxShadow:
-          //     Shadows.getShadow(mode: Theme.of(context).brightness, type: type, shadowType: ShadowType.levitated),
-          color: background,
-        ),
-        clipBehavior: Clip.antiAlias,
+        color: background,
+        // decoration: BoxDecoration(
+        //   borderRadius: BorderRadius.circular(16),
+        //   // boxShadow:
+        //   //     Shadows.getShadow(mode: Theme.of(context).brightness, type: type, shadowType: ShadowType.levitated),
+        //   color: background,
+        // ),
         child: RawMaterialButton(
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           elevation: 0,

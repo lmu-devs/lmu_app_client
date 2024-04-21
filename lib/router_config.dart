@@ -1,4 +1,4 @@
-import 'package:core/core.dart';
+import 'package:core/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mensa/mensa.dart';
@@ -30,16 +30,16 @@ final routeConfig = GoRouter(
           routes: <RouteBase>[
             GoRoute(
               path: RouteNames.mensa,
-              pageBuilder: (context, state) => const NoTransitionPage(
+              pageBuilder: (context, state) => NoTransitionPage(
                 child: MensaMainRoute(
-                  arguments: null,
+                  arguments: state.extra,
                 ),
               ),
               routes: <GoRoute>[
                 GoRoute(
                   path: RouteNames.mensaDetails.asSubroute,
-                  builder: (context, state) => const MensaDetailsRoute(
-                    arguments: null,
+                  builder: (context, state) => MensaDetailsRoute(
+                    arguments: state.extra,
                   ),
                 ),
               ],
