@@ -1,3 +1,4 @@
+import 'package:core/src/constants/spacing_atoms.dart';
 import 'package:core/src/themes/models/neutral_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -5,6 +6,7 @@ import 'lmu_colors_theme_extension.dart';
 import 'texts/text_themes.dart';
 
 class AppTheme {
+  static whatever = SpacingAtoms.gaps.tile;
   static ThemeData light = ThemeData(
     textTheme: getBaseTextTheme(
       "Inter",
