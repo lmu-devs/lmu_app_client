@@ -1,33 +1,221 @@
-library themes;
-
+import 'package:core/src/themes/models/neutral_colors.dart';
 import 'package:flutter/material.dart';
 
-import 'color_primitives.dart';
-import 'color_schemes.dart';
-import 'text_themes.dart';
+import 'lmu_colors_theme_extension.dart';
+import 'texts/text_themes.dart';
 
 class AppTheme {
   static ThemeData light = ThemeData(
-    colorScheme: ColorSchemes.light,
-    cardTheme: const CardTheme(
-      color: ColorPrimitives.white,
-      elevation: 0.0,
-    ),
     textTheme: getBaseTextTheme(
       "Inter",
-      ColorSchemes.light,
+      const TextColors(
+        weakColors: WeakColors(
+          base: Colors.black,
+          pressed: Colors.black,
+          disabled: Colors.black,
+        ),
+        mediumColors: MediumColors(
+          base: Colors.black,
+          pressed: Colors.black,
+          disabled: Colors.black,
+        ),
+        strongColors: StrongColors(
+          base: Colors.black,
+          pressed: Colors.black,
+          disabled: Colors.black,
+        ),
+        nonInvertableColors: NonInvertableColors(
+          base: Colors.black,
+          pressed: Colors.black,
+          disabled: Colors.black,
+          decoration: Colors.black,
+        ),
+        flippedColors: FlippedColors(
+          base: Colors.black,
+          pressed: Colors.black,
+          disabled: Colors.black,
+        ),
+      ),
     ),
+    extensions: const <ThemeExtension<dynamic>>[
+      LmuColors(
+        brandColor: Color.fromARGB(255, 199, 93, 22),
+        danger: Color(0xFFEF9A9A),
+        neutralColors: NeutralColors(
+          textColors: TextColors(
+            weakColors: WeakColors(
+              base: Colors.black,
+              pressed: Colors.black,
+              disabled: Colors.black,
+            ),
+            mediumColors: MediumColors(
+              base: Colors.black,
+              pressed: Colors.black,
+              disabled: Colors.black,
+            ),
+            strongColors: StrongColors(
+              base: Colors.black,
+              pressed: Colors.black,
+              disabled: Colors.black,
+            ),
+            nonInvertableColors: NonInvertableColors(
+              base: Colors.black,
+              pressed: Colors.black,
+              disabled: Colors.black,
+              decoration: Colors.black,
+            ),
+            flippedColors: FlippedColors(
+              base: Colors.black,
+              pressed: Colors.black,
+              disabled: Colors.black,
+            ),
+          ),
+          backgroundColors: BackgroundColors(
+            base: Colors.black,
+            tile: Colors.black,
+            pure: Colors.black,
+            weakColors: WeakColors(
+              base: Colors.black,
+              pressed: Colors.black,
+              disabled: Colors.black,
+            ),
+            mediumColors: MediumColors(
+              base: Colors.black,
+              pressed: Colors.black,
+              disabled: Colors.black,
+            ),
+            strongColors: StrongColors(
+              base: Colors.black,
+              pressed: Colors.black,
+              disabled: Colors.black,
+            ),
+            nonInvertableColors: NonInvertableColors(
+              base: Colors.black,
+              pressed: Colors.black,
+              disabled: Colors.black,
+              decoration: Colors.black,
+            ),
+            flippedColors: FlippedColors(
+              base: Colors.black,
+              pressed: Colors.black,
+              disabled: Colors.black,
+            ),
+          ),
+          borderColors: BorderColors(
+            seperatorLight: Colors.black,
+            inputStroke: Colors.black,
+            cutout: Colors.black,
+            seperatorDark: Colors.black,
+          ),
+        ),
+      ),
+    ],
   );
 
   static ThemeData dark = ThemeData(
-    colorScheme: ColorSchemes.dark,
-    cardTheme: const CardTheme(
-      color: ColorPrimitives.grey700,
-      elevation: 0.0,
-    ),
     textTheme: getBaseTextTheme(
       "Inter",
-      ColorSchemes.light,
+      const TextColors(
+        weakColors: WeakColors(
+          base: Colors.black,
+          pressed: Colors.black,
+          disabled: Colors.black,
+        ),
+        mediumColors: MediumColors(
+          base: Colors.black,
+          pressed: Colors.black,
+          disabled: Colors.black,
+        ),
+        strongColors: StrongColors(
+          base: Colors.black,
+          pressed: Colors.black,
+          disabled: Colors.black,
+        ),
+        nonInvertableColors: NonInvertableColors(
+          base: Colors.black,
+          pressed: Colors.black,
+          disabled: Colors.black,
+          decoration: Colors.black,
+        ),
+        flippedColors: FlippedColors(
+          base: Colors.black,
+          pressed: Colors.black,
+          disabled: Colors.black,
+        ),
+      ),
     ),
+    extensions: const <ThemeExtension<dynamic>>[
+      LmuColors(
+        brandColor: Color.fromARGB(255, 199, 93, 22),
+        danger: Color(0xFFEF9A9A),
+        neutralColors: NeutralColors(
+          textColors: TextColors(
+            weakColors: WeakColors(
+              base: Colors.black,
+              pressed: Colors.black,
+              disabled: Colors.black,
+            ),
+            mediumColors: MediumColors(
+              base: Colors.black,
+              pressed: Colors.black,
+              disabled: Colors.black,
+            ),
+            strongColors: StrongColors(
+              base: Colors.black,
+              pressed: Colors.black,
+              disabled: Colors.black,
+            ),
+            nonInvertableColors: NonInvertableColors(
+              base: Colors.black,
+              pressed: Colors.black,
+              disabled: Colors.black,
+              decoration: Colors.black,
+            ),
+            flippedColors: FlippedColors(
+              base: Colors.black,
+              pressed: Colors.black,
+              disabled: Colors.black,
+            ),
+          ),
+          backgroundColors: BackgroundColors(
+            base: Colors.white,
+            tile: Colors.black,
+            pure: Colors.black,
+            weakColors: WeakColors(
+              base: Colors.black,
+              pressed: Colors.black,
+              disabled: Colors.black,
+            ),
+            mediumColors: MediumColors(
+              base: Colors.black,
+              pressed: Colors.black,
+              disabled: Colors.black,
+            ),
+            strongColors: StrongColors(
+              base: Colors.black,
+              pressed: Colors.black,
+              disabled: Colors.black,
+            ),
+            nonInvertableColors: NonInvertableColors(
+              base: Colors.black,
+              pressed: Colors.black,
+              disabled: Colors.black,
+              decoration: Colors.black,
+            ),
+            flippedColors: FlippedColors(
+              base: Colors.black,
+              pressed: Colors.black,
+              disabled: Colors.black,
+            ),
+          ),
+          borderColors: BorderColors(
+            seperatorLight: Colors.black,
+            inputStroke: Colors.black,
+            cutout: Colors.black,
+            seperatorDark: Colors.black,
+          ),
+        ),
+      ),
+    ],
   );
 }

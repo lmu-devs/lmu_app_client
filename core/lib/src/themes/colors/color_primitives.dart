@@ -33,8 +33,4 @@ class ColorPrimitives {
   // Transparent colors
   static const Color trspBlack = Color(0x00000000);
   static const Color trspWhite = Color(0x00ffffff);
-
-  ColorSwatch lmuSwatch = ColorSwatch(0xFF1D1D1D, {
-    
-  });
 }

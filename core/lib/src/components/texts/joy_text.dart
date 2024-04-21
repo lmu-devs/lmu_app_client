@@ -1,7 +1,7 @@
+import 'package:core/src/themes/themes.dart';
 import 'package:flutter/material.dart';
 
-import '../../themes/color_schemes.dart';
-import '../../themes/text_themes.dart';
+import '../../themes/texts/text_themes.dart';
 
 class JoyText extends StatelessWidget {
   /// DEPRECATED: Use a factory method instead e.g. JoyText.body(...)
@@ -13,45 +13,15 @@ class JoyText extends StatelessWidget {
     this.customOverFlow,
     this.type,
     this.textStyle,
-    double? textScaleFactor,
     Color? color,
     bool? isEnabled,
     TextDecoration? decoration = TextDecoration.none,
     super.key,
-  })  : textScaleFactor = (textScaleFactor ?? 1.0) > 2.0 ? 2.0 : textScaleFactor,
-        _color = color,
+  })  : _color = color,
         isEnabled = isEnabled ?? true,
         customDecoration = decoration ?? TextDecoration.none;
 
-  factory JoyText.cover(
-    String? text, {
-    Key? key,
-    Color? color,
-    TextAlign? textAlign,
-    int? maxLines,
-    FontWeight? weight,
-    double? textScaleFactor,
-    bool? isEnabled,
-    TextOverflow? customOverFlow,
-    TextDecoration? decoration,
-    TextStyle? textStyle,
-  }) =>
-      JoyText(
-        text,
-        key: key,
-        textAlign: textAlign,
-        maxLines: maxLines,
-        weight: weight,
-        color: color,
-        type: JoyTextTypes.cover,
-        textScaleFactor: textScaleFactor,
-        isEnabled: isEnabled,
-        customOverFlow: customOverFlow,
-        decoration: decoration,
-        textStyle: textStyle,
-      );
-
-  factory JoyText.point(
+  factory JoyText.body(
     String? text, {
     Key? key,
     Color? color,
@@ -72,14 +42,13 @@ class JoyText extends StatelessWidget {
         weight: weight,
         color: color,
         textStyle: textStyle,
-        type: JoyTextTypes.point,
-        textScaleFactor: textScaleFactor,
         isEnabled: isEnabled,
         customOverFlow: customOverFlow,
         decoration: decoration,
+        type: JoyTextTypes.body,
       );
 
-  factory JoyText.welcome(
+  factory JoyText.bodySmall(
     String? text, {
     Key? key,
     Color? color,
@@ -99,10 +68,34 @@ class JoyText extends StatelessWidget {
         weight: weight,
         color: color,
         textStyle: textStyle,
-        textScaleFactor: textScaleFactor,
         customOverFlow: customOverFlow,
         decoration: decoration,
-        type: JoyTextTypes.welcome,
+        type: JoyTextTypes.bodySmall,
+      );
+
+  factory JoyText.bodyXSmall(
+    String? text, {
+    Key? key,
+    Color? color,
+    TextAlign? textAlign,
+    int? maxLines,
+    FontWeight? weight,
+    double? textScaleFactor,
+    TextOverflow? customOverFlow,
+    TextDecoration? decoration,
+    TextStyle? textStyle,
+  }) =>
+      JoyText(
+        text,
+        key: key,
+        textAlign: textAlign,
+        maxLines: maxLines,
+        weight: weight,
+        color: color,
+        textStyle: textStyle,
+        customOverFlow: customOverFlow,
+        decoration: decoration,
+        type: JoyTextTypes.bodyXSmall,
       );
 
   factory JoyText.h0(
@@ -126,39 +119,10 @@ class JoyText extends StatelessWidget {
         weight: weight,
         color: color,
         textStyle: textStyle,
-        textScaleFactor: textScaleFactor,
         isEnabled: isEnabled,
         customOverFlow: customOverFlow,
         decoration: decoration,
         type: JoyTextTypes.h0,
-      );
-
-  factory JoyText.status(
-    String? text, {
-    Key? key,
-    Color? color,
-    TextAlign? textAlign,
-    int? maxLines,
-    FontWeight? weight,
-    double? textScaleFactor,
-    bool? isEnabled,
-    TextOverflow? customOverFlow,
-    TextDecoration? decoration,
-    TextStyle? textStyle,
-  }) =>
-      JoyText(
-        text,
-        key: key,
-        textAlign: textAlign,
-        maxLines: maxLines,
-        weight: weight,
-        color: color,
-        textStyle: textStyle,
-        textScaleFactor: textScaleFactor,
-        isEnabled: isEnabled,
-        customOverFlow: customOverFlow,
-        decoration: decoration,
-        type: JoyTextTypes.status,
       );
 
   factory JoyText.h1(
@@ -182,7 +146,6 @@ class JoyText extends StatelessWidget {
         weight: weight,
         color: color,
         textStyle: textStyle,
-        textScaleFactor: textScaleFactor,
         isEnabled: isEnabled,
         customOverFlow: customOverFlow,
         decoration: decoration,
@@ -211,11 +174,10 @@ class JoyText extends StatelessWidget {
         weight: weight,
         color: color,
         textStyle: textStyle,
-        textScaleFactor: textScaleFactor,
         isEnabled: isEnabled,
         customOverFlow: customOverFlow,
         decoration: decoration,
-        type: useH2Explore ? JoyTextTypes.h2Explore : JoyTextTypes.h2,
+        type: JoyTextTypes.h2,
       );
 
   factory JoyText.h3(
@@ -239,130 +201,16 @@ class JoyText extends StatelessWidget {
         weight: weight,
         color: color,
         textStyle: textStyle,
-        textScaleFactor: textScaleFactor,
         isEnabled: isEnabled,
         customOverFlow: customOverFlow,
         decoration: decoration,
         type: JoyTextTypes.h3,
       );
 
-  factory JoyText.body(
-    String? text, {
-    Key? key,
-    Color? color,
-    TextAlign? textAlign,
-    int? maxLines,
-    FontWeight? weight,
-    double? textScaleFactor,
-    bool? isEnabled,
-    TextOverflow? customOverFlow,
-    TextDecoration? decoration,
-    TextStyle? textStyle,
-  }) =>
-      JoyText(
-        text,
-        key: key,
-        textAlign: textAlign,
-        maxLines: maxLines,
-        weight: weight,
-        color: color,
-        textStyle: textStyle,
-        textScaleFactor: textScaleFactor,
-        isEnabled: isEnabled,
-        customOverFlow: customOverFlow,
-        decoration: decoration,
-        type: JoyTextTypes.body,
-      );
-
-  factory JoyText.label(
-    String? text, {
-    Key? key,
-    Color? color,
-    TextAlign? textAlign,
-    int? maxLines,
-    FontWeight? weight,
-    double? textScaleFactor,
-    bool? isEnabled,
-    TextOverflow? customOverFlow,
-    TextDecoration? decoration,
-    TextStyle? textStyle,
-  }) =>
-      JoyText(
-        text,
-        key: key,
-        textAlign: textAlign,
-        maxLines: maxLines,
-        weight: weight,
-        color: color,
-        textStyle: textStyle,
-        textScaleFactor: textScaleFactor,
-        isEnabled: isEnabled,
-        customOverFlow: customOverFlow,
-        decoration: decoration,
-        type: JoyTextTypes.label,
-      );
-
-  factory JoyText.caption(
-    String? text, {
-    Key? key,
-    Color? color,
-    TextAlign? textAlign,
-    int? maxLines,
-    FontWeight? weight,
-    double? textScaleFactor,
-    bool? isEnabled,
-    TextOverflow? customOverFlow,
-    TextDecoration? decoration,
-    TextStyle? textStyle,
-  }) =>
-      JoyText(
-        text,
-        key: key,
-        textAlign: textAlign,
-        maxLines: maxLines,
-        weight: weight,
-        color: color,
-        textStyle: textStyle,
-        textScaleFactor: textScaleFactor,
-        isEnabled: isEnabled,
-        customOverFlow: customOverFlow,
-        decoration: decoration,
-        type: JoyTextTypes.caption,
-      );
-
-  factory JoyText.hints(
-    String? text, {
-    Key? key,
-    Color? color,
-    TextAlign? textAlign,
-    int? maxLines,
-    FontWeight? weight,
-    double? textScaleFactor,
-    bool? isEnabled,
-    TextOverflow? customOverFlow,
-    TextDecoration decoration = TextDecoration.none,
-    TextStyle? textStyle,
-  }) =>
-      JoyText(
-        text,
-        key: key,
-        textAlign: textAlign,
-        maxLines: maxLines,
-        weight: weight,
-        color: color,
-        textStyle: textStyle,
-        textScaleFactor: textScaleFactor,
-        isEnabled: isEnabled,
-        customOverFlow: customOverFlow,
-        decoration: decoration,
-        type: JoyTextTypes.hints,
-      );
-
   final String? text;
   final TextAlign? textAlign;
   final int? maxLines;
   final FontWeight? weight;
-  final double? textScaleFactor;
   final Color? _color;
   final TextStyle? textStyle;
   final bool isEnabled;
@@ -381,19 +229,19 @@ class JoyText extends StatelessWidget {
     }
     final textTheme = getBaseTextTheme(
       "Inter",
-      ColorSchemes.light,
+      context.colors.neutralColors.textColors,
     );
 
     TextStyle textStyleTemp;
     switch (type) {
-      case JoyTextTypes.cover:
-        textStyleTemp = textTheme.cover;
+      case JoyTextTypes.body:
+        textStyleTemp = textTheme.body;
         break;
-      case JoyTextTypes.point:
-        textStyleTemp = textTheme.point;
+      case JoyTextTypes.bodySmall:
+        textStyleTemp = textTheme.bodySmall;
         break;
-      case JoyTextTypes.welcome:
-        textStyleTemp = textTheme.welcome;
+      case JoyTextTypes.bodyXSmall:
+        textStyleTemp = textTheme.bodyXSmall;
         break;
       case JoyTextTypes.h0:
         textStyleTemp = textTheme.h0;
@@ -407,32 +255,26 @@ class JoyText extends StatelessWidget {
       case JoyTextTypes.h3:
         textStyleTemp = textTheme.h3;
         break;
-      case JoyTextTypes.status:
-        textStyleTemp = textTheme.status;
-        break;
-      case JoyTextTypes.body:
-        textStyleTemp = textTheme.body;
-        break;
-      case JoyTextTypes.label:
-        textStyleTemp = textTheme.label;
-        break;
-      case JoyTextTypes.caption:
-        textStyleTemp = textTheme.caption;
-        break;
-      case JoyTextTypes.hints:
-        textStyleTemp = textTheme.hints;
-        break;
       default:
         textStyleTemp = textTheme.body;
         break;
     }
+
+    textStyleTemp = textStyleTemp.copyWith(
+      fontWeight: weight,
+      decoration: customDecoration,
+    );
+
+    textStyleTemp = textStyleTemp.copyWith(
+      color: color,
+    );
 
     return textStyleTemp;
   }
 
   @override
   Widget build(BuildContext context) {
-    var softWrap;
+    bool? softWrap;
     if (maxLines != null) {
       if (maxLines == 1) {
         softWrap = false;
@@ -448,23 +290,16 @@ class JoyText extends StatelessWidget {
       textAlign: textAlign,
       maxLines: maxLines,
       style: getTextStyle(context),
-      textScaleFactor: textScaleFactor,
     );
   }
 }
 
 enum JoyTextTypes {
-  cover,
-  point,
-  welcome,
+  body,
+  bodySmall,
+  bodyXSmall,
   h0,
   h1,
   h2,
-  h2Explore,
   h3,
-  status,
-  body,
-  label,
-  caption,
-  hints,
 }

@@ -1,9 +1,7 @@
 import 'package:core/components.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../widgets/mensa_header.dart';
+import '../repository/api/models/models.dart';
 
 class MensaContentView extends StatelessWidget {
   const MensaContentView({
@@ -15,50 +13,113 @@ class MensaContentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final PageController _pageController = PageController();
+
+    final openingHours = MensaOpeningHours(
+      dayAsEnum: Weekday.monday,
+      openingHours: ["8-12"],
+    );
+
+    final mensaEntries = [
+      MensaEntry(
+        name: "Leopold",
+        type: MensaType.mensa,
+        distance: 23,
+        isFavorite: true,
+        openingHours: openingHours,
+      ),
+      MensaEntry(
+        name: "Schelling",
+        type: MensaType.bistro,
+        distance: 50,
+        isFavorite: false,
+        openingHours: openingHours,
+      )
+    ];
+
+    final mensaDays = [
+      MensaDay(
+        time: DateTime.now(),
+        mensaEntries: mensaEntries,
+      ),
+      MensaDay(
+        time: DateTime.utc(2022),
+        mensaEntries: mensaEntries,
+      ),
+      MensaDay(
+        time: DateTime.utc(2022),
+        mensaEntries: mensaEntries,
+      ),
+      MensaDay(
+        time: DateTime.utc(2022),
+        mensaEntries: mensaEntries,
+      ),
+    ];
+
+    final mensaOverview = MensaOverview(mensaDays: mensaDays);
+
+    return PageView.builder(
+      controller: _pageController,
+      itemCount: mensaOverview.mensaDays.length,
+      itemBuilder: (context, index) => _MensaOverivewItem(
+        mensaDay: mensaOverview.mensaDays[index],
+      ),
+    );
+  }
+}
+
+class _MensaOverivewItem extends StatelessWidget {
+  const _MensaOverivewItem({
+    required this.mensaDay,
+  });
+
+  final MensaDay mensaDay;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        const MensaHeader(),
-        Center(
-          child: Text(mensaData),
+        SizedBox(
+          height: 50,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) => Container(
+              width: 20,
+              height: 20,
+              color: Colors.green,
+            ),
+          ),
         ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: mensaDay.mensaEntries.length,
+            itemBuilder: (context, index) => _MensaEntryItem(
+              mensaEntry: mensaDay.mensaEntries[index],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _MensaEntryItem extends StatelessWidget {
+  const _MensaEntryItem({
+    required this.mensaEntry,
+  });
+
+  final MensaEntry mensaEntry;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
         JoyText.body(
-          "234234",
+          mensaEntry.name,
+          weight: FontWeight.w700,
         ),
-        ButtonBar(
-          alignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () => {
-                Provider.of<ThemeProvider>(context, listen: false).setThemeMode(ThemeMode.light) // For dark theme
-              },
-              child: const Text('Light'),
-            ),
-            ElevatedButton(
-              onPressed: () => {
-                Provider.of<ThemeProvider>(context, listen: false).setThemeMode(ThemeMode.dark) // For light theme
-              },
-              child: const Text('Dark'),
-            ),
-            ElevatedButton(
-              onPressed: () => {
-                Provider.of<ThemeProvider>(context, listen: false).setThemeMode(ThemeMode.system) // For system theme
-              },
-              child: const Text('System'),
-            ),
-          ],
-        ),
-        JoyButton(
-          onPressed: () => {VibrationPatterns.vibrate(VibrationType.success)},
-          text: 'This is the Text yo',
-          type: ElementType.primary,
-        ),
-        JoyButton(
-          onPressed: () => {VibrationPatterns.vibrate(VibrationType.error)},
-          text: 'This is the Text yo',
-          type: ElementType.secondary,
-          size: ElementSize.large,
-        ),
+        JoyText.bodySmall(mensaEntry.distance.toString()),
+        JoyText.bodyXSmall(mensaEntry.openingHours?.dayAsEnum.toString()),
       ],
     );
   }
