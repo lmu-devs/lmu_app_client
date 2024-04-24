@@ -1,7 +1,7 @@
 import 'package:core/src/themes/themes.dart';
 import 'package:flutter/material.dart';
 
-import '../../themes/texts/text_themes.dart';
+import '../../themes/texts/text_themes_definitions.dart';
 
 class JoyText extends StatelessWidget {
   /// DEPRECATED: Use a factory method instead e.g. JoyText.body(...)

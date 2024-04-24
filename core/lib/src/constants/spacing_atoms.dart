@@ -1,26 +1,65 @@
-import 'dart:ui';
-import 'sizes.dart';
-
 class SpacingAtoms {
-  static const DevicePaddings devicePaddings = DevicePaddings();
-  static const Gaps gaps = Gaps();
+  const SpacingAtoms({
+    required this.tilePadding,
+    required this.tileItemPaddingHorizontal,
+    required this.tileItemPaddingVertical,
+    required this.devicePaddings,
+    required this.gaps,
+    required this.visualSizes,
+  });
 
-  static const double tileP = Sizes.size4;
-  static const double tileItemPaddingHorizontal = Sizes.size4;
-  static const double tileItemPaddingVertical = Sizes.size4;
+  final double tilePadding;
+  final double tileItemPaddingHorizontal;
+  final double tileItemPaddingVertical;
+  final DevicePaddings devicePaddings;
+  final Gaps gaps;
+  final VisualSizes visualSizes;
 }
 
 class DevicePaddings {
-  const DevicePaddings();
-  static const double horizontal = Sizes.size16Base;
-  static const double vertical = Sizes.size16Base;
-  static const double bottom = Sizes.size48;
+  const DevicePaddings({
+    required this.horizontal,
+    required this.vertical,
+  });
+
+  final double horizontal;
+  final double vertical;
 }
 
 class Gaps {
-  const Gaps();
-  static const double tile = Sizes.size16Base;
-  static const double buttonsSm = Sizes.size8;
-  static const double buttonsM = Sizes.size16Base;
-  static const double tabbarSm = Sizes.size4;
+  const Gaps({
+    required this.buttonSmall,
+    required this.buttonMedium,
+    required this.tabbarSmall,
+    required this.tile,
+  });
+
+  final double buttonSmall;
+  final double buttonMedium;
+  final double tabbarSmall;
+  final double tile;
+}
+
+class VisualSizes {
+  const VisualSizes({
+    required this.xxsmall,
+    required this.xsmall,
+    required this.small,
+    required this.base,
+  });
+
+  final double xxsmall;
+  final double xsmall;
+  final double small;
+  final double base;
+}
+
+class ClickableSizes {
+  const ClickableSizes({
+    required this.large,
+    required this.base,
+  });
+
+  final double large;
+  final double base;
 }

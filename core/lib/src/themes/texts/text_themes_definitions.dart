@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/neutral_colors.dart';
+import '../colors/neutral_colors.dart';
 import 'joy_text_theme.dart';
 
 JoyTextTheme getBaseTextTheme(

@@ -1,8 +1,4 @@
-
-
-
-class Sizes {
-
+class AtomPrimitives {
   static const double size0 = 0;
   static const double size0_5 = 0.5;
   static const double size1 = 1;
@@ -14,9 +10,8 @@ class Sizes {
   static const double size20 = 20;
   static const double size24 = 24;
   static const double size32 = 32;
+  static const double size36 = 36;
   static const double size48 = 48;
   static const double size64 = 64;
   static const double size96 = 96;
 }
-
-
