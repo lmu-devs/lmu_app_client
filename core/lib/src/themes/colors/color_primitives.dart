@@ -20,17 +20,40 @@ class ColorPrimitives {
   // Grayscale colors
   static const Color white = Color(0xFFffffff);
   static const Color grey = Color(0xFFF5F5F5);
-  static const Color grey0 = Color(0xFFE6E6E6);
-  static const Color grey100 = Color(0xFFbabcba);
-  static const Color grey200 = Color(0xFF999c9a);
-  static const Color grey300 = Color(0xFF797d7a);
-  static const Color grey400 = Color(0xFF5b5f5c);
-  static const Color grey500 = Color(0xFF242424);
-  static const Color grey600 = Color(0xFF1D1D1D);
-  static const Color grey700 = Color(0xFF131313);
-  static const Color grey800 = Color(0xFF030303);
+  static const Color grey05 = Color(0xFFE6E6E6);
+  static const Color grey10 = Color(0xFFbabcba);
+  static const Color grey20 = Color(0xFF999c9a);
+  static const Color grey30 = Color(0xFF797d7a);
+  static const Color grey40 = Color(0xFF5b5f5c);
+  static const Color grey50 = Color(0xFF242424);
+  static const Color grey60 = Color(0xFF1D1D1D);
+  static const Color grey70 = Color(0xFF131313);
+  static const Color grey80 = Color(0xFF030303);
+  static const Color black = Color(0x00000000);
+
 
   // Transparent colors
-  static const Color trspBlack = Color(0x00000000);
-  static const Color trspWhite = Color(0x00ffffff);
+  static const Color trspBlack05 = Color(0x0D000000);
+  static const Color trspBlack10 = Color(0x1A000000);
+  static const Color trspBlack20 = Color(0x33000000);
+  static const Color trspBlack30 = Color(0x4D000000);
+  static const Color trspBlack40 = Color(0x66000000);
+  static const Color trspBlack50 = Color(0x80000000);
+  static const Color trspBlack60 = Color(0x99000000);
+  static const Color trspBlack67 = Color(0xAB000000);
+  static const Color trspBlack80 = Color(0xCC000000);
+  static const Color trspBlack90 = Color(0xE6000000);
+  static const Color trspBlack95 = Color(0xF2000000);
+
+  static const Color trspWhite05 = Color(0x0DFFFFFF);
+  static const Color trspWhite10 = Color(0x1AFFFFFF);
+  static const Color trspWhite20 = Color(0x33FFFFFF);
+  static const Color trspWhite30 = Color(0x4DFFFFFF);
+  static const Color trspWhite40 = Color(0x66FFFFFF);
+  static const Color trspWhite50 = Color(0x80FFFFFF);
+  static const Color trspWhite58 = Color(0x94FFFFFF);
+  static const Color trspWhite65 = Color(0xA6FFFFFF);
+  static const Color trspWhite75 = Color(0xBFFFFFFF);
+  static const Color trspWhite82 = Color(0xD1FFFFFF);
+  static const Color trspWhite95 = Color(0xF2FFFFFF);
 }

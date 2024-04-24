@@ -1,41 +1,41 @@
 import 'package:core/src/constants/spacing_atoms.dart';
 import 'package:core/src/themes/models/neutral_colors.dart';
 import 'package:flutter/material.dart';
+import './colors/color_primitives.dart';
 
 import 'lmu_colors_theme_extension.dart';
 import 'texts/text_themes.dart';
 
 class AppTheme {
-  static whatever = SpacingAtoms.gaps.tile;
   static ThemeData light = ThemeData(
     textTheme: getBaseTextTheme(
       "Inter",
       const TextColors(
-        weakColors: WeakColors(
-          base: Colors.black,
-          pressed: Colors.black,
-          disabled: Colors.black,
+        strongColors: StrongColors(
+          base: ColorPrimitives.trspBlack95,
+          pressed: ColorPrimitives.trspBlack80,
+          disabled: ColorPrimitives.trspBlack30,
         ),
         mediumColors: MediumColors(
-          base: Colors.black,
-          pressed: Colors.black,
-          disabled: Colors.black,
+          base: ColorPrimitives.trspBlack67,
+          pressed: ColorPrimitives.trspBlack60,
+          disabled: ColorPrimitives.trspBlack30,
         ),
-        strongColors: StrongColors(
-          base: Colors.black,
-          pressed: Colors.black,
-          disabled: Colors.black,
+        weakColors: WeakColors(
+          base: ColorPrimitives.trspBlack40,
+          pressed: ColorPrimitives.trspBlack50,
+          disabled: ColorPrimitives.trspBlack30,
         ),
         nonInvertableColors: NonInvertableColors(
-          base: Colors.black,
-          pressed: Colors.black,
-          disabled: Colors.black,
-          decoration: Colors.black,
+          base: ColorPrimitives.white,
+          pressed: ColorPrimitives.trspWhite95,
+          disabled: Colors.white30,
+          decoration: ColorPrimitives.grey80,
         ),
         flippedColors: FlippedColors(
-          base: Colors.black,
-          pressed: Colors.black,
-          disabled: Colors.black,
+          base: ColorPrimitives.trspWhite95,
+          pressed: ColorPrimitives.trspWhite75,
+          disabled: ColorPrimitives.trspWhite30,
         ),
       ),
     ),
@@ -45,31 +45,31 @@ class AppTheme {
         danger: Color(0xFFEF9A9A),
         neutralColors: NeutralColors(
           textColors: TextColors(
-            weakColors: WeakColors(
-              base: Colors.black,
-              pressed: Colors.black,
-              disabled: Colors.black,
+            strongColors: StrongColors(
+              base: ColorPrimitives.trspBlack95,
+              pressed: ColorPrimitives.trspBlack80,
+              disabled: ColorPrimitives.trspBlack30,
             ),
             mediumColors: MediumColors(
-              base: Colors.black,
-              pressed: Colors.black,
-              disabled: Colors.black,
+              base: ColorPrimitives.trspBlack67,
+              pressed: ColorPrimitives.trspBlack60,
+              disabled: ColorPrimitives.trspBlack30,
             ),
-            strongColors: StrongColors(
-              base: Colors.black,
-              pressed: Colors.black,
-              disabled: Colors.black,
+            weakColors: WeakColors(
+              base: ColorPrimitives.trspBlack40,
+              pressed: ColorPrimitives.trspBlack50,
+              disabled: ColorPrimitives.trspBlack30,
             ),
             nonInvertableColors: NonInvertableColors(
-              base: Colors.black,
-              pressed: Colors.black,
-              disabled: Colors.black,
-              decoration: Colors.black,
+              base: ColorPrimitives.white,
+              pressed: ColorPrimitives.trspWhite95,
+              disabled: Colors.white30,
+              decoration: ColorPrimitives.grey80,
             ),
             flippedColors: FlippedColors(
-              base: Colors.black,
-              pressed: Colors.black,
-              disabled: Colors.black,
+              base: ColorPrimitives.trspWhite95,
+              pressed: ColorPrimitives.trspWhite75,
+              disabled: ColorPrimitives.trspWhite30,
             ),
           ),
           backgroundColors: BackgroundColors(
@@ -118,31 +118,31 @@ class AppTheme {
     textTheme: getBaseTextTheme(
       "Inter",
       const TextColors(
-        weakColors: WeakColors(
-          base: Colors.black,
-          pressed: Colors.black,
-          disabled: Colors.black,
+        strongColors: StrongColors(
+          base: ColorPrimitives.trspWhite95,
+          pressed: ColorPrimitives.trspWhite82,
+          disabled: ColorPrimitives.trspWhite30,
         ),
         mediumColors: MediumColors(
-          base: Colors.black,
-          pressed: Colors.black,
-          disabled: Colors.black,
+          base: ColorPrimitives.trspWhite65,
+          pressed: ColorPrimitives.trspWhite58,
+          disabled: ColorPrimitives.trspWhite30,
         ),
-        strongColors: StrongColors(
-          base: Colors.black,
-          pressed: Colors.black,
-          disabled: Colors.black,
+        weakColors: WeakColors(
+          base: ColorPrimitives.trspWhite40,
+          pressed: ColorPrimitives.trspWhite50,
+          disabled: ColorPrimitives.trspWhite30,
         ),
         nonInvertableColors: NonInvertableColors(
-          base: Colors.black,
-          pressed: Colors.black,
-          disabled: Colors.black,
-          decoration: Colors.black,
+          base: ColorPrimitives.white,
+          pressed: ColorPrimitives.trspWhite95,
+          disabled: Colors.white30,
+          decoration: ColorPrimitives.grey80,
         ),
         flippedColors: FlippedColors(
-          base: Colors.black,
-          pressed: Colors.black,
-          disabled: Colors.black,
+          base: ColorPrimitives.trspBlack90,
+          pressed: ColorPrimitives.trspBlack67,
+          disabled: ColorPrimitives.trspWhite30,
         ),
       ),
     ),
@@ -152,31 +152,31 @@ class AppTheme {
         danger: Color(0xFFEF9A9A),
         neutralColors: NeutralColors(
           textColors: TextColors(
-            weakColors: WeakColors(
-              base: Colors.black,
-              pressed: Colors.black,
-              disabled: Colors.black,
+            strongColors: StrongColors(
+              base: ColorPrimitives.trspWhite95,
+              pressed: ColorPrimitives.trspWhite82,
+              disabled: ColorPrimitives.trspWhite30,
             ),
             mediumColors: MediumColors(
-              base: Colors.black,
-              pressed: Colors.black,
-              disabled: Colors.black,
+              base: ColorPrimitives.trspWhite65,
+              pressed: ColorPrimitives.trspWhite58,
+              disabled: ColorPrimitives.trspWhite30,
             ),
-            strongColors: StrongColors(
-              base: Colors.black,
-              pressed: Colors.black,
-              disabled: Colors.black,
+            weakColors: WeakColors(
+              base: ColorPrimitives.trspWhite40,
+              pressed: ColorPrimitives.trspWhite50,
+              disabled: ColorPrimitives.trspWhite30,
             ),
             nonInvertableColors: NonInvertableColors(
-              base: Colors.black,
-              pressed: Colors.black,
-              disabled: Colors.black,
-              decoration: Colors.black,
+              base: ColorPrimitives.white,
+              pressed: ColorPrimitives.trspWhite95,
+              disabled: Colors.white30,
+              decoration: ColorPrimitives.grey80,
             ),
             flippedColors: FlippedColors(
-              base: Colors.black,
-              pressed: Colors.black,
-              disabled: Colors.black,
+              base: ColorPrimitives.trspBlack90,
+              pressed: ColorPrimitives.trspBlack67,
+              disabled: ColorPrimitives.trspWhite30,
             ),
           ),
           backgroundColors: BackgroundColors(
