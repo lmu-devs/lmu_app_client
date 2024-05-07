@@ -1,7 +1,7 @@
-import 'package:core/components.dart';
 import 'package:flutter/material.dart';
 
 import '../repository/api/models/models.dart';
+import '../widgets/mensa_overview_tile.dart';
 
 class MensaContentView extends StatelessWidget {
   const MensaContentView({
@@ -114,12 +114,10 @@ class _MensaEntryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        JoyText.body(
-          mensaEntry.name,
-          weight: FontWeight.w700,
+        MensaOverviewTile(
+          title: mensaEntry.name,
+          distance: mensaEntry.distance,
         ),
-        JoyText.bodySmall(mensaEntry.distance.toString()),
-        JoyText.bodyXSmall(mensaEntry.openingHours?.dayAsEnum.toString()),
       ],
     );
   }

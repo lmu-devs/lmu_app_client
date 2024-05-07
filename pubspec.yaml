@@ -17,6 +17,7 @@ dependencies:
     path: ./core
   mensa: 
     path: ./feature_modules/mensa
+  http: ^0.13.3
 
 dev_dependencies:
   flutter_test:

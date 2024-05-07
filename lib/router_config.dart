@@ -21,66 +21,40 @@ final routeConfig = GoRouter(
             GoRoute(
               path: RouteNames.home,
               pageBuilder: (context, state) {
-                final colorScheme = Theme.of(context).colorScheme;
-
-                final colors = context.colors;
-
                 return NoTransitionPage(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TestColors(
-                            color1: colors.neutralColors.backgroundColors.base,
-                            color2: colorScheme.onBackground,
-                          ),
-                          TestColors(
-                            color1: colorScheme.primary,
-                            color2: colorScheme.onPrimary,
-                          ),
-                          TestColors(
-                            color1: colorScheme.secondary,
-                            color2: colorScheme.onSecondary,
-                          ),
-                          TestColors(
-                            color1: colorScheme.tertiary,
-                            color2: colorScheme.onTertiary,
-                          ),
-                          TestColors(
-                            color1: colorScheme.surface,
-                            color2: colorScheme.onSurface,
-                          ),
-                        ],
-                      ),
-                      ButtonBar(
-                        alignment: MainAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () => {
-                              Provider.of<ThemeProvider>(context, listen: false)
-                                  .setThemeMode(ThemeMode.light) // For dark theme
-                            },
-                            child: const Text('Light'),
-                          ),
-                          ElevatedButton(
-                            onPressed: () => {
-                              Provider.of<ThemeProvider>(context, listen: false)
-                                  .setThemeMode(ThemeMode.dark) // For light theme
-                            },
-                            child: const Text('Dark'),
-                          ),
-                          ElevatedButton(
-                            onPressed: () => {
-                              Provider.of<ThemeProvider>(context, listen: false)
-                                  .setThemeMode(ThemeMode.system) // For system theme
-                            },
-                            child: const Text('System'),
-                          ),
-                        ],
-                      ),
-                    ],
+                  child: Container(
+                    color: context.colors.neutralColors.backgroundColors.base,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ButtonBar(
+                          alignment: MainAxisAlignment.center,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () => {
+                                Provider.of<ThemeProvider>(context, listen: false)
+                                    .setThemeMode(ThemeMode.light) // For dark theme
+                              },
+                              child: const Text('Light'),
+                            ),
+                            ElevatedButton(
+                              onPressed: () => {
+                                Provider.of<ThemeProvider>(context, listen: false)
+                                    .setThemeMode(ThemeMode.dark) // For light theme
+                              },
+                              child: const Text('Dark'),
+                            ),
+                            ElevatedButton(
+                              onPressed: () => {
+                                Provider.of<ThemeProvider>(context, listen: false)
+                                    .setThemeMode(ThemeMode.system) // For system theme
+                              },
+                              child: const Text('System'),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },

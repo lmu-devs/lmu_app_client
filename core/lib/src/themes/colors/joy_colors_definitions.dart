@@ -35,9 +35,9 @@ const joyColorsLight = JoyColors(
       ),
     ),
     backgroundColors: BackgroundColors(
-      base: Colors.black,
-      tile: Colors.black,
-      pure: Colors.black,
+      base: ColorPrimitives.trspWhite30,
+      tile: ColorPrimitives.trspWhite30,
+      pure: ColorPrimitives.trspWhite30,
       weakColors: WeakColors(
         base: Colors.black,
         pressed: Colors.black,
@@ -49,7 +49,7 @@ const joyColorsLight = JoyColors(
         disabled: Colors.black,
       ),
       strongColors: StrongColors(
-        base: Colors.black,
+        base: ColorPrimitives.trspWhite65,
         pressed: Colors.black,
         disabled: Colors.black,
       ),

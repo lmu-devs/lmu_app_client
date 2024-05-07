@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/mensa_cubit/cubit.dart';
 import '../views/views.dart';
 
-class MensaPage extends StatelessWidget {
-  const MensaPage({super.key});
+class MensaMainPage extends StatelessWidget {
+  const MensaMainPage({super.key});
 
   @override
   Widget build(BuildContext context) {

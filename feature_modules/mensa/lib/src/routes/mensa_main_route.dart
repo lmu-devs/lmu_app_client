@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/mensa_cubit/cubit.dart';
-import '../pages/mensa_page.dart';
+import '../pages/mensa_main_page.dart';
 import '../repository/repository.dart';
 
 class MensaMainRoute extends StatelessWidget {
@@ -21,7 +21,7 @@ class MensaMainRoute extends StatelessWidget {
           mensaApiClient: MensaApiClient(),
         ),
       )..loadMensaData(),
-      child: const MensaPage(),
+      child: const MensaMainPage(),
     );
   }
 }
