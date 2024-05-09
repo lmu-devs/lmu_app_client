@@ -1,75 +1,126 @@
 import 'package:flutter/material.dart';
+import 'package:mensa/src/repository/api/api.dart';
+import 'package:mensa/src/views/mensa_mocks.dart';
+import 'package:mensa/src/widgets/mensa_overview_tile.dart';
 
-import '../repository/api/models/models.dart';
-import '../widgets/mensa_overview_tile.dart';
-
-class MensaContentView extends StatelessWidget {
+class MensaContentView extends StatefulWidget {
   const MensaContentView({
+    Key? key,
     required this.mensaData,
-    super.key,
-  });
+  }) : super(key: key);
 
   final String mensaData;
 
   @override
+  MensaContentViewState createState() => MensaContentViewState();
+}
+
+class MensaContentViewState extends State<MensaContentView> {
+  late ScrollController mensaDayScrollController;
+  late PageController mensaOverviewPageController;
+
+  @override
+  void initState() {
+    super.initState();
+    mensaDayScrollController = ScrollController();
+    mensaOverviewPageController = PageController();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final PageController _pageController = PageController();
-
-    final openingHours = MensaOpeningHours(
-      dayAsEnum: Weekday.monday,
-      openingHours: ["8-12"],
+    return Column(
+      children: [
+        Container(
+          height: 30,
+          margin: const EdgeInsets.all(12),
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            controller: mensaDayScrollController,
+            physics: const PageScrollPhysics(),
+            itemCount: MensaMocks.mensaDays.length,
+            itemBuilder: (context, index) => _WeekViewItem(
+              position: index,
+              mensaDay: MensaMocks.mensaDays[index],
+            ),
+          ),
+        ),
+        Expanded(
+          child: PageView.builder(
+            controller: mensaOverviewPageController,
+            itemCount: MensaMocks.mensaDays.length,
+            itemBuilder: (context, index) => _MensaOverviewItem(
+              mensaDay: MensaMocks.mensaOverview.mensaDays[index],
+            ),
+          ),
+        ),
+      ],
     );
+  }
 
-    final mensaEntries = [
-      MensaEntry(
-        name: "Leopold",
-        type: MensaType.mensa,
-        distance: 23,
-        isFavorite: true,
-        openingHours: openingHours,
-      ),
-      MensaEntry(
-        name: "Schelling",
-        type: MensaType.bistro,
-        distance: 50,
-        isFavorite: false,
-        openingHours: openingHours,
-      )
-    ];
+  @override
+  void dispose() {
+    mensaDayScrollController.dispose();
+    mensaOverviewPageController.dispose();
+    super.dispose();
+  }
+}
 
-    final mensaDays = [
-      MensaDay(
-        time: DateTime.now(),
-        mensaEntries: mensaEntries,
-      ),
-      MensaDay(
-        time: DateTime.utc(2022),
-        mensaEntries: mensaEntries,
-      ),
-      MensaDay(
-        time: DateTime.utc(2022),
-        mensaEntries: mensaEntries,
-      ),
-      MensaDay(
-        time: DateTime.utc(2022),
-        mensaEntries: mensaEntries,
-      ),
-    ];
+class _WeekViewItem extends StatelessWidget {
+  const _WeekViewItem({
+    required this.position,
+    required this.mensaDay,
+  });
 
-    final mensaOverview = MensaOverview(mensaDays: mensaDays);
+  final int position;
+  final MensaDay mensaDay;
 
-    return PageView.builder(
-      controller: _pageController,
-      itemCount: mensaOverview.mensaDays.length,
-      itemBuilder: (context, index) => _MensaOverivewItem(
-        mensaDay: mensaOverview.mensaDays[index],
+  String _convertDate(DateTime mensaDay) {
+    DateTime now = DateTime.now();
+    DateTime today = DateTime(now.year, now.month, now.day);
+    DateTime tomorrow = today.add(const Duration(days: 1));
+
+    if (mensaDay.year == now.year && mensaDay.month == now.month && mensaDay.day == now.day) {
+      return 'Today';
+    } else if (mensaDay.year == tomorrow.year && mensaDay.month == tomorrow.month && mensaDay.day == tomorrow.day) {
+      return 'Tomorrow';
+    } else {
+      return mensaDay.weekday == 1
+          ? 'Mo. ${mensaDay.day}'
+          : mensaDay.weekday == 2
+              ? 'Di. ${mensaDay.day}'
+              : mensaDay.weekday == 3
+                  ? 'Mi. ${mensaDay.day}'
+                  : mensaDay.weekday == 4
+                      ? 'Do. ${mensaDay.day}'
+                      : mensaDay.weekday == 5
+                          ? 'Fr. ${mensaDay.day}'
+                          : mensaDay.weekday == 6
+                              ? 'Sa. ${mensaDay.day}'
+                              : 'So. ${mensaDay.day}';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: (position == 0) ? Colors.grey : Colors.transparent,
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Text(
+            _convertDate(mensaDay.time),
+          ),
+        ),
       ),
     );
   }
 }
 
-class _MensaOverivewItem extends StatelessWidget {
-  const _MensaOverivewItem({
+class _MensaOverviewItem extends StatelessWidget {
+  const _MensaOverviewItem({
     required this.mensaDay,
   });
 
@@ -79,17 +130,6 @@ class _MensaOverivewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 50,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) => Container(
-              width: 20,
-              height: 20,
-              color: Colors.green,
-            ),
-          ),
-        ),
         Expanded(
           child: ListView.builder(
             itemCount: mensaDay.mensaEntries.length,
