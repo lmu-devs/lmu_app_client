@@ -18,12 +18,14 @@ class MensaContentView extends StatefulWidget {
 class MensaContentViewState extends State<MensaContentView> {
   late ScrollController mensaDayScrollController;
   late PageController mensaOverviewPageController;
+  late MensaDay currentMensaDay;
 
   @override
   void initState() {
     super.initState();
     mensaDayScrollController = ScrollController();
     mensaOverviewPageController = PageController();
+    currentMensaDay = MensaDay(time: DateTime.now(), mensaEntries: MensaMocks.mensaEntries);
   }
 
   @override
@@ -38,9 +40,16 @@ class MensaContentViewState extends State<MensaContentView> {
             controller: mensaDayScrollController,
             physics: const PageScrollPhysics(),
             itemCount: MensaMocks.mensaDays.length,
-            itemBuilder: (context, index) => _WeekViewItem(
-              position: index,
-              mensaDay: MensaMocks.mensaDays[index],
+            itemBuilder: (context, index) => GestureDetector(
+              onTap: () => setState(() {
+                currentMensaDay = MensaMocks.mensaDays[index];
+                mensaOverviewPageController.animateToPage(index,
+                    duration: const Duration(milliseconds: 500), curve: Curves.ease);
+              }),
+              child: _WeekViewItem(
+                currentMensaDay: currentMensaDay,
+                mensaDay: MensaMocks.mensaDays[index],
+              ),
             ),
           ),
         ),
@@ -48,6 +57,9 @@ class MensaContentViewState extends State<MensaContentView> {
           child: PageView.builder(
             controller: mensaOverviewPageController,
             itemCount: MensaMocks.mensaDays.length,
+            onPageChanged: (newPage) => setState(() {
+              currentMensaDay = MensaMocks.mensaDays[newPage];
+            }),
             itemBuilder: (context, index) => _MensaOverviewItem(
               mensaDay: MensaMocks.mensaOverview.mensaDays[index],
             ),
@@ -66,22 +78,28 @@ class MensaContentViewState extends State<MensaContentView> {
 }
 
 class _WeekViewItem extends StatelessWidget {
-  const _WeekViewItem({
-    required this.position,
+  _WeekViewItem({
+    required this.currentMensaDay,
     required this.mensaDay,
   });
 
-  final int position;
+  MensaDay currentMensaDay;
   final MensaDay mensaDay;
 
-  String _convertDate(DateTime mensaDay) {
+  bool _areMensaDaysEqual(DateTime firstDate, DateTime secondDate) {
+    return (firstDate.year == secondDate.year &&
+        firstDate.month == secondDate.month &&
+        firstDate.day == secondDate.day);
+  }
+
+  String _convertDateToText(DateTime mensaDay) {
     DateTime now = DateTime.now();
     DateTime today = DateTime(now.year, now.month, now.day);
     DateTime tomorrow = today.add(const Duration(days: 1));
 
-    if (mensaDay.year == now.year && mensaDay.month == now.month && mensaDay.day == now.day) {
+    if (_areMensaDaysEqual(mensaDay, now)) {
       return 'Today';
-    } else if (mensaDay.year == tomorrow.year && mensaDay.month == tomorrow.month && mensaDay.day == tomorrow.day) {
+    } else if (_areMensaDaysEqual(mensaDay, tomorrow)) {
       return 'Tomorrow';
     } else {
       return mensaDay.weekday == 1
@@ -104,14 +122,17 @@ class _WeekViewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: (position == 0) ? Colors.grey : Colors.transparent,
-        borderRadius: BorderRadius.circular(5),
+        color: _areMensaDaysEqual(currentMensaDay.time, mensaDay.time) ? Colors.grey : Colors.transparent,
+        borderRadius: BorderRadius.circular(10),
       ),
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text(
-            _convertDate(mensaDay.time),
+            _convertDateToText(mensaDay.time),
+            style: _areMensaDaysEqual(currentMensaDay.time, mensaDay.time)
+                ? const TextStyle(fontWeight: FontWeight.bold)
+                : const TextStyle(),
           ),
         ),
       ),
