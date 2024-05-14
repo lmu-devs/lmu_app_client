@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mensa/src/repository/api/models/mensa_model.dart';
 
 class MensaContentView extends StatelessWidget {
   const MensaContentView({
-    required this.mensaData,
+    required this.mensaModels,
     super.key,
   });
 
-  final String mensaData;
+  final List<MensaModel> mensaModels;
 
   @override
   Widget build(BuildContext context) {
@@ -14,40 +15,33 @@ class MensaContentView extends StatelessWidget {
 
     return PageView.builder(
       controller: _pageController,
-      itemCount: 2,
-      itemBuilder: (context, index) => Container(
-        color: Colors.red,
-        width: 20,
-        height: 20,
-      ),
+      itemCount: 4,
+      itemBuilder: (context, _) {
+        return ListView.builder(
+          physics: const AlwaysScrollableScrollPhysics(),
+          itemCount: mensaModels.length,
+          itemBuilder: (context, index) => _MensaOverivewItem(
+            mensaModel: mensaModels[index],
+          ),
+        );
+      },
     );
   }
 }
 
 class _MensaOverivewItem extends StatelessWidget {
+  const _MensaOverivewItem({
+    Key? key,
+    required this.mensaModel,
+  }) : super(key: key);
+
+  final MensaModel mensaModel;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 50,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) => Container(
-              width: 20,
-              height: 20,
-              color: Colors.green,
-            ),
-          ),
-        ),
-        // Expanded(
-        //   child: ListView.builder(
-        //     itemCount: 2,
-        //     itemBuilder: (context, index) => _MensaEntryItem(
-        //       mensaEntry: mensaDay.mensaEntries[index],
-        //     ),
-        //   ),
-        // ),
+        Text(mensaModel.name),
       ],
     );
   }
