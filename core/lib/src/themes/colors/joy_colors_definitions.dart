@@ -44,7 +44,7 @@ const joyColorsLight = JoyColors(
       weakColors: WeakColors(
         base: ColorPrimitives.trspBlack00,
         pressed: ColorPrimitives.trspBlack05,
-        active: ColorPrimitives.trspWhite10,
+        active: ColorPrimitives.trspBlack10,
         disabled: ColorPrimitives.trspBlack00,
       ),
       mediumColors: MediumColors(
