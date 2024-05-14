@@ -70,12 +70,14 @@ class WeakColors implements BaseColor {
   const WeakColors({
     required this.base,
     required this.pressed,
+    required this.active,
     required this.disabled,
   });
 
   @override
   final Color base;
   final Color pressed;
+  final Color active;
   final Color disabled;
 }
 
@@ -83,12 +85,14 @@ class MediumColors implements BaseColor {
   const MediumColors({
     required this.base,
     required this.pressed,
+    required this.active,
     required this.disabled,
   });
 
   @override
   final Color base;
   final Color pressed;
+  final Color active;
   final Color disabled;
 }
 
@@ -96,12 +100,14 @@ class StrongColors implements BaseColor {
   const StrongColors({
     required this.base,
     required this.pressed,
+    required this.active,
     required this.disabled,
   });
 
   @override
   final Color base;
   final Color pressed;
+  final Color active;
   final Color disabled;
 }
 
