@@ -19,7 +19,7 @@ class JoyNavigationBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Material(
       child: Container(
-        color: backgroundColor ?? Colors.red,
+        color: backgroundColor ?? Colors.transparent,
         child: SafeArea(
           child: Container(
             constraints: const BoxConstraints(

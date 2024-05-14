@@ -17,6 +17,7 @@ class MensaContentView extends StatefulWidget {
 
 class MensaContentViewState extends State<MensaContentView> {
   late ScrollController mensaDayScrollController;
+  late PageController mensaDayPageController;
   late PageController mensaOverviewPageController;
   late MensaDay currentMensaDay;
 
@@ -24,6 +25,7 @@ class MensaContentViewState extends State<MensaContentView> {
   void initState() {
     super.initState();
     mensaDayScrollController = ScrollController();
+    mensaDayPageController = PageController();
     mensaOverviewPageController = PageController();
     currentMensaDay = MensaDay(time: DateTime.now(), mensaEntries: MensaMocks.mensaEntries);
   }
@@ -32,13 +34,12 @@ class MensaContentViewState extends State<MensaContentView> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
+        /**Container(
           height: 30,
           margin: const EdgeInsets.all(12),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             controller: mensaDayScrollController,
-            physics: const PageScrollPhysics(),
             itemCount: MensaMocks.mensaDays.length,
             itemBuilder: (context, index) => GestureDetector(
               onTap: () => setState(() {
@@ -53,11 +54,48 @@ class MensaContentViewState extends State<MensaContentView> {
             ),
           ),
         ),
+        const Divider(),**/
+        Container(
+          height: 30,
+          margin: const EdgeInsets.all(12),
+          child: PageView.builder(
+              scrollDirection: Axis.horizontal,
+              physics: const PageScrollPhysics(),
+              controller: mensaDayPageController,
+              itemCount: (MensaMocks.mensaDays.length / 5).ceil(),
+              itemBuilder: (context, rowIndex) {
+                int startIndex = rowIndex * 5;
+                int endIndex = (rowIndex + 1) * 5;
+                if (endIndex > MensaMocks.mensaDays.length) {
+                  endIndex = MensaMocks.mensaDays.length;
+                }
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(endIndex - startIndex, (index) {
+                    int currentIndex = startIndex + index;
+                    return GestureDetector(
+                      onTap: () => setState(() {
+                        currentMensaDay = MensaMocks.mensaDays[currentIndex];
+                        mensaOverviewPageController.animateToPage(currentIndex,
+                            duration: const Duration(milliseconds: 500), curve: Curves.ease);
+                      }),
+                      child: _WeekViewItem(
+                        currentMensaDay: currentMensaDay,
+                        mensaDay: MensaMocks.mensaDays[currentIndex],
+                      ),
+                    );
+                  }),
+                );
+              }),
+        ),
+        const Divider(),
         Expanded(
           child: PageView.builder(
             controller: mensaOverviewPageController,
             itemCount: MensaMocks.mensaDays.length,
             onPageChanged: (newPage) => setState(() {
+              mensaDayPageController.animateToPage((newPage / 5).floor(),
+                  duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
               currentMensaDay = MensaMocks.mensaDays[newPage];
             }),
             itemBuilder: (context, index) => _MensaOverviewItem(
@@ -127,11 +165,11 @@ class _WeekViewItem extends StatelessWidget {
       ),
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Text(
             _convertDateToText(mensaDay.time),
             style: _areMensaDaysEqual(currentMensaDay.time, mensaDay.time)
-                ? const TextStyle(fontWeight: FontWeight.bold)
+                ? const TextStyle(fontWeight: FontWeight.w600)
                 : const TextStyle(),
           ),
         ),
