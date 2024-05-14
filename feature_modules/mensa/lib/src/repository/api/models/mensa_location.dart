@@ -1,27 +1,28 @@
-class MensaLocation {
-  final String name;
-  final double latitude;
-  final double longitude;
+import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-  MensaLocation({
-    required this.name,
+part 'mensa_location.g.dart';
+
+@JsonSerializable()
+class MensaLocation extends Equatable {
+  const MensaLocation({
+    required this.address,
     required this.latitude,
     required this.longitude,
   });
 
-  factory MensaLocation.fromJson(Map<String, dynamic> json) {
-    return MensaLocation(
-      name: json['name'],
-      latitude: json['latitude'],
-      longitude: json['longitude'],
-    );
-  }
+  final String address;
+  final double latitude;
+  final double longitude;
 
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'latitude': latitude,
-      'longitude': longitude,
-    };
-  }
+  factory MensaLocation.fromJson(Map<String, dynamic> json) => _$MensaLocationFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MensaLocationToJson(this);
+
+  @override
+  List<Object?> get props => [
+        address,
+        latitude,
+        longitude,
+      ];
 }

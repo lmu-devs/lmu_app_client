@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import '../../repository/api/models/mensa_model.dart';
+
 abstract class MensaState extends Equatable {}
 
 class MensaInitial extends MensaState {
@@ -14,13 +16,13 @@ class MensaLoadInProgress extends MensaState {
 
 class MensaLoadSuccess extends MensaState {
   MensaLoadSuccess({
-    required this.mensaData,
+    required this.mensaModels,
   });
 
-  final String mensaData;
+  final List<MensaModel> mensaModels;
 
   @override
-  List<Object?> get props => [mensaData];
+  List<Object?> get props => [mensaModels];
 }
 
 class MensaLoadFailure extends MensaState {

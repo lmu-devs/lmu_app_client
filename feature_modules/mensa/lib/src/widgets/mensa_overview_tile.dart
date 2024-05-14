@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
 import 'mensa_tag.dart';
@@ -116,7 +117,7 @@ class _HeadingSection extends StatelessWidget {
               isFavorite
                   ? Icon(
                       Icons.star,
-                      color: Colors.yellow,
+                      color: context.colors.neutralColors.backgroundColors.flippedColors.base,
                     )
                   : Icon(
                       Icons.star_border,
