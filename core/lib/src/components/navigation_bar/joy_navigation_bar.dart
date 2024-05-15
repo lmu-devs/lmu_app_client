@@ -1,4 +1,5 @@
 import 'package:core/components.dart';
+import 'package:core/src/core.dart';
 import 'package:flutter/material.dart';
 
 class JoyNavigationBar extends StatelessWidget implements PreferredSizeWidget {
@@ -19,7 +20,7 @@ class JoyNavigationBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Material(
       child: Container(
-        color: backgroundColor ?? Colors.transparent,
+        color: backgroundColor ?? context.colors.neutralColors.backgroundColors.base,
         child: SafeArea(
           child: Container(
             constraints: const BoxConstraints(

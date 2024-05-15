@@ -31,7 +31,7 @@ class MensaMainPage extends StatelessWidget {
               return const MensaLoadingView();
             } else if (state is MensaLoadSuccess) {
               return MensaContentView(
-                mensaData: state.mensaData,
+                mensaData: "tate.mensaData",
               );
             }
             return const MensaErrorView();

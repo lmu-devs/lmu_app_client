@@ -1,7 +1,8 @@
 import 'api/mensa_api_client.dart';
+import 'api/models/mensa_model.dart';
 
 abstract class MensaRepository {
-  Future<String> getMensa();
+  Future<List<MensaModel>> getMensaOverview();
 }
 
 class ConnectedMensaRepository implements MensaRepository {
@@ -12,7 +13,7 @@ class ConnectedMensaRepository implements MensaRepository {
   final MensaApiClient mensaApiClient;
 
   @override
-  Future<String> getMensa() {
-    return mensaApiClient.getMensa();
+  Future<List<MensaModel>> getMensaOverview() {
+    return mensaApiClient.getMensaOverview();
   }
 }
