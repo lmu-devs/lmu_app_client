@@ -1,7 +1,6 @@
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:mensa/src/utils/mensa_days.dart';
-import 'package:mensa/src/views/mensa_mocks.dart';
 import 'package:mensa/src/widgets/mensa_overview_tile.dart';
 
 class MensaContentView extends StatefulWidget {
@@ -22,7 +21,7 @@ class MensaContentViewState extends State<MensaContentView> {
   late PageController mensaOverviewPageController;
   late DateTime currentMensaDay;
 
-  List<DateTime> mensaDays = getMensaDays(excludePastDates: true);
+  List<DateTime> mensaDays = getMensaDays();
 
   @override
   void initState() {
@@ -33,19 +32,19 @@ class MensaContentViewState extends State<MensaContentView> {
     currentMensaDay = DateTime.now();
 
     /**int currentIndex = mensaDays.indexWhere((day) =>
-    day.year == currentMensaDay.year &&
+        day.year == currentMensaDay.year &&
         day.month == currentMensaDay.month &&
         day.day == currentMensaDay.day);
 
-    int pageIndex = currentIndex ~/ 5;
+        int pageIndex = currentIndex ~/ 5;
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      mensaDayPageController.animateToPage(
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+        mensaDayPageController.animateToPage(
         pageIndex,
         duration: const Duration(milliseconds: 500),
         curve: Curves.ease,
-      );
-    });**/
+        );
+        });**/
   }
 
   @override
@@ -56,34 +55,35 @@ class MensaContentViewState extends State<MensaContentView> {
           height: 30,
           margin: const EdgeInsets.all(12),
           child: PageView.builder(
-              scrollDirection: Axis.horizontal,
-              physics: const PageScrollPhysics(),
-              controller: mensaDayPageController,
-              itemCount: (mensaDays.length / 5).ceil(),
-              itemBuilder: (context, rowIndex) {
-                int startIndex = rowIndex * 5;
-                int endIndex = (rowIndex + 1) * 5;
-                if (endIndex > mensaDays.length) {
-                  endIndex = mensaDays.length;
-                }
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: List.generate(endIndex - startIndex, (index) {
-                    int currentIndex = startIndex + index;
-                    return GestureDetector(
-                      onTap: () => setState(() {
-                        currentMensaDay = mensaDays[currentIndex];
-                        mensaOverviewPageController.animateToPage(currentIndex,
-                            duration: const Duration(milliseconds: 500), curve: Curves.ease);
-                      }),
-                      child: _WeekViewItem(
-                        currentMensaDay: currentMensaDay,
-                        mensaDay: mensaDays[currentIndex],
-                      ),
-                    );
-                  }),
-                );
-              }),
+            scrollDirection: Axis.horizontal,
+            physics: const PageScrollPhysics(),
+            controller: mensaDayPageController,
+            itemCount: (mensaDays.length / 5).ceil(),
+            itemBuilder: (context, rowIndex) {
+              int startIndex = rowIndex * 5;
+              int endIndex = (rowIndex + 1) * 5;
+              if (endIndex > mensaDays.length) {
+                endIndex = mensaDays.length;
+              }
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(endIndex - startIndex, (index) {
+                  int currentIndex = startIndex + index;
+                  return GestureDetector(
+                    onTap: () => setState(() {
+                      currentMensaDay = mensaDays[currentIndex];
+                      mensaOverviewPageController.animateToPage(currentIndex,
+                          duration: const Duration(milliseconds: 500), curve: Curves.ease);
+                    }),
+                    child: _WeekViewItem(
+                      currentMensaDay: currentMensaDay,
+                      mensaDay: mensaDays[currentIndex],
+                    ),
+                  );
+                }),
+              );
+            },
+          ),
         ),
         const Divider(),
         Expanded(
@@ -119,43 +119,11 @@ class _WeekViewItem extends StatelessWidget {
   DateTime currentMensaDay;
   final DateTime mensaDay;
 
-  bool _areMensaDaysEqual(DateTime firstDate, DateTime secondDate) {
-    return (firstDate.year == secondDate.year &&
-        firstDate.month == secondDate.month &&
-        firstDate.day == secondDate.day);
-  }
-
-  String _convertDateToText(DateTime mensaDay) {
-    DateTime now = DateTime.now();
-    DateTime today = DateTime(now.year, now.month, now.day);
-    DateTime tomorrow = today.add(const Duration(days: 1));
-
-    if (_areMensaDaysEqual(mensaDay, now)) {
-      return 'Today';
-    } else if (_areMensaDaysEqual(mensaDay, tomorrow)) {
-      return 'Tomorrow';
-    } else {
-      return mensaDay.weekday == 1
-          ? 'Mo. ${mensaDay.day}'
-          : mensaDay.weekday == 2
-              ? 'Di. ${mensaDay.day}'
-              : mensaDay.weekday == 3
-                  ? 'Mi. ${mensaDay.day}'
-                  : mensaDay.weekday == 4
-                      ? 'Do. ${mensaDay.day}'
-                      : mensaDay.weekday == 5
-                          ? 'Fr. ${mensaDay.day}'
-                          : mensaDay.weekday == 6
-                              ? 'Sa. ${mensaDay.day}'
-                              : 'So. ${mensaDay.day}';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: _areMensaDaysEqual(currentMensaDay, mensaDay)
+        color: areMensaDaysEqual(currentMensaDay, mensaDay)
             ? context.colors.neutralColors.backgroundColors.weakColors.active
             : Colors.transparent,
         borderRadius: BorderRadius.circular(10),
@@ -164,8 +132,8 @@ class _WeekViewItem extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Text(
-            _convertDateToText(mensaDay),
-            style: _areMensaDaysEqual(currentMensaDay, mensaDay)
+            convertMensaDayToText(mensaDay),
+            style: areMensaDaysEqual(currentMensaDay, mensaDay)
                 ? const TextStyle(fontWeight: FontWeight.w600)
                 : const TextStyle(),
           ),
