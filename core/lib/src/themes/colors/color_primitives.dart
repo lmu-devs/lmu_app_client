@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 
 class ColorPrimitives {
   // Brand/Main Colors
-  static const Color lmuGreen10 = Color(0xFFebf6ec);
-  static const Color lmuGreen20 = Color(0xFFd8edda);
-  static const Color lmuGreen30 = Color(0xFFbce0bf);
-  static const Color lmuGreen40 = Color(0xFFa0d4a6);
-  static const Color lmuGreen50 = Color(0xFF83c78c);
-  static const Color lmuGreen60 = Color(0xFF64ba72);
-  static const Color lmuGreen70 = Color(0xFF40ac58);
-  static const Color lmuGreen80 = Color(0xFF12a242);
-  static const Color lmuGreen90 = Color(0xFF0b7e32);
-  static const Color lmuGreen100 = Color(0xFF076125);
-  static const Color lmuGreen110 = Color(0xFF034618);
-  static const Color lmuGreen120 = Color(0xFF012d0d);
-  static const Color lmuGreen130 = Color(0xFF001504);
-  static const Color lmuGreen140 = Color(0xFF000c02);
+  static const Color brand140 = Color(0xFF000c02);
+  static const Color brand130 = Color(0xFF001504);
+  static const Color brand120 = Color(0xFF012d0d);
+  static const Color brand110 = Color(0xFF034618);
+  static const Color brand100 = Color(0xFF076125);
+  static const Color brand90 = Color(0xFF0b7e32);
+  static const Color brand80 = Color(0xFF12a242);
+  static const Color brand70 = Color(0xFF40ac58);
+  static const Color brand60 = Color(0xFF64ba72);
+  static const Color brand50 = Color(0xFF83c78c);
+  static const Color brand40 = Color(0xFFa0d4a6);
+  static const Color brand30 = Color(0xFFbce0bf);
+  static const Color brand20 = Color(0xFFd8edda);
+  static const Color brand10 = Color(0xFFebf6ec);
 
   // Grayscale colors
-  static const Color white = Color(0xFFffffff);
+  static const Color black = Color(0x00000000);
   static const Color grey10 = Color(0xFF1D1D1D);
   static const Color grey20 = Color(0xFF242424);
   static const Color grey30 = Color(0xFF545654);
@@ -29,7 +29,7 @@ class ColorPrimitives {
   static const Color grey80 = Color(0xFFE0E2E0);
   static const Color grey90 = Color(0xFFEDEDED);
   static const Color grey100 = Color(0xFFF5F5F5);
-  static const Color black = Color(0x00000000);
+  static const Color white = Color(0xFFffffff);
 
   // Transparent colors
 

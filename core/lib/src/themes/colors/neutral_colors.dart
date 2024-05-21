@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'color_construct.dart';
 
 class NeutralColors {
   const NeutralColors({
@@ -28,7 +29,7 @@ class TextColors {
   final FlippedColors flippedColors;
 }
 
-class BackgroundColors implements BaseColor {
+class BackgroundColors {
   const BackgroundColors({
     required this.base,
     required this.tile,
@@ -40,7 +41,6 @@ class BackgroundColors implements BaseColor {
     required this.flippedColors,
   });
 
-  @override
   final Color base;
   final Color tile;
   final Color pure;
@@ -66,83 +66,5 @@ class BorderColors {
   final Color seperatorDark;
 }
 
-class WeakColors implements BaseColor {
-  const WeakColors({
-    required this.base,
-    required this.pressed,
-    required this.active,
-    required this.disabled,
-  });
 
-  @override
-  final Color base;
-  final Color pressed;
-  final Color active;
-  final Color disabled;
-}
 
-class MediumColors implements BaseColor {
-  const MediumColors({
-    required this.base,
-    required this.pressed,
-    required this.active,
-    required this.disabled,
-  });
-
-  @override
-  final Color base;
-  final Color pressed;
-  final Color active;
-  final Color disabled;
-}
-
-class StrongColors implements BaseColor {
-  const StrongColors({
-    required this.base,
-    required this.pressed,
-    required this.active,
-    required this.disabled,
-  });
-
-  @override
-  final Color base;
-  final Color pressed;
-  final Color active;
-  final Color disabled;
-}
-
-class NonInvertableColors implements BaseColor {
-  const NonInvertableColors({
-    required this.base,
-    required this.pressed,
-    required this.disabled,
-    required this.decoration,
-  });
-
-  @override
-  final Color base;
-  final Color pressed;
-  final Color disabled;
-  final Color decoration;
-}
-
-class FlippedColors implements BaseColor {
-  const FlippedColors({
-    required this.base,
-    required this.pressed,
-    required this.disabled,
-  });
-
-  @override
-  final Color base;
-  final Color pressed;
-  final Color disabled;
-}
-
-abstract class BaseColor {
-  BaseColor({
-    required this.base,
-  });
-
-  final Color base;
-}
