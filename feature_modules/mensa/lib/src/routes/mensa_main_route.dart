@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mensa/src/bloc/mensa_current_day_cubit/mensa_current_day_cubit.dart';
 
 import '../bloc/mensa_cubit/cubit.dart';
 import '../pages/mensa_main_page.dart';
@@ -15,12 +16,19 @@ class MensaMainRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => MensaCubit(
-        mensaRepository: ConnectedMensaRepository(
-          mensaApiClient: MensaApiClient(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<MensaCubit>(
+          create: (context) => MensaCubit(
+            mensaRepository: ConnectedMensaRepository(
+              mensaApiClient: MensaApiClient(),
+            ),
+          )..loadMensaData(),
         ),
-      )..loadMensaData(),
+        BlocProvider<MensaCurrentDayCubit>(
+          create: (context) => MensaCurrentDayCubit(),
+        ),
+      ],
       child: const MensaMainPage(),
     );
   }
