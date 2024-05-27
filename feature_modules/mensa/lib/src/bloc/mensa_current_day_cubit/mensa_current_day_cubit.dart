@@ -9,9 +9,7 @@ class MensaCurrentDayCubit extends Cubit<MensaDay> {
     super.onChange(change);
   }
 
-  void setCurrentMensaDay({
-    required MensaDay newMensaDay,
-  }) {
+  void setCurrentMensaDay({required MensaDay newMensaDay}) {
     emit(newMensaDay);
   }
 

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:core/components.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
@@ -12,21 +10,17 @@ class MensaWeekView extends StatelessWidget {
   MensaWeekView({
     super.key,
     required this.mensaCurrentDayCubit,
+    required this.weekViewController,
     this.hasDivider = true,
-    MensaDay? initialMensaDay,
-  })  : mensaDays = getMensaDays(excludeWeekend: true),
-        _initialMensaDay = initialMensaDay ?? MensaDay.now();
+  }) : mensaDays = getMensaDays(excludeWeekend: true);
 
   final MensaCurrentDayCubit mensaCurrentDayCubit;
-  final MensaDay _initialMensaDay;
+  final PageController weekViewController;
   final bool hasDivider;
-
   final List<MensaDay> mensaDays;
 
   @override
   Widget build(BuildContext context) {
-    final _mensaDayPageController = PageController();
-
     return Column(
       children: [
         Container(
@@ -35,7 +29,7 @@ class MensaWeekView extends StatelessWidget {
           child: PageView.builder(
             scrollDirection: Axis.horizontal,
             physics: const PageScrollPhysics(),
-            controller: _mensaDayPageController,
+            controller: weekViewController,
             itemCount: (mensaDays.length / 5).ceil(),
             itemBuilder: (context, rowIndex) {
               int startIndex = rowIndex * 5;
@@ -64,10 +58,9 @@ class MensaWeekView extends StatelessWidget {
                               }
                             }
                           }
-
                           return _WeekViewItem(
                             currentMensaDay: mensaCurrentDayCubit.state,
-                            mensaDay: mensaDays[currentIndex],
+                            selectedMensaDay: mensaDays[currentIndex],
                           );
                         },
                       ),
@@ -87,17 +80,17 @@ class MensaWeekView extends StatelessWidget {
 class _WeekViewItem extends StatelessWidget {
   const _WeekViewItem({
     required this.currentMensaDay,
-    required this.mensaDay,
+    required this.selectedMensaDay,
   });
 
   final MensaDay currentMensaDay;
-  final MensaDay mensaDay;
+  final MensaDay selectedMensaDay;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: currentMensaDay.isEqualTo(mensaDay)
+        color: selectedMensaDay.isEqualTo(currentMensaDay)
             ? context.colors.neutralColors.backgroundColors.weakColors.active
             : Colors.transparent,
         borderRadius: BorderRadius.circular(6),
@@ -106,8 +99,8 @@ class _WeekViewItem extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: JoyText(
-            mensaDay.toString(),
-            weight: currentMensaDay.isEqualTo(mensaDay) ? FontWeight.w600 : FontWeight.normal,
+            selectedMensaDay.toString(),
+            weight: selectedMensaDay.isEqualTo(currentMensaDay) ? FontWeight.w600 : FontWeight.normal,
           ),
         ),
       ),
