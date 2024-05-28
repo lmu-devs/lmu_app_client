@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mensa/src/bloc/mensa_current_day_cubit/mensa_current_day_cubit.dart';
-import 'package:mensa/src/utils/mensa_day.dart';
 import 'package:mensa/src/utils/get_mensa_days.dart';
+import 'package:mensa/src/utils/mensa_day.dart';
 import 'package:mensa/src/widgets/mensa_overview_tile.dart';
 import 'package:mensa/src/widgets/mensa_week_view.dart';
 
@@ -23,7 +23,6 @@ class MensaContentViewState extends State<MensaContentView> {
   late List<MensaDay> mensaDays;
   late MensaDay currentMensaDay;
 
-  late PageController weekViewController;
   late PageController mensaOverviewController;
 
   @override
@@ -41,7 +40,6 @@ class MensaContentViewState extends State<MensaContentView> {
       }
     }
 
-    weekViewController = PageController();
     mensaOverviewController = PageController(initialPage: mensaDays.indexOf(currentMensaDay));
   }
 
@@ -55,7 +53,6 @@ class MensaContentViewState extends State<MensaContentView> {
       children: [
         MensaWeekView(
           mensaCurrentDayCubit: mensaCurrentDayCubit,
-          weekViewController: weekViewController,
         ),
         Expanded(
           child: BlocListener<MensaCurrentDayCubit, MensaDay>(
@@ -80,13 +77,7 @@ class MensaContentViewState extends State<MensaContentView> {
                   pageAnimationCounter--;
                   return;
                 }
-                //final currentPage = weekViewController.page?.floor() ?? 0;
                 mensaCurrentDayCubit.setCurrentMensaDay(newMensaDay: mensaDays[newPage]);
-                int weekViewPageIndex = (mensaDays.indexWhere((day) => day.isEqualTo(mensaCurrentDayCubit.state)) / 5).floor();
-                if (weekViewPageIndex != weekViewController.page?.round()) {
-                  weekViewController.animateToPage(weekViewPageIndex,
-                      duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
-                }
                 hasManuallySwitchedPage = true;
               },
               itemBuilder: (context, index) => _MensaOverviewItem(),
@@ -99,7 +90,6 @@ class MensaContentViewState extends State<MensaContentView> {
 
   @override
   void dispose() {
-    weekViewController.dispose();
     mensaOverviewController.dispose();
     super.dispose();
   }

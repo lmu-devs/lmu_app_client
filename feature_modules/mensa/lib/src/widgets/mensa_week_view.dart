@@ -10,97 +10,110 @@ class MensaWeekView extends StatelessWidget {
   MensaWeekView({
     super.key,
     required this.mensaCurrentDayCubit,
-    required this.weekViewController,
     this.hasDivider = true,
   }) : mensaDays = getMensaDays(excludeWeekend: true);
 
   final MensaCurrentDayCubit mensaCurrentDayCubit;
-  final PageController weekViewController;
   final bool hasDivider;
   final List<MensaDay> mensaDays;
+
+  final pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          height: 36,
-          margin: const EdgeInsets.all(12),
-          child: PageView.builder(
-            scrollDirection: Axis.horizontal,
-            physics: const PageScrollPhysics(),
-            controller: weekViewController,
-            itemCount: (mensaDays.length / 5).ceil(),
-            itemBuilder: (context, rowIndex) {
-              int startIndex = rowIndex * 5;
-              int endIndex = (rowIndex + 1) * 5;
-              if (endIndex > mensaDays.length) {
-                endIndex = mensaDays.length;
-              }
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: List.generate(
-                  endIndex - startIndex,
-                  (index) {
-                    int currentIndex = startIndex + index;
-                    return GestureDetector(
-                      onTap: () {
-                        mensaCurrentDayCubit.setCurrentMensaDay(newMensaDay: mensaDays[currentIndex]);
-                      },
-                      child: BlocBuilder<MensaCurrentDayCubit, MensaDay>(
-                        bloc: mensaCurrentDayCubit,
-                        builder: (context, currentMensaDay) {
-                          if (!mensaDays.contains(currentMensaDay)) {
-                            for (MensaDay day in mensaDays) {
-                              if (day.isAfter(currentMensaDay)) {
-                                currentMensaDay = day;
-                                break;
-                              }
-                            }
-                          }
-                          return _WeekViewItem(
-                            currentMensaDay: mensaCurrentDayCubit.state,
-                            selectedMensaDay: mensaDays[currentIndex],
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
-              );
-            },
-          ),
-        ),
+        _buildPageView(),
         if (hasDivider) const Divider(thickness: 0.5, height: 0),
       ],
+    );
+  }
+
+  Widget _buildPageView() {
+    return Container(
+      height: 36,
+      margin: const EdgeInsets.all(12),
+      child: PageView.builder(
+        scrollDirection: Axis.horizontal,
+        physics: const PageScrollPhysics(),
+        controller: pageController,
+        itemCount: (mensaDays.length / 5).ceil(),
+        itemBuilder: (context, rowIndex) => _buildPageViewRow(rowIndex),
+      ),
+    );
+  }
+
+  Widget _buildPageViewRow(int rowIndex) {
+    final startIndex = rowIndex * 5;
+    final lastIndex = (rowIndex + 1) * 5;
+    final endIndex = lastIndex > mensaDays.length ? mensaDays.length : lastIndex;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: List.generate(
+        endIndex - startIndex,
+        (index) {
+          final currentIndex = startIndex + index;
+          final selectedMensaDay = mensaDays[currentIndex];
+
+          return BlocConsumer<MensaCurrentDayCubit, MensaDay>(
+            bloc: mensaCurrentDayCubit,
+            listener: (_, currentMensaDay) {
+              final weekViewPageIndex = (mensaDays.indexWhere((day) => day.isEqualTo(currentMensaDay)) / 5).floor();
+              if (weekViewPageIndex != pageController.page?.round()) {
+                pageController.animateToPage(weekViewPageIndex,
+                    duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
+              }
+            },
+            buildWhen: (previous, current) => current == selectedMensaDay || previous == selectedMensaDay,
+            builder: (_, currentMensaDay) {
+              return _buildDayItem(
+                selectedMensaDay: selectedMensaDay,
+                currentMensaDay: currentMensaDay,
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildDayItem({
+    required MensaDay selectedMensaDay,
+    required MensaDay currentMensaDay,
+  }) {
+    return GestureDetector(
+      onTap: () => mensaCurrentDayCubit.setCurrentMensaDay(newMensaDay: selectedMensaDay),
+      child: _WeekViewItem(
+        title: selectedMensaDay.toString(),
+        isActive: selectedMensaDay.isEqualTo(currentMensaDay),
+      ),
     );
   }
 }
 
 class _WeekViewItem extends StatelessWidget {
   const _WeekViewItem({
-    required this.currentMensaDay,
-    required this.selectedMensaDay,
+    required this.title,
+    required this.isActive,
   });
 
-  final MensaDay currentMensaDay;
-  final MensaDay selectedMensaDay;
+  final String title;
+  final bool isActive;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: selectedMensaDay.isEqualTo(currentMensaDay)
-            ? context.colors.neutralColors.backgroundColors.weakColors.active
-            : Colors.transparent,
+        color: isActive ? context.colors.neutralColors.backgroundColors.weakColors.active : Colors.transparent,
         borderRadius: BorderRadius.circular(6),
       ),
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: JoyText(
-            selectedMensaDay.toString(),
-            weight: selectedMensaDay.isEqualTo(currentMensaDay) ? FontWeight.w600 : FontWeight.normal,
+            title,
+            weight: isActive ? FontWeight.w600 : FontWeight.normal,
           ),
         ),
       ),
