@@ -4,8 +4,8 @@ import 'neutral_colors.dart';
 import 'mensa_colors.dart';
 import 'brand_colors.dart';
 
-class JoyColors extends ThemeExtension<JoyColors> {
-  const JoyColors({
+class LmuColors extends ThemeExtension<LmuColors> {
+  const LmuColors({
     required this.neutralColors,
     required this.mensaColors,
     required this.brandColors,
@@ -16,14 +16,14 @@ class JoyColors extends ThemeExtension<JoyColors> {
   final BrandColors brandColors;
 
   @override
-  JoyColors copyWith({
+  LmuColors copyWith({
     Color? brandColor,
     Color? danger,
     NeutralColors? neutralColors,
     MensaColors? mensaColors,
     BrandColors? brandColors,
   }) {
-    return JoyColors(
+    return LmuColors(
       neutralColors: neutralColors ?? this.neutralColors,
       mensaColors: mensaColors ?? this.mensaColors,
       brandColors: brandColors ?? this.brandColors,
@@ -31,11 +31,11 @@ class JoyColors extends ThemeExtension<JoyColors> {
   }
 
   @override
-  JoyColors lerp(JoyColors? other, double t) {
-    if (other is! JoyColors) {
+  LmuColors lerp(LmuColors? other, double t) {
+    if (other is! LmuColors) {
       return this;
     }
-    return JoyColors(
+    return LmuColors(
       neutralColors: neutralColors,
       mensaColors: mensaColors,
       brandColors: brandColors,

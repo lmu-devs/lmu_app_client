@@ -1,5 +1,4 @@
 import 'package:core/components.dart';
-import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
@@ -18,10 +17,7 @@ class MensaOverviewTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: spacingAtoms.tileItemPaddingVertical,
-        horizontal: spacingAtoms.tileItemPaddingHorizontal,
-      ),
+      padding: EdgeInsets.symmetric(),
       child: GestureDetector(
         onTap: () {
           print("Tapped");
@@ -32,9 +28,7 @@ class MensaOverviewTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           width: double.infinity,
-          padding: EdgeInsets.symmetric(
-            vertical: spacingAtoms.tileItemPaddingVertical,
-          ),
+          padding: EdgeInsets.symmetric(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -45,9 +39,7 @@ class MensaOverviewTile extends StatelessWidget {
                 status: "Open now",
                 distance: "1.2 km",
               ),
-              SizedBox(
-                height: spacingAtoms.visualSizes.xsmall,
-              ),
+              SizedBox(),
               const _ImageSection(),
             ],
           ),
@@ -65,9 +57,7 @@ class _ImageSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-        left: spacingAtoms.tileItemPaddingHorizontal,
-      ),
+      padding: EdgeInsets.only(),
       child: Container(
         width: double.infinity,
         height: 64,
@@ -95,11 +85,7 @@ class _HeadingSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-        left: spacingAtoms.tileItemPaddingHorizontal + spacingAtoms.tilePadding,
-        right: spacingAtoms.tileItemPaddingHorizontal + spacingAtoms.tilePadding,
-        top: spacingAtoms.tilePadding,
-      ),
+      padding: EdgeInsets.only(),
       child: Column(
         children: [
           Row(
@@ -107,7 +93,7 @@ class _HeadingSection extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  JoyText.h3(title),
+                  LmuText.h3(title),
                   SizedBox(
                     width: 8,
                   ),
@@ -127,10 +113,10 @@ class _HeadingSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              JoyText.body(
+              LmuText.body(
                 "Open now",
               ),
-              JoyText.body(
+              LmuText.body(
                 " • 1.2 km",
               ),
             ],

@@ -1,8 +1,8 @@
 import 'package:core/components.dart';
 import 'package:flutter/material.dart';
 
-class JoyNavigationBar extends StatelessWidget implements PreferredSizeWidget {
-  const JoyNavigationBar({
+class LmuNavigationBar extends StatelessWidget implements PreferredSizeWidget {
+  const LmuNavigationBar({
     this.title,
     this.leadingWidget,
     this.backgroundColor,
@@ -42,7 +42,7 @@ class JoyNavigationBar extends StatelessWidget implements PreferredSizeWidget {
                           )
                         ],
                       ),
-                    if (title != null) JoyText.h1(title),
+                    if (title != null) LmuText.h1(title),
                   ],
                 ),
                 if (trailingWidget != null) trailingWidget!,
