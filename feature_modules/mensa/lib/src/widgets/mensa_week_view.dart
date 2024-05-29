@@ -52,7 +52,7 @@ class MensaWeekViewState extends State<MensaWeekView> {
   Widget _buildPageView() {
     return Container(
       height: 36,
-      margin: const EdgeInsets.all(12),
+      margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 6),
       child: PageView.builder(
         scrollDirection: Axis.horizontal,
         physics: const PageScrollPhysics(),
