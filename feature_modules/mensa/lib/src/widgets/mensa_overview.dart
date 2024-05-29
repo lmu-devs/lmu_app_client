@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mensa/src/bloc/mensa_current_day_cubit/mensa_current_day_cubit.dart';
+import 'package:mensa/src/repository/api/api.dart';
 import 'package:mensa/src/utils/get_mensa_days.dart';
 import 'package:mensa/src/utils/mensa_day.dart';
 import 'mensa_overview_tile.dart';
@@ -9,9 +10,11 @@ class MensaOverview extends StatefulWidget {
   const MensaOverview({
     Key? key,
     required this.mensaCurrentDayCubit,
+    required this.mensaModels,
   }) : super(key: key);
 
   final MensaCurrentDayCubit mensaCurrentDayCubit;
+  final List<MensaModel> mensaModels;
 
   @override
   MensaOverviewState createState() => MensaOverviewState();
@@ -19,6 +22,7 @@ class MensaOverview extends StatefulWidget {
 
 class MensaOverviewState extends State<MensaOverview> {
   late final MensaCurrentDayCubit _mensaCurrentDayCubit;
+  late final List<MensaModel> _mensaModels;
   late final List<MensaDay> mensaDays;
   late final PageController pageController;
 
@@ -29,6 +33,7 @@ class MensaOverviewState extends State<MensaOverview> {
   void initState() {
     super.initState();
     _mensaCurrentDayCubit = widget.mensaCurrentDayCubit;
+    _mensaModels = widget.mensaModels;
     mensaDays = getMensaDays(excludeWeekend: true);
     pageController = PageController(initialPage: mensaDays.indexOf(MensaDay.now()));
   }
@@ -73,12 +78,19 @@ class MensaOverviewState extends State<MensaOverview> {
         _mensaCurrentDayCubit.setCurrentMensaDay(newMensaDay: mensaDays[newPage]);
         hasManuallySwitchedPage = true;
       },
-      itemBuilder: (context, index) => _MensaOverviewItem(),
+      itemBuilder: (context, index) => _MensaOverviewItem(mensaModels: _mensaModels),
     );
   }
 }
 
 class _MensaOverviewItem extends StatelessWidget {
+  const _MensaOverviewItem({
+    Key? key,
+    required this.mensaModels,
+  }) : super(key: key);
+
+  final List<MensaModel> mensaModels;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -88,8 +100,8 @@ class _MensaOverviewItem extends StatelessWidget {
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: 2,
-            itemBuilder: (context, index) => const MensaOverviewTile(title: "Mensa Schmensa"),
+            itemCount: mensaModels.length,
+            itemBuilder: (context, index) => MensaOverviewTile(title: mensaModels[index].name),
           ),
         ],
       ),
