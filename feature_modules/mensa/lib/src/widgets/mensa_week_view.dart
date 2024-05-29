@@ -6,25 +6,45 @@ import 'package:mensa/src/bloc/mensa_current_day_cubit/mensa_current_day_cubit.d
 import 'package:mensa/src/utils/get_mensa_days.dart';
 import 'package:mensa/src/utils/mensa_day.dart';
 
-class MensaWeekView extends StatelessWidget {
-  MensaWeekView({
-    super.key,
+class MensaWeekView extends StatefulWidget {
+  const MensaWeekView({
+    Key? key,
     required this.mensaCurrentDayCubit,
     this.hasDivider = true,
-  }) : mensaDays = getMensaDays(excludeWeekend: true);
+  }) : super(key: key);
 
   final MensaCurrentDayCubit mensaCurrentDayCubit;
   final bool hasDivider;
-  final List<MensaDay> mensaDays;
 
-  final pageController = PageController();
+  @override
+  MensaWeekViewState createState() => MensaWeekViewState();
+}
+
+class MensaWeekViewState extends State<MensaWeekView> {
+  late final MensaCurrentDayCubit _mensaCurrentDayCubit;
+  late final List<MensaDay> mensaDays;
+  late final PageController pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _mensaCurrentDayCubit = widget.mensaCurrentDayCubit;
+    mensaDays = getMensaDays(excludeWeekend: true);
+    pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         _buildPageView(),
-        if (hasDivider) const Divider(thickness: 0.5, height: 0),
+        if (widget.hasDivider) const Divider(thickness: 0.5, height: 0),
       ],
     );
   }
@@ -52,17 +72,20 @@ class MensaWeekView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: List.generate(
         endIndex - startIndex,
-        (index) {
+            (index) {
           final currentIndex = startIndex + index;
           final selectedMensaDay = mensaDays[currentIndex];
 
           return BlocConsumer<MensaCurrentDayCubit, MensaDay>(
-            bloc: mensaCurrentDayCubit,
+            bloc: _mensaCurrentDayCubit,
             listener: (_, currentMensaDay) {
               final weekViewPageIndex = (mensaDays.indexWhere((day) => day.isEqualTo(currentMensaDay)) / 5).floor();
               if (weekViewPageIndex != pageController.page?.round()) {
-                pageController.animateToPage(weekViewPageIndex,
-                    duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
+                pageController.animateToPage(
+                  weekViewPageIndex,
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.decelerate,
+                );
               }
             },
             buildWhen: (previous, current) => current == selectedMensaDay || previous == selectedMensaDay,
@@ -83,7 +106,7 @@ class MensaWeekView extends StatelessWidget {
     required MensaDay currentMensaDay,
   }) {
     return GestureDetector(
-      onTap: () => mensaCurrentDayCubit.setCurrentMensaDay(newMensaDay: selectedMensaDay),
+      onTap: () => _mensaCurrentDayCubit.setCurrentMensaDay(newMensaDay: selectedMensaDay),
       child: _WeekViewItem(
         title: selectedMensaDay.toString(),
         isActive: selectedMensaDay.isEqualTo(currentMensaDay),

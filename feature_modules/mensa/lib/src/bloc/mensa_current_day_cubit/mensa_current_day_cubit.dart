@@ -12,14 +12,4 @@ class MensaCurrentDayCubit extends Cubit<MensaDay> {
   void setCurrentMensaDay({required MensaDay newMensaDay}) {
     emit(newMensaDay);
   }
-
-  void incrementMensaDay() {
-    final newMensaDay = state.addDuration(const Duration(days: 1));
-    emit(newMensaDay);
-  }
-
-  void decrementMensaDay() {
-    final newMensaDay = state.subtractDuration(const Duration(days: 1));
-    emit(newMensaDay);
-  }
 }
