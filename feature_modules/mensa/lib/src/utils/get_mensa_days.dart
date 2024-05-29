@@ -4,21 +4,20 @@ List<MensaDay> getMensaDays({bool excludeWeekend = true}) {
   List<MensaDay> mensaDays = [];
 
   MensaDay now = MensaDay.now();
-  MensaDay firstDayOfMonth = MensaDay(now.year, now.month, 1);
   MensaDay lastDayOfMonth = MensaDay(now.year, now.month + 1, 0);
 
-  MensaDay startOfCurrentWeek = now.subtractDuration(Duration(days: now.weekday - 1));
-  MensaDay startOfFirstWeekToInclude =
-      startOfCurrentWeek.isBefore(firstDayOfMonth) ? firstDayOfMonth : startOfCurrentWeek;
-  MensaDay endOfLastWeek = lastDayOfMonth.addDuration(Duration(days: DateTime.sunday - lastDayOfMonth.weekday));
+  MensaDay startOfFirstWeekToInclude = now.subtractDuration(Duration(days: now.weekday - 1));
+  MensaDay endOfLastWeek = lastDayOfMonth.subtractDuration(Duration(days: lastDayOfMonth.weekday - DateTime.friday));
 
-  if (excludeWeekend && (now.weekday == DateTime.saturday || now.weekday == DateTime.sunday)) {
-    startOfFirstWeekToInclude = startOfFirstWeekToInclude.addDuration(const Duration(days: 7));
+  if (excludeWeekend) {
+    while (startOfFirstWeekToInclude.weekday == DateTime.saturday || startOfFirstWeekToInclude.weekday == DateTime.sunday) {
+      startOfFirstWeekToInclude = startOfFirstWeekToInclude.addDuration(const Duration(days: 1));
+    }
   }
 
   for (MensaDay day = startOfFirstWeekToInclude;
-      day.isBefore(endOfLastWeek) || day.isAtSameMomentAs(endOfLastWeek);
-      day = day.addDuration(const Duration(days: 1))) {
+  day.isBefore(endOfLastWeek) || day.isAtSameMomentAs(endOfLastWeek);
+  day = day.addDuration(const Duration(days: 1))) {
     if (excludeWeekend && (day.weekday == DateTime.saturday || day.weekday == DateTime.sunday)) {
       continue;
     }

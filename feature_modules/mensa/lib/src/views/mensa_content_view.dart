@@ -24,7 +24,7 @@ class MensaContentView extends StatelessWidget {
 
     return Column(
       children: [
-        MensaWeekView(Mer
+        MensaWeekView(
           mensaCurrentDayCubit: mensaCurrentDayCubit,
         ),
         MensaOverview(
