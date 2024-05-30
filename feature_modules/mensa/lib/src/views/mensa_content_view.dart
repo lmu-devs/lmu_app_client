@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mensa/src/bloc/mensa_current_day_cubit/mensa_current_day_cubit.dart';
+import 'package:mensa/src/repository/api/models/mensa_model.dart';
 import 'package:mensa/src/utils/get_mensa_days.dart';
 import 'package:mensa/src/utils/mensa_day.dart';
 import 'package:mensa/src/widgets/mensa_overview_tile.dart';
@@ -10,10 +11,10 @@ import 'package:mensa/src/widgets/mensa_week_view.dart';
 class MensaContentView extends StatefulWidget {
   const MensaContentView({
     Key? key,
-    required this.mensaData,
+    required this.mensaModels,
   }) : super(key: key);
 
-  final String mensaData;
+  final List<MensaModel> mensaModels;
 
   @override
   MensaContentViewState createState() => MensaContentViewState();
@@ -59,7 +60,9 @@ class MensaContentViewState extends State<MensaContentView> {
               controller: mensaOverviewController,
               itemCount: mensaDays.length,
               onPageChanged: _onPageChanged,
-              itemBuilder: (_, index) => const _MensaOverviewItem(),
+              itemBuilder: (_, index) => _MensaOverviewItem(
+                mensaModels: widget.mensaModels,
+              ),
             ),
           ),
         ),
@@ -98,7 +101,11 @@ class MensaContentViewState extends State<MensaContentView> {
 }
 
 class _MensaOverviewItem extends StatelessWidget {
-  const _MensaOverviewItem();
+  const _MensaOverviewItem({
+    required this.mensaModels,
+  });
+
+  final List<MensaModel> mensaModels;
 
   @override
   Widget build(BuildContext context) {
@@ -109,8 +116,8 @@ class _MensaOverviewItem extends StatelessWidget {
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: 2,
-            itemBuilder: (context, index) => const MensaOverviewTile(title: "Mensa Schmensa"),
+            itemCount: mensaModels.length,
+            itemBuilder: (context, index) => MensaOverviewTile(title: mensaModels[index].name),
           ),
         ],
       ),

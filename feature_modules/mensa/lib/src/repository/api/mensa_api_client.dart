@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'models/mensa_model.dart';
 
 class MensaApiClient {
-  Future<List<MensaModel>> getMensaOverview() async {
+  Future<List<MensaModel>> getMensaModels() async {
     try {
       final response = await http.get(
         Uri.parse('http://localhost:3000/api/mensadata'),
