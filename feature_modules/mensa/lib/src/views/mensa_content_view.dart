@@ -22,70 +22,72 @@ class MensaContentView extends StatefulWidget {
 class MensaContentViewState extends State<MensaContentView> {
   late List<MensaDay> mensaDays;
   late MensaDay currentMensaDay;
-
   late PageController mensaOverviewController;
+  int pageAnimationCounter = 0;
+  bool hasManuallySwitchedPage = false;
 
   @override
   void initState() {
     super.initState();
     mensaDays = getMensaDays();
-    currentMensaDay = MensaDay.now();
-
-    if (!mensaDays.contains(currentMensaDay)) {
-      for (MensaDay day in mensaDays) {
-        if (day.isAfter(currentMensaDay)) {
-          currentMensaDay = day;
-          break;
-        }
-      }
-    }
-
+    currentMensaDay = _initializeCurrentMensaDay();
     mensaOverviewController = PageController(initialPage: mensaDays.indexOf(currentMensaDay));
+  }
+
+  MensaDay _initializeCurrentMensaDay() {
+    MensaDay today = MensaDay.now();
+    if (mensaDays.contains(today)) {
+      return today;
+    }
+    return mensaDays.firstWhere((day) => day.isAfter(today), orElse: () => mensaDays.first);
   }
 
   @override
   Widget build(BuildContext context) {
     final mensaCurrentDayCubit = BlocProvider.of<MensaCurrentDayCubit>(context);
-    int pageAnimationCounter = 0;
-    bool hasManuallySwitchedPage = false;
 
     return Column(
       children: [
-        MensaWeekView(
-          mensaCurrentDayCubit: mensaCurrentDayCubit,
-        ),
+        MensaWeekView(mensaCurrentDayCubit: mensaCurrentDayCubit),
         Expanded(
           child: BlocListener<MensaCurrentDayCubit, MensaDay>(
             bloc: mensaCurrentDayCubit,
-            listener: (context, currentMensaDay) {
-              final indexOfCurrentMensaDay = mensaDays.indexOf(currentMensaDay);
-              if (!hasManuallySwitchedPage) {
-                pageAnimationCounter = (indexOfCurrentMensaDay - (mensaOverviewController.page?.floor() ?? 0)).abs();
-                mensaOverviewController.animateToPage(
-                  indexOfCurrentMensaDay,
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.ease,
-                );
-              }
-              hasManuallySwitchedPage = false;
+            listener: (_, currentMensaDay) {
+              _onMensaDayChanged(currentMensaDay);
             },
             child: PageView.builder(
               controller: mensaOverviewController,
               itemCount: mensaDays.length,
-              onPageChanged: (newPage) {
-                if (pageAnimationCounter > 0) {
-                  pageAnimationCounter--;
-                  return;
-                }
-                mensaCurrentDayCubit.setCurrentMensaDay(newMensaDay: mensaDays[newPage]);
-                hasManuallySwitchedPage = true;
-              },
-              itemBuilder: (context, index) => _MensaOverviewItem(),
+              onPageChanged: _onPageChanged,
+              itemBuilder: (_, index) => const _MensaOverviewItem(),
             ),
           ),
         ),
       ],
     );
+  }
+
+  void _onMensaDayChanged(MensaDay currentMensaDay) {
+    final indexOfCurrentMensaDay = mensaDays.indexOf(currentMensaDay);
+    if (!hasManuallySwitchedPage) {
+      pageAnimationCounter = (indexOfCurrentMensaDay - (mensaOverviewController.page?.floor() ?? 0)).abs();
+      mensaOverviewController.animateToPage(
+        indexOfCurrentMensaDay,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.ease,
+      );
+    }
+    hasManuallySwitchedPage = false;
+  }
+
+  void _onPageChanged(int newPage) {
+    if (pageAnimationCounter > 0) {
+      pageAnimationCounter--;
+      return;
+    }
+    final mensaCurrentDayCubit = BlocProvider.of<MensaCurrentDayCubit>(context);
+    mensaCurrentDayCubit.setCurrentMensaDay(newMensaDay: mensaDays[newPage]);
+    hasManuallySwitchedPage = true;
   }
 
   @override
@@ -96,6 +98,8 @@ class MensaContentViewState extends State<MensaContentView> {
 }
 
 class _MensaOverviewItem extends StatelessWidget {
+  const _MensaOverviewItem();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
