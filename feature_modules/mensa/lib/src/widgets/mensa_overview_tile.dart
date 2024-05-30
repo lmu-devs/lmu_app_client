@@ -45,10 +45,10 @@ class MensaOverviewTile extends StatelessWidget {
                 status: "Open now",
                 distance: "1.2 km",
               ),
-              SizedBox(
+              /**SizedBox(
                 height: spacingAtoms.visualSizes.xsmall,
               ),
-              const _ImageSection(),
+              const _ImageSection(),**/
             ],
           ),
         ),
