@@ -95,13 +95,14 @@ class _LmuBottomSheetContent extends StatelessWidget {
                             ),
                             child: Row(
                               children: [
-                                const Padding(
-                                  padding: EdgeInsets.only(
+                                Padding(
+                                  padding: const EdgeInsets.only(
                                     right: LmuSizes.mediumLarge,
                                   ),
                                   child: LmuIcon(
                                     size: LmuIconSizes.medium,
                                     icon: Icons.adb,
+                                    color: context.colors.neutralColors.textColors.strongColors.base,
                                   ),
                                 ),
                                 LmuText.body(
@@ -111,6 +112,7 @@ class _LmuBottomSheetContent extends StatelessWidget {
                                 LmuIcon(
                                   size: LmuIconSizes.medium,
                                   icon: Icons.check,
+                                  color: context.colors.neutralColors.textColors.strongColors.base,
                                 ),
                               ],
                             ),
@@ -168,9 +170,10 @@ class _LmuHeader extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).pop();
                       },
-                      child: const LmuIcon(
+                      child: LmuIcon(
                         size: LmuIconSizes.medium,
                         icon: Icons.close,
+                        color: context.colors.neutralColors.textColors.strongColors.base,
                       ),
                     ),
                   ),
