@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../../themes/texts/text_themes_definitions.dart';
 
-class JoyText extends StatelessWidget {
-  /// DEPRECATED: Use a factory method instead e.g. JoyText.body(...)
-  const JoyText(
+class LmuText extends StatelessWidget {
+  const LmuText(
     this.text, {
     this.textAlign,
     this.maxLines,
@@ -21,7 +20,7 @@ class JoyText extends StatelessWidget {
         isEnabled = isEnabled ?? true,
         customDecoration = decoration ?? TextDecoration.none;
 
-  factory JoyText.body(
+  factory LmuText.body(
     String? text, {
     Key? key,
     Color? color,
@@ -34,7 +33,7 @@ class JoyText extends StatelessWidget {
     TextDecoration? decoration,
     TextStyle? textStyle,
   }) =>
-      JoyText(
+      LmuText(
         text,
         key: key,
         textAlign: textAlign,
@@ -45,10 +44,10 @@ class JoyText extends StatelessWidget {
         isEnabled: isEnabled,
         customOverFlow: customOverFlow,
         decoration: decoration,
-        type: JoyTextTypes.body,
+        type: LmuTextTypes.body,
       );
 
-  factory JoyText.bodySmall(
+  factory LmuText.bodySmall(
     String? text, {
     Key? key,
     Color? color,
@@ -60,7 +59,7 @@ class JoyText extends StatelessWidget {
     TextDecoration? decoration,
     TextStyle? textStyle,
   }) =>
-      JoyText(
+      LmuText(
         text,
         key: key,
         textAlign: textAlign,
@@ -70,10 +69,10 @@ class JoyText extends StatelessWidget {
         textStyle: textStyle,
         customOverFlow: customOverFlow,
         decoration: decoration,
-        type: JoyTextTypes.bodySmall,
+        type: LmuTextTypes.bodySmall,
       );
 
-  factory JoyText.bodyXSmall(
+  factory LmuText.bodyXSmall(
     String? text, {
     Key? key,
     Color? color,
@@ -85,7 +84,7 @@ class JoyText extends StatelessWidget {
     TextDecoration? decoration,
     TextStyle? textStyle,
   }) =>
-      JoyText(
+      LmuText(
         text,
         key: key,
         textAlign: textAlign,
@@ -95,10 +94,10 @@ class JoyText extends StatelessWidget {
         textStyle: textStyle,
         customOverFlow: customOverFlow,
         decoration: decoration,
-        type: JoyTextTypes.bodyXSmall,
+        type: LmuTextTypes.bodyXSmall,
       );
 
-  factory JoyText.h0(
+  factory LmuText.h0(
     String? text, {
     Key? key,
     Color? color,
@@ -111,7 +110,7 @@ class JoyText extends StatelessWidget {
     TextDecoration? decoration,
     TextStyle? textStyle,
   }) =>
-      JoyText(
+      LmuText(
         text,
         key: key,
         textAlign: textAlign,
@@ -122,10 +121,10 @@ class JoyText extends StatelessWidget {
         isEnabled: isEnabled,
         customOverFlow: customOverFlow,
         decoration: decoration,
-        type: JoyTextTypes.h0,
+        type: LmuTextTypes.h0,
       );
 
-  factory JoyText.h1(
+  factory LmuText.h1(
     String? text, {
     Key? key,
     Color? color,
@@ -138,7 +137,7 @@ class JoyText extends StatelessWidget {
     TextDecoration? decoration,
     TextStyle? textStyle,
   }) =>
-      JoyText(
+      LmuText(
         text,
         key: key,
         textAlign: textAlign,
@@ -149,10 +148,10 @@ class JoyText extends StatelessWidget {
         isEnabled: isEnabled,
         customOverFlow: customOverFlow,
         decoration: decoration,
-        type: JoyTextTypes.h1,
+        type: LmuTextTypes.h1,
       );
 
-  factory JoyText.h2(
+  factory LmuText.h2(
     String? text, {
     Key? key,
     Color? color,
@@ -166,7 +165,7 @@ class JoyText extends StatelessWidget {
     TextStyle? textStyle,
     bool useH2Explore = false,
   }) =>
-      JoyText(
+      LmuText(
         text,
         key: key,
         textAlign: textAlign,
@@ -177,10 +176,10 @@ class JoyText extends StatelessWidget {
         isEnabled: isEnabled,
         customOverFlow: customOverFlow,
         decoration: decoration,
-        type: JoyTextTypes.h2,
+        type: LmuTextTypes.h2,
       );
 
-  factory JoyText.h3(
+  factory LmuText.h3(
     String? text, {
     Key? key,
     Color? color,
@@ -193,7 +192,7 @@ class JoyText extends StatelessWidget {
     TextDecoration? decoration,
     TextStyle? textStyle,
   }) =>
-      JoyText(
+      LmuText(
         text,
         key: key,
         textAlign: textAlign,
@@ -204,7 +203,7 @@ class JoyText extends StatelessWidget {
         isEnabled: isEnabled,
         customOverFlow: customOverFlow,
         decoration: decoration,
-        type: JoyTextTypes.h3,
+        type: LmuTextTypes.h3,
       );
 
   final String? text;
@@ -216,7 +215,7 @@ class JoyText extends StatelessWidget {
   final bool isEnabled;
   final TextOverflow? customOverFlow;
   final TextDecoration? customDecoration;
-  final JoyTextTypes? type;
+  final LmuTextTypes? type;
 
   Color? get color => _color;
 
@@ -234,25 +233,25 @@ class JoyText extends StatelessWidget {
 
     TextStyle textStyleTemp;
     switch (type) {
-      case JoyTextTypes.body:
+      case LmuTextTypes.body:
         textStyleTemp = textTheme.body;
         break;
-      case JoyTextTypes.bodySmall:
+      case LmuTextTypes.bodySmall:
         textStyleTemp = textTheme.bodySmall;
         break;
-      case JoyTextTypes.bodyXSmall:
+      case LmuTextTypes.bodyXSmall:
         textStyleTemp = textTheme.bodyXSmall;
         break;
-      case JoyTextTypes.h0:
+      case LmuTextTypes.h0:
         textStyleTemp = textTheme.h0;
         break;
-      case JoyTextTypes.h1:
+      case LmuTextTypes.h1:
         textStyleTemp = textTheme.h1;
         break;
-      case JoyTextTypes.h2:
+      case LmuTextTypes.h2:
         textStyleTemp = textTheme.h2;
         break;
-      case JoyTextTypes.h3:
+      case LmuTextTypes.h3:
         textStyleTemp = textTheme.h3;
         break;
       default:
@@ -294,7 +293,7 @@ class JoyText extends StatelessWidget {
   }
 }
 
-enum JoyTextTypes {
+enum LmuTextTypes {
   body,
   bodySmall,
   bodyXSmall,

@@ -13,7 +13,7 @@ class MensaDetailsPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text("MENSADETAILS"),
-            JoyButton(
+            LmuButton(
               text: "PREASS ME",
               onPressed: () {
                 showBottomSheet(

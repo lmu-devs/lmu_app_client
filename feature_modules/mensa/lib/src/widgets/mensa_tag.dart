@@ -16,7 +16,7 @@ class MensaTag extends StatelessWidget {
         color: Colors.cyanAccent,
         borderRadius: BorderRadius.circular(4),
       ),
-      child: JoyText.body(
+      child: LmuText.body(
         "Mensa",
         weight: FontWeight.bold,
       ),

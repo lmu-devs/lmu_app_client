@@ -1,4 +1,5 @@
 import 'package:core/components.dart';
+import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -110,8 +111,8 @@ class _WeekViewItem extends StatelessWidget {
       ),
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: JoyText(
+          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.medium),
+          child: LmuText(
             title,
             weight: isActive ? FontWeight.w600 : FontWeight.normal,
           ),

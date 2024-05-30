@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'colors/joy_colors_theme_extension.dart';
+import 'colors/lmu_colors_theme_extension.dart';
 
 extension ThemeGetter on BuildContext {
-  JoyColors get colors => Theme.of(this).extension<JoyColors>()!;
+  LmuColors get colors => Theme.of(this).extension<LmuColors>()!;
 }

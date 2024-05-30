@@ -21,4 +21,11 @@ class MensaCubit extends Cubit<MensaState> {
       emit(MensaLoadFailure());
     }
   }
+
+  @override
+  void onChange(Change<MensaState> change) {
+    super.onChange(change);
+
+    print('MensaCubit: ${change.currentState} -> ${change.nextState}');
+  }
 }
