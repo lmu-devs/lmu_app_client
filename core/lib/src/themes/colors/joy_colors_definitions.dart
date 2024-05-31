@@ -180,9 +180,9 @@ const joyColorsLight = JoyColors(
         disabled: ColorPrimitives.trspBlack10,
       ),
       strongColors: StrongColors(
-        base: ColorPrimitives.grey80,
-        pressed: ColorPrimitives.grey70,
-        active: ColorPrimitives.grey70,
+        base: ColorPrimitives.grey70,
+        pressed: ColorPrimitives.grey60,
+        active: ColorPrimitives.grey60,
         disabled: ColorPrimitives.grey80,
       ),
       nonInvertableColors: NonInvertableColors(
