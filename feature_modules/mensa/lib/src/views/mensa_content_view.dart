@@ -2,7 +2,6 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/routes.dart';
 import 'package:core/themes.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -64,6 +63,43 @@ class MensaContentViewState extends State<MensaContentView> {
     return Column(
       children: [
         MensaWeekView(mensaCurrentDayCubit: BlocProvider.of<MensaCurrentDayCubit>(context)),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: LmuListItem.base(
+            title: "Tetst Title",
+            titleInTextVisuals: [
+              LmuInTextVisual.text(
+                title: "Gl",
+              ),
+              LmuInTextVisual.icon(
+                icon: Icons.assignment_ind_rounded,
+              ),
+              LmuInTextVisual.iconBox(
+                icon: Icons.camera_alt_outlined,
+              ),
+            ],
+            leadingArea: Container(
+              width: 55,
+              height: 55,
+              color: Colors.green,
+              child: LmuIcon(
+                icon: Icons.border_right_rounded,
+                color: context.colors.neutralColors.backgroundColors.mediumColors.base,
+                size: LmuIconSizes.medium,
+              ),
+            ),
+            trailingArea: Container(
+              width: 55,
+              height: 50,
+              color: Colors.green,
+              child: LmuIcon(
+                icon: Icons.border_right_rounded,
+                color: context.colors.neutralColors.backgroundColors.mediumColors.base,
+                size: LmuIconSizes.medium,
+              ),
+            ),
+          ),
+        ),
         Expanded(
           child: BlocListener<MensaCurrentDayCubit, MensaDay>(
             bloc: BlocProvider.of<MensaCurrentDayCubit>(context),
