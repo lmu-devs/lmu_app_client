@@ -32,7 +32,6 @@ class MensaOverviewTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      onDoubleTap: onFavoriteTap,
       child: Container(
         decoration: BoxDecoration(
           color: context.colors.neutralColors.backgroundColors.tile,
@@ -71,7 +70,6 @@ class MensaOverviewTile extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: onFavoriteTap,
-                  behavior: HitTestBehavior.opaque,
                   child: isFavorite
                       ? const LmuIcon(
                           icon: Icons.star,

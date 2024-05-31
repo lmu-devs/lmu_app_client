@@ -21,6 +21,8 @@ class MensaFavoriteCubit extends Cubit<MensaFavoriteState> {
 
     if (favoriteMensaIds != null) {
       emit(MensaFavoriteLoadSuccess(favoriteMensaIds: favoriteMensaIds));
+    } else {
+      emit(const MensaFavoriteLoadSuccess(favoriteMensaIds: []));
     }
   }
 
