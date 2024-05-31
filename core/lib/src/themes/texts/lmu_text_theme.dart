@@ -9,6 +9,7 @@ class LmuTextTheme extends TextTheme {
     required this.h1,
     required this.h2,
     required this.h3,
+    required this.caption,
   }) : super(
           bodySmall: bodyXSmall,
           bodyMedium: bodySmall,
@@ -27,4 +28,6 @@ class LmuTextTheme extends TextTheme {
   final TextStyle h1;
   final TextStyle h2;
   final TextStyle h3;
+  @override
+  final TextStyle caption;
 }
