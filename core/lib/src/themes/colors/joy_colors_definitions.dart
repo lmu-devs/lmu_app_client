@@ -57,10 +57,10 @@ const joyColorsDark = JoyColors(
         disabled: ColorPrimitives.trspWhite00,
       ),
       strongColors: StrongColors(
-        base: ColorPrimitives.grey20,
-        pressed: ColorPrimitives.grey30,
-        active: ColorPrimitives.grey30,
-        disabled: ColorPrimitives.grey10,
+        base: ColorPrimitives.trspWhite20,
+        pressed: ColorPrimitives.trspWhite30,
+        active: ColorPrimitives.trspWhite40,
+        disabled: ColorPrimitives.trspWhite10,
       ),
       nonInvertableColors: NonInvertableColors(
         base: ColorPrimitives.trspWhite20,
@@ -180,10 +180,10 @@ const joyColorsLight = JoyColors(
         disabled: ColorPrimitives.trspBlack10,
       ),
       strongColors: StrongColors(
-        base: ColorPrimitives.grey70,
-        pressed: ColorPrimitives.grey60,
-        active: ColorPrimitives.grey60,
-        disabled: ColorPrimitives.grey80,
+        base: ColorPrimitives.trspBlack20,
+        pressed: ColorPrimitives.trspBlack30,
+        active: ColorPrimitives.trspBlack40,
+        disabled: ColorPrimitives.trspBlack10,
       ),
       nonInvertableColors: NonInvertableColors(
         base: ColorPrimitives.trspWhite20,

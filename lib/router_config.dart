@@ -5,14 +5,16 @@ import 'package:go_router/go_router.dart';
 import 'package:mensa/mensa.dart';
 import 'package:provider/provider.dart';
 
-final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
+final GlobalKey<NavigatorState> _rootNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'root');
 
 final routeConfig = GoRouter(
   navigatorKey: _rootNavigatorKey,
   errorBuilder: (context, state) => Container(),
   routes: <RouteBase>[
     StatefulShellRoute.indexedStack(
-      builder: (BuildContext context, GoRouterState state, StatefulNavigationShell navigationShell) {
+      builder: (BuildContext context, GoRouterState state,
+          StatefulNavigationShell navigationShell) {
         return ScaffoldWithNavBar(navigationShell: navigationShell);
       },
       branches: <StatefulShellBranch>[
@@ -32,26 +34,65 @@ final routeConfig = GoRouter(
                           children: [
                             ElevatedButton(
                               onPressed: () => {
-                                Provider.of<ThemeProvider>(context, listen: false)
-                                    .setThemeMode(ThemeMode.light) // For dark theme
+                                Provider.of<ThemeProvider>(context,
+                                        listen: false)
+                                    .setThemeMode(
+                                        ThemeMode.light) // For dark theme
                               },
                               child: const Text('Light'),
                             ),
                             ElevatedButton(
                               onPressed: () => {
-                                Provider.of<ThemeProvider>(context, listen: false)
-                                    .setThemeMode(ThemeMode.dark) // For light theme
+                                Provider.of<ThemeProvider>(context,
+                                        listen: false)
+                                    .setThemeMode(
+                                        ThemeMode.dark) // For light theme
                               },
                               child: const Text('Dark'),
                             ),
                             ElevatedButton(
                               onPressed: () => {
-                                Provider.of<ThemeProvider>(context, listen: false)
-                                    .setThemeMode(ThemeMode.system) // For system theme
+                                Provider.of<ThemeProvider>(context,
+                                        listen: false)
+                                    .setThemeMode(
+                                        ThemeMode.system) // For system theme
                               },
                               child: const Text('System'),
                             ),
                           ],
+                        ),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        //CSS: inset 0px 4px 6px rgba(8, 56, 73, 0.5)
+                        Container(
+                          child: const Center(
+                              child: const Text('Geeks for Geeks')),
+                          height: 100,
+                          width: 250,
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              const BoxShadow(
+                                color: Colors.white,
+                              ),
+                              BoxShadow(
+                                offset: const Offset(0, -4),
+                                color: context.colors.neutralColors.backgroundColors.base,
+                                // spreadRadius: -5.0,
+                                blurRadius: 6.0,
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              stops: [0.0, .1],
+                              colors: [
+                                context.colors.neutralColors.backgroundColors.strongColors.base,
+                                Colors.transparent,
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -99,6 +140,11 @@ class ScaffoldWithNavBar extends StatelessWidget {
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor:
+            context.colors.neutralColors.textColors.strongColors.base,
+        unselectedItemColor:
+            context.colors.neutralColors.textColors.strongColors.disabled,
+        backgroundColor: context.colors.neutralColors.backgroundColors.base,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.food_bank), label: 'Mensa'),
