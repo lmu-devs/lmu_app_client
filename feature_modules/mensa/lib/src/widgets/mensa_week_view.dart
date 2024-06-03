@@ -22,6 +22,7 @@ class MensaWeekView extends StatefulWidget {
 
 class MensaWeekViewState extends State<MensaWeekView> {
   late final MensaCurrentDayCubit _mensaCurrentDayCubit;
+  late final bool _hasDivider;
   late final List<MensaDay> mensaDays;
   late final PageController pageController;
 
@@ -29,6 +30,7 @@ class MensaWeekViewState extends State<MensaWeekView> {
   void initState() {
     super.initState();
     _mensaCurrentDayCubit = widget.mensaCurrentDayCubit;
+    _hasDivider = widget.hasDivider;
     mensaDays = getMensaDays(excludeWeekend: true);
     pageController = PageController();
   }
@@ -44,7 +46,7 @@ class MensaWeekViewState extends State<MensaWeekView> {
     return Column(
       children: [
         _buildPageView(),
-        if (widget.hasDivider) const Divider(thickness: 0.5, height: 0),
+        if (_hasDivider) const Divider(thickness: 0.5, height: 0),
       ],
     );
   }
@@ -52,7 +54,7 @@ class MensaWeekViewState extends State<MensaWeekView> {
   Widget _buildPageView() {
     return Container(
       height: 36,
-      margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 6),
+      margin: const EdgeInsets.all(12),
       child: PageView.builder(
         scrollDirection: Axis.horizontal,
         physics: const PageScrollPhysics(),
@@ -72,7 +74,7 @@ class MensaWeekViewState extends State<MensaWeekView> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: List.generate(
         endIndex - startIndex,
-            (index) {
+        (index) {
           final currentIndex = startIndex + index;
           final selectedMensaDay = mensaDays[currentIndex];
 

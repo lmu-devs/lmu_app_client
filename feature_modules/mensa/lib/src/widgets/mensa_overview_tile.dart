@@ -28,7 +28,7 @@ class MensaOverviewTile extends StatelessWidget {
         },
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.grey,
+            color: context.colors.neutralColors.backgroundColors.tile,
             borderRadius: BorderRadius.circular(12),
           ),
           width: double.infinity,
