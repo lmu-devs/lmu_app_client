@@ -15,7 +15,7 @@ class LmuApp extends StatelessWidget {
         builder: (context) {
           return MaterialApp.router(
             routerConfig: routeConfig,
-            title: 'LMU App',
+            title: 'Lmu App',
             theme: AppTheme.light,
             darkTheme: AppTheme.dark,
             themeMode: Provider.of<ThemeProvider>(context).themeMode,

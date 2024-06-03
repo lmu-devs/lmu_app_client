@@ -54,7 +54,7 @@ class MensaWeekViewState extends State<MensaWeekView> {
   Widget _buildPageView() {
     return Container(
       height: 36,
-      margin: const EdgeInsets.all(12),
+      margin: const EdgeInsets.all(16),
       child: PageView.builder(
         scrollDirection: Axis.horizontal,
         physics: const PageScrollPhysics(),
@@ -74,7 +74,7 @@ class MensaWeekViewState extends State<MensaWeekView> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: List.generate(
         endIndex - startIndex,
-        (index) {
+            (index) {
           final currentIndex = startIndex + index;
           final selectedMensaDay = mensaDays[currentIndex];
 
@@ -136,7 +136,7 @@ class _WeekViewItem extends StatelessWidget {
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: JoyText(
+          child: LmuText(
             title,
             weight: isActive ? FontWeight.w600 : FontWeight.normal,
           ),

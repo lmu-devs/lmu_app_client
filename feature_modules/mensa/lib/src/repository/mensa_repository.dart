@@ -7,6 +7,10 @@ import 'api/models/mensa_model.dart';
 
 abstract class MensaRepository {
   Future<List<MensaModel>> getMensaModels();
+
+  Future<List<String>?> getFavoriteMensaIds();
+
+  Future<void> updateFavoriteMensaIds(List<String> favoriteMensaIds);
 }
 
 class ConnectedMensaRepository implements MensaRepository {
@@ -19,6 +23,8 @@ class ConnectedMensaRepository implements MensaRepository {
   static const String _mensaModelsCacheKey = 'mena_models_cache_key';
   static const String _mensaModelCacheDateKey = 'mensa_models_cache_date_key';
   static const Duration _mensaModelsCacheDuration = Duration(days: 30);
+
+  static const String _favoriteMensaIdsKey = 'favorite_mensa_ids_key';
 
   @override
   Future<List<MensaModel>> getMensaModels({bool forceRefresh = false}) async {
@@ -49,5 +55,20 @@ class ConnectedMensaRepository implements MensaRepository {
       }
       rethrow;
     }
+  }
+
+  @override
+  Future<List<String>?> getFavoriteMensaIds() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final favoriteMensaIds = prefs.getStringList(_favoriteMensaIdsKey);
+    return favoriteMensaIds;
+  }
+
+  @override
+  Future<void> updateFavoriteMensaIds(List<String> favoriteMensaIds) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setStringList(_favoriteMensaIdsKey, favoriteMensaIds);
   }
 }

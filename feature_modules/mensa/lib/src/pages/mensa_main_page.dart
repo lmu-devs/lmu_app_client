@@ -12,20 +12,25 @@ class MensaMainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
-      appBar: JoyNavigationBar(
+      appBar: LmuNavigationBar(
         title: "Mensa",
-        trailingWidget: Container(
-          width: 40,
-          height: 20,
-          color: Colors.black,
+        trailingWidget: GestureDetector(
+          onTap: () {
+            LmuBottomSheet.show(
+              context,
+              title: "My Taste",
+            );
+          },
+          child: Container(
+            width: 40,
+            height: 20,
+            color: Colors.black,
+          ),
         ),
       ),
       body: Center(
         child: BlocBuilder<MensaCubit, MensaState>(
           builder: (context, state) {
-            return MensaContentView(
-              mensaModels: [],
-            );
             if (state is MensaLoadInProgress) {
               return const MensaLoadingView();
             } else if (state is MensaLoadSuccess) {

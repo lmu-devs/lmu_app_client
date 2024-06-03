@@ -1,13 +1,12 @@
+import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'lmu_text_theme.dart';
 
-import '../colors/neutral_colors.dart';
-import 'joy_text_theme.dart';
-
-JoyTextTheme getBaseTextTheme(
+LmuTextTheme getBaseTextTheme(
   String fontFamily,
   TextColors textColors,
 ) {
-  return JoyTextTheme(
+  return LmuTextTheme(
     body: TextStyle(
       fontSize: 16,
       decoration: TextDecoration.none,
