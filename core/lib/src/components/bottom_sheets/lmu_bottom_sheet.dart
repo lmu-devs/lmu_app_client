@@ -56,13 +56,13 @@ class _LmuBottomSheetContent extends StatelessWidget {
                     LmuText.h1(
                       title,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: LmuSizes.mediumSmall,
                     ),
                     LmuText.body(
                       "Adjust and activate your taste profile to filter dishes by your preferences and allergies.",
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: LmuSizes.xxlarge,
                     ),
                     Padding(
@@ -120,7 +120,7 @@ class _LmuBottomSheetContent extends StatelessWidget {
                         },
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: LmuSizes.xxxlarge,
                     ),
                     LmuText.bodyXSmall(

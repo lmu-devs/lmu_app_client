@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mensa/src/bloc/bloc.dart';
-
-import '../pages/mensa_main_page.dart';
-import '../repository/repository.dart';
+import 'package:mensa/src/pages/mensa_main_page.dart';
+import 'package:mensa/src/repository/api/mensa_api_client.dart';
+import 'package:mensa/src/repository/mensa_repository.dart';
 
 class MensaMainRoute extends StatelessWidget {
   const MensaMainRoute({
