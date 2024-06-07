@@ -2,13 +2,12 @@ import 'package:core/src/themes/colors/brand_colors.dart';
 import 'package:flutter/material.dart';
 
 import 'color_primitives.dart';
-import 'joy_colors_theme_extension.dart';
+import 'lmu_colors_theme_extension.dart';
 import 'color_construct.dart';
 import 'neutral_colors.dart';
 import 'mensa_colors.dart';
 
-
-const joyColorsDark = JoyColors(
+const lmuColorsDark = LmuColors(
   neutralColors: NeutralColors(
     textColors: TextColors(
       strongColors: StrongColors(
@@ -94,7 +93,7 @@ const joyColorsDark = JoyColors(
       stuLounge: Color(0x2EB08B5D),
     ),
   ),
-    brandColors: BrandColors(
+  brandColors: BrandColors(
     textColors: BrandTextColors(
       strongColors: StrongColors(
         base: ColorPrimitives.brand70,
@@ -130,8 +129,7 @@ const joyColorsDark = JoyColors(
   ),
 );
 
-
-const joyColorsLight = JoyColors(
+const lmuColorsLight = LmuColors(
   neutralColors: NeutralColors(
     textColors: TextColors(
       strongColors: StrongColors(

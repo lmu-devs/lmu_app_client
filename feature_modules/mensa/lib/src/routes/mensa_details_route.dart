@@ -1,6 +1,8 @@
+import 'package:core/routes.dart';
 import 'package:flutter/widgets.dart';
 
 import '../pages/mensa_details_page.dart';
+import '../repository/api/api.dart';
 
 class MensaDetailsRoute extends StatelessWidget {
   const MensaDetailsRoute({
@@ -12,6 +14,9 @@ class MensaDetailsRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MensaDetailsPage();
+    final mensaModel = (arguments as MensaDetailsRouteArguments).mensaModel as MensaModel;
+    return MensaDetailsPage(
+      mensaModel: mensaModel,
+    );
   }
 }

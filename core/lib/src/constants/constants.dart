@@ -1,2 +1,2 @@
-export 'joy_box_shadows.dart';
-export 'joy_spacing_atoms_definitions.dart';
+export 'lmu_icon_sizes.dart';
+export 'lmu_sizes.dart';

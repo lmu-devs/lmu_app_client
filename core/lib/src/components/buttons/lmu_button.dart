@@ -3,7 +3,7 @@ import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import '../../themes/themes.dart';
 
 // ignore: must_be_immutable
-class JoyButton extends StatelessWidget {
+class LmuButton extends StatelessWidget {
   final String? text;
   final VoidCallback onPressed;
   final Widget? leftIcon;
@@ -19,7 +19,7 @@ class JoyButton extends StatelessWidget {
   final bool removePaddings;
   final MainAxisAlignment horizontalAlignment;
 
-  JoyButton({
+  LmuButton({
     super.key,
     this.text,
     required this.onPressed,

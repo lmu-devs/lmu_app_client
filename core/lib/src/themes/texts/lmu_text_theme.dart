@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class JoyTextTheme extends TextTheme {
-  const JoyTextTheme({
+class LmuTextTheme extends TextTheme {
+  const LmuTextTheme({
     required this.body,
     required this.bodySmall,
     required this.bodyXSmall,
