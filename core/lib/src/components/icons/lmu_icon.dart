@@ -5,12 +5,12 @@ class LmuIcon extends StatelessWidget {
     Key? key,
     required this.icon,
     required this.size,
-    required this.color,
+    this.color,
   }) : super(key: key);
 
   final double size;
   final IconData icon;
-  final Color color;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
