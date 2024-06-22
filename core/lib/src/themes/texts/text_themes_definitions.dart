@@ -67,5 +67,14 @@ LmuTextTheme getBaseTextTheme(
       height: 24 / 18,
       letterSpacing: -0.36,
     ),
+    caption: TextStyle(
+      fontSize: 11,
+      decoration: TextDecoration.none,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      color: textColors.mediumColors.base,
+      height: 16 / 11,
+      letterSpacing: -0.44,
+    ),
   );
 }

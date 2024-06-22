@@ -57,18 +57,17 @@ class WeakColors extends BaseColor {
 }
 
 class NonInvertableColors extends BaseColor {
-
-
   const NonInvertableColors({
     required Color base,
     required Color pressed,
     required Color disabled,
+    required Color active,
   }) : super(
           base: base,
           pressed: pressed,
           disabled: disabled,
+          active: active,
         );
-
 }
 
 class FlippedColors extends BaseColor {

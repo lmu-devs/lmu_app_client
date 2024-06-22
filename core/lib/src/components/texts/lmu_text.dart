@@ -206,6 +206,33 @@ class LmuText extends StatelessWidget {
         type: LmuTextTypes.h3,
       );
 
+  factory LmuText.caption(
+    String? text, {
+    Key? key,
+    Color? color,
+    TextAlign? textAlign,
+    int? maxLines,
+    FontWeight? weight,
+    double? textScaleFactor,
+    bool? isEnabled,
+    TextOverflow? customOverFlow,
+    TextDecoration? decoration,
+    TextStyle? textStyle,
+  }) =>
+      LmuText(
+        text,
+        key: key,
+        textAlign: textAlign,
+        maxLines: maxLines,
+        weight: weight,
+        color: color,
+        textStyle: textStyle,
+        isEnabled: isEnabled,
+        customOverFlow: customOverFlow,
+        decoration: decoration,
+        type: LmuTextTypes.caption,
+      );
+
   final String? text;
   final TextAlign? textAlign;
   final int? maxLines;
@@ -254,6 +281,9 @@ class LmuText extends StatelessWidget {
       case LmuTextTypes.h3:
         textStyleTemp = textTheme.h3;
         break;
+      case LmuTextTypes.caption:
+        textStyleTemp = textTheme.caption;
+        break;
       default:
         textStyleTemp = textTheme.body;
         break;
@@ -301,4 +331,5 @@ enum LmuTextTypes {
   h1,
   h2,
   h3,
+  caption,
 }
