@@ -4,17 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mensa/mensa.dart';
 import 'package:provider/provider.dart';
+import 'package:wunschkonzert/wunschkonzert.dart';
 
-final GlobalKey<NavigatorState> _rootNavigatorKey =
-    GlobalKey<NavigatorState>(debugLabel: 'root');
+final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
 final routeConfig = GoRouter(
   navigatorKey: _rootNavigatorKey,
   errorBuilder: (context, state) => Container(),
   routes: <RouteBase>[
     StatefulShellRoute.indexedStack(
-      builder: (BuildContext context, GoRouterState state,
-          StatefulNavigationShell navigationShell) {
+      builder: (BuildContext context, GoRouterState state, StatefulNavigationShell navigationShell) {
         return ScaffoldWithNavBar(navigationShell: navigationShell);
       },
       branches: <StatefulShellBranch>[
@@ -34,28 +33,22 @@ final routeConfig = GoRouter(
                           children: [
                             ElevatedButton(
                               onPressed: () => {
-                                Provider.of<ThemeProvider>(context,
-                                        listen: false)
-                                    .setThemeMode(
-                                        ThemeMode.light) // For dark theme
+                                Provider.of<ThemeProvider>(context, listen: false)
+                                    .setThemeMode(ThemeMode.light) // For dark theme
                               },
                               child: const Text('Light'),
                             ),
                             ElevatedButton(
                               onPressed: () => {
-                                Provider.of<ThemeProvider>(context,
-                                        listen: false)
-                                    .setThemeMode(
-                                        ThemeMode.dark) // For light theme
+                                Provider.of<ThemeProvider>(context, listen: false)
+                                    .setThemeMode(ThemeMode.dark) // For light theme
                               },
                               child: const Text('Dark'),
                             ),
                             ElevatedButton(
                               onPressed: () => {
-                                Provider.of<ThemeProvider>(context,
-                                        listen: false)
-                                    .setThemeMode(
-                                        ThemeMode.system) // For system theme
+                                Provider.of<ThemeProvider>(context, listen: false)
+                                    .setThemeMode(ThemeMode.system) // For system theme
                               },
                               child: const Text('System'),
                             ),
@@ -64,36 +57,7 @@ final routeConfig = GoRouter(
                         const SizedBox(
                           height: 50,
                         ),
-                        //CSS: inset 0px 4px 6px rgba(8, 56, 73, 0.5)
-                        Container(
-                          child: const Center(
-                              child: const Text('Geeks for Geeks')),
-                          height: 100,
-                          width: 250,
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              const BoxShadow(
-                                color: Colors.white,
-                              ),
-                              BoxShadow(
-                                offset: const Offset(0, -4),
-                                color: context.colors.neutralColors.backgroundColors.base,
-                                // spreadRadius: -5.0,
-                                blurRadius: 6.0,
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              stops: [0.0, .1],
-                              colors: [
-                                context.colors.neutralColors.backgroundColors.strongColors.base,
-                                Colors.transparent,
-                              ],
-                            ),
-                          ),
-                        ),
+                        const _WeirdAssButton(),
                       ],
                     ),
                   ),
@@ -122,10 +86,58 @@ final routeConfig = GoRouter(
             ),
           ],
         ),
+        StatefulShellBranch(
+          routes: <RouteBase>[
+            GoRoute(
+              path: RouteNames.wunschkonzert,
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: WunschkonzertMainRoute(),
+              ),
+            ),
+          ],
+        ),
       ],
     ),
   ],
 );
+
+class _WeirdAssButton extends StatelessWidget {
+  const _WeirdAssButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100,
+      width: 250,
+      decoration: BoxDecoration(
+        boxShadow: [
+          const BoxShadow(
+            color: Colors.white,
+          ),
+          BoxShadow(
+            offset: const Offset(0, -4),
+            color: context.colors.neutralColors.backgroundColors.base,
+            // spreadRadius: -5.0,
+            blurRadius: 6.0,
+          ),
+        ],
+        borderRadius: BorderRadius.circular(10),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          stops: const [0.0, .1],
+          colors: [
+            context.colors.neutralColors.backgroundColors.strongColors.base,
+            Colors.transparent,
+          ],
+        ),
+      ),
+      child: const Center(
+        child: Text('Geeks for Geeks'),
+      ),
+    );
+  }
+}
 
 class ScaffoldWithNavBar extends StatelessWidget {
   const ScaffoldWithNavBar({
@@ -139,24 +151,26 @@ class ScaffoldWithNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: navigationShell,
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor:
-            context.colors.neutralColors.textColors.strongColors.base,
-        unselectedItemColor:
-            context.colors.neutralColors.textColors.strongColors.disabled,
+      bottomNavigationBar: NavigationBar(
+        height: 54,
+        selectedIndex: navigationShell.currentIndex,
+        onDestinationSelected: (int index) => _onTap(index),
         backgroundColor: context.colors.neutralColors.backgroundColors.base,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
+        indicatorColor: Colors.transparent,
+        destinations: const <NavigationDestination>[
+          NavigationDestination(
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.food_bank),
             label: 'Mensa',
           ),
+          NavigationDestination(
+            icon: Icon(Icons.confirmation_number),
+            label: 'Wunschkonzert',
+          ),
         ],
-        currentIndex: navigationShell.currentIndex,
-        onTap: (int index) => _onTap(index),
       ),
     );
   }
@@ -165,36 +179,6 @@ class ScaffoldWithNavBar extends StatelessWidget {
     navigationShell.goBranch(
       index,
       initialLocation: index == navigationShell.currentIndex,
-    );
-  }
-}
-
-class TestColors extends StatelessWidget {
-  const TestColors({
-    required this.color1,
-    required this.color2,
-    super.key,
-  });
-
-  final Color color1;
-  final Color color2;
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Container(
-          width: 50,
-          height: 50,
-          color: color1,
-        ),
-        Container(
-          width: 25,
-          height: 25,
-          color: color2,
-        ),
-      ],
     );
   }
 }
