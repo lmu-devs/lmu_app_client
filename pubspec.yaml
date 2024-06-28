@@ -17,6 +17,8 @@ dependencies:
     path: ./core
   mensa: 
     path: ./feature_modules/mensa
+  wunschkonzert:
+    path: ./feature_modules/wunschkonzert
   http: ^0.13.3
 
 dev_dependencies:

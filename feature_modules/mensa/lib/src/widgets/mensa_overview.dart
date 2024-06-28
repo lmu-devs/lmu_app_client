@@ -5,11 +5,10 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mensa/src/bloc/mensa_current_day_cubit/mensa_current_day_cubit.dart';
-import 'package:mensa/src/bloc/mensa_favorite_cubit/mensa_favorite_cubit.dart';
-import 'package:mensa/src/repository/api/api.dart';
-import 'package:mensa/src/utils/get_mensa_days.dart';
-import 'package:mensa/src/utils/mensa_day.dart';
+
+import '../bloc/bloc.dart';
+import '../repository/api/api.dart';
+import '../utils/utils.dart';
 import 'mensa_overview_tile.dart';
 
 class MensaOverview extends StatefulWidget {
@@ -54,14 +53,14 @@ class MensaOverviewState extends State<MensaOverview> {
     if (mensaDays.contains(today)) {
       _mensaCurrentDayCubit.setCurrentMensaDay(newMensaDay: today);
     } else {
-      _mensaCurrentDayCubit.setCurrentMensaDay(newMensaDay: mensaDays.firstWhere((day) => day.isAfter(today), orElse: () => mensaDays.first));
+      _mensaCurrentDayCubit.setCurrentMensaDay(
+          newMensaDay: mensaDays.firstWhere((day) => day.isAfter(today), orElse: () => mensaDays.first));
     }
   }
 
   void _initializePageController() {
     pageController = PageController(initialPage: mensaDays.indexOf(_mensaCurrentDayCubit.state));
   }
-
 
   @override
   void dispose() {
@@ -217,8 +216,8 @@ class _MensaOverviewItem extends StatelessWidget {
                 ),
                 isFavorite: isFavorite,
                 onFavoriteTap: () => context.read<MensaFavoriteCubit>().toggleFavoriteMensa(
-                  mensaId: id,
-                ),
+                      mensaId: id,
+                    ),
                 onTap: () => context.go(
                   RouteNames.mensaDetails,
                   extra: MensaDetailsRouteArguments(

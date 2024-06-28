@@ -1,11 +1,11 @@
 import 'package:core/src/themes/colors/brand_colors.dart';
 import 'package:flutter/material.dart';
 
+import 'color_construct.dart';
 import 'color_primitives.dart';
 import 'lmu_colors_theme_extension.dart';
-import 'color_construct.dart';
-import 'neutral_colors.dart';
 import 'mensa_colors.dart';
+import 'neutral_colors.dart';
 
 const lmuColorsDark = LmuColors(
   neutralColors: NeutralColors(
@@ -29,10 +29,10 @@ const lmuColorsDark = LmuColors(
         disabled: ColorPrimitives.trspWhite30,
       ),
       nonInvertableColors: NonInvertableColors(
-        base: ColorPrimitives.white,
-        pressed: ColorPrimitives.trspWhite95,
-        disabled: Colors.white30,
-      ),
+          base: ColorPrimitives.white,
+          pressed: ColorPrimitives.trspWhite95,
+          disabled: Colors.white30,
+          active: ColorPrimitives.trspWhite95),
       flippedColors: FlippedColors(
         base: ColorPrimitives.trspBlack90,
         pressed: ColorPrimitives.trspBlack67,
@@ -65,6 +65,7 @@ const lmuColorsDark = LmuColors(
         base: ColorPrimitives.trspWhite20,
         pressed: ColorPrimitives.trspWhite95,
         disabled: ColorPrimitives.grey30,
+        active: ColorPrimitives.trspWhite95,
       ),
       flippedColors: FlippedColors(
         base: ColorPrimitives.trspWhite95,
@@ -105,6 +106,7 @@ const lmuColorsDark = LmuColors(
         base: ColorPrimitives.brand80,
         pressed: ColorPrimitives.brand60,
         disabled: ColorPrimitives.brand30,
+        active: ColorPrimitives.brand50,
       ),
     ),
     backgroundColors: BrandBackgroundColors(
@@ -124,6 +126,7 @@ const lmuColorsDark = LmuColors(
         base: ColorPrimitives.brand80,
         pressed: ColorPrimitives.brand70,
         disabled: ColorPrimitives.brand10,
+        active: ColorPrimitives.brand50,
       ),
     ),
   ),
@@ -154,6 +157,7 @@ const lmuColorsLight = LmuColors(
         base: ColorPrimitives.white,
         pressed: ColorPrimitives.trspWhite95,
         disabled: ColorPrimitives.trspWhite50,
+        active: ColorPrimitives.trspWhite95,
       ),
       flippedColors: FlippedColors(
         base: ColorPrimitives.trspWhite95,
@@ -187,6 +191,7 @@ const lmuColorsLight = LmuColors(
         base: ColorPrimitives.trspWhite20,
         pressed: ColorPrimitives.trspWhite95,
         disabled: ColorPrimitives.grey30,
+        active: ColorPrimitives.trspWhite95,
       ),
       flippedColors: FlippedColors(
         base: ColorPrimitives.trspBlack95,
@@ -227,6 +232,7 @@ const lmuColorsLight = LmuColors(
         base: ColorPrimitives.brand80,
         pressed: ColorPrimitives.brand60,
         disabled: ColorPrimitives.brand30,
+        active: ColorPrimitives.brand50,
       ),
     ),
     backgroundColors: BrandBackgroundColors(
@@ -246,6 +252,7 @@ const lmuColorsLight = LmuColors(
         base: ColorPrimitives.brand70,
         pressed: ColorPrimitives.brand60,
         disabled: ColorPrimitives.brand10,
+        active: ColorPrimitives.brand50,
       ),
     ),
   ),

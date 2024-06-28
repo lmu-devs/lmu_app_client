@@ -2,9 +2,9 @@ import 'package:core/components.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mensa/src/bloc/mensa_current_day_cubit/mensa_current_day_cubit.dart';
-import 'package:mensa/src/utils/get_mensa_days.dart';
-import 'package:mensa/src/utils/mensa_day.dart';
+
+import '../bloc/mensa_current_day_cubit/mensa_current_day_cubit.dart';
+import '../utils/utils.dart';
 
 class MensaWeekView extends StatefulWidget {
   const MensaWeekView({
@@ -74,7 +74,7 @@ class MensaWeekViewState extends State<MensaWeekView> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: List.generate(
         endIndex - startIndex,
-            (index) {
+        (index) {
           final currentIndex = startIndex + index;
           final selectedMensaDay = mensaDays[currentIndex];
 

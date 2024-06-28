@@ -1,9 +1,11 @@
 import 'dart:math';
+
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:mensa/src/repository/api/api.dart';
+
+import '../repository/api/api.dart';
 import 'mensa_tag.dart';
 
 class MensaOverviewTile extends StatelessWidget {
@@ -70,15 +72,15 @@ class MensaOverviewTile extends StatelessWidget {
                   onTap: onFavoriteTap,
                   child: isFavorite
                       ? const LmuIcon(
-                    icon: Icons.star,
-                    size: LmuIconSizes.medium,
-                    color: Color.fromARGB(255, 247, 209, 21),
-                  )
+                          icon: Icons.star,
+                          size: LmuIconSizes.medium,
+                          color: Color.fromARGB(255, 247, 209, 21),
+                        )
                       : LmuIcon(
-                    icon: Icons.star_border_outlined,
-                    size: LmuIconSizes.medium,
-                    color: context.colors.neutralColors.backgroundColors.flippedColors.base,
-                  ),
+                          icon: Icons.star_border_outlined,
+                          size: LmuIconSizes.medium,
+                          color: context.colors.neutralColors.backgroundColors.flippedColors.base,
+                        ),
                 ),
               ],
             ),

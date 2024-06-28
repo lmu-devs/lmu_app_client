@@ -1,7 +1,7 @@
 enum MensaType {
   mensa("Mensa"),
   stuBistro("StuBistro"),
-  stuCafe("StuCafe"),
+  stuCafe("StuCafé"),
   lounge("Lounge");
 
   final String name;

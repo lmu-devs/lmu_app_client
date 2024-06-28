@@ -2,8 +2,8 @@ import 'package:core/components.dart';
 import 'package:core/src/core.dart';
 import 'package:flutter/material.dart';
 
-class LmuNavigationBar extends StatelessWidget implements PreferredSizeWidget {
-  const LmuNavigationBar({
+class LmuDefaultNavigationBar extends StatelessWidget implements PreferredSizeWidget {
+  const LmuDefaultNavigationBar({
     this.title,
     this.leadingWidget,
     this.backgroundColor,

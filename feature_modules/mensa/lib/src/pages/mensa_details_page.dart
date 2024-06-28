@@ -15,6 +15,14 @@ class MensaDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final openingHours = mensaModel.openingHours;
+    final weekOpeningHours = [
+      openingHours.mon,
+      openingHours.tue,
+      openingHours.wed,
+      openingHours.thu,
+      openingHours.fri,
+    ];
     return Scaffold(
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
       body: Column(
@@ -67,6 +75,18 @@ class MensaDetailsPage extends StatelessWidget {
                     mensaModel.location.address,
                     color: context.colors.neutralColors.textColors.mediumColors.base,
                   ),
+                ),
+                LmuListDropdown(
+                  title: "Heute geöffnet bis ",
+                  titleColor: Colors.green,
+                  items: weekOpeningHours
+                      .map((e) => LmuListItem.base(
+                            title: "test",
+                            hasVerticalPadding: false,
+                            hasHorizontalPadding: false,
+                            trailingTitle: '${e.start} - ${e.end} Uhr',
+                          ))
+                      .toList(),
                 ),
               ],
             ),
