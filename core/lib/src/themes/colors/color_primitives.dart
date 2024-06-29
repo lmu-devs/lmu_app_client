@@ -1,28 +1,26 @@
 import 'package:flutter/material.dart';
 
 class ColorPrimitives {
-
   // Brand/Main Colors
-static const Color brand10 = Color(0xFF000C02);
-static const Color brand20 = Color(0xFF001504);
-static const Color brand30 = Color(0xFF012D0D);
-static const Color brand40 = Color(0xFF034618);
-static const Color brand50 = Color(0xFF076125);
-static const Color brand60 = Color(0xFF0B7E32);
-static const Color brand70 = Color(0xFF12A242);
-static const Color brand80 = Color(0xFF40AC58);
-static const Color brand90 = Color(0xFF64BA72);
-static const Color brand100 = Color(0xFF83C78C);
-static const Color brand110 = Color(0xFFA0D4A6);
-static const Color brand120 = Color(0xFFBCE0BF);
-static const Color brand130 = Color(0xFFD8EDDA);
-static const Color brand140 = Color(0xFFEBF6EC);
-
+  static const Color brand10 = Color(0xFF000C02);
+  static const Color brand20 = Color(0xFF001504);
+  static const Color brand30 = Color(0xFF012D0D);
+  static const Color brand40 = Color(0xFF034618);
+  static const Color brand50 = Color(0xFF076125);
+  static const Color brand60 = Color(0xFF0B7E32);
+  static const Color brand70 = Color(0xFF12A242);
+  static const Color brand80 = Color(0xFF40AC58);
+  static const Color brand90 = Color(0xFF64BA72);
+  static const Color brand100 = Color(0xFF83C78C);
+  static const Color brand110 = Color(0xFFA0D4A6);
+  static const Color brand120 = Color(0xFFBCE0BF);
+  static const Color brand130 = Color(0xFFD8EDDA);
+  static const Color brand140 = Color(0xFFEBF6EC);
 
   // Grayscale colors
   static const Color black = Color(0x00000000);
   static const Color grey10 = Color(0xFF0F0F12);
-  static const Color grey20 = Color(0xFF1D1D1F);
+  static const Color grey20 = Color(0xFF1F1F21);
   static const Color grey30 = Color(0xFF46464A);
   static const Color grey40 = Color(0xFF75757E);
   static const Color grey50 = Color(0xFF9B9BA7);
@@ -35,7 +33,7 @@ static const Color brand140 = Color(0xFFEBF6EC);
 
   // Transparent colors
   static const Color trspBlack00 = Color.fromARGB(0, 0, 0, 0);
-  static const Color trspBlack05 = Color(0x0D000000);
+  static const Color trspBlack07 = Color(0x12000000);
   static const Color trspBlack10 = Color(0x1A000000);
   static const Color trspBlack20 = Color(0x33000000);
   static const Color trspBlack30 = Color(0x4D000000);
@@ -83,7 +81,4 @@ static const Color brand140 = Color(0xFFEBF6EC);
   static const Color amber80 = Color(0xFFF9C772);
   static const Color amber90 = Color(0xFFFBDAA1);
   static const Color amber100 = Color(0xFFFDECD0);
-
-
-
 }

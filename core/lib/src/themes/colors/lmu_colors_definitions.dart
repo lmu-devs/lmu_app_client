@@ -206,7 +206,7 @@ const lmuColorsLight = LmuColors(
       pure: ColorPrimitives.white,
       weakColors: WeakColors(
         base: ColorPrimitives.trspBlack00,
-        pressed: ColorPrimitives.trspBlack05,
+        pressed: ColorPrimitives.trspBlack07,
         active: ColorPrimitives.trspBlack10,
         disabled: ColorPrimitives.trspBlack00,
       ),
@@ -236,7 +236,7 @@ const lmuColorsLight = LmuColors(
     ),
     borderColors: BorderColors(
       seperatorLight: ColorPrimitives.trspBlack10,
-      inputStroke: ColorPrimitives.trspBlack05,
+      inputStroke: ColorPrimitives.trspBlack07,
       cutout: ColorPrimitives.white,
       seperatorDark: ColorPrimitives.white,
     ),
