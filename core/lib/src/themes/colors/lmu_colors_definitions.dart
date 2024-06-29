@@ -1,4 +1,6 @@
 import 'package:core/src/themes/colors/brand_colors.dart';
+import 'package:core/src/themes/colors/danger_colors.dart';
+import 'package:core/src/themes/colors/success_colors.dart';
 import 'package:flutter/material.dart';
 
 import 'color_construct.dart';
@@ -6,6 +8,7 @@ import 'color_primitives.dart';
 import 'lmu_colors_theme_extension.dart';
 import 'mensa_colors.dart';
 import 'neutral_colors.dart';
+import 'warning_colors.dart';
 
 const lmuColorsDark = LmuColors(
   neutralColors: NeutralColors(
@@ -80,6 +83,38 @@ const lmuColorsDark = LmuColors(
       seperatorDark: ColorPrimitives.black,
     ),
   ),
+  successColors: SuccessColors(
+      textColors: SuccessTextColors(
+          strongColors: StrongColors(
+              base: ColorPrimitives.brand100,
+              pressed: ColorPrimitives.brand120,
+              active: ColorPrimitives.brand100,
+              disabled: ColorPrimitives.brand30))),
+  dangerColors: DangerColors(
+      textColors: DangerTextColors(
+          strongColors: StrongColors(
+              base: ColorPrimitives.red70,
+              pressed: ColorPrimitives.red50,
+              active: ColorPrimitives.red70,
+              disabled: ColorPrimitives.red30)),
+      backgroundColors: DangerBackgroundColors(
+          weakColors: WeakColors(
+              base: ColorPrimitives.red10,
+              pressed: ColorPrimitives.red20,
+              active: ColorPrimitives.red20,
+              disabled: ColorPrimitives.red10),
+          strongColors: StrongColors(
+              base: ColorPrimitives.red50,
+              pressed: ColorPrimitives.red40,
+              active: ColorPrimitives.red50,
+              disabled: ColorPrimitives.red20))),
+  warningColors: WarningColors(
+      textColors: WarningTextColors(
+          strongColors: StrongColors(
+              base: ColorPrimitives.amber70,
+              pressed: ColorPrimitives.amber50,
+              active: ColorPrimitives.amber70,
+              disabled: ColorPrimitives.amber30))),
   mensaColors: MensaColors(
     textColors: MensaTextColors(
       mensa: Color(0xFF75DB70),
@@ -123,10 +158,10 @@ const lmuColorsDark = LmuColors(
         disabled: ColorPrimitives.brand10,
       ),
       nonInvertableColors: NonInvertableColors(
-        base: ColorPrimitives.brand80,
-        pressed: ColorPrimitives.brand70,
+        base: ColorPrimitives.brand70,
+        pressed: ColorPrimitives.brand60,
+        active: ColorPrimitives.brand70,
         disabled: ColorPrimitives.brand10,
-        active: ColorPrimitives.brand50,
       ),
     ),
   ),
@@ -171,7 +206,7 @@ const lmuColorsLight = LmuColors(
       pure: ColorPrimitives.white,
       weakColors: WeakColors(
         base: ColorPrimitives.trspBlack00,
-        pressed: ColorPrimitives.trspBlack05,
+        pressed: ColorPrimitives.trspBlack07,
         active: ColorPrimitives.trspBlack10,
         disabled: ColorPrimitives.trspBlack00,
       ),
@@ -201,11 +236,43 @@ const lmuColorsLight = LmuColors(
     ),
     borderColors: BorderColors(
       seperatorLight: ColorPrimitives.trspBlack10,
-      inputStroke: ColorPrimitives.trspBlack05,
+      inputStroke: ColorPrimitives.trspBlack07,
       cutout: ColorPrimitives.white,
       seperatorDark: ColorPrimitives.white,
     ),
   ),
+  successColors: SuccessColors(
+      textColors: SuccessTextColors(
+          strongColors: StrongColors(
+              base: ColorPrimitives.brand70,
+              pressed: ColorPrimitives.brand50,
+              active: ColorPrimitives.brand70,
+              disabled: ColorPrimitives.brand110))),
+  dangerColors: DangerColors(
+      textColors: DangerTextColors(
+          strongColors: StrongColors(
+              base: ColorPrimitives.red70,
+              pressed: ColorPrimitives.red50,
+              active: ColorPrimitives.red70,
+              disabled: ColorPrimitives.red30)),
+      backgroundColors: DangerBackgroundColors(
+          weakColors: WeakColors(
+              base: ColorPrimitives.red100,
+              pressed: ColorPrimitives.red90,
+              active: ColorPrimitives.red80,
+              disabled: ColorPrimitives.red100),
+          strongColors: StrongColors(
+              base: ColorPrimitives.red50,
+              pressed: ColorPrimitives.red40,
+              active: ColorPrimitives.red50,
+              disabled: ColorPrimitives.red20))),
+  warningColors: WarningColors(
+      textColors: WarningTextColors(
+          strongColors: StrongColors(
+              base: ColorPrimitives.amber60,
+              pressed: ColorPrimitives.amber60,
+              active: ColorPrimitives.amber60,
+              disabled: ColorPrimitives.amber60))),
   mensaColors: MensaColors(
     textColors: MensaTextColors(
       mensa: Color(0xFF4FBF4A),
@@ -249,10 +316,10 @@ const lmuColorsLight = LmuColors(
         disabled: ColorPrimitives.brand120,
       ),
       nonInvertableColors: NonInvertableColors(
-        base: ColorPrimitives.brand70,
-        pressed: ColorPrimitives.brand60,
+        base: ColorPrimitives.brand60,
+        pressed: ColorPrimitives.brand50,
+        active: ColorPrimitives.brand60,
         disabled: ColorPrimitives.brand10,
-        active: ColorPrimitives.brand50,
       ),
     ),
   ),

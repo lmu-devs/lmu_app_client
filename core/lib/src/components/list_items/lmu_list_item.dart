@@ -345,6 +345,7 @@ class LmuListItem extends StatelessWidget {
                                         child: LmuText.body(
                                           title,
                                           color: titleColor,
+                                          weight: FontWeight.w600,
                                         ),
                                       ),
                                     if (_hasTitleInTextVisuals)

@@ -19,7 +19,8 @@ class WunschkonzertSuccessView extends StatelessWidget {
               vertical: LmuSizes.medium,
             ),
             child: LmuText.body(
-                "Die App ist noch lange nicht am Ziel. Gute Dinge brauchen Zeit und durchdachte Entscheidungen. Helft uns herauszufinden, welche Funktionen euch am meisten fehlen."),
+                "Die App ist noch lange nicht am Ziel. Gute Dinge brauchen Zeit und durchdachte Entscheidungen. Helft uns herauszufinden, welche Funktionen euch am meisten fehlen.",
+                color: context.colors.neutralColors.textColors.mediumColors.base,),
           ),
           const SizedBox(
             height: LmuSizes.mediumLarge,
@@ -41,7 +42,7 @@ class WunschkonzertSuccessView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     LmuIcon(
-                      size: LmuIconSizes.small,
+                      size: LmuIconSizes.medium,
                       icon: Icons.link_off,
                       color: context.colors.neutralColors.textColors.weakColors.base,
                     ),
@@ -68,7 +69,7 @@ class _NextIcon extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         LmuIcon(
-          size: LmuIconSizes.small,
+          size: LmuIconSizes.medium,
           icon: Icons.arrow_forward_ios,
           color: context.colors.neutralColors.textColors.weakColors.base,
         ),
