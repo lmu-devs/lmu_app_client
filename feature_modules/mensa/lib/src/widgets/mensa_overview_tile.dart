@@ -121,11 +121,11 @@ extension MensaStatusExtension on MensaStatus {
   Color textColor(BuildContext context) {
     switch (this) {
       case MensaStatus.open:
-        return Colors.green;
+        return context.colors.successColors.textColors.strongColors.base;
       case MensaStatus.closed:
-        return Colors.red;
+        return context.colors.dangerColors.textColors.strongColors.base;
       case MensaStatus.closingSoon:
-        return Colors.orange;
+        return context.colors.warningColors.textColors.strongColors.base;
     }
   }
 }
