@@ -99,8 +99,8 @@ const lmuColorsDark = LmuColors(
               disabled: ColorPrimitives.red30)),
       backgroundColors: DangerBackgroundColors(
           weakColors: WeakColors(
-              base: ColorPrimitives.red10,
-              pressed: ColorPrimitives.red20,
+              base: ColorPrimitives.red20,
+              pressed: ColorPrimitives.red30,
               active: ColorPrimitives.red20,
               disabled: ColorPrimitives.red10),
           strongColors: StrongColors(
