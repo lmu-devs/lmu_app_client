@@ -59,16 +59,17 @@ class ColorPrimitives {
   static const Color trspWhite95 = Color(0xF2FFFFFF);
 
   // Error colors
-  static const Color red10 = Color(0xFF260202);
-  static const Color red20 = Color(0xFF3D0303);
-  static const Color red30 = Color(0xFF6C0606);
-  static const Color red40 = Color(0xFF9B0808);
-  static const Color red50 = Color(0xFFCA0B0B);
-  static const Color red60 = Color(0xFFF21414);
-  static const Color red70 = Color(0xFFF54343);
-  static const Color red80 = Color(0xFFF77272);
-  static const Color red90 = Color(0xFFFAA1A1);
-  static const Color red100 = Color(0xFFFCD0D0);
+  static const Color red10 = Color(0xFF350909);
+  static const Color red20 = Color(0xFF500E0E);
+  static const Color red30 = Color(0xFF761515);
+  static const Color red40 = Color(0xFF9F1C1C);
+  static const Color red50 = Color(0xFFC92323);
+  static const Color red60 = Color(0xFFDC4E4E);
+  static const Color red70 = Color(0xFFE17979);
+  static const Color red80 = Color(0xFFE89D9D);
+  static const Color red90 = Color(0xFFEFbebe);
+  static const Color red100 = Color(0xFFF6DFDF);
+
 
   // Warning colors
   static const Color amber10 = Color(0xFF2B1C02);
