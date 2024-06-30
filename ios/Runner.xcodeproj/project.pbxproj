@@ -659,11 +659,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-<<<<<<< HEAD
 				PRODUCT_BUNDLE_IDENTIFIER = "com.lmu-dev.lmu-app";
-=======
-				PRODUCT_BUNDLE_IDENTIFIER = "com.lmu-dev.lmuApp";
->>>>>>> main
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
