@@ -290,9 +290,9 @@ const lmuColorsLight = LmuColors(
   brandColors: BrandColors(
     textColors: BrandTextColors(
       strongColors: StrongColors(
-        base: ColorPrimitives.brand70,
+        base: ColorPrimitives.brand60,
         pressed: ColorPrimitives.brand80,
-        active: ColorPrimitives.brand80,
+        active: ColorPrimitives.brand60,
         disabled: ColorPrimitives.brand110,
       ),
       nonInvertableColors: NonInvertableColors(
