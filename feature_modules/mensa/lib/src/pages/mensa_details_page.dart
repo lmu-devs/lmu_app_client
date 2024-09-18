@@ -2,8 +2,7 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-
-import '../repository/api/models/mensa_model.dart';
+import 'package:mensa/src/repository/api/api.dart';
 
 class MensaDetailsPage extends StatelessWidget {
   const MensaDetailsPage({
@@ -16,13 +15,7 @@ class MensaDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final openingHours = mensaModel.openingHours;
-    final weekOpeningHours = [
-      openingHours.mon,
-      openingHours.tue,
-      openingHours.wed,
-      openingHours.thu,
-      openingHours.fri,
-    ];
+
     return Scaffold(
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
       body: Column(
@@ -79,12 +72,13 @@ class MensaDetailsPage extends StatelessWidget {
                 LmuListDropdown(
                   title: "Heute geöffnet bis ",
                   titleColor: Colors.green,
-                  items: weekOpeningHours
+                  items: openingHours
                       .map((e) => LmuListItem.base(
-                            title: "test",
+                            title: e.day,
                             hasVerticalPadding: false,
                             hasHorizontalPadding: false,
-                            trailingTitle: '${e.start} - ${e.end} Uhr',
+                            trailingTitle:
+                                '${e.startTime.substring(0, e.startTime.length - 3)} - ${e.endTime.substring(0, e.endTime.length - 3)} Uhr',
                           ))
                       .toList(),
                 ),
@@ -98,9 +92,7 @@ class MensaDetailsPage extends StatelessWidget {
 }
 
 class _DetailsBackButton extends StatelessWidget {
-  const _DetailsBackButton({
-    super.key,
-  });
+  const _DetailsBackButton();
 
   @override
   Widget build(BuildContext context) {

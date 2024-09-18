@@ -1,4 +1,3 @@
-export 'mensa_day_hours.dart';
 export 'mensa_location.dart';
 export 'mensa_model.dart';
 export 'mensa_opening_hours.dart';

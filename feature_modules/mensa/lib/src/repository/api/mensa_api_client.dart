@@ -8,7 +8,7 @@ class MensaApiClient {
   Future<List<MensaModel>> getMensaModels() async {
     try {
       final response = await http.get(
-        Uri.parse('http://localhost:3000/api/mensadata'),
+        Uri.parse('https://api.lmu-dev.org/eat/v1/canteens/'),
       );
 
       if (response.statusCode == 200) {
