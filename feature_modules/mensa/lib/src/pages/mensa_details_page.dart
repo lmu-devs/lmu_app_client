@@ -2,8 +2,7 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-
-import '../repository/api/models/mensa_model.dart';
+import 'package:mensa/src/repository/api/api.dart';
 
 class MensaDetailsPage extends StatelessWidget {
   const MensaDetailsPage({
@@ -78,7 +77,8 @@ class MensaDetailsPage extends StatelessWidget {
                             title: e.day,
                             hasVerticalPadding: false,
                             hasHorizontalPadding: false,
-                            trailingTitle: '${e.startTime} - ${e.endTime} Uhr',
+                            trailingTitle:
+                                '${e.startTime.substring(0, e.startTime.length - 3)} - ${e.endTime.substring(0, e.endTime.length - 3)} Uhr',
                           ))
                       .toList(),
                 ),
