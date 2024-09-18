@@ -8,12 +8,12 @@ part of 'mensa_day_hours.dart';
 
 MensaDayHours _$MensaDayHoursFromJson(Map<String, dynamic> json) =>
     MensaDayHours(
-      start: json['start'] as String,
-      end: json['end'] as String,
+      start: json['start_time'] as String,
+      end: json['end_time'] as String,
     );
 
 Map<String, dynamic> _$MensaDayHoursToJson(MensaDayHours instance) =>
     <String, dynamic>{
-      'start': instance.start,
-      'end': instance.end,
+      'start_time': instance.start,
+      'end_time': instance.end,
     };

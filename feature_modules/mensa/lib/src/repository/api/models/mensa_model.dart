@@ -8,17 +8,17 @@ part 'mensa_model.g.dart';
 
 @JsonSerializable()
 class MensaModel extends Equatable {
-  final String name;
-  final MensaLocation location;
   @JsonKey(name: 'canteen_id')
   final String canteenId;
-  @JsonKey(name: 'open_hours')
-  final MensaOpeningHours openingHours;
+  final String name;
+  final MensaLocation location;
+  @JsonKey(name: 'opening_hours')
+  final List<MensaOpeningHours> openingHours;
 
   const MensaModel({
+    required this.canteenId,
     required this.name,
     required this.location,
-    required this.canteenId,
     required this.openingHours,
   });
 
@@ -28,9 +28,9 @@ class MensaModel extends Equatable {
 
   @override
   List<Object?> get props => [
+        canteenId,
         name,
         location,
-        canteenId,
         openingHours,
       ];
 }

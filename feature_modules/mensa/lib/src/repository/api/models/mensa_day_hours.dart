@@ -10,7 +10,9 @@ class MensaDayHours extends Equatable {
     required this.end,
   });
 
+  @JsonKey(name: 'start_time')
   final String start;
+  @JsonKey(name: 'end_time')
   final String end;
 
   factory MensaDayHours.fromJson(Map<String, dynamic> json) => _$MensaDayHoursFromJson(json);
