@@ -2,9 +2,9 @@ import 'package:core/components.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../bloc/mensa_cubit/cubit.dart';
-import '../views/views.dart';
+import 'package:mensa/src/bloc/mensa_cubit/cubit.dart';
+import 'package:mensa/src/views/views.dart';
+import 'package:mensa/src/widgets/my_taste_button.dart';
 
 class MensaMainPage extends StatelessWidget {
   const MensaMainPage({super.key});
@@ -13,8 +13,17 @@ class MensaMainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
-      appBar: const LmuDefaultNavigationBar(
+      appBar: LmuDefaultNavigationBar(
         title: "Mensa",
+        trailingWidget: GestureDetector(
+          onTap: () {
+            LmuBottomSheet.show(
+              context,
+              title: "My Taste",
+            );
+          },
+          child: const MyTasteButton(),
+        ),
       ),
       body: Center(
         child: BlocBuilder<MensaCubit, MensaState>(
