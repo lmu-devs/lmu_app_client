@@ -36,7 +36,6 @@ class MensaApiClient {
         throw Exception('Failed to load menu data for mensa');
       }
     } catch (e) {
-      print(e.toString());
       throw Exception('Failed to parse menu data for mensa: $e');
     }
   }

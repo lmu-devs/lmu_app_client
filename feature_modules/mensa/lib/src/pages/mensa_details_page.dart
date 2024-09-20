@@ -47,59 +47,63 @@ class MensaDetailsPage extends StatelessWidget {
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: LmuSizes.mediumLarge,
-              right: LmuSizes.mediumLarge,
-              top: LmuSizes.mediumSmall,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: LmuSizes.medium,
-                  ),
-                  child: LmuText.h1(
-                    mensaModel.name,
-                  ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: LmuSizes.mediumLarge,
+                  right: LmuSizes.mediumLarge,
+                  top: LmuSizes.mediumSmall,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: LmuSizes.medium,
-                  ),
-                  child: LmuText.body(
-                    mensaModel.location.address,
-                    color: context.colors.neutralColors.textColors.mediumColors.base,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: LmuSizes.medium,
+                      ),
+                      child: LmuText.h1(
+                        mensaModel.name,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: LmuSizes.medium,
+                      ),
+                      child: LmuText.body(
+                        mensaModel.location.address,
+                        color: context.colors.neutralColors.textColors.mediumColors.base,
+                      ),
+                    ),
+                    LmuListDropdown(
+                      title: "Heute geöffnet bis ",
+                      titleColor: Colors.green,
+                      items: openingHours
+                          .map((e) => LmuListItem.base(
+                                title: e.day,
+                                hasVerticalPadding: false,
+                                hasHorizontalPadding: false,
+                                trailingTitle:
+                                    '${e.startTime.substring(0, e.startTime.length - 3)} - ${e.endTime.substring(0, e.endTime.length - 3)} Uhr',
+                              ))
+                          .toList(),
+                    ),
+                    const SizedBox(height: LmuSizes.medium),
+                    BlocBuilder<MensaMenuCubit, MensaMenuState>(
+                      builder: (context, state) {
+                        if (state is MensaMenuLoadInProgress) {
+                          return const MensaMenuLoadingView();
+                        } else if (state is MensaMenuLoadSuccess) {
+                          return MensaMenuContentView(
+                            mensaMenuModel: state.mensaMenuModel,
+                          );
+                        }
+                        return const MensaMenuErrorView();
+                      },
+                    ),
+                  ],
                 ),
-                LmuListDropdown(
-                  title: "Heute geöffnet bis ",
-                  titleColor: Colors.green,
-                  items: openingHours
-                      .map((e) => LmuListItem.base(
-                            title: e.day,
-                            hasVerticalPadding: false,
-                            hasHorizontalPadding: false,
-                            trailingTitle:
-                                '${e.startTime.substring(0, e.startTime.length - 3)} - ${e.endTime.substring(0, e.endTime.length - 3)} Uhr',
-                          ))
-                      .toList(),
-                ),
-                const SizedBox(height: LmuSizes.medium),
-                BlocBuilder<MensaMenuCubit, MensaMenuState>(
-                  builder: (context, state) {
-                    if (state is MensaMenuLoadInProgress) {
-                      return const MensaMenuLoadingView();
-                    } else if (state is MensaMenuLoadSuccess) {
-                      return MensaMenuContentView(
-                        mensaMenuModel: state.mensaMenuModel,
-                      );
-                    }
-                    return const MensaMenuErrorView();
-                  },
-                ),
-              ],
+              ),
             ),
           ),
         ],

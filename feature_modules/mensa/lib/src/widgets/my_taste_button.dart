@@ -38,7 +38,7 @@ class MyTasteButton extends StatelessWidget {
             color: context.colors.neutralColors.backgroundColors.base,
           ),
           Checkbox(
-            value: false,
+            value: true,
             onChanged: (bool? value) => isChecked = value,
             fillColor: MaterialStateProperty.resolveWith<Color?>(
                   (Set<MaterialState> states) {

@@ -15,7 +15,17 @@ class MensaMenuDayModel extends Equatable {
     required this.dishModels,
   });
 
-  factory MensaMenuDayModel.fromJson(Map<String, dynamic> json) => _$MensaMenuDayModelFromJson(json);
+  factory MensaMenuDayModel.fromJson(Map<String, dynamic> json) {
+    final dishesJson = json['dishes'] as List<dynamic>?;
+    final List<DishModel> dishModels = (dishesJson != null && dishesJson.isNotEmpty)
+        ? dishesJson.map((dishJson) => DishModel.fromJson(dishJson as Map<String, dynamic>)).toList()
+        : [];
+
+    return MensaMenuDayModel(
+      date: json['date'] as String,
+      dishModels: dishModels,
+    );
+  }
 
   Map<String, dynamic> toJson() => _$MensaMenuDayModelToJson(this);
 
