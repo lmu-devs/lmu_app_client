@@ -2,7 +2,11 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mensa/src/bloc/mensa_cubit/mensa_menu_cubit.dart';
+import 'package:mensa/src/bloc/mensa_cubit/mensa_menu_state.dart';
 import 'package:mensa/src/repository/api/api.dart';
+import 'package:mensa/src/views/views.dart';
 
 class MensaDetailsPage extends StatelessWidget {
   const MensaDetailsPage({
@@ -81,6 +85,19 @@ class MensaDetailsPage extends StatelessWidget {
                                 '${e.startTime.substring(0, e.startTime.length - 3)} - ${e.endTime.substring(0, e.endTime.length - 3)} Uhr',
                           ))
                       .toList(),
+                ),
+                const SizedBox(height: LmuSizes.medium),
+                BlocBuilder<MensaMenuCubit, MensaMenuState>(
+                  builder: (context, state) {
+                    if (state is MensaMenuLoadInProgress) {
+                      return const MensaMenuLoadingView();
+                    } else if (state is MensaMenuLoadSuccess) {
+                      return MensaMenuContentView(
+                        mensaMenuModel: state.mensaMenuModel,
+                      );
+                    }
+                    return const MensaMenuErrorView();
+                  },
                 ),
               ],
             ),

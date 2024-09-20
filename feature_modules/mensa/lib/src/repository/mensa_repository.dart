@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/mensa_api_client.dart';
+import 'api/models/mensa_menu_week_model.dart';
 import 'api/models/mensa_model.dart';
 
 abstract class MensaRepository {
@@ -11,6 +12,8 @@ abstract class MensaRepository {
   Future<List<String>?> getFavoriteMensaIds();
 
   Future<void> updateFavoriteMensaIds(List<String> favoriteMensaIds);
+
+  Future<MensaMenuWeekModel> getMensaMenuForSpecificWeek(String canteenId, int year, String week);
 }
 
 class ConnectedMensaRepository implements MensaRepository {
@@ -70,5 +73,16 @@ class ConnectedMensaRepository implements MensaRepository {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setStringList(_favoriteMensaIdsKey, favoriteMensaIds);
+  }
+
+  /// Cache storing missing for now
+  @override
+  Future<MensaMenuWeekModel> getMensaMenuForSpecificWeek(String canteenId, int year, String week) async {
+    try {
+      final mensaMenuModel = await mensaApiClient.getMensaMenuForSpecificWeek(canteenId, year, week);
+      return mensaMenuModel;
+    } catch (e) {
+      rethrow;
+    }
   }
 }

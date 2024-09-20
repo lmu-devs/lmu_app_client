@@ -12,7 +12,7 @@ class DishModel extends Equatable {
   @JsonKey(name: 'like_count')
   final int likeCount;
   @JsonKey(name: 'price_simple')
-  final int priceSimple;
+  final String priceSimple;
   final List<String> labels;
   final List<PriceModel> prices;
 

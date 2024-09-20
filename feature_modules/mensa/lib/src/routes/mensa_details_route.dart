@@ -1,8 +1,11 @@
 import 'package:core/routes.dart';
 import 'package:flutter/widgets.dart';
-
-import '../pages/mensa_details_page.dart';
-import '../repository/api/api.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mensa/src/bloc/mensa_cubit/mensa_menu_cubit.dart';
+import 'package:mensa/src/pages/mensa_details_page.dart';
+import 'package:mensa/src/repository/api/api.dart';
+import 'package:mensa/src/repository/mensa_repository.dart';
+import 'package:mensa/src/utils/mensa_day.dart';
 
 class MensaDetailsRoute extends StatelessWidget {
   const MensaDetailsRoute({
@@ -15,8 +18,23 @@ class MensaDetailsRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mensaModel = (arguments as MensaDetailsRouteArguments).mensaModel as MensaModel;
-    return MensaDetailsPage(
-      mensaModel: mensaModel,
+    final MensaDay selectedMensaDay = (arguments as MensaDetailsRouteArguments).mensaDay as MensaDay;
+
+    final mensaRepository = ConnectedMensaRepository(
+      mensaApiClient: MensaApiClient(),
+    );
+
+    return BlocProvider<MensaMenuCubit>(
+      create: (context) => MensaMenuCubit(
+        mensaRepository: mensaRepository,
+      )..loadMensaMenuData(
+          mensaModel.canteenId,
+          selectedMensaDay.year,
+          30.toString(),
+        ),
+      child: MensaDetailsPage(
+        mensaModel: mensaModel,
+      ),
     );
   }
 }

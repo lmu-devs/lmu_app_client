@@ -7,9 +7,9 @@ part 'price_model.g.dart';
 class PriceModel extends Equatable {
   final String category;
   @JsonKey(name: 'base_price')
-  final int basePrice;
+  final double basePrice;
   @JsonKey(name: 'price_per_unit')
-  final int pricePerUnit;
+  final double pricePerUnit;
   final String unit;
 
   const PriceModel({

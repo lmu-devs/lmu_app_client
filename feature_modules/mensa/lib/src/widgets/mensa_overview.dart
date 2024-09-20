@@ -223,6 +223,7 @@ class _MensaOverviewItem extends StatelessWidget {
                   RouteNames.mensaDetails,
                   extra: MensaDetailsRouteArguments(
                     mensaModel: mensaModel,
+                    mensaDay: context.read<MensaCurrentDayCubit>().state,
                   ),
                 ),
               ),

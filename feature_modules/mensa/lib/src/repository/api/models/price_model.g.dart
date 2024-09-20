@@ -8,8 +8,8 @@ part of 'price_model.dart';
 
 PriceModel _$PriceModelFromJson(Map<String, dynamic> json) => PriceModel(
       category: json['category'] as String,
-      basePrice: (json['base_price'] as num).toInt(),
-      pricePerUnit: (json['price_per_unit'] as num).toInt(),
+      basePrice: (json['base_price'] as num).toDouble(),
+      pricePerUnit: (json['price_per_unit'] as num).toDouble(),
       unit: json['unit'] as String,
     );
 

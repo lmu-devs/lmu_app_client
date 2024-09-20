@@ -10,7 +10,7 @@ DishModel _$DishModelFromJson(Map<String, dynamic> json) => DishModel(
       name: json['name'] as String,
       dishType: json['dish_type'] as String,
       likeCount: (json['like_count'] as num).toInt(),
-      priceSimple: (json['price_simple'] as num).toInt(),
+      priceSimple: json['price_simple'] as String,
       labels:
           (json['labels'] as List<dynamic>).map((e) => e as String).toList(),
       prices: (json['prices'] as List<dynamic>)
