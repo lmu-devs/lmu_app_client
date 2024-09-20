@@ -21,6 +21,7 @@ class MensaMenuContentView extends StatelessWidget {
       itemBuilder: (context, index) => Padding(
         padding: const EdgeInsets.only(bottom: LmuSizes.mediumSmall),
         child: DishTile(
+          dishType: mensaMenuModel.mensaMenuDayModels.first.dishModels[index].dishType,
           title: mensaMenuModel.mensaMenuDayModels.first.dishModels[index].name,
           priceSimple: mensaMenuModel.mensaMenuDayModels.first.dishModels[index].priceSimple,
           isFavorite: false,

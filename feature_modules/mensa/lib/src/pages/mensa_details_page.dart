@@ -7,6 +7,7 @@ import 'package:mensa/src/bloc/mensa_cubit/mensa_menu_cubit.dart';
 import 'package:mensa/src/bloc/mensa_cubit/mensa_menu_state.dart';
 import 'package:mensa/src/repository/api/api.dart';
 import 'package:mensa/src/views/views.dart';
+import 'package:mensa/src/widgets/my_taste_button.dart';
 
 class MensaDetailsPage extends StatelessWidget {
   const MensaDetailsPage({
@@ -22,87 +23,94 @@ class MensaDetailsPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            children: [
-              Image.network(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 200,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Image.network(
                 'https://www.byak.de/preiseundco-proxy/images/projekte/538/63a07e3ad2d28676dc35fbb7/b20352fdf91b24c98b9483d5f9083c6e.jpg?w=1260&h=648',
-                height: 267,
-                width: double.infinity,
-                fit: BoxFit.fitWidth,
+                fit: BoxFit.cover,
               ),
-              const SafeArea(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: LmuSizes.mediumLarge,
-                  ),
-                  child: Row(
-                    children: [
-                      _DetailsBackButton(),
-                    ],
-                  ),
+            ),
+            leading: const SafeArea(
+              child: Padding(
+                padding: EdgeInsets.all(LmuSizes.medium),
+                child: _DetailsBackButton(),
+              ),
+            ),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: LmuSizes.mediumLarge),
+                child: GestureDetector(
+                  onTap: () {
+                    LmuBottomSheet.show(
+                      context,
+                      title: "My Taste",
+                    );
+                  },
+                  child: MyTasteButton(background: context.colors.neutralColors.backgroundColors.base),
                 ),
               ),
             ],
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  left: LmuSizes.mediumLarge,
-                  right: LmuSizes.mediumLarge,
-                  top: LmuSizes.mediumSmall,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: LmuSizes.medium,
-                      ),
-                      child: LmuText.h1(
-                        mensaModel.name,
-                      ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: LmuSizes.mediumLarge,
+                right: LmuSizes.mediumLarge,
+                top: LmuSizes.mediumSmall,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: LmuSizes.medium,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: LmuSizes.medium,
-                      ),
-                      child: LmuText.body(
-                        mensaModel.location.address,
-                        color: context.colors.neutralColors.textColors.mediumColors.base,
-                      ),
+                    child: LmuText.h1(
+                      mensaModel.name,
                     ),
-                    LmuListDropdown(
-                      title: "Heute geöffnet bis ",
-                      titleColor: Colors.green,
-                      items: openingHours
-                          .map((e) => LmuListItem.base(
-                                title: e.day,
-                                hasVerticalPadding: false,
-                                hasHorizontalPadding: false,
-                                trailingTitle:
-                                    '${e.startTime.substring(0, e.startTime.length - 3)} - ${e.endTime.substring(0, e.endTime.length - 3)} Uhr',
-                              ))
-                          .toList(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: LmuSizes.medium,
                     ),
-                    const SizedBox(height: LmuSizes.medium),
-                    BlocBuilder<MensaMenuCubit, MensaMenuState>(
-                      builder: (context, state) {
-                        if (state is MensaMenuLoadInProgress) {
-                          return const MensaMenuLoadingView();
-                        } else if (state is MensaMenuLoadSuccess) {
-                          return MensaMenuContentView(
-                            mensaMenuModel: state.mensaMenuModel,
-                          );
-                        }
-                        return const MensaMenuErrorView();
-                      },
+                    child: LmuText.body(
+                      mensaModel.location.address,
+                      color: context.colors.neutralColors.textColors.mediumColors.base,
                     ),
-                  ],
-                ),
+                  ),
+                  Divider(thickness: .5, height: 0, color: context.colors.neutralColors.borderColors.seperatorLight),
+                  LmuListDropdown(
+                    title: "Heute geöffnet bis ",
+                    titleColor: Colors.green,
+                    items: openingHours
+                        .map((e) => LmuListItem.base(
+                              title: e.day,
+                              hasVerticalPadding: false,
+                              hasHorizontalPadding: false,
+                              trailingTitle:
+                                  '${e.startTime.substring(0, e.startTime.length - 3)} - ${e.endTime.substring(0, e.endTime.length - 3)} Uhr',
+                            ))
+                        .toList(),
+                  ),
+                  const SizedBox(height: LmuSizes.medium),
+                  BlocBuilder<MensaMenuCubit, MensaMenuState>(
+                    builder: (context, state) {
+                      if (state is MensaMenuLoadInProgress) {
+                        return const MensaMenuLoadingView();
+                      } else if (state is MensaMenuLoadSuccess) {
+                        return MensaMenuContentView(
+                          mensaMenuModel: state.mensaMenuModel,
+                        );
+                      }
+                      return const MensaMenuErrorView();
+                    },
+                  ),
+                  const SizedBox(height: LmuSizes.medium),
+                ],
               ),
             ),
           ),

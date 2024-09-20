@@ -4,7 +4,9 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
 class MyTasteButton extends StatelessWidget {
-  const MyTasteButton({super.key});
+  const MyTasteButton({super.key, required this.background});
+
+  final Color background;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class MyTasteButton extends StatelessWidget {
           VerticalDivider(
             width: 0,
             thickness: 2.5,
-            color: context.colors.neutralColors.backgroundColors.base,
+            color: background,
           ),
           Checkbox(
             value: true,

@@ -1,11 +1,15 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:mensa/src/utils/get_dish_type_emoji.dart';
 
 class DishTile extends StatelessWidget {
   const DishTile({
     super.key,
+    required this.dishType,
     required this.title,
     required this.priceSimple,
     required this.isFavorite,
@@ -13,6 +17,7 @@ class DishTile extends StatelessWidget {
     this.onTap,
   });
 
+  final String dishType;
   final String title;
   final String priceSimple;
   final void Function()? onTap;
@@ -36,14 +41,25 @@ class DishTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Flexible(
-              child: LmuText.body(
-                title,
-                weight: FontWeight.w600,
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(getDishTypeEmoji(dishType)),
+                  const SizedBox(
+                    width: LmuSizes.medium,
+                  ),
+                  Flexible(
+                    child: LmuText.body(
+                      title,
+                      weight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: LmuSizes.xlarge,
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(
-              width: LmuSizes.medium,
             ),
             Column(
               children: [

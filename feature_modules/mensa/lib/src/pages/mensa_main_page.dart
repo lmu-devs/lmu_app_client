@@ -22,7 +22,7 @@ class MensaMainPage extends StatelessWidget {
               title: "My Taste",
             );
           },
-          child: const MyTasteButton(),
+          child: MyTasteButton(background: context.colors.neutralColors.backgroundColors.base),
         ),
       ),
       body: Center(
