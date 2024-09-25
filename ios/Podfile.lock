@@ -1,23 +1,56 @@
 PODS:
   - Flutter (1.0.0)
+  - mapbox_maps_flutter (2.2.0):
+    - Flutter
+    - MapboxMaps (~> 11.6.0)
+    - Turf (= 2.8.0)
+  - MapboxCommon (24.6.0)
+  - MapboxCoreMaps (11.6.0):
+    - MapboxCommon (~> 24.6)
+  - MapboxMaps (11.6.0):
+    - MapboxCommon (= 24.6.0)
+    - MapboxCoreMaps (= 11.6.0)
+    - Turf (= 2.8.0)
+  - permission_handler_apple (9.3.0):
+    - Flutter
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - Turf (2.8.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - mapbox_maps_flutter (from `.symlinks/plugins/mapbox_maps_flutter/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
+
+SPEC REPOS:
+  trunk:
+    - MapboxCommon
+    - MapboxCoreMaps
+    - MapboxMaps
+    - Turf
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  mapbox_maps_flutter:
+    :path: ".symlinks/plugins/mapbox_maps_flutter/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  mapbox_maps_flutter: d853261834ff2a87f716e5c4beb150bca3f4cb65
+  MapboxCommon: 6008e74b1312a093dec291497a036fc8b47f344f
+  MapboxCoreMaps: bd097795c5ae4f002181769e7151474a33ce878a
+  MapboxMaps: fc1b2ab98563d0157ba01f6e4a2fd8a8af556d92
+  permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
+  Turf: aa2ede4298009639d10db36aba1a7ebaad072a5e
 
-PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
+PODFILE CHECKSUM: 7be2f5f74864d463a8ad433546ed1de7e0f29aef
 
 COCOAPODS: 1.15.2

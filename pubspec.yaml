@@ -20,6 +20,8 @@ dependencies:
   wunschkonzert:
     path: ./feature_modules/wunschkonzert
   http: ^0.13.3
+  mapbox_maps_flutter: ^2.2.0
+  permission_handler: ^11.3.1
 
 dev_dependencies:
   flutter_test:

@@ -90,6 +90,16 @@ final routeConfig = GoRouter(
           routes: <RouteBase>[
             GoRoute(
               path: RouteNames.wunschkonzert,
+              pageBuilder: (context, state) => NoTransitionPage(
+                child: MensaMapRoute(),
+              ),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: <RouteBase>[
+            GoRoute(
+              path: RouteNames.wunschkonzert,
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: WunschkonzertMainRoute(),
               ),
@@ -165,6 +175,10 @@ class ScaffoldWithNavBar extends StatelessWidget {
           NavigationDestination(
             icon: Icon(Icons.food_bank),
             label: 'Mensa',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.map),
+            label: 'Map',
           ),
           NavigationDestination(
             icon: Icon(Icons.confirmation_number),
