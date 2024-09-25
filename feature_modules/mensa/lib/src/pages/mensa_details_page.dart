@@ -26,8 +26,10 @@ class MensaDetailsPage extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            expandedHeight: 200,
+            expandedHeight: 210,
             pinned: true,
+            elevation: 0,
+            backgroundColor: context.colors.neutralColors.backgroundColors.base,
             flexibleSpace: FlexibleSpaceBar(
               background: Image.network(
                 'https://www.byak.de/preiseundco-proxy/images/projekte/538/63a07e3ad2d28676dc35fbb7/b20352fdf91b24c98b9483d5f9083c6e.jpg?w=1260&h=648',
@@ -103,7 +105,7 @@ class MensaDetailsPage extends StatelessWidget {
                         return const MensaMenuLoadingView();
                       } else if (state is MensaMenuLoadSuccess) {
                         return MensaMenuContentView(
-                          mensaMenuModel: state.mensaMenuModel,
+                          mensaMenuModels: state.mensaMenuModels,
                         );
                       }
                       return const MensaMenuErrorView();

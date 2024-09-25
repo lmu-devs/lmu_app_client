@@ -15,13 +15,13 @@ class MensaMenuLoadInProgress extends MensaMenuState {
 
 class MensaMenuLoadSuccess extends MensaMenuState {
   MensaMenuLoadSuccess({
-    required this.mensaMenuModel,
+    required this.mensaMenuModels,
   });
 
-  final MensaMenuWeekModel mensaMenuModel;
+  final List<MensaMenuWeekModel> mensaMenuModels;
 
   @override
-  List<Object?> get props => [mensaMenuModel];
+  List<Object?> get props => [mensaMenuModels];
 }
 
 class MensaMenuLoadFailure extends MensaMenuState {

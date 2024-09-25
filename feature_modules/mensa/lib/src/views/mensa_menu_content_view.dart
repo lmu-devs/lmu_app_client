@@ -6,10 +6,10 @@ import 'package:mensa/src/widgets/dish_tile.dart';
 class MensaMenuContentView extends StatelessWidget {
   const MensaMenuContentView({
     Key? key,
-    required this.mensaMenuModel,
+    required this.mensaMenuModels,
   }) : super(key: key);
 
-  final MensaMenuWeekModel mensaMenuModel;
+  final List<MensaMenuWeekModel> mensaMenuModels;
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +17,13 @@ class MensaMenuContentView extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       padding: EdgeInsets.zero,
-      itemCount: mensaMenuModel.mensaMenuDayModels.first.dishModels.length,
+      itemCount: mensaMenuModels.first.mensaMenuDayModels.first.dishModels.length,
       itemBuilder: (context, index) => Padding(
         padding: const EdgeInsets.only(bottom: LmuSizes.mediumSmall),
         child: DishTile(
-          dishType: mensaMenuModel.mensaMenuDayModels.first.dishModels[index].dishType,
-          title: mensaMenuModel.mensaMenuDayModels.first.dishModels[index].name,
-          priceSimple: mensaMenuModel.mensaMenuDayModels.first.dishModels[index].priceSimple,
+          dishType: mensaMenuModels.first.mensaMenuDayModels.first.dishModels[index].dishType,
+          title: mensaMenuModels.first.mensaMenuDayModels.first.dishModels[index].name,
+          priceSimple: mensaMenuModels.first.mensaMenuDayModels.first.dishModels[index].priceSimple,
           isFavorite: false,
           onFavoriteTap: () {},
         ),

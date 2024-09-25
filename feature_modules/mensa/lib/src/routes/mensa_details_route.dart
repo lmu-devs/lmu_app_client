@@ -31,6 +31,7 @@ class MensaDetailsRoute extends StatelessWidget {
           mensaModel.canteenId,
           selectedMensaDay.year,
           30.toString(),
+          true,
         ),
       child: MensaDetailsPage(
         mensaModel: mensaModel,

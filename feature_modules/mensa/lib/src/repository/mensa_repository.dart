@@ -13,7 +13,7 @@ abstract class MensaRepository {
 
   Future<void> updateFavoriteMensaIds(List<String> favoriteMensaIds);
 
-  Future<MensaMenuWeekModel> getMensaMenuForSpecificWeek(String canteenId, int year, String week);
+  Future<List<MensaMenuWeekModel>> getMensaMenusForSpecificWeek(String canteenId, int year, String week, bool liked);
 }
 
 class ConnectedMensaRepository implements MensaRepository {
@@ -77,10 +77,10 @@ class ConnectedMensaRepository implements MensaRepository {
 
   /// Cache storing missing for now
   @override
-  Future<MensaMenuWeekModel> getMensaMenuForSpecificWeek(String canteenId, int year, String week) async {
+  Future<List<MensaMenuWeekModel>> getMensaMenusForSpecificWeek(String canteenId, int year, String week, bool liked) async {
     try {
-      final mensaMenuModel = await mensaApiClient.getMensaMenuForSpecificWeek(canteenId, year, week);
-      return mensaMenuModel;
+      final mensaMenuModels = await mensaApiClient.getMensaMenusForSpecificWeek(canteenId, year, week, liked);
+      return mensaMenuModels;
     } catch (e) {
       rethrow;
     }

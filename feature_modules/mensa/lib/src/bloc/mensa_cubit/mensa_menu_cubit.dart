@@ -9,13 +9,13 @@ class MensaMenuCubit extends Cubit<MensaMenuState> {
 
   final MensaRepository mensaRepository;
 
-  void loadMensaMenuData(String canteenId, int year, String week) async {
+  void loadMensaMenuData(String canteenId, int year, String week, bool liked) async {
     emit(MensaMenuLoadInProgress());
 
     try {
-      final mensaMenuModel = await mensaRepository.getMensaMenuForSpecificWeek(canteenId, year, week);
+      final mensaMenuModels = await mensaRepository.getMensaMenusForSpecificWeek(canteenId, year, week, liked);
 
-      emit(MensaMenuLoadSuccess(mensaMenuModel: mensaMenuModel));
+      emit(MensaMenuLoadSuccess(mensaMenuModels: mensaMenuModels));
     } catch (e) {
       emit(MensaMenuLoadFailure());
     }
