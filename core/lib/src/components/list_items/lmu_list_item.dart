@@ -264,6 +264,54 @@ class LmuListItem extends StatelessWidget {
     );
   }
 
+  factory LmuListItem.chevron({
+    Key? key,
+    String? title,
+    Color? titleColor,
+    List<LmuInTextVisual>? titleInTextVisuals,
+    MainContentAlignment? mainContentAlignment,
+    String? subtitle,
+    Color? subtitleTextColor,
+    List<LmuInTextVisual>? subtitleInTextVisuals,
+    String? trailingTitle,
+    Color? trailingTitleColor,
+    List<LmuInTextVisual>? trailingTitleInTextVisuals,
+    String? trailingSubtitle,
+    Color? trailingSubtitleColor,
+    List<LmuInTextVisual>? trailingSubtitleInTextVisuals,
+    Widget? leadingArea,
+    Widget? trailingArea,
+    bool? hasVerticalPadding,
+    bool? hasHorizontalPadding,
+    String? chevronTitle,
+    void Function()? onTap,
+  }) {
+    return LmuListItem._(
+      key: key,
+      title: title,
+      titleColor: titleColor,
+      titleInTextVisuals: titleInTextVisuals,
+      mainContentAlignment: mainContentAlignment ?? MainContentAlignment.top,
+      subtitle: subtitle,
+      subtitleColor: subtitleTextColor,
+      subtitleInTextVisuals: subtitleInTextVisuals,
+      trailingTitle: trailingTitle,
+      trailingTitleColor: trailingTitleColor,
+      trailingTitleInTextVisuals: trailingTitleInTextVisuals,
+      trailingSubtitle: trailingSubtitle,
+      trailingSubtitleColor: trailingSubtitleColor,
+      trailingSubtitleInTextVisuals: trailingSubtitleInTextVisuals,
+      leadingArea: leadingArea,
+      trailingArea: trailingArea,
+      hasHorizontalPadding: hasHorizontalPadding ?? true,
+      hasVerticalPadding: hasVerticalPadding ?? true,
+      onTap: onTap,
+      actionArea: LmuChevronAction(
+        chevronTitle: chevronTitle,
+      ),
+    );
+  }
+
   // Helpers
   bool get _hasTitle => title != null;
   bool get _hasTitleInTextVisuals => titleInTextVisuals != null;
@@ -524,7 +572,6 @@ class _ActionArea extends StatelessWidget {
         ),
         ConstrainedBox(
           constraints: const BoxConstraints(
-            maxWidth: LmuSizes.xxxlarge,
             maxHeight: LmuSizes.xxxlarge,
             minHeight: LmuSizes.xlarge,
           ),

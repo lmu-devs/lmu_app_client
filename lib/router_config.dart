@@ -4,18 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mensa/mensa.dart';
 import 'package:provider/provider.dart';
-import 'package:wunschkonzert/wunschkonzert.dart';
+import 'package:settings/settings.dart';
 
-final GlobalKey<NavigatorState> _rootNavigatorKey =
-    GlobalKey<NavigatorState>(debugLabel: 'root');
+final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
 final routeConfig = GoRouter(
   navigatorKey: _rootNavigatorKey,
   errorBuilder: (context, state) => Container(),
   routes: <RouteBase>[
     StatefulShellRoute.indexedStack(
-      builder: (BuildContext context, GoRouterState state,
-          StatefulNavigationShell navigationShell) {
+      builder: (BuildContext context, GoRouterState state, StatefulNavigationShell navigationShell) {
         return ScaffoldWithNavBar(navigationShell: navigationShell);
       },
       branches: <StatefulShellBranch>[
@@ -35,28 +33,22 @@ final routeConfig = GoRouter(
                           children: [
                             ElevatedButton(
                               onPressed: () => {
-                                Provider.of<ThemeProvider>(context,
-                                        listen: false)
-                                    .setThemeMode(
-                                        ThemeMode.light) // For dark theme
+                                Provider.of<ThemeProvider>(context, listen: false)
+                                    .setThemeMode(ThemeMode.light) // For dark theme
                               },
                               child: const Text('Light'),
                             ),
                             ElevatedButton(
                               onPressed: () => {
-                                Provider.of<ThemeProvider>(context,
-                                        listen: false)
-                                    .setThemeMode(
-                                        ThemeMode.dark) // For light theme
+                                Provider.of<ThemeProvider>(context, listen: false)
+                                    .setThemeMode(ThemeMode.dark) // For light theme
                               },
                               child: const Text('Dark'),
                             ),
                             ElevatedButton(
                               onPressed: () => {
-                                Provider.of<ThemeProvider>(context,
-                                        listen: false)
-                                    .setThemeMode(
-                                        ThemeMode.system) // For system theme
+                                Provider.of<ThemeProvider>(context, listen: false)
+                                    .setThemeMode(ThemeMode.system) // For system theme
                               },
                               child: const Text('System'),
                             ),
@@ -97,9 +89,9 @@ final routeConfig = GoRouter(
         StatefulShellBranch(
           routes: <RouteBase>[
             GoRoute(
-              path: RouteNames.wunschkonzert,
+              path: RouteNames.settings,
               pageBuilder: (context, state) => const NoTransitionPage(
-                child: WunschkonzertMainRoute(),
+                child: SettingsMainRoute(),
               ),
             ),
           ],
@@ -175,8 +167,8 @@ class ScaffoldWithNavBar extends StatelessWidget {
             label: 'Mensa',
           ),
           NavigationDestination(
-            icon: Icon(Icons.confirmation_number),
-            label: 'Wunschkonzert',
+            icon: Icon(Icons.settings),
+            label: 'Settings',
           ),
         ],
       ),
