@@ -33,6 +33,7 @@ class ConentTile extends BaseTile {
   @override
   Widget buildTile(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: content,
     );
   }

@@ -28,11 +28,11 @@ class WunschkonzertSuccessView extends StatelessWidget {
           ),
           ConentTile(
             content: [
-              LmuListItem.chevron(
+              LmuListItem.action(
                 title: "Unsere Roadmap",
                 subtitle: "Unrealistische Meilensteine",
                 mainContentAlignment: MainContentAlignment.center,
-                chevronTitle: "2333s",
+                actionType: LmuListItemAction.chevron,
                 onTap: () {},
               ),
               LmuListItem.base(

@@ -1,6 +1,8 @@
 import 'package:core/components.dart';
 import 'package:flutter/material.dart';
 
+import '../actions/lmu_list_item_action.dart';
+
 class LmuListDropdown extends StatelessWidget {
   const LmuListDropdown({
     Key? key,
@@ -20,12 +22,13 @@ class LmuListDropdown extends StatelessWidget {
     final valueNotifier = ValueNotifier<bool>(initialValue);
     return Column(
       children: [
-        LmuListItem.dropdown(
+        LmuListItem.action(
           hasHorizontalPadding: false,
           title: title,
           titleColor: titleColor,
           initialValue: initialValue,
           mainContentAlignment: MainContentAlignment.center,
+          actionType: LmuListItemAction.dropdown,
           onChange: (value) => valueNotifier.value = value,
         ),
         ValueListenableBuilder(

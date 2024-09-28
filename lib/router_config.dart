@@ -56,6 +56,14 @@ final routeConfig = GoRouter(
               pageBuilder: (context, state) => const NoTransitionPage(
                 child: SettingsMainRoute(),
               ),
+              routes: [
+                GoRoute(
+                  path: RouteNames.settingsApperance.asSubroute,
+                  pageBuilder: (context, state) => const NoTransitionPage(
+                    child: SettingsApperanceRoute(),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

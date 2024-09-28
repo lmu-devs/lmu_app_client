@@ -4,6 +4,7 @@ class RouteNames {
   static const mensaDetails = '/mensa/details';
   static const wunschkonzert = '/wunschkonzert';
   static const settings = '/settings';
+  static const settingsApperance = '/settings/apperance';
 }
 
 extension RouteExtension on String {
