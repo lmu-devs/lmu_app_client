@@ -22,7 +22,7 @@ dependencies:
   wunschkonzert:
     path: ./feature_modules/wunschkonzert
   http: ^0.13.3
-  lucide_icons: ^0.257.0
+  flutter_lucide: ^1.2.0
 
 dev_dependencies:
   flutter_test:

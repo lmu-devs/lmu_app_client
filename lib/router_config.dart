@@ -1,15 +1,17 @@
 import 'package:core/routes.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mensa/mensa.dart';
-import 'package:provider/provider.dart';
 import 'package:settings/settings.dart';
+import 'package:wunschkonzert/wunschkonzert.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
 final routeConfig = GoRouter(
   navigatorKey: _rootNavigatorKey,
+  initialLocation: RouteNames.mensa,
   errorBuilder: (context, state) => Container(),
   routes: <RouteBase>[
     StatefulShellRoute.indexedStack(
@@ -17,55 +19,6 @@ final routeConfig = GoRouter(
         return ScaffoldWithNavBar(navigationShell: navigationShell);
       },
       branches: <StatefulShellBranch>[
-        StatefulShellBranch(
-          routes: <GoRoute>[
-            GoRoute(
-              path: RouteNames.home,
-              pageBuilder: (context, state) {
-                return NoTransitionPage(
-                  child: Container(
-                    color: context.colors.neutralColors.backgroundColors.base,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ButtonBar(
-                          alignment: MainAxisAlignment.center,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () => {
-                                Provider.of<ThemeProvider>(context, listen: false)
-                                    .setThemeMode(ThemeMode.light) // For dark theme
-                              },
-                              child: const Text('Light'),
-                            ),
-                            ElevatedButton(
-                              onPressed: () => {
-                                Provider.of<ThemeProvider>(context, listen: false)
-                                    .setThemeMode(ThemeMode.dark) // For light theme
-                              },
-                              child: const Text('Dark'),
-                            ),
-                            ElevatedButton(
-                              onPressed: () => {
-                                Provider.of<ThemeProvider>(context, listen: false)
-                                    .setThemeMode(ThemeMode.system) // For system theme
-                              },
-                              child: const Text('System'),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 50,
-                        ),
-                        const _WeirdAssButton(),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
         StatefulShellBranch(
           routes: <RouteBase>[
             GoRoute(
@@ -83,6 +36,16 @@ final routeConfig = GoRouter(
                   ),
                 ),
               ],
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: <RouteBase>[
+            GoRoute(
+              path: RouteNames.wunschkonzert,
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: WunschkonzertMainRoute(),
+              ),
             ),
           ],
         ),
@@ -133,7 +96,7 @@ class _WeirdAssButton extends StatelessWidget {
         ),
       ),
       child: const Center(
-        child: Text('Geeks for Geeks'),
+        child: Text('Grandmas with Drip'),
       ),
     );
   }
@@ -159,15 +122,15 @@ class ScaffoldWithNavBar extends StatelessWidget {
         indicatorColor: Colors.transparent,
         destinations: const <NavigationDestination>[
           NavigationDestination(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.food_bank),
+            icon: Icon(LucideIcons.utensils),
             label: 'Mensa',
           ),
           NavigationDestination(
-            icon: Icon(Icons.settings),
+            icon: Icon(LucideIcons.party_popper),
+            label: 'Wunschkonzert',
+          ),
+          NavigationDestination(
+            icon: Icon(LucideIcons.circle_ellipsis),
             label: 'Settings',
           ),
         ],
