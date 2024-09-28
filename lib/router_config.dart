@@ -114,26 +114,37 @@ class ScaffoldWithNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: navigationShell,
-      bottomNavigationBar: NavigationBar(
-        height: 54,
-        selectedIndex: navigationShell.currentIndex,
-        onDestinationSelected: (int index) => _onTap(index),
-        backgroundColor: context.colors.neutralColors.backgroundColors.base,
-        indicatorColor: Colors.transparent,
-        destinations: const <NavigationDestination>[
-          NavigationDestination(
-            icon: Icon(LucideIcons.utensils),
-            label: 'Mensa',
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              color: context.colors.neutralColors.borderColors.seperatorLight,
+              width: 1,
+            ),
           ),
-          NavigationDestination(
-            icon: Icon(LucideIcons.party_popper),
-            label: 'Wunschkonzert',
-          ),
-          NavigationDestination(
-            icon: Icon(LucideIcons.circle_ellipsis),
-            label: 'Settings',
-          ),
-        ],
+        ),
+        child: NavigationBar(
+          height: 64,
+          selectedIndex: navigationShell.currentIndex,
+          onDestinationSelected: (int index) => _onTap(index),
+          backgroundColor: context.colors.neutralColors.backgroundColors.base,
+          surfaceTintColor: Colors.transparent,
+          indicatorColor: Colors.transparent,
+          destinations: const <NavigationDestination>[
+            NavigationDestination(
+              icon: Icon(LucideIcons.utensils),
+              label: 'Mensa',
+            ),
+            NavigationDestination(
+              icon: Icon(LucideIcons.party_popper),
+              label: 'Wunschkonzert',
+            ),
+            NavigationDestination(
+              icon: Icon(LucideIcons.circle_ellipsis),
+              label: 'Settings',
+            ),
+          ],
+        ),
       ),
     );
   }

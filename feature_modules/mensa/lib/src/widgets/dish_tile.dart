@@ -12,7 +12,8 @@ class DishTile extends StatelessWidget {
     required this.dishType,
     required this.title,
     required this.priceSimple,
-    required this.isFavorite,
+    required this.isLiked,
+    required this.likeCount,
     required this.onFavoriteTap,
     this.onTap,
   });
@@ -21,7 +22,8 @@ class DishTile extends StatelessWidget {
   final String title;
   final String priceSimple;
   final void Function()? onTap;
-  final bool isFavorite;
+  final bool isLiked;
+  final int likeCount;
   final void Function()? onFavoriteTap;
 
   @override
@@ -37,52 +39,69 @@ class DishTile extends StatelessWidget {
         padding: const EdgeInsets.all(
           LmuSizes.mediumLarge,
         ),
-        child: Row(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(getDishTypeEmoji(dishType)),
-                  const SizedBox(
-                    width: LmuSizes.medium,
-                  ),
-                  Flexible(
-                    child: LmuText.body(
-                      title,
-                      weight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: LmuSizes.xlarge,
-                  ),
-                ],
-              ),
-            ),
-            Column(
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                GestureDetector(
-                  onTap: onFavoriteTap,
-                  child: isFavorite
-                      ? LmuIcon(
-                          icon: Icons.star,
-                          size: LmuIconSizes.medium,
-                          color: context.colors.warningColors.textColors.strongColors.base,
-                        )
-                      : LmuIcon(
-                          icon: Icons.star_border_outlined,
-                          size: LmuIconSizes.medium,
-                          color: context.colors.neutralColors.backgroundColors.flippedColors.base,
+                Expanded(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(getDishTypeEmoji(dishType)),
+                      const SizedBox(
+                        width: LmuSizes.medium,
+                      ),
+                      Flexible(
+                        child: LmuText.body(
+                          title,
+                          weight: FontWeight.w600,
                         ),
+                      ),
+                      const SizedBox(
+                        width: LmuSizes.xlarge,
+                      ),
+                    ],
+                  ),
                 ),
-                LmuText.bodySmall(
-                  priceSimple,
-                  weight: FontWeight.w300,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Row(
+                      children: [
+                        LmuText.bodySmall(likeCount != 0 ? likeCount.toString() : ''),
+                        const SizedBox(
+                          width: LmuSizes.small,
+                        ),
+                        GestureDetector(
+                          onTap: onFavoriteTap,
+                          child: isLiked
+                              ? LmuIcon(
+                                  icon: Icons.star,
+                                  size: LmuIconSizes.medium,
+                                  color: context.colors.warningColors.textColors.strongColors.base,
+                                )
+                              : LmuIcon(
+                                  icon: Icons.star_border_outlined,
+                                  size: LmuIconSizes.medium,
+                                  color: context.colors.neutralColors.backgroundColors.flippedColors.base,
+                                ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: LmuSizes.small,
+                    ),
+                    LmuText.bodySmall(
+                      priceSimple,
+                      weight: FontWeight.w300,
+                    ),
+                  ],
                 ),
               ],
             ),
+            /// Add Allergens
           ],
         ),
       ),

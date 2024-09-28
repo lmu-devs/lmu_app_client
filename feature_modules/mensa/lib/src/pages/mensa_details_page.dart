@@ -29,6 +29,7 @@ class MensaDetailsPage extends StatelessWidget {
             expandedHeight: 210,
             pinned: true,
             elevation: 0,
+            surfaceTintColor: Colors.transparent,
             backgroundColor: context.colors.neutralColors.backgroundColors.base,
             flexibleSpace: FlexibleSpaceBar(
               background: Image.network(
