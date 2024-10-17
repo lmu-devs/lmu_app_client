@@ -1,12 +1,13 @@
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:lmu_app/shell_route_data.dart';
 import 'package:provider/provider.dart';
 
 import 'global_providers.dart';
-import 'router_config.dart';
 
 class LmuApp extends StatelessWidget {
-  const LmuApp({super.key});
+  LmuApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class LmuApp extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return MaterialApp.router(
-            routerConfig: routeConfig,
+            routerConfig: _router,
             title: 'Lmu App',
             theme: AppTheme.light,
             darkTheme: AppTheme.dark,
@@ -24,4 +25,9 @@ class LmuApp extends StatelessWidget {
       ),
     );
   }
+
+  final GoRouter _router = GoRouter(
+    routes: [$shellRouteData],
+    initialLocation: '/mensa',
+  );
 }

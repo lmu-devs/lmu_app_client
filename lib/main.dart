@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-import 'lmu_app.dart';
+import 'package:lmu_app/lmu_app.dart';
 
 void main() {
   runApp(
-    const LmuApp(),
+    LmuApp(),
   );
 }

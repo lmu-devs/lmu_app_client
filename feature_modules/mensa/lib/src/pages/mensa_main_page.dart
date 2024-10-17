@@ -1,44 +1,41 @@
-import 'package:core/components.dart';
-import 'package:core/themes.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mensa/src/bloc/mensa_cubit/cubit.dart';
-import 'package:mensa/src/views/views.dart';
-import 'package:mensa/src/widgets/my_taste_button.dart';
+import 'package:mensa/src/bloc/bloc.dart';
+import 'package:mensa/src/repository/api/mensa_api_client.dart';
+import 'package:mensa/src/repository/mensa_repository.dart';
+
+import '../views/mensa_main_view.dart';
 
 class MensaMainPage extends StatelessWidget {
-  const MensaMainPage({super.key});
+  const MensaMainPage({
+    required this.arguments,
+    super.key,
+  });
+
+  final Object? arguments;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.colors.neutralColors.backgroundColors.base,
-      appBar: LmuDefaultNavigationBar(
-        title: "Mensa",
-        trailingWidget: GestureDetector(
-          onTap: () {
-            LmuBottomSheet.show(
-              context,
-              title: "My Taste",
-            );
-          },
-          child: MyTasteButton(background: context.colors.neutralColors.backgroundColors.base),
+    final mensaRepository = ConnectedMensaRepository(
+      mensaApiClient: MensaApiClient(),
+    );
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<MensaCubit>(
+          create: (context) => MensaCubit(
+            mensaRepository: mensaRepository,
+          )..loadMensaData(),
         ),
-      ),
-      body: Center(
-        child: BlocBuilder<MensaCubit, MensaState>(
-          builder: (context, state) {
-            if (state is MensaLoadInProgress) {
-              return const MensaLoadingView();
-            } else if (state is MensaLoadSuccess) {
-              return MensaContentView(
-                mensaModels: state.mensaModels,
-              );
-            }
-            return const MensaErrorView();
-          },
+        BlocProvider<MensaCurrentDayCubit>(
+          create: (context) => MensaCurrentDayCubit(),
         ),
-      ),
+        BlocProvider<MensaFavoriteCubit>(
+          create: (context) => MensaFavoriteCubit(
+            mensaRepository: mensaRepository,
+          ),
+        ),
+      ],
+      child: MensaMainView(),
     );
   }
 }

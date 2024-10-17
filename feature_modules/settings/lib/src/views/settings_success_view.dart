@@ -1,10 +1,10 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:core/routes.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+
+import '../routes/settings_routes.dart';
 
 class SettingsSuccessView extends StatelessWidget {
   const SettingsSuccessView({super.key});
@@ -28,9 +28,7 @@ class SettingsSuccessView extends StatelessWidget {
                   actionType: LmuListItemAction.chevron,
                   chevronTitle: Provider.of<ThemeProvider>(context, listen: true).themeMode.name,
                   onTap: () {
-                    context.go(
-                      RouteNames.settingsApperance,
-                    );
+                    SettingsApperanceRoute().go(context);
                   },
                 ),
               ],

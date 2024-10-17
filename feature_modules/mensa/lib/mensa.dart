@@ -1,3 +1,3 @@
 library mensa;
 
-export 'src/routes/routes.dart';
+export 'src/routes/mensa_routes.dart';
