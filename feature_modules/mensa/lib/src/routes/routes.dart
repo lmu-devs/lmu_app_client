@@ -1,2 +1,2 @@
-export 'mensa_details_route.dart';
-export 'mensa_main_route.dart';
+export '../pages/mensa_details_page.dart';
+export '../pages/mensa_main_page.dart';

@@ -23,11 +23,15 @@ dependencies:
     path: ./feature_modules/wunschkonzert
   http: ^0.13.3
   flutter_lucide: ^1.2.0
+  collection: ^1.15.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  go_router_builder: ^2.7.1
+  build_runner: any
+  build_verify: any
 
 
 flutter:
