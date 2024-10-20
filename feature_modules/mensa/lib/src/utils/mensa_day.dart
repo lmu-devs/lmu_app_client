@@ -11,7 +11,7 @@ class MensaDay extends DateTime {
     DateTime newDateTime = dateTime.add(duration);
 
     /// Daylight Saving Time Check
-    if (newDateTime.year == year && newDateTime.month == month && newDateTime.day == day) {
+    if (duration.inHours >= 24 && newDateTime.year == year && newDateTime.month == month && newDateTime.day == day) {
       newDateTime = newDateTime.add(const Duration(hours: 1));
     }
 
@@ -23,7 +23,7 @@ class MensaDay extends DateTime {
     DateTime newDateTime = dateTime.subtract(duration);
 
     /// Daylight Saving Time Check
-    if (newDateTime.year == year && newDateTime.month == month && newDateTime.day == day) {
+    if (duration.inHours >= 24 && newDateTime.year == year && newDateTime.month == month && newDateTime.day == day) {
       newDateTime = newDateTime.subtract(const Duration(hours: 1));
     }
 
