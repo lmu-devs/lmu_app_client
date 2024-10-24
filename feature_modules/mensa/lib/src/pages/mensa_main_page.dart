@@ -1,24 +1,17 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mensa/src/bloc/bloc.dart';
-import 'package:mensa/src/repository/api/mensa_api_client.dart';
 import 'package:mensa/src/repository/mensa_repository.dart';
 
 import '../views/mensa_main_view.dart';
 
 class MensaMainPage extends StatelessWidget {
-  const MensaMainPage({
-    required this.arguments,
-    super.key,
-  });
-
-  final Object? arguments;
+  const MensaMainPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final mensaRepository = ConnectedMensaRepository(
-      mensaApiClient: MensaApiClient(),
-    );
+    final mensaRepository = GetIt.I.get<MensaRepository>();
     return MultiBlocProvider(
       providers: [
         BlocProvider<MensaCubit>(
@@ -35,7 +28,7 @@ class MensaMainPage extends StatelessWidget {
           ),
         ),
       ],
-      child: MensaMainView(),
+      child: const MensaMainView(),
     );
   }
 }
