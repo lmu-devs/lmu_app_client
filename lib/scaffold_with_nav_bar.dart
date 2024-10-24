@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:go_router/go_router.dart';
@@ -21,10 +22,23 @@ class ScaffoldWithNavBar extends StatelessWidget {
         children: children,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: context.colors.neutralColors.textColors.strongColors.base,
+        unselectedItemColor: context.colors.neutralColors.textColors.weakColors.base,
+        backgroundColor: context.colors.neutralColors.backgroundColors.base,
+        selectedLabelStyle: const TextStyle(
+          fontWeight: FontWeight.w600,
+        ),
+        unselectedLabelStyle: const TextStyle(
+          fontWeight: FontWeight.w600,
+        ),
         selectedFontSize: 12,
+        unselectedFontSize: 12,
         items: const <BottomNavigationBarItem>[
+          //BottomNavigationBarItem(icon: Icon(LucideIcons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(LucideIcons.utensils), label: 'Canteen'),
-          BottomNavigationBarItem(icon: Icon(LucideIcons.circle_ellipsis), label: 'Settings'),
+          //BottomNavigationBarItem(icon: Icon(LucideIcons.map), label: 'Explore'),
+          BottomNavigationBarItem(icon: Icon(LucideIcons.circle_ellipsis), label: 'More'),
         ],
         currentIndex: navigationShell.currentIndex,
         onTap: (int index) => _onTap(context, index),

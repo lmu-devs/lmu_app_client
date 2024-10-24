@@ -1,7 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/routes.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -161,12 +160,9 @@ class MensaOverviewState extends State<MensaOverview> {
         Padding(
           padding: EdgeInsets.only(
             top: areFavoritesEmpty || isFavorite ? LmuSizes.none : LmuSizes.mediumLarge,
-            bottom: LmuSizes.mediumLarge,
           ),
-          child: LmuText.body(
-            title,
-            weight: FontWeight.w600,
-            color: context.colors.neutralColors.textColors.mediumColors.base,
+          child: LmuTileHeadline.base(
+            title: title,
           ),
         ),
         _MensaOverviewItem(
