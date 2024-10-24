@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
-import 'routes.dart';
+import '../pages/pages.dart';
 
 part 'mensa_routes.g.dart';
 
@@ -25,9 +25,7 @@ class MensaMainRoute extends GoRouteData {
   const MensaMainRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const MensaMainPage(
-        arguments: null,
-      );
+  Widget build(BuildContext context, GoRouterState state) => const MensaMainPage();
 }
 
 class MensaDetailsRoute extends GoRouteData {
