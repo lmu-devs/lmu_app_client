@@ -1,8 +1,10 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:core/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 import '../bloc/bloc.dart';
@@ -110,6 +112,7 @@ class MensaOverviewState extends State<MensaOverview> {
       child: Padding(
         padding: const EdgeInsets.all(LmuSizes.mediumLarge),
         child: BlocBuilder<MensaFavoriteCubit, MensaFavoriteState>(
+          bloc: GetIt.I.get<MensaFavoriteCubit>(),
           builder: (context, state) {
             if (state is MensaFavoriteLoadSuccess) {
               final favoriteMensaModels = _getFavoriteMensaModels(state.favoriteMensaIds);
@@ -119,13 +122,13 @@ class MensaOverviewState extends State<MensaOverview> {
                 children: [
                   if (favoriteMensaModels.isNotEmpty)
                     _buildMensaOverview(
-                      title: "Favorites",
+                      title: context.localizations.favorites,
                       mensaModels: favoriteMensaModels,
                       isFavorite: true,
                     ),
                   if (unFavoritedMensaModels.isNotEmpty)
                     _buildMensaOverview(
-                      title: "All Mensas",
+                      title: context.localizations.allCanteens,
                       mensaModels: unFavoritedMensaModels,
                       areFavoritesEmpty: favoriteMensaModels.isEmpty,
                     ),
@@ -212,7 +215,7 @@ class _MensaOverviewItem extends StatelessWidget {
                   mensaModel.openingHours,
                 ),
                 isFavorite: isFavorite,
-                onFavoriteTap: () => context.read<MensaFavoriteCubit>().toggleFavoriteMensa(
+                onFavoriteTap: () => GetIt.I.get<MensaFavoriteCubit>().toggleFavoriteMensa(
                       mensaId: id,
                     ),
                 onTap: () => context.go(
