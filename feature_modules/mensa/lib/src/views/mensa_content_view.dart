@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/mensa_current_day_cubit/mensa_current_day_cubit.dart';
 import '../repository/api/api.dart';
+import '../utils/utils.dart';
 import '../widgets/mensa_overview.dart';
 import '../widgets/mensa_week_view.dart';
 
@@ -17,6 +18,7 @@ class MensaContentView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mensaCurrentDayCubit = BlocProvider.of<MensaCurrentDayCubit>(context);
+    final valueListenable = ValueNotifier<MensaDay>(MensaDay.now());
 
     return Column(
       children: [

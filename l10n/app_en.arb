@@ -1,0 +1,18 @@
+{
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  },
+  "open": "Open",
+  "@open": {
+    "description": "The state of being open"
+  },
+  "allCanteens": "All Canteens",
+  "@allCanteens": {
+    "description": "Display all canteens"
+  },
+  "favorites": "Favorites",
+  "@favorites": {
+    "description": "Favrourite canteens"
+  }
+}

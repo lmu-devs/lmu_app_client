@@ -2,6 +2,7 @@ import 'package:core/components.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mensa/src/bloc/mensa_cubit/cubit.dart';
 import 'package:mensa/src/views/views.dart';
 import 'package:mensa/src/widgets/my_taste_button.dart';
@@ -27,6 +28,7 @@ class MensaMainView extends StatelessWidget {
       ),
       body: Center(
         child: BlocBuilder<MensaCubit, MensaState>(
+          bloc: GetIt.I.get<MensaCubit>(),
           builder: (context, state) {
             if (state is MensaLoadInProgress) {
               return const MensaLoadingView();

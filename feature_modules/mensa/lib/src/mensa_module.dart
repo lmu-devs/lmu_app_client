@@ -1,6 +1,7 @@
 import 'package:core/module.dart';
 import 'package:get_it/get_it.dart';
 
+import 'bloc/bloc.dart';
 import 'public_api/public_api.dart';
 import 'repository/repository.dart';
 
@@ -11,10 +12,17 @@ class MensaModule extends AppModule
 
   @override
   void provideLocalDependcies() {
+    final repository = ConnectedMensaRepository(
+      mensaApiClient: MensaApiClient(),
+    );
     GetIt.I.registerSingleton<MensaRepository>(
-      ConnectedMensaRepository(
-        mensaApiClient: MensaApiClient(),
-      ),
+      repository,
+    );
+    GetIt.I.registerSingleton<MensaCubit>(
+      MensaCubit(mensaRepository: repository),
+    );
+    GetIt.I.registerSingleton<MensaFavoriteCubit>(
+      MensaFavoriteCubit(mensaRepository: repository),
     );
   }
 
@@ -26,5 +34,7 @@ class MensaModule extends AppModule
   }
 
   @override
-  void onAppStartNotice() {}
+  void onAppStartNotice() {
+    GetIt.I.get<MensaCubit>().loadMensaData();
+  }
 }
