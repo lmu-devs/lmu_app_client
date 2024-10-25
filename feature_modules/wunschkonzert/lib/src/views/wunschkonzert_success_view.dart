@@ -19,33 +19,30 @@ class WunschkonzertSuccessView extends StatelessWidget {
               vertical: LmuSizes.medium,
             ),
             child: LmuText.body(
-                "Die App ist noch lange nicht am Ziel. Gute Dinge brauchen Zeit und durchdachte Entscheidungen. Helft uns herauszufinden, welche Funktionen euch am meisten fehlen."),
+              "Die App ist noch lange nicht am Ziel. Gute Dinge brauchen Zeit und durchdachte Entscheidungen. Helft uns herauszufinden, welche Funktionen euch am meisten fehlen.",
+              color: context.colors.neutralColors.textColors.mediumColors.base,
+            ),
           ),
           const SizedBox(
             height: LmuSizes.mediumLarge,
           ),
-          TileContent(
+          ConentTile(
             content: [
-              LmuListItem.base(
+              LmuListItem.action(
                 title: "Unsere Roadmap",
                 subtitle: "Unrealistische Meilensteine",
                 mainContentAlignment: MainContentAlignment.center,
-                trailingArea: const _NextIcon(),
+                actionType: LmuListItemAction.chevron,
                 onTap: () {},
               ),
               LmuListItem.base(
                 title: "Beta Tester:in werden",
                 subtitle: "Teste die neusten App Features",
                 mainContentAlignment: MainContentAlignment.center,
-                trailingArea: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    LmuIcon(
-                      size: LmuIconSizes.small,
-                      icon: Icons.link_off,
-                      color: context.colors.neutralColors.textColors.weakColors.base,
-                    ),
-                  ],
+                trailingArea: LmuIcon(
+                  size: LmuIconSizes.medium,
+                  icon: Icons.link_off,
+                  color: context.colors.neutralColors.textColors.weakColors.base,
                 ),
                 onTap: () {},
               ),
@@ -53,42 +50,6 @@ class WunschkonzertSuccessView extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _NextIcon extends StatelessWidget {
-  const _NextIcon({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        LmuIcon(
-          size: LmuIconSizes.small,
-          icon: Icons.arrow_forward_ios,
-          color: context.colors.neutralColors.textColors.weakColors.base,
-        ),
-      ],
-    );
-  }
-}
-
-class TileContent extends BaseTile {
-  const TileContent({
-    required this.content,
-    super.key,
-  });
-
-  final List<Widget> content;
-
-  @override
-  Widget buildTile(BuildContext context) {
-    return Column(
-      children: content,
     );
   }
 }

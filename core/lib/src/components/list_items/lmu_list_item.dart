@@ -2,7 +2,7 @@ import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
-import '../actions/actions.dart';
+import '../actions/lmu_list_item_action.dart';
 import '../in_text_visuals/in_text_visuals.dart';
 import '../texts/lmu_text.dart';
 
@@ -26,12 +26,13 @@ class LmuListItem extends StatelessWidget {
     this.trailingSubtitleInTextVisuals,
     this.leadingArea,
     this.trailingArea,
-    this.actionArea,
+    this.actionType,
     this.onActionValueChanged,
     this.actionValueNotifier,
     this.hasVerticalPadding = true,
     this.hasHorizontalPadding = true,
     this.onTap,
+    this.chevronTitle,
   }) : super(key: key);
 
   final String? title;
@@ -49,12 +50,13 @@ class LmuListItem extends StatelessWidget {
   final List<LmuInTextVisual>? trailingSubtitleInTextVisuals;
   final Widget? leadingArea;
   final Widget? trailingArea;
-  final Widget? actionArea;
+  final LmuListItemAction? actionType;
   final void Function(bool)? onActionValueChanged;
   final ValueNotifier<bool>? actionValueNotifier;
   final void Function()? onTap;
   final bool hasVerticalPadding;
   final bool hasHorizontalPadding;
+  final String? chevronTitle;
 
   factory LmuListItem.base({
     Key? key,
@@ -99,9 +101,10 @@ class LmuListItem extends StatelessWidget {
         hasVerticalPadding: hasVerticalPadding ?? true,
       );
 
-  factory LmuListItem.toggle({
-    required void Function(bool) onChange,
-    required bool initialValue,
+  factory LmuListItem.action({
+    required LmuListItemAction actionType,
+    void Function(bool)? onChange,
+    bool? initialValue,
     Key? key,
     String? title,
     Color? titleColor,
@@ -118,10 +121,11 @@ class LmuListItem extends StatelessWidget {
     List<LmuInTextVisual>? trailingSubtitleInTextVisuals,
     Widget? leadingArea,
     Widget? trailingArea,
+    void Function()? onTap,
     bool? hasVerticalPadding,
     bool? hasHorizontalPadding,
+    String? chevronTitle,
   }) {
-    final tappedNotifier = ValueNotifier<bool>(initialValue);
     return LmuListItem._(
       key: key,
       title: title,
@@ -139,128 +143,13 @@ class LmuListItem extends StatelessWidget {
       trailingSubtitleInTextVisuals: trailingSubtitleInTextVisuals,
       leadingArea: leadingArea,
       trailingArea: trailingArea,
-      actionValueNotifier: tappedNotifier,
+      actionValueNotifier: ValueNotifier<bool>(initialValue ?? false),
       onActionValueChanged: onChange,
       hasHorizontalPadding: hasHorizontalPadding ?? true,
       hasVerticalPadding: hasVerticalPadding ?? true,
-      actionArea: ValueListenableBuilder<bool>(
-        valueListenable: tappedNotifier,
-        builder: (context, isActive, _) {
-          return LmuToggleAction(
-            isActive: isActive,
-          );
-        },
-      ),
-    );
-  }
-
-  factory LmuListItem.dropdown({
-    required void Function(bool) onChange,
-    required bool initialValue,
-    Key? key,
-    String? title,
-    Color? titleColor,
-    List<LmuInTextVisual>? titleInTextVisuals,
-    MainContentAlignment? mainContentAlignment,
-    String? subtitle,
-    Color? subtitleTextColor,
-    List<LmuInTextVisual>? subtitleInTextVisuals,
-    String? trailingTitle,
-    Color? trailingTitleColor,
-    List<LmuInTextVisual>? trailingTitleInTextVisuals,
-    String? trailingSubtitle,
-    Color? trailingSubtitleColor,
-    List<LmuInTextVisual>? trailingSubtitleInTextVisuals,
-    Widget? leadingArea,
-    Widget? trailingArea,
-    bool? hasVerticalPadding,
-    bool? hasHorizontalPadding,
-  }) {
-    final tappedNotifier = ValueNotifier<bool>(initialValue);
-    return LmuListItem._(
-      key: key,
-      title: title,
-      titleColor: titleColor,
-      titleInTextVisuals: titleInTextVisuals,
-      mainContentAlignment: mainContentAlignment ?? MainContentAlignment.top,
-      subtitle: subtitle,
-      subtitleColor: subtitleTextColor,
-      subtitleInTextVisuals: subtitleInTextVisuals,
-      trailingTitle: trailingTitle,
-      trailingTitleColor: trailingTitleColor,
-      trailingTitleInTextVisuals: trailingTitleInTextVisuals,
-      trailingSubtitle: trailingSubtitle,
-      trailingSubtitleColor: trailingSubtitleColor,
-      trailingSubtitleInTextVisuals: trailingSubtitleInTextVisuals,
-      leadingArea: leadingArea,
-      trailingArea: trailingArea,
-      actionValueNotifier: tappedNotifier,
-      onActionValueChanged: onChange,
-      hasHorizontalPadding: hasHorizontalPadding ?? true,
-      hasVerticalPadding: hasVerticalPadding ?? true,
-      actionArea: ValueListenableBuilder<bool>(
-        valueListenable: tappedNotifier,
-        builder: (context, isActive, _) {
-          return LmuDropDownAction(
-            isActive: isActive,
-          );
-        },
-      ),
-    );
-  }
-
-  factory LmuListItem.checkbox({
-    required void Function(bool) onChange,
-    required bool initialValue,
-    Key? key,
-    String? title,
-    Color? titleColor,
-    List<LmuInTextVisual>? titleInTextVisuals,
-    MainContentAlignment? mainContentAlignment,
-    String? subtitle,
-    Color? subtitleTextColor,
-    List<LmuInTextVisual>? subtitleInTextVisuals,
-    String? trailingTitle,
-    Color? trailingTitleColor,
-    List<LmuInTextVisual>? trailingTitleInTextVisuals,
-    String? trailingSubtitle,
-    Color? trailingSubtitleColor,
-    List<LmuInTextVisual>? trailingSubtitleInTextVisuals,
-    Widget? leadingArea,
-    Widget? trailingArea,
-    bool? hasVerticalPadding,
-    bool? hasHorizontalPadding,
-  }) {
-    final tappedNotifier = ValueNotifier<bool>(initialValue);
-    return LmuListItem._(
-      key: key,
-      title: title,
-      titleColor: titleColor,
-      titleInTextVisuals: titleInTextVisuals,
-      mainContentAlignment: mainContentAlignment ?? MainContentAlignment.top,
-      subtitle: subtitle,
-      subtitleColor: subtitleTextColor,
-      subtitleInTextVisuals: subtitleInTextVisuals,
-      trailingTitle: trailingTitle,
-      trailingTitleColor: trailingTitleColor,
-      trailingTitleInTextVisuals: trailingTitleInTextVisuals,
-      trailingSubtitle: trailingSubtitle,
-      trailingSubtitleColor: trailingSubtitleColor,
-      trailingSubtitleInTextVisuals: trailingSubtitleInTextVisuals,
-      leadingArea: leadingArea,
-      trailingArea: trailingArea,
-      actionValueNotifier: tappedNotifier,
-      onActionValueChanged: onChange,
-      hasHorizontalPadding: hasHorizontalPadding ?? true,
-      hasVerticalPadding: hasVerticalPadding ?? true,
-      actionArea: ValueListenableBuilder<bool>(
-        valueListenable: tappedNotifier,
-        builder: (context, isActive, _) {
-          return LmuCheckboxAction(
-            isActive: isActive,
-          );
-        },
-      ),
+      actionType: actionType,
+      onTap: onTap,
+      chevronTitle: chevronTitle,
     );
   }
 
@@ -288,7 +177,7 @@ class LmuListItem extends StatelessWidget {
   bool get _hasMainContent => _hasTitleLine || _hasSubtitleLine;
 
   bool get _hasLeadingArea => leadingArea != null;
-  bool get _hasActionArea => actionArea != null;
+  bool get _hasActionArea => actionType != null && actionValueNotifier != null;
   bool get _hasTrailingArea => trailingArea != null;
 
   MainAxisAlignment get _mainContentAlignment =>
@@ -345,6 +234,7 @@ class LmuListItem extends StatelessWidget {
                                         child: LmuText.body(
                                           title,
                                           color: titleColor,
+                                          weight: FontWeight.w600,
                                         ),
                                       ),
                                     if (_hasTitleInTextVisuals)
@@ -468,7 +358,12 @@ class LmuListItem extends StatelessWidget {
                   ],
                 ),
               ),
-            if (_hasActionArea) _ActionArea(actionArea: actionArea),
+            if (_hasActionArea)
+              _ActionArea(
+                actionArea: actionType,
+                tappedNotifier: actionValueNotifier,
+                chevronTitle: chevronTitle,
+              ),
             if (_hasTrailingArea) _TrailingArea(trailingArea: trailingArea),
           ],
         ),
@@ -510,9 +405,13 @@ class _TrailingArea extends StatelessWidget {
 class _ActionArea extends StatelessWidget {
   const _ActionArea({
     required this.actionArea,
+    required this.tappedNotifier,
+    this.chevronTitle,
   });
 
-  final Widget? actionArea;
+  final LmuListItemAction? actionArea;
+  final ValueNotifier<bool>? tappedNotifier;
+  final String? chevronTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -523,11 +422,15 @@ class _ActionArea extends StatelessWidget {
         ),
         ConstrainedBox(
           constraints: const BoxConstraints(
-            maxWidth: LmuSizes.xxxlarge,
             maxHeight: LmuSizes.xxxlarge,
             minHeight: LmuSizes.xlarge,
           ),
-          child: actionArea,
+          child: ValueListenableBuilder<bool>(
+            valueListenable: tappedNotifier!,
+            builder: (context, isActive, _) {
+              return actionArea!.getWidget(isActive: isActive, chevronTitle: chevronTitle);
+            },
+          ),
         ),
       ],
     );

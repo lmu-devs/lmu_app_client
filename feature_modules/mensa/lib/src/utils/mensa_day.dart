@@ -8,14 +8,26 @@ class MensaDay extends DateTime {
 
   MensaDay addDuration(Duration duration) {
     DateTime dateTime = DateTime(year, month, day);
-    dateTime = dateTime.add(duration);
-    return MensaDay(dateTime.year, dateTime.month, dateTime.day);
+    DateTime newDateTime = dateTime.add(duration);
+
+    /// Daylight Saving Time Check
+    if (duration.inHours >= 24 && newDateTime.year == year && newDateTime.month == month && newDateTime.day == day) {
+      newDateTime = newDateTime.add(const Duration(hours: 1));
+    }
+
+    return MensaDay(newDateTime.year, newDateTime.month, newDateTime.day);
   }
 
   MensaDay subtractDuration(Duration duration) {
     DateTime dateTime = DateTime(year, month, day);
-    dateTime = dateTime.subtract(duration);
-    return MensaDay(dateTime.year, dateTime.month, dateTime.day);
+    DateTime newDateTime = dateTime.subtract(duration);
+
+    /// Daylight Saving Time Check
+    if (duration.inHours >= 24 && newDateTime.year == year && newDateTime.month == month && newDateTime.day == day) {
+      newDateTime = newDateTime.subtract(const Duration(hours: 1));
+    }
+
+    return MensaDay(newDateTime.year, newDateTime.month, newDateTime.day);
   }
 
   bool isEqualTo(MensaDay other) {
@@ -29,17 +41,17 @@ class MensaDay extends DateTime {
     if (isEqualTo(now)) {
       return 'Today';
     } else {
-      return weekday == 1
+      return weekday == DateTime.monday
           ? 'Mo. $day'
-          : weekday == 2
+          : weekday == DateTime.tuesday
               ? 'Di. $day'
-              : weekday == 3
+              : weekday == DateTime.wednesday
                   ? 'Mi. $day'
-                  : weekday == 4
+                  : weekday == DateTime.thursday
                       ? 'Do. $day'
-                      : weekday == 5
+                      : weekday == DateTime.friday
                           ? 'Fr. $day'
-                          : weekday == 6
+                          : weekday == DateTime.saturday
                               ? 'Sa. $day'
                               : 'So. $day';
     }

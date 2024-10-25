@@ -26,8 +26,10 @@ class LmuDefaultNavigationBar extends StatelessWidget implements PreferredSizeWi
             constraints: const BoxConstraints(
               minHeight: 48,
             ),
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
+            padding: const EdgeInsets.only(
+              top: 24,
+              left: 16,
+              right: 16,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,5 +58,5 @@ class LmuDefaultNavigationBar extends StatelessWidget implements PreferredSizeWi
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(48);
+  Size get preferredSize => const Size.fromHeight(72);
 }

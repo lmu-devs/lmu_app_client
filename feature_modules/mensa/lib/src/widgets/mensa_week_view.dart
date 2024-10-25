@@ -2,9 +2,8 @@ import 'package:core/components.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../bloc/mensa_current_day_cubit/mensa_current_day_cubit.dart';
-import '../utils/utils.dart';
+import 'package:mensa/src/bloc/mensa_current_day_cubit/mensa_current_day_cubit.dart';
+import 'package:mensa/src/utils/utils.dart';
 
 class MensaWeekView extends StatefulWidget {
   const MensaWeekView({
@@ -46,7 +45,12 @@ class MensaWeekViewState extends State<MensaWeekView> {
     return Column(
       children: [
         _buildPageView(),
-        if (_hasDivider) const Divider(thickness: 0.5, height: 0),
+        if (_hasDivider)
+          Divider(
+            thickness: .5,
+            height: 0,
+            color: context.colors.neutralColors.borderColors.seperatorLight,
+          ),
       ],
     );
   }

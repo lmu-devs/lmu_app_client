@@ -25,9 +25,8 @@ class MensaTag extends StatelessWidget {
           LmuSizes.small,
         ),
       ),
-      child: LmuText.body(
+      child: LmuText.bodySmall(
         type.name,
-        weight: FontWeight.bold,
         color: type.textColor(context),
       ),
     );

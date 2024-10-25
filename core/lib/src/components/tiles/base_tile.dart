@@ -21,3 +21,20 @@ abstract class BaseTile extends StatelessWidget {
     );
   }
 }
+
+class ConentTile extends BaseTile {
+  const ConentTile({
+    required this.content,
+    super.key,
+  });
+
+  final List<Widget> content;
+
+  @override
+  Widget buildTile(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: content,
+    );
+  }
+}

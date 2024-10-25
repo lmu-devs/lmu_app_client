@@ -8,18 +8,14 @@ part of 'mensa_opening_hours.dart';
 
 MensaOpeningHours _$MensaOpeningHoursFromJson(Map<String, dynamic> json) =>
     MensaOpeningHours(
-      mon: MensaDayHours.fromJson(json['mon'] as Map<String, dynamic>),
-      tue: MensaDayHours.fromJson(json['tue'] as Map<String, dynamic>),
-      wed: MensaDayHours.fromJson(json['wed'] as Map<String, dynamic>),
-      thu: MensaDayHours.fromJson(json['thu'] as Map<String, dynamic>),
-      fri: MensaDayHours.fromJson(json['fri'] as Map<String, dynamic>),
+      day: json['day'] as String,
+      startTime: json['start_time'] as String,
+      endTime: json['end_time'] as String,
     );
 
 Map<String, dynamic> _$MensaOpeningHoursToJson(MensaOpeningHours instance) =>
     <String, dynamic>{
-      'mon': instance.mon,
-      'tue': instance.tue,
-      'wed': instance.wed,
-      'thu': instance.thu,
-      'fri': instance.fri,
+      'day': instance.day,
+      'start_time': instance.startTime,
+      'end_time': instance.endTime,
     };

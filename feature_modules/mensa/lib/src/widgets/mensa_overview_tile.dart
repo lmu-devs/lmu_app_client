@@ -49,11 +49,12 @@ class MensaOverviewTile extends StatelessWidget {
               children: [
                 Flexible(
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Flexible(
-                        child: LmuText.h3(
+                        child: LmuText.body(
                           title,
+                          weight: FontWeight.w600,
                         ),
                       ),
                       const SizedBox(
@@ -71,10 +72,10 @@ class MensaOverviewTile extends StatelessWidget {
                 GestureDetector(
                   onTap: onFavoriteTap,
                   child: isFavorite
-                      ? const LmuIcon(
+                      ? LmuIcon(
                           icon: Icons.star,
                           size: LmuIconSizes.medium,
-                          color: Color.fromARGB(255, 247, 209, 21),
+                          color: context.colors.warningColors.textColors.strongColors.base,
                         )
                       : LmuIcon(
                           icon: Icons.star_border_outlined,
@@ -93,9 +94,11 @@ class MensaOverviewTile extends StatelessWidget {
                 ),
                 LmuText.body(
                   " • ",
+                  color: context.colors.neutralColors.textColors.mediumColors.base,
                 ),
                 LmuText.body(
                   distanceString,
+                  color: context.colors.neutralColors.textColors.mediumColors.base,
                 ),
               ],
             )
@@ -119,13 +122,17 @@ class MensaOverviewTile extends StatelessWidget {
 
 extension MensaStatusExtension on MensaStatus {
   Color textColor(BuildContext context) {
+    final colors = context.colors;
+
     switch (this) {
       case MensaStatus.open:
-        return Colors.green;
+        return colors.successColors.textColors.strongColors.base;
       case MensaStatus.closed:
-        return Colors.red;
+        return colors.neutralColors.textColors.mediumColors.base;
       case MensaStatus.closingSoon:
-        return Colors.orange;
+        return colors.warningColors.textColors.strongColors.base;
+      default:
+        return colors.neutralColors.textColors.mediumColors.base;
     }
   }
 }

@@ -1,9 +1,10 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:core/routes.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 import '../bloc/bloc.dart';
@@ -111,6 +112,7 @@ class MensaOverviewState extends State<MensaOverview> {
       child: Padding(
         padding: const EdgeInsets.all(LmuSizes.mediumLarge),
         child: BlocBuilder<MensaFavoriteCubit, MensaFavoriteState>(
+          bloc: GetIt.I.get<MensaFavoriteCubit>(),
           builder: (context, state) {
             if (state is MensaFavoriteLoadSuccess) {
               final favoriteMensaModels = _getFavoriteMensaModels(state.favoriteMensaIds);
@@ -120,13 +122,13 @@ class MensaOverviewState extends State<MensaOverview> {
                 children: [
                   if (favoriteMensaModels.isNotEmpty)
                     _buildMensaOverview(
-                      title: "Favorites",
+                      title: context.localizations.favorites,
                       mensaModels: favoriteMensaModels,
                       isFavorite: true,
                     ),
                   if (unFavoritedMensaModels.isNotEmpty)
                     _buildMensaOverview(
-                      title: "All Mensas",
+                      title: context.localizations.allCanteens,
                       mensaModels: unFavoritedMensaModels,
                       areFavoritesEmpty: favoriteMensaModels.isEmpty,
                     ),
@@ -161,12 +163,9 @@ class MensaOverviewState extends State<MensaOverview> {
         Padding(
           padding: EdgeInsets.only(
             top: areFavoritesEmpty || isFavorite ? LmuSizes.none : LmuSizes.mediumLarge,
-            bottom: LmuSizes.mediumLarge,
           ),
-          child: LmuText.body(
-            title,
-            weight: FontWeight.w600,
-            color: context.colors.neutralColors.textColors.mediumColors.base,
+          child: LmuTileHeadline.base(
+            title: title,
           ),
         ),
         _MensaOverviewItem(
@@ -198,8 +197,9 @@ class _MensaOverviewItem extends StatelessWidget {
           itemCount: mensaModels.length,
           itemBuilder: (context, index) {
             final mensaModel = mensaModels[index];
-            final name = mensaModel.name;
             final id = mensaModel.canteenId;
+            final name = mensaModel.name;
+
             return Padding(
               padding: EdgeInsets.only(
                 bottom: index == mensaModels.length - 1 ? LmuSizes.none : LmuSizes.mediumSmall,
@@ -215,13 +215,14 @@ class _MensaOverviewItem extends StatelessWidget {
                   mensaModel.openingHours,
                 ),
                 isFavorite: isFavorite,
-                onFavoriteTap: () => context.read<MensaFavoriteCubit>().toggleFavoriteMensa(
+                onFavoriteTap: () => GetIt.I.get<MensaFavoriteCubit>().toggleFavoriteMensa(
                       mensaId: id,
                     ),
                 onTap: () => context.go(
                   RouteNames.mensaDetails,
                   extra: MensaDetailsRouteArguments(
                     mensaModel: mensaModel,
+                    mensaDay: context.read<MensaCurrentDayCubit>().state,
                   ),
                 ),
               ),
@@ -250,35 +251,35 @@ class _MensaOverviewItem extends StatelessWidget {
     return mappedValue ?? MensaType.mensa;
   }
 
-  MensaStatus getMensaStatus(MensaOpeningHours openingHours) {
+  MensaStatus getMensaStatus(List<MensaOpeningHours> openingHours) {
     DateTime now = DateTime.now();
-    MensaDayHours? todaysHours;
+    MensaOpeningHours? todaysHours;
 
     switch (now.weekday) {
       case DateTime.monday:
-        todaysHours = openingHours.mon;
+        todaysHours = openingHours.firstWhere((element) => element.day == "MONDAY");
         break;
       case DateTime.tuesday:
-        todaysHours = openingHours.tue;
+        todaysHours = openingHours.firstWhere((element) => element.day == "TUESDAY");
         break;
       case DateTime.wednesday:
-        todaysHours = openingHours.wed;
+        todaysHours = openingHours.firstWhere((element) => element.day == "WEDNESDAY");
         break;
       case DateTime.thursday:
-        todaysHours = openingHours.thu;
+        todaysHours = openingHours.firstWhere((element) => element.day == "THURSDAY");
         break;
       case DateTime.friday:
-        todaysHours = openingHours.fri;
+        todaysHours = openingHours.firstWhere((element) => element.day == "FRIDAY");
         break;
       default:
         return MensaStatus.closed; // Closed on weekends
     }
 
     // Parse start and end times
-    DateTime startTime = DateTime(now.year, now.month, now.day, int.parse(todaysHours.start.split(":")[0]),
-        int.parse(todaysHours.start.split(":")[1]));
-    DateTime endTime = DateTime(now.year, now.month, now.day, int.parse(todaysHours.end.split(":")[0]),
-        int.parse(todaysHours.end.split(":")[1]));
+    DateTime startTime = DateTime(now.year, now.month, now.day, int.parse(todaysHours.startTime.split(":")[0]),
+        int.parse(todaysHours.startTime.split(":")[1]));
+    DateTime endTime = DateTime(now.year, now.month, now.day, int.parse(todaysHours.endTime.split(":")[0]),
+        int.parse(todaysHours.endTime.split(":")[1]));
 
     if (now.isAfter(startTime) && now.isBefore(endTime)) {
       // Check if closing soon
