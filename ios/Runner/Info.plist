@@ -45,5 +45,13 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>MBXAccessToken</key>
+	<string>sk.eyJ1IjoiZWFkcmF4LW15am91cm5leSIsImEiOiJjbGs2bjlrdzYwMDR6M2RwaHA4d25meXlsIn0.a0jbkKjoon1rk79B5_piuQ</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>[Because you a g]</string>
 </dict>
 </plist>

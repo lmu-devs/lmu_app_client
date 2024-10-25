@@ -2,6 +2,7 @@ import 'package:core/module.dart';
 import 'package:get_it/get_it.dart';
 
 import 'bloc/bloc.dart';
+import 'public_api/default_mensa_public_api.dart';
 import 'public_api/public_api.dart';
 import 'repository/repository.dart';
 

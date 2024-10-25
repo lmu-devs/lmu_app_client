@@ -1,7 +1,7 @@
 import 'package:core/routes.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mensa/src/bloc/mensa_cubit/mensa_menu_cubit.dart';
+import 'package:mensa/src/bloc/mensa_menu_cubit/mensa_menu_cubit.dart';
 import 'package:mensa/src/repository/api/api.dart';
 import 'package:mensa/src/repository/mensa_repository.dart';
 import 'package:mensa/src/utils/mensa_day.dart';

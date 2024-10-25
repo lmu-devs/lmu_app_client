@@ -1,3 +1,4 @@
+import 'package:explore/explore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mensa/mensa.dart';
@@ -11,6 +12,7 @@ RouteBase get $shellRouteData => StatefulShellRouteData.$route(
       factory: (_) => const ShellRouteData(),
       branches: [
         $mensaData,
+        $exploreData,
         $settingsData,
       ],
     );

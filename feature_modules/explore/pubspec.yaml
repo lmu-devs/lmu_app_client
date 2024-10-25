@@ -1,0 +1,29 @@
+name: explore
+description: "The explore package containing everything which can be explored on a map."
+version: 0.0.1
+publish_to: 'none' 
+
+environment:
+  sdk: '>=3.3.4 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  build_runner: ^2.4.9
+  build_verify: ^3.1.0
+  flutter:
+    sdk: flutter
+  get_it: ^8.0.1
+  go_router: ^14.3.0
+  go_router_builder: ^2.7.1
+  mapbox_maps_flutter: ^2.3.0
+  mensa:
+    path: ../../feature_modules/mensa
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  assets: 
+    - assets/
