@@ -37,7 +37,7 @@ class ScaffoldWithNavBar extends StatelessWidget {
         items: const <BottomNavigationBarItem>[
           //BottomNavigationBarItem(icon: Icon(LucideIcons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(LucideIcons.utensils), label: 'Canteen'),
-          //BottomNavigationBarItem(icon: Icon(LucideIcons.map), label: 'Explore'),
+          BottomNavigationBarItem(icon: Icon(LucideIcons.map), label: 'Explore'),
           BottomNavigationBarItem(icon: Icon(LucideIcons.circle_ellipsis), label: 'More'),
         ],
         currentIndex: navigationShell.currentIndex,

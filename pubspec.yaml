@@ -10,13 +10,15 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  go_router: ^13.2.0
+  go_router: any
   flutter_bloc: ^8.1.3
   provider: ^6.1.2
   core:
     path: ./core
   mensa: 
     path: ./feature_modules/mensa
+  explore:
+    path: ./feature_modules/explore
   settings: 
     path: ./feature_modules/settings
   wunschkonzert:
