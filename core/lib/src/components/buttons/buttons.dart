@@ -1,1 +1,1 @@
-export 'lmu_button.dart';
+export 'lmu_button.dart' hide ButtonColors;
