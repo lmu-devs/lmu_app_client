@@ -102,8 +102,20 @@ abstract class AppLocalizations {
   /// The state of being open
   ///
   /// In en, this message translates to:
-  /// **'Open'**
-  String get open;
+  /// **'Open now'**
+  String get openNow;
+
+  /// The state of closing soon
+  ///
+  /// In en, this message translates to:
+  /// **'Open until {time}'**
+  String closingSoon(String time);
+
+  /// The state of being closed
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get closed;
 
   /// Display all canteens
   ///
@@ -116,6 +128,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Favorites'**
   String get favorites;
+
+  /// The type of a canteen
+  ///
+  /// In en, this message translates to:
+  /// **'Mensa'**
+  String get mensaTypeMensa;
+
+  /// The type of a canteen
+  ///
+  /// In en, this message translates to:
+  /// **'StuBistro'**
+  String get mensaTypeStuBistro;
+
+  /// The type of a canteen
+  ///
+  /// In en, this message translates to:
+  /// **'StuCafé'**
+  String get mensaTypeStuCafe;
+
+  /// The type of a canteen
+  ///
+  /// In en, this message translates to:
+  /// **'Louge'**
+  String get mensaTypeLounge;
+
+  /// Alphabetically sorting
+  ///
+  /// In en, this message translates to:
+  /// **'Alphabetically'**
+  String get alphabetically;
+
+  /// Price sorting
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get price;
+
+  /// Rating sorting
+  ///
+  /// In en, this message translates to:
+  /// **'Rating'**
+  String get rating;
+
+  /// Distance sorting
+  ///
+  /// In en, this message translates to:
+  /// **'Distance'**
+  String get distance;
+
+  /// Type
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get type;
+
+  /// No favorites added yet
+  ///
+  /// In en, this message translates to:
+  /// **'No favorites added yet'**
+  String get noFavorites;
+
+  /// All canteens are closed
+  ///
+  /// In en, this message translates to:
+  /// **'Everything is closed'**
+  String get allClosed;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

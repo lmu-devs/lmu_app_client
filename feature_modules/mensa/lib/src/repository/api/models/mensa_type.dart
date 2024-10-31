@@ -1,10 +1,15 @@
+import 'package:json_annotation/json_annotation.dart';
+
 enum MensaType {
-  mensa("Mensa"),
-  stuBistro("StuBistro"),
-  stuCafe("StuCafé"),
-  lounge("Lounge");
+  @JsonValue('MENSA')
+  mensa,
 
-  final String name;
+  @JsonValue('STUBISTRO')
+  stuBistro,
 
-  const MensaType(this.name);
+  @JsonValue('STUCAFE')
+  stuCafe,
+
+  @JsonValue('LOUNGE')
+  lounge;
 }

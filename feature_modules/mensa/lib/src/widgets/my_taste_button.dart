@@ -43,7 +43,7 @@ class MyTasteButton extends StatelessWidget {
             value: true,
             onChanged: (bool? value) => isChecked = value,
             fillColor: MaterialStateProperty.resolveWith<Color?>(
-                  (Set<MaterialState> states) {
+              (Set<MaterialState> states) {
                 if (states.contains(MaterialState.selected)) {
                   return context.colors.brandColors.backgroundColors.nonInvertableColors.base;
                 } else {
@@ -52,7 +52,7 @@ class MyTasteButton extends StatelessWidget {
               },
             ),
             side: MaterialStateBorderSide.resolveWith(
-                  (states) =>
+              (states) =>
                   BorderSide(width: 0.5, color: context.colors.neutralColors.backgroundColors.strongColors.base),
             ),
           ),

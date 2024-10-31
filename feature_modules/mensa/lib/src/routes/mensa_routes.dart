@@ -32,7 +32,5 @@ class MensaDetailsRoute extends GoRouteData {
   const MensaDetailsRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const MensaDetailsPage(
-        arguments: null,
-      );
+  Widget build(BuildContext context, GoRouterState state) => const MensaDetailsPage();
 }

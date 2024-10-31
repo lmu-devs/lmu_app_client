@@ -246,7 +246,7 @@ extension ButtonSizeExtension on ButtonSize {
       case ButtonSize.medium:
         return LmuIconSizes.small;
       case ButtonSize.large:
-        return 20;
+        return LmuSizes.large;
     }
   }
 }

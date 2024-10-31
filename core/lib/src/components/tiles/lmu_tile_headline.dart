@@ -56,17 +56,15 @@ class LmuTileHeadline extends StatelessWidget {
               color: context.colors.neutralColors.textColors.mediumColors.base,
             ),
             if (actionTitle != null)
-              GestureDetector(
+              LmuButton(
+                title: actionTitle!,
                 onTap: onActionTap,
-                child: LmuText.body(
-                  actionTitle,
-                  color: context.colors.brandColors.textColors.strongColors.base,
-                  weight: FontWeight.w600,
-                ),
+                emphasis: ButtonEmphasis.link,
+                size: ButtonSize.large,
               ),
           ],
         ),
-        const SizedBox(height: LmuSizes.mediumLarge),
+        const SizedBox(height: LmuSizes.medium),
         if (bottomWidget != null)
           Column(
             children: [

@@ -23,10 +23,12 @@ class MensaApiClient {
     }
   }
 
-  Future<List<MensaMenuWeekModel>> getMensaMenusForSpecificWeek(String canteenId, int year, String week, bool liked) async {
+  Future<List<MensaMenuWeekModel>> getMensaMenusForSpecificWeek(
+      String canteenId, int year, String week, bool liked) async {
     try {
       final response = await http.get(
-        Uri.parse('https://api.lmu-dev.org/eat/v1/menus?year=$year&week=$week&canteen_id=$canteenId&only_liked_canteens=$liked'),
+        Uri.parse(
+            'https://api.lmu-dev.org/eat/v1/menus?year=$year&week=$week&canteen_id=$canteenId&only_liked_canteens=$liked'),
       );
 
       if (response.statusCode == 200) {

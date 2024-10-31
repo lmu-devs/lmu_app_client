@@ -25,7 +25,7 @@ class ConnectedMensaRepository implements MensaRepository {
 
   static const String _mensaModelsCacheKey = 'mena_models_cache_key';
   static const String _mensaModelCacheDateKey = 'mensa_models_cache_date_key';
-  static const Duration _mensaModelsCacheDuration = Duration(days: 30);
+  static const Duration _mensaModelsCacheDuration = Duration(seconds: 30);
 
   static const String _favoriteMensaIdsKey = 'favorite_mensa_ids_key';
 
@@ -77,7 +77,8 @@ class ConnectedMensaRepository implements MensaRepository {
 
   /// Cache storing missing for now
   @override
-  Future<List<MensaMenuWeekModel>> getMensaMenusForSpecificWeek(String canteenId, int year, String week, bool liked) async {
+  Future<List<MensaMenuWeekModel>> getMensaMenusForSpecificWeek(
+      String canteenId, int year, String week, bool liked) async {
     try {
       final mensaMenuModels = await mensaApiClient.getMensaMenusForSpecificWeek(canteenId, year, week, liked);
       return mensaMenuModels;
