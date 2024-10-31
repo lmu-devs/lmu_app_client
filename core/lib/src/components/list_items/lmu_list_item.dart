@@ -448,16 +448,8 @@ class _LeadingArea extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: LmuSizes.xxxlarge,
-            maxHeight: LmuSizes.xxxlarge,
-            minHeight: LmuSizes.xxxlarge,
-            minWidth: LmuSizes.xxxlarge,
-          ),
-          child: Center(
-            child: leadingArea!,
-          ),
+        Center(
+          child: leadingArea!,
         ),
         const SizedBox(
           width: LmuSizes.mediumLarge,

@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
@@ -15,27 +16,29 @@ class MensaTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+    final localizations = context.localizations;
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: LmuSizes.small,
       ),
       decoration: BoxDecoration(
-        color: type.backgroundColor(context),
+        color: type.backgroundColor(colors),
         borderRadius: BorderRadius.circular(
           LmuSizes.small,
         ),
       ),
       child: LmuText.bodySmall(
-        type.name,
-        color: type.textColor(context),
+        type.text(localizations),
+        color: type.textColor(colors),
       ),
     );
   }
 }
 
 extension TagColors on MensaType {
-  Color backgroundColor(BuildContext context) {
-    final mensaBackgroundColors = context.colors.mensaColors.backgroundColors;
+  Color backgroundColor(LmuColors colors) {
+    final mensaBackgroundColors = colors.mensaColors.backgroundColors;
 
     switch (this) {
       case MensaType.mensa:
@@ -49,8 +52,8 @@ extension TagColors on MensaType {
     }
   }
 
-  Color textColor(BuildContext context) {
-    final mensaTextColors = context.colors.mensaColors.textColors;
+  Color textColor(LmuColors colors) {
+    final mensaTextColors = colors.mensaColors.textColors;
     switch (this) {
       case MensaType.mensa:
         return mensaTextColors.mensa;
@@ -60,6 +63,19 @@ extension TagColors on MensaType {
         return mensaTextColors.stuCafe;
       case MensaType.lounge:
         return mensaTextColors.stuLounge;
+    }
+  }
+
+  String text(AppLocalizations localizations) {
+    switch (this) {
+      case MensaType.mensa:
+        return localizations.mensaTypeMensa;
+      case MensaType.stuBistro:
+        return localizations.mensaTypeStuBistro;
+      case MensaType.stuCafe:
+        return localizations.mensaTypeStuCafe;
+      case MensaType.lounge:
+        return localizations.mensaTypeLounge;
     }
   }
 }

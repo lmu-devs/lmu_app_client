@@ -8,11 +8,11 @@ class RatingModel extends Equatable {
   @JsonKey(name: 'like_count')
   final int likeCount;
   @JsonKey(name: 'is_liked')
-  final bool? isLiked;
+  final bool isLiked;
 
   const RatingModel({
     required this.likeCount,
-    required this.isLiked,
+    this.isLiked = false,
   });
 
   factory RatingModel.fromJson(Map<String, dynamic> json) => _$RatingModelFromJson(json);

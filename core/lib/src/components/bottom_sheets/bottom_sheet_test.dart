@@ -1,0 +1,200 @@
+import 'package:core/components.dart';
+import 'package:core/constants.dart';
+import 'package:core/themes.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
+
+class LmuBottomSheetContent extends StatelessWidget {
+  const LmuBottomSheetContent({super.key, required this.title});
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: context.colors.neutralColors.backgroundColors.base,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: LmuSizes.mediumLarge,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const LmuHeader(
+              leadingIcon: LucideIcons.arrow_left,
+              trailingIcon: LucideIcons.air_vent,
+              title: "Test",
+              showExpanded: true,
+            ),
+            Container(
+              color: Colors.red,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LmuBottomSheetContentTest extends StatelessWidget {
+  const _LmuBottomSheetContentTest({
+    required this.title,
+  });
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return DraggableScrollableSheet(
+      initialChildSize: 1.0,
+      minChildSize: 1.0,
+      expand: false,
+      builder: (context, scrollController) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _LmuHeader(
+            title: title,
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(
+                LmuSizes.mediumLarge,
+              ),
+              child: SingleChildScrollView(
+                controller: scrollController,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    LmuText.h1(
+                      title,
+                    ),
+                    const SizedBox(
+                      height: LmuSizes.mediumSmall,
+                    ),
+                    LmuText.body(
+                      "Adjust and activate your taste profile to filter dishes by your preferences and allergies.",
+                    ),
+                    const SizedBox(
+                      height: LmuSizes.xxlarge,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: LmuSizes.medium,
+                      ),
+                      child: LmuText.body(
+                        "I eat",
+                        color: context.colors.neutralColors.textColors.mediumColors.base,
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(
+                        LmuSizes.small,
+                      ),
+                      decoration: BoxDecoration(
+                        color: context.colors.neutralColors.backgroundColors.tile,
+                        borderRadius: BorderRadius.circular(
+                          LmuSizes.medium,
+                        ),
+                      ),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: 3,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            padding: const EdgeInsets.all(
+                              LmuSizes.medium,
+                            ),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    right: LmuSizes.mediumLarge,
+                                  ),
+                                  child: LmuIcon(
+                                    size: LmuIconSizes.medium,
+                                    icon: Icons.adb,
+                                    color: context.colors.neutralColors.textColors.strongColors.base,
+                                  ),
+                                ),
+                                LmuText.body(
+                                  "Vegan",
+                                ),
+                                const Spacer(),
+                                LmuIcon(
+                                  size: LmuIconSizes.medium,
+                                  icon: Icons.check,
+                                  color: context.colors.neutralColors.textColors.strongColors.base,
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: LmuSizes.xxxlarge,
+                    ),
+                    LmuText.bodyXSmall(
+                      "Die Allergene und die übrigen Kennzeichnungen ändern sich möglicherweise durch kurzfristige Rezeptur- und Speiseplanänderungen, die nicht im Internetspeiseplan ersichtlich sein können. Bitte beachten Sie unbedingt die Angaben auf den tagesaktuellen Thekenaufstellern in der Betriebsstelle. Spurenhinweis für Allergiker: Spuren von Allergenen durch Kreuzkontaminationen während der Vor- und Zubereitung bzw. Ausgabe sowie durch technologisch unvermeidbare Verunreinigungen einzelner Zutaten können nicht ausgeschlossen werden und werden nicht gekennzeichnet.",
+                      color: context.colors.neutralColors.textColors.weakColors.base,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LmuHeader extends StatelessWidget {
+  const _LmuHeader({
+    required this.title,
+  });
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(
+        LmuSizes.mediumLarge,
+      ),
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: LmuText.h3(title),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      right: LmuSizes.mediumLarge,
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: LmuIcon(
+                        size: LmuIconSizes.medium,
+                        icon: Icons.close,
+                        color: context.colors.neutralColors.textColors.strongColors.base,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}

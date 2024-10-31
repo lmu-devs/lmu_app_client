@@ -1,6 +1,18 @@
 {
     "helloWorld": "Hallo Welt!",
-    "open": "Geöffnet",
+    "openNow": "Jetzt geöffnet",
+    "closingSoon": "Geöffnet bis {time} Uhr",
+    "closed": "Geschlossen",
     "allCanteens": "Alle Mensen",
-    "favorites": "Favoriten"
+    "favorites": "Favoriten",
+    "mensaTypeMensa": "Mensa",
+    "mensaTypeStuBistro": "StuBistro",
+    "mensaTypeStuCafe": "StuCafé",
+    "mensaTypeLounge": "Louge",
+    "alphabetically": "Alphabetisch",
+    "price": "Preis",
+    "rating": "Bewertung",
+    "distance": "Entfernung",
+    "type": "Typ",
+    "noFavorites": "Noch keine Favoriten hinzugefügt"
 }

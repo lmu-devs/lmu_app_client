@@ -5,6 +5,7 @@ import 'package:mensa/src/repository/api/models/rating_model.dart';
 import 'image_model.dart';
 import 'mensa_location.dart';
 import 'mensa_opening_hours.dart';
+import 'mensa_type.dart';
 
 part 'mensa_model.g.dart';
 
@@ -19,6 +20,7 @@ class MensaModel extends Equatable {
   @JsonKey(name: 'opening_hours')
   final List<MensaOpeningHours> openingHours;
   final List<ImageModel> images;
+  final MensaType type;
 
   const MensaModel({
     required this.canteenId,
@@ -27,6 +29,7 @@ class MensaModel extends Equatable {
     required this.ratingModel,
     required this.openingHours,
     required this.images,
+    required this.type,
   });
 
   factory MensaModel.fromJson(Map<String, dynamic> json) => _$MensaModelFromJson(json);

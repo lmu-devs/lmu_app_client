@@ -10,14 +10,15 @@ List<MensaDay> getMensaDays({bool excludeWeekend = true}) {
   MensaDay endOfLastWeek = lastDayOfMonth.subtractDuration(Duration(days: lastDayOfMonth.weekday - DateTime.friday));
 
   if (excludeWeekend) {
-    while (startOfFirstWeekToInclude.weekday == DateTime.saturday || startOfFirstWeekToInclude.weekday == DateTime.sunday) {
+    while (startOfFirstWeekToInclude.weekday == DateTime.saturday ||
+        startOfFirstWeekToInclude.weekday == DateTime.sunday) {
       startOfFirstWeekToInclude = startOfFirstWeekToInclude.addDuration(const Duration(days: 1));
     }
   }
 
   for (MensaDay day = startOfFirstWeekToInclude;
-  day.isBefore(endOfLastWeek) || day.isAtSameMomentAs(endOfLastWeek);
-  day = day.addDuration(const Duration(days: 1))) {
+      day.isBefore(endOfLastWeek) || day.isAtSameMomentAs(endOfLastWeek);
+      day = day.addDuration(const Duration(days: 1))) {
     if (excludeWeekend && (day.weekday == DateTime.saturday || day.weekday == DateTime.sunday)) {
       continue;
     }

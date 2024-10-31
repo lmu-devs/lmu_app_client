@@ -101,6 +101,7 @@ class DishTile extends StatelessWidget {
                 ),
               ],
             ),
+
             /// Add Allergens
           ],
         ),

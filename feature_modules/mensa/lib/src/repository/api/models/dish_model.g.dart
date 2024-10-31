@@ -11,11 +11,8 @@ DishModel _$DishModelFromJson(Map<String, dynamic> json) => DishModel(
       dishType: json['dish_type'] as String,
       ratingModel: RatingModel.fromJson(json['rating'] as Map<String, dynamic>),
       priceSimple: json['price_simple'] as String,
-      labels:
-          (json['labels'] as List<dynamic>).map((e) => e as String).toList(),
-      prices: (json['prices'] as List<dynamic>)
-          .map((e) => PriceModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      labels: (json['labels'] as List<dynamic>).map((e) => e as String).toList(),
+      prices: (json['prices'] as List<dynamic>).map((e) => PriceModel.fromJson(e as Map<String, dynamic>)).toList(),
     );
 
 Map<String, dynamic> _$DishModelToJson(DishModel instance) => <String, dynamic>{

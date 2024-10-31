@@ -55,10 +55,10 @@ class MensaDetailsView extends StatelessWidget {
                 padding: const EdgeInsets.only(right: LmuSizes.mediumLarge),
                 child: GestureDetector(
                   onTap: () {
-                    LmuBottomSheet.show(
-                      context,
-                      title: "My Taste",
-                    );
+                    // LmuBottomSheet.show(
+                    //   context,
+                    //   title: "My Taste",
+                    // );
                   },
                   child: MyTasteButton(background: context.colors.neutralColors.backgroundColors.base),
                 ),

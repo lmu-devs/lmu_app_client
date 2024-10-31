@@ -2,107 +2,145 @@ import 'dart:math';
 
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
+import '../bloc/mensa_favorite_cubit/mensa_favorite_cubit.dart';
+import '../extensions/opening_hours_extensions.dart';
 import '../repository/api/api.dart';
+import '../routes/mensa_routes.dart';
 import 'mensa_tag.dart';
+import 'star_icon.dart';
 
 class MensaOverviewTile extends StatelessWidget {
   const MensaOverviewTile({
     super.key,
-    required this.title,
-    required this.type,
-    required this.status,
+    required this.mensaModel,
     required this.isFavorite,
-    required this.onFavoriteTap,
     this.distance,
-    this.onTap,
+    this.hasDivider = false,
+    this.hasLargeImage = false,
   });
 
-  final String title;
-  final double? distance;
-  final MensaType type;
-  final MensaStatus status;
-  final void Function()? onTap;
+  final MensaModel mensaModel;
   final bool isFavorite;
-  final void Function()? onFavoriteTap;
+  final double? distance;
+  final bool hasDivider;
+  final bool hasLargeImage;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: context.colors.neutralColors.backgroundColors.tile,
-          borderRadius: BorderRadius.circular(LmuSizes.medium),
-        ),
-        width: double.infinity,
-        padding: const EdgeInsets.all(
-          LmuSizes.mediumLarge,
-        ),
-        child: Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Flexible(
-                        child: LmuText.body(
-                          title,
-                          weight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: LmuSizes.mediumSmall,
-                      ),
-                      MensaTag(
-                        type: type,
-                      ),
-                    ],
+    final name = mensaModel.name;
+    final type = mensaModel.type;
+    final openingHours = mensaModel.openingHours;
+    final status = openingHours.mensaStatus;
+    final likeCount = mensaModel.ratingModel.likeCount;
+    final imageUrl = mensaModel.images.isNotEmpty ? mensaModel.images.first.url : null;
+
+    return Padding(
+      padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.none : LmuSizes.medium),
+      child: GestureDetector(
+        onTap: () {
+          const MensaDetailsRoute().go(context);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: context.colors.neutralColors.backgroundColors.tile,
+            borderRadius: BorderRadius.circular(LmuSizes.medium),
+          ),
+          child: Column(
+            children: [
+              if (hasLargeImage)
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: LmuSizes.small,
+                    left: LmuSizes.small,
+                    right: LmuSizes.small,
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: context.colors.neutralColors.backgroundColors.tile,
+                      borderRadius: BorderRadius.circular(LmuSizes.mediumSmall),
+                      image: imageUrl != null
+                          ? DecorationImage(
+                              image: NetworkImage(imageUrl),
+                              fit: BoxFit.cover,
+                            )
+                          : null,
+                    ),
+                    height: LmuSizes.mediumLarge * 10,
                   ),
                 ),
-                const SizedBox(
-                  width: LmuSizes.mediumSmall,
+              Padding(
+                padding: const EdgeInsets.all(
+                  LmuSizes.mediumLarge,
                 ),
-                GestureDetector(
-                  onTap: onFavoriteTap,
-                  child: isFavorite
-                      ? LmuIcon(
-                          icon: Icons.star,
-                          size: LmuIconSizes.medium,
-                          color: context.colors.warningColors.textColors.strongColors.base,
-                        )
-                      : LmuIcon(
-                          icon: Icons.star_border_outlined,
-                          size: LmuIconSizes.medium,
-                          color: context.colors.neutralColors.backgroundColors.flippedColors.base,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Flexible(
+                                child: LmuText.body(
+                                  name,
+                                  weight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: LmuSizes.mediumSmall,
+                              ),
+                              MensaTag(
+                                type: type,
+                              ),
+                            ],
+                          ),
                         ),
+                        const SizedBox(
+                          width: LmuSizes.mediumSmall,
+                        ),
+                        LmuText.bodyXSmall(
+                          likeCount.formattedLikes,
+                          weight: FontWeight.w400,
+                          color: context.colors.neutralColors.textColors.weakColors.base,
+                        ),
+                        const SizedBox(
+                          width: LmuSizes.small,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            GetIt.I.get<MensaFavoriteCubit>().toggleFavoriteMensa(
+                                  mensaId: mensaModel.canteenId,
+                                );
+                          },
+                          child: isFavorite ? const StarIcon.active() : const StarIcon.inActive(),
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        LmuText.body(
+                          status.text(context.localizations, openingHours: openingHours),
+                          color: status.textColor(context.colors),
+                        ),
+                        if (distance != null)
+                          LmuText.body(
+                            " • $distance",
+                            color: context.colors.neutralColors.textColors.mediumColors.base,
+                          ),
+                      ],
+                    )
+                  ],
                 ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                LmuText.body(
-                  status.name,
-                  color: status.textColor(context),
-                ),
-                LmuText.body(
-                  " • ",
-                  color: context.colors.neutralColors.textColors.mediumColors.base,
-                ),
-                LmuText.body(
-                  distanceString,
-                  color: context.colors.neutralColors.textColors.mediumColors.base,
-                ),
-              ],
-            )
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -120,10 +158,17 @@ class MensaOverviewTile extends StatelessWidget {
   }
 }
 
-extension MensaStatusExtension on MensaStatus {
-  Color textColor(BuildContext context) {
-    final colors = context.colors;
+extension LikeFormatter on int {
+  String get formattedLikes {
+    if (this >= 1000) {
+      return "${(this / 1000).toStringAsFixed(1)}K";
+    }
+    return toString();
+  }
+}
 
+extension MensaStatusExtension on MensaStatus {
+  Color textColor(LmuColors colors) {
     switch (this) {
       case MensaStatus.open:
         return colors.successColors.textColors.strongColors.base;
@@ -131,8 +176,20 @@ extension MensaStatusExtension on MensaStatus {
         return colors.neutralColors.textColors.mediumColors.base;
       case MensaStatus.closingSoon:
         return colors.warningColors.textColors.strongColors.base;
-      default:
-        return colors.neutralColors.textColors.mediumColors.base;
+    }
+  }
+
+  String text(
+    AppLocalizations localizations, {
+    required List<MensaOpeningHours> openingHours,
+  }) {
+    switch (this) {
+      case MensaStatus.open:
+        return localizations.openNow;
+      case MensaStatus.closed:
+        return localizations.closed;
+      case MensaStatus.closingSoon:
+        return localizations.closingSoon(openingHours.closingTime);
     }
   }
 }

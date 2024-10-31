@@ -3,9 +3,23 @@
   "@helloWorld": {
     "description": "The conventional newborn programmer greeting"
   },
-  "open": "Open",
-  "@open": {
+  "openNow": "Open now",
+  "@openNow": {
     "description": "The state of being open"
+  },
+  "closingSoon": "Open until {time}",
+  "@closingSoon": {
+    "description": "The state of closing soon",
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "10 PM"
+      }
+    }
+  },
+  "closed": "Closed",
+  "@closed": {
+    "description": "The state of being closed"
   },
   "allCanteens": "All Canteens",
   "@allCanteens": {
@@ -14,5 +28,49 @@
   "favorites": "Favorites",
   "@favorites": {
     "description": "Favrourite canteens"
+  },
+  "mensaTypeMensa": "Mensa",
+  "@mensaTypeMensa": {
+    "description": "The type of a canteen"
+  },
+  "mensaTypeStuBistro": "StuBistro",
+  "@mensaTypeStuBistro": {
+    "description": "The type of a canteen"
+  },
+  "mensaTypeStuCafe": "StuCafé",
+  "@mensaTypeStuCafe": {
+    "description": "The type of a canteen"
+  },
+  "mensaTypeLounge": "Louge",
+  "@mensaTypeLounge": {
+    "description": "The type of a canteen"
+  },
+  "alphabetically": "Alphabetically",
+  "@alphabetically": {
+    "description": "Alphabetically sorting"
+  },
+  "price": "Price",
+  "@price": {
+    "description": "Price sorting"
+  },
+  "rating": "Rating",
+  "@rating": {
+    "description": "Rating sorting"
+  },
+  "distance": "Distance",
+  "@distance": {
+    "description": "Distance sorting"
+  },
+  "type": "Type",
+  "@type": {
+    "description": "Type"
+  },
+  "noFavorites": "No favorites added yet",
+  "@noFavorites": {
+    "description": "No favorites added yet"
+  },
+  "allClosed": "Everything is closed",
+  "@allClosed": {
+    "description": "All canteens are closed"
   }
 }
