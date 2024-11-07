@@ -16,6 +16,29 @@ class LmuBottomSheet {
       },
     );
   }
+
+  static void showExtended(
+    BuildContext context, {
+    required Widget content,
+  }) {
+    showModalBottomSheet(
+      context: context,
+      useRootNavigator: true,
+      backgroundColor: context.colors.neutralColors.backgroundColors.base,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (_) {
+        return Padding(
+          padding: const EdgeInsets.only(
+            left: LmuSizes.mediumLarge,
+            right: LmuSizes.mediumLarge,
+            top: LmuSizes.mediumSmall,
+          ),
+          child: content,
+        );
+      },
+    );
+  }
 }
 
 class LmuBottomSheetContent extends StatelessWidget {

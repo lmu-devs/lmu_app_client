@@ -3,10 +3,8 @@ import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
-import 'base_tile.dart';
-
-class LmuContentTile extends BaseTile {
-  LmuContentTile({
+class LmuContentMensa extends BaseTile {
+  LmuContentMensa({
     required this.inTextVisuals,
     super.key,
   });

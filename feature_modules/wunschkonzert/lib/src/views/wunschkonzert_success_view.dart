@@ -26,7 +26,7 @@ class WunschkonzertSuccessView extends StatelessWidget {
           const SizedBox(
             height: LmuSizes.mediumLarge,
           ),
-          ConentTile(
+          LmuContentTile(
             content: [
               LmuListItem.action(
                 title: "Unsere Roadmap",
