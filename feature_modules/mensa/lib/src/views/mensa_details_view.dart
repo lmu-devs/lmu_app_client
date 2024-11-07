@@ -1,13 +1,17 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mensa/src/bloc/mensa_menu_cubit/mensa_menu_cubit.dart';
-import 'package:mensa/src/bloc/mensa_menu_cubit/mensa_menu_state.dart';
-import 'package:mensa/src/repository/api/api.dart';
-import 'package:mensa/src/views/views.dart';
-import 'package:mensa/src/widgets/my_taste_button.dart';
+import 'package:get_it/get_it.dart';
+import '../bloc/mensa_menu_cubit/mensa_menu_cubit.dart';
+import '../bloc/mensa_menu_cubit/mensa_menu_state.dart';
+import '../repository/api/api.dart';
+import '../repository/api/models/image_model.dart';
+import 'views.dart';
+import '../pages/pages.dart';
+import '../services/services.dart';
 
 class MensaDetailsView extends StatelessWidget {
   const MensaDetailsView({
@@ -15,34 +19,24 @@ class MensaDetailsView extends StatelessWidget {
     required this.mensaModel,
   });
 
-  final MensaModel? mensaModel;
+  final MensaModel mensaModel;
 
   @override
   Widget build(BuildContext context) {
-    if (mensaModel == null) {
-      return const Scaffold(
-        body: Center(
-          child: Text('Error: Mensa not found'),
-        ),
-      );
-    }
-    final openingHours = mensaModel!.openingHours;
+    final openingHours = mensaModel.openingHours;
 
     return Scaffold(
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            expandedHeight: 210,
+            expandedHeight: mensaModel.images.isNotEmpty ? 210 : 0,
             pinned: true,
             elevation: 0,
             surfaceTintColor: Colors.transparent,
             backgroundColor: context.colors.neutralColors.backgroundColors.base,
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.network(
-                'https://www.byak.de/preiseundco-proxy/images/projekte/538/63a07e3ad2d28676dc35fbb7/b20352fdf91b24c98b9483d5f9083c6e.jpg?w=1260&h=648',
-                fit: BoxFit.cover,
-              ),
+              background: ImageArea(images: mensaModel.images),
             ),
             leading: const SafeArea(
               child: Padding(
@@ -53,14 +47,23 @@ class MensaDetailsView extends StatelessWidget {
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: LmuSizes.mediumLarge),
-                child: GestureDetector(
-                  onTap: () {
-                    // LmuBottomSheet.show(
-                    //   context,
-                    //   title: "My Taste",
-                    // );
+                child: LmuButton(
+                  title: context.localizations.myTaste,
+                  emphasis: ButtonEmphasis.secondary,
+                  onTap: () async {
+                    final tasteProfileService = GetIt.I.get<TasteProfileService>();
+                    final saveModel = await tasteProfileService.loadTasteProfileState();
+                    if (context.mounted) {
+                      LmuBottomSheet.showExtended(
+                        context,
+                        content: TasteProfilePage(
+                          selectedPresets: saveModel.selectedPresets,
+                          excludedLabels: saveModel.excludedLabels,
+                          isActive: saveModel.isActive,
+                        ),
+                      );
+                    }
                   },
-                  child: MyTasteButton(background: context.colors.neutralColors.backgroundColors.base),
                 ),
               ),
             ],
@@ -80,7 +83,7 @@ class MensaDetailsView extends StatelessWidget {
                       vertical: LmuSizes.medium,
                     ),
                     child: LmuText.h1(
-                      mensaModel!.name,
+                      mensaModel.name,
                     ),
                   ),
                   Padding(
@@ -88,7 +91,7 @@ class MensaDetailsView extends StatelessWidget {
                       vertical: LmuSizes.medium,
                     ),
                     child: LmuText.body(
-                      mensaModel!.location.address,
+                      mensaModel.location.address,
                       color: context.colors.neutralColors.textColors.mediumColors.base,
                     ),
                   ),
@@ -153,5 +156,109 @@ class _DetailsBackButton extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class ImageArea extends StatefulWidget {
+  final List<ImageModel> images;
+
+  const ImageArea({super.key, required this.images});
+
+  @override
+  ImageAreaState createState() => ImageAreaState();
+}
+
+class ImageAreaState extends State<ImageArea> {
+  late PageController _pageController;
+  final ValueNotifier<int> _currentPageNotifier = ValueNotifier<int>(0);
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+    _pageController.addListener(() {
+      int page = _pageController.page?.round() ?? 0;
+      if (_currentPageNotifier.value != page) {
+        _currentPageNotifier.value = page;
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    _currentPageNotifier.dispose();
+    super.dispose();
+  }
+
+  void _onDotTapped(int index) {
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+    _currentPageNotifier.value = index;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.images.isEmpty) {
+      return const SizedBox.shrink();
+    } else if (widget.images.length == 1) {
+      return Image.network(
+        widget.images.first.url!,
+        fit: BoxFit.cover,
+      );
+    } else {
+      return Stack(
+        children: [
+          PageView.builder(
+            scrollDirection: Axis.horizontal,
+            physics: const ClampingScrollPhysics(),
+            clipBehavior: Clip.none,
+            controller: _pageController,
+            itemCount: widget.images.length,
+            itemBuilder: (context, index) {
+              return Image.network(
+                widget.images[index].url!,
+                fit: BoxFit.cover,
+              );
+            },
+          ),
+          Positioned(
+            bottom: LmuSizes.medium,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: ValueListenableBuilder<int>(
+                valueListenable: _currentPageNotifier,
+                builder: (context, currentPage, child) {
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: List.generate(
+                      widget.images.length,
+                      (index) => GestureDetector(
+                        onTap: () => _onDotTapped(index),
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: LmuSizes.small,
+                          ),
+                          height: LmuSizes.mediumSmall,
+                          width: LmuSizes.mediumSmall,
+                          decoration: BoxDecoration(
+                            color: currentPage == index ? Colors.white : Colors.white.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      );
+    }
   }
 }

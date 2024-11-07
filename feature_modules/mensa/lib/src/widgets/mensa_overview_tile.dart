@@ -53,25 +53,21 @@ class MensaOverviewTile extends StatelessWidget {
           child: Column(
             children: [
               if (hasLargeImage)
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: LmuSizes.small,
-                    left: LmuSizes.small,
-                    right: LmuSizes.small,
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: context.colors.neutralColors.backgroundColors.tile,
-                      borderRadius: BorderRadius.circular(LmuSizes.mediumSmall),
-                      image: imageUrl != null
-                          ? DecorationImage(
-                              image: NetworkImage(imageUrl),
-                              fit: BoxFit.cover,
-                            )
-                          : null,
+                Container(
+                  decoration: BoxDecoration(
+                    color: context.colors.neutralColors.backgroundColors.tile,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(LmuSizes.mediumSmall),
+                      topRight: Radius.circular(LmuSizes.mediumSmall),
                     ),
-                    height: LmuSizes.mediumLarge * 10,
+                    image: imageUrl != null
+                        ? DecorationImage(
+                            image: NetworkImage(imageUrl),
+                            fit: BoxFit.cover,
+                          )
+                        : null,
                   ),
+                  height: LmuSizes.mediumLarge * 10,
                 ),
               Padding(
                 padding: const EdgeInsets.all(

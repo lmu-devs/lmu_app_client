@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mensa/src/bloc/mensa_menu_cubit/mensa_menu_cubit.dart';
-import 'package:mensa/src/repository/api/api.dart';
-import 'package:mensa/src/repository/mensa_repository.dart';
+import '../bloc/mensa_menu_cubit/mensa_menu_cubit.dart';
+import '../repository/api/api.dart';
+import '../repository/mensa_repository.dart';
 
 import '../views/mensa_details_view.dart';
 
@@ -26,7 +26,7 @@ class MensaDetailsPage extends StatelessWidget {
       )..loadMensaMenuData(
           mensaModel.canteenId,
           2024,
-          30.toString(),
+          45.toString(),
           true,
         ),
       child: MensaDetailsView(

@@ -11,7 +11,8 @@ RatingModel _$RatingModelFromJson(Map<String, dynamic> json) => RatingModel(
       isLiked: json['is_liked'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$RatingModelToJson(RatingModel instance) => <String, dynamic>{
+Map<String, dynamic> _$RatingModelToJson(RatingModel instance) =>
+    <String, dynamic>{
       'like_count': instance.likeCount,
       'is_liked': instance.isLiked,
     };
