@@ -194,6 +194,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Everything is closed'**
   String get allClosed;
+
+  /// The action of saving
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// The user's taste
+  ///
+  /// In en, this message translates to:
+  /// **'My Taste'**
+  String get myTaste;
+
+  /// The user's taste description
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust and activate your taste profile to filter dishes by your preferences and allergies.'**
+  String get myTasteDescription;
+
+  /// Presets
+  ///
+  /// In en, this message translates to:
+  /// **'Presets'**
+  String get presets;
+
+  /// Reset
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get reset;
+
+  /// The user's taste preferences
+  ///
+  /// In en, this message translates to:
+  /// **'I eat and tolerate'**
+  String get tastePreferences;
+
+  /// The user's taste footer
+  ///
+  /// In en, this message translates to:
+  /// **'The allergens and other labelling may change due to short-term recipe and menu changes that cannot be shown on the online menu. Please be sure to check the information on the daily counter displays in the restaurant. Trace information for allergy sufferers: Traces of allergens due to cross-contamination during preparation and serving as well as due to technologically unavoidable contamination of individual ingredients cannot be ruled out and are not labelled.’ Translated with DeepL.com (free version)'**
+  String get myTasteFooter;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

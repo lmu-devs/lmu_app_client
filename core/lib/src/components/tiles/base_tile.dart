@@ -22,8 +22,8 @@ abstract class BaseTile extends StatelessWidget {
   }
 }
 
-class ConentTile extends BaseTile {
-  const ConentTile({
+class LmuContentTile extends BaseTile {
+  const LmuContentTile({
     required this.content,
     super.key,
   });

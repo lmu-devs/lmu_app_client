@@ -22,7 +22,7 @@ class SettingsSuccessView extends StatelessWidget {
             const SizedBox(
               height: LmuSizes.mediumLarge,
             ),
-            ConentTile(
+            LmuContentTile(
               content: [
                 LmuListItem.action(
                   title: "Erscheinungsbild",
@@ -37,7 +37,7 @@ class SettingsSuccessView extends StatelessWidget {
             const SizedBox(
               height: LmuSizes.mediumLarge,
             ),
-            ConentTile(
+            LmuContentTile(
               content: [
                 LmuListItem.base(
                   title: "Über LMU Developers",
@@ -66,7 +66,7 @@ class SettingsSuccessView extends StatelessWidget {
             const SizedBox(
               height: LmuSizes.mediumLarge,
             ),
-            ConentTile(
+            LmuContentTile(
               content: [
                 LmuListItem.action(
                   title: "Datenschutz",
@@ -88,7 +88,7 @@ class SettingsSuccessView extends StatelessWidget {
             const SizedBox(
               height: LmuSizes.mediumLarge,
             ),
-            ConentTile(
+            LmuContentTile(
               content: [
                 LmuListItem.action(
                   title: "Feature vorschlagen",

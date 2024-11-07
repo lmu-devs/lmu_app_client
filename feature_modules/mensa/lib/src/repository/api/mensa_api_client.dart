@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 
 import 'models/mensa_menu_week_model.dart';
 import 'models/mensa_model.dart';
+import 'models/taste_profile/taste_profile_model.dart';
 
 class MensaApiClient {
   Future<List<MensaModel>> getMensaModels() async {
@@ -39,6 +40,25 @@ class MensaApiClient {
       }
     } catch (e) {
       throw Exception('Failed to parse menu data for mensa: $e');
+    }
+  }
+
+  Future<TasteProfileModel> getTasteProfile() async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+          "https://api.lmu-dev.org/eat/v1/taste-profile",
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        final jsonMap = json.decode(response.body) as Map<String, dynamic>;
+        return TasteProfileModel.fromJson(jsonMap);
+      } else {
+        throw Exception('Failed to load taste profile data');
+      }
+    } catch (e) {
+      throw Exception('Failed to load taste profile data: $e');
     }
   }
 }

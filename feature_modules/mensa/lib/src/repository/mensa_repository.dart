@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'api/mensa_api_client.dart';
 import 'api/models/mensa_menu_week_model.dart';
 import 'api/models/mensa_model.dart';
+import 'api/models/taste_profile/taste_profile.dart';
 
 abstract class MensaRepository {
   Future<List<MensaModel>> getMensaModels();
@@ -14,6 +15,12 @@ abstract class MensaRepository {
   Future<void> updateFavoriteMensaIds(List<String> favoriteMensaIds);
 
   Future<List<MensaMenuWeekModel>> getMensaMenusForSpecificWeek(String canteenId, int year, String week, bool liked);
+
+  Future<TasteProfileModel> getTasteProfileContent();
+
+  Future<TasteProfileSaveModel> getTasteProfileState();
+
+  Future<void> saveTasteProfileState(TasteProfileSaveModel saveModel);
 }
 
 class ConnectedMensaRepository implements MensaRepository {
@@ -28,6 +35,8 @@ class ConnectedMensaRepository implements MensaRepository {
   static const Duration _mensaModelsCacheDuration = Duration(seconds: 30);
 
   static const String _favoriteMensaIdsKey = 'favorite_mensa_ids_key';
+
+  static const String _pasteProfileSelectionsKey = 'taste_profile_selections_key';
 
   @override
   Future<List<MensaModel>> getMensaModels({bool forceRefresh = false}) async {
@@ -85,5 +94,36 @@ class ConnectedMensaRepository implements MensaRepository {
     } catch (e) {
       rethrow;
     }
+  }
+
+  @override
+  Future<TasteProfileModel> getTasteProfileContent() async {
+    //TODO: Implement caching
+    try {
+      final tasteProfile = await mensaApiClient.getTasteProfile();
+
+      return tasteProfile;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<TasteProfileSaveModel> getTasteProfileState() async {
+    final prefs = await SharedPreferences.getInstance();
+    final saveModel = prefs.getString(_pasteProfileSelectionsKey);
+
+    if (saveModel == null) {
+      return TasteProfileSaveModel.empty();
+    }
+
+    return TasteProfileSaveModel.fromJson(json.decode(saveModel));
+  }
+
+  @override
+  Future<void> saveTasteProfileState(TasteProfileSaveModel saveModel) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString(_pasteProfileSelectionsKey, json.encode(saveModel.toJson()));
   }
 }

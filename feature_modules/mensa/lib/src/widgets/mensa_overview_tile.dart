@@ -43,7 +43,7 @@ class MensaOverviewTile extends StatelessWidget {
       padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.none : LmuSizes.medium),
       child: GestureDetector(
         onTap: () {
-          const MensaDetailsRoute().go(context);
+          MensaDetailsRoute(mensaModel).go(context);
         },
         child: Container(
           decoration: BoxDecoration(
