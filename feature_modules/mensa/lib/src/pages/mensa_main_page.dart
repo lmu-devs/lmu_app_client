@@ -3,7 +3,6 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-
 import '../bloc/mensa_cubit/cubit.dart';
 import '../views/views.dart';
 
@@ -17,20 +16,18 @@ class MensaMainPage extends StatelessWidget {
       appBar: const LmuDefaultNavigationBar(
         title: "Mensa",
       ),
-      body: Center(
-        child: BlocBuilder<MensaCubit, MensaState>(
-          bloc: GetIt.I.get<MensaCubit>(),
-          builder: (context, state) {
-            if (state is MensaLoadInProgress) {
-              return const MensaLoadingView();
-            } else if (state is MensaLoadSuccess) {
-              return MensaContentView(
-                mensaModels: state.mensaModels,
-              );
-            }
-            return const MensaErrorView();
-          },
-        ),
+      body: BlocBuilder<MensaCubit, MensaState>(
+        bloc: GetIt.I.get<MensaCubit>(),
+        builder: (context, state) {
+          if (state is MensaLoadInProgress) {
+            return const MensaLoadingView();
+          } else if (state is MensaLoadSuccess) {
+            return MensaContentView(
+              mensaModels: state.mensaModels,
+            );
+          }
+          return const MensaErrorView();
+        },
       ),
     );
   }
