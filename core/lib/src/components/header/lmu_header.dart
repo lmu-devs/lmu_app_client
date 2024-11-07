@@ -12,6 +12,7 @@ class LmuHeader extends StatelessWidget {
     this.trailingIcon,
     this.onTrailingTap,
     this.showExpanded = false,
+    this.traillingWidget,
   });
 
   final IconData? leadingIcon;
@@ -20,6 +21,7 @@ class LmuHeader extends StatelessWidget {
   final IconData? trailingIcon;
   final void Function()? onTrailingTap;
   final bool showExpanded;
+  final Widget? traillingWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -44,18 +46,20 @@ class LmuHeader extends StatelessWidget {
                     : null,
               ),
               if (title != null && !showExpanded) LmuText.h3(title),
-              SizedBox(
-                  width: 28,
-                  child: trailingIcon != null
-                      ? GestureDetector(
-                          onTap: onTrailingTap,
-                          child: LmuIcon(
-                            icon: trailingIcon!,
-                            size: 28,
-                            color: context.colors.neutralColors.textColors.strongColors.base,
-                          ),
-                        )
-                      : null),
+              traillingWidget != null
+                  ? traillingWidget!
+                  : SizedBox(
+                      width: 28,
+                      child: trailingIcon != null
+                          ? GestureDetector(
+                              onTap: onTrailingTap,
+                              child: LmuIcon(
+                                icon: trailingIcon!,
+                                size: 28,
+                                color: context.colors.neutralColors.textColors.strongColors.base,
+                              ),
+                            )
+                          : null),
             ],
           ),
         ),

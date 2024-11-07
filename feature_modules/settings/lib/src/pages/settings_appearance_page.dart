@@ -28,7 +28,7 @@ class SettingsApperancePage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(LmuSizes.mediumLarge),
-        child: ConentTile(
+        child: LmuContentTile(
           content: [
             LmuListItem.action(
               title: "Automatisch",

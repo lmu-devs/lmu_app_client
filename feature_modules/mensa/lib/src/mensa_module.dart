@@ -5,6 +5,7 @@ import 'bloc/bloc.dart';
 import 'public_api/default_mensa_public_api.dart';
 import 'public_api/public_api.dart';
 import 'repository/repository.dart';
+import 'services/taste_profile_service.dart';
 
 class MensaModule extends AppModule
     with LocalDependenciesProvidingAppModule, NoticeableAppStartAppModule, PublicApiProvidingAppModule {
@@ -25,6 +26,10 @@ class MensaModule extends AppModule
     GetIt.I.registerSingleton<MensaFavoriteCubit>(
       MensaFavoriteCubit(mensaRepository: repository),
     );
+
+    GetIt.I.registerSingleton<TasteProfileService>(
+      TasteProfileService(mensaRepository: repository),
+    );
   }
 
   @override
@@ -37,5 +42,6 @@ class MensaModule extends AppModule
   @override
   void onAppStartNotice() {
     GetIt.I.get<MensaCubit>().loadMensaData();
+    GetIt.I.get<TasteProfileService>().loadTasteProfile();
   }
 }
