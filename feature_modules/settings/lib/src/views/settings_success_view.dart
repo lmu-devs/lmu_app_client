@@ -2,6 +2,7 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:provider/provider.dart';
 
 import '../routes/settings_routes.dart';
@@ -40,13 +41,24 @@ class SettingsSuccessView extends StatelessWidget {
               content: [
                 LmuListItem.base(
                   title: "Über LMU Developers",
+                  trailingArea: Icon(
+                    LucideIcons.external_link,
+                    size: LmuSizes.large,
+                    color: context.colors.neutralColors.textColors.weakColors.base,
+                  ),
                 ),
                 LmuListItem.base(
                   title: "Kontakt aufnehmen",
                   onTap: () {},
+                  trailingArea: Icon(
+                    LucideIcons.mail,
+                    size: LmuSizes.large,
+                    color: context.colors.neutralColors.textColors.weakColors.base,
+                  ),
                 ),
-                LmuListItem.base(
+                LmuListItem.action(
                   title: "Spenden",
+                  actionType: LmuListItemAction.chevron,
                   onTap: () {},
                 ),
               ],
@@ -110,8 +122,8 @@ class _LeadingFancyIcons extends StatelessWidget {
   Widget build(BuildContext context) {
     final backgroundColor = context.colors.neutralColors.backgroundColors.mediumColors.base;
     return Container(
-      width: double.infinity,
-      height: double.infinity,
+      width: LmuSizes.xxxlarge,
+      height: LmuSizes.xxxlarge,
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(
