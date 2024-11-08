@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
+
 import '../bloc/mensa_cubit/cubit.dart';
 import '../services/taste_profile_service.dart';
 import '../views/views.dart';
@@ -26,13 +27,12 @@ class MensaMainPage extends StatelessWidget {
             final tasteProfileService = GetIt.I.get<TasteProfileService>();
             final saveModel = await tasteProfileService.loadTasteProfileState();
             if (context.mounted) {
-              LmuBottomSheet.showExtended(
-                context,
-                content: TasteProfilePage(
-                  selectedPresets: saveModel.selectedPresets,
-                  excludedLabels: saveModel.excludedLabels,
-                  isActive: saveModel.isActive,
-                ),
+              LmuBottomSheet.showExtended(context, content: 
+               TasteProfilePage(
+                      selectedPresets: saveModel.selectedPresets,
+                      excludedLabels: saveModel.excludedLabels,
+                      isActive: saveModel.isActive,
+                    ),
               );
             }
           },
