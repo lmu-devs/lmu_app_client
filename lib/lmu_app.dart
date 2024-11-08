@@ -1,6 +1,7 @@
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +24,7 @@ class LmuApp extends StatelessWidget {
             themeMode: Provider.of<ThemeProvider>(context).themeMode,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
+            builder: FToastBuilder(),
           );
         },
       ),
