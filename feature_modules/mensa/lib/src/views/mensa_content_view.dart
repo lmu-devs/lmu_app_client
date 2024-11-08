@@ -190,8 +190,10 @@ class MensaContentView extends StatelessWidget {
                   return Column(
                     children: [
                       LmuListItem.base(
-                        title: sortOption.title(context.localizations),
+                        title: sortOption == activeValue ? sortOption.title(context.localizations) : null,
                         titleColor: textColor,
+                        subtitle: sortOption == activeValue ? null : sortOption.title(context.localizations),
+
                         mainContentAlignment: MainContentAlignment.center,
                         leadingArea: LmuIcon(
                           icon: sortOption.icon,
@@ -203,7 +205,7 @@ class MensaContentView extends StatelessWidget {
                           sortedMensaModelsNotifier.value = sortOption.sort(mensaModels);
 
                           Future.delayed(
-                            const Duration(milliseconds: 100),
+                            const Duration(milliseconds: 130),
                             () {
                               Navigator.of(context, rootNavigator: true).pop();
                             },
