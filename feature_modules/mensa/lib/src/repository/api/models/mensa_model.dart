@@ -32,7 +32,18 @@ class MensaModel extends Equatable {
     required this.type,
   });
 
-  factory MensaModel.fromJson(Map<String, dynamic> json) => _$MensaModelFromJson(json);
+  factory MensaModel.placeholder({String? name}) => MensaModel(
+        canteenId: '',
+        name: name ?? 'Name',
+        location: MensaLocation.placeholder(),
+        ratingModel: RatingModel.placeholder(),
+        openingHours: const [],
+        images: const [ImageModel(url: "https://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png", name: "name")],
+        type: MensaType.none,
+      );
+
+  factory MensaModel.fromJson(Map<String, dynamic> json) =>
+      _$MensaModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$MensaModelToJson(this);
 

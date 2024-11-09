@@ -15,7 +15,10 @@ class RatingModel extends Equatable {
     this.isLiked = false,
   });
 
-  factory RatingModel.fromJson(Map<String, dynamic> json) => _$RatingModelFromJson(json);
+  factory RatingModel.placeholder() => const RatingModel(likeCount: -999);
+
+  factory RatingModel.fromJson(Map<String, dynamic> json) =>
+      _$RatingModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$RatingModelToJson(this);
 

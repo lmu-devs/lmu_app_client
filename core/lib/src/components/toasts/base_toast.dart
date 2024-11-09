@@ -3,7 +3,6 @@ import 'package:core/src/constants/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:sprung/sprung.dart';
 
 enum ToastType {
   default_,
@@ -19,7 +18,7 @@ class LmuCustomToast {
     String? actionText,
     VoidCallback? onActionPressed,
     ToastType type = ToastType.default_,
-    Duration duration = const Duration(seconds: 3),
+    Duration? duration,
   }) {
     final fToast = FToast();
     fToast.init(context);
@@ -43,11 +42,7 @@ class LmuCustomToast {
           tween: Tween<Offset>(
             begin: const Offset(0.0, 1.0),
             end: const Offset(0.0, 0.0),
-          ).chain(CurveTween(curve: Sprung.custom(
-            damping: 30,
-            stiffness: 200.0,
-            mass: 1.0,
-          ))),
+          ).chain(CurveTween(curve: LmuAnimations.quick)),
           weight: 1.0,
         ),
       ]).animate(
@@ -61,6 +56,10 @@ class LmuCustomToast {
         decoration: BoxDecoration(
           color: context.colors.neutralColors.backgroundColors.base,
           borderRadius: BorderRadius.circular(50),
+          border: Border.all(
+            color: context.colors.neutralColors.borderColors.seperatorLight,
+            width: 1,
+          ),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -85,8 +84,8 @@ class LmuCustomToast {
                   Container(
                     width: 1,
                     height: 20,
-                    color: context
-                        .colors.neutralColors.backgroundColors.mediumColors.base,
+                    color: context.colors.neutralColors.backgroundColors
+                        .mediumColors.base,
                   ),
                   const SizedBox(width: LmuSizes.mediumSmall),
                   LmuButton(
@@ -106,11 +105,17 @@ class LmuCustomToast {
     fToast.showToast(
       child: toast,
       gravity: ToastGravity.BOTTOM,
-      toastDuration: duration,
+      toastDuration: duration ??
+          calculateDuration(
+            messages: [
+              message,
+              if (actionText != null && onActionPressed != null) actionText
+            ],
+            hasAction: onActionPressed != null,
+          ),
       fadeDuration: const Duration(milliseconds: 200),
     );
   }
-
 
   // Convenience methods for different toast types
   static void showSuccess({
@@ -118,7 +123,7 @@ class LmuCustomToast {
     required String message,
     String? actionText,
     VoidCallback? onActionPressed,
-    Duration duration = const Duration(seconds: 3),
+    Duration? duration,
   }) {
     show(
       context: context,
@@ -135,7 +140,7 @@ class LmuCustomToast {
     required String message,
     String? actionText,
     VoidCallback? onActionPressed,
-    Duration duration = const Duration(seconds: 3),
+    Duration? duration,
   }) {
     show(
       context: context,
@@ -152,7 +157,7 @@ class LmuCustomToast {
     required String message,
     String? actionText,
     VoidCallback? onActionPressed,
-    Duration duration = const Duration(seconds: 3),
+    Duration? duration,
   }) {
     show(
       context: context,
@@ -162,5 +167,32 @@ class LmuCustomToast {
       onActionPressed: onActionPressed,
       duration: duration,
     );
+  }
+
+  /// Calculates the duration of the toast based on the number of words in the message
+  static Duration calculateDuration(
+      {required List<String> messages, bool hasAction = false}) {
+    int wordCount = messages
+        .where((msg) =>
+            msg.trim().isNotEmpty) // Filter out empty/whitespace-only strings
+        .map((msg) =>
+            msg.trim().split(RegExp(r'\s+')).length) // Split into words
+        .fold(0, (sum, count) => sum + count); // Sum up word counts
+
+    int durationMs = 0;
+    if (hasAction) {
+      // Add 1 second for the action button
+      print("has action");
+      durationMs += 1000;
+    }
+
+    // Base duration: 1 second + 250ms per word
+    durationMs += 1000 + (wordCount * 250);
+
+    print(durationMs);
+    print(wordCount);
+
+    // Clamp between 1,6 seconds and 5 seconds
+    return Duration(milliseconds: durationMs.clamp(1600, 4000));
   }
 }

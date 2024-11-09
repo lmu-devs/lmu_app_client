@@ -1,5 +1,6 @@
 import 'package:core/src/themes/colors/brand_colors.dart';
 import 'package:core/src/themes/colors/danger_colors.dart';
+import 'package:core/src/themes/colors/gradient_colors.dart';
 import 'package:core/src/themes/colors/success_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -165,6 +166,12 @@ const lmuColorsDark = LmuColors(
       ),
     ),
   ),
+  gradientColors: GradientColors(
+    gradientLoadingColors: GradientLoadingColors(
+      base: ColorPrimitives.trspWhite10,
+      highlight: ColorPrimitives.trspWhite05,
+    ),
+  ),
 );
 
 const lmuColorsLight = LmuColors(
@@ -206,7 +213,7 @@ const lmuColorsLight = LmuColors(
       pure: ColorPrimitives.white,
       weakColors: WeakColors(
         base: ColorPrimitives.trspBlack00,
-        pressed: ColorPrimitives.trspBlack07,
+        pressed: ColorPrimitives.trspBlack05,
         active: ColorPrimitives.trspBlack10,
         disabled: ColorPrimitives.trspBlack00,
       ),
@@ -236,7 +243,7 @@ const lmuColorsLight = LmuColors(
     ),
     borderColors: BorderColors(
       seperatorLight: ColorPrimitives.trspBlack10,
-      inputStroke: ColorPrimitives.trspBlack07,
+      inputStroke: ColorPrimitives.trspBlack05,
       cutout: ColorPrimitives.white,
       seperatorDark: ColorPrimitives.white,
     ),
@@ -321,6 +328,12 @@ const lmuColorsLight = LmuColors(
         active: ColorPrimitives.brand60,
         disabled: ColorPrimitives.brand10,
       ),
+    ),
+  ),
+  gradientColors: GradientColors(
+    gradientLoadingColors: GradientLoadingColors(
+      base: ColorPrimitives.trspBlack10,
+      highlight: ColorPrimitives.trspBlack05,
     ),
   ),
 );
