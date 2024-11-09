@@ -38,6 +38,7 @@ dependencies:
   fluttertoast: ^8.2.8
   scrollable_positioned_list: ^0.3.8
   super_cupertino_navigation_bar: ^2.1.2
+  skeletonizer: ^1.4.2
 
 dev_dependencies:
   flutter_test:

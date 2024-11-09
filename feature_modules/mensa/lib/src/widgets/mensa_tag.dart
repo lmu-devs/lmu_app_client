@@ -49,6 +49,8 @@ extension TagColors on MensaType {
         return mensaBackgroundColors.stuCafe;
       case MensaType.lounge:
         return mensaBackgroundColors.stuLounge;
+      default:
+        return Colors.transparent;
     }
   }
 
@@ -63,6 +65,8 @@ extension TagColors on MensaType {
         return mensaTextColors.stuCafe;
       case MensaType.lounge:
         return mensaTextColors.stuLounge;
+      default:
+        return Colors.transparent;
     }
   }
 
@@ -76,6 +80,8 @@ extension TagColors on MensaType {
         return localizations.mensaTypeStuCafe;
       case MensaType.lounge:
         return localizations.mensaTypeLounge;
+      default:
+        return '';
     }
   }
 }

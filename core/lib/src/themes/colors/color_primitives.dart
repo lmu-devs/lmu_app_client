@@ -33,7 +33,7 @@ class ColorPrimitives {
 
   // Transparent colors
   static const Color trspBlack00 = Color.fromARGB(0, 0, 0, 0);
-  static const Color trspBlack07 = Color(0x12000000);
+  static const Color trspBlack05 = Color(0x0D000000);
   static const Color trspBlack10 = Color(0x1A000000);
   static const Color trspBlack20 = Color(0x33000000);
   static const Color trspBlack30 = Color(0x4D000000);
@@ -69,7 +69,6 @@ class ColorPrimitives {
   static const Color red80 = Color(0xFFE89D9D);
   static const Color red90 = Color(0xFFEFbebe);
   static const Color red100 = Color(0xFFF6DFDF);
-
 
   // Warning colors
   static const Color amber10 = Color(0xFF2B1C02);

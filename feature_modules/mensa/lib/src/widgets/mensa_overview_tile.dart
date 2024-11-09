@@ -6,6 +6,7 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../bloc/mensa_favorite_cubit/mensa_favorite_cubit.dart';
 import '../extensions/opening_hours_extensions.dart';
@@ -30,6 +31,17 @@ class MensaOverviewTile extends StatelessWidget {
   final bool hasDivider;
   final bool hasLargeImage;
 
+
+  factory MensaOverviewTile.loading({String? name, hasLargeImage = false}) {
+    return MensaOverviewTile(
+      mensaModel: MensaModel.placeholder(
+        name: name,
+      ),
+      isFavorite: false,
+      hasLargeImage: hasLargeImage,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final name = mensaModel.name;
@@ -40,7 +52,7 @@ class MensaOverviewTile extends StatelessWidget {
     final imageUrl = mensaModel.images.isNotEmpty ? mensaModel.images.first.url : null;
 
     return Padding(
-      padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.none : LmuSizes.medium),
+      padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.none : LmuSizes.mediumSmall),
       child: GestureDetector(
         onTap: () {
           MensaDetailsRoute(mensaModel).go(context);
@@ -53,21 +65,25 @@ class MensaOverviewTile extends StatelessWidget {
           child: Column(
             children: [
               if (hasLargeImage)
-                Container(
-                  decoration: BoxDecoration(
-                    color: context.colors.neutralColors.backgroundColors.tile,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(LmuSizes.mediumSmall),
-                      topRight: Radius.circular(LmuSizes.mediumSmall),
-                    ),
-                    image: imageUrl != null
-                        ? DecorationImage(
-                            image: NetworkImage(imageUrl),
-                            fit: BoxFit.cover,
-                          )
-                        : null,
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: LmuSizes.small,
+                    left: LmuSizes.small,
+                    right: LmuSizes.small,
                   ),
-                  height: LmuSizes.mediumLarge * 10,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: context.colors.neutralColors.backgroundColors.tile,
+                      borderRadius: BorderRadius.circular(LmuSizes.mediumSmall),
+                      image: imageUrl != null
+                          ? DecorationImage(
+                              image: NetworkImage(imageUrl),
+                              fit: BoxFit.cover,
+                            )
+                          : null,
+                    ),
+                    height: LmuSizes.mediumLarge * 10,
+                  ),
                 ),
               Padding(
                 padding: const EdgeInsets.all(
@@ -117,7 +133,11 @@ class MensaOverviewTile extends StatelessWidget {
                                   context: context,
                                   message: 'Favorit hinzugefügt',
                                   actionText: 'Rückgängig',
- 
+                                  onActionPressed: () {
+                                    GetIt.I.get<MensaFavoriteCubit>().toggleFavoriteMensa(
+                                      mensaId: mensaModel.canteenId,
+                                    );
+                                  },
                                 );
                           },
                           child: isFavorite ? const StarIcon.active() : const StarIcon.inActive(),

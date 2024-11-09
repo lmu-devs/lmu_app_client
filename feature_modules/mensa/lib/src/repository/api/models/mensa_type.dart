@@ -11,5 +11,8 @@ enum MensaType {
   stuCafe,
 
   @JsonValue('LOUNGE')
-  lounge;
+  lounge,
+
+  @JsonValue('NONE')
+  none;
 }

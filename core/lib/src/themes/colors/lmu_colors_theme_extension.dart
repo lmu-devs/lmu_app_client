@@ -6,6 +6,7 @@ import 'brand_colors.dart';
 import 'success_colors.dart';
 import 'danger_colors.dart';
 import 'warning_colors.dart';
+import 'gradient_colors.dart';
 
 class LmuColors extends ThemeExtension<LmuColors> {
   const LmuColors({
@@ -15,6 +16,7 @@ class LmuColors extends ThemeExtension<LmuColors> {
     required this.successColors,
     required this.dangerColors,
     required this.warningColors,
+    required this.gradientColors,
   });
 
   final NeutralColors neutralColors;
@@ -23,6 +25,7 @@ class LmuColors extends ThemeExtension<LmuColors> {
   final SuccessColors successColors;
   final DangerColors dangerColors;
   final WarningColors warningColors;
+  final GradientColors gradientColors;
 
   @override
   LmuColors copyWith({
@@ -34,6 +37,7 @@ class LmuColors extends ThemeExtension<LmuColors> {
     SuccessColors? successColors,
     DangerColors? dangerColors,
     WarningColors? warningColors,
+    GradientColors? gradientColors,
   }) {
     return LmuColors(
       neutralColors: neutralColors ?? this.neutralColors,
@@ -42,6 +46,7 @@ class LmuColors extends ThemeExtension<LmuColors> {
       successColors: successColors ?? this.successColors,
       dangerColors: dangerColors ?? this.dangerColors,
       warningColors: warningColors ?? this.warningColors,
+      gradientColors: gradientColors ?? this.gradientColors,
     );
   }
 
@@ -57,6 +62,7 @@ class LmuColors extends ThemeExtension<LmuColors> {
       successColors: successColors,
       dangerColors: dangerColors,
       warningColors: warningColors,
+      gradientColors: gradientColors,
     );
   }
 }
