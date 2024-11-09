@@ -31,7 +31,6 @@ class MensaOverviewTile extends StatelessWidget {
   final bool hasDivider;
   final bool hasLargeImage;
 
-
   factory MensaOverviewTile.loading({String? name, hasLargeImage = false}) {
     return MensaOverviewTile(
       mensaModel: MensaModel.placeholder(
@@ -49,10 +48,12 @@ class MensaOverviewTile extends StatelessWidget {
     final openingHours = mensaModel.openingHours;
     final status = openingHours.mensaStatus;
     final likeCount = mensaModel.ratingModel.likeCount;
-    final imageUrl = mensaModel.images.isNotEmpty ? mensaModel.images.first.url : null;
+    final imageUrl =
+        mensaModel.images.isNotEmpty ? mensaModel.images.first.url : null;
 
     return Padding(
-      padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.none : LmuSizes.mediumSmall),
+      padding: EdgeInsets.only(
+          bottom: hasDivider ? LmuSizes.none : LmuSizes.mediumSmall),
       child: GestureDetector(
         onTap: () {
           MensaDetailsRoute(mensaModel).go(context);
@@ -119,28 +120,46 @@ class MensaOverviewTile extends StatelessWidget {
                         LmuText.bodyXSmall(
                           likeCount.formattedLikes,
                           weight: FontWeight.w400,
-                          color: context.colors.neutralColors.textColors.weakColors.base,
+                          color: context
+                              .colors.neutralColors.textColors.weakColors.base,
                         ),
                         const SizedBox(
                           width: LmuSizes.small,
                         ),
                         GestureDetector(
                           onTap: () {
-                            GetIt.I.get<MensaFavoriteCubit>().toggleFavoriteMensa(
+                            GetIt.I
+                                .get<MensaFavoriteCubit>()
+                                .toggleFavoriteMensa(
                                   mensaId: mensaModel.canteenId,
                                 );
-                                LmuCustomToast.showSuccess(
-                                  context: context,
-                                  message: 'Favorit hinzugefügt',
-                                  actionText: 'Rückgängig',
-                                  onActionPressed: () {
-                                    GetIt.I.get<MensaFavoriteCubit>().toggleFavoriteMensa(
+                            LmuToast.show(
+                              context: context,
+                              type: ToastType.success,
+                              message: 'Favorit hinzugefügt',
+                              actionText: 'Rückgängig',
+                              onActionPressed: () {
+                                GetIt.I
+                                    .get<MensaFavoriteCubit>()
+                                    .toggleFavoriteMensa(
                                       mensaId: mensaModel.canteenId,
                                     );
-                                  },
-                                );
+                              },
+                            );
                           },
-                          child: isFavorite ? const StarIcon.active() : const StarIcon.inActive(),
+                          child: AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 300),
+                            transitionBuilder: (child, animation) {
+                              return ScaleTransition(
+                                scale: animation,
+                                child: child,
+                              );
+                            },
+                            child: StarIcon(
+                              isActive: isFavorite,
+                              key: ValueKey(isFavorite),
+                            ),
+                          ),
                         )
                       ],
                     ),
@@ -148,13 +167,15 @@ class MensaOverviewTile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         LmuText.body(
-                          status.text(context.localizations, openingHours: openingHours),
+                          status.text(context.localizations,
+                              openingHours: openingHours),
                           color: status.textColor(context.colors),
                         ),
                         if (distance != null)
                           LmuText.body(
                             " • $distance",
-                            color: context.colors.neutralColors.textColors.mediumColors.base,
+                            color: context.colors.neutralColors.textColors
+                                .mediumColors.base,
                           ),
                       ],
                     )

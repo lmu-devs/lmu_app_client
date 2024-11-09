@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class StarIcon extends StatelessWidget {
-  const StarIcon._internal(this.isActive);
-  const StarIcon.active() : this._internal(true);
-  const StarIcon.inActive() : this._internal(false);
+   const StarIcon({Key? key, this.isActive = false}):super(key: key);
 
   final bool isActive;
 

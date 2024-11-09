@@ -37,14 +37,13 @@ class MensaMainPage extends StatelessWidget {
       body: BlocBuilder<MensaCubit, MensaState>(
         bloc: GetIt.I.get<MensaCubit>(),
         builder: (context, state) {
-          if (state is MensaLoadInProgress) {
-            return const MensaLoadingView();
-          } else if (state is MensaLoadSuccess) {
+          if (state is MensaLoadSuccess) {
             return MensaContentView(
               mensaModels: state.mensaModels,
             );
           }
-          return const MensaErrorView();
+
+          return const MensaLoadingView();
         },
       ),
     );
