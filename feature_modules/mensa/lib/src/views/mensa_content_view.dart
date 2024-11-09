@@ -155,11 +155,14 @@ class MensaContentView extends StatelessWidget {
               itemCount: filteredMensaModels.length,
               itemBuilder: (context, index) {
                 final isFavorite = favoriteMensaIds.contains(filteredMensaModels[index].canteenId);
-                return MensaOverviewTile(
-                  mensaModel: filteredMensaModels[index],
-                  isFavorite: isFavorite,
-                  hasDivider: index == mensaModels.length - 1,
-                  hasLargeImage: filteredMensaModels[index].images.isNotEmpty,
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: LmuSizes.xsmall),
+                  child: MensaOverviewTile(
+                    mensaModel: filteredMensaModels[index],
+                    isFavorite: isFavorite,
+                    hasDivider: index == mensaModels.length - 1,
+                    hasLargeImage: filteredMensaModels[index].images.isNotEmpty,
+                  ),
                 );
               },
             );

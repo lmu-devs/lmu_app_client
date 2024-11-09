@@ -155,29 +155,39 @@ class LmuListItem extends StatelessWidget {
 
   // Helpers
   bool get _hasTitle => title != null;
+
   bool get _hasTitleInTextVisuals => titleInTextVisuals != null;
 
   bool get _hasTrailingTitle => trailingTitle != null;
+
   bool get _hasTrailingTitleInTextVisuals => trailingTitleInTextVisuals != null;
 
   bool get _hasLeadingTitleArea => _hasTitle || _hasTitleInTextVisuals;
+
   bool get _hasTrailingTitleArea => _hasTrailingTitle || _hasTrailingTitleInTextVisuals;
+
   bool get _hasTitleLine => _hasLeadingTitleArea || _hasTrailingTitleArea;
 
   bool get _hasSubtitle => subtitle != null;
+
   bool get _hasSubtitleInTextVisuals => subtitleInTextVisuals != null;
 
   bool get _hasTrailingSubtitle => trailingSubtitle != null;
+
   bool get _hasTrailingSubtitleInTextVisuals => trailingSubtitleInTextVisuals != null;
 
   bool get _hasLeadingSubtitleArea => _hasSubtitle || _hasSubtitleInTextVisuals;
+
   bool get _hasTrailingSubtitleArea => _hasTrailingSubtitle || _hasTrailingSubtitleInTextVisuals;
+
   bool get _hasSubtitleLine => _hasLeadingSubtitleArea || _hasTrailingSubtitleArea;
 
   bool get _hasMainContent => _hasTitleLine || _hasSubtitleLine;
 
   bool get _hasLeadingArea => leadingArea != null;
+
   bool get _hasActionArea => actionType != null && actionValueNotifier != null;
+
   bool get _hasTrailingArea => trailingArea != null;
 
   MainAxisAlignment get _mainContentAlignment =>
@@ -386,16 +396,11 @@ class _TrailingArea extends StatelessWidget {
         const SizedBox(
           width: LmuSizes.mediumLarge,
         ),
-        ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: LmuSizes.xxxlarge,
-            maxHeight: LmuSizes.xxxlarge,
-            minHeight: LmuSizes.xxxlarge,
-            minWidth: LmuSizes.xxxlarge,
-          ),
-          child: Center(
-            child: trailingArea!,
-          ),
+        Center(
+          child: trailingArea!,
+        ),
+        const SizedBox(
+          width: LmuSizes.small,
         ),
       ],
     );
