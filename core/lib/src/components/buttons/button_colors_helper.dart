@@ -44,7 +44,7 @@ final Map<Tuple3<ButtonAction, ButtonEmphasis, ButtonState>, Tuple2<ButtonColors
   const Tuple3(ButtonAction.base, ButtonEmphasis.secondary, ButtonState.enabled):
       const Tuple2(ButtonColors.neutralBgMediumBase, ButtonColors.neutralTextStrongBase),
   const Tuple3(ButtonAction.base, ButtonEmphasis.secondary, ButtonState.disabled):
-      const Tuple2(ButtonColors.neutralTextStrongBase, ButtonColors.neutralTextWeakDisabled),
+      const Tuple2(ButtonColors.neutralBgMediumDisabled, ButtonColors.neutralTextWeakDisabled),
 
   //Tertiary Button
   const Tuple3(ButtonAction.base, ButtonEmphasis.tertiary, ButtonState.enabled):

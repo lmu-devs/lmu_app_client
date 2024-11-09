@@ -8,9 +8,18 @@ class LmuBottomSheet {
     BuildContext context, {
     required Widget content,
   }) {
-    showModalBottomSheet(
+    showMaterialModalBottomSheet(
       context: context,
       useRootNavigator: true,
+      animationCurve: LmuAnimations.fastSmooth,
+      duration: const Duration(milliseconds: 400),
+      closeProgressThreshold: .9,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(LmuSizes.xlarge),
+          topRight: Radius.circular(LmuSizes.xlarge),
+        ),
+      ),
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
       builder: (_) {
         return LmuBottomSheetContent(content: content);
@@ -25,20 +34,21 @@ class LmuBottomSheet {
     showBarModalBottomSheet(
       context: context,
       useRootNavigator: true,
+      
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(LmuSizes.mediumLarge),
           topRight: Radius.circular(LmuSizes.mediumLarge),
         ),
       ),
-      animationCurve: Curves.easeOutCubic,
       bounce: true,
+      animationCurve: LmuAnimations.slowSmooth,
       duration: const Duration(milliseconds: 500),
-      clipBehavior: Clip.antiAlias,
+      closeProgressThreshold: .9,
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
       builder: (context) => Padding(
           padding: const EdgeInsets.only(
-            top: LmuSizes.mediumLarge,
+            top: LmuSizes.mediumSmall,
             left: LmuSizes.mediumLarge,
             right: LmuSizes.mediumLarge,
           ),

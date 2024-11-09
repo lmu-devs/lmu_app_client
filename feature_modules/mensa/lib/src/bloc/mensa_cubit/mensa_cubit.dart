@@ -14,6 +14,7 @@ class MensaCubit extends Cubit<MensaState> {
     emit(MensaLoadInProgress());
 
     try {
+      await Future.delayed(const Duration(seconds: 2));
       final mensaModels = await mensaRepository.getMensaModels();
 
       emit(MensaLoadSuccess(mensaModels: mensaModels));

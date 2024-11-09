@@ -23,9 +23,9 @@ dependencies:
   permission_handler: ^11.3.1
   flutter_lucide: ^1.2.0
   get_it: ^8.0.1
-  iconsax: ^0.0.8
   flutter_svg: ^2.0.9
   collection: ^1.18.0
+  skeletonizer: ^1.4.2
 
 
 dev_dependencies:

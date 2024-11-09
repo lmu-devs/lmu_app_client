@@ -21,27 +21,48 @@ class ScaffoldWithNavBar extends StatelessWidget {
         currentIndex: navigationShell.currentIndex,
         children: children,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: context.colors.neutralColors.textColors.strongColors.base,
-        unselectedItemColor: context.colors.neutralColors.textColors.weakColors.base,
-        backgroundColor: context.colors.neutralColors.backgroundColors.base,
-        selectedLabelStyle: const TextStyle(
-          fontWeight: FontWeight.w600,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              color: context.colors.neutralColors.borderColors.seperatorLight, 
+              width: 1.0,
+            ),
+          ),
         ),
-        unselectedLabelStyle: const TextStyle(
-          fontWeight: FontWeight.w600,
+        child: Theme(
+          data: Theme.of(context).copyWith(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+          ),
+          child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            selectedItemColor:
+                context.colors.neutralColors.textColors.strongColors.base,
+            unselectedItemColor:
+                context.colors.neutralColors.textColors.weakColors.base,
+            backgroundColor: context.colors.neutralColors.backgroundColors.base,
+            selectedLabelStyle: const TextStyle(
+              fontWeight: FontWeight.w600,
+            ),
+            unselectedLabelStyle: const TextStyle(
+              fontWeight: FontWeight.w600,
+            ),
+            selectedFontSize: 12,
+            unselectedFontSize: 12,
+            items: const <BottomNavigationBarItem>[
+              //BottomNavigationBarItem(icon: Icon(LucideIcons.home), label: 'Home'),
+              BottomNavigationBarItem(
+                  icon: Icon(LucideIcons.utensils), label: 'Canteen'),
+              BottomNavigationBarItem(
+                  icon: Icon(LucideIcons.map), label: 'Explore'),
+              BottomNavigationBarItem(
+                  icon: Icon(LucideIcons.circle_ellipsis), label: 'More'),
+            ],
+            currentIndex: navigationShell.currentIndex,
+            onTap: (int index) => _onTap(context, index),
+          ),
         ),
-        selectedFontSize: 12,
-        unselectedFontSize: 12,
-        items: const <BottomNavigationBarItem>[
-          //BottomNavigationBarItem(icon: Icon(LucideIcons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(LucideIcons.utensils), label: 'Canteen'),
-          BottomNavigationBarItem(icon: Icon(LucideIcons.map), label: 'Explore'),
-          BottomNavigationBarItem(icon: Icon(LucideIcons.circle_ellipsis), label: 'More'),
-        ],
-        currentIndex: navigationShell.currentIndex,
-        onTap: (int index) => _onTap(context, index),
       ),
     );
   }
@@ -55,7 +76,8 @@ class ScaffoldWithNavBar extends StatelessWidget {
 }
 
 class AnimatedBranchContainer extends StatelessWidget {
-  const AnimatedBranchContainer({super.key, required this.currentIndex, required this.children});
+  const AnimatedBranchContainer(
+      {super.key, required this.currentIndex, required this.children});
 
   final int currentIndex;
   final List<Widget> children;

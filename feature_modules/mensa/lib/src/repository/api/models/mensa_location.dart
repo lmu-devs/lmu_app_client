@@ -12,6 +12,13 @@ class MensaLocation extends MensaLocationData {
     required double longitude,
   }) : super(address: address, latitude: latitude, longitude: longitude);
 
+
+  factory MensaLocation.placeholder() => const MensaLocation(
+        address: '',
+        latitude: 0,
+        longitude: 0,
+      );
+
   factory MensaLocation.fromJson(Map<String, dynamic> json) => _$MensaLocationFromJson(json);
 
   Map<String, dynamic> toJson() => _$MensaLocationToJson(this);
