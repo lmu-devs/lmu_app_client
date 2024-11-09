@@ -6,12 +6,11 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
-import '../bloc/mensa_favorite_cubit/mensa_favorite_cubit.dart';
 import '../extensions/opening_hours_extensions.dart';
 import '../repository/api/api.dart';
 import '../routes/mensa_routes.dart';
+import '../services/mensa_user_preferences_service.dart';
 import 'mensa_tag.dart';
 import 'star_icon.dart';
 
@@ -48,12 +47,10 @@ class MensaOverviewTile extends StatelessWidget {
     final openingHours = mensaModel.openingHours;
     final status = openingHours.mensaStatus;
     final likeCount = mensaModel.ratingModel.likeCount;
-    final imageUrl =
-        mensaModel.images.isNotEmpty ? mensaModel.images.first.url : null;
+    final imageUrl = mensaModel.images.isNotEmpty ? mensaModel.images.first.url : null;
 
     return Padding(
-      padding: EdgeInsets.only(
-          bottom: hasDivider ? LmuSizes.none : LmuSizes.mediumSmall),
+      padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.none : LmuSizes.mediumSmall),
       child: GestureDetector(
         onTap: () {
           MensaDetailsRoute(mensaModel).go(context);
@@ -120,18 +117,15 @@ class MensaOverviewTile extends StatelessWidget {
                         LmuText.bodyXSmall(
                           likeCount.formattedLikes,
                           weight: FontWeight.w400,
-                          color: context
-                              .colors.neutralColors.textColors.weakColors.base,
+                          color: context.colors.neutralColors.textColors.weakColors.base,
                         ),
                         const SizedBox(
                           width: LmuSizes.small,
                         ),
                         GestureDetector(
                           onTap: () {
-                            GetIt.I
-                                .get<MensaFavoriteCubit>()
-                                .toggleFavoriteMensa(
-                                  mensaId: mensaModel.canteenId,
+                            GetIt.I.get<MensaUserPreferencesService>().toggleFavoriteMensaId(
+                                  mensaModel.canteenId,
                                 );
                             LmuToast.show(
                               context: context,
@@ -139,10 +133,8 @@ class MensaOverviewTile extends StatelessWidget {
                               message: 'Favorit hinzugefügt',
                               actionText: 'Rückgängig',
                               onActionPressed: () {
-                                GetIt.I
-                                    .get<MensaFavoriteCubit>()
-                                    .toggleFavoriteMensa(
-                                      mensaId: mensaModel.canteenId,
+                                GetIt.I.get<MensaUserPreferencesService>().toggleFavoriteMensaId(
+                                      mensaModel.canteenId,
                                     );
                               },
                             );
@@ -167,15 +159,13 @@ class MensaOverviewTile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         LmuText.body(
-                          status.text(context.localizations,
-                              openingHours: openingHours),
+                          status.text(context.localizations, openingHours: openingHours),
                           color: status.textColor(context.colors),
                         ),
                         if (distance != null)
                           LmuText.body(
                             " • $distance",
-                            color: context.colors.neutralColors.textColors
-                                .mediumColors.base,
+                            color: context.colors.neutralColors.textColors.mediumColors.base,
                           ),
                       ],
                     )

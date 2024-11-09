@@ -12,7 +12,6 @@ class MensaLocation extends MensaLocationData {
     required double longitude,
   }) : super(address: address, latitude: latitude, longitude: longitude);
 
-
   factory MensaLocation.placeholder() => const MensaLocation(
         address: '',
         latitude: 0,

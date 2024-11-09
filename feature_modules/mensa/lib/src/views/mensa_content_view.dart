@@ -3,29 +3,23 @@ import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 
-import '../bloc/mensa_favorite_cubit/mensa_favorite_cubit.dart';
 import '../extensions/opening_hours_extensions.dart';
 import '../repository/api/models/mensa_model.dart';
 import '../repository/api/models/mensa_type.dart';
+import '../repository/api/models/user_preferences/sort_option.dart';
+import '../services/mensa_user_preferences_service.dart';
 import '../widgets/widgets.dart';
-
-enum SortOption {
-  alphabetically,
-  distance,
-  rating,
-  type,
-}
 
 class MensaContentView extends StatelessWidget {
   MensaContentView({
     Key? key,
     required this.mensaModels,
-  })  : sortOptionNotifier = ValueNotifier(SortOption.alphabetically),
-        sortedMensaModelsNotifier = ValueNotifier(SortOption.alphabetically.sort(mensaModels)),
+    SortOption initalSortOption = SortOption.alphabetically,
+  })  : sortOptionNotifier = ValueNotifier(initalSortOption),
+        sortedMensaModelsNotifier = ValueNotifier(initalSortOption.sort(mensaModels)),
         super(key: key);
 
   final List<MensaModel> mensaModels;
@@ -35,20 +29,15 @@ class MensaContentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final favoriteMensaIdsNotifier = GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier;
     final activeSortOption = sortOptionNotifier.value;
 
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(LmuSizes.mediumLarge),
-        child: BlocBuilder<MensaFavoriteCubit, MensaFavoriteState>(
-          bloc: GetIt.I.get<MensaFavoriteCubit>(),
-          builder: (context, state) {
-            if (state is! MensaFavoriteLoadSuccess) {
-              return const SizedBox.shrink();
-            }
-
-            final favoriteMensaIds = state.favoriteMensaIds;
-
+        child: ValueListenableBuilder(
+          valueListenable: favoriteMensaIdsNotifier,
+          builder: (context, favoriteMensaIds, _) {
             final favoriteMensaModels = _getFavoriteMensaModels(favoriteMensaIds);
             final localizations = context.localizations;
 
@@ -204,9 +193,9 @@ class MensaContentView extends StatelessWidget {
                         onTap: () async {
                           sortOptionNotifier.value = sortOption;
                           sortedMensaModelsNotifier.value = sortOption.sort(mensaModels);
-
+                          await GetIt.I.get<MensaUserPreferencesService>().updateSortOption(sortOption);
                           Future.delayed(
-                            const Duration(milliseconds: 130),
+                            const Duration(milliseconds: 100),
                             () {
                               Navigator.of(context, rootNavigator: true).pop();
                             },
@@ -293,4 +282,69 @@ extension SortOptionExtension on SortOption {
 
 extension TypeExtension on MensaType {
   int compareTo(MensaType other) => index.compareTo(other.index);
+}
+
+class FavoriteMensaList extends StatefulWidget {
+  final List<MensaModel> favoriteMensaModels;
+
+  const FavoriteMensaList({Key? key, required this.favoriteMensaModels}) : super(key: key);
+
+  @override
+  _FavoriteMensaListState createState() => _FavoriteMensaListState();
+}
+
+class _FavoriteMensaListState extends State<FavoriteMensaList> {
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+  late List<MensaModel> _favoriteMensaModels;
+
+  @override
+  void initState() {
+    super.initState();
+    _favoriteMensaModels = List.from(widget.favoriteMensaModels);
+  }
+
+  // Method to add an item to the list with an animation
+  void _addItem(MensaModel mensaModel) {
+    _favoriteMensaModels.add(mensaModel);
+    _listKey.currentState?.insertItem(_favoriteMensaModels.length - 1);
+  }
+
+  // Method to remove an item from the list with an animation
+  void _removeItem(int index) {
+    final removedItem = _favoriteMensaModels[index];
+    _favoriteMensaModels.removeAt(index);
+
+    _listKey.currentState?.removeItem(
+      index,
+      (context, animation) => _buildAnimatedTile(removedItem, animation),
+      duration: const Duration(milliseconds: 300),
+    );
+  }
+
+  Widget _buildAnimatedTile(MensaModel mensaModel, Animation<double> animation) {
+    return FadeTransition(
+      opacity: animation,
+      child: MensaOverviewTile(
+        mensaModel: mensaModel,
+        hasDivider: _favoriteMensaModels.indexOf(mensaModel) == _favoriteMensaModels.length - 1,
+        isFavorite: true,
+        hasLargeImage: false,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedList(
+      key: _listKey,
+      shrinkWrap: true,
+      padding: EdgeInsets.zero,
+      physics: const NeverScrollableScrollPhysics(),
+      initialItemCount: _favoriteMensaModels.length,
+      itemBuilder: (context, index, animation) {
+        final mensaModel = _favoriteMensaModels[index];
+        return _buildAnimatedTile(mensaModel, animation);
+      },
+    );
+  }
 }

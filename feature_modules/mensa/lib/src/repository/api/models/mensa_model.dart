@@ -42,8 +42,7 @@ class MensaModel extends Equatable {
         type: MensaType.none,
       );
 
-  factory MensaModel.fromJson(Map<String, dynamic> json) =>
-      _$MensaModelFromJson(json);
+  factory MensaModel.fromJson(Map<String, dynamic> json) => _$MensaModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$MensaModelToJson(this);
 

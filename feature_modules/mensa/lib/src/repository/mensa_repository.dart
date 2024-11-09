@@ -6,6 +6,7 @@ import 'api/mensa_api_client.dart';
 import 'api/models/mensa_menu_week_model.dart';
 import 'api/models/mensa_model.dart';
 import 'api/models/taste_profile/taste_profile.dart';
+import 'api/models/user_preferences/sort_option.dart';
 
 abstract class MensaRepository {
   Future<List<MensaModel>> getMensaModels();
@@ -21,6 +22,10 @@ abstract class MensaRepository {
   Future<TasteProfileSaveModel> getTasteProfileState();
 
   Future<void> saveTasteProfileState(TasteProfileSaveModel saveModel);
+
+  Future<SortOption?> getSortOption();
+
+  Future<void> setSortOption(SortOption mensaUserPreferences);
 }
 
 class ConnectedMensaRepository implements MensaRepository {
@@ -37,6 +42,8 @@ class ConnectedMensaRepository implements MensaRepository {
   static const String _favoriteMensaIdsKey = 'favorite_mensa_ids_key';
 
   static const String _pasteProfileSelectionsKey = 'taste_profile_selections_key';
+
+  static const String _mensaSortOptionKey = 'mensa_user_preferences';
 
   @override
   Future<List<MensaModel>> getMensaModels({bool forceRefresh = false}) async {
@@ -125,5 +132,30 @@ class ConnectedMensaRepository implements MensaRepository {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setString(_pasteProfileSelectionsKey, json.encode(saveModel.toJson()));
+  }
+
+  @override
+  Future<SortOption?> getSortOption() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final cachedSortOption = prefs.getString(_mensaSortOptionKey);
+
+    if (cachedSortOption == null) {
+      return null;
+    }
+
+    for (var element in SortOption.values) {
+      if (element.name == cachedSortOption) {
+        return element;
+      }
+    }
+    return null;
+  }
+
+  @override
+  Future<void> setSortOption(SortOption sortOption) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString(_mensaSortOptionKey, sortOption.name);
   }
 }
