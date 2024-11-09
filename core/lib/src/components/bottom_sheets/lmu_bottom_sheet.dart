@@ -28,14 +28,7 @@ class LmuBottomSheet {
       isScrollControlled: true,
       useSafeArea: true,
       builder: (_) {
-        return Padding(
-          padding: const EdgeInsets.only(
-            left: LmuSizes.mediumLarge,
-            right: LmuSizes.mediumLarge,
-            top: LmuSizes.mediumSmall,
-          ),
-          child: content,
-        );
+        return content;
       },
     );
   }

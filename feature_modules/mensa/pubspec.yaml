@@ -26,6 +26,7 @@ dependencies:
   iconsax: ^0.0.8
   flutter_svg: ^2.0.9
   collection: ^1.18.0
+  scrollable_positioned_list: ^0.3.8
 
 
 dev_dependencies:

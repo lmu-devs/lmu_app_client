@@ -1,5 +1,4 @@
 import 'package:core/components.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
 import '../views/wunschkonzert_success_view.dart';
@@ -9,11 +8,8 @@ class WunschkonzertMainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.colors.neutralColors.backgroundColors.base,
-      appBar: const LmuDefaultNavigationBar(
-        title: "Wunschkonzert",
-      ),
+    return LmuScaffoldWithAppBar(
+      largeTitle: "Wunschkonzert",
       body: const WunschkonzertSuccessView(),
     );
   }

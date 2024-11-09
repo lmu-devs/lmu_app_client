@@ -37,12 +37,9 @@ class LmuBottomSheet {
       clipBehavior: Clip.antiAlias,
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
       builder: (context) => Padding(
-          padding: const EdgeInsets.only(
-            top: LmuSizes.mediumLarge,
-            left: LmuSizes.mediumLarge,
-            right: LmuSizes.mediumLarge,
-          ),
-          child: content),
+        padding: const EdgeInsets.only(),
+        child: content,
+      ),
     );
   }
 }

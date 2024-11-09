@@ -12,18 +12,15 @@ class SettingsApperancePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
 
-    return Scaffold(
-      backgroundColor: context.colors.neutralColors.backgroundColors.base,
-      appBar: LmuDefaultNavigationBar(
-        title: "Erscheinungsbild",
-        leadingWidget: GestureDetector(
-          onTap: () {
-            context.pop();
-          },
-          child: const LmuIcon(
-            icon: Icons.arrow_back,
-            size: LmuSizes.large,
-          ),
+    return LmuScaffoldWithAppBar(
+      largeTitle: "Erscheinungsbild",
+      leadingWidget: GestureDetector(
+        onTap: () {
+          context.pop();
+        },
+        child: const LmuIcon(
+          icon: Icons.arrow_back,
+          size: 28,
         ),
       ),
       body: Padding(

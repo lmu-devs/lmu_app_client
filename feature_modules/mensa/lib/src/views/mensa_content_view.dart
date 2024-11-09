@@ -196,7 +196,6 @@ class MensaContentView extends StatelessWidget {
                         title: sortOption == activeValue ? sortOption.title(context.localizations) : null,
                         titleColor: textColor,
                         subtitle: sortOption == activeValue ? null : sortOption.title(context.localizations),
-
                         mainContentAlignment: MainContentAlignment.center,
                         leadingArea: LmuIcon(
                           icon: sortOption.icon,
