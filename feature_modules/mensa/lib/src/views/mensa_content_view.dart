@@ -86,6 +86,7 @@ class MensaContentView extends StatelessWidget {
   Widget _buildFavoriteMensaList(List<MensaModel> favoriteMensaModels) {
     return ListView.builder(
       shrinkWrap: true,
+      padding: EdgeInsets.zero,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: favoriteMensaModels.length,
       itemBuilder: (context, index) {
@@ -151,6 +152,7 @@ class MensaContentView extends StatelessWidget {
 
             return ListView.builder(
               shrinkWrap: true,
+              padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: filteredMensaModels.length,
               itemBuilder: (context, index) {

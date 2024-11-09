@@ -25,6 +25,7 @@ class MensaLoadingView extends StatelessWidget {
             ),
             ListView.builder(
               shrinkWrap: true,
+              padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: 3,
               itemBuilder: (context, index) {
@@ -54,6 +55,7 @@ class MensaLoadingView extends StatelessWidget {
             const SizedBox(height: LmuSizes.mediumLarge),
             ListView.builder(
               shrinkWrap: true,
+              padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: 5,
               itemBuilder: (context, index) {
