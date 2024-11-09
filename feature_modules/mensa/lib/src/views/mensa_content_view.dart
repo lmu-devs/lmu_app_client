@@ -61,7 +61,7 @@ class MensaContentView extends StatelessWidget {
                     ? _buildFavoriteMensaList(favoriteMensaModels)
                     : MensaOverviewPlaceholderTile(
                         title: localizations.noFavorites,
-                        leadingWidget: const StarIcon.active(),
+                        leadingWidget: const StarIcon(),
                       ),
                 const SizedBox(height: LmuSizes.xxlarge),
                 LmuTileHeadline.base(
