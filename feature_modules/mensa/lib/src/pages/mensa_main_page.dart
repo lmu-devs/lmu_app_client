@@ -4,10 +4,11 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import '../bloc/mensa_cubit/cubit.dart';
-import '../services/taste_profile_service.dart';
+import 'pages.dart';
+
+import '../bloc/bloc.dart';
+import '../services/services.dart';
 import '../views/views.dart';
-import 'test.dart';
 
 class MensaMainPage extends StatelessWidget {
   const MensaMainPage({super.key});

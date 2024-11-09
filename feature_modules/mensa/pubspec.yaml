@@ -27,6 +27,7 @@ dependencies:
   flutter_svg: ^2.0.9
   collection: ^1.18.0
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

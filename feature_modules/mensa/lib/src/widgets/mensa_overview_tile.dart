@@ -113,6 +113,12 @@ class MensaOverviewTile extends StatelessWidget {
                             GetIt.I.get<MensaFavoriteCubit>().toggleFavoriteMensa(
                                   mensaId: mensaModel.canteenId,
                                 );
+                                LmuCustomToast.showSuccess(
+                                  context: context,
+                                  message: 'Favorit hinzugefügt',
+                                  actionText: 'Rückgängig',
+ 
+                                );
                           },
                           child: isFavorite ? const StarIcon.active() : const StarIcon.inActive(),
                         )
