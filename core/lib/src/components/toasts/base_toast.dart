@@ -5,38 +5,26 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 enum ToastType {
-  default_,
+  base,
   success,
   error,
   warning,
 }
 
-class LmuCustomToast {
+class LmuToast {
   static void show({
     required BuildContext context,
     required String message,
     String? actionText,
     VoidCallback? onActionPressed,
-    ToastType type = ToastType.default_,
+    ToastType type = ToastType.base,
     Duration? duration,
+    Stream<bool>? removeStream,
   }) {
     final fToast = FToast();
     fToast.init(context);
 
-    Color getDotColor() {
-      switch (type) {
-        case ToastType.success:
-          return context.colors.successColors.textColors.strongColors.base;
-        case ToastType.error:
-          return context.colors.dangerColors.textColors.strongColors.base;
-        case ToastType.warning:
-          return context.colors.warningColors.textColors.strongColors.base;
-        case ToastType.default_:
-          return context.colors.neutralColors.textColors.strongColors.base;
-      }
-    }
-
-    Widget toast = SlideTransition(
+    final toast = SlideTransition(
       position: TweenSequence<Offset>([
         TweenSequenceItem(
           tween: Tween<Offset>(
@@ -52,7 +40,8 @@ class LmuCustomToast {
         )..forward(),
       ),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        padding: const EdgeInsets.symmetric(
+            horizontal: LmuSizes.mediumLarge, vertical: LmuSizes.mediumSmall),
         decoration: BoxDecoration(
           color: context.colors.neutralColors.backgroundColors.base,
           borderRadius: BorderRadius.circular(50),
@@ -68,11 +57,11 @@ class LmuCustomToast {
               width: LmuSizes.mediumSmall,
               height: LmuSizes.mediumSmall,
               decoration: BoxDecoration(
-                color: getDotColor(),
+                color: type.color(context.colors),
                 shape: BoxShape.circle,
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: LmuSizes.medium),
             LmuText.bodySmall(
               message,
               weight: FontWeight.w600,
@@ -106,7 +95,7 @@ class LmuCustomToast {
       child: toast,
       gravity: ToastGravity.BOTTOM,
       toastDuration: duration ??
-          calculateDuration(
+          _calculateDuration(
             messages: [
               message,
               if (actionText != null && onActionPressed != null) actionText
@@ -115,63 +104,17 @@ class LmuCustomToast {
           ),
       fadeDuration: const Duration(milliseconds: 200),
     );
-  }
 
-  // Convenience methods for different toast types
-  static void showSuccess({
-    required BuildContext context,
-    required String message,
-    String? actionText,
-    VoidCallback? onActionPressed,
-    Duration? duration,
-  }) {
-    show(
-      context: context,
-      message: message,
-      actionText: actionText,
-      type: ToastType.success,
-      onActionPressed: onActionPressed,
-      duration: duration,
-    );
-  }
-
-  static void showError({
-    required BuildContext context,
-    required String message,
-    String? actionText,
-    VoidCallback? onActionPressed,
-    Duration? duration,
-  }) {
-    show(
-      context: context,
-      message: message,
-      actionText: actionText,
-      type: ToastType.error,
-      onActionPressed: onActionPressed,
-      duration: duration,
-    );
-  }
-
-  static void showWarning({
-    required BuildContext context,
-    required String message,
-    String? actionText,
-    VoidCallback? onActionPressed,
-    Duration? duration,
-  }) {
-    show(
-      context: context,
-      message: message,
-      actionText: actionText,
-      type: ToastType.warning,
-      onActionPressed: onActionPressed,
-      duration: duration,
-    );
+    removeStream?.listen((_) {
+      fToast.removeCustomToast();
+    });
   }
 
   /// Calculates the duration of the toast based on the number of words in the message
-  static Duration calculateDuration(
-      {required List<String> messages, bool hasAction = false}) {
+  static Duration _calculateDuration({
+    required List<String> messages,
+    bool hasAction = false,
+  }) {
     int wordCount = messages
         .where((msg) =>
             msg.trim().isNotEmpty) // Filter out empty/whitespace-only strings
@@ -182,17 +125,28 @@ class LmuCustomToast {
     int durationMs = 0;
     if (hasAction) {
       // Add 1 second for the action button
-      print("has action");
       durationMs += 1000;
     }
 
     // Base duration: 1 second + 250ms per word
     durationMs += 1000 + (wordCount * 250);
 
-    print(durationMs);
-    print(wordCount);
-
     // Clamp between 1,6 seconds and 5 seconds
     return Duration(milliseconds: durationMs.clamp(1600, 4000));
+  }
+}
+
+extension ToastTypeExtension on ToastType {
+  Color color(LmuColors colors) {
+    switch (this) {
+      case ToastType.success:
+        return colors.successColors.textColors.strongColors.base;
+      case ToastType.error:
+        return colors.dangerColors.textColors.strongColors.base;
+      case ToastType.warning:
+        return colors.warningColors.textColors.strongColors.base;
+      case ToastType.base:
+        return colors.neutralColors.textColors.strongColors.base;
+    }
   }
 }
