@@ -1,5 +1,4 @@
 import 'package:core/components.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
 import '../views/settings_success_view.dart';
@@ -9,12 +8,9 @@ class SettingsMainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.colors.neutralColors.backgroundColors.base,
-      appBar: const LmuDefaultNavigationBar(
-        title: "Settings",
-      ),
-      body: const SettingsSuccessView(),
+    return const LmuScaffoldWithAppBar(
+      largeTitle: "Settings",
+      body: SettingsSuccessView(),
     );
   }
 }

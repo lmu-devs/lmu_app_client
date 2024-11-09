@@ -25,6 +25,7 @@ dependencies:
   get_it: ^8.0.1
   flutter_svg: ^2.0.9
   collection: ^1.18.0
+  scrollable_positioned_list: ^0.3.8
   skeletonizer: ^1.4.2
 
 

@@ -86,6 +86,7 @@ class MensaContentView extends StatelessWidget {
   Widget _buildFavoriteMensaList(List<MensaModel> favoriteMensaModels) {
     return ListView.builder(
       shrinkWrap: true,
+      padding: EdgeInsets.zero,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: favoriteMensaModels.length,
       itemBuilder: (context, index) {
@@ -151,6 +152,7 @@ class MensaContentView extends StatelessWidget {
 
             return ListView.builder(
               shrinkWrap: true,
+              padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: filteredMensaModels.length,
               itemBuilder: (context, index) {
@@ -193,7 +195,6 @@ class MensaContentView extends StatelessWidget {
                         title: sortOption == activeValue ? sortOption.title(context.localizations) : null,
                         titleColor: textColor,
                         subtitle: sortOption == activeValue ? null : sortOption.title(context.localizations),
-
                         mainContentAlignment: MainContentAlignment.center,
                         leadingArea: LmuIcon(
                           icon: sortOption.icon,

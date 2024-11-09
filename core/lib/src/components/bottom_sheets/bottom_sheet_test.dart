@@ -34,7 +34,6 @@ class LmuBottomSheet {
     showBarModalBottomSheet(
       context: context,
       useRootNavigator: true,
-      
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(LmuSizes.mediumLarge),
@@ -47,12 +46,9 @@ class LmuBottomSheet {
       closeProgressThreshold: .9,
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
       builder: (context) => Padding(
-          padding: const EdgeInsets.only(
-            top: LmuSizes.mediumSmall,
-            left: LmuSizes.mediumLarge,
-            right: LmuSizes.mediumLarge,
-          ),
-          child: content),
+        padding: const EdgeInsets.only(),
+        child: content,
+      ),
     );
   }
 }

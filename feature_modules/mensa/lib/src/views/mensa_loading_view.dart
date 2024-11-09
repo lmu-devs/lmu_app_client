@@ -24,8 +24,7 @@ class MensaLoadingView extends StatelessWidget {
       listener: (context, state) {
         if (state is MensaLoadFailure) {
           final localizations = context.localizations;
-          final isSuccessfullStream =
-              mensaCubit.stream.map((state) => state is MensaLoadSuccess);
+          final isSuccessfullStream = mensaCubit.stream.map((state) => state is MensaLoadSuccess);
 
           LmuToast.show(
             context: context,
