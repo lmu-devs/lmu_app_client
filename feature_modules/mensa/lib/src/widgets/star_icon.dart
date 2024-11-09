@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class StarIcon extends StatelessWidget {
-   const StarIcon({Key? key, this.isActive = false}):super(key: key);
+  const StarIcon({Key? key, this.isActive = false}) : super(key: key);
 
   final bool isActive;
 

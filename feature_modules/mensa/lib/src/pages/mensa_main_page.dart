@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../bloc/bloc.dart';
+import '../services/mensa_user_preferences_service.dart';
 import '../services/services.dart';
 import '../views/views.dart';
 import 'taste_profile_page.dart';
@@ -38,8 +39,10 @@ class MensaMainPage extends StatelessWidget {
         bloc: GetIt.I.get<MensaCubit>(),
         builder: (context, state) {
           if (state is MensaLoadSuccess) {
+            final initialSortOption = GetIt.I.get<MensaUserPreferencesService>().initialSortOption;
             return MensaContentView(
               mensaModels: state.mensaModels,
+              initalSortOption: initialSortOption,
             );
           }
 
