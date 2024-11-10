@@ -1,4 +1,6 @@
 import 'package:collection/collection.dart';
+import 'package:core/constants.dart';
+import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -78,21 +80,23 @@ class _MensaFavoriteTestState extends State<MensaFavoriteTest> {
     return Column(
       children: [
         ValueListenableBuilder(
-          valueListenable: GetIt.I<MensaUserPreferencesService>().favoriteMensaIdsNotifier,
-          builder: (context, value, child) {
-            final newMensa = value.firstWhereOrNull((element) => !_mensaList._items.any((item) => item.canteenId == element));
-            if(newMensa != null) _insert(widget.mensaModels.firstWhere((element) => element.canteenId == newMensa));
-            return AnimatedList(
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              physics: const NeverScrollableScrollPhysics(),
-              key: _listKey,
-              initialItemCount: _mensaList.length,
-              
-              itemBuilder: _buildItem,
-            );
-          }
-        ),
+            valueListenable:
+                GetIt.I<MensaUserPreferencesService>().favoriteMensaIdsNotifier,
+            builder: (context, value, child) {
+              final newMensa = value.firstWhereOrNull((element) =>
+                  !_mensaList._items.any((item) => item.canteenId == element));
+              if (newMensa != null)
+                _insert(widget.mensaModels
+                    .firstWhere((element) => element.canteenId == newMensa));
+              return AnimatedList(
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                physics: const NeverScrollableScrollPhysics(),
+                key: _listKey,
+                initialItemCount: _mensaList.length,
+                itemBuilder: _buildItem,
+              );
+            }),
       ],
     );
   }
@@ -125,12 +129,31 @@ class CardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizeTransition(
-      sizeFactor: animation,
-      child: MensaOverviewTile(
-        mensaModel: mensaModel,
-        isFavorite: true,
-        onFavoriteTap: onFavoriteTap,
+    final fadeAnimation = CurvedAnimation(
+        parent: animation,
+        curve: LmuAnimations.gentle,
+        reverseCurve: LmuAnimations.slowSmooth);
+
+    final sizeAnimation = CurvedAnimation(
+        parent: animation,
+        curve: LmuAnimations.gentle,
+        reverseCurve: LmuAnimations.slowSmooth);
+
+    return Container(
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(LmuRadiusSizes.mediumLarge),
+      ),
+      child: FadeTransition(
+        opacity: fadeAnimation,
+        child: SizeTransition(
+          sizeFactor: sizeAnimation,
+          child: MensaOverviewTile(
+            mensaModel: mensaModel,
+            isFavorite: true,
+            onFavoriteTap: onFavoriteTap,
+          ),
+        ),
       ),
     );
   }
@@ -163,7 +186,12 @@ class ListModel<E> {
 
   void insert(int index, E item) {
     _items.insert(index, item);
-    _animatedList!.insertItem(index);
+    _animatedList!.insertItem(
+      index,
+      duration: const Duration(
+        milliseconds: 1200,
+      ),
+    );
   }
 
   E removeAt(int index) {
@@ -174,6 +202,9 @@ class ListModel<E> {
         (BuildContext context, Animation<double> animation) {
           return removedItemBuilder(removedItem, context, animation);
         },
+        duration: const Duration(
+          milliseconds: 800,
+        ),
       );
     }
     return removedItem;
