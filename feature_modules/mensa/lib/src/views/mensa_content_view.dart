@@ -254,7 +254,7 @@ extension SortOptionExtension on SortOption {
       case SortOption.rating:
         return List.from(mensaModels)
           ..sort((a, b) =>
-              a.ratingModel.likeCount.compareTo(b.ratingModel.likeCount));
+              b.ratingModel.likeCount.compareTo(a.ratingModel.likeCount));
       case SortOption.type:
         return List.from(mensaModels)
           ..sort((a, b) {
