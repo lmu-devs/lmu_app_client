@@ -16,24 +16,26 @@ class ScaffoldWithNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
+      backgroundColor: context.colors.neutralColors.backgroundColors.base,
       body: AnimatedBranchContainer(
         currentIndex: navigationShell.currentIndex,
         children: children,
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(
-              color: context.colors.neutralColors.borderColors.seperatorLight, 
-              width: 1.0,
-            ),
-          ),
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
         ),
-        child: Theme(
-          data: Theme.of(context).copyWith(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: context.colors.neutralColors.borderColors.seperatorLight,
+                width: 1,
+              ),
+            ),
           ),
           child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,

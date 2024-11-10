@@ -22,6 +22,7 @@ class MensaOverviewTile extends StatelessWidget {
     this.distance,
     this.hasDivider = false,
     this.hasLargeImage = false,
+    this.onFavoriteTap
   });
 
   final MensaModel mensaModel;
@@ -29,6 +30,7 @@ class MensaOverviewTile extends StatelessWidget {
   final double? distance;
   final bool hasDivider;
   final bool hasLargeImage;
+  final void Function ()? onFavoriteTap;
 
   factory MensaOverviewTile.loading({String? name, hasLargeImage = false}) {
     return MensaOverviewTile(
@@ -47,10 +49,12 @@ class MensaOverviewTile extends StatelessWidget {
     final openingHours = mensaModel.openingHours;
     final status = openingHours.mensaStatus;
     final likeCount = mensaModel.ratingModel.likeCount;
-    final imageUrl = mensaModel.images.isNotEmpty ? mensaModel.images.first.url : null;
+    final imageUrl =
+        mensaModel.images.isNotEmpty ? mensaModel.images.first.url : null;
 
     return Padding(
-      padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.none : LmuSizes.mediumSmall),
+      padding: EdgeInsets.only(
+          bottom: hasDivider ? LmuSizes.none : LmuSizes.mediumSmall),
       child: GestureDetector(
         onTap: () {
           MensaDetailsRoute(mensaModel).go(context);
@@ -117,55 +121,81 @@ class MensaOverviewTile extends StatelessWidget {
                         LmuText.bodyXSmall(
                           likeCount.formattedLikes,
                           weight: FontWeight.w400,
-                          color: context.colors.neutralColors.textColors.weakColors.base,
+                          color: context
+                              .colors.neutralColors.textColors.weakColors.base,
                         ),
                         const SizedBox(
                           width: LmuSizes.small,
                         ),
                         GestureDetector(
-                          onTap: () {
-                            GetIt.I.get<MensaUserPreferencesService>().toggleFavoriteMensaId(
-                                  mensaModel.canteenId,
+                            onTap: () async {
+                              final toggleFavoriteMensaId = GetIt.I
+                                  .get<MensaUserPreferencesService>()
+                                  .toggleFavoriteMensaId(
+                                    mensaModel.canteenId,
+                                  );
+
+                              if (isFavorite) {
+                                LmuToast.show(
+                                  context: context,
+                                  type: ToastType.success,
+                                  message: 'Favorit entfernt',
+                                  actionText: 'Rückgängig',
+                                  onActionPressed: () async {
+                                    await toggleFavoriteMensaId;
+                                  },
                                 );
-                            LmuToast.show(
-                              context: context,
-                              type: ToastType.success,
-                              message: 'Favorit hinzugefügt',
-                              actionText: 'Rückgängig',
-                              onActionPressed: () {
-                                GetIt.I.get<MensaUserPreferencesService>().toggleFavoriteMensaId(
-                                      mensaModel.canteenId,
-                                    );
-                              },
-                            );
-                          },
-                          child: AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 300),
-                            transitionBuilder: (child, animation) {
-                              return ScaleTransition(
-                                scale: animation,
-                                child: child,
-                              );
+                              } else {
+                                LmuToast.show(
+                                  context: context,
+                                  type: ToastType.success,
+                                  message: 'Favorit hinzugefügt',
+                                );
+                              }
+
+                              onFavoriteTap?.call();
+
+                              await toggleFavoriteMensaId;
                             },
-                            child: StarIcon(
-                              isActive: isFavorite,
-                              key: ValueKey(isFavorite),
-                            ),
-                          ),
-                        )
+                            child: AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 500),
+                              transitionBuilder: (child, animation) {
+                                return FadeTransition(
+                                  opacity: animation,
+                                  child: ScaleTransition(
+                                    scale: Tween<double>(begin: 0.5, end: 1)
+                                        .animate(
+                                      CurvedAnimation(
+                                        parent: animation,
+                                        curve: isFavorite
+                                            ? Curves.elasticOut
+                                            : Curves.easeOutCirc,
+                                      ),
+                                    ),
+                                    child: child,
+                                  ),
+                                );
+                              },
+                              child: StarIcon(
+                                isActive: isFavorite,
+                                key: ValueKey(isFavorite),
+                              ),
+                            ))
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         LmuText.body(
-                          status.text(context.localizations, openingHours: openingHours),
+                          status.text(context.localizations,
+                              openingHours: openingHours),
                           color: status.textColor(context.colors),
                         ),
                         if (distance != null)
                           LmuText.body(
                             " • $distance",
-                            color: context.colors.neutralColors.textColors.mediumColors.base,
+                            color: context.colors.neutralColors.textColors
+                                .mediumColors.base,
                           ),
                       ],
                     )
