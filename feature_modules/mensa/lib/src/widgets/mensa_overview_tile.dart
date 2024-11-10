@@ -15,21 +15,20 @@ import 'mensa_tag.dart';
 import 'star_icon.dart';
 
 class MensaOverviewTile extends StatelessWidget {
-  const MensaOverviewTile(
-      {super.key,
-      required this.mensaModel,
-      required this.isFavorite,
-      this.distance,
-      this.hasDivider = false,
-      this.hasLargeImage = false,
-      this.onFavoriteTap});
+  const MensaOverviewTile({
+    super.key,
+    required this.mensaModel,
+    required this.isFavorite,
+    this.distance,
+    this.hasDivider = false,
+    this.hasLargeImage = false,
+  });
 
   final MensaModel mensaModel;
   final bool isFavorite;
   final double? distance;
   final bool hasDivider;
   final bool hasLargeImage;
-  final void Function()? onFavoriteTap;
 
   factory MensaOverviewTile.loading({String? name, hasLargeImage = false}) {
     return MensaOverviewTile(
@@ -48,16 +47,12 @@ class MensaOverviewTile extends StatelessWidget {
     final openingHours = mensaModel.openingHours;
     final status = openingHours.mensaStatus;
     final likeCount = mensaModel.ratingModel.likeCount;
-    final imageUrl =
-        mensaModel.images.isNotEmpty ? mensaModel.images.first.url : null;
+    final imageUrl = mensaModel.images.isNotEmpty ? mensaModel.images.first.url : null;
 
     return Padding(
-      padding: EdgeInsets.only(
-          bottom: hasDivider ? LmuSizes.none : LmuSizes.mediumSmall),
+      padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.none : LmuSizes.mediumSmall),
       child: GestureDetector(
-        onTap: () {
-          MensaDetailsRoute(mensaModel).go(context);
-        },
+        onTap: () => MensaDetailsRoute(mensaModel).go(context),
         child: Container(
           decoration: BoxDecoration(
             color: context.colors.neutralColors.backgroundColors.tile,
@@ -89,9 +84,7 @@ class MensaOverviewTile extends StatelessWidget {
               Stack(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(
-                      LmuSizes.mediumLarge,
-                    ),
+                    padding: const EdgeInsets.all(LmuSizes.mediumLarge),
                     child: Column(
                       children: [
                         Row(
@@ -107,42 +100,30 @@ class MensaOverviewTile extends StatelessWidget {
                                       weight: FontWeight.w600,
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: LmuSizes.mediumSmall,
-                                  ),
-                                  MensaTag(
-                                    type: type,
-                                  ),
+                                  const SizedBox(width: LmuSizes.mediumSmall),
+                                  MensaTag(type: type),
                                 ],
                               ),
                             ),
                             Row(
                               children: [
-                                const SizedBox(
-                                  width: LmuSizes.mediumSmall,
-                                ),
+                                const SizedBox(width: LmuSizes.mediumSmall),
                                 LmuText.bodyXSmall(
                                   likeCount.formattedLikes,
                                   weight: FontWeight.w400,
-                                  color: context.colors.neutralColors.textColors
-                                      .weakColors.base,
+                                  color: context.colors.neutralColors.textColors.weakColors.base,
                                 ),
-                                const SizedBox(
-                                  width: LmuSizes.small,
-                                ),
+                                const SizedBox(width: LmuSizes.small),
                                 AnimatedSwitcher(
                                   duration: const Duration(milliseconds: 500),
                                   transitionBuilder: (child, animation) {
                                     return FadeTransition(
                                       opacity: animation,
                                       child: ScaleTransition(
-                                        scale: Tween<double>(begin: 0.5, end: 1)
-                                            .animate(
+                                        scale: Tween<double>(begin: 0.5, end: 1).animate(
                                           CurvedAnimation(
                                             parent: animation,
-                                            curve: isFavorite
-                                                ? Curves.elasticOut
-                                                : Curves.easeOutCirc,
+                                            curve: isFavorite ? Curves.elasticOut : Curves.easeOutCirc,
                                           ),
                                         ),
                                         child: child,
@@ -162,15 +143,13 @@ class MensaOverviewTile extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             LmuText.body(
-                              status.text(context.localizations,
-                                  openingHours: openingHours),
+                              status.text(context.localizations, openingHours: openingHours),
                               color: status.textColor(context.colors),
                             ),
                             if (distance != null)
                               LmuText.body(
                                 " • $distance",
-                                color: context.colors.neutralColors.textColors
-                                    .mediumColors.base,
+                                color: context.colors.neutralColors.textColors.mediumColors.base,
                               ),
                           ],
                         )
@@ -182,39 +161,33 @@ class MensaOverviewTile extends StatelessWidget {
                     bottom: LmuSizes.mediumLarge,
                     top: LmuSizes.mediumSmall,
                     child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () async {
-                          final toggleFavoriteMensaId = GetIt.I
-                              .get<MensaUserPreferencesService>()
-                              .toggleFavoriteMensaId(
-                                mensaModel.canteenId,
-                              );
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        final userPreferencesService = GetIt.I.get<MensaUserPreferencesService>();
+                        final id = mensaModel.canteenId;
 
-                          if (isFavorite) {
-                            LmuToast.show(
-                              context: context,
-                              type: ToastType.success,
-                              message: 'Favorit entfernt',
-                              actionText: 'Rückgängig',
-                              onActionPressed: () async {
-                                await toggleFavoriteMensaId;
-                              },
-                            );
-                          } else {
-                            LmuToast.show(
-                              context: context,
-                              type: ToastType.success,
-                              message: 'Favorit hinzugefügt',
-                            );
-                          }
+                        if (isFavorite) {
+                          LmuToast.show(
+                            context: context,
+                            type: ToastType.success,
+                            message: 'Favorit entfernt',
+                            actionText: 'Rückgängig',
+                            onActionPressed: () {
+                              userPreferencesService.toggleFavoriteMensaId(id);
+                            },
+                          );
+                        } else {
+                          LmuToast.show(
+                            context: context,
+                            type: ToastType.success,
+                            message: 'Favorit hinzugefügt',
+                          );
+                        }
 
-                          onFavoriteTap?.call();
-
-                          await toggleFavoriteMensaId;
-                        },
-                        child: Container(
-                          width: 64,
-                        )),
+                        userPreferencesService.toggleFavoriteMensaId(id);
+                      },
+                      child: const SizedBox(width: 64),
+                    ),
                   ),
                 ],
               ),

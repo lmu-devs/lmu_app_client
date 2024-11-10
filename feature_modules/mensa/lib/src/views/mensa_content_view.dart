@@ -8,11 +8,9 @@ import 'package:get_it/get_it.dart';
 
 import '../extensions/opening_hours_extensions.dart';
 import '../repository/api/models/mensa_model.dart';
-import '../repository/api/models/mensa_type.dart';
 import '../repository/api/models/user_preferences/sort_option.dart';
 import '../services/mensa_user_preferences_service.dart';
 import '../widgets/widgets.dart';
-import 'mensa_favorite_test.dart';
 
 class MensaContentView extends StatelessWidget {
   MensaContentView({
@@ -20,8 +18,7 @@ class MensaContentView extends StatelessWidget {
     required this.mensaModels,
     SortOption initalSortOption = SortOption.alphabetically,
   })  : sortOptionNotifier = ValueNotifier(initalSortOption),
-        sortedMensaModelsNotifier =
-            ValueNotifier(initalSortOption.sort(mensaModels)),
+        sortedMensaModelsNotifier = ValueNotifier(initalSortOption.sort(mensaModels)),
         super(key: key);
 
   final List<MensaModel> mensaModels;
@@ -31,80 +28,42 @@ class MensaContentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final favoriteMensaIdsNotifier =
-        GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier;
     final activeSortOption = sortOptionNotifier.value;
+    final localizations = context.localizations;
 
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(LmuSizes.mediumLarge),
-        child: ValueListenableBuilder(
-          valueListenable: favoriteMensaIdsNotifier,
-          builder: (context, favoriteMensaIds, _) {
-            final favoriteMensaModels =
-                _getFavoriteMensaModels(favoriteMensaIds);
-            final localizations = context.localizations;
-
-            return Column(
-              children: [
-                LmuTileHeadline.base(
-                  title: context.localizations.favorites,
-                ),
-                favoriteMensaModels.isNotEmpty
-                    ? MensaFavoriteTest(
-                        mensaModels: mensaModels)
-                    : MensaOverviewPlaceholderTile(
-                        title: localizations.noFavorites,
-                        leadingWidget: const StarIcon(),
-                      ),
-                const SizedBox(height: LmuSizes.xxlarge),
-                LmuTileHeadline.base(
-                  title: localizations.allCanteens,
-                  bottomWidget: Row(
-                    children: [
-                      _buildSortButton(localizations, activeSortOption),
-                      const SizedBox(width: LmuSizes.mediumSmall),
-                      _buildOpenNowFilterButton(localizations),
-                    ],
-                  ),
-                ),
-                _buildAllMensaList(favoriteMensaIds)
-              ],
-            );
-          },
+        child: Column(
+          children: [
+            LmuTileHeadline.base(
+              title: context.localizations.favorites,
+            ),
+            MensaOverivewFavoriteSection(mensaModels: mensaModels),
+            const SizedBox(height: LmuSizes.xxlarge),
+            LmuTileHeadline.base(
+              title: localizations.allCanteens,
+              bottomWidget: Row(
+                children: [
+                  _buildSortButton(localizations, activeSortOption),
+                  const SizedBox(width: LmuSizes.mediumSmall),
+                  _buildOpenNowFilterButton(localizations),
+                ],
+              ),
+            ),
+            _buildAllMensaList(),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildFavoriteMensaList(List<MensaModel> favoriteMensaModels) {
-    return ListView.builder(
-      shrinkWrap: true,
-      padding: EdgeInsets.zero,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: favoriteMensaModels.length,
-      itemBuilder: (context, index) {
-        final mensaModel = favoriteMensaModels[index];
-
-        return MensaOverviewTile(
-          mensaModel: mensaModel,
-          hasDivider: index == mensaModels.length - 1,
-          isFavorite: true,
-          hasLargeImage: false,
-        );
-      },
-    );
-  }
-
-  Widget _buildSortButton(
-      AppLocalizations localizations, SortOption activeSortOption) {
+  Widget _buildSortButton(AppLocalizations localizations, SortOption activeSortOption) {
     return ValueListenableBuilder(
       valueListenable: sortOptionNotifier,
       builder: (context, activeSortOption, _) {
         return LmuButton(
-          title: SortOption.values
-              .firstWhere((option) => option == activeSortOption)
-              .title(localizations),
+          title: SortOption.values.firstWhere((option) => option == activeSortOption).title(localizations),
           emphasis: ButtonEmphasis.secondary,
           trailingIcon: LucideIcons.chevron_down,
           onTap: () => _showSortOptionActionSheet(context, activeSortOption),
@@ -119,50 +78,51 @@ class MensaContentView extends StatelessWidget {
       builder: (context, isOpenNowFilterActive, _) {
         return LmuButton(
           title: localizations.openNow,
-          emphasis: isOpenNowFilterActive
-              ? ButtonEmphasis.primary
-              : ButtonEmphasis.secondary,
-          onTap: () =>
-              isOpenNowFilerNotifier.value = !isOpenNowFilerNotifier.value,
+          emphasis: isOpenNowFilterActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
+          onTap: () => isOpenNowFilerNotifier.value = !isOpenNowFilerNotifier.value,
         );
       },
     );
   }
 
-  Widget _buildAllMensaList(List<String> favoriteMensaIds) {
+  Widget _buildAllMensaList() {
     return ValueListenableBuilder(
-      valueListenable: sortedMensaModelsNotifier,
-      builder: (context, sortedMensaModels, _) {
+      valueListenable: GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier,
+      builder: (context, favoriteMensaIds, _) {
         return ValueListenableBuilder(
-          valueListenable: isOpenNowFilerNotifier,
-          builder: (context, isFilterActive, _) {
-            final filteredMensaModels = sortedMensaModels.where((element) {
-              if (!isFilterActive) {
-                return true;
-              }
-              return element.openingHours.mensaStatus != MensaStatus.closed;
-            }).toList();
+          valueListenable: sortedMensaModelsNotifier,
+          builder: (context, sortedMensaModels, _) {
+            return ValueListenableBuilder(
+              valueListenable: isOpenNowFilerNotifier,
+              builder: (context, isFilterActive, _) {
+                final filteredMensaModels = sortedMensaModels.where((element) {
+                  if (!isFilterActive) {
+                    return true;
+                  }
+                  return element.openingHours.mensaStatus != MensaStatus.closed;
+                }).toList();
 
-            if (filteredMensaModels.isEmpty) {
-              return MensaOverviewPlaceholderTile(
-                title: context.localizations.allClosed,
-                icon: LucideIcons.bone,
-              );
-            }
+                if (filteredMensaModels.isEmpty) {
+                  return MensaOverviewPlaceholderTile(
+                    title: context.localizations.allClosed,
+                    icon: LucideIcons.bone,
+                  );
+                }
 
-            return ListView.builder(
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: filteredMensaModels.length,
-              itemBuilder: (context, index) {
-                final isFavorite = favoriteMensaIds
-                    .contains(filteredMensaModels[index].canteenId);
-                return MensaOverviewTile(
-                  mensaModel: filteredMensaModels[index],
-                  isFavorite: isFavorite,
-                  hasDivider: index == mensaModels.length - 1,
-                  hasLargeImage: filteredMensaModels[index].images.isNotEmpty,
+                return ListView.builder(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: filteredMensaModels.length,
+                  itemBuilder: (context, index) {
+                    final isFavorite = favoriteMensaIds.contains(filteredMensaModels[index].canteenId);
+                    return MensaOverviewTile(
+                      mensaModel: filteredMensaModels[index],
+                      isFavorite: isFavorite,
+                      hasDivider: index == mensaModels.length - 1,
+                      hasLargeImage: filteredMensaModels[index].images.isNotEmpty,
+                    );
+                  },
                 );
               },
             );
@@ -172,8 +132,7 @@ class MensaContentView extends StatelessWidget {
     );
   }
 
-  void _showSortOptionActionSheet(
-      BuildContext context, SortOption activeSortOption) {
+  void _showSortOptionActionSheet(BuildContext context, SortOption activeSortOption) {
     LmuBottomSheet.show(
       context,
       content: ValueListenableBuilder(
@@ -194,13 +153,9 @@ class MensaContentView extends StatelessWidget {
                   return Column(
                     children: [
                       LmuListItem.base(
-                        title: sortOption == activeValue
-                            ? sortOption.title(context.localizations)
-                            : null,
+                        title: sortOption == activeValue ? sortOption.title(context.localizations) : null,
                         titleColor: textColor,
-                        subtitle: sortOption == activeValue
-                            ? null
-                            : sortOption.title(context.localizations),
+                        subtitle: sortOption == activeValue ? null : sortOption.title(context.localizations),
                         mainContentAlignment: MainContentAlignment.center,
                         leadingArea: LmuIcon(
                           icon: sortOption.icon,
@@ -209,11 +164,8 @@ class MensaContentView extends StatelessWidget {
                         ),
                         onTap: () async {
                           sortOptionNotifier.value = sortOption;
-                          sortedMensaModelsNotifier.value =
-                              sortOption.sort(mensaModels);
-                          await GetIt.I
-                              .get<MensaUserPreferencesService>()
-                              .updateSortOption(sortOption);
+                          sortedMensaModelsNotifier.value = sortOption.sort(mensaModels);
+                          await GetIt.I.get<MensaUserPreferencesService>().updateSortOption(sortOption);
                           Future.delayed(
                             const Duration(milliseconds: 100),
                             () {
@@ -236,12 +188,6 @@ class MensaContentView extends StatelessWidget {
       ),
     );
   }
-
-  List<MensaModel> _getFavoriteMensaModels(List<String> favoriteMensaIds) {
-    return favoriteMensaIds
-        .map((id) => mensaModels.firstWhere((mensa) => mensa.canteenId == id))
-        .toList();
-  }
 }
 
 extension SortOptionExtension on SortOption {
@@ -252,9 +198,7 @@ extension SortOptionExtension on SortOption {
       case SortOption.alphabetically:
         return List.from(mensaModels)..sort((a, b) => a.name.compareTo(b.name));
       case SortOption.rating:
-        return List.from(mensaModels)
-          ..sort((a, b) =>
-              b.ratingModel.likeCount.compareTo(a.ratingModel.likeCount));
+        return List.from(mensaModels)..sort((a, b) => b.ratingModel.likeCount.compareTo(a.ratingModel.likeCount));
       case SortOption.type:
         return List.from(mensaModels)
           ..sort((a, b) {
@@ -302,8 +246,4 @@ extension SortOptionExtension on SortOption {
     }
     return colors.neutralColors.textColors.mediumColors.base;
   }
-}
-
-extension TypeExtension on MensaType {
-  int compareTo(MensaType other) => index.compareTo(other.index);
 }

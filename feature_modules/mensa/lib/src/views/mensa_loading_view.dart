@@ -7,6 +7,7 @@ import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 
 import '../bloc/bloc.dart';
+import '../services/mensa_user_preferences_service.dart';
 import '../widgets/widgets.dart';
 
 class MensaLoadingView extends StatelessWidget {
@@ -16,11 +17,11 @@ class MensaLoadingView extends StatelessWidget {
   Widget build(BuildContext context) {
     final mensaCubit = GetIt.I.get<MensaCubit>();
 
+    final favoriteMensas = GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier.value;
+
     return BlocListener<MensaCubit, MensaState>(
       bloc: GetIt.I.get<MensaCubit>(),
-      listenWhen: (_, current) {
-        return current is MensaLoadFailure;
-      },
+      listenWhen: (_, current) => current is MensaLoadFailure,
       listener: (context, state) {
         if (state is MensaLoadFailure) {
           final localizations = context.localizations;
@@ -52,7 +53,7 @@ class MensaLoadingView extends StatelessWidget {
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: 3,
+                itemCount: _calculateFavoriteLoadingItemCount(favoriteMensas.length),
                 itemBuilder: (context, index) {
                   return const MensaOverviewTileLoading();
                 },
@@ -94,5 +95,9 @@ class MensaLoadingView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  int _calculateFavoriteLoadingItemCount(int favoriteMensasCount) {
+    return favoriteMensasCount > 0 ? favoriteMensasCount : 2;
   }
 }
