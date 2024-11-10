@@ -37,7 +37,7 @@ class MensaUserPreferencesService {
     if (favoriteMensaIds.contains(mensaId)) {
       favoriteMensaIds.remove(mensaId);
     } else {
-      favoriteMensaIds.add(mensaId);
+      favoriteMensaIds.insert(0, mensaId);
     }
 
     await _updateFavoriteMensaIds(favoriteMensaIds);
