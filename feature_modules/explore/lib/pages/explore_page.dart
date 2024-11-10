@@ -93,7 +93,9 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
       return mapStyleDark;
     }
 
-    return MediaQuery.of(context).platformBrightness == Brightness.light ? mapStyleLight : mapStyleDark;
+    return MediaQuery.of(context).platformBrightness == Brightness.light
+        ? mapStyleLight
+        : mapStyleDark;
   }
 
   @override
@@ -109,32 +111,30 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, child) {
-          String mapStyleUri = getMapStyleUri(themeProvider.themeMode, context);
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (mapboxMap != null) {
-              mapboxMap!.loadStyleURI(mapStyleUri);
-            }
-          });
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, child) {
+        String mapStyleUri = getMapStyleUri(themeProvider.themeMode, context);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mapboxMap != null) {
+            mapboxMap!.loadStyleURI(mapStyleUri);
+          }
+        });
 
-          return MapWidget(
-            key: const ValueKey("mapWidget"),
-            styleUri: mapStyleUri,
-            onMapCreated: _onMapCreated,
-            cameraOptions: CameraOptions(
-              center: Point(
-                coordinates: Position(
-                  11.582,
-                  48.1351,
-                ),
+        return MapWidget(
+          key: const ValueKey("mapWidget"),
+          styleUri: mapStyleUri,
+          onMapCreated: _onMapCreated,
+          cameraOptions: CameraOptions(
+            center: Point(
+              coordinates: Position(
+                11.582,
+                48.1351,
               ),
-              zoom: 12.0,
             ),
-          );
-        },
-      ),
+            zoom: 12.0,
+          ),
+        );
+      },
     );
   }
 }

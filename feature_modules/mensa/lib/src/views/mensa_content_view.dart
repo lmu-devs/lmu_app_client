@@ -12,6 +12,7 @@ import '../repository/api/models/mensa_type.dart';
 import '../repository/api/models/user_preferences/sort_option.dart';
 import '../services/mensa_user_preferences_service.dart';
 import '../widgets/widgets.dart';
+import 'mensa_favorite_test.dart';
 
 class MensaContentView extends StatelessWidget {
   MensaContentView({
@@ -19,7 +20,8 @@ class MensaContentView extends StatelessWidget {
     required this.mensaModels,
     SortOption initalSortOption = SortOption.alphabetically,
   })  : sortOptionNotifier = ValueNotifier(initalSortOption),
-        sortedMensaModelsNotifier = ValueNotifier(initalSortOption.sort(mensaModels)),
+        sortedMensaModelsNotifier =
+            ValueNotifier(initalSortOption.sort(mensaModels)),
         super(key: key);
 
   final List<MensaModel> mensaModels;
@@ -29,7 +31,8 @@ class MensaContentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final favoriteMensaIdsNotifier = GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier;
+    final favoriteMensaIdsNotifier =
+        GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier;
     final activeSortOption = sortOptionNotifier.value;
 
     return SingleChildScrollView(
@@ -38,7 +41,8 @@ class MensaContentView extends StatelessWidget {
         child: ValueListenableBuilder(
           valueListenable: favoriteMensaIdsNotifier,
           builder: (context, favoriteMensaIds, _) {
-            final favoriteMensaModels = _getFavoriteMensaModels(favoriteMensaIds);
+            final favoriteMensaModels =
+                _getFavoriteMensaModels(favoriteMensaIds);
             final localizations = context.localizations;
 
             return Column(
@@ -47,7 +51,8 @@ class MensaContentView extends StatelessWidget {
                   title: context.localizations.favorites,
                 ),
                 favoriteMensaModels.isNotEmpty
-                    ? _buildFavoriteMensaList(favoriteMensaModels)
+                    ? MensaFavoriteTest(
+                        mensaModels: mensaModels)
                     : MensaOverviewPlaceholderTile(
                         title: localizations.noFavorites,
                         leadingWidget: const StarIcon(),
@@ -91,12 +96,15 @@ class MensaContentView extends StatelessWidget {
     );
   }
 
-  Widget _buildSortButton(AppLocalizations localizations, SortOption activeSortOption) {
+  Widget _buildSortButton(
+      AppLocalizations localizations, SortOption activeSortOption) {
     return ValueListenableBuilder(
       valueListenable: sortOptionNotifier,
       builder: (context, activeSortOption, _) {
         return LmuButton(
-          title: SortOption.values.firstWhere((option) => option == activeSortOption).title(localizations),
+          title: SortOption.values
+              .firstWhere((option) => option == activeSortOption)
+              .title(localizations),
           emphasis: ButtonEmphasis.secondary,
           trailingIcon: LucideIcons.chevron_down,
           onTap: () => _showSortOptionActionSheet(context, activeSortOption),
@@ -111,8 +119,11 @@ class MensaContentView extends StatelessWidget {
       builder: (context, isOpenNowFilterActive, _) {
         return LmuButton(
           title: localizations.openNow,
-          emphasis: isOpenNowFilterActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
-          onTap: () => isOpenNowFilerNotifier.value = !isOpenNowFilerNotifier.value,
+          emphasis: isOpenNowFilterActive
+              ? ButtonEmphasis.primary
+              : ButtonEmphasis.secondary,
+          onTap: () =>
+              isOpenNowFilerNotifier.value = !isOpenNowFilerNotifier.value,
         );
       },
     );
@@ -145,7 +156,8 @@ class MensaContentView extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: filteredMensaModels.length,
               itemBuilder: (context, index) {
-                final isFavorite = favoriteMensaIds.contains(filteredMensaModels[index].canteenId);
+                final isFavorite = favoriteMensaIds
+                    .contains(filteredMensaModels[index].canteenId);
                 return MensaOverviewTile(
                   mensaModel: filteredMensaModels[index],
                   isFavorite: isFavorite,
@@ -160,7 +172,8 @@ class MensaContentView extends StatelessWidget {
     );
   }
 
-  void _showSortOptionActionSheet(BuildContext context, SortOption activeSortOption) {
+  void _showSortOptionActionSheet(
+      BuildContext context, SortOption activeSortOption) {
     LmuBottomSheet.show(
       context,
       content: ValueListenableBuilder(
@@ -181,9 +194,13 @@ class MensaContentView extends StatelessWidget {
                   return Column(
                     children: [
                       LmuListItem.base(
-                        title: sortOption == activeValue ? sortOption.title(context.localizations) : null,
+                        title: sortOption == activeValue
+                            ? sortOption.title(context.localizations)
+                            : null,
                         titleColor: textColor,
-                        subtitle: sortOption == activeValue ? null : sortOption.title(context.localizations),
+                        subtitle: sortOption == activeValue
+                            ? null
+                            : sortOption.title(context.localizations),
                         mainContentAlignment: MainContentAlignment.center,
                         leadingArea: LmuIcon(
                           icon: sortOption.icon,
@@ -192,8 +209,11 @@ class MensaContentView extends StatelessWidget {
                         ),
                         onTap: () async {
                           sortOptionNotifier.value = sortOption;
-                          sortedMensaModelsNotifier.value = sortOption.sort(mensaModels);
-                          await GetIt.I.get<MensaUserPreferencesService>().updateSortOption(sortOption);
+                          sortedMensaModelsNotifier.value =
+                              sortOption.sort(mensaModels);
+                          await GetIt.I
+                              .get<MensaUserPreferencesService>()
+                              .updateSortOption(sortOption);
                           Future.delayed(
                             const Duration(milliseconds: 100),
                             () {
@@ -218,7 +238,9 @@ class MensaContentView extends StatelessWidget {
   }
 
   List<MensaModel> _getFavoriteMensaModels(List<String> favoriteMensaIds) {
-    return favoriteMensaIds.map((id) => mensaModels.firstWhere((mensa) => mensa.canteenId == id)).toList();
+    return favoriteMensaIds
+        .map((id) => mensaModels.firstWhere((mensa) => mensa.canteenId == id))
+        .toList();
   }
 }
 
@@ -230,7 +252,9 @@ extension SortOptionExtension on SortOption {
       case SortOption.alphabetically:
         return List.from(mensaModels)..sort((a, b) => a.name.compareTo(b.name));
       case SortOption.rating:
-        return List.from(mensaModels)..sort((a, b) => a.ratingModel.likeCount.compareTo(b.ratingModel.likeCount));
+        return List.from(mensaModels)
+          ..sort((a, b) =>
+              a.ratingModel.likeCount.compareTo(b.ratingModel.likeCount));
       case SortOption.type:
         return List.from(mensaModels)
           ..sort((a, b) {
@@ -282,69 +306,4 @@ extension SortOptionExtension on SortOption {
 
 extension TypeExtension on MensaType {
   int compareTo(MensaType other) => index.compareTo(other.index);
-}
-
-class FavoriteMensaList extends StatefulWidget {
-  final List<MensaModel> favoriteMensaModels;
-
-  const FavoriteMensaList({Key? key, required this.favoriteMensaModels}) : super(key: key);
-
-  @override
-  _FavoriteMensaListState createState() => _FavoriteMensaListState();
-}
-
-class _FavoriteMensaListState extends State<FavoriteMensaList> {
-  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-  late List<MensaModel> _favoriteMensaModels;
-
-  @override
-  void initState() {
-    super.initState();
-    _favoriteMensaModels = List.from(widget.favoriteMensaModels);
-  }
-
-  // Method to add an item to the list with an animation
-  void _addItem(MensaModel mensaModel) {
-    _favoriteMensaModels.add(mensaModel);
-    _listKey.currentState?.insertItem(_favoriteMensaModels.length - 1);
-  }
-
-  // Method to remove an item from the list with an animation
-  void _removeItem(int index) {
-    final removedItem = _favoriteMensaModels[index];
-    _favoriteMensaModels.removeAt(index);
-
-    _listKey.currentState?.removeItem(
-      index,
-      (context, animation) => _buildAnimatedTile(removedItem, animation),
-      duration: const Duration(milliseconds: 300),
-    );
-  }
-
-  Widget _buildAnimatedTile(MensaModel mensaModel, Animation<double> animation) {
-    return FadeTransition(
-      opacity: animation,
-      child: MensaOverviewTile(
-        mensaModel: mensaModel,
-        hasDivider: _favoriteMensaModels.indexOf(mensaModel) == _favoriteMensaModels.length - 1,
-        isFavorite: true,
-        hasLargeImage: false,
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedList(
-      key: _listKey,
-      shrinkWrap: true,
-      padding: EdgeInsets.zero,
-      physics: const NeverScrollableScrollPhysics(),
-      initialItemCount: _favoriteMensaModels.length,
-      itemBuilder: (context, index, animation) {
-        final mensaModel = _favoriteMensaModels[index];
-        return _buildAnimatedTile(mensaModel, animation);
-      },
-    );
-  }
 }

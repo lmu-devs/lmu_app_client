@@ -79,7 +79,10 @@ class LmuToast {
                   const SizedBox(width: LmuSizes.mediumSmall),
                   LmuButton(
                     title: actionText,
-                    onTap: onActionPressed,
+                    onTap:(){
+                      onActionPressed();
+                      fToast.removeCustomToast();
+                    } ,
                     size: ButtonSize.medium,
                     emphasis: ButtonEmphasis.link,
                   )
