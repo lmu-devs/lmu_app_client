@@ -48,7 +48,7 @@ class MensaDetailsView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: LmuSizes.mediumLarge),
                 child: LmuButton(
-                  title: context.localizations.myTaste,
+                  title: context.locals.canteen.myTaste,
                   emphasis: ButtonEmphasis.secondary,
                   onTap: () async {
                     final tasteProfileService = GetIt.I.get<TasteProfileService>();

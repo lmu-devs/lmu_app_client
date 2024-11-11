@@ -18,7 +18,7 @@ class MensaMainPage extends StatelessWidget {
     return LmuScaffoldWithAppBar(
       largeTitle: "Mensa",
       largeTitleTrailingWidget: LmuButton(
-        title: context.localizations.myTaste,
+        title: context.locals.canteen.myTaste,
         emphasis: ButtonEmphasis.secondary,
         onTap: () async {
           final tasteProfileService = GetIt.I.get<TasteProfileService>();

@@ -1,0 +1,70 @@
+{
+  "@@locale": "en",
+  "@@context": "Settings",
+
+
+  "tabTitle": "More",
+  "@tabTitle": {
+    "description": "The title of the Settings tab"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings"
+  },
+  "appearance": "Appearance",
+  "@appearance": {
+    "description": "Appearance Settings"
+  },
+  "darkMode": "Dark",
+  "@darkMode": {
+    "description": "Dark mode"
+  },
+  "lightMode": "Light",
+  "@lightMode": {
+    "description": "Light mode"
+  },
+  "systemMode": "Automatic",
+  "@systemMode": {
+    "description": "System mode"
+  },
+  "aboutLmuDevelopers": "About LMU Developers",
+  "@aboutLmuDevelopers": {
+    "description": "About LMU Developers"
+  },
+  "contact": "Get in touch",
+  "@contact": {
+    "description": "Get in touch"
+  },
+  "donate": "Donate",
+  "@donate": {
+    "description": "Donate"
+  },
+  "dataPrivacy": "Data Privacy",
+  "@dataPrivacy": {
+    "description": "Data Privacy"
+  },
+  "imprint": "Imprint",
+  "@imprint": {
+    "description": "Imprint"
+  },
+  "licenses": "Licenses",
+  "@licenses": {
+    "description": "Licenses"
+  },
+  "suggestFeature": "Suggest a feature",
+  "@suggestFeature": {
+    "description": "Suggest a feature"
+  },
+  "reportBug": "Report a bug",
+  "@reportBug": {
+    "description": "Report a bug"
+  },
+  "contactSubject": "Munich Students App",
+  "@contactSubject": {
+    "description": "The subject of the contact form"
+  },
+  "contactBody": "Dear lovely LMU Developers,\n\n",
+  "@contactBody": {
+    "description": "The body of the contact form"
+  }
+}

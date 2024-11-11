@@ -34,7 +34,7 @@ class TasteProfilePage extends StatelessWidget {
     final tasteProfileService = GetIt.I.get<TasteProfileService>();
     final tasteProfileNotifier = tasteProfileService.tasteProfileModel;
     final selectedLanguage = Localizations.localeOf(context).languageCode.toUpperCase();
-    final localizations = context.localizations;
+    final localizations = context.locals.canteen;
 
     return LmuScaffoldWithAppBar(
       largeTitle: localizations.myTaste,
@@ -83,7 +83,7 @@ class TasteProfilePage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildTitleSection(localizations),
+                      _buildTitleSection(localizations, context),
                       _buildToggleSection(localizations),
                       _buildPresetsSection(localizations, selectedLanguage, presets),
                       _buildPreferencesSection(localizations, context.colors, selectedLanguage, presets, sortedLabels),
@@ -99,21 +99,21 @@ class TasteProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildTitleSection(AppLocalizations localizations) {
+  Widget _buildTitleSection(CanteenLocalizations localizations, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: LmuSizes.mediumSmall),
-          LmuText.body(localizations.myTasteDescription),
+          LmuText.body(localizations.myTasteDescription, color: context.colors.neutralColors.textColors.mediumColors.base,),
           const SizedBox(height: LmuSizes.xxlarge),
         ],
       ),
     );
   }
 
-  Widget _buildToggleSection(AppLocalizations localizations) {
+  Widget _buildToggleSection(CanteenLocalizations localizations) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
       child: Column(
@@ -141,7 +141,7 @@ class TasteProfilePage extends StatelessWidget {
   }
 
   Widget _buildPresetsSection(
-    AppLocalizations localizations,
+    CanteenLocalizations localizations,
     String selectedLanguage,
     List<TasteProfilePreset> presets,
   ) {
@@ -176,7 +176,7 @@ class TasteProfilePage extends StatelessWidget {
   }
 
   Widget _buildPreferencesSection(
-    AppLocalizations localizations,
+    CanteenLocalizations localizations,
     LmuColors colors,
     String selectedLanguage,
     List<TasteProfilePreset> presets,
@@ -306,7 +306,7 @@ class TasteProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildFooter(BuildContext context, AppLocalizations localizations) {
+  Widget _buildFooter(BuildContext context, CanteenLocalizations localizations) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
       child: Column(

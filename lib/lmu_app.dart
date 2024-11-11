@@ -17,14 +17,14 @@ class LmuApp extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return MaterialApp.router(
+            localizationsDelegates: LmuLocalizations.localizationsDelegates,
+            supportedLocales: LmuLocalizations.supportedLocales,
             debugShowCheckedModeBanner: false,
             routerConfig: _router,
-            title: 'Lmu App',
+            title: "Muc Students",
             theme: AppTheme.light,
             darkTheme: AppTheme.dark,
             themeMode: Provider.of<ThemeProvider>(context).themeMode,
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
             builder: FToastBuilder(),
           );
         },

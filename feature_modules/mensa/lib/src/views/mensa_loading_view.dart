@@ -24,7 +24,7 @@ class MensaLoadingView extends StatelessWidget {
       listenWhen: (_, current) => current is MensaLoadFailure,
       listener: (context, state) {
         if (state is MensaLoadFailure) {
-          final localizations = context.localizations;
+          final localizations = context.locals.canteen;
           final isSuccessfullStream = mensaCubit.stream.map((state) => state is MensaLoadSuccess);
 
           LmuToast.show(
@@ -47,7 +47,7 @@ class MensaLoadingView extends StatelessWidget {
           child: Column(
             children: [
               LmuTileHeadline.base(
-                title: context.localizations.favorites,
+                title: context.locals.canteen.favorites,
               ),
               ListView.builder(
                 shrinkWrap: true,
@@ -60,19 +60,19 @@ class MensaLoadingView extends StatelessWidget {
               ),
               const SizedBox(height: LmuSizes.xxlarge),
               LmuTileHeadline.base(
-                title: context.localizations.allCanteens,
+                title: context.locals.canteen.allCanteens,
               ),
               Row(
                 children: [
                   LmuButton(
-                    title: context.localizations.alphabetically,
+                    title: context.locals.canteen.alphabetically,
                     emphasis: ButtonEmphasis.secondary,
                     state: ButtonState.disabled,
                     trailingIcon: LucideIcons.chevron_down,
                   ),
                   const SizedBox(width: LmuSizes.mediumSmall),
                   LmuButton(
-                    title: context.localizations.openNow,
+                    title: context.locals.canteen.openNow,
                     emphasis: ButtonEmphasis.secondary,
                     state: ButtonState.disabled,
                   ),

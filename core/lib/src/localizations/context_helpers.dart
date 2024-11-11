@@ -1,7 +1,44 @@
+import 'package:core/src/localizations/generated/app_localizations.dart';
+import 'package:core/src/localizations/generated/explore_localizations.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'generated/app_localizations.dart';
+import 'generated/canteen_localizations.dart';
+import 'generated/settings_localizations.dart';
 
 extension LocalizationExtension on BuildContext {
-  AppLocalizations get localizations => AppLocalizations.of(this)!;
+  LmuLocalizations get locals => LmuLocalizations(this);
+}
+
+class LmuLocalizations {
+  final BuildContext context;
+
+  LmuLocalizations(this.context);
+
+
+  AppLocalizations get app => AppLocalizations.of(context)!;
+  CanteenLocalizations get canteen => CanteenLocalizations.of(context)!;
+  ExploreLocalizations get explore => ExploreLocalizations.of(context)!;
+  SettingsLocalizations get settings => SettingsLocalizations.of(context)!;
+  // Add other localizations
+
+  /// List of all supported localizations delegates
+  static List<LocalizationsDelegate> get localizationsDelegates => [
+        AppLocalizations.delegate,
+        CanteenLocalizations.delegate,
+        ExploreLocalizations.delegate,
+        SettingsLocalizations.delegate,
+        // Add other localizations delegates
+
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ];
+
+  /// List of all supported locales
+  static List<Locale> get supportedLocales => const [
+        Locale('en'),
+        Locale('de'),
+        // Add other supported locales
+      ];
 }

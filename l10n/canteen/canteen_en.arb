@@ -1,7 +1,10 @@
 {
-  "helloWorld": "Hello World!",
-  "@helloWorld": {
-    "description": "The conventional newborn programmer greeting"
+  "@@locale": "en",
+  "@@context": "Canteen",
+
+  "tabTitle": "Meals",
+  "@tabTitle": {
+    "description": "The title of the meals tab"
   },
   "openNow": "Open now",
   "@openNow": {
@@ -73,6 +76,8 @@
   "@allClosed": {
     "description": "All canteens are closed"
   },
+
+
   "save": "Save",
   "@save": {
     "description": "The action of saving"
@@ -108,64 +113,6 @@
   "retry": "Retry",
   "@retry": {
     "description": "Retry"
-  },
-
-  "@@context": "Settings",
-  "settingsAppearance": "Appearance",
-  "@settingsAppearance": {
-    "description": "Appearance settings"
-  },
-  "settingsDarkMode": "Dark",
-  "@settingsDarkMode": {
-    "description": "Dark mode"
-  },
-  "settingsLightMode": "Light",
-  "@settingsLightMode": {
-    "description": "Light mode"
-  },
-  "settingsSystemMode": "Automatic",
-  "@settingsSystemMode": {
-    "description": "System mode"
-  },
-  "settingsAboutLmuDevelopers": "About LMU Developers",
-  "@settingsAboutLmuDevelopers": {
-    "description": "About LMU Developers"
-  },
-  "settingsContact": "Get in touch",
-  "@settingsContact": {
-    "description": "Get in touch"
-  },
-  "settingsDonate": "Donate",
-  "@settingsDonate": {
-    "description": "Donate"
-  },
-  "settingsDataPrivacy": "Data Privacy",
-  "@settingsDataPrivacy": {
-    "description": "Data Privacy"
-  },
-  "settingsImprint": "Imprint",
-  "@settingsImprint": {
-    "description": "Imprint"
-  },
-  "settingsLicenses": "Licenses",
-  "@settingsLicenses": {
-    "description": "Licenses"
-  },
-  "settingsSuggestFeature": "Suggest a feature",
-  "@settingsSuggestFeature": {
-    "description": "Suggest a feature"
-  },
-  "settingsReportBug": "Report a bug",
-  "@settingsReportBug": {
-    "description": "Report a bug"
-  },
-  "settingsContactSubject": "Munich Students App",
-  "@settingsContactSubject": {
-    "description": "The subject of the contact form"
-  },
-  "settingsContactBody": "Dear lovely LMU Developers,\n\n",
-  "@settingsContactBody": {
-    "description": "The body of the contact form"
   }
 
 }

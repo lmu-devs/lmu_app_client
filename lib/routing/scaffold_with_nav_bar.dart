@@ -3,6 +3,7 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:go_router/go_router.dart';
+import 'package:core/localizations.dart';
 
 class ScaffoldWithNavBar extends StatelessWidget {
   const ScaffoldWithNavBar({
@@ -52,14 +53,13 @@ class ScaffoldWithNavBar extends StatelessWidget {
             ),
             selectedFontSize: 12,
             unselectedFontSize: 12,
-            items: const <BottomNavigationBarItem>[
-              //BottomNavigationBarItem(icon: Icon(LucideIcons.home), label: 'Home'),
+            items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                  icon: Icon(LucideIcons.utensils), label: 'Canteen'),
+                  icon: const Icon(LucideIcons.utensils), label: context.locals.canteen.tabTitle),
               BottomNavigationBarItem(
-                  icon: Icon(LucideIcons.map), label: 'Explore'),
+                  icon: const Icon(LucideIcons.map), label: context.locals.explore.tabTitle),
               BottomNavigationBarItem(
-                  icon: Icon(LucideIcons.circle_ellipsis), label: 'More'),
+                  icon: const Icon(LucideIcons.circle_ellipsis), label: context.locals.settings.tabTitle),
             ],
             currentIndex: navigationShell.currentIndex,
             onTap: (int index) => _onTap(context, index),

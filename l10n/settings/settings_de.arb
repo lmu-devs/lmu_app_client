@@ -1,0 +1,21 @@
+{
+  "@@locale": "de",
+  "@@context": "Settings",
+  
+  "tabTitle": "Mehr",
+  "settings": "Einstellungen",
+  "appearance": "Erscheinungsbild",
+  "darkMode": "Dunkel",
+  "lightMode": "Hell",
+  "systemMode": "Automatisch",
+  "aboutLmuDevelopers": "Über LMU Developers",
+  "contact": "Kontakt aufnehmen",
+  "donate": "Spenden",
+  "dataPrivacy": "Datenschutz",
+  "imprint": "Impressum",
+  "licenses": "Lizenzen",
+  "suggestFeature": "Feature vorschlagen",
+  "reportBug": "Fehler melden",
+  "contactSubject": "Munich Students App",
+  "contactBody": "Liebes LMU Developers Team,\n\n"
+}

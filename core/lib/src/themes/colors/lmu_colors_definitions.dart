@@ -136,13 +136,13 @@ const lmuColorsDark = LmuColors(
         base: ColorPrimitives.brand70,
         pressed: ColorPrimitives.brand80,
         active: ColorPrimitives.brand80,
-        disabled: ColorPrimitives.brand100,
+        disabled: ColorPrimitives.trspWhite30,
       ),
       nonInvertableColors: NonInvertableColors(
         base: ColorPrimitives.brand80,
         pressed: ColorPrimitives.brand60,
-        disabled: ColorPrimitives.brand30,
         active: ColorPrimitives.brand50,
+        disabled: ColorPrimitives.trspWhite30,
       ),
     ),
     backgroundColors: BrandBackgroundColors(

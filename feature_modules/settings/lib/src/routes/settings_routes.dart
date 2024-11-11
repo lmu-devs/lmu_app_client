@@ -16,6 +16,9 @@ part 'settings_routes.g.dart';
         TypedGoRoute<SettingsLanguageRoute>(
           path: 'language',
         ),
+        TypedGoRoute<SettingsLicenceRoute>(
+          path: 'licence',
+        ),
       ],
     ),
   ],
@@ -28,19 +31,30 @@ class SettingsMainRoute extends GoRouteData {
   const SettingsMainRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const SettingsMainPage();
+  Widget build(BuildContext context, GoRouterState state) =>
+      const SettingsMainPage();
 }
 
 class SettingsApperanceRoute extends GoRouteData {
   const SettingsApperanceRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const SettingsApperancePage();
+  Widget build(BuildContext context, GoRouterState state) =>
+      const SettingsApperancePage();
 }
 
 class SettingsLanguageRoute extends GoRouteData {
   const SettingsLanguageRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const Placeholder();
+  Widget build(BuildContext context, GoRouterState state) =>
+      const Placeholder();
+}
+
+class SettingsLicenceRoute extends GoRouteData {
+  const SettingsLicenceRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const SettingsLicencePage();
 }
