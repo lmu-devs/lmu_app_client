@@ -4,11 +4,13 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import '../bloc/mensa_menu_cubit/mensa_menu_cubit.dart';
 import '../bloc/mensa_menu_cubit/mensa_menu_state.dart';
 import '../repository/api/api.dart';
 import '../repository/api/models/image_model.dart';
+import '../widgets/loading/dish_tile_loading.dart';
 import 'views.dart';
 import '../pages/pages.dart';
 import '../services/services.dart';
@@ -110,6 +112,8 @@ class MensaDetailsView extends StatelessWidget {
                         .toList(),
                   ),
                   const SizedBox(height: LmuSizes.medium),
+                  DishTileLoading(),
+                  const SizedBox(height: LmuSizes.medium),
                   BlocBuilder<MensaMenuCubit, MensaMenuState>(
                     builder: (context, state) {
                       if (state is MensaMenuLoadInProgress) {
@@ -150,7 +154,7 @@ class _DetailsBackButton extends StatelessWidget {
           color: context.colors.neutralColors.backgroundColors.tile,
         ),
         child: LmuIcon(
-          icon: Icons.arrow_back,
+          icon: LucideIcons.arrow_left,
           size: LmuIconSizes.medium,
           color: context.colors.neutralColors.textColors.strongColors.base,
         ),
