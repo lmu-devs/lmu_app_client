@@ -205,59 +205,63 @@ class ImageAreaState extends State<ImageArea> {
     if (widget.images.isEmpty) {
       return const SizedBox.shrink();
     } else if (widget.images.length == 1) {
-      return Image.network(
-        widget.images.first.url!,
-        fit: BoxFit.cover,
+      return SoftBlur(
+        child: Image.network(
+          widget.images.first.url!,
+          fit: BoxFit.cover,
+        ),
       );
     } else {
-      return Stack(
-        children: [
-          PageView.builder(
-            scrollDirection: Axis.horizontal,
-            physics: const ClampingScrollPhysics(),
-            clipBehavior: Clip.none,
-            controller: _pageController,
-            itemCount: widget.images.length,
-            itemBuilder: (context, index) {
-              return Image.network(
-                widget.images[index].url!,
-                fit: BoxFit.cover,
-              );
-            },
-          ),
-          Positioned(
-            bottom: LmuSizes.medium,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: ValueListenableBuilder<int>(
-                valueListenable: _currentPageNotifier,
-                builder: (context, currentPage, child) {
-                  return Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: List.generate(
-                      widget.images.length,
-                      (index) => GestureDetector(
-                        onTap: () => _onDotTapped(index),
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: LmuSizes.small,
-                          ),
-                          height: LmuSizes.mediumSmall,
-                          width: LmuSizes.mediumSmall,
-                          decoration: BoxDecoration(
-                            color: currentPage == index ? Colors.white : Colors.white.withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(8),
+      return SoftBlur(
+        child: Stack(
+          children: [
+            PageView.builder(
+              scrollDirection: Axis.horizontal,
+              physics: const ClampingScrollPhysics(),
+              clipBehavior: Clip.none,
+              controller: _pageController,
+              itemCount: widget.images.length,
+              itemBuilder: (context, index) {
+                return Image.network(
+                  widget.images[index].url!,
+                  fit: BoxFit.cover,
+                );
+              },
+            ),
+            Positioned(
+              bottom: LmuSizes.medium,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: ValueListenableBuilder<int>(
+                  valueListenable: _currentPageNotifier,
+                  builder: (context, currentPage, child) {
+                    return Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: List.generate(
+                        widget.images.length,
+                        (index) => GestureDetector(
+                          onTap: () => _onDotTapped(index),
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(
+                              horizontal: LmuSizes.small,
+                            ),
+                            height: LmuSizes.mediumSmall,
+                            width: LmuSizes.mediumSmall,
+                            decoration: BoxDecoration(
+                              color: currentPage == index ? Colors.white : Colors.white.withOpacity(0.5),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
     }
   }
