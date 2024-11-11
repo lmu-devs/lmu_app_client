@@ -49,7 +49,9 @@ class DishTile extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(getDishTypeEmoji(dishType)),
+                      LmuText.body(
+                        getDishTypeEmoji(dishType),
+                      ),
                       const SizedBox(
                         width: LmuSizes.medium,
                       ),

@@ -1,6 +1,6 @@
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:core/components.dart';
 
 import '../widgets.dart';
 
@@ -11,12 +11,8 @@ class MensaOverviewTileLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gradientLoadingColors = context.colors.gradientColors.gradientLoadingColors;
-    return Skeletonizer(
-      effect: ShimmerEffect(
-        baseColor: gradientLoadingColors.base,
-        highlightColor: gradientLoadingColors.highlight,
-      ),
+    return LmuSkeleton(
+      context: context,
       child: MensaOverviewTile.loading(
         name: BoneMock.fullName,
         hasLargeImage: hasLargeImage,
@@ -24,3 +20,4 @@ class MensaOverviewTileLoading extends StatelessWidget {
     );
   }
 }
+
