@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 
 enum VibrationType { primary, secondary, error, success }
 
-class VibrationPatterns {
-  static void vibrate(VibrationType type) async {
+class LmuVibrations {
+  static void vibrate({VibrationType? type}) async {
     switch (type) {
       case VibrationType.primary:
         HapticFeedback.mediumImpact();
@@ -22,6 +22,8 @@ class VibrationPatterns {
         sleep(const Duration(milliseconds: 140));
         HapticFeedback.heavyImpact();
         break;
+      default:
+        HapticFeedback.mediumImpact();
     }
   }
 }

@@ -24,6 +24,7 @@ dependencies:
   sprung: ^3.0.1
   super_cupertino_navigation_bar: ^2.1.2
   fluttertoast: ^8.2.8
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:

@@ -62,9 +62,13 @@ class LmuToast {
               ),
             ),
             const SizedBox(width: LmuSizes.medium),
-            LmuText.bodySmall(
-              message,
-              weight: FontWeight.w600,
+            Flexible(
+              child: LmuText.bodySmall(
+                message,
+                weight: FontWeight.w600,
+                customOverFlow: TextOverflow.ellipsis,
+                maxLines: 3,
+              ),
             ),
             if (actionText != null && onActionPressed != null) ...[
               Row(

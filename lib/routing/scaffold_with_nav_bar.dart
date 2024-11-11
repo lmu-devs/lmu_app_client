@@ -70,6 +70,7 @@ class ScaffoldWithNavBar extends StatelessWidget {
   }
 
   void _onTap(BuildContext context, int index) {
+    LmuVibrations.vibrate(type: VibrationType.secondary);
     navigationShell.goBranch(
       index,
       initialLocation: index == navigationShell.currentIndex,

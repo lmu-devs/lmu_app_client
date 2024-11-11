@@ -53,5 +53,10 @@
 	<string>sk.eyJ1IjoiZWFkcmF4LW15am91cm5leSIsImEiOiJjbGs2bjlrdzYwMDR6M2RwaHA4d25meXlsIn0.a0jbkKjoon1rk79B5_piuQ</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
     <string>[Because you a g]</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>http</string>
+		<string>https</string>
+	</array>
 </dict>
 </plist>

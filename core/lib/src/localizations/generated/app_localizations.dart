@@ -248,6 +248,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Retry'**
   String get retry;
+
+  /// Appearance settings
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get settingsAppearance;
+
+  /// Dark mode
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get settingsDarkMode;
+
+  /// Light mode
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get settingsLightMode;
+
+  /// System mode
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic'**
+  String get settingsSystemMode;
+
+  /// About LMU Developers
+  ///
+  /// In en, this message translates to:
+  /// **'About LMU Developers'**
+  String get settingsAboutLmuDevelopers;
+
+  /// Get in touch
+  ///
+  /// In en, this message translates to:
+  /// **'Get in touch'**
+  String get settingsContact;
+
+  /// Donate
+  ///
+  /// In en, this message translates to:
+  /// **'Donate'**
+  String get settingsDonate;
+
+  /// Data Privacy
+  ///
+  /// In en, this message translates to:
+  /// **'Data Privacy'**
+  String get settingsDataPrivacy;
+
+  /// Imprint
+  ///
+  /// In en, this message translates to:
+  /// **'Imprint'**
+  String get settingsImprint;
+
+  /// Licenses
+  ///
+  /// In en, this message translates to:
+  /// **'Licenses'**
+  String get settingsLicenses;
+
+  /// Suggest a feature
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest a feature'**
+  String get settingsSuggestFeature;
+
+  /// Report a bug
+  ///
+  /// In en, this message translates to:
+  /// **'Report a bug'**
+  String get settingsReportBug;
+
+  /// The subject of the contact form
+  ///
+  /// In en, this message translates to:
+  /// **'Munich Students App'**
+  String get settingsContactSubject;
+
+  /// The body of the contact form
+  ///
+  /// In en, this message translates to:
+  /// **'Dear lovely LMU Developers,\n\n'**
+  String get settingsContactBody;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

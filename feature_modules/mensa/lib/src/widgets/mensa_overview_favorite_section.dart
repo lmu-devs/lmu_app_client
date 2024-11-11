@@ -101,16 +101,14 @@ class _MensaOverviewTileAnimationWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fadeAnimation = CurvedAnimation(
-      parent: animation,
-      curve: LmuAnimations.gentle,
-      reverseCurve: LmuAnimations.slowSmooth,
-    );
+        parent: animation,
+        curve: LmuAnimations.gentle,
+        reverseCurve: Curves.easeInCubic);
 
     final sizeAnimation = CurvedAnimation(
-      parent: animation,
-      curve: LmuAnimations.gentle,
-      reverseCurve: LmuAnimations.slowSmooth,
-    );
+        parent: animation,
+        curve: LmuAnimations.gentle,
+        reverseCurve: Curves.easeInCubic);
 
     return Container(
       clipBehavior: Clip.antiAlias,
@@ -165,7 +163,7 @@ class _ListModel<E> {
           return removedItemBuilder(removedItem, animation);
         },
         duration: const Duration(
-          milliseconds: 800,
+          milliseconds: 700,
         ),
       );
     }

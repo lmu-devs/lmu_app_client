@@ -1,1 +1,1 @@
-export 'vibration_patterns.dart';
+export 'lmu_vibrations.dart';

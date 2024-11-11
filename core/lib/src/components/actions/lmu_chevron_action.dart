@@ -2,6 +2,7 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 
 class LmuChevronAction extends StatelessWidget {
   const LmuChevronAction({
@@ -26,7 +27,7 @@ class LmuChevronAction extends StatelessWidget {
               )
             : const SizedBox.shrink(),
         LmuIcon(
-          icon: Icons.chevron_right,
+          icon: LucideIcons.chevron_right,
           size: LmuIconSizes.medium,
           color: iconColor,
         ),

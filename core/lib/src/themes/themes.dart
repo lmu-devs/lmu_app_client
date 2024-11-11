@@ -5,4 +5,5 @@ export 'context_helpers.dart';
 export 'definitions.dart';
 export 'texts/text_themes_definitions.dart';
 export 'theme_provider.dart';
+export 'vibration/lmu_vibrations.dart';
 export 'animations/animations.dart';
