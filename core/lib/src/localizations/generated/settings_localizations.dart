@@ -93,95 +93,101 @@ abstract class SettingsLocalizations {
     Locale('en')
   ];
 
+  /// The title of the Settings tab
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get tabTitle;
+
   /// Settings
   ///
   /// In en, this message translates to:
   /// **'Settings'**
   String get settings;
 
-  /// Appearance settings
+  /// Appearance Settings
   ///
   /// In en, this message translates to:
   /// **'Appearance'**
-  String get settingsAppearance;
+  String get appearance;
 
   /// Dark mode
   ///
   /// In en, this message translates to:
   /// **'Dark'**
-  String get settingsDarkMode;
+  String get darkMode;
 
   /// Light mode
   ///
   /// In en, this message translates to:
   /// **'Light'**
-  String get settingsLightMode;
+  String get lightMode;
 
   /// System mode
   ///
   /// In en, this message translates to:
   /// **'Automatic'**
-  String get settingsSystemMode;
+  String get systemMode;
 
   /// About LMU Developers
   ///
   /// In en, this message translates to:
   /// **'About LMU Developers'**
-  String get settingsAboutLmuDevelopers;
+  String get aboutLmuDevelopers;
 
   /// Get in touch
   ///
   /// In en, this message translates to:
   /// **'Get in touch'**
-  String get settingsContact;
+  String get contact;
 
   /// Donate
   ///
   /// In en, this message translates to:
   /// **'Donate'**
-  String get settingsDonate;
+  String get donate;
 
   /// Data Privacy
   ///
   /// In en, this message translates to:
   /// **'Data Privacy'**
-  String get settingsDataPrivacy;
+  String get dataPrivacy;
 
   /// Imprint
   ///
   /// In en, this message translates to:
   /// **'Imprint'**
-  String get settingsImprint;
+  String get imprint;
 
   /// Licenses
   ///
   /// In en, this message translates to:
   /// **'Licenses'**
-  String get settingsLicenses;
+  String get licenses;
 
   /// Suggest a feature
   ///
   /// In en, this message translates to:
   /// **'Suggest a feature'**
-  String get settingsSuggestFeature;
+  String get suggestFeature;
 
   /// Report a bug
   ///
   /// In en, this message translates to:
   /// **'Report a bug'**
-  String get settingsReportBug;
+  String get reportBug;
 
   /// The subject of the contact form
   ///
   /// In en, this message translates to:
   /// **'Munich Students App'**
-  String get settingsContactSubject;
+  String get contactSubject;
 
   /// The body of the contact form
   ///
   /// In en, this message translates to:
   /// **'Dear lovely LMU Developers,\n\n'**
-  String get settingsContactBody;
+  String get contactBody;
 }
 
 class _SettingsLocalizationsDelegate extends LocalizationsDelegate<SettingsLocalizations> {

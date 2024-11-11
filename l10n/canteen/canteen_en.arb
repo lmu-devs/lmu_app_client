@@ -2,13 +2,9 @@
   "@@locale": "en",
   "@@context": "Canteen",
 
-  "appTitle": "Munich Students",
-  "@appTitle": {
-    "description": "The title of the app"
-  },
-  "helloWorld": "Hello World!",
-  "@helloWorld": {
-    "description": "The conventional newborn programmer greeting"
+  "tabTitle": "Meals",
+  "@tabTitle": {
+    "description": "The title of the meals tab"
   },
   "openNow": "Open now",
   "@openNow": {
@@ -80,6 +76,8 @@
   "@allClosed": {
     "description": "All canteens are closed"
   },
+
+
   "save": "Save",
   "@save": {
     "description": "The action of saving"

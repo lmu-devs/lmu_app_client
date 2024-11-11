@@ -93,6 +93,11 @@ abstract class AppLocalizations {
     Locale('en')
   ];
 
+  /// The title of the app
+  ///
+  /// In en, this message translates to:
+  /// **'Munich Students'**
+  String get appTitle;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

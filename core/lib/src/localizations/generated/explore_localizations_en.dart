@@ -4,5 +4,6 @@ import 'explore_localizations.dart';
 class ExploreLocalizationsEn extends ExploreLocalizations {
   ExploreLocalizationsEn([String locale = 'en']) : super(locale);
 
-
+  @override
+  String get tabTitle => 'Explore';
 }

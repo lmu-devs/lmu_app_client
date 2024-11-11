@@ -1,5 +1,8 @@
 {
     "@@locale": "de",
-    "@@context": "Explore"
+    "@@context": "Explore",
+
+    "tabTitle": "Entdecke"
+
 
 }

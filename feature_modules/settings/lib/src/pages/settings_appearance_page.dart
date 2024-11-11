@@ -16,7 +16,7 @@ class SettingsApperancePage extends StatelessWidget {
     final localization = context.locals.settings;
 
     return LmuScaffoldWithAppBar(
-      largeTitle: localization.settingsAppearance,
+      largeTitle: localization.appearance,
       leadingWidget: GestureDetector(
         onTap: () {
           context.pop();
@@ -33,7 +33,7 @@ class SettingsApperancePage extends StatelessWidget {
             child: LmuContentTile(
               content: [
                 LmuListItem.action(
-                  title: localization.settingsSystemMode,
+                  title: localization.systemMode,
                   actionType: LmuListItemAction.radio,
                   initialValue: themeProvider.themeMode == ThemeMode.system,
                   onTap: () {
@@ -41,7 +41,7 @@ class SettingsApperancePage extends StatelessWidget {
                   },
                 ),
                 LmuListItem.action(
-                  title: localization.settingsLightMode,
+                  title: localization.lightMode,
                   actionType: LmuListItemAction.radio,
                   initialValue: themeProvider.themeMode == ThemeMode.light,
                   onTap: () {
@@ -49,7 +49,7 @@ class SettingsApperancePage extends StatelessWidget {
                   },
                 ),
                 LmuListItem.action(
-                  title: localization.settingsDarkMode,
+                  title: localization.darkMode,
                   actionType: LmuListItemAction.radio,
                   initialValue: themeProvider.themeMode == ThemeMode.dark,
                   onTap: () {

@@ -4,5 +4,6 @@ import 'explore_localizations.dart';
 class ExploreLocalizationsDe extends ExploreLocalizations {
   ExploreLocalizationsDe([String locale = 'de']) : super(locale);
 
-
+  @override
+  String get tabTitle => 'Entdecke';
 }

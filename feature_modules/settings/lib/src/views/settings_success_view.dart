@@ -28,7 +28,7 @@ class SettingsSuccessView extends StatelessWidget {
             LmuContentTile(
               content: [
                 LmuListItem.action(
-                  title: localizaitons.settingsAppearance,
+                  title: localizaitons.appearance,
                   actionType: LmuListItemAction.chevron,
                   chevronTitle: _getThemeModeString(context, localizaitons),
                   onTap: () {
@@ -43,7 +43,7 @@ class SettingsSuccessView extends StatelessWidget {
             LmuContentTile(
               content: [
                 LmuListItem.base(
-                  title: localizaitons.settingsAboutLmuDevelopers,
+                  title: localizaitons.aboutLmuDevelopers,
                   trailingArea: Icon(
                     LucideIcons.external_link,
                     size: LmuSizes.large,
@@ -58,7 +58,7 @@ class SettingsSuccessView extends StatelessWidget {
                   },
                 ),
                 LmuListItem.base(
-                  title: localizaitons.settingsContact,
+                  title: localizaitons.contact,
                   trailingArea: Icon(
                     LucideIcons.mail,
                     size: LmuSizes.large,
@@ -69,13 +69,13 @@ class SettingsSuccessView extends StatelessWidget {
                     LmuUrlLauncher.launchEmail(
                       context: context,
                       email: "contact@lmu-dev.org",
-                      subject: localizaitons.settingsContactSubject,
-                      body: localizaitons.settingsContactBody,
+                      subject: localizaitons.contactSubject,
+                      body: localizaitons.contactBody,
                     );
                   },
                 ),
                 LmuListItem.action(
-                  title: localizaitons.settingsDonate,
+                  title: localizaitons.donate,
                   actionType: LmuListItemAction.chevron,
                   onTap: () {},
                 ),
@@ -87,17 +87,17 @@ class SettingsSuccessView extends StatelessWidget {
             LmuContentTile(
               content: [
                 LmuListItem.action(
-                  title: localizaitons.settingsDataPrivacy,
+                  title: localizaitons.dataPrivacy,
                   actionType: LmuListItemAction.chevron,
                   onTap: () {},
                 ),
                 LmuListItem.action(
-                  title: localizaitons.settingsImprint,
+                  title: localizaitons.imprint,
                   actionType: LmuListItemAction.chevron,
                   onTap: () {},
                 ),
                 LmuListItem.action(
-                  title: localizaitons.settingsLicenses,
+                  title: localizaitons.licenses,
                   actionType: LmuListItemAction.chevron,
                   onTap: () {
                     const SettingsLicenceRoute().go(context);
@@ -111,14 +111,14 @@ class SettingsSuccessView extends StatelessWidget {
             LmuContentTile(
               content: [
                 LmuListItem.action(
-                  title: localizaitons.settingsSuggestFeature,
+                  title: localizaitons.suggestFeature,
                   actionType: LmuListItemAction.chevron,
                   mainContentAlignment: MainContentAlignment.center,
                   leadingArea: const _LeadingFancyIcons(icon: LucideIcons.plus),
                   onTap: () {},
                 ),
                 LmuListItem.action(
-                  title: localizaitons.settingsReportBug,
+                  title: localizaitons.reportBug,
                   actionType: LmuListItemAction.chevron,
                   mainContentAlignment: MainContentAlignment.center,
                   leadingArea: const _LeadingFancyIcons(icon: LucideIcons.bug),
@@ -165,12 +165,12 @@ String _getThemeModeString(BuildContext context, SettingsLocalizations localizai
       Provider.of<ThemeProvider>(context, listen: true).themeMode.name;
   switch (themeName.toLowerCase()) {
     case 'system':
-      return localizaitons.settingsSystemMode;
+      return localizaitons.systemMode;
     case 'dark':
-      return localizaitons.settingsDarkMode;
+      return localizaitons.darkMode;
     case 'light':
-      return localizaitons.settingsLightMode;
+      return localizaitons.lightMode;
     default:
-      return localizaitons.settingsSystemMode;
+      return localizaitons.systemMode;
   }
 }

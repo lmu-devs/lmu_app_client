@@ -1,5 +1,9 @@
 {
   "@@locale": "en",
-  "@@context": "AppWide"
-
+  "@@context": "AppWide",
+  
+  "appTitle": "Munich Students",
+  "@appTitle": {
+    "description": "The title of the app"
+  }
 }

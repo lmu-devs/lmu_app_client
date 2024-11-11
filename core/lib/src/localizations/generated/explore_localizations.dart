@@ -93,6 +93,11 @@ abstract class ExploreLocalizations {
     Locale('en')
   ];
 
+  /// The title of the explore tab
+  ///
+  /// In en, this message translates to:
+  /// **'Explore'**
+  String get tabTitle;
 }
 
 class _ExploreLocalizationsDelegate extends LocalizationsDelegate<ExploreLocalizations> {

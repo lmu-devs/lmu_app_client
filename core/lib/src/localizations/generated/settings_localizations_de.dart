@@ -5,47 +5,50 @@ class SettingsLocalizationsDe extends SettingsLocalizations {
   SettingsLocalizationsDe([String locale = 'de']) : super(locale);
 
   @override
+  String get tabTitle => 'Weiteres';
+
+  @override
   String get settings => 'Einstellungen';
 
   @override
-  String get settingsAppearance => 'Erscheinungsbild';
+  String get appearance => 'Erscheinungsbild';
 
   @override
-  String get settingsDarkMode => 'Dunkel';
+  String get darkMode => 'Dunkel';
 
   @override
-  String get settingsLightMode => 'Hell';
+  String get lightMode => 'Hell';
 
   @override
-  String get settingsSystemMode => 'Automatisch';
+  String get systemMode => 'Automatisch';
 
   @override
-  String get settingsAboutLmuDevelopers => 'Über LMU Developers';
+  String get aboutLmuDevelopers => 'Über LMU Developers';
 
   @override
-  String get settingsContact => 'Kontakt aufnehmen';
+  String get contact => 'Kontakt aufnehmen';
 
   @override
-  String get settingsDonate => 'Spenden';
+  String get donate => 'Spenden';
 
   @override
-  String get settingsDataPrivacy => 'Datenschutz';
+  String get dataPrivacy => 'Datenschutz';
 
   @override
-  String get settingsImprint => 'Impressum';
+  String get imprint => 'Impressum';
 
   @override
-  String get settingsLicenses => 'Lizenzen';
+  String get licenses => 'Lizenzen';
 
   @override
-  String get settingsSuggestFeature => 'Feature vorschlagen';
+  String get suggestFeature => 'Feature vorschlagen';
 
   @override
-  String get settingsReportBug => 'Fehler melden';
+  String get reportBug => 'Fehler melden';
 
   @override
-  String get settingsContactSubject => 'Munich Students App';
+  String get contactSubject => 'Munich Students App';
 
   @override
-  String get settingsContactBody => 'Liebes LMU Developers Team,\n\n';
+  String get contactBody => 'Liebes LMU Developers Team,\n\n';
 }

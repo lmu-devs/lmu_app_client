@@ -4,5 +4,6 @@ import 'app_localizations.dart';
 class AppLocalizationsDe extends AppLocalizations {
   AppLocalizationsDe([String locale = 'de']) : super(locale);
 
-
+  @override
+  String get appTitle => 'Munich Students';
 }

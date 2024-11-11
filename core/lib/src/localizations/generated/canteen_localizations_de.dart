@@ -5,10 +5,7 @@ class CanteenLocalizationsDe extends CanteenLocalizations {
   CanteenLocalizationsDe([String locale = 'de']) : super(locale);
 
   @override
-  String get appTitle => 'Munich Students';
-
-  @override
-  String get helloWorld => 'Hallo Welt!';
+  String get tabTitle => 'Mensa';
 
   @override
   String get openNow => 'Jetzt geöffnet';
@@ -73,7 +70,7 @@ class CanteenLocalizationsDe extends CanteenLocalizations {
   String get presets => 'Vorlagen';
 
   @override
-  String get reset => 'Diskrimieren';
+  String get reset => 'Reset';
 
   @override
   String get tastePreferences => 'Ich esse und vertrage';

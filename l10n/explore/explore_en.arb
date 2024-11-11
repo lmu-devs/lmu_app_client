@@ -1,5 +1,9 @@
 {
   "@@locale": "en",
-  "@@context": "Explore"
+  "@@context": "Explore",
 
+  "tabTitle": "Explore",
+  "@tabTitle": {
+    "description": "The title of the explore tab"
+  }
 }

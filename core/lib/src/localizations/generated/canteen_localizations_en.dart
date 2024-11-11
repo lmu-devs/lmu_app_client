@@ -5,10 +5,7 @@ class CanteenLocalizationsEn extends CanteenLocalizations {
   CanteenLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'Munich Students';
-
-  @override
-  String get helloWorld => 'Hello World!';
+  String get tabTitle => 'Meals';
 
   @override
   String get openNow => 'Open now';

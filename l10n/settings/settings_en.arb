@@ -2,64 +2,69 @@
   "@@locale": "en",
   "@@context": "Settings",
 
+
+  "tabTitle": "More",
+  "@tabTitle": {
+    "description": "The title of the Settings tab"
+  },
   "settings": "Settings",
   "@settings": {
     "description": "Settings"
   },
-  "settingsAppearance": "Appearance",
-  "@settingsAppearance": {
-    "description": "Appearance settings"
+  "appearance": "Appearance",
+  "@appearance": {
+    "description": "Appearance Settings"
   },
-  "settingsDarkMode": "Dark",
-  "@settingsDarkMode": {
+  "darkMode": "Dark",
+  "@darkMode": {
     "description": "Dark mode"
   },
-  "settingsLightMode": "Light",
-  "@settingsLightMode": {
+  "lightMode": "Light",
+  "@lightMode": {
     "description": "Light mode"
   },
-  "settingsSystemMode": "Automatic",
-  "@settingsSystemMode": {
+  "systemMode": "Automatic",
+  "@systemMode": {
     "description": "System mode"
   },
-  "settingsAboutLmuDevelopers": "About LMU Developers",
-  "@settingsAboutLmuDevelopers": {
+  "aboutLmuDevelopers": "About LMU Developers",
+  "@aboutLmuDevelopers": {
     "description": "About LMU Developers"
   },
-  "settingsContact": "Get in touch",
-  "@settingsContact": {
+  "contact": "Get in touch",
+  "@contact": {
     "description": "Get in touch"
   },
-  "settingsDonate": "Donate",
-  "@settingsDonate": {
+  "donate": "Donate",
+  "@donate": {
     "description": "Donate"
   },
-  "settingsDataPrivacy": "Data Privacy",
-  "@settingsDataPrivacy": {
+  "dataPrivacy": "Data Privacy",
+  "@dataPrivacy": {
     "description": "Data Privacy"
   },
-  "settingsImprint": "Imprint",
-  "@settingsImprint": {
+  "imprint": "Imprint",
+  "@imprint": {
     "description": "Imprint"
   },
-  "settingsLicenses": "Licenses",
-  "@settingsLicenses": {
+  "licenses": "Licenses",
+  "@licenses": {
     "description": "Licenses"
   },
-  "settingsSuggestFeature": "Suggest a feature",
-  "@settingsSuggestFeature": {
+  "suggestFeature": "Suggest a feature",
+  "@suggestFeature": {
     "description": "Suggest a feature"
   },
-  "settingsReportBug": "Report a bug",
-  "@settingsReportBug": {
+  "reportBug": "Report a bug",
+  "@reportBug": {
     "description": "Report a bug"
   },
-  "settingsContactSubject": "Munich Students App",
-  "@settingsContactSubject": {
+  "contactSubject": "Munich Students App",
+  "@contactSubject": {
     "description": "The subject of the contact form"
   },
-  "settingsContactBody": "Dear lovely LMU Developers,\n\n",
-  "@settingsContactBody": {
+  "contactBody": "Dear lovely LMU Developers,\n\n",
+  "@contactBody": {
     "description": "The body of the contact form"
   }
 }

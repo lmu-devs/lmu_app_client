@@ -93,17 +93,11 @@ abstract class CanteenLocalizations {
     Locale('en')
   ];
 
-  /// The title of the app
+  /// The title of the meals tab
   ///
   /// In en, this message translates to:
-  /// **'Munich Students'**
-  String get appTitle;
-
-  /// The conventional newborn programmer greeting
-  ///
-  /// In en, this message translates to:
-  /// **'Hello World!'**
-  String get helloWorld;
+  /// **'Meals'**
+  String get tabTitle;
 
   /// The state of being open
   ///
