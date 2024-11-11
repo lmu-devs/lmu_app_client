@@ -156,6 +156,7 @@ class MensaOverviewTile extends StatelessWidget {
                       ],
                     ),
                   ),
+                  // touch target for favorite toggle
                   Positioned(
                     right: 0,
                     bottom: LmuSizes.mediumLarge,
@@ -165,6 +166,8 @@ class MensaOverviewTile extends StatelessWidget {
                       onTap: () {
                         final userPreferencesService = GetIt.I.get<MensaUserPreferencesService>();
                         final id = mensaModel.canteenId;
+
+                        LmuVibrations.vibrate(type: VibrationType.secondary);
 
                         if (isFavorite) {
                           LmuToast.show(

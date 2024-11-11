@@ -1,6 +1,8 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:provider/provider.dart';
@@ -25,11 +27,11 @@ class SettingsSuccessView extends StatelessWidget {
             LmuContentTile(
               content: [
                 LmuListItem.action(
-                  title: "Erscheinungsbild",
+                  title: context.localizations.settingsAppearance,
                   actionType: LmuListItemAction.chevron,
-                  chevronTitle: Provider.of<ThemeProvider>(context, listen: true).themeMode.name,
+                  chevronTitle: _getThemeModeString(context),
                   onTap: () {
-                    SettingsApperanceRoute().go(context);
+                    const SettingsApperanceRoute().go(context);
                   },
                 ),
               ],
@@ -40,24 +42,39 @@ class SettingsSuccessView extends StatelessWidget {
             LmuContentTile(
               content: [
                 LmuListItem.base(
-                  title: "Über LMU Developers",
+                  title: context.localizations.settingsAboutLmuDevelopers,
                   trailingArea: Icon(
                     LucideIcons.external_link,
                     size: LmuSizes.large,
-                    color: context.colors.neutralColors.textColors.weakColors.base,
+                    color:
+                        context.colors.neutralColors.textColors.weakColors.base,
                   ),
+                  onTap: () {
+                    LmuUrlLauncher.launchWebsite(
+                        context: context,
+                        url: "https://lmu-dev.org",
+                        mode: LmuUrlLauncherMode.externalApplication);
+                  },
                 ),
                 LmuListItem.base(
-                  title: "Kontakt aufnehmen",
-                  onTap: () {},
+                  title: context.localizations.settingsContact,
                   trailingArea: Icon(
                     LucideIcons.mail,
                     size: LmuSizes.large,
-                    color: context.colors.neutralColors.textColors.weakColors.base,
+                    color:
+                        context.colors.neutralColors.textColors.weakColors.base,
                   ),
+                  onTap: () {
+                    LmuUrlLauncher.launchEmail(
+                      context: context,
+                      email: "contact@lmu-dev.org",
+                      subject: context.localizations.settingsContactSubject,
+                      body: context.localizations.settingsContactBody,
+                    );
+                  },
                 ),
                 LmuListItem.action(
-                  title: "Spenden",
+                  title: context.localizations.settingsDonate,
                   actionType: LmuListItemAction.chevron,
                   onTap: () {},
                 ),
@@ -69,17 +86,17 @@ class SettingsSuccessView extends StatelessWidget {
             LmuContentTile(
               content: [
                 LmuListItem.action(
-                  title: "Datenschutz",
+                  title: context.localizations.settingsDataPrivacy,
                   actionType: LmuListItemAction.chevron,
                   onTap: () {},
                 ),
                 LmuListItem.action(
-                  title: "Impressum",
+                  title: context.localizations.settingsImprint,
                   actionType: LmuListItemAction.chevron,
                   onTap: () {},
                 ),
                 LmuListItem.action(
-                  title: "Lizenzen",
+                  title: context.localizations.settingsLicenses,
                   actionType: LmuListItemAction.chevron,
                   onTap: () {},
                 ),
@@ -91,17 +108,17 @@ class SettingsSuccessView extends StatelessWidget {
             LmuContentTile(
               content: [
                 LmuListItem.action(
-                  title: "Feature vorschlagen",
+                  title: context.localizations.settingsSuggestFeature,
                   actionType: LmuListItemAction.chevron,
                   mainContentAlignment: MainContentAlignment.center,
-                  leadingArea: const _LeadingFancyIcons(icon: Icons.add),
+                  leadingArea: const _LeadingFancyIcons(icon: LucideIcons.plus),
                   onTap: () {},
                 ),
                 LmuListItem.action(
-                  title: "Fehler melden",
+                  title: context.localizations.settingsReportBug,
                   actionType: LmuListItemAction.chevron,
                   mainContentAlignment: MainContentAlignment.center,
-                  leadingArea: const _LeadingFancyIcons(icon: Icons.margin),
+                  leadingArea: const _LeadingFancyIcons(icon: LucideIcons.bug),
                   onTap: () {},
                 ),
               ],
@@ -120,7 +137,8 @@ class _LeadingFancyIcons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final backgroundColor = context.colors.neutralColors.backgroundColors.mediumColors.base;
+    final backgroundColor =
+        context.colors.neutralColors.backgroundColors.mediumColors.base;
     return Container(
       width: LmuSizes.xxxlarge,
       height: LmuSizes.xxxlarge,
@@ -136,5 +154,20 @@ class _LeadingFancyIcons extends StatelessWidget {
         color: context.colors.neutralColors.textColors.strongColors.base,
       ),
     );
+  }
+}
+
+String _getThemeModeString(BuildContext context) {
+  final String themeName =
+      Provider.of<ThemeProvider>(context, listen: true).themeMode.name;
+  switch (themeName.toLowerCase()) {
+    case 'system':
+      return context.localizations.settingsSystemMode;
+    case 'dark':
+      return context.localizations.settingsDarkMode;
+    case 'light':
+      return context.localizations.settingsLightMode;
+    default:
+      return context.localizations.settingsSystemMode;
   }
 }

@@ -2,6 +2,7 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:core/localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +14,7 @@ class SettingsApperancePage extends StatelessWidget {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
 
     return LmuScaffoldWithAppBar(
-      largeTitle: "Erscheinungsbild",
+      largeTitle: context.localizations.settingsAppearance,
       leadingWidget: GestureDetector(
         onTap: () {
           context.pop();
@@ -28,7 +29,7 @@ class SettingsApperancePage extends StatelessWidget {
         child: LmuContentTile(
           content: [
             LmuListItem.action(
-              title: "Automatisch",
+              title: context.localizations.settingsSystemMode,
               actionType: LmuListItemAction.radio,
               initialValue: themeProvider.themeMode == ThemeMode.system,
               onTap: () {
@@ -36,7 +37,7 @@ class SettingsApperancePage extends StatelessWidget {
               },
             ),
             LmuListItem.action(
-              title: "Hell",
+              title: context.localizations.settingsLightMode,
               actionType: LmuListItemAction.radio,
               initialValue: themeProvider.themeMode == ThemeMode.light,
               onTap: () {
@@ -44,7 +45,7 @@ class SettingsApperancePage extends StatelessWidget {
               },
             ),
             LmuListItem.action(
-              title: "Dunkel",
+              title: context.localizations.settingsDarkMode,
               actionType: LmuListItemAction.radio,
               initialValue: themeProvider.themeMode == ThemeMode.dark,
               onTap: () {
