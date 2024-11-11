@@ -5,5 +5,5 @@ class ExploreLocalizationsDe extends ExploreLocalizations {
   ExploreLocalizationsDe([String locale = 'de']) : super(locale);
 
   @override
-  String get tabTitle => 'Entdecke';
+  String get tabTitle => 'Entdecken';
 }

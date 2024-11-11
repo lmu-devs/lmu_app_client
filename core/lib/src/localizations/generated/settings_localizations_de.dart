@@ -5,7 +5,7 @@ class SettingsLocalizationsDe extends SettingsLocalizations {
   SettingsLocalizationsDe([String locale = 'de']) : super(locale);
 
   @override
-  String get tabTitle => 'Weiteres';
+  String get tabTitle => 'Mehr';
 
   @override
   String get settings => 'Einstellungen';
