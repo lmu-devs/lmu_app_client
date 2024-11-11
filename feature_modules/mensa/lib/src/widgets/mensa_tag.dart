@@ -17,7 +17,7 @@ class MensaTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final localizations = context.localizations;
+    final localizations = context.locals.canteen;
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: LmuSizes.small,
@@ -70,7 +70,7 @@ extension TagColors on MensaType {
     }
   }
 
-  String text(AppLocalizations localizations) {
+  String text(CanteenLocalizations localizations) {
     switch (this) {
       case MensaType.mensa:
         return localizations.mensaTypeMensa;

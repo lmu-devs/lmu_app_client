@@ -29,7 +29,7 @@ class MensaContentView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final activeSortOption = sortOptionNotifier.value;
-    final localizations = context.localizations;
+    final localizations = context.locals.canteen;
 
     return SingleChildScrollView(
       child: Padding(
@@ -37,7 +37,7 @@ class MensaContentView extends StatelessWidget {
         child: Column(
           children: [
             LmuTileHeadline.base(
-              title: context.localizations.favorites,
+              title: localizations.favorites,
             ),
             MensaOverivewFavoriteSection(mensaModels: mensaModels),
             const SizedBox(height: LmuSizes.xxlarge),
@@ -58,7 +58,7 @@ class MensaContentView extends StatelessWidget {
     );
   }
 
-  Widget _buildSortButton(AppLocalizations localizations, SortOption activeSortOption) {
+  Widget _buildSortButton(CanteenLocalizations localizations, SortOption activeSortOption) {
     return ValueListenableBuilder(
       valueListenable: sortOptionNotifier,
       builder: (context, activeSortOption, _) {
@@ -72,7 +72,7 @@ class MensaContentView extends StatelessWidget {
     );
   }
 
-  Widget _buildOpenNowFilterButton(AppLocalizations localizations) {
+  Widget _buildOpenNowFilterButton(CanteenLocalizations localizations) {
     return ValueListenableBuilder(
       valueListenable: isOpenNowFilerNotifier,
       builder: (context, isOpenNowFilterActive, _) {
@@ -104,7 +104,7 @@ class MensaContentView extends StatelessWidget {
 
                 if (filteredMensaModels.isEmpty) {
                   return MensaOverviewPlaceholderTile(
-                    title: context.localizations.allClosed,
+                    title: context.locals.canteen.allClosed,
                     icon: LucideIcons.bone,
                   );
                 }
@@ -153,9 +153,9 @@ class MensaContentView extends StatelessWidget {
                   return Column(
                     children: [
                       LmuListItem.base(
-                        title: sortOption == activeValue ? sortOption.title(context.localizations) : null,
+                        title: sortOption == activeValue ? sortOption.title(context.locals.canteen) : null,
                         titleColor: textColor,
-                        subtitle: sortOption == activeValue ? null : sortOption.title(context.localizations),
+                        subtitle: sortOption == activeValue ? null : sortOption.title(context.locals.canteen),
                         mainContentAlignment: MainContentAlignment.center,
                         leadingArea: LmuIcon(
                           icon: sortOption.icon,
@@ -224,7 +224,7 @@ extension SortOptionExtension on SortOption {
     }
   }
 
-  String title(AppLocalizations localizations) {
+  String title(CanteenLocalizations localizations) {
     switch (this) {
       case SortOption.alphabetically:
         return localizations.alphabetically;

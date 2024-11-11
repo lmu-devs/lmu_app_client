@@ -143,7 +143,7 @@ class MensaOverviewTile extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             LmuText.body(
-                              status.text(context.localizations, openingHours: openingHours),
+                              status.text(context.locals.canteen, openingHours: openingHours),
                               color: status.textColor(context.colors),
                             ),
                             if (distance != null)
@@ -235,7 +235,7 @@ extension MensaStatusExtension on MensaStatus {
   }
 
   String text(
-    AppLocalizations localizations, {
+    CanteenLocalizations localizations, {
     required List<MensaOpeningHours> openingHours,
   }) {
     switch (this) {

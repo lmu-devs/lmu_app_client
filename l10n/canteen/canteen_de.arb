@@ -1,4 +1,8 @@
 {
+    "@@locale": "de",
+    "@@context": "Canteen",
+
+    "appTitle": "Munich Students",
     "helloWorld": "Hallo Welt!",
     "openNow": "Jetzt geöffnet",
     "closingSoon": "Geöffnet bis {time} Uhr",
@@ -20,26 +24,9 @@
     "myTaste": "My Taste",
     "myTasteDescription": "Passen Sie Ihr Geschmacksprofil an und aktivieren Sie es, um Gerichte nach Ihren Vorlieben und Allergien zu filtern.",
     "presets": "Vorlagen",
-    "reset": "Diskrimieren",
+    "reset": "Reset",
     "tastePreferences": "Ich esse und vertrage",
     "myTasteFooter": "Die Allergene und die übrigen Kennzeichnungen ändern sich möglicherweise durch kurzfristige Rezeptur- und Speiseplanänderungen, die nicht im Internetspeiseplan ersichtlich sein können. Bitte beachten Sie unbedingt die Angaben auf den tagesaktuellen Thekenaufstellern in der Betriebsstelle. Spurenhinweis für Allergiker: Spuren von Allergenen durch Kreuzkontaminationen während der Vor- und Zubereitung bzw. Ausgabe sowie durch technologisch unvermeidbare Verunreinigungen einzelner Zutaten können nicht ausgeschlossen werden und werden nicht gekennzeichnet.",
     "noConnection": "Keine Verbindung",
-    "retry": "Neu laden",
-
-    "@@context": "Settings",
-    "settingsAppearance": "Erscheinungsbild",
-    "settingsDarkMode": "Dunkel",
-    "settingsLightMode": "Hell",
-    "settingsSystemMode": "Automatisch",
-    "settingsAboutLmuDevelopers": "Über LMU Developers",
-    "settingsContact": "Kontakt aufnehmen",
-    "settingsDonate": "Spenden",
-    "settingsDataPrivacy": "Datenschutz",
-    "settingsImprint": "Impressum",
-    "settingsLicenses": "Lizenzen",
-    "settingsSuggestFeature": "Feature vorschlagen",
-    "settingsReportBug": "Fehler melden",
-    "settingsContactSubject": "Munich Students App",
-    "settingsContactBody": "Liebes LMU Developers Team,\n\n"
-
+    "retry": "Neu laden"
 }
