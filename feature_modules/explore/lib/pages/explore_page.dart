@@ -84,8 +84,8 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   }
 
   String getMapStyleUri(ThemeMode themeMode, BuildContext context) {
-    const String mapStyleLight = 'mapbox://styles/mapbox/streets-v11';
-    const String mapStyleDark = 'mapbox://styles/mapbox/dark-v10';
+    const String mapStyleLight = MapboxStyles.MAPBOX_STREETS;
+    const String mapStyleDark = MapboxStyles.DARK;
 
     if (themeMode == ThemeMode.light) {
       return mapStyleLight;

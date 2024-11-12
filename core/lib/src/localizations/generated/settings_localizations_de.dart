@@ -29,7 +29,7 @@ class SettingsLocalizationsDe extends SettingsLocalizations {
   String get contact => 'Kontakt aufnehmen';
 
   @override
-  String get donate => 'Spenden';
+  String get donate => 'OnlyFans';
 
   @override
   String get dataPrivacy => 'Datenschutz';

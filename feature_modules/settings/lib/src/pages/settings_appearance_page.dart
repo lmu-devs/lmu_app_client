@@ -12,7 +12,7 @@ class SettingsApperancePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: true);
     final localization = context.locals.settings;
 
     return LmuScaffoldWithAppBar(
