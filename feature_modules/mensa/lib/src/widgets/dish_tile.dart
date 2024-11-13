@@ -1,10 +1,10 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mensa/src/utils/get_dish_type_emoji.dart';
+
+import 'widgets.dart';
 
 class DishTile extends StatelessWidget {
   const DishTile({
@@ -72,23 +72,11 @@ class DishTile extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        LmuText.bodySmall(likeCount != 0 ? likeCount.toString() : ''),
-                        const SizedBox(
-                          width: LmuSizes.small,
-                        ),
+                        LmuText.bodySmall(likeCount.toString()),
+                        const SizedBox(width: LmuSizes.small),
                         GestureDetector(
                           onTap: onFavoriteTap,
-                          child: isLiked
-                              ? LmuIcon(
-                                  icon: Icons.star,
-                                  size: LmuIconSizes.medium,
-                                  color: context.colors.warningColors.textColors.strongColors.base,
-                                )
-                              : LmuIcon(
-                                  icon: Icons.star_border_outlined,
-                                  size: LmuIconSizes.medium,
-                                  color: context.colors.neutralColors.backgroundColors.flippedColors.base,
-                                ),
+                          child: StarIcon(isActive: isLiked),
                         ),
                       ],
                     ),

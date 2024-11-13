@@ -7,6 +7,7 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
+import '../extensions/likes_formatter_extension.dart';
 import '../extensions/opening_hours_extensions.dart';
 import '../repository/api/api.dart';
 import '../routes/mensa_routes.dart';
@@ -206,41 +207,5 @@ class MensaOverviewTile extends StatelessWidget {
     Random random = Random();
     double randomDouble = min + (max - min) * random.nextDouble();
     return double.parse(randomDouble.toStringAsFixed(1));
-  }
-}
-
-extension LikeFormatter on int {
-  String get formattedLikes {
-    if (this >= 1000) {
-      return "${(this / 1000).toStringAsFixed(1)}K";
-    }
-    return toString();
-  }
-}
-
-extension MensaStatusExtension on MensaStatus {
-  Color textColor(LmuColors colors) {
-    switch (this) {
-      case MensaStatus.open:
-        return colors.successColors.textColors.strongColors.base;
-      case MensaStatus.closed:
-        return colors.neutralColors.textColors.mediumColors.base;
-      case MensaStatus.closingSoon:
-        return colors.warningColors.textColors.strongColors.base;
-    }
-  }
-
-  String text(
-    CanteenLocalizations localizations, {
-    required List<MensaOpeningHours> openingHours,
-  }) {
-    switch (this) {
-      case MensaStatus.open:
-        return localizations.openNow;
-      case MensaStatus.closed:
-        return localizations.closed;
-      case MensaStatus.closingSoon:
-        return localizations.closingSoon(openingHours.closingTime);
-    }
   }
 }

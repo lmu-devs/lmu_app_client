@@ -6,7 +6,7 @@ packages:
     description:
       name: _fe_analyzer_shared
       sha256: "0b2f2bd91ba804e53a61d757b986f89f1f9eaed5b11e4b2f5a2468d86d6c9fc7"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "67.0.0"
   analyzer:
@@ -14,7 +14,7 @@ packages:
     description:
       name: analyzer
       sha256: "37577842a27e4338429a1cbc32679d508836510b056f1eedf0c8d20e39c1383d"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "6.4.1"
   ansicolor:
@@ -38,7 +38,7 @@ packages:
     description:
       name: args
       sha256: bf9f5caeea8d8fe6721a9c358dd8a5c1947b27f1cfaa18b39c301273594919e6
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.6.0"
   async:
@@ -46,7 +46,7 @@ packages:
     description:
       name: async
       sha256: "947bfcf187f74dbc5e146c9eb9c0f10c9f8b30743e341481c1e2ed3ecc18c20c"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.11.0"
   benchmark:
@@ -54,7 +54,7 @@ packages:
     description:
       name: benchmark
       sha256: cb3eeea01e3f054df76ee9775ca680f3afa5f19f39b2bb426ba78ba27654493b
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "0.3.0"
   bloc:
@@ -62,7 +62,7 @@ packages:
     description:
       name: bloc
       sha256: "106842ad6569f0b60297619e9e0b1885c2fb9bf84812935490e6c5275777804e"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "8.1.4"
   boolean_selector:
@@ -70,7 +70,7 @@ packages:
     description:
       name: boolean_selector
       sha256: "6cfb5af12253eaf2b368f07bacc5a80d1301a071c73360d746b7f2e32d762c66"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.1.1"
   build:
@@ -78,7 +78,7 @@ packages:
     description:
       name: build
       sha256: "80184af8b6cb3e5c1c4ec6d8544d27711700bc3e6d2efad04238c7b5290889f0"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.4.1"
   build_config:
@@ -86,47 +86,47 @@ packages:
     description:
       name: build_config
       sha256: bf80fcfb46a29945b423bd9aad884590fb1dc69b330a4d4700cac476af1708d1
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.1.1"
   build_daemon:
     dependency: transitive
     description:
       name: build_daemon
-      sha256: "0343061a33da9c5810b2d6cee51945127d8f4c060b7fbdd9d54917f0a3feaaa1"
-      url: "https://pub.dev"
+      sha256: "79b2aef6ac2ed00046867ed354c88778c9c0f029df8a20fe10b5436826721ef9"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
-    version: "4.0.1"
+    version: "4.0.2"
   build_resolvers:
     dependency: transitive
     description:
       name: build_resolvers
       sha256: "339086358431fa15d7eca8b6a36e5d783728cf025e559b834f4609a1fcfb7b0a"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.4.2"
   build_runner:
     dependency: "direct dev"
     description:
       name: build_runner
-      sha256: "3ac61a79bfb6f6cc11f693591063a7f19a7af628dc52f141743edac5c16e8c22"
-      url: "https://pub.dev"
+      sha256: "644dc98a0f179b872f612d3eb627924b578897c629788e858157fa5e704ca0c7"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
-    version: "2.4.9"
+    version: "2.4.11"
   build_runner_core:
     dependency: transitive
     description:
       name: build_runner_core
-      sha256: "4ae8ffe5ac758da294ecf1802f2aff01558d8b1b00616aa7538ea9a8a5d50799"
-      url: "https://pub.dev"
+      sha256: e3c79f69a64bdfcd8a776a3c28db4eb6e3fb5356d013ae5eb2e52007706d5dbe
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
-    version: "7.3.0"
+    version: "7.3.1"
   build_verify:
     dependency: "direct dev"
     description:
       name: build_verify
       sha256: abbb9b9eda076854ac1678d284c053a5ec608e64da741d0801f56d4bbea27e23
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "3.1.0"
   built_collection:
@@ -134,7 +134,7 @@ packages:
     description:
       name: built_collection
       sha256: "376e3dd27b51ea877c28d525560790aee2e6fbb5f20e2f85d5081027d94e2100"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "5.1.1"
   built_value:
@@ -142,7 +142,7 @@ packages:
     description:
       name: built_value
       sha256: c7913a9737ee4007efedaffc968c049fd0f3d0e49109e778edc10de9426005cb
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "8.9.2"
   characters:
@@ -150,7 +150,7 @@ packages:
     description:
       name: characters
       sha256: "04a925763edad70e8443c99234dc3328f442e811f1d8fd1a72f1c8ad0f69a605"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.3.0"
   checked_yaml:
@@ -158,7 +158,7 @@ packages:
     description:
       name: checked_yaml
       sha256: feb6bed21949061731a7a75fc5d2aa727cf160b91af9a3e464c5e3a32e28b5ff
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.0.3"
   clock:
@@ -166,7 +166,7 @@ packages:
     description:
       name: clock
       sha256: cb6d7f03e1de671e34607e909a7213e31d7752be4fb66a86d29fe1eb14bfb5cf
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.1.1"
   code_builder:
@@ -174,7 +174,7 @@ packages:
     description:
       name: code_builder
       sha256: f692079e25e7869c14132d39f223f8eec9830eb76131925143b2129c4bb01b37
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "4.10.0"
   collection:
@@ -182,17 +182,17 @@ packages:
     description:
       name: collection
       sha256: ee67cb0715911d28db6bf4af1026078bd6f0128b07a5f66fb2ed94ec6783c09a
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.18.0"
   convert:
     dependency: transitive
     description:
       name: convert
-      sha256: "0f08b14755d163f6e2134cb58222dd25ea2a2ee8a195e53983d57c075324d592"
-      url: "https://pub.dev"
+      sha256: b30acd5944035672bc15c6b7a8b47d773e41e2f17de064350988c5d02adb1c68
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
-    version: "3.1.1"
+    version: "3.1.2"
   core:
     dependency: "direct main"
     description:
@@ -204,32 +204,24 @@ packages:
     dependency: transitive
     description:
       name: coverage
-      sha256: "3945034e86ea203af7a056d98e98e42a5518fff200d6e8e6647e1886b07e936e"
-      url: "https://pub.dev"
+      sha256: "88b0fddbe4c92910fefc09cc0248f5e7f0cd23e450ded4c28f16ab8ee8f83268"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
-    version: "1.8.0"
+    version: "1.10.0"
   crypto:
     dependency: transitive
     description:
       name: crypto
-      sha256: ff625774173754681d66daaf4a448684fb04b78f902da9cb3d308c19cc5e8bab
-      url: "https://pub.dev"
+      sha256: "1e445881f28f22d6140f181e07737b22f1e099a5e1ff94b0af2f9e4a463f4855"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
-    version: "3.0.3"
-  csslib:
-    dependency: transitive
-    description:
-      name: csslib
-      sha256: "09bad715f418841f976c77db72d5398dc1253c21fb9c0c7f0b0b985860b2d58e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.2"
+    version: "3.0.6"
   cupertino_icons:
     dependency: "direct main"
     description:
       name: cupertino_icons
       sha256: ba631d1c7f7bef6b729a622b7b752645a2d076dba9976925b8f25725a30e1ee6
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.0.8"
   dart_sort_queue:
@@ -237,7 +229,7 @@ packages:
     description:
       name: dart_sort_queue
       sha256: f3353ba8b4850e072d3368757f62edb79af34a9703c3e3df9c59342721f5f5b1
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "0.0.2+3"
   dart_style:
@@ -245,7 +237,7 @@ packages:
     description:
       name: dart_style
       sha256: "99e066ce75c89d6b29903d788a7bb9369cf754f7b24bf70bf4b6d6d6b26853b9"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.3.6"
   equatable:
@@ -253,7 +245,7 @@ packages:
     description:
       name: equatable
       sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.0.5"
   explore:
@@ -268,7 +260,7 @@ packages:
     description:
       name: fake_async
       sha256: "511392330127add0b769b75a987850d136345d9227c6b94c96a04cf4a391bf78"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.3.1"
   ffi:
@@ -276,7 +268,7 @@ packages:
     description:
       name: ffi
       sha256: "16ed7b077ef01ad6170a3d0c57caa4a112a38d7a2ed5602e0aca9ca6f3d98da6"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.1.3"
   file:
@@ -284,7 +276,7 @@ packages:
     description:
       name: file
       sha256: a3b4f84adafef897088c160faf7dfffb7696046cb13ae90b508c2cbc95d3b8d4
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "7.0.1"
   fixnum:
@@ -292,7 +284,7 @@ packages:
     description:
       name: fixnum
       sha256: b6dc7065e46c974bc7c5f143080a6764ec7a4be6da1285ececdc37be96de53be
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.1.1"
   flutter:
@@ -305,7 +297,7 @@ packages:
     description:
       name: flutter_bloc
       sha256: b594505eac31a0518bdcb4b5b79573b8d9117b193cc80cc12e17d639b10aa27a
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "8.1.6"
   flutter_lints:
@@ -313,7 +305,7 @@ packages:
     description:
       name: flutter_lints
       sha256: a25a15ebbdfc33ab1cd26c63a6ee519df92338a9c10f122adda92938253bef04
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.0.3"
   flutter_localizations:
@@ -325,32 +317,24 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_lucide
-      sha256: "458f4bdaebbb7cafd3cd50003668fd221a87c5ce6c14dbfd641b84c26a7eca58"
-      url: "https://pub.dev"
+      sha256: "7d0756fe6eee698874e6a710564c561027779b8287b5b25936fa4d0fcf939265"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
-    version: "1.2.0"
-  flutter_native_splash:
-    dependency: "direct main"
-    description:
-      name: flutter_native_splash
-      sha256: aa06fec78de2190f3db4319dd60fdc8d12b2626e93ef9828633928c2dcaea840
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.1"
+    version: "1.4.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
       name: flutter_plugin_android_lifecycle
-      sha256: "8cf40eebf5dec866a6d1956ad7b4f7016e6c0cc69847ab946833b7d43743809f"
-      url: "https://pub.dev"
+      sha256: "9ee02950848f61c4129af3d6ec84a1cfc0e47931abc746b03e7a3bc3e8ff6eda"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
-    version: "2.0.19"
+    version: "2.0.22"
   flutter_svg:
     dependency: "direct main"
     description:
       name: flutter_svg
       sha256: d39e7f95621fc84376bc0f7d504f05c3a41488c562f4a8ad410569127507402c
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.0.9"
   flutter_test:
@@ -368,23 +352,23 @@ packages:
     description:
       name: fluttertoast
       sha256: "95f349437aeebe524ef7d6c9bde3e6b4772717cf46a0eb6a3ceaddc740b297cc"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "8.2.8"
   frontend_server_client:
     dependency: transitive
     description:
       name: frontend_server_client
-      sha256: "408e3ca148b31c20282ad6f37ebfa6f4bdc8fede5b74bc2f08d9d92b55db3612"
-      url: "https://pub.dev"
+      sha256: f64a0333a82f30b0cca061bc3d143813a486dc086b574bfb233b7c1372427694
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
-    version: "3.2.0"
+    version: "4.0.0"
   geotypes:
     dependency: transitive
     description:
       name: geotypes
       sha256: "5bedf57de92283133dd221e363812ef50eaaba414f0823b1974ef7d84b86991f"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "0.0.2"
   get_it:
@@ -392,7 +376,7 @@ packages:
     description:
       name: get_it
       sha256: c49895c1ecb0ee2a0ec568d39de882e2c299ba26355aa6744ab1001f98cebd15
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "8.0.2"
   glob:
@@ -400,47 +384,39 @@ packages:
     description:
       name: glob
       sha256: "0e7014b3b7d4dac1ca4d6114f82bf1782ee86745b9b42a92c9289c23d8a0ab63"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.1.2"
   go_router:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: "6f1b756f6e863259a99135ff3c95026c3cdca17d10ebef2bba2261a25ddc8bbc"
-      url: "https://pub.dev"
+      sha256: ce89c5a993ca5eea74535f798478502c30a625ecb10a1de4d7fef5cd1bcac2a4
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
-    version: "14.3.0"
+    version: "14.4.1"
   go_router_builder:
     dependency: "direct dev"
     description:
       name: go_router_builder
       sha256: "3425b72dea69209754ac6b71b4da34165dcd4d4a2934713029945709a246427a"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.7.1"
   graphs:
     dependency: transitive
     description:
       name: graphs
-      sha256: aedc5a15e78fc65a6e23bcd927f24c64dd995062bcd1ca6eda65a3cff92a4d19
-      url: "https://pub.dev"
+      sha256: "741bbf84165310a68ff28fe9e727332eef1407342fca52759cb21ad8177bb8d0"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
-    version: "2.3.1"
-  html:
-    dependency: transitive
-    description:
-      name: html
-      sha256: "1fc58edeaec4307368c60d59b7e15b9d658b57d7f3125098b6294153c75337ec"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.15.5"
+    version: "2.3.2"
   http:
     dependency: "direct main"
     description:
       name: http
       sha256: "5895291c13fa8a3bd82e76d5627f69e0d85ca6a30dcac95c4ea19a5d555879c2"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "0.13.6"
   http_multi_server:
@@ -448,7 +424,7 @@ packages:
     description:
       name: http_multi_server
       sha256: "97486f20f9c2f7be8f514851703d0119c3596d14ea63227af6f7a481ef2b2f8b"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "3.2.1"
   http_parser:
@@ -456,7 +432,7 @@ packages:
     description:
       name: http_parser
       sha256: "2aa08ce0341cc9b354a498388e30986515406668dbcc4f7c950c3e715496693b"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "4.0.2"
   image:
@@ -472,7 +448,7 @@ packages:
     description:
       name: intl
       sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "0.19.0"
   io:
@@ -480,23 +456,23 @@ packages:
     description:
       name: io
       sha256: "2ec25704aba361659e10e3e5f5d672068d332fc8ac516421d483a11e5cbd061e"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.0.4"
   js:
     dependency: transitive
     description:
       name: js
-      sha256: f2c445dce49627136094980615a031419f7f3eb393237e4ecd97ac15dea343f3
-      url: "https://pub.dev"
+      sha256: c1b2e9b5ea78c45e1a0788d29606ba27dc5f71f019f32ca5140f61ef071838cf
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
-    version: "0.6.7"
+    version: "0.7.1"
   json_annotation:
     dependency: transitive
     description:
       name: json_annotation
       sha256: "1ce844379ca14835a50d2f019a3099f419082cfdd231cd86a142af94dd5c6bb1"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "4.9.0"
   leak_tracker:
@@ -504,7 +480,7 @@ packages:
     description:
       name: leak_tracker
       sha256: "7f0df31977cb2c0b88585095d168e689669a2cc9b97c309665e3386f3e9d341a"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "10.0.4"
   leak_tracker_flutter_testing:
@@ -512,7 +488,7 @@ packages:
     description:
       name: leak_tracker_flutter_testing
       sha256: "06e98f569d004c1315b991ded39924b21af84cf14cc94791b8aea337d25b57f8"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "3.0.3"
   leak_tracker_testing:
@@ -520,7 +496,7 @@ packages:
     description:
       name: leak_tracker_testing
       sha256: "6ba465d5d76e67ddf503e1161d1f4a6bc42306f9d66ca1e8f079a47290fb06d3"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "3.0.1"
   lints:
@@ -528,23 +504,23 @@ packages:
     description:
       name: lints
       sha256: "0a217c6c989d21039f1498c3ed9f3ed71b354e69873f13a8dfc3c9fe76f1b452"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.1.1"
   logging:
     dependency: transitive
     description:
       name: logging
-      sha256: "623a88c9594aa774443aa3eb2d41807a48486b5613e67599fb4c41c0ad47c340"
-      url: "https://pub.dev"
+      sha256: c8245ada5f1717ed44271ed1c26b8ce85ca3228fd2ffdb75468ab01979309d61
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
-    version: "1.2.0"
+    version: "1.3.0"
   mapbox_maps_flutter:
     dependency: "direct main"
     description:
       name: mapbox_maps_flutter
       sha256: d8283667c78b92406caaef973600d85dcfe357addfd91573cdaa503683ed44b0
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.3.0"
   matcher:
@@ -552,7 +528,7 @@ packages:
     description:
       name: matcher
       sha256: d2323aa2060500f906aa31a895b4030b6da3ebdcc5619d14ce1aada65cd161cb
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "0.12.16+1"
   material_color_utilities:
@@ -560,7 +536,7 @@ packages:
     description:
       name: material_color_utilities
       sha256: "0e0a020085b65b6083975e499759762399b4475f766c21668c4ecca34ea74e5a"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "0.8.0"
   mensa:
@@ -575,7 +551,7 @@ packages:
     description:
       name: meta
       sha256: "7687075e408b093f36e6bbf6c91878cc0d4cd10f409506f7bc996f68220b9136"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.12.0"
   mime:
@@ -583,23 +559,23 @@ packages:
     description:
       name: mime
       sha256: "801fd0b26f14a4a58ccb09d5892c3fbdeff209594300a542492cf13fba9d247a"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.0.6"
   modal_bottom_sheet:
     dependency: transitive
     description:
       name: modal_bottom_sheet
-      sha256: eac66ef8cb0461bf069a38c5eb0fa728cee525a531a8304bd3f7b2185407c67e
-      url: "https://pub.dev"
+      sha256: d803396599f5ac5b267adb88886461784e415898a95e68284119bc1eea935df6
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
-    version: "3.0.0"
+    version: "3.0.0+1-pre-ohos"
   nested:
     dependency: transitive
     description:
       name: nested
       sha256: "03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.0.0"
   nested_scroll_view_plus:
@@ -607,7 +583,7 @@ packages:
     description:
       name: nested_scroll_view_plus
       sha256: "81ad080fac8368ae1406d59c34799845cea463ba98a9459f464d71dd8c2f3d3a"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.0.3"
   node_preamble:
@@ -615,7 +591,7 @@ packages:
     description:
       name: node_preamble
       sha256: "6e7eac89047ab8a8d26cf16127b5ed26de65209847630400f9aefd7cd5c730db"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.0.2"
   package_config:
@@ -623,7 +599,7 @@ packages:
     description:
       name: package_config
       sha256: "1c5b77ccc91e4823a5af61ee74e6b972db1ef98c2ff5a18d3161c982a55448bd"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.1.0"
   path:
@@ -631,23 +607,23 @@ packages:
     description:
       name: path
       sha256: "087ce49c3f0dc39180befefc60fdb4acd8f8620e5682fe2476afd0b3688bb4af"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.9.0"
   path_parsing:
     dependency: transitive
     description:
       name: path_parsing
-      sha256: caa17e8f0b386eb190dd5b6a3b71211c76375aa8b6ffb4465b5863d019bdb334
-      url: "https://pub.dev"
+      sha256: "883402936929eac138ee0a45da5b0f2c80f89913e6dc3bf77eb65b84b409c6ca"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
-    version: "1.0.3"
+    version: "1.1.0"
   path_provider_linux:
     dependency: transitive
     description:
       name: path_provider_linux
       sha256: f7a1fe3a634fe7734c8d3f2766ad746ae2a2884abe22e241a8b301bf5cac3279
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.2.1"
   path_provider_platform_interface:
@@ -655,7 +631,7 @@ packages:
     description:
       name: path_provider_platform_interface
       sha256: "88f5779f72ba699763fa3a3b06aa4bf6de76c8e5de842cf6f29e2e06476c2334"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.1.2"
   path_provider_windows:
@@ -663,7 +639,7 @@ packages:
     description:
       name: path_provider_windows
       sha256: bd6f00dbd873bfb70d0761682da2b3a2c2fccc2b9e84c495821639601d81afe7
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.3.0"
   permission_handler:
@@ -671,7 +647,7 @@ packages:
     description:
       name: permission_handler
       sha256: "18bf33f7fefbd812f37e72091a15575e72d5318854877e0e4035a24ac1113ecb"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "11.3.1"
   permission_handler_android:
@@ -679,7 +655,7 @@ packages:
     description:
       name: permission_handler_android
       sha256: "71bbecfee799e65aff7c744761a57e817e73b738fedf62ab7afd5593da21f9f1"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "12.0.13"
   permission_handler_apple:
@@ -687,7 +663,7 @@ packages:
     description:
       name: permission_handler_apple
       sha256: e6f6d73b12438ef13e648c4ae56bd106ec60d17e90a59c4545db6781229082a0
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "9.4.5"
   permission_handler_html:
@@ -695,7 +671,7 @@ packages:
     description:
       name: permission_handler_html
       sha256: af26edbbb1f2674af65a8f4b56e1a6f526156bc273d0e65dd8075fab51c78851
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "0.1.3+2"
   permission_handler_platform_interface:
@@ -703,7 +679,7 @@ packages:
     description:
       name: permission_handler_platform_interface
       sha256: e9c8eadee926c4532d0305dff94b85bf961f16759c3af791486613152af4b4f9
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "4.2.3"
   permission_handler_windows:
@@ -711,7 +687,7 @@ packages:
     description:
       name: permission_handler_windows
       sha256: "1a790728016f79a41216d88672dbc5df30e686e811ad4e698bfc51f76ad91f1e"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "0.2.1"
   petitparser:
@@ -719,7 +695,7 @@ packages:
     description:
       name: petitparser
       sha256: c15605cd28af66339f8eb6fbe0e541bfe2d1b72d5825efc6598f3e0a31b9ad27
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "6.0.2"
   platform:
@@ -727,7 +703,7 @@ packages:
     description:
       name: platform
       sha256: "5d6b1b0036a5f331ebc77c850ebc8506cbc1e9416c27e59b439f917a902a4984"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "3.1.6"
   plugin_platform_interface:
@@ -735,7 +711,7 @@ packages:
     description:
       name: plugin_platform_interface
       sha256: "4820fbfdb9478b1ebae27888254d445073732dae3d6ea81f0b7e06d5dedc3f02"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.1.8"
   pool:
@@ -743,7 +719,7 @@ packages:
     description:
       name: pool
       sha256: "20fe868b6314b322ea036ba325e6fc0711a22948856475e2c2b6306e8ab39c2a"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.5.1"
   provider:
@@ -751,7 +727,7 @@ packages:
     description:
       name: provider
       sha256: c8a055ee5ce3fd98d6fc872478b03823ffdb448699c6ebdbbc71d59b596fd48c
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "6.1.2"
   pub_semver:
@@ -759,7 +735,7 @@ packages:
     description:
       name: pub_semver
       sha256: "40d3ab1bbd474c4c2328c91e3a7df8c6dd629b79ece4c4bd04bee496a224fb0c"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.1.4"
   pubspec_parse:
@@ -767,7 +743,7 @@ packages:
     description:
       name: pubspec_parse
       sha256: c799b721d79eb6ee6fa56f00c04b472dcd44a30d258fac2174a6ec57302678f8
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.3.0"
   rbush:
@@ -775,7 +751,7 @@ packages:
     description:
       name: rbush
       sha256: "48b683421b4afb43a642f82c6aa31911e54f3069143d31c7d33cbe329df13403"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.1.1"
   scrollable_positioned_list:
@@ -783,7 +759,7 @@ packages:
     description:
       name: scrollable_positioned_list
       sha256: "1b54d5f1329a1e263269abc9e2543d90806131aa14fe7c6062a8054d57249287"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "0.3.8"
   settings:
@@ -797,24 +773,24 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences
-      sha256: d3bbe5553a986e83980916ded2f0b435ef2e1893dfaa29d5a7a790d0eca12180
-      url: "https://pub.dev"
+      sha256: "95f9997ca1fb9799d494d0cb2a780fd7be075818d59f00c43832ed112b158a82"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
-    version: "2.2.3"
+    version: "2.3.3"
   shared_preferences_android:
     dependency: transitive
     description:
       name: shared_preferences_android
-      sha256: "1ee8bf911094a1b592de7ab29add6f826a7331fb854273d55918693d5364a1f2"
-      url: "https://pub.dev"
+      sha256: "480ba4345773f56acda9abf5f50bd966f581dac5d514e5fc4a18c62976bbba7e"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
-    version: "2.2.2"
+    version: "2.3.2"
   shared_preferences_foundation:
     dependency: transitive
     description:
       name: shared_preferences_foundation
       sha256: "07e050c7cd39bad516f8d64c455f04508d09df104be326d8c02551590a0d513d"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.5.3"
   shared_preferences_linux:
@@ -822,7 +798,7 @@ packages:
     description:
       name: shared_preferences_linux
       sha256: "580abfd40f415611503cae30adf626e6656dfb2f0cee8f465ece7b6defb40f2f"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.4.1"
   shared_preferences_platform_interface:
@@ -830,23 +806,23 @@ packages:
     description:
       name: shared_preferences_platform_interface
       sha256: "57cbf196c486bc2cf1f02b85784932c6094376284b3ad5779d1b1c6c6a816b80"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.4.1"
   shared_preferences_web:
     dependency: transitive
     description:
       name: shared_preferences_web
-      sha256: "59dc807b94d29d52ddbb1b3c0d3b9d0a67fc535a64e62a5542c8db0513fcb6c2"
-      url: "https://pub.dev"
+      sha256: d2ca4132d3946fec2184261726b355836a82c33d7d5b67af32692aff18a4684e
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
-    version: "2.4.1"
+    version: "2.4.2"
   shared_preferences_windows:
     dependency: transitive
     description:
       name: shared_preferences_windows
       sha256: "94ef0f72b2d71bc3e700e025db3710911bd51a71cefb65cc609dd0d9a982e3c1"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.4.1"
   shelf:
@@ -854,7 +830,7 @@ packages:
     description:
       name: shelf
       sha256: ad29c505aee705f41a4d8963641f91ac4cee3c8fad5947e033390a7bd8180fa4
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.4.1"
   shelf_packages_handler:
@@ -862,7 +838,7 @@ packages:
     description:
       name: shelf_packages_handler
       sha256: "89f967eca29607c933ba9571d838be31d67f53f6e4ee15147d5dc2934fee1b1e"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "3.0.2"
   shelf_static:
@@ -870,7 +846,7 @@ packages:
     description:
       name: shelf_static
       sha256: c87c3875f91262785dade62d135760c2c69cb217ac759485334c5857ad89f6e3
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.1.3"
   shelf_web_socket:
@@ -878,7 +854,7 @@ packages:
     description:
       name: shelf_web_socket
       sha256: "9ca081be41c60190ebcb4766b2486a7d50261db7bd0f5d9615f2d653637a84c1"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.0.4"
   skeletonizer:
@@ -886,7 +862,7 @@ packages:
     description:
       name: skeletonizer
       sha256: "3b202e4fa9c49b017d368fb0e570d4952bcd19972b67b2face071bdd68abbfae"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.4.2"
   sky_engine:
@@ -899,7 +875,7 @@ packages:
     description:
       name: snap_scroll_physics
       sha256: "253249c8a07526cd18ada11720126c72f09657096e8c52f8754c377629b72bf3"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "0.0.1+3"
   soft_edge_blur:
@@ -907,7 +883,7 @@ packages:
     description:
       name: soft_edge_blur
       sha256: "3e9a6c981d298d6aa2bf98716bc521fb043708833a570cd9f559a7d523973c51"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "0.1.3"
   source_gen:
@@ -915,7 +891,7 @@ packages:
     description:
       name: source_gen
       sha256: "14658ba5f669685cd3d63701d01b31ea748310f7ab854e471962670abcf57832"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.5.0"
   source_helper:
@@ -923,7 +899,7 @@ packages:
     description:
       name: source_helper
       sha256: "6adebc0006c37dd63fe05bca0a929b99f06402fc95aa35bf36d67f5c06de01fd"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.3.4"
   source_map_stack_trace:
@@ -931,7 +907,7 @@ packages:
     description:
       name: source_map_stack_trace
       sha256: c0713a43e323c3302c2abe2a1cc89aa057a387101ebd280371d6a6c9fa68516b
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.1.2"
   source_maps:
@@ -939,7 +915,7 @@ packages:
     description:
       name: source_maps
       sha256: "708b3f6b97248e5781f493b765c3337db11c5d2c81c3094f10904bfa8004c703"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "0.10.12"
   source_span:
@@ -947,7 +923,7 @@ packages:
     description:
       name: source_span
       sha256: "53e943d4206a5e30df338fd4c6e7a077e02254531b138a15aec3bd143c1a8b3c"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.10.0"
   sprung:
@@ -955,7 +931,7 @@ packages:
     description:
       name: sprung
       sha256: "54322638f5e393d2b808175f7eadbaa4836a4425456e98d93c3d676dc56ebdf1"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "3.0.1"
   stack_trace:
@@ -963,7 +939,7 @@ packages:
     description:
       name: stack_trace
       sha256: "73713990125a6d93122541237550ee3352a2d84baad52d375a4cad2eb9b7ce0b"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.11.1"
   stream_channel:
@@ -971,7 +947,7 @@ packages:
     description:
       name: stream_channel
       sha256: ba2aa5d8cc609d96bbb2899c28934f9e1af5cddbd60a827822ea467161eb54e7
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.1.2"
   stream_transform:
@@ -979,7 +955,7 @@ packages:
     description:
       name: stream_transform
       sha256: "14a00e794c7c11aa145a170587321aedce29769c08d7f58b1d141da75e3b1c6f"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.1.0"
   string_scanner:
@@ -987,7 +963,7 @@ packages:
     description:
       name: string_scanner
       sha256: "556692adab6cfa87322a115640c11f13cb77b3f076ddcc5d6ae3c20242bedcde"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.2.0"
   super_cupertino_navigation_bar:
@@ -995,7 +971,7 @@ packages:
     description:
       name: super_cupertino_navigation_bar
       sha256: c725330bc7f135862ffe7c4e1f04772a35740d78f2f5d97a7200b910638f7668
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.1.2"
   sweepline_intersections:
@@ -1003,7 +979,7 @@ packages:
     description:
       name: sweepline_intersections
       sha256: a665c707200a4f07140a4029b41a7c4883beb3f04322cd8e08ebf650f69e1176
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "0.0.4"
   term_glyph:
@@ -1011,7 +987,7 @@ packages:
     description:
       name: term_glyph
       sha256: a29248a84fbb7c79282b40b8c72a1209db169a2e0542bce341da992fe1bc7e84
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.2.1"
   test:
@@ -1019,7 +995,7 @@ packages:
     description:
       name: test
       sha256: "7ee446762c2c50b3bd4ea96fe13ffac69919352bd3b4b17bac3f3465edc58073"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.25.2"
   test_api:
@@ -1027,7 +1003,7 @@ packages:
     description:
       name: test_api
       sha256: "9955ae474176f7ac8ee4e989dadfb411a58c30415bcfb648fa04b2b8a03afa7f"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "0.7.0"
   test_core:
@@ -1035,7 +1011,7 @@ packages:
     description:
       name: test_core
       sha256: "2bc4b4ecddd75309300d8096f781c0e3280ca1ef85beda558d33fcbedc2eead4"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "0.6.0"
   timing:
@@ -1043,7 +1019,7 @@ packages:
     description:
       name: timing
       sha256: "70a3b636575d4163c477e6de42f247a23b315ae20e86442bebe32d3cabf61c32"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.0.1"
   tuple:
@@ -1051,7 +1027,7 @@ packages:
     description:
       name: tuple
       sha256: a97ce2013f240b2f3807bcbaf218765b6f301c3eff91092bcfa23a039e7dd151
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.0.2"
   turf:
@@ -1059,7 +1035,7 @@ packages:
     description:
       name: turf
       sha256: "75347c45a5c1de805db7cb182286f05a3770e01546626c4dc292709d15cbe436"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "0.0.10"
   turf_equality:
@@ -1067,7 +1043,7 @@ packages:
     description:
       name: turf_equality
       sha256: f0f44ffe389547941358e0d3d4a747db2bd56115b32ff1cede5e5bdf3126a3e2
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "0.1.0"
   turf_pip:
@@ -1075,7 +1051,7 @@ packages:
     description:
       name: turf_pip
       sha256: ba4fd414baffd5d7b30880658ad6db82461c49ec023f8ffd0c23d398ad8b14be
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "0.0.2"
   typed_data:
@@ -1083,7 +1059,7 @@ packages:
     description:
       name: typed_data
       sha256: facc8d6582f16042dd49f2463ff1bd6e2c9ef9f3d5da3d9b087e244a7b564b3c
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.3.2"
   universal_io:
@@ -1163,7 +1139,7 @@ packages:
     description:
       name: vector_graphics
       sha256: "4ac59808bbfca6da38c99f415ff2d3a5d7ca0a6b4809c71d9cf30fba5daf9752"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.1.10+1"
   vector_graphics_codec:
@@ -1171,7 +1147,7 @@ packages:
     description:
       name: vector_graphics_codec
       sha256: f3247e7ab0ec77dc759263e68394990edc608fb2b480b80db8aa86ed09279e33
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.1.10+1"
   vector_graphics_compiler:
@@ -1179,7 +1155,7 @@ packages:
     description:
       name: vector_graphics_compiler
       sha256: "18489bdd8850de3dd7ca8a34e0c446f719ec63e2bab2e7a8cc66a9028dd76c5a"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.1.10+1"
   vector_math:
@@ -1187,7 +1163,7 @@ packages:
     description:
       name: vector_math
       sha256: "80b3257d1492ce4d091729e3a67a60407d227c27241d6927be0130c98e741803"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.1.4"
   vm_service:
@@ -1195,7 +1171,7 @@ packages:
     description:
       name: vm_service
       sha256: "3923c89304b715fb1eb6423f017651664a03bf5f4b29983627c4da791f74a4ec"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "14.2.1"
   watcher:
@@ -1203,23 +1179,23 @@ packages:
     description:
       name: watcher
       sha256: "3d2ad6751b3c16cf07c7fca317a1413b3f26530319181b37e3b9039b84fc01d8"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.1.0"
   web:
     dependency: transitive
     description:
       name: web
-      sha256: "97da13628db363c635202ad97068d47c5b8aa555808e7a9411963c533b449b27"
-      url: "https://pub.dev"
+      sha256: cd3543bd5798f6ad290ea73d210f423502e71900302dde696f8bff84bf89a1cb
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
-    version: "0.5.1"
+    version: "1.1.0"
   web_socket_channel:
     dependency: transitive
     description:
       name: web_socket_channel
       sha256: d88238e5eac9a42bb43ca4e721edba3c08c6354d4a53063afaa568516217621b
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.4.0"
   webkit_inspection_protocol:
@@ -1227,7 +1203,7 @@ packages:
     description:
       name: webkit_inspection_protocol
       sha256: "87d3f2333bb240704cd3f1c6b5b7acd8a10e7f0bc28c28dcf14e782014f4a572"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.2.1"
   wunschkonzert:
@@ -1242,7 +1218,7 @@ packages:
     description:
       name: xdg_directories
       sha256: "7a3f37b05d989967cdddcbb571f1ea834867ae2faa29725fd085180e0883aa15"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.1.0"
   xml:
@@ -1250,7 +1226,7 @@ packages:
     description:
       name: xml
       sha256: b015a8ad1c488f66851d762d3090a21c600e479dc75e68328c52774040cf9226
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "6.5.0"
   yaml:
@@ -1258,9 +1234,9 @@ packages:
     description:
       name: yaml
       sha256: "75769501ea3489fca56601ff33454fe45507ea3bfb014161abc3b43ae25989d5"
-      url: "https://pub.dev"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=3.3.4 <4.0.0"
-  flutter: ">=3.19.0"
+  dart: ">=3.4.3 <4.0.0"
+  flutter: ">=3.22.0"

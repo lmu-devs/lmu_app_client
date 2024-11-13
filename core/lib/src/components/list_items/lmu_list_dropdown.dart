@@ -1,8 +1,6 @@
 import 'package:core/components.dart';
 import 'package:flutter/material.dart';
 
-import '../actions/lmu_list_item_action.dart';
-
 class LmuListDropdown extends StatelessWidget {
   const LmuListDropdown({
     Key? key,
@@ -24,8 +22,8 @@ class LmuListDropdown extends StatelessWidget {
       children: [
         LmuListItem.action(
           hasHorizontalPadding: false,
-          title: title,
-          titleColor: titleColor,
+          subtitle: title,
+          subtitleTextColor: titleColor,
           initialValue: initialValue,
           mainContentAlignment: MainContentAlignment.center,
           actionType: LmuListItemAction.dropdown,

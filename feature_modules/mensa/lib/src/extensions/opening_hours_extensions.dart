@@ -1,4 +1,8 @@
+import 'dart:ui';
+
 import 'package:collection/collection.dart';
+import 'package:core/localizations.dart';
+import 'package:core/themes.dart';
 
 import '../repository/api/models/mensa_opening_hours.dart';
 
@@ -56,5 +60,32 @@ extension OpeningHoursExtension on List<MensaOpeningHours> {
     final hour = int.parse(parts[0]);
     final minute = int.parse(parts[1]);
     return DateTime(referenceDate.year, referenceDate.month, referenceDate.day, hour, minute);
+  }
+}
+
+extension MensaStatusExtension on MensaStatus {
+  Color textColor(LmuColors colors) {
+    switch (this) {
+      case MensaStatus.open:
+        return colors.successColors.textColors.strongColors.base;
+      case MensaStatus.closed:
+        return colors.neutralColors.textColors.mediumColors.base;
+      case MensaStatus.closingSoon:
+        return colors.warningColors.textColors.strongColors.base;
+    }
+  }
+
+  String text(
+    CanteenLocalizations localizations, {
+    required List<MensaOpeningHours> openingHours,
+  }) {
+    switch (this) {
+      case MensaStatus.open:
+        return localizations.openNow;
+      case MensaStatus.closed:
+        return localizations.closed;
+      case MensaStatus.closingSoon:
+        return localizations.closingSoon(openingHours.closingTime);
+    }
   }
 }
