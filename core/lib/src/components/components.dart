@@ -10,3 +10,4 @@ export 'tab_bars/tab_bars.dart';
 export 'texts/texts.dart';
 export 'tiles/tiles.dart';
 export 'toasts/toasts.dart';
+export 'skeletons/skeletons.dart';

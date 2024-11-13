@@ -11,6 +11,7 @@ class LmuBottomSheet {
     showMaterialModalBottomSheet(
       context: context,
       useRootNavigator: true,
+      barrierColor: const Color.fromARGB(150, 0, 0, 0),
       animationCurve: LmuAnimations.fastSmooth,
       duration: const Duration(milliseconds: 400),
       closeProgressThreshold: .9,

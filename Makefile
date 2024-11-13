@@ -8,6 +8,9 @@ generate_localizations:
 run_generator: 
 	dart run build_runner build --delete-conflicting-outputs
 
+generate_splash_screen:
+	dart run flutter_native_splash:create
+
 setup_mapbox:
 	sh scripts/mapbox_setup.sh ${MAPBOX_ACCESS_TOKEN}
 

@@ -141,25 +141,25 @@ abstract class SettingsLocalizations {
   /// **'Get in touch'**
   String get contact;
 
-  /// Donate
+  /// Title for list item to donate
   ///
   /// In en, this message translates to:
-  /// **'Donate'**
+  /// **'OnlyFans'**
   String get donate;
 
-  /// Data Privacy
+  /// Title for list item to show data privacy
   ///
   /// In en, this message translates to:
   /// **'Data Privacy'**
   String get dataPrivacy;
 
-  /// Imprint
+  /// Title for list item to show imprint
   ///
   /// In en, this message translates to:
   /// **'Imprint'**
   String get imprint;
 
-  /// Licenses
+  /// Title for list item to show licenses
   ///
   /// In en, this message translates to:
   /// **'Licenses'**
