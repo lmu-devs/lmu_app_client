@@ -248,6 +248,24 @@ abstract class CanteenLocalizations {
   /// In en, this message translates to:
   /// **'Retry'**
   String get retry;
+
+  /// Share button
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get share;
+
+  /// The state of closing soon
+  ///
+  /// In en, this message translates to:
+  /// **'Today open until {time}'**
+  String closingSoonDetailed(String time);
+
+  /// The state of being closed
+  ///
+  /// In en, this message translates to:
+  /// **'Currently closed'**
+  String get closedDetailed;
 }
 
 class _CanteenLocalizationsDelegate extends LocalizationsDelegate<CanteenLocalizations> {

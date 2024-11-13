@@ -113,6 +113,24 @@
   "retry": "Retry",
   "@retry": {
     "description": "Retry"
+  },
+  "share": "Share",
+  "@share": {
+    "description": "Share button"
+  },
+  "closingSoonDetailed": "Today open until {time}",
+  "@closingSoonDetailed": {
+    "description": "The state of closing soon",
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "10 PM"
+      }
+    }
+  },
+  "closedDetailed": "Currently closed",
+  "@closedDetailed": {
+    "description": "The state of being closed"
   }
 
 }

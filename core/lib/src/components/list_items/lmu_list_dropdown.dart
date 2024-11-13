@@ -40,7 +40,7 @@ class LmuListDropdown extends StatelessWidget {
             child: AnimatedSwitcher(
               transitionBuilder: (child, animation) {
                 return FadeTransition(
-                  opacity: animation,
+                  opacity: animation.drive(CurveTween(curve: Curves.easeInQuad)),
                   child: SizeTransition(
                     sizeFactor: animation,
                     child: child,

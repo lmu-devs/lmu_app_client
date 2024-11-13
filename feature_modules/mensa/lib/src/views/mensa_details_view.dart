@@ -2,6 +2,7 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -77,11 +78,20 @@ class MensaDetailsView extends StatelessWidget {
                           LmuButton(
                             title: "Google Maps",
                             emphasis: ButtonEmphasis.secondary,
-                            onTap: () {},
+                            onTap: () {
+                              final lng = mensaModel.location.longitude;
+                              final lat = mensaModel.location.latitude;
+                              LmuUrlLauncher.launchWebsite(
+                                context: context,
+                                url:
+                                    "https://www.google.com/maps/search/?api=1&query=$lat,$lng",
+                                mode: LmuUrlLauncherMode.externalApplication,
+                              );
+                            },
                           ),
                           const SizedBox(width: LmuSizes.mediumSmall),
                           LmuButton(
-                            title: "Teilen",
+                            title: localizations.share,
                             emphasis: ButtonEmphasis.secondary,
                             onTap: () {},
                           )
