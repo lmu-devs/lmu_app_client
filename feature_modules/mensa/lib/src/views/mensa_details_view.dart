@@ -17,9 +17,11 @@ class MensaDetailsView extends StatelessWidget {
   const MensaDetailsView({
     super.key,
     required this.mensaModel,
+    required this.currentDayOfWeek,
   });
 
   final MensaModel mensaModel;
+  final int currentDayOfWeek;
 
   @override
   Widget build(BuildContext context) {
@@ -117,6 +119,7 @@ class MensaDetailsView extends StatelessWidget {
                       } else if (state is MensaMenuLoadSuccess) {
                         return MensaMenuContentView(
                           mensaMenuModels: state.mensaMenuModels,
+                          currentDayOfWeek: currentDayOfWeek,
                         );
                       }
                       return const MensaMenuErrorView();

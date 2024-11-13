@@ -93,9 +93,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
       return mapStyleDark;
     }
 
-    return MediaQuery.of(context).platformBrightness == Brightness.light
-        ? mapStyleLight
-        : mapStyleDark;
+    return MediaQuery.of(context).platformBrightness == Brightness.light ? mapStyleLight : mapStyleDark;
   }
 
   @override

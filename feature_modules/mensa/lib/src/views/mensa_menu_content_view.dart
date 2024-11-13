@@ -7,9 +7,11 @@ class MensaMenuContentView extends StatelessWidget {
   const MensaMenuContentView({
     Key? key,
     required this.mensaMenuModels,
+    required this.currentDayOfWeek,
   }) : super(key: key);
 
   final List<MensaMenuWeekModel> mensaMenuModels;
+  final int currentDayOfWeek;
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +19,16 @@ class MensaMenuContentView extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       padding: EdgeInsets.zero,
-      itemCount: mensaMenuModels.first.mensaMenuDayModels.first.dishModels.length,
+      itemCount: mensaMenuModels.first.mensaMenuDayModels[currentDayOfWeek - 1].dishModels.length,
       itemBuilder: (context, index) => Padding(
         padding: const EdgeInsets.only(bottom: LmuSizes.mediumSmall),
         child: DishTile(
-          dishType: mensaMenuModels.first.mensaMenuDayModels.first.dishModels[index].dishType,
-          title: mensaMenuModels.first.mensaMenuDayModels.first.dishModels[index].name,
-          priceSimple: mensaMenuModels.first.mensaMenuDayModels.first.dishModels[index].priceSimple,
+          dishType: mensaMenuModels.first.mensaMenuDayModels[currentDayOfWeek - 1].dishModels[index].dishType,
+          title: mensaMenuModels.first.mensaMenuDayModels[currentDayOfWeek - 1].dishModels[index].name,
+          priceSimple: mensaMenuModels.first.mensaMenuDayModels[currentDayOfWeek - 1].dishModels[index].priceSimple,
           isLiked: false,
-          likeCount: mensaMenuModels.first.mensaMenuDayModels.first.dishModels[index].ratingModel.likeCount,
+          likeCount:
+              mensaMenuModels.first.mensaMenuDayModels[currentDayOfWeek - 1].dishModels[index].ratingModel.likeCount,
           onFavoriteTap: () {},
         ),
       ),

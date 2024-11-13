@@ -4,6 +4,8 @@ import '../bloc/mensa_menu_cubit/mensa_menu_cubit.dart';
 import '../repository/api/api.dart';
 import '../repository/mensa_repository.dart';
 
+import '../utils/get_calendar_week.dart';
+import '../utils/mensa_day.dart';
 import '../views/mensa_details_view.dart';
 
 class MensaDetailsPage extends StatelessWidget {
@@ -20,17 +22,20 @@ class MensaDetailsPage extends StatelessWidget {
       mensaApiClient: MensaApiClient(),
     );
 
+    MensaDay today = MensaDay.now();
+
     return BlocProvider<MensaMenuCubit>(
       create: (context) => MensaMenuCubit(
         mensaRepository: mensaRepository,
       )..loadMensaMenuData(
           mensaModel.canteenId,
-          2024,
-          45.toString(),
+          today.year,
+          getCalendarWeek(today).toString(),
           true,
         ),
       child: MensaDetailsView(
         mensaModel: mensaModel,
+        currentDayOfWeek: today.weekday,
       ),
     );
   }
