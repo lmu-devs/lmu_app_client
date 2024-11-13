@@ -1,7 +1,9 @@
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:super_cupertino_navigation_bar/super_cupertino_navigation_bar.dart';
+import 'package:super_cupertino_navigation_bar/super_cupertino_navigation_bar.dart' hide SuperScaffold;
+
+import 'test.dart';
 
 class LmuScaffoldWithAppBar extends StatelessWidget {
   const LmuScaffoldWithAppBar({
@@ -55,7 +57,7 @@ class LmuScaffoldWithAppBar extends StatelessWidget {
             textStyle: largeTitleStyle,
             actions: [if (largeTitleTrailingWidget != null) largeTitleTrailingWidget!],
           ),
-          backgroundColor: neutralColors.backgroundColors.base,
+          backgroundColor: neutralColors.backgroundColors.base.withAlpha(200),
           height: 54, // Adjust for different heights
           actions: trailingWidget != null
               ? Row(
@@ -88,7 +90,6 @@ class LmuScaffoldWithAppBar extends StatelessWidget {
               : const SizedBox.shrink(),
           searchBar: SuperSearchBar(
             enabled: false,
-            resultBehavior: SearchBarResultBehavior.neverVisible,
           ),
         ),
         body: body,
