@@ -72,7 +72,11 @@ class DishTile extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        LmuText.bodySmall(likeCount.toString()),
+                        LmuText.bodyXSmall(
+                          likeCount.toString(),
+                          color: context
+                              .colors.neutralColors.textColors.weakColors.base,
+                        ),
                         const SizedBox(width: LmuSizes.small),
                         GestureDetector(
                           onTap: onFavoriteTap,
@@ -83,9 +87,10 @@ class DishTile extends StatelessWidget {
                     const SizedBox(
                       height: LmuSizes.small,
                     ),
-                    LmuText.bodySmall(
+                    LmuText.bodyXSmall(
                       priceSimple,
-                      weight: FontWeight.w300,
+                      color: context
+                          .colors.neutralColors.textColors.weakColors.base,
                     ),
                   ],
                 ),

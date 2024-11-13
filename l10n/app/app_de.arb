@@ -1,5 +1,11 @@
 {
   "@@locale": "de",
   "@@context": "AppWide",
-  "appTitle": "Munich Students"
+  "appTitle": "Munich Students",
+  
+  "monday": "Montag",
+  "tuesday": "Dienstag",
+  "wednesday": "Mittwoch",
+  "thursday": "Donnerstag",
+  "friday": "Freitag"
 }

@@ -31,6 +31,7 @@ class MensaDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final localizations = context.locals.canteen;
+    final appLocalizations = context.locals.app;
 
     final openingHours = mensaModel.openingHours;
     final mensaStatus = openingHours.mensaStatus;
@@ -39,7 +40,10 @@ class MensaDetailsView extends StatelessWidget {
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
       body: CustomScrollView(
         slivers: [
-          _AppBarWithImage(mensaModel: mensaModel, colors: colors, localizations: localizations),
+          _AppBarWithImage(
+              mensaModel: mensaModel,
+              colors: colors,
+              localizations: localizations),
           SliverToBoxAdapter(
             child: Column(
               children: [
@@ -64,7 +68,8 @@ class MensaDetailsView extends StatelessWidget {
                       Row(
                         children: [
                           LmuButton(
-                            title: "${mensaModel.ratingModel.likeCount.formattedLikes} Likes",
+                            title:
+                                "${mensaModel.ratingModel.likeCount.formattedLikes} Likes",
                             emphasis: ButtonEmphasis.secondary,
                             onTap: () {},
                           ),
@@ -87,7 +92,11 @@ class MensaDetailsView extends StatelessWidget {
                         subtitle: mensaModel.location.address,
                         hasHorizontalPadding: false,
                       ),
-                      Divider(thickness: .5, height: 0, color: colors.neutralColors.borderColors.seperatorLight),
+                      Divider(
+                          thickness: .5,
+                          height: 0,
+                          color:
+                              colors.neutralColors.borderColors.seperatorLight),
                       LmuListDropdown(
                         title: "Heute geschlossen",
                         titleColor: mensaStatus.textColor(colors),
@@ -98,14 +107,14 @@ class MensaDetailsView extends StatelessWidget {
 
                           return weekday - 1 == index
                               ? LmuListItem.base(
-                                  title: e.day, // e.day.mapToDay(localizations),
+                                  title: e.mapToDay(appLocalizations),
                                   hasVerticalPadding: false,
                                   hasHorizontalPadding: false,
                                   trailingTitle:
                                       '${e.startTime.substring(0, e.startTime.length - 3)} - ${e.endTime.substring(0, e.endTime.length - 3)}',
                                 )
                               : LmuListItem.base(
-                                  subtitle: e.day, //e.day.mapToDay(localizations),
+                                  subtitle: e.mapToDay(appLocalizations),
                                   hasVerticalPadding: false,
                                   hasHorizontalPadding: false,
                                   trailingSubtitle:
@@ -184,7 +193,8 @@ class _AppBarWithImage extends StatelessWidget {
       ),
       leading: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: LmuSizes.medium, top: LmuSizes.medium),
+          padding: const EdgeInsets.only(
+              left: LmuSizes.medium, top: LmuSizes.medium),
           child: GestureDetector(
             onTap: () {
               Navigator.of(context).pop();
@@ -199,7 +209,8 @@ class _AppBarWithImage extends StatelessWidget {
               child: LmuIcon(
                 icon: Icons.arrow_back,
                 size: LmuIconSizes.medium,
-                color: context.colors.neutralColors.textColors.strongColors.base,
+                color:
+                    context.colors.neutralColors.textColors.strongColors.base,
               ),
             ),
           ),
@@ -213,7 +224,8 @@ class _AppBarWithImage extends StatelessWidget {
             emphasis: ButtonEmphasis.secondary,
             onTap: () async {
               final tasteProfileService = GetIt.I.get<TasteProfileService>();
-              final saveModel = await tasteProfileService.loadTasteProfileState();
+              final saveModel =
+                  await tasteProfileService.loadTasteProfileState();
               if (context.mounted) {
                 LmuBottomSheet.showExtended(
                   context,
@@ -323,7 +335,9 @@ class ImageAreaState extends State<ImageArea> {
                             height: LmuSizes.mediumSmall,
                             width: LmuSizes.mediumSmall,
                             decoration: BoxDecoration(
-                              color: currentPage == index ? Colors.white : Colors.white.withOpacity(0.5),
+                              color: currentPage == index
+                                  ? Colors.white
+                                  : Colors.white.withOpacity(0.5),
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),

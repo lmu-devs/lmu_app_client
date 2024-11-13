@@ -12,6 +12,26 @@ enum MensaStatus {
   closingSoon,
 }
 
+// Add the new extension for day mapping
+extension MensaOpeningHoursExtension on MensaOpeningHours {
+  String mapToDay(AppLocalizations localizations) {
+    switch (day) {
+      case "MONDAY":
+        return localizations.monday;
+      case "TUESDAY":
+        return localizations.tuesday;
+      case "WEDNESDAY":
+        return localizations.wednesday;
+      case "THURSDAY":
+        return localizations.thursday;
+      case "FRIDAY":
+        return localizations.friday;
+      default:
+        return day;
+    }
+  }
+}
+
 extension OpeningHoursExtension on List<MensaOpeningHours> {
   MensaStatus get mensaStatus {
     final now = DateTime.now();

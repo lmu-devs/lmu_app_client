@@ -18,7 +18,7 @@ class MensaMenuContentView extends StatelessWidget {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.zero,
+      padding: const EdgeInsets.all(LmuSizes.mediumLarge),
       itemCount: mensaMenuModels.first.mensaMenuDayModels[currentDayOfWeek - 1].dishModels.length,
       itemBuilder: (context, index) => Padding(
         padding: const EdgeInsets.only(bottom: LmuSizes.mediumSmall),

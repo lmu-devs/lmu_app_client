@@ -113,26 +113,6 @@
   "retry": "Retry",
   "@retry": {
     "description": "Retry"
-  },
-  "monday": "Monday",
-  "@monday": {
-    "description": "Monday"
-  },
-  "tuesday": "Tuesday",
-  "@tuesday": {
-    "description": "Tuesday"
-  },
-  "wednesday": "Wednesday",
-  "@wednesday": {
-    "description": "Wednesday"
-  },
-  "thursday": "Thursday",
-  "@thursday": {
-    "description": "Thursday"
-  },
-  "friday": "Friday",
-  "@friday": {
-    "description": "Friday"
   }
 
 }
