@@ -7,13 +7,13 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../extensions/likes_formatter_extension.dart';
-import '../extensions/opening_hours_extensions.dart';
-import '../repository/api/api.dart';
-import '../routes/mensa_routes.dart';
-import '../services/mensa_user_preferences_service.dart';
-import 'mensa_tag.dart';
-import 'star_icon.dart';
+import '../../extensions/likes_formatter_extension.dart';
+import '../../extensions/opening_hours_extensions.dart';
+import '../../repository/api/api.dart';
+import '../../routes/mensa_routes.dart';
+import '../../services/mensa_user_preferences_service.dart';
+import '../mensa_tag.dart';
+import '../star_icon.dart';
 
 class MensaOverviewTile extends StatelessWidget {
   const MensaOverviewTile({
@@ -51,7 +51,7 @@ class MensaOverviewTile extends StatelessWidget {
     final imageUrl = mensaModel.images.isNotEmpty ? mensaModel.images.first.url : null;
 
     return Padding(
-      padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.none : LmuSizes.mediumSmall),
+      padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.none : LmuSizes.medium),
       child: GestureDetector(
         onTap: () => MensaDetailsRoute(mensaModel).go(context),
         child: Container(

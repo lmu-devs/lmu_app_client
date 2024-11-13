@@ -1,8 +1,8 @@
+import 'package:core/components.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:core/components.dart';
 
-import '../widgets.dart';
+import '../../widgets.dart';
 
 class MensaOverviewTileLoading extends StatelessWidget {
   const MensaOverviewTileLoading({super.key, this.hasLargeImage = false});
@@ -20,4 +20,3 @@ class MensaOverviewTileLoading extends StatelessWidget {
     );
   }
 }
-
