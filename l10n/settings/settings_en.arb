@@ -35,21 +35,21 @@
   "@contact": {
     "description": "Get in touch"
   },
-  "donate": "Donate",
+  "donate": "OnlyFans",
   "@donate": {
-    "description": "Donate"
+    "description": "Title for list item to donate"
   },
   "dataPrivacy": "Data Privacy",
   "@dataPrivacy": {
-    "description": "Data Privacy"
+    "description": "Title for list item to show data privacy"
   },
   "imprint": "Imprint",
   "@imprint": {
-    "description": "Imprint"
+    "description": "Title for list item to show imprint"
   },
   "licenses": "Licenses",
   "@licenses": {
-    "description": "Licenses"
+    "description": "Title for list item to show licenses"
   },
   "suggestFeature": "Suggest a feature",
   "@suggestFeature": {
