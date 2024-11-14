@@ -2,7 +2,7 @@
   "@@locale": "en",
   "@@context": "Canteen",
 
-  "tabTitle": "Meals",
+  "tabTitle": "Food",
   "@tabTitle": {
     "description": "The title of the meals tab"
   },
@@ -113,6 +113,24 @@
   "retry": "Retry",
   "@retry": {
     "description": "Retry"
+  },
+  "share": "Share",
+  "@share": {
+    "description": "Share button"
+  },
+  "closingSoonDetailed": "Today open until {time}",
+  "@closingSoonDetailed": {
+    "description": "The state of closing soon",
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "10 PM"
+      }
+    }
+  },
+  "closedDetailed": "Currently closed",
+  "@closedDetailed": {
+    "description": "The state of being closed"
   }
 
 }

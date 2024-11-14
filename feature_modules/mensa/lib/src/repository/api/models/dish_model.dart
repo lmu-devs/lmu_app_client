@@ -7,6 +7,7 @@ part 'dish_model.g.dart';
 
 @JsonSerializable()
 class DishModel extends Equatable {
+  final int id;
   final String name;
   @JsonKey(name: 'dish_type')
   final String dishType;
@@ -18,6 +19,7 @@ class DishModel extends Equatable {
   final List<PriceModel> prices;
 
   const DishModel({
+    required this.id,
     required this.name,
     required this.dishType,
     required this.ratingModel,

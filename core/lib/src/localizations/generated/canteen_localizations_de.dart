@@ -83,4 +83,15 @@ class CanteenLocalizationsDe extends CanteenLocalizations {
 
   @override
   String get retry => 'Neu laden';
+
+  @override
+  String get share => 'Teilen';
+
+  @override
+  String closingSoonDetailed(String time) {
+    return 'Heute geöffnet bis $time';
+  }
+
+  @override
+  String get closedDetailed => 'Gerade geschlossen';
 }

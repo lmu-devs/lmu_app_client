@@ -5,22 +5,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-
 import '../bloc/bloc.dart';
 import '../services/mensa_user_preferences_service.dart';
 import '../services/services.dart';
 import '../views/views.dart';
 import 'taste_profile_page.dart';
 
-
 class MensaMainPage extends StatelessWidget {
   const MensaMainPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    FlutterNativeSplash.remove();
+    FlutterNativeSplash.remove(); // Reorder splash screen
+    final localization = context.locals.canteen;
     return LmuScaffoldWithAppBar(
-      largeTitle: "Mensa",
+      largeTitle: localization.tabTitle,
       largeTitleTrailingWidget: LmuButton(
         title: context.locals.canteen.myTaste,
         emphasis: ButtonEmphasis.secondary,
@@ -44,13 +43,13 @@ class MensaMainPage extends StatelessWidget {
         builder: (context, state) {
           if (state is MensaLoadSuccess) {
             final initialSortOption = GetIt.I.get<MensaUserPreferencesService>().initialSortOption;
-            return MensaContentView(
+            return MensaOverviewContentView(
               mensaModels: state.mensaModels,
               initalSortOption: initialSortOption,
             );
           }
 
-          return const MensaLoadingView();
+          return const MensaOverviewLoadingView();
         },
       ),
     );

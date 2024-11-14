@@ -13,7 +13,8 @@ PriceModel _$PriceModelFromJson(Map<String, dynamic> json) => PriceModel(
       unit: json['unit'] as String,
     );
 
-Map<String, dynamic> _$PriceModelToJson(PriceModel instance) => <String, dynamic>{
+Map<String, dynamic> _$PriceModelToJson(PriceModel instance) =>
+    <String, dynamic>{
       'category': instance.category,
       'base_price': instance.basePrice,
       'price_per_unit': instance.pricePerUnit,

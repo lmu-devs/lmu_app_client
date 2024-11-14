@@ -11,15 +11,14 @@ extension LocalizationExtension on BuildContext {
 }
 
 class LmuLocalizations {
-  final BuildContext context;
+  final BuildContext _context;
 
-  LmuLocalizations(this.context);
+  const LmuLocalizations(this._context);
 
-
-  AppLocalizations get app => AppLocalizations.of(context)!;
-  CanteenLocalizations get canteen => CanteenLocalizations.of(context)!;
-  ExploreLocalizations get explore => ExploreLocalizations.of(context)!;
-  SettingsLocalizations get settings => SettingsLocalizations.of(context)!;
+  AppLocalizations get app => AppLocalizations.of(_context)!;
+  CanteenLocalizations get canteen => CanteenLocalizations.of(_context)!;
+  ExploreLocalizations get explore => ExploreLocalizations.of(_context)!;
+  SettingsLocalizations get settings => SettingsLocalizations.of(_context)!;
   // Add other localizations
 
   /// List of all supported localizations delegates

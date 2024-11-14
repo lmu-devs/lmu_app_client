@@ -7,12 +7,13 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../extensions/opening_hours_extensions.dart';
-import '../repository/api/api.dart';
-import '../routes/mensa_routes.dart';
-import '../services/mensa_user_preferences_service.dart';
-import 'mensa_tag.dart';
-import 'star_icon.dart';
+import '../../extensions/likes_formatter_extension.dart';
+import '../../extensions/opening_hours_extensions.dart';
+import '../../routes/mensa_routes.dart';
+import '../../services/mensa_user_preferences_service.dart';
+import '../../repository/api/api.dart';
+import '../mensa_tag.dart';
+import '../star_icon.dart';
 
 class MensaOverviewTile extends StatelessWidget {
   const MensaOverviewTile({
@@ -42,15 +43,18 @@ class MensaOverviewTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = context.locals.app;
     final name = mensaModel.name;
     final type = mensaModel.type;
     final openingHours = mensaModel.openingHours;
     final status = openingHours.mensaStatus;
     final likeCount = mensaModel.ratingModel.likeCount;
-    final imageUrl = mensaModel.images.isNotEmpty ? mensaModel.images.first.url : null;
+    final imageUrl =
+        mensaModel.images.isNotEmpty ? mensaModel.images.first.url : null;
 
     return Padding(
-      padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.none : LmuSizes.mediumSmall),
+      padding:
+          EdgeInsets.only(bottom: hasDivider ? LmuSizes.none : LmuSizes.medium),
       child: GestureDetector(
         onTap: () => MensaDetailsRoute(mensaModel).go(context),
         child: Container(
@@ -107,7 +111,8 @@ class MensaOverviewTile extends StatelessWidget {
                                 LmuText.bodyXSmall(
                                   likeCount.formattedLikes,
                                   weight: FontWeight.w400,
-                                  color: context.colors.neutralColors.textColors.weakColors.base,
+                                  color: context.colors.neutralColors.textColors
+                                      .weakColors.base,
                                 ),
                                 const SizedBox(width: LmuSizes.small),
                                 AnimatedSwitcher(
@@ -116,10 +121,13 @@ class MensaOverviewTile extends StatelessWidget {
                                     return FadeTransition(
                                       opacity: animation,
                                       child: ScaleTransition(
-                                        scale: Tween<double>(begin: 0.5, end: 1).animate(
+                                        scale: Tween<double>(begin: 0.5, end: 1)
+                                            .animate(
                                           CurvedAnimation(
                                             parent: animation,
-                                            curve: isFavorite ? Curves.elasticOut : Curves.easeOutCirc,
+                                            curve: isFavorite
+                                                ? Curves.elasticOut
+                                                : Curves.easeOutCirc,
                                           ),
                                         ),
                                         child: child,
@@ -139,13 +147,15 @@ class MensaOverviewTile extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             LmuText.body(
-                              status.text(context.locals.canteen, openingHours: openingHours),
+                              status.text(context.locals.canteen,
+                                  openingHours: openingHours),
                               color: status.textColor(context.colors),
                             ),
                             if (distance != null)
                               LmuText.body(
                                 " • $distance",
-                                color: context.colors.neutralColors.textColors.mediumColors.base,
+                                color: context.colors.neutralColors.textColors
+                                    .mediumColors.base,
                               ),
                           ],
                         )
@@ -160,7 +170,8 @@ class MensaOverviewTile extends StatelessWidget {
                     child: GestureDetector(
                       behavior: HitTestBehavior.opaque,
                       onTap: () {
-                        final userPreferencesService = GetIt.I.get<MensaUserPreferencesService>();
+                        final userPreferencesService =
+                            GetIt.I.get<MensaUserPreferencesService>();
                         final id = mensaModel.canteenId;
 
                         LmuVibrations.vibrate(type: VibrationType.secondary);
@@ -169,8 +180,8 @@ class MensaOverviewTile extends StatelessWidget {
                           LmuToast.show(
                             context: context,
                             type: ToastType.success,
-                            message: 'Favorit entfernt',
-                            actionText: 'Rückgängig',
+                            message: localizations.favoriteRemoved,
+                            actionText: localizations.undo,
                             onActionPressed: () {
                               userPreferencesService.toggleFavoriteMensaId(id);
                             },
@@ -179,7 +190,7 @@ class MensaOverviewTile extends StatelessWidget {
                           LmuToast.show(
                             context: context,
                             type: ToastType.success,
-                            message: 'Favorit hinzugefügt',
+                            message: localizations.favoriteAdded,
                           );
                         }
 
@@ -206,41 +217,5 @@ class MensaOverviewTile extends StatelessWidget {
     Random random = Random();
     double randomDouble = min + (max - min) * random.nextDouble();
     return double.parse(randomDouble.toStringAsFixed(1));
-  }
-}
-
-extension LikeFormatter on int {
-  String get formattedLikes {
-    if (this >= 1000) {
-      return "${(this / 1000).toStringAsFixed(1)}K";
-    }
-    return toString();
-  }
-}
-
-extension MensaStatusExtension on MensaStatus {
-  Color textColor(LmuColors colors) {
-    switch (this) {
-      case MensaStatus.open:
-        return colors.successColors.textColors.strongColors.base;
-      case MensaStatus.closed:
-        return colors.neutralColors.textColors.mediumColors.base;
-      case MensaStatus.closingSoon:
-        return colors.warningColors.textColors.strongColors.base;
-    }
-  }
-
-  String text(
-    CanteenLocalizations localizations, {
-    required List<MensaOpeningHours> openingHours,
-  }) {
-    switch (this) {
-      case MensaStatus.open:
-        return localizations.openNow;
-      case MensaStatus.closed:
-        return localizations.closed;
-      case MensaStatus.closingSoon:
-        return localizations.closingSoon(openingHours.closingTime);
-    }
   }
 }

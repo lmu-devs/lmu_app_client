@@ -4,9 +4,9 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../repository/api/models/mensa_model.dart';
-import '../services/mensa_user_preferences_service.dart';
-import 'widgets.dart';
+import '../../repository/api/models/mensa_model.dart';
+import '../../services/mensa_user_preferences_service.dart';
+import '../widgets.dart';
 
 class MensaOverivewFavoriteSection extends StatefulWidget {
   const MensaOverivewFavoriteSection({
@@ -100,15 +100,11 @@ class _MensaOverviewTileAnimationWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fadeAnimation = CurvedAnimation(
-        parent: animation,
-        curve: LmuAnimations.gentle,
-        reverseCurve: Curves.easeInCubic);
+    final fadeAnimation =
+        CurvedAnimation(parent: animation, curve: LmuAnimations.gentle, reverseCurve: Curves.easeInCubic);
 
-    final sizeAnimation = CurvedAnimation(
-        parent: animation,
-        curve: LmuAnimations.gentle,
-        reverseCurve: Curves.easeInCubic);
+    final sizeAnimation =
+        CurvedAnimation(parent: animation, curve: LmuAnimations.gentle, reverseCurve: Curves.easeInCubic);
 
     return Container(
       clipBehavior: Clip.antiAlias,

@@ -7,15 +7,20 @@ part of 'dish_model.dart';
 // **************************************************************************
 
 DishModel _$DishModelFromJson(Map<String, dynamic> json) => DishModel(
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
       dishType: json['dish_type'] as String,
       ratingModel: RatingModel.fromJson(json['rating'] as Map<String, dynamic>),
       priceSimple: json['price_simple'] as String,
-      labels: (json['labels'] as List<dynamic>).map((e) => e as String).toList(),
-      prices: (json['prices'] as List<dynamic>).map((e) => PriceModel.fromJson(e as Map<String, dynamic>)).toList(),
+      labels:
+          (json['labels'] as List<dynamic>).map((e) => e as String).toList(),
+      prices: (json['prices'] as List<dynamic>)
+          .map((e) => PriceModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$DishModelToJson(DishModel instance) => <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'dish_type': instance.dishType,
       'rating': instance.ratingModel,
