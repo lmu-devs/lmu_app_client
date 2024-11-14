@@ -28,6 +28,7 @@ abstract class MensaRepository {
   Future<void> setSortOption(SortOption mensaUserPreferences);
 }
 
+/// MensaRepository implementation for fetching mensa data from the API
 class ConnectedMensaRepository implements MensaRepository {
   ConnectedMensaRepository({
     required this.mensaApiClient,
@@ -35,7 +36,7 @@ class ConnectedMensaRepository implements MensaRepository {
 
   final MensaApiClient mensaApiClient;
 
-  static const String _mensaModelsCacheKey = 'mena_models_cache_key';
+  static const String _mensaModelsCacheKey = 'mensa_models_cache_key';
   static const String _mensaModelCacheDateKey = 'mensa_models_cache_date_key';
   static const Duration _mensaModelsCacheDuration = Duration(seconds: 30);
 
@@ -45,6 +46,7 @@ class ConnectedMensaRepository implements MensaRepository {
 
   static const String _mensaSortOptionKey = 'mensa_user_preferences';
 
+  /// Function to fetch mensa models from the API, [forceRefresh] parameter can be used to ignore the cache
   @override
   Future<List<MensaModel>> getMensaModels({bool forceRefresh = false}) async {
     final prefs = await SharedPreferences.getInstance();
@@ -76,6 +78,7 @@ class ConnectedMensaRepository implements MensaRepository {
     }
   }
 
+  /// MensaRepository implementation for fetching favorite mensa ids from the cache
   @override
   Future<List<String>?> getFavoriteMensaIds() async {
     final prefs = await SharedPreferences.getInstance();

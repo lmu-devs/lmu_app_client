@@ -16,9 +16,10 @@ class MensaMainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FlutterNativeSplash.remove();
+    FlutterNativeSplash.remove(); // Reorder splash screen
+    final localization = context.locals.canteen;
     return LmuScaffoldWithAppBar(
-      largeTitle: "Mensa",
+      largeTitle: localization.tabTitle,
       largeTitleTrailingWidget: LmuButton(
         title: context.locals.canteen.myTaste,
         emphasis: ButtonEmphasis.secondary,

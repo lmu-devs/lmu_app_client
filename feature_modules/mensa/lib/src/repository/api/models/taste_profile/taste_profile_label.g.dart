@@ -6,7 +6,8 @@ part of 'taste_profile_label.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-TasteProfileLabel _$TasteProfileLabelFromJson(Map<String, dynamic> json) => TasteProfileLabel(
+TasteProfileLabel _$TasteProfileLabelFromJson(Map<String, dynamic> json) =>
+    TasteProfileLabel(
       enumCategory: json['enum_category'] as String,
       name: json['name'] as String,
       items: (json['items'] as List<dynamic>)
@@ -14,7 +15,8 @@ TasteProfileLabel _$TasteProfileLabelFromJson(Map<String, dynamic> json) => Tast
           .toList(),
     );
 
-Map<String, dynamic> _$TasteProfileLabelToJson(TasteProfileLabel instance) => <String, dynamic>{
+Map<String, dynamic> _$TasteProfileLabelToJson(TasteProfileLabel instance) =>
+    <String, dynamic>{
       'enum_category': instance.enumCategory,
       'name': instance.name,
       'items': instance.items,

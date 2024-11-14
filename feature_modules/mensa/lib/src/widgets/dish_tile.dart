@@ -2,28 +2,23 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mensa/src/utils/get_dish_type_emoji.dart';
 
+import '../repository/api/models/dish_model.dart';
+import '../services/dish_user_preferences_service.dart';
 import 'widgets.dart';
 
 class DishTile extends StatelessWidget {
   const DishTile({
     super.key,
-    required this.dishType,
-    required this.title,
-    required this.priceSimple,
-    required this.isLiked,
-    required this.likeCount,
+    required this.dishModel,
     required this.onFavoriteTap,
     this.onTap,
   });
 
-  final String dishType;
-  final String title;
-  final String priceSimple;
+  final DishModel dishModel;
   final void Function()? onTap;
-  final bool isLiked;
-  final int likeCount;
   final void Function()? onFavoriteTap;
 
   @override
@@ -39,8 +34,7 @@ class DishTile extends StatelessWidget {
         padding: const EdgeInsets.all(
           LmuSizes.mediumLarge,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,14 +44,14 @@ class DishTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       LmuText.body(
-                        getDishTypeEmoji(dishType),
+                        getDishTypeEmoji(dishModel.dishType),
                       ),
                       const SizedBox(
                         width: LmuSizes.medium,
                       ),
                       Flexible(
                         child: LmuText.body(
-                          title,
+                          dishModel.name,
                           weight: FontWeight.w600,
                         ),
                       ),
@@ -73,14 +67,14 @@ class DishTile extends StatelessWidget {
                     Row(
                       children: [
                         LmuText.bodyXSmall(
-                          likeCount.toString(),
+                          dishModel.ratingModel.likeCount.toString(),
                           color: context
                               .colors.neutralColors.textColors.weakColors.base,
                         ),
                         const SizedBox(width: LmuSizes.small),
                         GestureDetector(
                           onTap: onFavoriteTap,
-                          child: StarIcon(isActive: isLiked),
+                          child: StarIcon(isActive: dishModel.ratingModel.isLiked),
                         ),
                       ],
                     ),
@@ -88,7 +82,7 @@ class DishTile extends StatelessWidget {
                       height: LmuSizes.small,
                     ),
                     LmuText.bodyXSmall(
-                      priceSimple,
+                      dishModel.priceSimple,
                       color: context
                           .colors.neutralColors.textColors.weakColors.base,
                     ),
@@ -96,8 +90,44 @@ class DishTile extends StatelessWidget {
                 ),
               ],
             ),
-
-            /// Add Allergens
+            Positioned(
+                    right: 0,
+                    bottom: LmuSizes.mediumLarge,
+                    top: LmuSizes.mediumSmall,
+                    child: Container(
+                      color: Colors.yellow,
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          final userPreferencesService = GetIt.I.get<DishUserPreferencesService>();
+                          final id = dishModel.id;
+                      
+                          LmuVibrations.vibrate(type: VibrationType.secondary);
+                      
+                          if (dishModel.ratingModel.isLiked) {
+                            LmuToast.show(
+                              context: context,
+                              type: ToastType.success,
+                              message: 'Favorit entfernt',
+                              actionText: 'Rückgängig',
+                              onActionPressed: () {
+                                userPreferencesService.toggleFavoriteDishId(id);
+                              },
+                            );
+                          } else {
+                            LmuToast.show(
+                              context: context,
+                              type: ToastType.success,
+                              message: 'Favorit hinzugefügt',
+                            );
+                          }
+                      
+                          userPreferencesService.toggleFavoriteDishId(id);
+                        },
+                        child: const SizedBox(width: 64),
+                      ),
+                    ),
+                  ),
           ],
         ),
       ),

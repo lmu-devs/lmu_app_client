@@ -5,6 +5,7 @@ import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 
 import '../bloc/mensa_menu_cubit/mensa_menu_cubit.dart';
@@ -204,20 +205,20 @@ class _AppBarWithImage extends StatelessWidget {
       leading: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(
-              left: LmuSizes.medium, top: LmuSizes.medium),
+              left: LmuSizes.medium, top: LmuSizes.medium, bottom: LmuSizes.xsmall),
           child: GestureDetector(
             onTap: () {
               Navigator.of(context).pop();
             },
             child: Container(
-              width: 36,
-              height: 36,
+              width: LmuSizes.large,
+              height: LmuSizes.large,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: context.colors.neutralColors.backgroundColors.tile,
               ),
               child: LmuIcon(
-                icon: Icons.arrow_back,
+                icon: LucideIcons.arrow_left,
                 size: LmuIconSizes.medium,
                 color:
                     context.colors.neutralColors.textColors.strongColors.base,

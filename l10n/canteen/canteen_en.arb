@@ -2,7 +2,7 @@
   "@@locale": "en",
   "@@context": "Canteen",
 
-  "tabTitle": "Meals",
+  "tabTitle": "Food",
   "@tabTitle": {
     "description": "The title of the meals tab"
   },

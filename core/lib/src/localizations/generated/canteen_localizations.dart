@@ -96,7 +96,7 @@ abstract class CanteenLocalizations {
   /// The title of the meals tab
   ///
   /// In en, this message translates to:
-  /// **'Meals'**
+  /// **'Food'**
   String get tabTitle;
 
   /// The state of being open

@@ -1,15 +1,26 @@
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class LmuBottomSheet {
   static void show(
     BuildContext context, {
     required Widget content,
   }) {
-    showModalBottomSheet(
+    showMaterialModalBottomSheet(
       context: context,
       useRootNavigator: true,
+      barrierColor: const Color.fromARGB(150, 0, 0, 0),
+      animationCurve: LmuAnimations.fastSmooth,
+      duration: const Duration(milliseconds: 400),
+      closeProgressThreshold: .9,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(LmuSizes.xlarge),
+          topRight: Radius.circular(LmuSizes.xlarge),
+        ),
+      ),
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
       builder: (_) {
         return LmuBottomSheetContent(content: content);
@@ -21,15 +32,24 @@ class LmuBottomSheet {
     BuildContext context, {
     required Widget content,
   }) {
-    showModalBottomSheet(
+    showBarModalBottomSheet(
       context: context,
       useRootNavigator: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(LmuSizes.mediumLarge),
+          topRight: Radius.circular(LmuSizes.mediumLarge),
+        ),
+      ),
+      bounce: true,
+      animationCurve: LmuAnimations.slowSmooth,
+      duration: const Duration(milliseconds: 500),
+      closeProgressThreshold: .9,
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
-      isScrollControlled: true,
-      useSafeArea: true,
-      builder: (_) {
-        return content;
-      },
+      builder: (context) => Padding(
+        padding: const EdgeInsets.only(),
+        child: content,
+      ),
     );
   }
 }

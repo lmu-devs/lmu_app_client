@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:mensa/src/repository/api/models/mensa_menu_week_model.dart';
 import 'package:mensa/src/widgets/dish_tile.dart';
 
+import '../repository/api/models/dish_model.dart';
+
 class MensaMenuContentView extends StatelessWidget {
   const MensaMenuContentView({
     Key? key,
@@ -15,23 +17,31 @@ class MensaMenuContentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int amountMensaDays = mensaMenuModels.first.mensaMenuDayModels.length; 
+    // TODO: Some canteens only have a menu for 4 days, so we need to check if the current day is within the range of the available days
+    // important: we need to map the food to the right day of the week
     return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.all(LmuSizes.mediumLarge),
-      itemCount: mensaMenuModels.first.mensaMenuDayModels[currentDayOfWeek - 1].dishModels.length,
-      itemBuilder: (context, index) => Padding(
-        padding: const EdgeInsets.only(bottom: LmuSizes.mediumSmall),
-        child: DishTile(
-          dishType: mensaMenuModels.first.mensaMenuDayModels[currentDayOfWeek - 1].dishModels[index].dishType,
-          title: mensaMenuModels.first.mensaMenuDayModels[currentDayOfWeek - 1].dishModels[index].name,
-          priceSimple: mensaMenuModels.first.mensaMenuDayModels[currentDayOfWeek - 1].dishModels[index].priceSimple,
-          isLiked: false,
-          likeCount:
-              mensaMenuModels.first.mensaMenuDayModels[currentDayOfWeek - 1].dishModels[index].ratingModel.likeCount,
-          onFavoriteTap: () {},
-        ),
-      ),
-    );
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        padding: const EdgeInsets.all(LmuSizes.mediumLarge),
+        itemCount: mensaMenuModels
+            .first.mensaMenuDayModels[currentDayOfWeek - 1].dishModels.length,
+        itemBuilder: (context, index) {
+          final DishModel dishModel = mensaMenuModels
+              .first.mensaMenuDayModels[currentDayOfWeek - 1].dishModels[index];
+
+          print(mensaMenuModels.first.mensaMenuDayModels.length);
+          print(currentDayOfWeek);
+          return Padding(
+            padding: const EdgeInsets.only(bottom: LmuSizes.mediumSmall),
+            child: DishTile(
+              dishModel: dishModel,
+              onTap: () {
+                print("Du geiler Hund");
+              },
+              onFavoriteTap: () {},
+            ),
+          );
+        });
   }
 }
