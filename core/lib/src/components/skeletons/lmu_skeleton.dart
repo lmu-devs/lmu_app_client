@@ -5,8 +5,8 @@ import 'package:core/themes.dart';
 class LmuSkeleton extends StatelessWidget {
   const LmuSkeleton({
     super.key,
-    required this.child,
     required this.context,
+    required this.child,
   });
   final BuildContext context;
   final Widget child;

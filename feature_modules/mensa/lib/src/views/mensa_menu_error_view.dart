@@ -6,7 +6,7 @@ class MensaMenuErrorView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text("ERROR"),
+      child: Text("ERROR"), //TODO: Add error message
     );
   }
 }

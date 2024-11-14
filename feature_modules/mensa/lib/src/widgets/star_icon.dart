@@ -10,16 +10,34 @@ class StarIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset(
-      "assets/star.svg",
-      semanticsLabel: 'Star',
-      package: "mensa",
-      width: LmuSizes.large,
-      colorFilter: ColorFilter.mode(
-        isActive
-            ? context.colors.warningColors.textColors.strongColors.base
-            : context.colors.neutralColors.backgroundColors.base,
-        BlendMode.srcIn,
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 500),
+      transitionBuilder: (child, animation) {
+        return FadeTransition(
+          opacity: animation,
+          child: ScaleTransition(
+            scale: Tween<double>(begin: 0.5, end: 1).animate(
+              CurvedAnimation(
+                parent: animation,
+                curve: isActive ? Curves.elasticOut : Curves.easeOutCirc,
+              ),
+            ),
+            child: child,
+          ),
+        );
+      },
+      child: SvgPicture.asset(
+        "assets/star.svg",
+        semanticsLabel: 'Star',
+        key: ValueKey(isActive),
+        package: "mensa",
+        width: LmuSizes.large,
+        colorFilter: ColorFilter.mode(
+          isActive
+              ? context.colors.warningColors.textColors.strongColors.base
+              : context.colors.neutralColors.backgroundColors.base,
+          BlendMode.srcIn,
+        ),
       ),
     );
   }

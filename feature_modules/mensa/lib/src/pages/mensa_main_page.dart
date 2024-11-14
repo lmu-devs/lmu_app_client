@@ -2,7 +2,6 @@ import 'package:core/components.dart';
 import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get_it/get_it.dart';
 
 import '../bloc/bloc.dart';
@@ -16,12 +15,9 @@ class MensaMainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FlutterNativeSplash.remove();
+    final localization = context.locals.canteen;
     return LmuScaffoldWithAppBar(
-      onRefresh: () {
-        GetIt.I.get<MensaCubit>().loadMensaData();
-      },
-      largeTitle: "Mensa",
+      largeTitle: localization.tabTitle,
       largeTitleTrailingWidget: LmuButton(
         title: context.locals.canteen.myTaste,
         emphasis: ButtonEmphasis.secondary,
@@ -45,13 +41,13 @@ class MensaMainPage extends StatelessWidget {
         builder: (context, state) {
           if (state is MensaLoadSuccess) {
             final initialSortOption = GetIt.I.get<MensaUserPreferencesService>().initialSortOption;
-            return MensaContentView(
+            return MensaOverviewContentView(
               mensaModels: state.mensaModels,
               initalSortOption: initialSortOption,
             );
           }
 
-          return const MensaLoadingView();
+          return const MensaOverviewLoadingView();
         },
       ),
     );
