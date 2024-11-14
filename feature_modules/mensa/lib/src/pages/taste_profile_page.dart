@@ -37,6 +37,8 @@ class TasteProfilePage extends StatelessWidget {
     final localizations = context.locals.canteen;
 
     return LmuScaffoldWithAppBar(
+      collapsedTitleHeight: 54,
+      stretch: false,
       largeTitle: localizations.myTaste,
       leadingWidget: GestureDetector(
         onTap: () => Navigator.of(context, rootNavigator: true).pop(),
@@ -106,7 +108,10 @@ class TasteProfilePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: LmuSizes.mediumSmall),
-          LmuText.body(localizations.myTasteDescription, color: context.colors.neutralColors.textColors.mediumColors.base,),
+          LmuText.body(
+            localizations.myTasteDescription,
+            color: context.colors.neutralColors.textColors.mediumColors.base,
+          ),
           const SizedBox(height: LmuSizes.xxlarge),
         ],
       ),

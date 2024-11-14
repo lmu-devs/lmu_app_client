@@ -2,16 +2,14 @@ import 'package:core/components.dart';
 import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-
+import 'package:get_it/get_it.dart';
 
 import '../bloc/bloc.dart';
 import '../services/mensa_user_preferences_service.dart';
 import '../services/services.dart';
 import '../views/views.dart';
 import 'taste_profile_page.dart';
-
 
 class MensaMainPage extends StatelessWidget {
   const MensaMainPage({super.key});
@@ -20,6 +18,9 @@ class MensaMainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     FlutterNativeSplash.remove();
     return LmuScaffoldWithAppBar(
+      onRefresh: () {
+        GetIt.I.get<MensaCubit>().loadMensaData();
+      },
       largeTitle: "Mensa",
       largeTitleTrailingWidget: LmuButton(
         title: context.locals.canteen.myTaste,
