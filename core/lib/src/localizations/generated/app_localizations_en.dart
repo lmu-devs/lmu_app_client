@@ -21,4 +21,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get friday => 'Friday';
+
+  @override
+  String get undo => 'Undo';
+
+  @override
+  String get reset => 'Reset';
+
+  @override
+  String get favoriteAdded => 'Favorite added';
+
+  @override
+  String get favoriteRemoved => 'Favorite removed';
 }

@@ -7,5 +7,9 @@
   "tuesday": "Dienstag",
   "wednesday": "Mittwoch",
   "thursday": "Donnerstag",
-  "friday": "Freitag"
+  "friday": "Freitag",
+  "undo": "Rückgängig",
+  "reset": "Zurücksetzen",
+  "favoriteAdded": "Favorit hinzugefügt",
+  "favoriteRemoved": "Favorit entfernt"
 }

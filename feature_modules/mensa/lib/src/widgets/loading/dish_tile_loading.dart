@@ -18,7 +18,7 @@ class DishTileLoading extends StatelessWidget {
         child: DishTile(
           dishModel: DishModel(
             id: 1,
-            name: BoneMock.words(3),
+            name: BoneMock.words(7),
             labels: const [],
             prices: const [],
             ratingModel: const RatingModel(likeCount: 0, isLiked: false),
@@ -26,6 +26,7 @@ class DishTileLoading extends StatelessWidget {
             priceSimple: "€€€",
           ),
           onFavoriteTap: () {},
+          isFavorite: false,
         ));
   }
 }

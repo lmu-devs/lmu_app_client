@@ -128,6 +128,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Friday'**
   String get friday;
+
+  /// Undo
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get undo;
+
+  /// Reset
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get reset;
+
+  /// Favorite added
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite added'**
+  String get favoriteAdded;
+
+  /// Favorite removed
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite removed'**
+  String get favoriteRemoved;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

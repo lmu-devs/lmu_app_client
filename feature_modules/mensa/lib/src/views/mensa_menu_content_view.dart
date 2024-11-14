@@ -1,9 +1,11 @@
 import 'package:core/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:mensa/src/repository/api/models/mensa_menu_week_model.dart';
-import 'package:mensa/src/widgets/dish_tile.dart';
+import 'package:get_it/get_it.dart';
 
+import '../repository/api/models/mensa_menu_week_model.dart';
+import '../widgets/dish_tile.dart';
 import '../repository/api/models/dish_model.dart';
+import '../services/mensa_user_preferences_service.dart';
 
 class MensaMenuContentView extends StatelessWidget {
   const MensaMenuContentView({
@@ -17,31 +19,39 @@ class MensaMenuContentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int amountMensaDays = mensaMenuModels.first.mensaMenuDayModels.length; 
-    // TODO: Some canteens only have a menu for 4 days, so we need to check if the current day is within the range of the available days
-    // important: we need to map the food to the right day of the week
-    return ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        padding: const EdgeInsets.all(LmuSizes.mediumLarge),
-        itemCount: mensaMenuModels
-            .first.mensaMenuDayModels[currentDayOfWeek - 1].dishModels.length,
-        itemBuilder: (context, index) {
-          final DishModel dishModel = mensaMenuModels
-              .first.mensaMenuDayModels[currentDayOfWeek - 1].dishModels[index];
+    final favoriteDishIdsNotifier =
+        GetIt.I.get<MensaUserPreferencesService>().favoriteDishIdsNotifier;
+    return ValueListenableBuilder(
+        valueListenable: favoriteDishIdsNotifier,
+        builder: (context, favoriteDishIds, _) {
+          return ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.all(LmuSizes.mediumLarge),
+              itemCount: mensaMenuModels.first
+                  .mensaMenuDayModels[currentDayOfWeek - 1].dishModels.length,
+              itemBuilder: (context, index) {
+                final isFavorite = favoriteDishIds.contains(
+                  mensaMenuModels.first.mensaMenuDayModels[currentDayOfWeek - 1]
+                      .dishModels[index].id
+                      .toString(),
+                );
 
-          print(mensaMenuModels.first.mensaMenuDayModels.length);
-          print(currentDayOfWeek);
-          return Padding(
-            padding: const EdgeInsets.only(bottom: LmuSizes.mediumSmall),
-            child: DishTile(
-              dishModel: dishModel,
-              onTap: () {
-                print("Du geiler Hund");
-              },
-              onFavoriteTap: () {},
-            ),
-          );
+                final DishModel dishModel = mensaMenuModels.first
+                    .mensaMenuDayModels[currentDayOfWeek - 1].dishModels[index];
+
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: LmuSizes.mediumSmall),
+                  child: DishTile(
+                    dishModel: dishModel,
+                    onTap: () {
+                      print("Du geiler Hund");
+                    },
+                    isFavorite: isFavorite,
+                    onFavoriteTap: () {},
+                  ),
+                );
+              });
         });
   }
 }

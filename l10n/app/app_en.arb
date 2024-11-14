@@ -25,5 +25,22 @@
   "friday": "Friday",
   "@friday": {
     "description": "Friday"
+  },
+  "undo": "Undo",
+  "@undo": {
+    "description": "Undo"
+  },
+  "reset": "Reset",
+  "@reset": {
+    "description": "Reset"
+  },
+  "favoriteAdded": "Favorite added",
+  "@favoriteAdded": {
+    "description": "Favorite added"
+  },
+  "favoriteRemoved": "Favorite removed",
+  "@favoriteRemoved": {
+    "description": "Favorite removed"
   }
+
 }

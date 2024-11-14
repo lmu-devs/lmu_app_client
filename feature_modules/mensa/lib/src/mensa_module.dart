@@ -4,9 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'bloc/bloc.dart';
 import 'public_api/default_mensa_public_api.dart';
 import 'public_api/public_api.dart';
-import 'repository/dish_repository.dart';
 import 'repository/repository.dart';
-import 'services/dish_user_preferences_service.dart';
 import 'services/mensa_user_preferences_service.dart';
 import 'services/taste_profile_service.dart';
 
@@ -24,9 +22,7 @@ class MensaModule extends AppModule
     final repository = ConnectedMensaRepository(
       mensaApiClient: MensaApiClient(),
     );
-    final dishRepository = ConnectedDishRepository(
-      mensaApiClient: MensaApiClient(),
-    );
+
     GetIt.I.registerSingleton<MensaRepository>(
       repository,
     );
@@ -42,9 +38,6 @@ class MensaModule extends AppModule
       MensaUserPreferencesService(mensaRepository: repository),
     );
 
-    GetIt.I.registerSingleton<DishUserPreferencesService>(
-      DishUserPreferencesService(dishRepository: dishRepository),
-    );
   }
 
   @override

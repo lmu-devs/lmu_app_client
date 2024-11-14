@@ -13,7 +13,11 @@ abstract class MensaRepository {
 
   Future<List<String>?> getFavoriteMensaIds();
 
+  Future<List<String>?> getFavoriteDishIds();
+
   Future<void> updateFavoriteMensaIds(List<String> favoriteMensaIds);
+
+  Future<void> updateFavoriteDishIds(List<String> favoriteDishIds);
 
   Future<List<MensaMenuWeekModel>> getMensaMenusForSpecificWeek(String canteenId, int year, String week, bool liked);
 
@@ -41,6 +45,7 @@ class ConnectedMensaRepository implements MensaRepository {
   static const Duration _mensaModelsCacheDuration = Duration(seconds: 30);
 
   static const String _favoriteMensaIdsKey = 'favorite_mensa_ids_key';
+  static const String _favoriteDishIdsKey = 'favorite_dish_ids_key';
 
   static const String _pasteProfileSelectionsKey = 'taste_profile_selections_key';
 
@@ -88,10 +93,25 @@ class ConnectedMensaRepository implements MensaRepository {
   }
 
   @override
+  Future<List<String>?> getFavoriteDishIds() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final favoriteDishIds = prefs.getStringList(_favoriteDishIdsKey);
+    return favoriteDishIds;
+  }
+
+  @override
   Future<void> updateFavoriteMensaIds(List<String> favoriteMensaIds) async {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setStringList(_favoriteMensaIdsKey, favoriteMensaIds);
+  }
+
+  @override
+  Future<void> updateFavoriteDishIds(List<String> favoriteDishIds) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setStringList(_favoriteDishIdsKey, favoriteDishIds);
   }
 
   /// Cache storing missing for now
