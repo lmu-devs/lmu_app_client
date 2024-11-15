@@ -34,7 +34,6 @@ class LmuScaffoldWithAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final neutralColors = context.colors.neutralColors;
-
     return Scaffold(
       backgroundColor: neutralColors.backgroundColors.base,
       body: LmuBaseAppBar(
