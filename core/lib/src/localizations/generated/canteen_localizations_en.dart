@@ -94,4 +94,11 @@ class CanteenLocalizationsEn extends CanteenLocalizations {
 
   @override
   String get closedDetailed => 'Currently closed';
+
+
+  @override
+  String get emptyFavoritesBefore => 'Tap the ';
+
+  @override
+  String get emptyFavoritesAfter => ' icon to add favorites here';
 }
