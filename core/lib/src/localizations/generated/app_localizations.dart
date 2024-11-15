@@ -152,6 +152,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Favorite removed'**
   String get favoriteRemoved;
+
+  /// Star icon
+  ///
+  /// In en, this message translates to:
+  /// **'Star'**
+  String get icon_star;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
