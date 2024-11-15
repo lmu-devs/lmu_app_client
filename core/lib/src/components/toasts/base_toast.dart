@@ -40,8 +40,7 @@ class LmuToast {
         )..forward(),
       ),
       child: Container(
-        padding: const EdgeInsets.symmetric(
-            horizontal: LmuSizes.mediumLarge, vertical: LmuSizes.mediumSmall),
+        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge, vertical: LmuSizes.mediumSmall),
         decoration: BoxDecoration(
           color: context.colors.neutralColors.backgroundColors.base,
           borderRadius: BorderRadius.circular(50),
@@ -77,16 +76,15 @@ class LmuToast {
                   Container(
                     width: 1,
                     height: 20,
-                    color: context.colors.neutralColors.backgroundColors
-                        .mediumColors.base,
+                    color: context.colors.neutralColors.backgroundColors.mediumColors.base,
                   ),
                   const SizedBox(width: LmuSizes.mediumSmall),
                   LmuButton(
                     title: actionText,
-                    onTap:(){
+                    onTap: () {
                       onActionPressed();
                       fToast.removeCustomToast();
-                    } ,
+                    },
                     size: ButtonSize.medium,
                     emphasis: ButtonEmphasis.link,
                   )
@@ -103,10 +101,7 @@ class LmuToast {
       gravity: ToastGravity.BOTTOM,
       toastDuration: duration ??
           _calculateDuration(
-            messages: [
-              message,
-              if (actionText != null && onActionPressed != null) actionText
-            ],
+            messages: [message, if (actionText != null && onActionPressed != null) actionText],
             hasAction: onActionPressed != null,
           ),
       fadeDuration: const Duration(milliseconds: 200),
@@ -123,10 +118,8 @@ class LmuToast {
     bool hasAction = false,
   }) {
     int wordCount = messages
-        .where((msg) =>
-            msg.trim().isNotEmpty) // Filter out empty/whitespace-only strings
-        .map((msg) =>
-            msg.trim().split(RegExp(r'\s+')).length) // Split into words
+        .where((msg) => msg.trim().isNotEmpty) // Filter out empty/whitespace-only strings
+        .map((msg) => msg.trim().split(RegExp(r'\s+')).length) // Split into words
         .fold(0, (sum, count) => sum + count); // Sum up word counts
 
     int durationMs = 0;

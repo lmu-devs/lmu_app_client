@@ -17,7 +17,6 @@ class ScaffoldWithNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
       body: AnimatedBranchContainer(
@@ -40,10 +39,8 @@ class ScaffoldWithNavBar extends StatelessWidget {
           ),
           child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
-            selectedItemColor:
-                context.colors.neutralColors.textColors.strongColors.base,
-            unselectedItemColor:
-                context.colors.neutralColors.textColors.weakColors.base,
+            selectedItemColor: context.colors.neutralColors.textColors.strongColors.base,
+            unselectedItemColor: context.colors.neutralColors.textColors.weakColors.base,
             backgroundColor: context.colors.neutralColors.backgroundColors.base,
             selectedLabelStyle: const TextStyle(
               fontWeight: FontWeight.w600,
@@ -54,10 +51,8 @@ class ScaffoldWithNavBar extends StatelessWidget {
             selectedFontSize: 12,
             unselectedFontSize: 12,
             items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                  icon: const Icon(LucideIcons.utensils), label: context.locals.canteen.tabTitle),
-              BottomNavigationBarItem(
-                  icon: const Icon(LucideIcons.map), label: context.locals.explore.tabTitle),
+              BottomNavigationBarItem(icon: const Icon(LucideIcons.utensils), label: context.locals.canteen.tabTitle),
+              BottomNavigationBarItem(icon: const Icon(LucideIcons.map), label: context.locals.explore.tabTitle),
               BottomNavigationBarItem(
                   icon: const Icon(LucideIcons.circle_ellipsis), label: context.locals.settings.tabTitle),
             ],
@@ -79,8 +74,7 @@ class ScaffoldWithNavBar extends StatelessWidget {
 }
 
 class AnimatedBranchContainer extends StatelessWidget {
-  const AnimatedBranchContainer(
-      {super.key, required this.currentIndex, required this.children});
+  const AnimatedBranchContainer({super.key, required this.currentIndex, required this.children});
 
   final int currentIndex;
   final List<Widget> children;

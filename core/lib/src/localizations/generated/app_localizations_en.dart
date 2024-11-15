@@ -36,5 +36,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get icon_star => 'Star';
-
 }

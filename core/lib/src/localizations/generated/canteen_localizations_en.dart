@@ -64,7 +64,8 @@ class CanteenLocalizationsEn extends CanteenLocalizations {
   String get myTaste => 'My Taste';
 
   @override
-  String get myTasteDescription => 'Adjust and activate your taste profile to filter dishes by your preferences and allergies.';
+  String get myTasteDescription =>
+      'Adjust and activate your taste profile to filter dishes by your preferences and allergies.';
 
   @override
   String get presets => 'Presets';
@@ -76,7 +77,8 @@ class CanteenLocalizationsEn extends CanteenLocalizations {
   String get tastePreferences => 'I eat and tolerate';
 
   @override
-  String get myTasteFooter => 'The allergens and other labelling may change due to short-term recipe and menu changes that cannot be shown on the online menu. Please be sure to check the information on the daily counter displays in the restaurant. Trace information for allergy sufferers: Traces of allergens due to cross-contamination during preparation and serving as well as due to technologically unavoidable contamination of individual ingredients cannot be ruled out and are not labelled.’ Translated with DeepL.com (free version)';
+  String get myTasteFooter =>
+      'The allergens and other labelling may change due to short-term recipe and menu changes that cannot be shown on the online menu. Please be sure to check the information on the daily counter displays in the restaurant. Trace information for allergy sufferers: Traces of allergens due to cross-contamination during preparation and serving as well as due to technologically unavoidable contamination of individual ingredients cannot be ruled out and are not labelled.’ Translated with DeepL.com (free version)';
 
   @override
   String get noConnection => 'No connection';

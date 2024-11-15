@@ -25,7 +25,6 @@ class AppTheme {
       lmuColorsDark.neutralColors.textColors,
     ),
     extensions: const <ThemeExtension<dynamic>>[lmuColorsDark],
-
     colorScheme: const ColorScheme.dark(),
     scaffoldBackgroundColor: lmuColorsDark.neutralColors.backgroundColors.base,
     cardColor: lmuColorsDark.neutralColors.backgroundColors.base,
