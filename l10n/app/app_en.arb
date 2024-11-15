@@ -41,6 +41,10 @@
   "favoriteRemoved": "Favorite removed",
   "@favoriteRemoved": {
     "description": "Favorite removed"
+  }, 
+  "icon_star": "Star",
+  "@icon_star": {
+    "description": "Star icon"
   }
 
 }

@@ -2,6 +2,7 @@ import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:core/localizations.dart';
 
 class StarIcon extends StatelessWidget {
   const StarIcon({Key? key, this.isActive = false}) : super(key: key);
@@ -10,6 +11,7 @@ class StarIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localization = context.locals.app;
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 500),
       transitionBuilder: (child, animation) {
@@ -28,7 +30,7 @@ class StarIcon extends StatelessWidget {
       },
       child: SvgPicture.asset(
         "assets/star.svg",
-        semanticsLabel: 'Star',
+        semanticsLabel: localization.icon_star,
         key: ValueKey(isActive),
         package: "mensa",
         width: LmuSizes.large,

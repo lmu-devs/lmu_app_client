@@ -33,4 +33,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get favoriteRemoved => 'Favorite removed';
+
+  @override
+  String get icon_star => 'Star';
+
 }
