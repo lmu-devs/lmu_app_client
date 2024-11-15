@@ -131,6 +131,13 @@
   "closedDetailed": "Currently closed",
   "@closedDetailed": {
     "description": "The state of being closed"
-  }
-
+  },
+  "emptyFavoritesBefore": "Tap the ",
+  "@emptyFavoritesBeforeIcon": {
+      "description": "Empty favorites text before star icon"
+    },
+  "emptyFavoritesAfter": " icon to add favorites here",
+  "@emptyFavoritesAfter": {
+        "description": "Empty favorites text after star icon"
+      }
 }

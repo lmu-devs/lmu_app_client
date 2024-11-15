@@ -29,5 +29,7 @@
     "retry": "Neu laden",
     "share": "Teilen",
     "closingSoonDetailed": "Heute geöffnet bis {time}",
-    "closedDetailed": "Gerade geschlossen"
+    "closedDetailed": "Gerade geschlossen",
+    "emptyFavoritesBefore": "Füge Favoriten mit dem ",
+    "emptyFavoritesAfter": " Symbol hinzu"
 }

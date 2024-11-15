@@ -263,6 +263,18 @@ abstract class CanteenLocalizations {
   /// In en, this message translates to:
   /// **'Currently closed'**
   String get closedDetailed;
+
+  /// Empty favorites text before star icon
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the '**
+  String get emptyFavoritesBefore;
+
+  /// Empty favorites text after star icon
+  ///
+  /// In en, this message translates to:
+  /// **' icon to add favorites here'**
+  String get emptyFavoritesAfter;
 }
 
 class _CanteenLocalizationsDelegate extends LocalizationsDelegate<CanteenLocalizations> {
