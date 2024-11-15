@@ -1,8 +1,6 @@
 import 'package:core/src/themes/themes.dart';
 import 'package:flutter/material.dart';
 
-import '../../themes/texts/text_themes_definitions.dart';
-
 class LmuText extends StatelessWidget {
   const LmuText(
     this.text, {

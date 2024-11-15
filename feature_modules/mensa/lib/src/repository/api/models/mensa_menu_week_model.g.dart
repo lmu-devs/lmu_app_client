@@ -6,8 +6,7 @@ part of 'mensa_menu_week_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-MensaMenuWeekModel _$MensaMenuWeekModelFromJson(Map<String, dynamic> json) =>
-    MensaMenuWeekModel(
+MensaMenuWeekModel _$MensaMenuWeekModelFromJson(Map<String, dynamic> json) => MensaMenuWeekModel(
       week: (json['week'] as num).toInt(),
       year: (json['year'] as num).toInt(),
       canteenId: json['canteen_id'] as String,
@@ -16,8 +15,7 @@ MensaMenuWeekModel _$MensaMenuWeekModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$MensaMenuWeekModelToJson(MensaMenuWeekModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$MensaMenuWeekModelToJson(MensaMenuWeekModel instance) => <String, dynamic>{
       'week': instance.week,
       'year': instance.year,
       'canteen_id': instance.canteenId,

@@ -29,7 +29,7 @@ class AnnotationClickListener extends OnCircleAnnotationClickListener {
 }
 
 class MapWithAnnotations extends StatefulWidget {
-  const MapWithAnnotations();
+  const MapWithAnnotations({super.key});
 
   @override
   State<StatefulWidget> createState() => MapWithAnnotationsState();

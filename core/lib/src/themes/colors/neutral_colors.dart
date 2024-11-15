@@ -65,6 +65,3 @@ class BorderColors {
   final Color cutout;
   final Color seperatorDark;
 }
-
-
-

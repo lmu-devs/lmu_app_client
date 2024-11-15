@@ -19,8 +19,7 @@ class MensaMenuContentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final favoriteDishIdsNotifier =
-        GetIt.I.get<MensaUserPreferencesService>().favoriteDishIdsNotifier;
+    final favoriteDishIdsNotifier = GetIt.I.get<MensaUserPreferencesService>().favoriteDishIdsNotifier;
     return ValueListenableBuilder(
         valueListenable: favoriteDishIdsNotifier,
         builder: (context, favoriteDishIds, _) {
@@ -28,17 +27,14 @@ class MensaMenuContentView extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.all(LmuSizes.mediumLarge),
-              itemCount: mensaMenuModels.first
-                  .mensaMenuDayModels[currentDayOfWeek - 1].dishModels.length,
+              itemCount: mensaMenuModels.first.mensaMenuDayModels[currentDayOfWeek - 1].dishModels.length,
               itemBuilder: (context, index) {
                 final isFavorite = favoriteDishIds.contains(
-                  mensaMenuModels.first.mensaMenuDayModels[currentDayOfWeek - 1]
-                      .dishModels[index].id
-                      .toString(),
+                  mensaMenuModels.first.mensaMenuDayModels[currentDayOfWeek - 1].dishModels[index].id.toString(),
                 );
 
-                final DishModel dishModel = mensaMenuModels.first
-                    .mensaMenuDayModels[currentDayOfWeek - 1].dishModels[index];
+                final DishModel dishModel =
+                    mensaMenuModels.first.mensaMenuDayModels[currentDayOfWeek - 1].dishModels[index];
 
                 return Padding(
                   padding: const EdgeInsets.only(bottom: LmuSizes.mediumSmall),

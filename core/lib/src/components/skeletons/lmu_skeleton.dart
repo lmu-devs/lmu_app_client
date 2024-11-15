@@ -13,8 +13,7 @@ class LmuSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gradientLoadingColors =
-        context.colors.gradientColors.gradientLoadingColors;
+    final gradientLoadingColors = context.colors.gradientColors.gradientLoadingColors;
     return Skeletonizer(
         effect: ShimmerEffect(
           baseColor: gradientLoadingColors.base,
