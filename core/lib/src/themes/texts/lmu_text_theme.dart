@@ -28,6 +28,5 @@ class LmuTextTheme extends TextTheme {
   final TextStyle h1;
   final TextStyle h2;
   final TextStyle h3;
-  @override
   final TextStyle caption;
 }

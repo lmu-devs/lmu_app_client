@@ -17,8 +17,7 @@ class LmuDropDownAction extends StatefulWidget {
   State<LmuDropDownAction> createState() => _LmuDropDownActionState();
 }
 
-class _LmuDropDownActionState extends State<LmuDropDownAction>
-    with SingleTickerProviderStateMixin {
+class _LmuDropDownActionState extends State<LmuDropDownAction> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 

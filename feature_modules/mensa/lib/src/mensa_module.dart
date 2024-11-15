@@ -37,7 +37,6 @@ class MensaModule extends AppModule
     GetIt.I.registerSingleton<MensaUserPreferencesService>(
       MensaUserPreferencesService(mensaRepository: repository),
     );
-
   }
 
   @override
