@@ -6,17 +6,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 
-import '../bloc/bloc.dart';
-import '../services/mensa_user_preferences_service.dart';
-import '../widgets/widgets.dart';
+import '../../bloc/bloc.dart';
+import '../../services/mensa_user_preferences_service.dart';
+import '../../widgets/widgets.dart';
 
-class MensaLoadingView extends StatelessWidget {
-  const MensaLoadingView({super.key});
+class MensaOverviewLoadingView extends StatelessWidget {
+  const MensaOverviewLoadingView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final mensaCubit = GetIt.I.get<MensaCubit>();
-
     final favoriteMensas = GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier.value;
 
     return BlocListener<MensaCubit, MensaState>(

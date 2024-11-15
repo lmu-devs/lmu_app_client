@@ -22,6 +22,7 @@ class MensaModule extends AppModule
     final repository = ConnectedMensaRepository(
       mensaApiClient: MensaApiClient(),
     );
+
     GetIt.I.registerSingleton<MensaRepository>(
       repository,
     );

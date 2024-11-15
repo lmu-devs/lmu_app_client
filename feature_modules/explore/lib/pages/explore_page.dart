@@ -33,7 +33,7 @@ class AnnotationClickListener extends OnPointAnnotationClickListener {
 }
 
 class MapWithAnnotations extends StatefulWidget {
-  const MapWithAnnotations();
+  const MapWithAnnotations({super.key});
 
   @override
   State<StatefulWidget> createState() => MapWithAnnotationsState();

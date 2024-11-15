@@ -13,7 +13,11 @@ abstract class MensaRepository {
 
   Future<List<String>?> getFavoriteMensaIds();
 
+  Future<List<String>?> getFavoriteDishIds();
+
   Future<void> updateFavoriteMensaIds(List<String> favoriteMensaIds);
+
+  Future<void> updateFavoriteDishIds(List<String> favoriteDishIds);
 
   Future<List<MensaMenuWeekModel>> getMensaMenusForSpecificWeek(String canteenId, int year, String week, bool liked);
 
@@ -28,6 +32,7 @@ abstract class MensaRepository {
   Future<void> setSortOption(SortOption mensaUserPreferences);
 }
 
+/// MensaRepository implementation for fetching mensa data from the API
 class ConnectedMensaRepository implements MensaRepository {
   ConnectedMensaRepository({
     required this.mensaApiClient,
@@ -35,16 +40,18 @@ class ConnectedMensaRepository implements MensaRepository {
 
   final MensaApiClient mensaApiClient;
 
-  static const String _mensaModelsCacheKey = 'mena_models_cache_key';
+  static const String _mensaModelsCacheKey = 'mensa_models_cache_key';
   static const String _mensaModelCacheDateKey = 'mensa_models_cache_date_key';
   static const Duration _mensaModelsCacheDuration = Duration(seconds: 30);
 
   static const String _favoriteMensaIdsKey = 'favorite_mensa_ids_key';
+  static const String _favoriteDishIdsKey = 'favorite_dish_ids_key';
 
   static const String _pasteProfileSelectionsKey = 'taste_profile_selections_key';
 
   static const String _mensaSortOptionKey = 'mensa_user_preferences';
 
+  /// Function to fetch mensa models from the API, [forceRefresh] parameter can be used to ignore the cache
   @override
   Future<List<MensaModel>> getMensaModels({bool forceRefresh = false}) async {
     final prefs = await SharedPreferences.getInstance();
@@ -76,6 +83,7 @@ class ConnectedMensaRepository implements MensaRepository {
     }
   }
 
+  /// MensaRepository implementation for fetching favorite mensa ids from the cache
   @override
   Future<List<String>?> getFavoriteMensaIds() async {
     final prefs = await SharedPreferences.getInstance();
@@ -85,10 +93,25 @@ class ConnectedMensaRepository implements MensaRepository {
   }
 
   @override
+  Future<List<String>?> getFavoriteDishIds() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final favoriteDishIds = prefs.getStringList(_favoriteDishIdsKey);
+    return favoriteDishIds;
+  }
+
+  @override
   Future<void> updateFavoriteMensaIds(List<String> favoriteMensaIds) async {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setStringList(_favoriteMensaIdsKey, favoriteMensaIds);
+  }
+
+  @override
+  Future<void> updateFavoriteDishIds(List<String> favoriteDishIds) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setStringList(_favoriteDishIdsKey, favoriteDishIds);
   }
 
   /// Cache storing missing for now

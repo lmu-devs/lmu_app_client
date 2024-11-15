@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:mensa/src/repository/api/models/mensa_menu_week_model.dart';
+import '../../repository/api/models/mensa_menu_week_model.dart';
 
 abstract class MensaMenuState extends Equatable {}
 

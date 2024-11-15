@@ -59,4 +59,32 @@ class MensaUserPreferencesService {
   Future<void> updateSortOption(SortOption sortOption) async {
     await _mensaRepository.setSortOption(sortOption);
   }
+
+  final _favoriteDishIdsNotifier = ValueNotifier<List<String>>([]);
+  ValueNotifier<List<String>> get favoriteDishIdsNotifier => _favoriteDishIdsNotifier;
+
+  Future<void> getFavoriteDishIds() async {
+    final favoriteDishIds = await _mensaRepository.getFavoriteDishIds();
+
+    if (favoriteDishIds != null) {
+      _favoriteDishIdsNotifier.value = favoriteDishIds;
+    }
+  }
+
+  Future<void> toggleFavoriteDishId(String dishId) async {
+    final favoriteDishIds = List<String>.from(_favoriteDishIdsNotifier.value);
+
+    if (favoriteDishIds.contains(dishId)) {
+      favoriteDishIds.remove(dishId);
+    } else {
+      favoriteDishIds.insert(0, dishId);
+    }
+
+    await _updateFavoriteDishIds(favoriteDishIds);
+  }
+
+  Future<void> _updateFavoriteDishIds(List<String> favoriteDishIds) async {
+    _favoriteDishIdsNotifier.value = favoriteDishIds;
+    await _mensaRepository.updateFavoriteDishIds(favoriteDishIds);
+  }
 }

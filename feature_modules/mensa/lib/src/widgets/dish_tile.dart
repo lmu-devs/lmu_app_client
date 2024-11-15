@@ -1,33 +1,31 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:mensa/src/utils/get_dish_type_emoji.dart';
+import 'package:get_it/get_it.dart';
+import '../utils/get_dish_type_emoji.dart';
+import 'package:core/localizations.dart';
+
+import '../repository/api/models/dish_model.dart';
+import '../services/mensa_user_preferences_service.dart';
+import 'widgets.dart';
 
 class DishTile extends StatelessWidget {
   const DishTile({
     super.key,
-    required this.dishType,
-    required this.title,
-    required this.priceSimple,
-    required this.isLiked,
-    required this.likeCount,
+    required this.dishModel,
     required this.onFavoriteTap,
+    required this.isFavorite,
     this.onTap,
   });
 
-  final String dishType;
-  final String title;
-  final String priceSimple;
+  final DishModel dishModel;
   final void Function()? onTap;
-  final bool isLiked;
-  final int likeCount;
   final void Function()? onFavoriteTap;
-
+  final bool isFavorite;
   @override
   Widget build(BuildContext context) {
+    final localizations = context.locals.app;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -36,75 +34,95 @@ class DishTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(LmuSizes.medium),
         ),
         width: double.infinity,
-        padding: const EdgeInsets.all(
-          LmuSizes.mediumLarge,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      LmuText.body(
-                        getDishTypeEmoji(dishType),
-                      ),
-                      const SizedBox(
-                        width: LmuSizes.medium,
-                      ),
-                      Flexible(
-                        child: LmuText.body(
-                          title,
-                          weight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: LmuSizes.xlarge,
-                      ),
-                    ],
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Row(
+            Padding(
+              padding: const EdgeInsets.all(LmuSizes.mediumLarge),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        LmuText.bodySmall(likeCount != 0 ? likeCount.toString() : ''),
-                        const SizedBox(
-                          width: LmuSizes.small,
+                        LmuText.body(
+                          getDishTypeEmoji(dishModel.dishType),
                         ),
-                        GestureDetector(
-                          onTap: onFavoriteTap,
-                          child: isLiked
-                              ? LmuIcon(
-                                  icon: Icons.star,
-                                  size: LmuIconSizes.medium,
-                                  color: context.colors.warningColors.textColors.strongColors.base,
-                                )
-                              : LmuIcon(
-                                  icon: Icons.star_border_outlined,
-                                  size: LmuIconSizes.medium,
-                                  color: context.colors.neutralColors.backgroundColors.flippedColors.base,
-                                ),
+                        const SizedBox(
+                          width: LmuSizes.medium,
+                        ),
+                        Flexible(
+                          child: LmuText.body(
+                            dishModel.name,
+                            weight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: LmuSizes.xlarge,
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: LmuSizes.small,
-                    ),
-                    LmuText.bodySmall(
-                      priceSimple,
-                      weight: FontWeight.w300,
-                    ),
-                  ],
-                ),
-              ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Row(
+                        children: [
+                          LmuText.bodyXSmall(
+                            dishModel.ratingModel.likeCount.toString(),
+                            color: context.colors.neutralColors.textColors.weakColors.base,
+                          ),
+                          const SizedBox(width: LmuSizes.small),
+                          StarIcon(isActive: isFavorite),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: LmuSizes.small,
+                      ),
+                      LmuText.bodyXSmall(
+                        dishModel.priceSimple,
+                        color: context.colors.neutralColors.textColors.weakColors.base,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
+            Positioned(
+              right: 0,
+              bottom: LmuSizes.mediumLarge,
+              top: LmuSizes.mediumSmall,
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  final userPreferencesService = GetIt.I.get<MensaUserPreferencesService>();
+                  final id = dishModel.id;
 
-            /// Add Allergens
+                  LmuVibrations.vibrate(type: VibrationType.secondary);
+
+                  if (isFavorite) {
+                    LmuToast.show(
+                      context: context,
+                      type: ToastType.success,
+                      message: localizations.favoriteRemoved,
+                      actionText: localizations.undo,
+                      onActionPressed: () {
+                        userPreferencesService.toggleFavoriteDishId(id.toString());
+                      },
+                    );
+                  } else {
+                    LmuToast.show(
+                      context: context,
+                      type: ToastType.success,
+                      message: localizations.favoriteAdded,
+                    );
+                  }
+
+                  userPreferencesService.toggleFavoriteDishId(id.toString());
+                },
+                child: const SizedBox(width: 64),
+              ),
+            ),
           ],
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 
 import '../icons/lmu_icon.dart';
 
@@ -24,10 +25,12 @@ class _LmuDropDownActionState extends State<LmuDropDownAction> with SingleTicker
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 150),
+      duration: const Duration(milliseconds: 450),
       vsync: this,
     );
-    _animation = Tween<double>(begin: 0, end: 0.5).animate(_controller);
+    _animation = Tween<double>(begin: 0, end: .5).animate(
+      CurvedAnimation(parent: _controller, curve: LmuAnimations.gentle, reverseCurve: LmuAnimations.gentle.flipped),
+    );
 
     if (widget.isActive) {
       _controller.forward();
@@ -56,11 +59,11 @@ class _LmuDropDownActionState extends State<LmuDropDownAction> with SingleTicker
 
   @override
   Widget build(BuildContext context) {
-    final color = context.colors.neutralColors.textColors.mediumColors.base;
+    final color = context.colors.neutralColors.textColors.weakColors.base;
     return RotationTransition(
       turns: _animation,
       child: LmuIcon(
-        icon: Icons.keyboard_arrow_down,
+        icon: LucideIcons.chevron_down,
         size: LmuIconSizes.medium,
         color: color,
       ),

@@ -29,12 +29,12 @@ class LmuUrlLauncher {
   }
 
   /// Launches a website URL with error handling and user feedback
-  /// 
+  ///
   /// Parameters:
   /// - [url]: The URL to launch
   /// - [context]: BuildContext for showing feedback
   /// - [mode]: LaunchMode to determine how the URL should be opened
-  /// 
+  ///
   /// Returns a Future<bool> indicating success/failure
   static Future<bool> launchWebsite({
     required String url,
@@ -43,8 +43,7 @@ class LmuUrlLauncher {
   }) async {
     try {
       final Uri uri = Uri.parse(url);
-      
-      
+
       // Verify URL can be launched
       if (!await canLaunchUrl(uri)) {
         if (context.mounted) {
@@ -86,57 +85,53 @@ class LmuUrlLauncher {
     }
   }
 
-static Future<bool> launchEmail({
-  required String email,
-  String? subject,
-  String? body,
-  required BuildContext context,
-}) async {
-  try {
-    // Create the mailto URI with raw spaces
-    final emailUri = Uri.parse('mailto:$email?${
-      [
+  static Future<bool> launchEmail({
+    required String email,
+    String? subject,
+    String? body,
+    required BuildContext context,
+  }) async {
+    try {
+      // Create the mailto URI with raw spaces
+      final emailUri = Uri.parse('mailto:$email?${[
         if (subject != null) 'subject=$subject',
         if (body != null) 'body=$body',
-      ].join('&')
-    }');
+      ].join('&')}');
 
-    if (!await canLaunchUrl(emailUri)) {
+      if (!await canLaunchUrl(emailUri)) {
+        if (context.mounted) {
+          _showErrorToast(
+            context: context,
+            message: 'No email client found',
+          );
+        }
+        return false;
+      }
+
+      final launched = await launchUrl(emailUri);
+
+      if (!launched && context.mounted) {
+        _showErrorToast(
+          context: context,
+          message: 'Failed to launch email client',
+        );
+        return false;
+      }
+
+      return launched;
+    } catch (e) {
       if (context.mounted) {
         _showErrorToast(
           context: context,
-          message: 'No email client found',
+          message: 'Error launching email client: $e',
         );
       }
       return false;
     }
-
-    final launched = await launchUrl(emailUri);
-
-    if (!launched && context.mounted) {
-      _showErrorToast(
-        context: context,
-        message: 'Failed to launch email client',
-      );
-      return false;
-    }
-
-    return launched;
-  } catch (e) {
-    if (context.mounted) {
-      _showErrorToast(
-        context: context,
-        message: 'Error launching email client: $e',
-      );
-    }
-    return false;
   }
-}
-
-
 
   /// Shows an error message using a Toast
-  /// 
+  ///
   /// Parameters:
   /// - [context]: BuildContext for showing the SnackBar
   /// - [message]: Error message to display

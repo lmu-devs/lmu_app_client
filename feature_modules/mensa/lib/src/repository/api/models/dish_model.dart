@@ -1,12 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:mensa/src/repository/api/models/rating_model.dart';
+import 'rating_model.dart';
 import 'price_model.dart';
 
 part 'dish_model.g.dart';
 
 @JsonSerializable()
 class DishModel extends Equatable {
+  final int id;
   final String name;
   @JsonKey(name: 'dish_type')
   final String dishType;
@@ -18,6 +19,7 @@ class DishModel extends Equatable {
   final List<PriceModel> prices;
 
   const DishModel({
+    required this.id,
     required this.name,
     required this.dishType,
     required this.ratingModel,

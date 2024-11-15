@@ -88,16 +88,73 @@ abstract class AppLocalizations {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[
-    Locale('de'),
-    Locale('en')
-  ];
+  static const List<Locale> supportedLocales = <Locale>[Locale('de'), Locale('en')];
 
   /// The title of the app
   ///
   /// In en, this message translates to:
   /// **'Munich Students'**
   String get appTitle;
+
+  /// Monday
+  ///
+  /// In en, this message translates to:
+  /// **'Monday'**
+  String get monday;
+
+  /// Tuesday
+  ///
+  /// In en, this message translates to:
+  /// **'Tuesday'**
+  String get tuesday;
+
+  /// Wednesday
+  ///
+  /// In en, this message translates to:
+  /// **'Wednesday'**
+  String get wednesday;
+
+  /// Thursday
+  ///
+  /// In en, this message translates to:
+  /// **'Thursday'**
+  String get thursday;
+
+  /// Friday
+  ///
+  /// In en, this message translates to:
+  /// **'Friday'**
+  String get friday;
+
+  /// Undo
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get undo;
+
+  /// Reset
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get reset;
+
+  /// Favorite added
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite added'**
+  String get favoriteAdded;
+
+  /// Favorite removed
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite removed'**
+  String get favoriteRemoved;
+
+  /// Star icon
+  ///
+  /// In en, this message translates to:
+  /// **'Star'**
+  String get icon_star;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
@@ -116,18 +173,16 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
-
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'de': return AppLocalizationsDe();
-    case 'en': return AppLocalizationsEn();
+    case 'de':
+      return AppLocalizationsDe();
+    case 'en':
+      return AppLocalizationsEn();
   }
 
-  throw FlutterError(
-    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-    'an issue with the localizations generation tool. Please file an issue '
-    'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.'
-  );
+  throw FlutterError('AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+      'an issue with the localizations generation tool. Please file an issue '
+      'on GitHub with a reproducible sample app and the gen-l10n configuration '
+      'that was used.');
 }

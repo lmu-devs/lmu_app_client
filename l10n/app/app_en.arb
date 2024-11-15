@@ -1,9 +1,50 @@
 {
   "@@locale": "en",
   "@@context": "AppWide",
-  
+
   "appTitle": "Munich Students",
   "@appTitle": {
     "description": "The title of the app"
+  },
+  "monday": "Monday",
+  "@monday": {
+    "description": "Monday"
+  },
+  "tuesday": "Tuesday",
+  "@tuesday": {
+    "description": "Tuesday"
+  },
+  "wednesday": "Wednesday",
+  "@wednesday": {
+    "description": "Wednesday"
+  },
+  "thursday": "Thursday",
+  "@thursday": {
+    "description": "Thursday"
+  },
+  "friday": "Friday",
+  "@friday": {
+    "description": "Friday"
+  },
+  "undo": "Undo",
+  "@undo": {
+    "description": "Undo"
+  },
+  "reset": "Reset",
+  "@reset": {
+    "description": "Reset"
+  },
+  "favoriteAdded": "Favorite added",
+  "@favoriteAdded": {
+    "description": "Favorite added"
+  },
+  "favoriteRemoved": "Favorite removed",
+  "@favoriteRemoved": {
+    "description": "Favorite removed"
+  }, 
+  "icon_star": "Star",
+  "@icon_star": {
+    "description": "Star icon"
   }
+
 }

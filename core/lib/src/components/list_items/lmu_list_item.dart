@@ -287,6 +287,7 @@ class LmuListItem extends StatelessWidget {
                                           trailingTitle,
                                           textAlign: TextAlign.end,
                                           color: trailingTitleColor,
+                                          weight: FontWeight.w600,
                                         ),
                                       ),
                                   ],

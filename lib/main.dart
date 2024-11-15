@@ -4,7 +4,6 @@ import 'lmu_app.dart';
 import 'registry/module_registry.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-
 import 'registry/feature_modules.dart';
 
 GetIt getIt = GetIt.instance;

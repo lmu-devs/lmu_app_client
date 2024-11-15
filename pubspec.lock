@@ -415,10 +415,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: "6f1b756f6e863259a99135ff3c95026c3cdca17d10ebef2bba2261a25ddc8bbc"
+      sha256: "8ae664a70174163b9f65ea68dd8673e29db8f9095de7b5cd00e167c621f4fef5"
       url: "https://pub.dev"
     source: hosted
-    version: "14.3.0"
+    version: "14.6.0"
   go_router_builder:
     dependency: "direct dev"
     description:
@@ -467,6 +467,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  husky:
+    dependency: "direct dev"
+    description:
+      name: husky
+      sha256: ce4a92b311c03e67ff66b6e354c8d5b8ee7c663ccaedb954e93798658b439bb2
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.7"
   image:
     dependency: transitive
     description:
@@ -646,10 +654,10 @@ packages:
     dependency: transitive
     description:
       name: path_parsing
-      sha256: caa17e8f0b386eb190dd5b6a3b71211c76375aa8b6ffb4465b5863d019bdb334
+      sha256: "883402936929eac138ee0a45da5b0f2c80f89913e6dc3bf77eb65b84b409c6ca"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "1.1.0"
   path_provider_linux:
     dependency: transitive
     description:
