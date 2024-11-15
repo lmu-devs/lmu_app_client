@@ -17,6 +17,10 @@ dependencies:
   go_router_builder: ^2.7.1
   mapbox_maps_flutter: ^2.3.0
   flutter_svg: ^2.0.9
+  shared_preferences: ^2.0.7
+  permission_handler: ^11.3.1
+  core:
+    path: ../../core
   mensa:
     path: ../../feature_modules/mensa
 
@@ -26,5 +30,6 @@ dev_dependencies:
   flutter_lints: ^3.0.0
 
 flutter:
-  assets: 
+  assets:
     - assets/
+    - assets/mensa_pin.png

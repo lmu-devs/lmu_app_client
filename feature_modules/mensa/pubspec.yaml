@@ -27,7 +27,7 @@ dependencies:
   collection: ^1.18.0
   scrollable_positioned_list: ^0.3.8
   skeletonizer: ^1.4.2
-  flutter_native_splash: ^2.4.1
+  flutter_native_splash: ^2.3.1
 
 
 dev_dependencies:
