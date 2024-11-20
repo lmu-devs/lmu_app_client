@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../repository/api/models/mensa_model.dart';
+import '../../repository/api/models/mensa/mensa_model.dart';
 import '../../services/mensa_user_preferences_service.dart';
 import '../widgets.dart';
 

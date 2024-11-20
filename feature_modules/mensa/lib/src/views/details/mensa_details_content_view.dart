@@ -8,19 +8,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 
-import '../bloc/mensa_menu_cubit/mensa_menu_cubit.dart';
-import '../bloc/mensa_menu_cubit/mensa_menu_state.dart';
-import '../extensions/extensions.dart';
-import '../pages/pages.dart';
-import '../pages/taste_profile_page.dart';
-import '../repository/api/api.dart';
-import '../repository/api/models/image_model.dart';
-import '../services/services.dart';
-import '../widgets/widgets.dart';
-import 'views.dart';
+import '../../bloc/menu_cubit/cubit.dart';
+import '../../extensions/extensions.dart';
+import '../../pages/pages.dart';
+import '../../pages/taste_profile_page.dart';
+import '../../repository/api/api.dart';
+import '../../repository/api/models/mensa/image_model.dart';
+import '../../services/services.dart';
+import '../../widgets/widgets.dart';
+import '../views.dart';
 
-class MensaDetailsView extends StatelessWidget {
-  const MensaDetailsView({
+class MensaDetailsContentView extends StatelessWidget {
+  const MensaDetailsContentView({
     super.key,
     required this.mensaModel,
     required this.currentDayOfWeek,
@@ -34,7 +33,6 @@ class MensaDetailsView extends StatelessWidget {
     final colors = context.colors;
     final localizations = context.locals.canteen;
     final appLocalizations = context.locals.app;
-
     final openingHours = mensaModel.openingHours;
     final mensaStatus = openingHours.mensaStatus;
 
@@ -147,17 +145,16 @@ class MensaDetailsView extends StatelessWidget {
                   height: 0.5,
                   color: colors.neutralColors.borderColors.seperatorLight,
                 ),
-                BlocBuilder<MensaMenuCubit, MensaMenuState>(
+                BlocBuilder<MenuCubit, MenuState>(
                   builder: (context, state) {
-                    if (state is MensaMenuLoadInProgress) {
+                    if (state is! MenuLoadSuccess) {
                       return const MensaMenuLoadingView();
-                    } else if (state is MensaMenuLoadSuccess) {
-                      return MensaMenuContentView(
-                        mensaMenuModels: state.mensaMenuModels,
-                        currentDayOfWeek: currentDayOfWeek,
-                      );
                     }
-                    return const MensaMenuErrorView();
+
+                    return MensaMenuContentView(
+                      mensaMenuModels: state.mensaMenuModels,
+                      currentDayOfWeek: currentDayOfWeek,
+                    );
                   },
                 ),
                 const SizedBox(height: LmuSizes.medium),

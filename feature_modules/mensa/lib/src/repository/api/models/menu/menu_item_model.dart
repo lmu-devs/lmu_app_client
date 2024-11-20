@@ -1,14 +1,15 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'rating_model.dart';
+
+import '../rating_model.dart';
 import 'price_model.dart';
 
-part 'dish_model.g.dart';
+part 'menu_item_model.g.dart';
 
 @JsonSerializable()
-class DishModel extends Equatable {
+class MenuItemModel extends Equatable {
   final int id;
-  final String name;
+  final String title;
   @JsonKey(name: 'dish_type')
   final String dishType;
   @JsonKey(name: 'rating')
@@ -18,9 +19,9 @@ class DishModel extends Equatable {
   final List<String> labels;
   final List<PriceModel> prices;
 
-  const DishModel({
+  const MenuItemModel({
     required this.id,
-    required this.name,
+    required this.title,
     required this.dishType,
     required this.ratingModel,
     required this.priceSimple,
@@ -28,13 +29,13 @@ class DishModel extends Equatable {
     required this.prices,
   });
 
-  factory DishModel.fromJson(Map<String, dynamic> json) => _$DishModelFromJson(json);
+  factory MenuItemModel.fromJson(Map<String, dynamic> json) => _$MenuItemModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$DishModelToJson(this);
+  Map<String, dynamic> toJson() => _$MenuItemModelToJson(this);
 
   @override
   List<Object?> get props => [
-        name,
+        title,
         dishType,
         ratingModel,
         priceSimple,

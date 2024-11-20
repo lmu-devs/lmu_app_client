@@ -1,4 +1,4 @@
-import '../repository/api/models/mensa_model.dart';
+import '../repository/api/models/mensa/mensa_model.dart';
 import '../repository/api/models/user_preferences/sort_option.dart';
 
 extension SortOptionSortExtension on SortOption {

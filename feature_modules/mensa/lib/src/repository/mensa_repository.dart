@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/mensa_api_client.dart';
-import 'api/models/mensa_menu_week_model.dart';
-import 'api/models/mensa_model.dart';
+import 'api/models/mensa/mensa_model.dart';
+import 'api/models/menu/menu_day_model.dart';
 import 'api/models/taste_profile/taste_profile.dart';
 import 'api/models/user_preferences/sort_option.dart';
 
@@ -19,7 +19,7 @@ abstract class MensaRepository {
 
   Future<void> updateFavoriteDishIds(List<String> favoriteDishIds);
 
-  Future<List<MensaMenuWeekModel>> getMensaMenusForSpecificWeek(String canteenId, int year, String week, bool liked);
+  Future<List<MenuDayModel>> getMenuDayForMensa(String canteenId);
 
   Future<TasteProfileModel> getTasteProfileContent();
 
@@ -114,12 +114,10 @@ class ConnectedMensaRepository implements MensaRepository {
     await prefs.setStringList(_favoriteDishIdsKey, favoriteDishIds);
   }
 
-  /// Cache storing missing for now
   @override
-  Future<List<MensaMenuWeekModel>> getMensaMenusForSpecificWeek(
-      String canteenId, int year, String week, bool liked) async {
+  Future<List<MenuDayModel>> getMenuDayForMensa(String canteenId) async {
     try {
-      final mensaMenuModels = await mensaApiClient.getMensaMenusForSpecificWeek(canteenId, year, week, liked);
+      final mensaMenuModels = await mensaApiClient.getMenuDayForMensa(canteenId);
       return mensaMenuModels;
     } catch (e) {
       rethrow;

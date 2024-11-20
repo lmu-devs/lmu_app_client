@@ -1,14 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'dish_model.dart';
+part of 'menu_item_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-DishModel _$DishModelFromJson(Map<String, dynamic> json) => DishModel(
+MenuItemModel _$MenuItemModelFromJson(Map<String, dynamic> json) => MenuItemModel(
       id: (json['id'] as num).toInt(),
-      name: json['name'] as String,
+      title: json['title'] as String,
       dishType: json['dish_type'] as String,
       ratingModel: RatingModel.fromJson(json['rating'] as Map<String, dynamic>),
       priceSimple: json['price_simple'] as String,
@@ -16,9 +16,9 @@ DishModel _$DishModelFromJson(Map<String, dynamic> json) => DishModel(
       prices: (json['prices'] as List<dynamic>).map((e) => PriceModel.fromJson(e as Map<String, dynamic>)).toList(),
     );
 
-Map<String, dynamic> _$DishModelToJson(DishModel instance) => <String, dynamic>{
+Map<String, dynamic> _$MenuItemModelToJson(MenuItemModel instance) => <String, dynamic>{
       'id': instance.id,
-      'name': instance.name,
+      'title': instance.title,
       'dish_type': instance.dishType,
       'rating': instance.ratingModel,
       'price_simple': instance.priceSimple,

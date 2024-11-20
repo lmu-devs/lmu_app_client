@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../repository/api/models/mensa_model.dart';
+import '../../repository/api/models/mensa/mensa_model.dart';
 
 abstract class MensaState extends Equatable {}
 

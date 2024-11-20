@@ -4,7 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 
-import '../repository/api/models/mensa_opening_hours.dart';
+import '../repository/api/models/mensa/mensa_opening_hours.dart';
 
 enum MensaStatus {
   closed,

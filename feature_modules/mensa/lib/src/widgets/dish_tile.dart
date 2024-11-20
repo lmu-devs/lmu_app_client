@@ -1,13 +1,13 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import '../utils/get_dish_type_emoji.dart';
-import 'package:core/localizations.dart';
 
-import '../repository/api/models/dish_model.dart';
+import '../repository/api/models/menu/menu_item_model.dart';
 import '../services/mensa_user_preferences_service.dart';
+import '../utils/get_dish_type_emoji.dart';
 import 'widgets.dart';
 
 class DishTile extends StatelessWidget {
@@ -19,7 +19,7 @@ class DishTile extends StatelessWidget {
     this.onTap,
   });
 
-  final DishModel dishModel;
+  final MenuItemModel dishModel;
   final void Function()? onTap;
   final void Function()? onFavoriteTap;
   final bool isFavorite;
@@ -53,7 +53,7 @@ class DishTile extends StatelessWidget {
                         ),
                         Flexible(
                           child: LmuText.body(
-                            dishModel.name,
+                            dishModel.title,
                             weight: FontWeight.w600,
                           ),
                         ),
