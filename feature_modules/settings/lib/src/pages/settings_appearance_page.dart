@@ -1,11 +1,11 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:core/localizations.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_lucide/flutter_lucide.dart';
 
 class SettingsApperancePage extends StatelessWidget {
   const SettingsApperancePage({super.key});

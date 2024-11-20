@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'lmu_app.dart';
-import 'registry/module_registry.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:get_it/get_it.dart';
 
+import 'lmu_app.dart';
 import 'registry/feature_modules.dart';
+import 'registry/module_registry.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -18,4 +18,5 @@ void main() async {
   runApp(
     LmuApp(),
   );
+  FlutterNativeSplash.remove();
 }
