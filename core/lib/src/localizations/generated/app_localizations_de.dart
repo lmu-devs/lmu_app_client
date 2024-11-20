@@ -35,5 +35,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get favoriteRemoved => 'Favorit entfernt';
 
   @override
-  String get icon_star => 'Stern';
+  String get iconStar => 'Stern';
+
+  @override
+  String get today => 'Heute';
+
+  @override
+  String get tomorrow => 'Morgen';
 }

@@ -2,21 +2,16 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
-import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../bloc/menu_cubit/cubit.dart';
-import '../../extensions/extensions.dart';
 import '../../pages/pages.dart';
 import '../../pages/taste_profile_page.dart';
 import '../../repository/api/api.dart';
 import '../../repository/api/models/mensa/image_model.dart';
 import '../../services/services.dart';
 import '../../widgets/widgets.dart';
-import '../views.dart';
 
 class MensaDetailsContentView extends StatelessWidget {
   const MensaDetailsContentView({
@@ -32,9 +27,6 @@ class MensaDetailsContentView extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final localizations = context.locals.canteen;
-    final appLocalizations = context.locals.app;
-    final openingHours = mensaModel.openingHours;
-    final mensaStatus = openingHours.mensaStatus;
 
     return Scaffold(
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
@@ -43,120 +35,10 @@ class MensaDetailsContentView extends StatelessWidget {
           _AppBarWithImage(mensaModel: mensaModel, colors: colors, localizations: localizations),
           SliverToBoxAdapter(
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: LmuSizes.mediumLarge,
-                    right: LmuSizes.mediumLarge,
-                    top: LmuSizes.mediumSmall,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: LmuSizes.medium),
-                      Row(
-                        children: [
-                          LmuText.h1(mensaModel.name),
-                          const SizedBox(width: 8),
-                          MensaTag(type: mensaModel.type),
-                        ],
-                      ),
-                      const SizedBox(height: LmuSizes.medium),
-                      Row(
-                        children: [
-                          LmuButton(
-                            title: "${mensaModel.ratingModel.likeCount.formattedLikes} Likes",
-                            emphasis: ButtonEmphasis.secondary,
-                            onTap: () {},
-                          ),
-                          const SizedBox(width: LmuSizes.mediumSmall),
-                          LmuButton(
-                            title: "Google Maps",
-                            emphasis: ButtonEmphasis.secondary,
-                            onTap: () {
-                              final lng = mensaModel.location.longitude;
-                              final lat = mensaModel.location.latitude;
-                              LmuUrlLauncher.launchWebsite(
-                                context: context,
-                                url: "https://www.google.com/maps/search/?api=1&query=$lat,$lng",
-                                mode: LmuUrlLauncherMode.externalApplication,
-                              );
-                            },
-                          ),
-                          const SizedBox(width: LmuSizes.mediumSmall),
-                          LmuButton(
-                            title: localizations.share,
-                            emphasis: ButtonEmphasis.secondary,
-                            onTap: () {},
-                          )
-                        ],
-                      ),
-                      const SizedBox(height: LmuSizes.mediumLarge),
-                      LmuListItem.base(
-                        subtitle: mensaModel.location.address,
-                        hasHorizontalPadding: false,
-                      ),
-                      Divider(thickness: .5, height: 0, color: colors.neutralColors.borderColors.seperatorLight),
-                      LmuListDropdown(
-                        title: "Heute geschlossen",
-                        titleColor: mensaStatus.textColor(colors),
-                        items: openingHours.asMap().entries.map((entry) {
-                          final index = entry.key;
-                          final e = entry.value;
-                          final weekday = DateTime.now().weekday;
-
-                          return weekday - 1 == index
-                              ? LmuListItem.base(
-                                  title: e.mapToDay(appLocalizations),
-                                  hasVerticalPadding: false,
-                                  hasHorizontalPadding: false,
-                                  trailingTitle:
-                                      '${e.startTime.substring(0, e.startTime.length - 3)} - ${e.endTime.substring(0, e.endTime.length - 3)}',
-                                )
-                              : LmuListItem.base(
-                                  subtitle: e.mapToDay(appLocalizations),
-                                  hasVerticalPadding: false,
-                                  hasHorizontalPadding: false,
-                                  trailingSubtitle:
-                                      '${e.startTime.substring(0, e.startTime.length - 3)} - ${e.endTime.substring(0, e.endTime.length - 3)}',
-                                );
-                        }).toList(),
-                      ),
-                      const SizedBox(height: LmuSizes.mediumLarge),
-                    ],
-                  ),
-                ),
-                LmuTabBar(
-                  items: const [
-                    LmuTabBarItemData(title: "Heute"),
-                    LmuTabBarItemData(title: "Morgen"),
-                    LmuTabBarItemData(title: "Mo. 14"),
-                    LmuTabBarItemData(title: "Di. 15"),
-                    LmuTabBarItemData(title: "Mi. 16"),
-                    LmuTabBarItemData(title: "Do. 17"),
-                    LmuTabBarItemData(title: "Fr. 18"),
-                    LmuTabBarItemData(title: "Sa. 19"),
-                  ],
-                  onTabChanged: (index, _) {
-                    print("Tab changed");
-                  },
-                ),
-                Divider(
-                  height: 0.5,
-                  color: colors.neutralColors.borderColors.seperatorLight,
-                ),
-                BlocBuilder<MenuCubit, MenuState>(
-                  builder: (context, state) {
-                    if (state is! MenuLoadSuccess) {
-                      return const MensaMenuLoadingView();
-                    }
-
-                    return MensaMenuContentView(
-                      mensaMenuModels: state.mensaMenuModels,
-                      currentDayOfWeek: currentDayOfWeek,
-                    );
-                  },
-                ),
+                MensaDetailsInfoSection(mensaModel: mensaModel),
+                const MensaDetailsMenuSection(),
                 const SizedBox(height: LmuSizes.medium),
               ],
             ),

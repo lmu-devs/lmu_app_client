@@ -169,7 +169,7 @@ class EmptyFavoritesContainer extends StatelessWidget {
                 SvgPicture.asset(
                   'assets/star.svg',
                   package: 'mensa',
-                  semanticsLabel: context.locals.app.icon_star,
+                  semanticsLabel: context.locals.app.iconStar,
                   width: LmuSizes.mediumLarge,
                   height: LmuSizes.mediumLarge,
                   colorFilter: ColorFilter.mode(

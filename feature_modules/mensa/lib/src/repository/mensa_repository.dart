@@ -50,6 +50,7 @@ class ConnectedMensaRepository implements MensaRepository {
   static const String _pasteProfileSelectionsKey = 'taste_profile_selections_key';
 
   static const String _mensaSortOptionKey = 'mensa_user_preferences';
+  static const String _menuBaseKey = 'mensa_menu_base_key';
 
   /// Function to fetch mensa models from the API, [forceRefresh] parameter can be used to ignore the cache
   @override
@@ -116,10 +117,28 @@ class ConnectedMensaRepository implements MensaRepository {
 
   @override
   Future<List<MenuDayModel>> getMenuDayForMensa(String canteenId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final key = '$_menuBaseKey$canteenId';
+
     try {
       final mensaMenuModels = await mensaApiClient.getMenuDayForMensa(canteenId);
+      await prefs.setString(key, json.encode(mensaMenuModels.map((e) => e.toJson()).toList()));
       return mensaMenuModels;
     } catch (e) {
+      final cachedMenu = prefs.getString(key);
+      if (cachedMenu != null) {
+        final jsonList = json.decode(cachedMenu) as List<dynamic>;
+        final menuModels = jsonList.map((json) => MenuDayModel.fromJson(json as Map<String, dynamic>)).toList();
+        final today = DateTime.now();
+        final todayString = '${today.year}-${today.month}-${today.day}';
+        final todayIndex = menuModels.indexWhere((element) => element.date == todayString);
+        if (todayIndex == -1) {
+          await prefs.remove(key);
+          rethrow;
+        }
+        final filteredMenuModels = menuModels.sublist(todayIndex);
+        return filteredMenuModels;
+      }
       rethrow;
     }
   }

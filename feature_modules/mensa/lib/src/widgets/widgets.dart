@@ -1,3 +1,5 @@
+export 'details/mensa_details_info_section.dart';
+export 'details/mensa_details_menu_section.dart';
 export 'mensa_tag.dart';
 export 'mensa_week_view.dart';
 export 'overview/loading/mensa_overview_tile_loading.dart';

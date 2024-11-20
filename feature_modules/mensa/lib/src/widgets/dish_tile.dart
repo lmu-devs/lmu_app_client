@@ -54,7 +54,6 @@ class DishTile extends StatelessWidget {
                         Flexible(
                           child: LmuText.body(
                             dishModel.title,
-                            weight: FontWeight.w600,
                           ),
                         ),
                         const SizedBox(

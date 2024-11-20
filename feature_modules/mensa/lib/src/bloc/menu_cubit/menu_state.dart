@@ -16,13 +16,13 @@ class MenuLoadInProgress extends MenuState {
 
 class MenuLoadSuccess extends MenuState {
   MenuLoadSuccess({
-    required this.mensaMenuModels,
+    required this.menuModels,
   });
 
-  final List<MenuDayModel> mensaMenuModels;
+  final List<MenuDayModel> menuModels;
 
   @override
-  List<Object?> get props => [mensaMenuModels];
+  List<Object?> get props => [menuModels];
 }
 
 class MenuLoadFailure extends MenuState {
