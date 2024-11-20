@@ -11,5 +11,6 @@
   "undo": "Rückgängig",
   "reset": "Zurücksetzen",
   "favoriteAdded": "Favorit hinzugefügt",
-  "favoriteRemoved": "Favorit entfernt"
+  "favoriteRemoved": "Favorit entfernt",
+  "icon_star": "Stern"
 }

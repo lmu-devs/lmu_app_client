@@ -11,8 +11,7 @@ ImageModel _$ImageModelFromJson(Map<String, dynamic> json) => ImageModel(
       name: json['name'] as String?,
     );
 
-Map<String, dynamic> _$ImageModelToJson(ImageModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ImageModelToJson(ImageModel instance) => <String, dynamic>{
       'url': instance.url,
       'name': instance.name,
     };

@@ -3,7 +3,7 @@ import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mensa/src/utils/get_dish_type_emoji.dart';
+import '../utils/get_dish_type_emoji.dart';
 import 'package:core/localizations.dart';
 
 import '../repository/api/models/dish_model.dart';
@@ -70,8 +70,7 @@ class DishTile extends StatelessWidget {
                         children: [
                           LmuText.bodyXSmall(
                             dishModel.ratingModel.likeCount.toString(),
-                            color: context.colors.neutralColors.textColors
-                                .weakColors.base,
+                            color: context.colors.neutralColors.textColors.weakColors.base,
                           ),
                           const SizedBox(width: LmuSizes.small),
                           StarIcon(isActive: isFavorite),
@@ -82,8 +81,7 @@ class DishTile extends StatelessWidget {
                       ),
                       LmuText.bodyXSmall(
                         dishModel.priceSimple,
-                        color: context
-                            .colors.neutralColors.textColors.weakColors.base,
+                        color: context.colors.neutralColors.textColors.weakColors.base,
                       ),
                     ],
                   ),
@@ -97,8 +95,7 @@ class DishTile extends StatelessWidget {
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
-                  final userPreferencesService =
-                      GetIt.I.get<MensaUserPreferencesService>();
+                  final userPreferencesService = GetIt.I.get<MensaUserPreferencesService>();
                   final id = dishModel.id;
 
                   LmuVibrations.vibrate(type: VibrationType.secondary);
@@ -110,8 +107,7 @@ class DishTile extends StatelessWidget {
                       message: localizations.favoriteRemoved,
                       actionText: localizations.undo,
                       onActionPressed: () {
-                        userPreferencesService
-                            .toggleFavoriteDishId(id.toString());
+                        userPreferencesService.toggleFavoriteDishId(id.toString());
                       },
                     );
                   } else {

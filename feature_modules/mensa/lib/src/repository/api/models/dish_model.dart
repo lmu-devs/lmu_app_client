@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:mensa/src/repository/api/models/rating_model.dart';
+import 'rating_model.dart';
 import 'price_model.dart';
 
 part 'dish_model.g.dart';

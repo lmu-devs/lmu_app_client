@@ -34,7 +34,7 @@ class MensaOverviewContentView extends StatelessWidget {
             LmuTileHeadline.base(
               title: localizations.favorites,
             ),
-            MensaOverivewFavoriteSection(mensaModels: mensaModels),
+            MensaOverviewFavoriteSection(mensaModels: mensaModels),
             const SizedBox(height: LmuSizes.xxlarge),
             LmuTileHeadline.base(
               title: localizations.allCanteens,

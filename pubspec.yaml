@@ -38,7 +38,7 @@ dependencies:
   fluttertoast: ^8.2.8
   scrollable_positioned_list: ^0.3.8
   skeletonizer: ^1.4.2
-  flutter_native_splash: ^2.4.1
+  flutter_native_splash: ^2.3.1
 
 dev_dependencies:
   flutter_test:
@@ -47,6 +47,7 @@ dev_dependencies:
   go_router_builder: ^2.7.1
   build_runner: any
   build_verify: any
+  husky: ^0.1.7
 
 
 flutter:

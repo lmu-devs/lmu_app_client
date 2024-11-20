@@ -88,10 +88,7 @@ abstract class CanteenLocalizations {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[
-    Locale('de'),
-    Locale('en')
-  ];
+  static const List<Locale> supportedLocales = <Locale>[Locale('de'), Locale('en')];
 
   /// The title of the meals tab
   ///
@@ -266,6 +263,18 @@ abstract class CanteenLocalizations {
   /// In en, this message translates to:
   /// **'Currently closed'**
   String get closedDetailed;
+
+  /// Empty favorites text before star icon
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the '**
+  String get emptyFavoritesBefore;
+
+  /// Empty favorites text after star icon
+  ///
+  /// In en, this message translates to:
+  /// **' icon to add favorites here'**
+  String get emptyFavoritesAfter;
 }
 
 class _CanteenLocalizationsDelegate extends LocalizationsDelegate<CanteenLocalizations> {
@@ -284,18 +293,16 @@ class _CanteenLocalizationsDelegate extends LocalizationsDelegate<CanteenLocaliz
 }
 
 CanteenLocalizations lookupCanteenLocalizations(Locale locale) {
-
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'de': return CanteenLocalizationsDe();
-    case 'en': return CanteenLocalizationsEn();
+    case 'de':
+      return CanteenLocalizationsDe();
+    case 'en':
+      return CanteenLocalizationsEn();
   }
 
-  throw FlutterError(
-    'CanteenLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-    'an issue with the localizations generation tool. Please file an issue '
-    'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.'
-  );
+  throw FlutterError('CanteenLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+      'an issue with the localizations generation tool. Please file an issue '
+      'on GitHub with a reproducible sample app and the gen-l10n configuration '
+      'that was used.');
 }

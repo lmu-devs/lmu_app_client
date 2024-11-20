@@ -1,4 +1,4 @@
-import 'package:mensa/src/utils/mensa_day.dart';
+import 'mensa_day.dart';
 
 List<MensaDay> getMensaDays({bool excludeWeekend = true}) {
   List<MensaDay> mensaDays = [];
