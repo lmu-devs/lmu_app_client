@@ -1,8 +1,8 @@
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:core/localizations.dart';
 
 class StarIcon extends StatelessWidget {
   const StarIcon({Key? key, this.isActive = false}) : super(key: key);
@@ -30,7 +30,7 @@ class StarIcon extends StatelessWidget {
       },
       child: SvgPicture.asset(
         "assets/star.svg",
-        semanticsLabel: localization.icon_star,
+        semanticsLabel: localization.iconStar,
         key: ValueKey(isActive),
         package: "mensa",
         width: LmuSizes.large,

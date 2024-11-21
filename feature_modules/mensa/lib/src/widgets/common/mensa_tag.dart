@@ -4,7 +4,7 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
-import '../repository/api/models/mensa_type.dart';
+import '../../repository/api/models/mensa/mensa_type.dart';
 
 class MensaTag extends StatelessWidget {
   const MensaTag({

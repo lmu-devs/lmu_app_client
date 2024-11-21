@@ -1,11 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import 'price_category.dart';
+
 part 'price_model.g.dart';
 
 @JsonSerializable()
 class PriceModel extends Equatable {
-  final String category;
+  final PriceCategory category;
   @JsonKey(name: 'base_price')
   final double basePrice;
   @JsonKey(name: 'price_per_unit')

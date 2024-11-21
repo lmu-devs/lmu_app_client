@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../repository/api/models/mensa_model.dart';
+import '../../repository/api/models/mensa/mensa_model.dart';
 import '../../services/mensa_user_preferences_service.dart';
 import '../widgets.dart';
 
@@ -169,7 +169,7 @@ class EmptyFavoritesContainer extends StatelessWidget {
                 SvgPicture.asset(
                   'assets/star.svg',
                   package: 'mensa',
-                  semanticsLabel: context.locals.app.icon_star,
+                  semanticsLabel: context.locals.app.iconStar,
                   width: LmuSizes.mediumLarge,
                   height: LmuSizes.mediumLarge,
                   colorFilter: ColorFilter.mode(

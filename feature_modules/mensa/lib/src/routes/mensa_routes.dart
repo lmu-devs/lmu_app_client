@@ -1,7 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+
 import '../pages/pages.dart';
-import '../repository/api/models/mensa_model.dart';
+import '../repository/api/models/mensa/mensa_model.dart';
 
 part 'mensa_routes.g.dart';
 

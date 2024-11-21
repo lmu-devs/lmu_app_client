@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../public_api/models/mensa_location_data.dart';
+import '../../../../public_api/models/mensa_location_data.dart';
 
 part 'mensa_location.g.dart';
 
@@ -10,7 +10,11 @@ class MensaLocation extends MensaLocationData {
     required String address,
     required double latitude,
     required double longitude,
-  }) : super(address: address, latitude: latitude, longitude: longitude);
+  }) : super(
+          address: address,
+          latitude: latitude,
+          longitude: longitude,
+        );
 
   factory MensaLocation.placeholder() => const MensaLocation(
         address: '',

@@ -1,7 +1,6 @@
 {
   "@@locale": "en",
   "@@context": "AppWide",
-
   "appTitle": "Munich Students",
   "@appTitle": {
     "description": "The title of the app"
@@ -41,10 +40,17 @@
   "favoriteRemoved": "Favorite removed",
   "@favoriteRemoved": {
     "description": "Favorite removed"
-  }, 
-  "icon_star": "Star",
-  "@icon_star": {
+  },
+  "iconStar": "Star",
+  "@iconStar": {
     "description": "Star icon"
+  },
+  "today": "Today",
+  "@today": {
+    "description": "Today"
+  },
+  "tomorrow": "Tomorrow",
+  "@tomorrow": {
+    "description": "Tomorrow"
   }
-
 }

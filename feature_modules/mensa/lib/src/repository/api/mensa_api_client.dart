@@ -2,15 +2,15 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import 'models/mensa_menu_week_model.dart';
-import 'models/mensa_model.dart';
+import 'api.dart';
+import 'models/menu/menu_day_model.dart';
 import 'models/taste_profile/taste_profile_model.dart';
 
 class MensaApiClient {
   Future<List<MensaModel>> getMensaModels() async {
     try {
       final response = await http.get(
-        Uri.parse('https://api.lmu-dev.org/eat/v1/canteens'),
+        Uri.parse(MensaApiEndpoints.getMensaModels()),
       );
 
       if (response.statusCode == 200) {
@@ -24,17 +24,15 @@ class MensaApiClient {
     }
   }
 
-  Future<List<MensaMenuWeekModel>> getMensaMenusForSpecificWeek(
-      String canteenId, int year, String week, bool liked) async {
+  Future<List<MenuDayModel>> getMenuDayForMensa(String canteenId) async {
     try {
       final response = await http.get(
-        Uri.parse(
-            'https://api.lmu-dev.org/eat/v1/menus?year=$year&week=$week&canteen_id=$canteenId&only_liked_canteens=$liked'),
+        Uri.parse(MensaApiEndpoints.getMenuDayForMensa(canteenId)),
       );
 
       if (response.statusCode == 200) {
         final jsonList = json.decode(response.body) as List<dynamic>;
-        return jsonList.map((json) => MensaMenuWeekModel.fromJson(json as Map<String, dynamic>)).toList();
+        return jsonList.map((json) => MenuDayModel.fromJson(json as Map<String, dynamic>)).toList();
       } else {
         throw Exception('Failed to load menu data for mensa');
       }
@@ -46,9 +44,7 @@ class MensaApiClient {
   Future<TasteProfileModel> getTasteProfile() async {
     try {
       final response = await http.get(
-        Uri.parse(
-          "https://api.lmu-dev.org/eat/v1/taste-profile",
-        ),
+        Uri.parse(MensaApiEndpoints.getTasteProfile()),
       );
 
       if (response.statusCode == 200) {

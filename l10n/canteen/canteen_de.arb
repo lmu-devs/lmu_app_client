@@ -3,7 +3,8 @@
     "@@context": "Canteen",
     "tabTitle": "Mensa",
     "openNow": "Jetzt geöffnet",
-    "closingSoon": "Geöffnet bis {time} Uhr",
+    "openUntil": "Geöffnet bis {time} Uhr",
+    "openingSoon": "Öffnet um {time} Uhr",
     "closed": "Geschlossen",
     "allCanteens": "Alle Mensen",
     "favorites": "Favoriten",
@@ -28,8 +29,11 @@
     "noConnection": "Keine Verbindung",
     "retry": "Neu laden",
     "share": "Teilen",
-    "closingSoonDetailed": "Heute geöffnet bis {time}",
+    "openDetails": "Geöffnet von {openingTime}-{closingTime} Uhr",
     "closedDetailed": "Gerade geschlossen",
     "emptyFavoritesBefore": "Füge Favoriten mit dem ",
-    "emptyFavoritesAfter": " Symbol hinzu"
+    "emptyFavoritesAfter": " Symbol hinzu",
+    "students": "Studenten",
+    "staff": "Mitarbeiter",
+    "guests": "Gäste"
 }

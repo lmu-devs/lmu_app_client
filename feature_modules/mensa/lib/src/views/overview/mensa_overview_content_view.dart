@@ -4,7 +4,7 @@ import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 
 import '../../extensions/sort_option_sort_extension.dart';
-import '../../repository/api/models/mensa_model.dart';
+import '../../repository/api/models/mensa/mensa_model.dart';
 import '../../repository/api/models/user_preferences/sort_option.dart';
 import '../../widgets/widgets.dart';
 

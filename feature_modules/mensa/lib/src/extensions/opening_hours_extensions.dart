@@ -4,12 +4,13 @@ import 'package:collection/collection.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 
-import '../repository/api/models/mensa_opening_hours.dart';
+import '../repository/api/models/mensa/mensa_opening_hours.dart';
 
 enum MensaStatus {
-  closed,
+  openingSoon,
   open,
   closingSoon,
+  closed,
 }
 
 // Add the new extension for day mapping
@@ -42,8 +43,9 @@ extension OpeningHoursExtension on List<MensaOpeningHours> {
     final startTime = _parseTime(todaysHours.startTime, now);
     final endTime = _parseTime(todaysHours.endTime, now);
     final closingSoonThreshold = endTime.subtract(const Duration(minutes: 30));
-
-    if (now.isAfter(startTime) && now.isBefore(closingSoonThreshold)) {
+    if (now.isBefore(startTime)) {
+      return MensaStatus.openingSoon;
+    } else if (now.isAfter(startTime) && now.isBefore(closingSoonThreshold)) {
       return MensaStatus.open;
     } else if (now.isAfter(closingSoonThreshold) && now.isBefore(endTime)) {
       return MensaStatus.closingSoon;
@@ -58,6 +60,14 @@ extension OpeningHoursExtension on List<MensaOpeningHours> {
 
     final endTime = _parseTime(todaysHours.endTime, DateTime.now());
     return "${endTime.hour.toString().padLeft(2, '0')}:${endTime.minute.toString().padLeft(2, '0')}";
+  }
+
+  String get openingTime {
+    final todaysHours = _getTodaysHours(DateTime.now());
+    if (todaysHours == null) return "";
+
+    final startTime = _parseTime(todaysHours.startTime, DateTime.now());
+    return "${startTime.hour.toString().padLeft(2, '0')}:${startTime.minute.toString().padLeft(2, '0')}";
   }
 
   MensaOpeningHours? _getTodaysHours(DateTime now) {
@@ -84,11 +94,12 @@ extension OpeningHoursExtension on List<MensaOpeningHours> {
 }
 
 extension MensaStatusExtension on MensaStatus {
-  Color textColor(LmuColors colors) {
+  Color color(LmuColors colors) {
     switch (this) {
       case MensaStatus.open:
         return colors.successColors.textColors.strongColors.base;
       case MensaStatus.closed:
+      case MensaStatus.openingSoon:
         return colors.neutralColors.textColors.mediumColors.base;
       case MensaStatus.closingSoon:
         return colors.warningColors.textColors.strongColors.base;
@@ -98,14 +109,19 @@ extension MensaStatusExtension on MensaStatus {
   String text(
     CanteenLocalizations localizations, {
     required List<MensaOpeningHours> openingHours,
+    bool short = false,
   }) {
     switch (this) {
       case MensaStatus.open:
-        return localizations.openNow;
+      case MensaStatus.closingSoon:
+        return localizations.openUntil(openingHours.closingTime);
       case MensaStatus.closed:
         return localizations.closed;
-      case MensaStatus.closingSoon:
-        return localizations.closingSoon(openingHours.closingTime);
+      case MensaStatus.openingSoon:
+        if (short) {
+          return localizations.openingSoon(openingHours.openingTime);
+        }
+        return localizations.openDetails(openingHours.openingTime, openingHours.closingTime);
     }
   }
 }

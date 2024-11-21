@@ -154,7 +154,19 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Star'**
-  String get icon_star;
+  String get iconStar;
+
+  /// Today
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// Tomorrow
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get tomorrow;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
