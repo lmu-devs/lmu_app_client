@@ -14,7 +14,7 @@ class MenuService {
 
   final MensaRepository _mensaRepository = GetIt.I.get<MensaRepository>();
 
-  ValueNotifier<List<MenuDayModel>?> _mensaMenuModels = ValueNotifier(null);
+  final ValueNotifier<List<MenuDayModel>?> _mensaMenuModels = ValueNotifier(null);
 
   ValueNotifier<List<MenuDayModel>?> get mensaMenuModels => _mensaMenuModels;
 

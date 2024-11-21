@@ -50,13 +50,13 @@ class MenuDetailsPage extends StatelessWidget {
                     emphasis: ButtonEmphasis.secondary,
                   ),
                   const SizedBox(width: LmuSizes.mediumSmall),
-                  LmuButton(
+                  const LmuButton(
                     title: "Erinnere mich",
                     trailingIcon: LucideIcons.bell,
                     emphasis: ButtonEmphasis.secondary,
                   ),
                   const SizedBox(width: LmuSizes.mediumSmall),
-                  LmuButton(
+                  const LmuButton(
                     title: "Teilen",
                     emphasis: ButtonEmphasis.secondary,
                   ),
