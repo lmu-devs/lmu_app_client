@@ -32,5 +32,8 @@
     "openDetails": "Geöffnet von {openingTime}-{closingTime} Uhr",
     "closedDetailed": "Gerade geschlossen",
     "emptyFavoritesBefore": "Füge Favoriten mit dem ",
-    "emptyFavoritesAfter": " Symbol hinzu"
+    "emptyFavoritesAfter": " Symbol hinzu",
+    "students": "Studenten",
+    "staff": "Mitarbeiter",
+    "guests": "Gäste"
 }

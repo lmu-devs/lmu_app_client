@@ -105,4 +105,13 @@ class CanteenLocalizationsDe extends CanteenLocalizations {
 
   @override
   String get emptyFavoritesAfter => ' Symbol hinzu';
+
+  @override
+  String get students => 'Studenten';
+
+  @override
+  String get staff => 'Mitarbeiter';
+
+  @override
+  String get guests => 'Gäste';
 }

@@ -284,6 +284,24 @@ abstract class CanteenLocalizations {
   /// In en, this message translates to:
   /// **' icon to add favorites here'**
   String get emptyFavoritesAfter;
+
+  /// Students
+  ///
+  /// In en, this message translates to:
+  /// **'Students'**
+  String get students;
+
+  /// Staff
+  ///
+  /// In en, this message translates to:
+  /// **'Staff'**
+  String get staff;
+
+  /// Guests
+  ///
+  /// In en, this message translates to:
+  /// **'Guests'**
+  String get guests;
 }
 
 class _CanteenLocalizationsDelegate extends LocalizationsDelegate<CanteenLocalizations> {

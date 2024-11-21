@@ -1,7 +1,9 @@
+import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../pages/pages.dart';
 import '../../../repository/api/models/menu/menu_day_model.dart';
 import '../../../services/mensa_user_preferences_service.dart';
 import '../../../widgets/details/menu/menu_item_tile.dart';
@@ -43,7 +45,14 @@ class MenuContentView extends StatelessWidget {
               child: MenuItemTile(
                 menuItemModel: dishModel,
                 onTap: () {
-                  print("Du geiler Hund");
+                  final initialPriceCategory = GetIt.I.get<MensaUserPreferencesService>().initialPriceCategory;
+                  LmuBottomSheet.showExtended(
+                    context,
+                    content: MenuDetailsPage(
+                      menuItemModel: dishModel,
+                      initialPriceCategory: initialPriceCategory,
+                    ),
+                  );
                 },
                 isFavorite: isFavorite,
                 onFavoriteTap: () {},

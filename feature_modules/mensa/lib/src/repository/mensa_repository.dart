@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'api/mensa_api_client.dart';
 import 'api/models/mensa/mensa_model.dart';
 import 'api/models/menu/menu_day_model.dart';
+import 'api/models/menu/price_category.dart';
 import 'api/models/taste_profile/taste_profile.dart';
 import 'api/models/user_preferences/sort_option.dart';
 
@@ -30,6 +31,10 @@ abstract class MensaRepository {
   Future<SortOption?> getSortOption();
 
   Future<void> setSortOption(SortOption mensaUserPreferences);
+
+  Future<PriceCategory?> getPriceCategory();
+
+  Future<void> setPriceCategory(PriceCategory priceCategory);
 }
 
 /// MensaRepository implementation for fetching mensa data from the API
@@ -49,7 +54,8 @@ class ConnectedMensaRepository implements MensaRepository {
 
   static const String _pasteProfileSelectionsKey = 'taste_profile_selections_key';
 
-  static const String _mensaSortOptionKey = 'mensa_user_preferences';
+  static const String _mensaSortOptionKey = 'mensa_sort_option';
+  static const String _menuPriceCategory = 'menu_price_category';
   static const String _menuBaseKey = 'mensa_menu_base_key';
 
   /// Function to fetch mensa models from the API, [forceRefresh] parameter can be used to ignore the cache
@@ -197,5 +203,30 @@ class ConnectedMensaRepository implements MensaRepository {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setString(_mensaSortOptionKey, sortOption.name);
+  }
+
+  @override
+  Future<PriceCategory?> getPriceCategory() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final cachedPriceCategory = prefs.getString(_menuPriceCategory);
+
+    if (cachedPriceCategory == null) {
+      return null;
+    }
+
+    for (var element in PriceCategory.values) {
+      if (element.name == cachedPriceCategory) {
+        return element;
+      }
+    }
+    return null;
+  }
+
+  @override
+  Future<void> setPriceCategory(PriceCategory priceCategory) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString(_menuPriceCategory, priceCategory.name);
   }
 }

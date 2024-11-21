@@ -150,5 +150,17 @@
   "emptyFavoritesAfter": " icon to add favorites here",
   "@emptyFavoritesAfter": {
     "description": "Empty favorites text after star icon"
+  },
+  "students": "Students",
+  "@students": {
+    "description": "Students"
+  },
+  "staff": "Staff",
+  "@staff": {
+    "description": "Staff"
+  },
+  "guests": "Guests",
+  "@guests": {
+    "description": "Guests"
   }
 }
