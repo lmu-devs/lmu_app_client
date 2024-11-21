@@ -32,7 +32,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MBXAccessToken</key>
-	<string>sk.eyJ1IjoiZWFkcmF4LW15am91cm5leSIsImEiOiJjbGs2bjlrdzYwMDR6M2RwaHA4d25meXlsIn0.a0jbkKjoon1rk79B5_piuQ</string>
+	<string>pk.eyJ1IjoibHVrYXNwbGVuayIsImEiOiJjbTJ4OWRvcXkwMmJoMmxyMzNreHJnemp0In0.Y2tZBr2Ek1F-s-yP2DxnNA</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
     <string>Your location is needed to show distances to university buildings and cafeterias, and to display nearby facilities on the map.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -48,7 +48,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

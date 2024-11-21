@@ -27,7 +27,6 @@ class AnnotationClickListener extends OnPointAnnotationClickListener {
 
   @override
   void onPointAnnotationClick(PointAnnotation annotation) {
-    print("onAnnotationClick, id: ${annotation.id}");
     onAnnotationClick(annotation);
   }
 }
@@ -44,7 +43,8 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
 
   MapboxMap? mapboxMap;
   PointAnnotationManager? pointAnnotationManager;
-  List<MensaLocationData> mensaLocations = [];
+  List<MensaModel> mensaData = [];
+  Map<String, MensaModel> mensaPins = {};
 
   Future<void> _requestLocationPermission() async {
     final prefs = await SharedPreferences.getInstance();
@@ -114,19 +114,25 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
     pointAnnotationManager = await mapboxMap.annotations.createPointAnnotationManager();
 
     var options = <PointAnnotationOptions>[];
-    for (final location in mensaLocations) {
-      options.add(
-        PointAnnotationOptions(
-          geometry: Point(
-            coordinates: Position(
-              location.longitude,
-              location.latitude,
-            ),
+    for (final mensa in mensaData) {
+      var annotationOptions = PointAnnotationOptions(
+        geometry: Point(
+          coordinates: Position(
+            mensa.location.longitude,
+            mensa.location.latitude,
           ),
-          iconImage: "mensa_pin",
-          iconSize: 1,
         ),
+        iconImage: "mensa_pin",
+        iconSize: 1,
       );
+
+      options.add(annotationOptions);
+    }
+
+    List<PointAnnotation?>? annotations = await pointAnnotationManager?.createMulti(options);
+
+    for (int i = 0; i < annotations!.length; i++) {
+      mensaPins[annotations[i]!.id] = mensaData[i];
     }
 
     await pointAnnotationManager?.createMulti(options);
@@ -134,6 +140,11 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
     pointAnnotationManager?.addOnPointAnnotationClickListener(
       AnnotationClickListener(
         onAnnotationClick: (annotation) {
+          MensaModel? mensa = mensaPins[annotation.id];
+          if (mensa != null) {
+            print("Mensa name: ${mensa.name}");
+          }
+
           mapboxMap.easeTo(
             CameraOptions(
               center: annotation.geometry,
@@ -165,7 +176,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   void initState() {
     super.initState();
     _requestLocationPermission();
-    mensaLocations = GetIt.I.get<MensaPublicApi>().testLocations;
+    mensaData = GetIt.I.get<MensaPublicApi>().mensaData;
   }
 
   @override
