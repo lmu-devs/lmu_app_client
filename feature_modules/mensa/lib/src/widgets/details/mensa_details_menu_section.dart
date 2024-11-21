@@ -37,7 +37,6 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
               items: menuModels.map(
                 (dayModel) {
                   final dateTime = DateTime.parse(dayModel.date);
-                  print(dateTime);
                   return LmuTabBarItemData(
                     title: dateTime.dayName(context.locals.app),
                   );

@@ -2,8 +2,9 @@ import 'package:core/components.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../bloc/mensa_current_day_cubit/mensa_current_day_cubit.dart';
-import '../utils/utils.dart';
+
+import '../../bloc/mensa_current_day_cubit/mensa_current_day_cubit.dart';
+import '../../utils/utils.dart';
 
 class MensaWeekView extends StatefulWidget {
   const MensaWeekView({

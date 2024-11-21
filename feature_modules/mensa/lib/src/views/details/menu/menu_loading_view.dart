@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/menu_cubit/cubit.dart';
-import '../../../widgets/loading/dish_tile_loading.dart';
+import '../../../widgets/details/menu/loading/menu_item_tile_loading.dart';
 
 class MenuLoadingView extends StatelessWidget {
   const MenuLoadingView({super.key});
@@ -50,7 +50,7 @@ class MenuLoadingView extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: LmuSizes.mediumSmall),
                 child: LmuSkeleton(
                   context: context,
-                  child: const DishTileLoading(),
+                  child: const MenuItemTileLoading(),
                 ),
               );
             },

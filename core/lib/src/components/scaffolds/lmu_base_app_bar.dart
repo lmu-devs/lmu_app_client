@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:core/constants.dart';
@@ -17,12 +18,13 @@ class LmuBaseAppBar extends StatefulWidget {
     this.trailingWidget,
     this.backgroundColor,
     this.largeTitleTrailingWidget,
-    this.largeTitleHeight,
     this.collapsedTitleHeight,
     this.alwaysShowCollapsedTitle = false,
     this.stretch = true,
     this.scrollController,
     this.onRefresh,
+    this.appBarWidth = 393,
+    required this.textTheme,
   }) : super(key: key);
 
   final Widget body;
@@ -35,13 +37,15 @@ class LmuBaseAppBar extends StatefulWidget {
   final Widget? largeTitleTrailingWidget;
 
   final Color? backgroundColor;
-  final double? largeTitleHeight;
   final double? collapsedTitleHeight;
   final bool alwaysShowCollapsedTitle;
   final bool stretch;
 
   final ScrollController? scrollController;
   final void Function()? onRefresh;
+
+  final double appBarWidth;
+  final LmuTextTheme textTheme;
 
   @override
   State<LmuBaseAppBar> createState() => _LmuBaseAppBarState();
@@ -51,21 +55,30 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
   late ScrollController _scrollController;
   final _scrollOffsetNotifier = ValueNotifier<double>(0);
 
+  double _calculatedLargeTitleHeight = 0;
+  int _maxLines = 0;
+
   @override
   void initState() {
     super.initState();
+
+    final span = TextSpan(
+      text: _largeTitle,
+      style: widget.textTheme.h0,
+    );
+    final tp = TextPainter(text: span, textDirection: TextDirection.ltr, maxLines: 3);
+    tp.layout(maxWidth: widget.appBarWidth - LmuSizes.xxlarge);
+    _maxLines = min(tp.computeLineMetrics().length, 3);
+
+    const largeTitleLineHeight = 36.0;
+    _calculatedLargeTitleHeight = largeTitleLineHeight * _maxLines;
+
     _scrollController = widget.scrollController ?? ScrollController();
     _scrollController.addListener(() {
       final offset = _scrollController.offset;
       _scrollOffsetNotifier.value = offset;
-
-      if (offset < _refreshThreshold) {
-        //widget.onRefresh?.call();
-      }
     });
   }
-
-  double get _refreshThreshold => -100;
 
   String get _largeTitle => widget.largeTitle;
   String get _collapsedTitle => widget.collapsedTitle ?? _largeTitle;
@@ -78,7 +91,7 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
   bool get _stretch => widget.stretch;
 
   double get _collapsedTitleHeight => widget.collapsedTitleHeight ?? 40.0;
-  double get _largeTitleHeight => widget.largeTitleHeight ?? 48.0;
+  double get _largeTitleHeight => _calculatedLargeTitleHeight + LmuSizes.medium;
   double get _appBarHeight => _collapsedTitleHeight + _largeTitleHeight;
   double get _maxScrollHeight => 3000.0;
 
@@ -107,9 +120,7 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
   @override
   Widget build(BuildContext context) {
     final topPadding = MediaQuery.of(context).padding.top;
-
-    final textColors = context.colors.neutralColors.textColors;
-    final textStyles = getBaseTextTheme("Inter", textColors);
+    final textStyles = widget.textTheme;
     final titleStyle = textStyles.h3;
     final largeTitleStyle = textStyles.h0;
 
@@ -183,7 +194,9 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
                           bottom: false,
                           child: NavigationToolbar(
                             leading: Padding(
-                              padding: const EdgeInsets.only(left: LmuSizes.mediumLarge),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: LmuSizes.mediumLarge,
+                              ),
                               child: _leadingWidget,
                             ),
                             middle: Opacity(
@@ -191,10 +204,14 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
                               child: Text(
                                 _collapsedTitle,
                                 style: titleStyle,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                             trailing: Padding(
-                              padding: const EdgeInsets.only(right: LmuSizes.mediumLarge),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: LmuSizes.mediumLarge,
+                              ),
                               child: _trailingWidget,
                             ),
                             middleSpacing: 6.0,
@@ -213,16 +230,19 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
                                 right: 0,
                                 child: Row(
                                   children: [
-                                    Transform.scale(
-                                      scale: scaleTitle,
-                                      filterQuality: FilterQuality.high,
-                                      alignment: Alignment.bottomLeft,
-                                      child: Text(
-                                        _largeTitle,
-                                        style: largeTitleStyle,
+                                    Expanded(
+                                      child: Transform.scale(
+                                        scale: scaleTitle,
+                                        filterQuality: FilterQuality.high,
+                                        alignment: Alignment.bottomLeft,
+                                        child: Text(
+                                          _largeTitle,
+                                          style: largeTitleStyle,
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
                                     ),
-                                    const Spacer(),
                                     if (_largeTitleTrailingWidget != null) _largeTitleTrailingWidget!,
                                   ],
                                 ),

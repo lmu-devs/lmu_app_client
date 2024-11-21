@@ -14,7 +14,6 @@ class LmuScaffoldWithAppBar extends StatelessWidget {
     this.leadingWidget,
     this.customScrollController,
     this.stretch = true,
-    this.largeTitleHeight,
     this.collapsedTitleHeight,
     this.onRefresh,
   });
@@ -27,13 +26,14 @@ class LmuScaffoldWithAppBar extends StatelessWidget {
   final Widget? leadingWidget;
   final ScrollController? customScrollController;
   final bool stretch;
-  final double? largeTitleHeight;
   final double? collapsedTitleHeight;
   final void Function()? onRefresh;
 
   @override
   Widget build(BuildContext context) {
     final neutralColors = context.colors.neutralColors;
+    final width = MediaQuery.of(context).size.width;
+    final textTheme = context.textTheme;
     return Scaffold(
       backgroundColor: neutralColors.backgroundColors.base,
       body: LmuBaseAppBar(
@@ -46,9 +46,10 @@ class LmuScaffoldWithAppBar extends StatelessWidget {
         leadingWidget: leadingWidget,
         trailingWidget: trailingWidget,
         largeTitleTrailingWidget: largeTitleTrailingWidget,
-        largeTitleHeight: largeTitleHeight,
         collapsedTitleHeight: collapsedTitleHeight,
         onRefresh: onRefresh,
+        appBarWidth: width,
+        textTheme: textTheme,
       ),
     );
   }

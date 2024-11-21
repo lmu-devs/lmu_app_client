@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 
 import '../../../repository/api/models/menu/menu_day_model.dart';
 import '../../../services/mensa_user_preferences_service.dart';
-import '../../../widgets/dish_tile.dart';
+import '../../../widgets/details/menu/menu_item_tile.dart';
 
 class MenuContentView extends StatelessWidget {
   const MenuContentView({
@@ -40,8 +40,8 @@ class MenuContentView extends StatelessWidget {
             final dishModel = menuItems[index];
             return Padding(
               padding: const EdgeInsets.only(bottom: LmuSizes.mediumSmall),
-              child: DishTile(
-                dishModel: dishModel,
+              child: MenuItemTile(
+                menuItemModel: dishModel,
                 onTap: () {
                   print("Du geiler Hund");
                 },

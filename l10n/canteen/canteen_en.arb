@@ -1,7 +1,6 @@
 {
   "@@locale": "en",
   "@@context": "Canteen",
-
   "tabTitle": "Food",
   "@tabTitle": {
     "description": "The title of the meals tab"
@@ -10,9 +9,19 @@
   "@openNow": {
     "description": "The state of being open"
   },
-  "closingSoon": "Open until {time}",
-  "@closingSoon": {
+  "openUntil": "Open until {time}",
+  "@openUntil": {
     "description": "The state of closing soon",
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "10 PM"
+      }
+    }
+  },
+  "openingSoon": "Open from {time}",
+  "@openingSoon": {
+    "description": "The state of opening soon",
     "placeholders": {
       "time": {
         "type": "String",
@@ -76,8 +85,6 @@
   "@allClosed": {
     "description": "All canteens are closed"
   },
-
-
   "save": "Save",
   "@save": {
     "description": "The action of saving"
@@ -118,13 +125,17 @@
   "@share": {
     "description": "Share button"
   },
-  "closingSoonDetailed": "Today open until {time}",
-  "@closingSoonDetailed": {
+  "openDetails": "Open from {openingTime}-{closingTime}",
+  "@openDetails": {
     "description": "The state of closing soon",
     "placeholders": {
-      "time": {
+      "openingTime": {
         "type": "String",
         "example": "10 PM"
+      },
+      "closingTime": {
+        "type": "String",
+        "example": "12 PM"
       }
     }
   },
@@ -133,11 +144,11 @@
     "description": "The state of being closed"
   },
   "emptyFavoritesBefore": "Tap the ",
-  "@emptyFavoritesBeforeIcon": {
-      "description": "Empty favorites text before star icon"
-    },
+  "@emptyFavoritesBefore": {
+    "description": "Empty favorites text before star icon"
+  },
   "emptyFavoritesAfter": " icon to add favorites here",
   "@emptyFavoritesAfter": {
-        "description": "Empty favorites text after star icon"
-      }
+    "description": "Empty favorites text after star icon"
+  }
 }

@@ -109,7 +109,13 @@ abstract class CanteenLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Open until {time}'**
-  String closingSoon(String time);
+  String openUntil(String time);
+
+  /// The state of opening soon
+  ///
+  /// In en, this message translates to:
+  /// **'Open from {time}'**
+  String openingSoon(String time);
 
   /// The state of being closed
   ///
@@ -258,8 +264,8 @@ abstract class CanteenLocalizations {
   /// The state of closing soon
   ///
   /// In en, this message translates to:
-  /// **'Today open until {time}'**
-  String closingSoonDetailed(String time);
+  /// **'Open from {openingTime}-{closingTime}'**
+  String openDetails(String openingTime, String closingTime);
 
   /// The state of being closed
   ///
@@ -267,7 +273,7 @@ abstract class CanteenLocalizations {
   /// **'Currently closed'**
   String get closedDetailed;
 
-  /// No description provided for @emptyFavoritesBefore.
+  /// Empty favorites text before star icon
   ///
   /// In en, this message translates to:
   /// **'Tap the '**

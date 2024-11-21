@@ -5,21 +5,21 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../repository/api/models/menu/menu_item_model.dart';
-import '../services/mensa_user_preferences_service.dart';
-import '../utils/get_dish_type_emoji.dart';
-import 'widgets.dart';
+import '../../../repository/api/models/menu/menu_item_model.dart';
+import '../../../services/mensa_user_preferences_service.dart';
+import '../../../utils/get_dish_type_emoji.dart';
+import '../../widgets.dart';
 
-class DishTile extends StatelessWidget {
-  const DishTile({
+class MenuItemTile extends StatelessWidget {
+  const MenuItemTile({
     super.key,
-    required this.dishModel,
+    required this.menuItemModel,
     required this.onFavoriteTap,
     required this.isFavorite,
     this.onTap,
   });
 
-  final MenuItemModel dishModel;
+  final MenuItemModel menuItemModel;
   final void Function()? onTap;
   final void Function()? onFavoriteTap;
   final bool isFavorite;
@@ -46,14 +46,14 @@ class DishTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         LmuText.body(
-                          getDishTypeEmoji(dishModel.dishType),
+                          getDishTypeEmoji(menuItemModel.dishType),
                         ),
                         const SizedBox(
                           width: LmuSizes.medium,
                         ),
                         Flexible(
                           child: LmuText.body(
-                            dishModel.title,
+                            menuItemModel.title,
                           ),
                         ),
                         const SizedBox(
@@ -62,24 +62,20 @@ class DishTile extends StatelessWidget {
                       ],
                     ),
                   ),
+                  LmuText.bodyXSmall(
+                    "10K", //menuItemModel.ratingModel.likeCount.toString(),
+                    color: context.colors.neutralColors.textColors.weakColors.base,
+                  ),
+                  const SizedBox(width: LmuSizes.small),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Row(
-                        children: [
-                          LmuText.bodyXSmall(
-                            dishModel.ratingModel.likeCount.toString(),
-                            color: context.colors.neutralColors.textColors.weakColors.base,
-                          ),
-                          const SizedBox(width: LmuSizes.small),
-                          StarIcon(isActive: isFavorite),
-                        ],
-                      ),
+                      StarIcon(isActive: isFavorite),
                       const SizedBox(
                         height: LmuSizes.small,
                       ),
                       LmuText.bodyXSmall(
-                        dishModel.priceSimple,
+                        menuItemModel.priceSimple,
                         color: context.colors.neutralColors.textColors.weakColors.base,
                       ),
                     ],
@@ -95,7 +91,7 @@ class DishTile extends StatelessWidget {
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
                   final userPreferencesService = GetIt.I.get<MensaUserPreferencesService>();
-                  final id = dishModel.id;
+                  final id = menuItemModel.id;
 
                   LmuVibrations.vibrate(type: VibrationType.secondary);
 

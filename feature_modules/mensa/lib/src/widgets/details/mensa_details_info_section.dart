@@ -24,6 +24,7 @@ class MensaDetailsInfoSection extends StatelessWidget {
     final colors = context.colors;
 
     final openingHours = mensaModel.openingHours;
+    final mensaStatus = openingHours.mensaStatus;
     return Padding(
       padding: const EdgeInsets.only(
         left: LmuSizes.mediumLarge,
@@ -78,8 +79,8 @@ class MensaDetailsInfoSection extends StatelessWidget {
           ),
           Divider(thickness: .5, height: 0, color: colors.neutralColors.borderColors.seperatorLight),
           LmuListDropdown(
-            title: "Heute geschlossen",
-            titleColor: openingHours.mensaStatus.textColor(colors),
+            title: mensaStatus.text(context.locals.canteen, openingHours: openingHours),
+            titleColor: openingHours.mensaStatus.color(colors),
             items: openingHours.asMap().entries.map(
               (entry) {
                 final index = entry.key;

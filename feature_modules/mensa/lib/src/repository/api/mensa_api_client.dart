@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import 'models/mensa/mensa_model.dart';
+import 'api.dart';
 import 'models/menu/menu_day_model.dart';
 import 'models/taste_profile/taste_profile_model.dart';
 
@@ -10,7 +10,7 @@ class MensaApiClient {
   Future<List<MensaModel>> getMensaModels() async {
     try {
       final response = await http.get(
-        Uri.parse('https://api.lmu-dev.org/eat/v1/canteens'),
+        Uri.parse(MensaApiEndpoints.getMensaModels()),
       );
 
       if (response.statusCode == 200) {
@@ -27,7 +27,7 @@ class MensaApiClient {
   Future<List<MenuDayModel>> getMenuDayForMensa(String canteenId) async {
     try {
       final response = await http.get(
-        Uri.parse('https://api.lmu-dev.org/eat/v1/menus?canteen_id=$canteenId'),
+        Uri.parse(MensaApiEndpoints.getMenuDayForMensa(canteenId)),
       );
 
       if (response.statusCode == 200) {
@@ -44,9 +44,7 @@ class MensaApiClient {
   Future<TasteProfileModel> getTasteProfile() async {
     try {
       final response = await http.get(
-        Uri.parse(
-          "https://api.lmu-dev.org/eat/v1/taste-profile",
-        ),
+        Uri.parse(MensaApiEndpoints.getTasteProfile()),
       );
 
       if (response.statusCode == 200) {

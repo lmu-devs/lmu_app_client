@@ -11,8 +11,13 @@ class CanteenLocalizationsEn extends CanteenLocalizations {
   String get openNow => 'Open now';
 
   @override
-  String closingSoon(String time) {
+  String openUntil(String time) {
     return 'Open until $time';
+  }
+
+  @override
+  String openingSoon(String time) {
+    return 'Open from $time';
   }
 
   @override
@@ -88,8 +93,8 @@ class CanteenLocalizationsEn extends CanteenLocalizations {
   String get share => 'Share';
 
   @override
-  String closingSoonDetailed(String time) {
-    return 'Today open until $time';
+  String openDetails(String openingTime, String closingTime) {
+    return 'Open from $openingTime-$closingTime';
   }
 
   @override
