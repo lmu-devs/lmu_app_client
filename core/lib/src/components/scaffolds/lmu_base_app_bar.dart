@@ -5,7 +5,6 @@ import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nested_scroll_view_plus/nested_scroll_view_plus.dart';
 import 'package:snap_scroll_physics/snap_scroll_physics.dart';
 
 class LmuBaseAppBar extends StatefulWidget {
@@ -128,25 +127,28 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
 
     return Stack(
       children: [
-        NestedScrollViewPlus(
+        CustomScrollView(
           controller: _scrollController,
           physics: SnapScrollPhysics(
-            parent: const BouncingScrollPhysics(),
+            parent: BouncingScrollPhysics(),
             snaps: [
               Snap.avoidZone(0, _largeTitleHeight),
               Snap.avoidZone(_largeTitleHeight, 2 * _largeTitleHeight),
             ],
           ),
-          headerSliverBuilder: (_, __) => [
-            OverlapAbsorberPlus(
+          slivers: [
+            SliverOverlapAbsorber(
+              handle: SliverOverlapAbsorberHandle(),
               sliver: SliverToBoxAdapter(
                 child: Container(
                   height: topPadding + _appBarHeight,
                 ),
               ),
-            )
+            ),
+            SliverToBoxAdapter(
+              child: widget.body,
+            ),
           ],
-          body: widget.body,
         ),
         ValueListenableBuilder(
           valueListenable: _scrollOffsetNotifier,
