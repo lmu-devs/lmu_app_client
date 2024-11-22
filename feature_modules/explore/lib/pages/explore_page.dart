@@ -1,7 +1,5 @@
-import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:flutter/material.dart' hide Visibility;
-import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:mensa/mensa.dart';
@@ -10,6 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../widgets/search_bottom_sheet.dart';
 
 class ExplorePage extends StatelessWidget {
   const ExplorePage({super.key});
@@ -47,7 +47,8 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   PointAnnotationManager? pointAnnotationManager;
   List<MensaModel> mensaData = [];
   Map<String, MensaModel> mensaPins = {};
-  final ValueNotifier<String?> selectedMensaNotifier = ValueNotifier<String?>(null);
+  final ValueNotifier<MensaModel?> selectedMensaNotifier = ValueNotifier<MensaModel?>(null);
+  final DraggableScrollableController _sheetController = DraggableScrollableController();
 
   Future<void> _requestLocationPermission() async {
     final prefs = await SharedPreferences.getInstance();
@@ -129,7 +130,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
           ),
         ),
         iconImage: "mensa_pin",
-        iconSize: 1,
+        iconSize: selectedMensaNotifier.value == mensa.name ? 1.5 : 1.0,
       );
 
       options.add(annotationOptions);
@@ -143,23 +144,38 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
 
     await pointAnnotationManager?.createMulti(options);
 
+    PointAnnotation? previouslySelectedAnnotation;
+
     pointAnnotationManager?.addOnPointAnnotationClickListener(
       AnnotationClickListener(
-        onAnnotationClick: (annotation) {
-          MensaModel? mensa = mensaPins[annotation.id];
-          if (mensa != null) {
-            selectedMensaNotifier.value = mensa.name;
-          }
+        onAnnotationClick: (annotation) async {
+          MensaModel? selectedMensa = mensaPins[annotation.id];
 
-          mapboxMap.easeTo(
-            CameraOptions(
-              center: annotation.geometry,
-              zoom: 14.0,
-            ),
-            MapAnimationOptions(
-              duration: 4,
-            ),
-          );
+          if (selectedMensa != null) {
+            selectedMensaNotifier.value = selectedMensa;
+
+            if (previouslySelectedAnnotation != null) {
+              await pointAnnotationManager?.update(
+                previouslySelectedAnnotation!..iconSize = 1.0,
+              );
+            }
+
+            await pointAnnotationManager?.update(
+              annotation..iconSize = 1.5,
+            );
+
+            previouslySelectedAnnotation = annotation;
+
+            mapboxMap.easeTo(
+              CameraOptions(
+                center: annotation.geometry,
+                zoom: 14.0,
+              ),
+              MapAnimationOptions(
+                duration: 8,
+              ),
+            );
+          }
         },
       ),
     );
@@ -217,72 +233,9 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
                 zoom: 12.0,
               ),
             ),
-            DraggableScrollableSheet(
-              initialChildSize: 0.125,
-              minChildSize: 0.125,
-              maxChildSize: 0.25,
-              builder: (context, scrollController) {
-                return ValueListenableBuilder<String?>(
-                  valueListenable: selectedMensaNotifier,
-                  builder: (context, selectedMensaName, child) {
-                    return Container(
-                      padding: EdgeInsets.all(LmuSizes.mediumLarge),
-                      decoration: BoxDecoration(
-                        color: context.colors.neutralColors.backgroundColors.base,
-                        border: Border(
-                          top: BorderSide(
-                            color: context.colors.neutralColors.backgroundColors.strongColors.base,
-                          ),
-                        ),
-                      ),
-                      child: SingleChildScrollView(
-                        controller: scrollController,
-                        physics: const ClampingScrollPhysics(),
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: LmuSizes.mediumSmall,
-                                horizontal: LmuSizes.mediumLarge,
-                              ),
-                              decoration: BoxDecoration(
-                                color: context.colors.neutralColors.backgroundColors.tile,
-                                borderRadius: BorderRadius.all(Radius.circular(LmuRadiusSizes.medium)),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        LucideIcons.search,
-                                        size: LmuSizes.xlarge,
-                                        color: context.colors.neutralColors.textColors.weakColors.base,
-                                      ),
-                                      const SizedBox(width: LmuSizes.mediumLarge),
-                                      LmuText.bodySmall(selectedMensaName ?? 'Suchen'),
-                                    ],
-                                  ),
-                                  selectedMensaName != null
-                                      ? GestureDetector(
-                                          onTap: () => selectedMensaNotifier.value = null,
-                                          child: Icon(
-                                            LucideIcons.x,
-                                            size: LmuSizes.xlarge,
-                                            color: context.colors.neutralColors.textColors.strongColors.base,
-                                          ),
-                                        )
-                                      : const SizedBox.shrink(),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                );
-              },
+            SearchBottomSheet(
+              selectedMensaNotifier: selectedMensaNotifier,
+              sheetController: _sheetController,
             ),
           ],
         );
