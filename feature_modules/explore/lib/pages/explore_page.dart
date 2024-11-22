@@ -1,5 +1,7 @@
+import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:flutter/material.dart' hide Visibility;
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:mensa/mensa.dart';
@@ -45,6 +47,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   PointAnnotationManager? pointAnnotationManager;
   List<MensaModel> mensaData = [];
   Map<String, MensaModel> mensaPins = {};
+  final ValueNotifier<String?> selectedMensaNotifier = ValueNotifier<String?>(null);
 
   Future<void> _requestLocationPermission() async {
     final prefs = await SharedPreferences.getInstance();
@@ -110,6 +113,9 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   Future<void> _onMapCreated(MapboxMap mapboxMap) async {
     this.mapboxMap = mapboxMap;
 
+    await mapboxMap.attribution
+        .updateSettings(AttributionSettings(marginTop: LmuIconSizes.medium, position: OrnamentPosition.TOP_LEFT));
+
     await _addMarkersToMap(mapboxMap);
     pointAnnotationManager = await mapboxMap.annotations.createPointAnnotationManager();
 
@@ -142,7 +148,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
         onAnnotationClick: (annotation) {
           MensaModel? mensa = mensaPins[annotation.id];
           if (mensa != null) {
-            print("Mensa name: ${mensa.name}");
+            selectedMensaNotifier.value = mensa.name;
           }
 
           mapboxMap.easeTo(
@@ -195,19 +201,90 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
           }
         });
 
-        return MapWidget(
-          key: const ValueKey("mapWidget"),
-          styleUri: mapStyleUri,
-          onMapCreated: _onMapCreated,
-          cameraOptions: CameraOptions(
-            center: Point(
-              coordinates: Position(
-                11.582,
-                48.1351,
+        return Stack(
+          children: [
+            MapWidget(
+              key: const ValueKey("mapWidget"),
+              styleUri: mapStyleUri,
+              onMapCreated: _onMapCreated,
+              cameraOptions: CameraOptions(
+                center: Point(
+                  coordinates: Position(
+                    11.582,
+                    48.1351,
+                  ),
+                ),
+                zoom: 12.0,
               ),
             ),
-            zoom: 12.0,
-          ),
+            DraggableScrollableSheet(
+              initialChildSize: 0.125,
+              minChildSize: 0.125,
+              maxChildSize: 0.25,
+              builder: (context, scrollController) {
+                return ValueListenableBuilder<String?>(
+                  valueListenable: selectedMensaNotifier,
+                  builder: (context, selectedMensaName, child) {
+                    return Container(
+                      padding: EdgeInsets.all(LmuSizes.mediumLarge),
+                      decoration: BoxDecoration(
+                        color: context.colors.neutralColors.backgroundColors.base,
+                        border: Border(
+                          top: BorderSide(
+                            color: context.colors.neutralColors.backgroundColors.strongColors.base,
+                          ),
+                        ),
+                      ),
+                      child: SingleChildScrollView(
+                        controller: scrollController,
+                        physics: const ClampingScrollPhysics(),
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: LmuSizes.mediumSmall,
+                                horizontal: LmuSizes.mediumLarge,
+                              ),
+                              decoration: BoxDecoration(
+                                color: context.colors.neutralColors.backgroundColors.tile,
+                                borderRadius: BorderRadius.all(Radius.circular(LmuRadiusSizes.medium)),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        LucideIcons.search,
+                                        size: LmuSizes.xlarge,
+                                        color: context.colors.neutralColors.textColors.weakColors.base,
+                                      ),
+                                      const SizedBox(width: LmuSizes.mediumLarge),
+                                      LmuText.bodySmall(selectedMensaName ?? 'Suchen'),
+                                    ],
+                                  ),
+                                  selectedMensaName != null
+                                      ? GestureDetector(
+                                          onTap: () => selectedMensaNotifier.value = null,
+                                          child: Icon(
+                                            LucideIcons.x,
+                                            size: LmuSizes.xlarge,
+                                            color: context.colors.neutralColors.textColors.strongColors.base,
+                                          ),
+                                        )
+                                      : const SizedBox.shrink(),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ],
         );
       },
     );
