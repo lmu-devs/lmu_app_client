@@ -4,7 +4,7 @@ import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../extensions/opening_hours_extensions.dart';
-import '../../repository/api/models/mensa_model.dart';
+import '../../repository/api/models/mensa/mensa_model.dart';
 import '../../services/mensa_user_preferences_service.dart';
 import '../widgets.dart';
 

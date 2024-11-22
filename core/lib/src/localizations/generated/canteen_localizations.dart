@@ -106,7 +106,13 @@ abstract class CanteenLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Open until {time}'**
-  String closingSoon(String time);
+  String openUntil(String time);
+
+  /// The state of opening soon
+  ///
+  /// In en, this message translates to:
+  /// **'Open from {time}'**
+  String openingSoon(String time);
 
   /// The state of being closed
   ///
@@ -255,8 +261,8 @@ abstract class CanteenLocalizations {
   /// The state of closing soon
   ///
   /// In en, this message translates to:
-  /// **'Today open until {time}'**
-  String closingSoonDetailed(String time);
+  /// **'Open from {openingTime}-{closingTime}'**
+  String openDetails(String openingTime, String closingTime);
 
   /// The state of being closed
   ///
@@ -275,6 +281,24 @@ abstract class CanteenLocalizations {
   /// In en, this message translates to:
   /// **' icon to add favorites here'**
   String get emptyFavoritesAfter;
+
+  /// Students
+  ///
+  /// In en, this message translates to:
+  /// **'Students'**
+  String get students;
+
+  /// Staff
+  ///
+  /// In en, this message translates to:
+  /// **'Staff'**
+  String get staff;
+
+  /// Guests
+  ///
+  /// In en, this message translates to:
+  /// **'Guests'**
+  String get guests;
 }
 
 class _CanteenLocalizationsDelegate extends LocalizationsDelegate<CanteenLocalizations> {

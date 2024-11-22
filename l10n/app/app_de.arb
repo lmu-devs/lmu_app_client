@@ -2,7 +2,6 @@
   "@@locale": "de",
   "@@context": "AppWide",
   "appTitle": "Munich Students",
-  
   "monday": "Montag",
   "tuesday": "Dienstag",
   "wednesday": "Mittwoch",
@@ -12,5 +11,7 @@
   "reset": "Zurücksetzen",
   "favoriteAdded": "Favorit hinzugefügt",
   "favoriteRemoved": "Favorit entfernt",
-  "icon_star": "Stern"
+  "iconStar": "Stern",
+  "today": "Heute",
+  "tomorrow": "Morgen"
 }

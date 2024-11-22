@@ -21,7 +21,7 @@ class LmuApp extends StatelessWidget {
             supportedLocales: LmuLocalizations.supportedLocales,
             debugShowCheckedModeBanner: false,
             routerConfig: _router,
-            title: "Muc Students",
+            title: "LMU Students",
             theme: AppTheme.light,
             darkTheme: AppTheme.dark,
             themeMode: Provider.of<ThemeProvider>(context).themeMode,

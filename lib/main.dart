@@ -20,4 +20,5 @@ void main() async {
   runApp(
     LmuApp(),
   );
+  FlutterNativeSplash.remove();
 }

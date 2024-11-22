@@ -37,6 +37,8 @@ class TasteProfilePage extends StatelessWidget {
     final localizations = context.locals.canteen;
 
     return LmuScaffoldWithAppBar(
+      collapsedTitleHeight: 54,
+      stretch: false,
       largeTitle: localizations.myTaste,
       leadingWidget: GestureDetector(
         onTap: () => Navigator.of(context, rootNavigator: true).pop(),

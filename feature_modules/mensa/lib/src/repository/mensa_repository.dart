@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/mensa_api_client.dart';
-import 'api/models/mensa_menu_week_model.dart';
-import 'api/models/mensa_model.dart';
+import 'api/models/mensa/mensa_model.dart';
+import 'api/models/menu/menu_day_model.dart';
+import 'api/models/menu/price_category.dart';
 import 'api/models/taste_profile/taste_profile.dart';
 import 'api/models/user_preferences/sort_option.dart';
 
@@ -19,7 +20,7 @@ abstract class MensaRepository {
 
   Future<void> updateFavoriteDishIds(List<String> favoriteDishIds);
 
-  Future<List<MensaMenuWeekModel>> getMensaMenusForSpecificWeek(String canteenId, int year, String week, bool liked);
+  Future<List<MenuDayModel>> getMenuDayForMensa(String canteenId);
 
   Future<TasteProfileModel> getTasteProfileContent();
 
@@ -30,6 +31,10 @@ abstract class MensaRepository {
   Future<SortOption?> getSortOption();
 
   Future<void> setSortOption(SortOption mensaUserPreferences);
+
+  Future<PriceCategory?> getPriceCategory();
+
+  Future<void> setPriceCategory(PriceCategory priceCategory);
 }
 
 /// MensaRepository implementation for fetching mensa data from the API
@@ -49,7 +54,9 @@ class ConnectedMensaRepository implements MensaRepository {
 
   static const String _pasteProfileSelectionsKey = 'taste_profile_selections_key';
 
-  static const String _mensaSortOptionKey = 'mensa_user_preferences';
+  static const String _mensaSortOptionKey = 'mensa_sort_option';
+  static const String _menuPriceCategory = 'menu_price_category';
+  static const String _menuBaseKey = 'mensa_menu_base_key';
 
   /// Function to fetch mensa models from the API, [forceRefresh] parameter can be used to ignore the cache
   @override
@@ -114,14 +121,30 @@ class ConnectedMensaRepository implements MensaRepository {
     await prefs.setStringList(_favoriteDishIdsKey, favoriteDishIds);
   }
 
-  /// Cache storing missing for now
   @override
-  Future<List<MensaMenuWeekModel>> getMensaMenusForSpecificWeek(
-      String canteenId, int year, String week, bool liked) async {
+  Future<List<MenuDayModel>> getMenuDayForMensa(String canteenId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final key = '$_menuBaseKey$canteenId';
+
     try {
-      final mensaMenuModels = await mensaApiClient.getMensaMenusForSpecificWeek(canteenId, year, week, liked);
+      final mensaMenuModels = await mensaApiClient.getMenuDayForMensa(canteenId);
+      await prefs.setString(key, json.encode(mensaMenuModels.map((e) => e.toJson()).toList()));
       return mensaMenuModels;
     } catch (e) {
+      final cachedMenu = prefs.getString(key);
+      if (cachedMenu != null) {
+        final jsonList = json.decode(cachedMenu) as List<dynamic>;
+        final menuModels = jsonList.map((json) => MenuDayModel.fromJson(json as Map<String, dynamic>)).toList();
+        final today = DateTime.now();
+        final todayString = '${today.year}-${today.month}-${today.day}';
+        final todayIndex = menuModels.indexWhere((element) => element.date == todayString);
+        if (todayIndex == -1) {
+          await prefs.remove(key);
+          rethrow;
+        }
+        final filteredMenuModels = menuModels.sublist(todayIndex);
+        return filteredMenuModels;
+      }
       rethrow;
     }
   }
@@ -180,5 +203,30 @@ class ConnectedMensaRepository implements MensaRepository {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setString(_mensaSortOptionKey, sortOption.name);
+  }
+
+  @override
+  Future<PriceCategory?> getPriceCategory() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final cachedPriceCategory = prefs.getString(_menuPriceCategory);
+
+    if (cachedPriceCategory == null) {
+      return null;
+    }
+
+    for (var element in PriceCategory.values) {
+      if (element.name == cachedPriceCategory) {
+        return element;
+      }
+    }
+    return null;
+  }
+
+  @override
+  Future<void> setPriceCategory(PriceCategory priceCategory) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString(_menuPriceCategory, priceCategory.name);
   }
 }

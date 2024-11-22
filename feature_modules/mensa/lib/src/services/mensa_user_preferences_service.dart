@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+import '../repository/api/models/menu/price_category.dart';
 import '../repository/api/models/user_preferences/user_preferences.dart';
 import '../repository/mensa_repository.dart';
 
@@ -12,6 +13,7 @@ class MensaUserPreferencesService {
     return Future.wait([
       getSortOption(),
       getFavoriteMensaIds(),
+      getSelectedPriceCategory(),
     ]);
   }
 
@@ -19,6 +21,10 @@ class MensaUserPreferencesService {
 
   var _initialSortOption = SortOption.alphabetically;
   SortOption get initialSortOption => _initialSortOption;
+
+  var _initialPriceCategory = PriceCategory.students;
+
+  PriceCategory get initialPriceCategory => _initialPriceCategory;
 
   final _favoriteMensaIdsNotifier = ValueNotifier<List<String>>([]);
   ValueNotifier<List<String>> get favoriteMensaIdsNotifier => _favoriteMensaIdsNotifier;
@@ -86,5 +92,17 @@ class MensaUserPreferencesService {
   Future<void> _updateFavoriteDishIds(List<String> favoriteDishIds) async {
     _favoriteDishIdsNotifier.value = favoriteDishIds;
     await _mensaRepository.updateFavoriteDishIds(favoriteDishIds);
+  }
+
+  Future<void> getSelectedPriceCategory() async {
+    final selectedPriceCategory = await _mensaRepository.getPriceCategory();
+
+    if (selectedPriceCategory != null) {
+      _initialPriceCategory = selectedPriceCategory;
+    }
+  }
+
+  Future<void> updatePriceCategory(PriceCategory priceCategory) async {
+    await _mensaRepository.setPriceCategory(priceCategory);
   }
 }

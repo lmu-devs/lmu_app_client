@@ -22,10 +22,11 @@ dependencies:
   tuple: ^2.0.2
   modal_bottom_sheet: ^3.0.0
   sprung: ^3.0.1
-  super_cupertino_navigation_bar: ^2.1.2
   fluttertoast: ^8.2.8
   url_launcher: ^6.3.1
   skeletonizer: ^1.4.2
+  nested_scroll_view_plus: ^1.0.3
+  snap_scroll_physics: ^0.0.1+3
 
 dev_dependencies:
   flutter_test:

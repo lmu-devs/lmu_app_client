@@ -1007,7 +1007,7 @@ packages:
     source: hosted
     version: "1.2.0"
   super_cupertino_navigation_bar:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: super_cupertino_navigation_bar
       sha256: c725330bc7f135862ffe7c4e1f04772a35740d78f2f5d97a7200b910638f7668

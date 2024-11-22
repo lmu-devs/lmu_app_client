@@ -3,7 +3,6 @@ import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import '../bloc/bloc.dart';
 import '../services/mensa_user_preferences_service.dart';
@@ -16,7 +15,6 @@ class MensaMainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FlutterNativeSplash.remove(); // Reorder splash screen
     final localization = context.locals.canteen;
     return LmuScaffoldWithAppBar(
       largeTitle: localization.tabTitle,
