@@ -28,14 +28,7 @@ class MenuDetailsPage extends StatelessWidget {
       collapsedTitleHeight: 54,
       largeTitle: menuItemModel.title,
       stretch: false,
-      leadingWidget: GestureDetector(
-        onTap: () => Navigator.of(context, rootNavigator: true).pop(),
-        child: LmuIcon(
-          icon: LucideIcons.x,
-          size: 28,
-          color: context.colors.neutralColors.textColors.strongColors.base,
-        ),
-      ),
+      leadingAction: LeadingAction.close,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
         child: SingleChildScrollView(

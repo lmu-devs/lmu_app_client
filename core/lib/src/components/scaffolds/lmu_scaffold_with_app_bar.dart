@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'lmu_base_app_bar.dart';
 
+export 'lmu_base_app_bar.dart' show LeadingAction;
+
 class LmuScaffoldWithAppBar extends StatelessWidget {
   const LmuScaffoldWithAppBar({
     super.key,
@@ -11,12 +13,13 @@ class LmuScaffoldWithAppBar extends StatelessWidget {
     this.collapsedTitle,
     this.largeTitleTrailingWidget,
     this.trailingWidget,
-    this.leadingWidget,
+    this.leadingAction,
     this.customScrollController,
     this.stretch = true,
     this.collapsedTitleHeight,
-    this.onRefresh,
     this.imageUrls,
+    this.trailingWidgets,
+    this.largeTitleTrailingWidgetAlignment = MainAxisAlignment.spaceBetween,
   });
 
   final Widget body;
@@ -24,18 +27,20 @@ class LmuScaffoldWithAppBar extends StatelessWidget {
   final String? collapsedTitle;
   final Widget? largeTitleTrailingWidget;
   final Widget? trailingWidget;
-  final Widget? leadingWidget;
   final ScrollController? customScrollController;
   final bool stretch;
   final double? collapsedTitleHeight;
-  final void Function()? onRefresh;
   final List<String>? imageUrls;
+  final List<Widget>? trailingWidgets;
+  final LeadingAction? leadingAction;
+  final MainAxisAlignment largeTitleTrailingWidgetAlignment;
 
   @override
   Widget build(BuildContext context) {
     final neutralColors = context.colors.neutralColors;
     final width = MediaQuery.of(context).size.width;
     final textTheme = context.textTheme;
+
     return Scaffold(
       backgroundColor: neutralColors.backgroundColors.base,
       body: LmuBaseAppBar(
@@ -45,14 +50,15 @@ class LmuScaffoldWithAppBar extends StatelessWidget {
         scrollController: customScrollController,
         stretch: stretch,
         backgroundColor: neutralColors.backgroundColors.base,
-        leadingWidget: leadingWidget,
         trailingWidget: trailingWidget,
         largeTitleTrailingWidget: largeTitleTrailingWidget,
         collapsedTitleHeight: collapsedTitleHeight,
-        onRefresh: onRefresh,
         appBarWidth: width,
         textTheme: textTheme,
         imageUrls: imageUrls,
+        trailingWidgets: trailingWidgets,
+        leadingAction: leadingAction,
+        largeTitleTrailingWidgetAlignment: largeTitleTrailingWidgetAlignment,
       ),
     );
   }

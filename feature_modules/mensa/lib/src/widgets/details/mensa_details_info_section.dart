@@ -2,12 +2,10 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
-import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../extensions/extensions.dart';
 import '../../repository/api/api.dart';
-import '../../widgets/widgets.dart';
 
 class MensaDetailsInfoSection extends StatelessWidget {
   const MensaDetailsInfoSection({
@@ -19,7 +17,6 @@ class MensaDetailsInfoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final canteenLocalizations = context.locals.canteen;
     final appLocalizations = context.locals.app;
     final colors = context.colors;
 
@@ -29,50 +26,10 @@ class MensaDetailsInfoSection extends StatelessWidget {
       padding: const EdgeInsets.only(
         left: LmuSizes.mediumLarge,
         right: LmuSizes.mediumLarge,
-        top: LmuSizes.mediumSmall,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: LmuSizes.medium),
-          Row(
-            children: [
-              LmuText.h1(mensaModel.name),
-              const SizedBox(width: 8),
-              MensaTag(type: mensaModel.type),
-            ],
-          ),
-          const SizedBox(height: LmuSizes.medium),
-          Row(
-            children: [
-              LmuButton(
-                title: "${mensaModel.ratingModel.likeCount.formattedLikes} Likes",
-                emphasis: ButtonEmphasis.secondary,
-                onTap: () {},
-              ),
-              const SizedBox(width: LmuSizes.mediumSmall),
-              LmuButton(
-                title: "Google Maps",
-                emphasis: ButtonEmphasis.secondary,
-                onTap: () {
-                  final lng = mensaModel.location.longitude;
-                  final lat = mensaModel.location.latitude;
-                  LmuUrlLauncher.launchWebsite(
-                    context: context,
-                    url: "https://www.google.com/maps/search/?api=1&query=$lat,$lng",
-                    mode: LmuUrlLauncherMode.externalApplication,
-                  );
-                },
-              ),
-              const SizedBox(width: LmuSizes.mediumSmall),
-              LmuButton(
-                title: canteenLocalizations.share,
-                emphasis: ButtonEmphasis.secondary,
-                onTap: () {},
-              )
-            ],
-          ),
-          const SizedBox(height: LmuSizes.mediumLarge),
           LmuListItem.base(
             subtitle: mensaModel.location.address,
             hasHorizontalPadding: false,

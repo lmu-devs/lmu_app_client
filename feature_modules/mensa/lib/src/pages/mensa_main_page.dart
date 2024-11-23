@@ -18,10 +18,6 @@ class MensaMainPage extends StatelessWidget {
     final localization = context.locals.canteen;
     return LmuScaffoldWithAppBar(
       largeTitle: localization.tabTitle,
-      imageUrls: [
-        'https://api.lmu-dev.org/v1/eat/images/mensa-leopoldstr_01.webp',
-        'https://api.lmu-dev.org/v1/eat/images/mensa-leopoldstr_01.webp',
-      ],
       largeTitleTrailingWidget: LmuButton(
         title: context.locals.canteen.myTaste,
         emphasis: ButtonEmphasis.secondary,

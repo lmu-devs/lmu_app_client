@@ -21,7 +21,7 @@ Map<String, dynamic> _$PriceModelToJson(PriceModel instance) => <String, dynamic
     };
 
 const _$PriceCategoryEnumMap = {
-  PriceCategory.students: 'students',
-  PriceCategory.staff: 'staff',
-  PriceCategory.guests: 'guests',
+  PriceCategory.students: 'STUDENTS',
+  PriceCategory.staff: 'STAFF',
+  PriceCategory.guests: 'GUESTS',
 };

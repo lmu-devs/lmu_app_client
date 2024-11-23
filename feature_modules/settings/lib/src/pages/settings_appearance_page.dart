@@ -3,8 +3,6 @@ import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lucide/flutter_lucide.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class SettingsApperancePage extends StatelessWidget {
@@ -17,15 +15,7 @@ class SettingsApperancePage extends StatelessWidget {
 
     return LmuScaffoldWithAppBar(
       largeTitle: localization.appearance,
-      leadingWidget: GestureDetector(
-        onTap: () {
-          context.pop();
-        },
-        child: const LmuIcon(
-          icon: LucideIcons.arrow_left,
-          size: 28,
-        ),
-      ),
+      leadingAction: LeadingAction.back,
       body: Column(
         children: [
           Padding(
