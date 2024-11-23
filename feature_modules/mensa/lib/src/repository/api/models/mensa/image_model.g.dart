@@ -7,7 +7,7 @@ part of 'image_model.dart';
 // **************************************************************************
 
 ImageModel _$ImageModelFromJson(Map<String, dynamic> json) => ImageModel(
-      url: json['url'] as String?,
+      url: json['url'] as String,
       name: json['name'] as String?,
     );
 

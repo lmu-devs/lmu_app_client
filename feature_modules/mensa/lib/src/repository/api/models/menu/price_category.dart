@@ -1,10 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
 
 enum PriceCategory {
-  @JsonValue('students')
+  @JsonValue('STUDENTS')
   students,
-  @JsonValue('staff')
+  @JsonValue('STAFF')
   staff,
-  @JsonValue('guests')
+  @JsonValue('GUESTS')
   guests,
 }
