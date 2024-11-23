@@ -1,13 +1,12 @@
 import 'package:core/constants.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/material.dart' hide Visibility;
 import 'package:get_it/get_it.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:mensa/mensa.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widgets/map_bottom_sheet.dart';
 
@@ -51,65 +50,71 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   final ValueNotifier<MensaModel?> selectedMensaNotifier = ValueNotifier<MensaModel?>(null);
   final DraggableScrollableController _sheetController = DraggableScrollableController();
 
-  Future<void> _requestLocationPermission() async {
-    final prefs = await SharedPreferences.getInstance();
-    bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
+  Future<void> _addMarkersToMap(MapboxMap mapboxMap) async {
+    final List<String> pinTypes = ['mensa_pin', 'bistro_pin', 'cafe_pin'];
 
-    if (isFirstLaunch) {
-      await prefs.setBool('isFirstLaunch', false);
+    for (final pinType in pinTypes) {
+      final ByteData bytes =
+          await rootBundle.load(getPngAssetTheme(context, 'feature_modules/explore/assets/$pinType'));
+      final Uint8List imageData = bytes.buffer.asUint8List();
+      final MbxImage mbxImage = MbxImage(
+        data: imageData,
+        width: LmuSizes.small.floor(),
+        height: LmuSizes.small.floor(),
+      );
 
-      PermissionStatus status = await Permission.location.request();
-      if (status.isGranted) {
-        print('Location permission granted');
-      } else if (status.isDenied) {
-        print('Location permission denied');
-      } else if (status.isPermanentlyDenied) {
-        await _showAppSettingsDialog();
+      await mapboxMap.style.addStyleImage(
+        pinType,
+        7,
+        mbxImage,
+        false,
+        [],
+        [],
+        null,
+      );
+    }
+
+    await pointAnnotationManager?.deleteAll();
+
+    var options = <PointAnnotationOptions>[];
+
+    for (final mensa in mensaData) {
+      final String pinType = _getPinTypeForMensa(mensa.type);
+      var annotationOptions = PointAnnotationOptions(
+        geometry: Point(
+          coordinates: Position(
+            mensa.location.longitude,
+            mensa.location.latitude,
+          ),
+        ),
+        iconImage: pinType,
+        iconSize: selectedMensaNotifier.value?.canteenId == mensa.canteenId ? 1.5 : 1.0,
+      );
+
+      options.add(annotationOptions);
+    }
+
+    List<PointAnnotation?>? annotations = await pointAnnotationManager?.createMulti(options);
+
+    if (annotations != null) {
+      mensaPins.clear();
+      for (int i = 0; i < annotations.length; i++) {
+        if (annotations[i] != null) {
+          mensaPins[annotations[i]!.id] = mensaData[i];
+        }
       }
     }
   }
 
-  Future<void> _showAppSettingsDialog() async {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text("Permission Required"),
-        content: Text("Location permission is required for this feature. Please allow it in settings."),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text("Cancel"),
-          ),
-          TextButton(
-            onPressed: () async {
-              Navigator.of(context).pop();
-              await openAppSettings();
-            },
-            child: Text("Open Settings"),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _addMarkersToMap(MapboxMap mapboxMap) async {
-    final ByteData bytes = await rootBundle.load('feature_modules/explore/assets/mensa_pin.png');
-    final Uint8List imageData = bytes.buffer.asUint8List();
-    final MbxImage mbxImage = MbxImage(
-      data: imageData,
-      width: LmuSizes.small.floor(),
-      height: LmuSizes.small.floor(),
-    );
-
-    await mapboxMap.style.addStyleImage(
-      "mensa_pin",
-      5,
-      mbxImage,
-      false,
-      [],
-      [],
-      null,
-    );
+  String _getPinTypeForMensa(MensaType mensaType) {
+    switch (mensaType) {
+      case MensaType.mensa:
+        return 'mensa_pin';
+      case MensaType.stuBistro:
+        return 'bistro_pin';
+      default:
+        return 'cafe_pin';
+    }
   }
 
   Future<void> _configureAttribution(MapboxMap mapboxMap, BuildContext context) async {
@@ -148,8 +153,8 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
             mensa.location.latitude,
           ),
         ),
-        iconImage: "mensa_pin",
-        iconSize: selectedMensaNotifier.value?.name == mensa.name ? 1.5 : 1.0,
+        iconImage: _getPinTypeForMensa(mensa.type),
+        iconSize: selectedMensaNotifier.value?.canteenId == mensa.canteenId ? 1.5 : 1.0,
       );
 
       options.add(annotationOptions);
@@ -172,6 +177,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
             selectedMensaNotifier.value = selectedMensa;
 
             if (previouslySelectedAnnotation != null) {
+              // Check if the previouslySelectedAnnotation still exists
               await pointAnnotationManager?.update(
                 previouslySelectedAnnotation!..iconSize = 1.0,
               );
@@ -213,7 +219,6 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   @override
   void initState() {
     super.initState();
-    _requestLocationPermission();
     mensaData = GetIt.I.get<MensaPublicApi>().mensaData;
   }
 
@@ -234,7 +239,6 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
           previouslySelectedAnnotation = null;
         }
 
-        // Return the map widget
         return Consumer<ThemeProvider>(
           builder: (context, themeProvider, child) {
             String mapStyleUri = _getMapStyleUri(themeProvider.themeMode, context);
@@ -242,6 +246,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
               if (mapboxMap != null) {
                 mapboxMap!.loadStyleURI(mapStyleUri);
                 _configureAttribution(mapboxMap!, context);
+                _addMarkersToMap(mapboxMap!);
               }
             });
 

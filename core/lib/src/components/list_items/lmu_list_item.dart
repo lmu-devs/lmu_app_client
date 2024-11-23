@@ -216,7 +216,7 @@ class LmuListItem extends StatelessWidget {
         child: Row(
           crossAxisAlignment: mainContentAlignment == MainContentAlignment.center
               ? CrossAxisAlignment.center
-              : CrossAxisAlignment.start,
+              : CrossAxisAlignment.center,
           children: [
             if (_hasLeadingArea) _LeadingArea(leadingArea: leadingArea),
             if (_hasMainContent)
