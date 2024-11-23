@@ -24,6 +24,7 @@ class LmuBaseAppBar extends StatefulWidget {
     this.onRefresh,
     this.appBarWidth = 393,
     required this.textTheme,
+    this.imageUrls,
   }) : super(key: key);
 
   final Widget body;
@@ -45,6 +46,8 @@ class LmuBaseAppBar extends StatefulWidget {
 
   final double appBarWidth;
   final LmuTextTheme textTheme;
+
+  final List<String>? imageUrls;
 
   @override
   State<LmuBaseAppBar> createState() => _LmuBaseAppBarState();
@@ -94,6 +97,8 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
   double get _appBarHeight => _collapsedTitleHeight + _largeTitleHeight;
   double get _maxScrollHeight => 3000.0;
 
+  double get _imageSize => widget.imageUrls != null ? 250.0 : 0.0;
+
   Color get _backgroundColor => widget.backgroundColor ?? Colors.transparent;
 
   double _mapValueToRange(double x, double min, double max) {
@@ -123,6 +128,9 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
     final titleStyle = textStyles.h3;
     final largeTitleStyle = textStyles.h0;
 
+    final defaultHeight = (_imageSize == 0 ? topPadding + _appBarHeight : _imageSize + _largeTitleHeight);
+    final collapsedHeightWithSafeArea = _collapsedTitleHeight + topPadding;
+
     final overlayStyle = _calculateOverlayStyle();
 
     return Stack(
@@ -130,7 +138,7 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
         CustomScrollView(
           controller: _scrollController,
           physics: SnapScrollPhysics(
-            parent: BouncingScrollPhysics(),
+            parent: AlwaysScrollableScrollPhysics(),
             snaps: [
               Snap.avoidZone(0, _largeTitleHeight),
               Snap.avoidZone(_largeTitleHeight, 2 * _largeTitleHeight),
@@ -141,7 +149,7 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
               handle: SliverOverlapAbsorberHandle(),
               sliver: SliverToBoxAdapter(
                 child: Container(
-                  height: topPadding + _appBarHeight,
+                  height: defaultHeight,
                 ),
               ),
             ),
@@ -150,25 +158,40 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
             ),
           ],
         ),
+        if (widget.imageUrls != null)
+          ValueListenableBuilder(
+            valueListenable: _scrollOffsetNotifier,
+            builder: (context, scrollOffset, _) {
+              final scrolledImageHeight = _calculateImageHeight(scrollOffset);
+              final largeTitleScale = _calculateLargeTitleScale(scrollOffset);
+
+              return Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: Transform.scale(
+                  scale: largeTitleScale,
+                  filterQuality: FilterQuality.high,
+                  alignment: Alignment.topCenter,
+                  child: SizedBox(
+                    height: scrolledImageHeight,
+                    child: _ImageArea(
+                      imageUrls: widget.imageUrls!,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
         ValueListenableBuilder(
           valueListenable: _scrollOffsetNotifier,
           builder: (context, scrollOffset, _) {
-            final fullAppBarHeight = clampDouble(
-              topPadding + _appBarHeight - scrollOffset,
-              _collapsedTitleHeight + topPadding,
-              _stretch ? _maxScrollHeight : topPadding + _appBarHeight,
-            );
-            final scrolledLargeTitleHeight = scrollOffset > 0
-                ? clampDouble(_largeTitleHeight - (scrollOffset), 0, _largeTitleHeight)
-                : _largeTitleHeight;
-            final scaleTitle = !_stretch
-                ? 1.0
-                : scrollOffset < 0
-                    ? clampDouble((1 - scrollOffset / (_maxScrollHeight / 2)), 1, 1.12)
-                    : 1.0;
-            final middleTextOpacity = _alwaysShowCollapsedTitle
-                ? 1.0
-                : _mapValueToRange(scrollOffset, LmuSizes.mediumSmall, _largeTitleHeight);
+            final fullAppBarHeight =
+                _calculateFullAppBarHeight(scrollOffset, defaultHeight, collapsedHeightWithSafeArea);
+            final scrolledLargeTitleHeight = _calculateLargeTitleHeight(scrollOffset);
+            final largeTitleScale = _calculateLargeTitleScale(scrollOffset);
+            final middleTextOpacity = _calculateMiddleOpacity(scrollOffset);
+            final backgroundOpacity = scrolledLargeTitleHeight == _largeTitleHeight ? 0.0 : 1.0;
 
             return Positioned(
               top: 0,
@@ -183,42 +206,52 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
                   systemStatusBarContrastEnforced: overlayStyle.systemStatusBarContrastEnforced,
                 ),
                 child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: _backgroundColor,
-                  ),
+                  decoration: BoxDecoration(color: Colors.transparent),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      SizedBox(
-                        height: _collapsedTitleHeight + topPadding,
-                        child: SafeArea(
-                          bottom: false,
-                          child: NavigationToolbar(
-                            leading: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: LmuSizes.mediumLarge,
-                              ),
-                              child: _leadingWidget,
-                            ),
-                            middle: Opacity(
-                              opacity: middleTextOpacity,
-                              child: Text(
-                                _collapsedTitle,
-                                style: titleStyle,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                      Stack(
+                        children: [
+                          SizedBox(
+                            height: collapsedHeightWithSafeArea,
+                            child: Opacity(
+                              opacity: backgroundOpacity,
+                              child: Container(
+                                color: _backgroundColor,
                               ),
                             ),
-                            trailing: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: LmuSizes.mediumLarge,
-                              ),
-                              child: _trailingWidget,
-                            ),
-                            middleSpacing: 6.0,
                           ),
-                        ),
+                          SizedBox(
+                            height: collapsedHeightWithSafeArea,
+                            child: SafeArea(
+                              bottom: false,
+                              child: NavigationToolbar(
+                                leading: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: LmuSizes.mediumLarge,
+                                  ),
+                                  child: _leadingWidget,
+                                ),
+                                middle: Opacity(
+                                  opacity: middleTextOpacity,
+                                  child: Text(
+                                    _collapsedTitle,
+                                    style: titleStyle,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                trailing: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: LmuSizes.mediumLarge,
+                                  ),
+                                  child: _trailingWidget,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
@@ -234,7 +267,7 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
                                   children: [
                                     Expanded(
                                       child: Transform.scale(
-                                        scale: scaleTitle,
+                                        scale: largeTitleScale,
                                         filterQuality: FilterQuality.high,
                                         alignment: Alignment.bottomLeft,
                                         child: Text(
@@ -259,6 +292,160 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
               ),
             );
           },
+        ),
+      ],
+    );
+  }
+
+  double _calculateLargeTitleHeight(double scrollOffset) {
+    final test = _imageSize == 0 ? 0 : _imageSize - _collapsedTitleHeight - 59;
+    if (scrollOffset > 0 + test) {
+      return clampDouble(_largeTitleHeight - scrollOffset + test, 0, _largeTitleHeight);
+    }
+    return _largeTitleHeight;
+  }
+
+  double _calculateMiddleOpacity(double scrollOffset) {
+    final test = _imageSize == 0 ? 0 : _imageSize - _collapsedTitleHeight - 59;
+
+    if (_alwaysShowCollapsedTitle) {
+      return 1.0;
+    }
+    return _mapValueToRange(scrollOffset, LmuSizes.mediumSmall + test, _largeTitleHeight + test);
+  }
+
+  double _calculateLargeTitleScale(double scrollOffset) {
+    if (!_stretch) {
+      return 1.0;
+    }
+    if (scrollOffset < 0) {
+      return clampDouble((1 - scrollOffset / (_maxScrollHeight / 2)), 1, 1.12);
+    }
+    return 1.0;
+  }
+
+  double _calculateFullAppBarHeight(double scrollOffset, double defaultHeight, double collapsedHeightWithSafeArea) {
+    return clampDouble(
+      defaultHeight - scrollOffset,
+      collapsedHeightWithSafeArea,
+      _stretch ? _maxScrollHeight : defaultHeight,
+    );
+  }
+
+  double _calculateImageHeight(double scrollOffset) {
+    if (scrollOffset > 0) {
+      return clampDouble(_imageSize - scrollOffset, 0, _imageSize);
+    }
+    return _imageSize;
+  }
+}
+
+class _ImageArea extends StatefulWidget {
+  final List<String> imageUrls;
+
+  const _ImageArea({super.key, required this.imageUrls});
+
+  @override
+  _ImageAreaState createState() => _ImageAreaState();
+}
+
+class _ImageAreaState extends State<_ImageArea> {
+  late PageController _pageController;
+  final ValueNotifier<int> _currentPageNotifier = ValueNotifier<int>(0);
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+    _pageController.addListener(() {
+      int page = _pageController.page?.round() ?? 0;
+      if (_currentPageNotifier.value != page) {
+        _currentPageNotifier.value = page;
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    _currentPageNotifier.dispose();
+    super.dispose();
+  }
+
+  void _onDotTapped(int index) {
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+    _currentPageNotifier.value = index;
+  }
+
+  List<String> get imageUrls => widget.imageUrls;
+
+  @override
+  Widget build(BuildContext context) {
+    if (imageUrls.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    if (imageUrls.length == 1) {
+      return SoftBlur(
+        child: Image.network(
+          imageUrls.first,
+          height: 250,
+          fit: BoxFit.cover,
+        ),
+      );
+    }
+
+    return Stack(
+      children: [
+        PageView.builder(
+          scrollDirection: Axis.horizontal,
+          physics: const ClampingScrollPhysics(),
+          clipBehavior: Clip.none,
+          controller: _pageController,
+          itemCount: imageUrls.length,
+          itemBuilder: (context, index) {
+            return Image.network(
+              imageUrls[index],
+              height: 250,
+              fit: BoxFit.cover,
+            );
+          },
+        ),
+        Positioned(
+          bottom: LmuSizes.medium,
+          left: 0,
+          right: 0,
+          child: Center(
+            child: ValueListenableBuilder<int>(
+              valueListenable: _currentPageNotifier,
+              builder: (context, currentPage, child) {
+                return Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: List.generate(
+                    imageUrls.length,
+                    (index) => GestureDetector(
+                      onTap: () => _onDotTapped(index),
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: LmuSizes.small,
+                        ),
+                        height: LmuSizes.mediumSmall,
+                        width: LmuSizes.mediumSmall,
+                        decoration: BoxDecoration(
+                          color: currentPage == index ? Colors.white : Colors.white.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
         ),
       ],
     );

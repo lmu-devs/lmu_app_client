@@ -16,6 +16,7 @@ class LmuScaffoldWithAppBar extends StatelessWidget {
     this.stretch = true,
     this.collapsedTitleHeight,
     this.onRefresh,
+    this.imageUrls,
   });
 
   final Widget body;
@@ -28,6 +29,7 @@ class LmuScaffoldWithAppBar extends StatelessWidget {
   final bool stretch;
   final double? collapsedTitleHeight;
   final void Function()? onRefresh;
+  final List<String>? imageUrls;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +52,7 @@ class LmuScaffoldWithAppBar extends StatelessWidget {
         onRefresh: onRefresh,
         appBarWidth: width,
         textTheme: textTheme,
+        imageUrls: imageUrls,
       ),
     );
   }
