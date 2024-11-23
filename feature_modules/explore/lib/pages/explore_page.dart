@@ -9,7 +9,7 @@ import 'package:core/themes.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../widgets/search_bottom_sheet.dart';
+import '../widgets/map_bottom_sheet.dart';
 
 class ExplorePage extends StatelessWidget {
   const ExplorePage({super.key});
@@ -261,7 +261,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
                     zoom: 12.0,
                   ),
                 ),
-                SearchBottomSheet(
+                MapBottomSheet(
                   selectedMensaNotifier: selectedMensaNotifier,
                   sheetController: _sheetController,
                 ),

@@ -21,6 +21,9 @@ class MensaOverviewTile extends StatelessWidget {
     this.distance,
     this.hasDivider = false,
     this.hasLargeImage = false,
+    this.hasButton = false,
+    this.buttonText,
+    this.buttonAction,
   });
 
   final MensaModel mensaModel;
@@ -28,6 +31,9 @@ class MensaOverviewTile extends StatelessWidget {
   final double? distance;
   final bool hasDivider;
   final bool hasLargeImage;
+  final bool hasButton;
+  final String? buttonText;
+  final VoidCallback? buttonAction;
 
   factory MensaOverviewTile.loading({String? name, hasLargeImage = false}) {
     return MensaOverviewTile(
@@ -150,7 +156,18 @@ class MensaOverviewTile extends StatelessWidget {
                                 color: colors.neutralColors.textColors.mediumColors.base,
                               ),
                           ],
-                        )
+                        ),
+                        hasButton
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: LmuSizes.medium),
+                                child: LmuButton(
+                                  emphasis: ButtonEmphasis.secondary,
+                                  showFullWidth: true,
+                                  title: buttonText ?? '',
+                                  onTap: buttonAction,
+                                ),
+                              )
+                            : const SizedBox.shrink(),
                       ],
                     ),
                   ),

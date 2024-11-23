@@ -2,7 +2,9 @@
     "@@locale": "de",
     "@@context": "Explore",
 
-    "tabTitle": "Entdecken"
-
-
+    "tabTitle": "Entdecken",
+    "navigate": "Navigieren",
+    "openWith": "Öffnen mit",
+    "appleMaps": "Apple Karten",
+    "googleMaps": "Google Maps"
 }

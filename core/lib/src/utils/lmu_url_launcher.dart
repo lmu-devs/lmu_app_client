@@ -28,6 +28,11 @@ class LmuUrlLauncher {
     }
   }
 
+  static Future<bool> canLaunch({required String url}) async {
+    final Uri uri = Uri.parse(url);
+    return await canLaunchUrl(uri);
+  }
+
   /// Launches a website URL with error handling and user feedback
   ///
   /// Parameters:

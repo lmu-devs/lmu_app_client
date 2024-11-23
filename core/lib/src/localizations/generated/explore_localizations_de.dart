@@ -6,4 +6,16 @@ class ExploreLocalizationsDe extends ExploreLocalizations {
 
   @override
   String get tabTitle => 'Entdecken';
+
+  @override
+  String get navigate => 'Navigieren';
+
+  @override
+  String get openWith => 'Öffnen mit';
+
+  @override
+  String get appleMaps => 'Apple Karten';
+
+  @override
+  String get googleMaps => 'Google Maps';
 }
