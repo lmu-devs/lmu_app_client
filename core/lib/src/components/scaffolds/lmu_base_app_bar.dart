@@ -134,7 +134,7 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
         CustomScrollView(
           controller: _scrollController,
           physics: SnapScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics(),
+            parent: const AlwaysScrollableScrollPhysics(),
             snaps: [
               Snap.avoidZone(0 + imageOffset, _largeTitleHeight + imageOffset),
             ],
@@ -193,7 +193,6 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
             final scrolledLargeTitleHeight = _calculateLargeTitleHeight(scrollOffset, imageOffset);
             final largeTitleScale = _calculateLargeTitleScale(scrollOffset);
             final middleTextOpacity = _calculateMiddleOpacity(scrollOffset, imageOffset);
-            // final backgroundOpacity = _calculateBackgroundOpactiy(scrollOffset, imageOffset, inverted: true);
 
             return Positioned(
               top: 0,
