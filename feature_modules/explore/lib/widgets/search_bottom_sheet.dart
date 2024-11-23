@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
@@ -31,7 +32,7 @@ class SearchBottomSheet extends StatelessWidget {
         } else {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             sheetController.animateTo(
-              0.1,
+              0.11,
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut,
             );
@@ -40,8 +41,8 @@ class SearchBottomSheet extends StatelessWidget {
 
         return DraggableScrollableSheet(
           controller: sheetController,
-          initialChildSize: 0.1,
-          minChildSize: 0.1,
+          initialChildSize: 0.11,
+          minChildSize: 0.11,
           maxChildSize: 0.3,
           builder: (context, scrollController) {
             return Container(
@@ -89,7 +90,7 @@ class SearchBottomSheet extends StatelessWidget {
                                 color: context.colors.neutralColors.textColors.weakColors.base,
                               ),
                               const SizedBox(width: LmuSizes.mediumLarge),
-                              LmuText.bodySmall(selectedMensa?.name ?? 'Suchen'),
+                              LmuText.bodySmall(selectedMensa?.name ?? context.locals.app.search),
                             ],
                           ),
                           selectedMensa != null

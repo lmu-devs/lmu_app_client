@@ -47,6 +47,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   PointAnnotationManager? pointAnnotationManager;
   List<MensaModel> mensaData = [];
   Map<String, MensaModel> mensaPins = {};
+  PointAnnotation? previouslySelectedAnnotation;
   final ValueNotifier<MensaModel?> selectedMensaNotifier = ValueNotifier<MensaModel?>(null);
   final DraggableScrollableController _sheetController = DraggableScrollableController();
 
@@ -111,12 +112,30 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
     );
   }
 
+  Future<void> _configureAttribution(MapboxMap mapboxMap, BuildContext context) async {
+    Color attributionColor;
+
+    if (Provider.of<ThemeProvider>(context, listen: false).themeMode == ThemeMode.light) {
+      attributionColor = Colors.black;
+    } else if (Provider.of<ThemeProvider>(context, listen: false).themeMode == ThemeMode.dark) {
+      attributionColor = Colors.white;
+    } else {
+      attributionColor = MediaQuery.of(context).platformBrightness == Brightness.light ? Colors.black : Colors.white;
+    }
+
+    await mapboxMap.attribution.updateSettings(
+      AttributionSettings(
+        marginTop: LmuSizes.large,
+        position: OrnamentPosition.TOP_LEFT,
+        iconColor: attributionColor.value,
+      ),
+    );
+  }
+
   Future<void> _onMapCreated(MapboxMap mapboxMap) async {
     this.mapboxMap = mapboxMap;
 
-    await mapboxMap.attribution
-        .updateSettings(AttributionSettings(marginTop: LmuIconSizes.medium, position: OrnamentPosition.TOP_LEFT));
-
+    await _configureAttribution(mapboxMap, context);
     await _addMarkersToMap(mapboxMap);
     pointAnnotationManager = await mapboxMap.annotations.createPointAnnotationManager();
 
@@ -130,7 +149,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
           ),
         ),
         iconImage: "mensa_pin",
-        iconSize: selectedMensaNotifier.value == mensa.name ? 1.5 : 1.0,
+        iconSize: selectedMensaNotifier.value?.name == mensa.name ? 1.5 : 1.0,
       );
 
       options.add(annotationOptions);
@@ -143,8 +162,6 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
     }
 
     await pointAnnotationManager?.createMulti(options);
-
-    PointAnnotation? previouslySelectedAnnotation;
 
     pointAnnotationManager?.addOnPointAnnotationClickListener(
       AnnotationClickListener(
@@ -169,7 +186,6 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
             mapboxMap.easeTo(
               CameraOptions(
                 center: annotation.geometry,
-                zoom: 14.0,
               ),
               MapAnimationOptions(
                 duration: 8,
@@ -208,36 +224,50 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeProvider>(
-      builder: (context, themeProvider, child) {
-        String mapStyleUri = _getMapStyleUri(themeProvider.themeMode, context);
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (mapboxMap != null) {
-            mapboxMap!.loadStyleURI(mapStyleUri);
-          }
-        });
+    return ValueListenableBuilder<MensaModel?>(
+      valueListenable: selectedMensaNotifier,
+      builder: (context, selectedMensa, child) {
+        if (selectedMensa == null && previouslySelectedAnnotation != null) {
+          pointAnnotationManager?.update(
+            previouslySelectedAnnotation!..iconSize = 1.0,
+          );
+          previouslySelectedAnnotation = null;
+        }
 
-        return Stack(
-          children: [
-            MapWidget(
-              key: const ValueKey("mapWidget"),
-              styleUri: mapStyleUri,
-              onMapCreated: _onMapCreated,
-              cameraOptions: CameraOptions(
-                center: Point(
-                  coordinates: Position(
-                    11.582,
-                    48.1351,
+        // Return the map widget
+        return Consumer<ThemeProvider>(
+          builder: (context, themeProvider, child) {
+            String mapStyleUri = _getMapStyleUri(themeProvider.themeMode, context);
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (mapboxMap != null) {
+                mapboxMap!.loadStyleURI(mapStyleUri);
+                _configureAttribution(mapboxMap!, context);
+              }
+            });
+
+            return Stack(
+              children: [
+                MapWidget(
+                  key: const ValueKey("mapWidget"),
+                  styleUri: mapStyleUri,
+                  onMapCreated: _onMapCreated,
+                  cameraOptions: CameraOptions(
+                    center: Point(
+                      coordinates: Position(
+                        11.582,
+                        48.1351,
+                      ),
+                    ),
+                    zoom: 12.0,
                   ),
                 ),
-                zoom: 12.0,
-              ),
-            ),
-            SearchBottomSheet(
-              selectedMensaNotifier: selectedMensaNotifier,
-              sheetController: _sheetController,
-            ),
-          ],
+                SearchBottomSheet(
+                  selectedMensaNotifier: selectedMensaNotifier,
+                  sheetController: _sheetController,
+                ),
+              ],
+            );
+          },
         );
       },
     );
