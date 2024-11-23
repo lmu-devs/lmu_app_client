@@ -104,7 +104,7 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
   bool get _alwaysShowCollapsedTitle => widget.alwaysShowCollapsedTitle;
   bool get _stretch => widget.stretch;
 
-  double get _collapsedTitleHeight => widget.collapsedTitleHeight ?? 40.0;
+  double get _collapsedTitleHeight => widget.collapsedTitleHeight ?? 54.0;
   double get _largeTitleHeight => _calculatedLargeTitleHeight + (_hasImage ? LmuSizes.xlarge : LmuSizes.medium);
   double get _appBarHeight => _collapsedTitleHeight + _largeTitleHeight;
 

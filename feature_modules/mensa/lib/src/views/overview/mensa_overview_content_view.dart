@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../../extensions/sort_option_sort_extension.dart';
 import '../../repository/api/models/mensa/mensa_model.dart';
 import '../../repository/api/models/user_preferences/sort_option.dart';
+import '../../repository/repository.dart';
 import '../../widgets/widgets.dart';
 
 class MensaOverviewContentView extends StatelessWidget {
@@ -14,7 +15,8 @@ class MensaOverviewContentView extends StatelessWidget {
     required this.mensaModels,
     SortOption initalSortOption = SortOption.alphabetically,
   })  : sortOptionNotifier = ValueNotifier(initalSortOption),
-        sortedMensaModelsNotifier = ValueNotifier(initalSortOption.sort(mensaModels)),
+        sortedMensaModelsNotifier =
+            ValueNotifier(initalSortOption.sort(mensaModels)),
         super(key: key);
 
   final List<MensaModel> mensaModels;
@@ -50,9 +52,13 @@ class MensaOverviewContentView extends StatelessWidget {
               isOpenNowFilerNotifier: isOpenNowFilerNotifier,
               mensaModels: mensaModels,
             ),
+            MensaOverviewInfoSection(localizations: localizations),
+            const SizedBox(height: LmuSizes.xhuge),
           ],
         ),
       ),
     );
   }
 }
+
+

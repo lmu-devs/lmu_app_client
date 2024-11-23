@@ -2,10 +2,9 @@ name: shared_api
 description: Package for everything which is shared between the different feature modules.
 version: 0.0.1
 publish_to: 'none'
-homepage:
 
 environment:
-  sdk: '>=3.4.4 <4.0.0'
+  sdk: '>=3.2.4 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:

@@ -44,6 +44,6 @@ dev_dependencies:
 
 flutter:
   assets:
-    - assets/star.svg
+    - assets/
 
  
