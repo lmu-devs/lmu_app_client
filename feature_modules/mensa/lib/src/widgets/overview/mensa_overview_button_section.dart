@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/explore.dart';
 
 import '../../extensions/sort_option_sort_extension.dart';
 import '../../repository/api/models/mensa/mensa_model.dart';
@@ -31,11 +32,28 @@ class MensaOverviewButtonSection extends StatelessWidget {
     final localizations = context.locals.canteen;
     return Row(
       children: [
+        GestureDetector(
+          onTap: () => GetIt.I.get<ExploreService>().navigateToExplore(context),
+          child: Container(
+            height: LmuActionSizes.base,
+            width: LmuActionSizes.base,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(LmuRadiusSizes.medium),
+              image: const DecorationImage(
+                image:
+                    AssetImage("assets/maps_icon_dark.png", package: "mensa"),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: LmuSizes.mediumSmall),
         ValueListenableBuilder(
           valueListenable: sortOptionNotifier,
           builder: (context, activeSortOption, _) {
             return LmuButton(
-              title: SortOption.values.firstWhere((option) => option == activeSortOption).title(localizations),
+              title: SortOption.values
+                  .firstWhere((option) => option == activeSortOption)
+                  .title(localizations),
               emphasis: ButtonEmphasis.secondary,
               trailingIcon: LucideIcons.chevron_down,
               onTap: () => _showSortOptionActionSheet(context),
@@ -48,8 +66,11 @@ class MensaOverviewButtonSection extends StatelessWidget {
           builder: (context, isOpenNowFilterActive, _) {
             return LmuButton(
               title: localizations.openNow,
-              emphasis: isOpenNowFilterActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
-              onTap: () => isOpenNowFilerNotifier.value = !isOpenNowFilerNotifier.value,
+              emphasis: isOpenNowFilterActive
+                  ? ButtonEmphasis.primary
+                  : ButtonEmphasis.secondary,
+              onTap: () =>
+                  isOpenNowFilerNotifier.value = !isOpenNowFilerNotifier.value,
             );
           },
         )
@@ -100,9 +121,13 @@ class _SortOptionActionSheetContent extends StatelessWidget {
                 return Column(
                   children: [
                     LmuListItem.base(
-                      title: sortOption == activeValue ? sortOption.title(context.locals.canteen) : null,
+                      title: sortOption == activeValue
+                          ? sortOption.title(context.locals.canteen)
+                          : null,
                       titleColor: textColor,
-                      subtitle: sortOption == activeValue ? null : sortOption.title(context.locals.canteen),
+                      subtitle: sortOption == activeValue
+                          ? null
+                          : sortOption.title(context.locals.canteen),
                       mainContentAlignment: MainContentAlignment.center,
                       leadingArea: LmuIcon(
                         icon: sortOption.icon,
@@ -111,8 +136,11 @@ class _SortOptionActionSheetContent extends StatelessWidget {
                       ),
                       onTap: () async {
                         sortOptionNotifier.value = sortOption;
-                        sortedMensaModelsNotifier.value = sortOption.sort(mensaModels);
-                        await GetIt.I.get<MensaUserPreferencesService>().updateSortOption(sortOption);
+                        sortedMensaModelsNotifier.value =
+                            sortOption.sort(mensaModels);
+                        await GetIt.I
+                            .get<MensaUserPreferencesService>()
+                            .updateSortOption(sortOption);
                         Future.delayed(
                           const Duration(milliseconds: 100),
                           () {

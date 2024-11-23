@@ -36,7 +36,6 @@ class TasteProfilePage extends StatelessWidget {
     final localizations = context.locals.canteen;
 
     return LmuScaffoldWithAppBar(
-      collapsedTitleHeight: 54,
       stretch: false,
       largeTitle: localizations.myTaste,
       leadingAction: LeadingAction.close,
@@ -72,18 +71,16 @@ class TasteProfilePage extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildTitleSection(localizations, context),
-                      _buildToggleSection(localizations),
-                      _buildPresetsSection(localizations, selectedLanguage, presets),
-                      _buildPreferencesSection(localizations, context.colors, selectedLanguage, presets, sortedLabels),
-                      _buildFooter(context, localizations),
-                    ],
-                  ),
+              SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildTitleSection(localizations, context),
+                    _buildToggleSection(localizations),
+                    _buildPresetsSection(localizations, selectedLanguage, presets),
+                    _buildPreferencesSection(localizations, context.colors, selectedLanguage, presets, sortedLabels),
+                    _buildFooter(context, localizations),
+                  ],
                 ),
               ),
             ],

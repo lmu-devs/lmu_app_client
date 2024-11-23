@@ -9,3 +9,4 @@ export 'overview/mensa_overview_button_section.dart';
 export 'overview/mensa_overview_favorite_section.dart';
 export 'overview/mensa_overview_placeholder_tile.dart';
 export 'overview/mensa_overview_tile.dart';
+export 'overview/mensa_overview_info_section.dart';
