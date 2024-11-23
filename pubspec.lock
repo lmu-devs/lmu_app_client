@@ -801,6 +801,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  shared_api:
+    dependency: "direct main"
+    description:
+      path: shared_api
+      relative: true
+    source: path
+    version: "0.0.1"
   shared_preferences:
     dependency: transitive
     description:
