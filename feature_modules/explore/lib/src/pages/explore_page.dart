@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:core/constants.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart' hide Visibility;
@@ -252,18 +254,20 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
 
             return Stack(
               children: [
-                MapWidget(
-                  key: const ValueKey("mapWidget"),
-                  styleUri: mapStyleUri,
-                  onMapCreated: _onMapCreated,
-                  cameraOptions: CameraOptions(
-                    center: Point(
-                      coordinates: Position(
-                        11.582,
-                        48.1351,
+                SoftBlur(
+                  child: MapWidget(
+                    key: const ValueKey("mapWidget"),
+                    styleUri: mapStyleUri,
+                    onMapCreated: _onMapCreated,
+                    cameraOptions: CameraOptions(
+                      center: Point(
+                        coordinates: Position(
+                          11.582,
+                          48.1351,
+                        ),
                       ),
+                      zoom: 12.0,
                     ),
-                    zoom: 12.0,
                   ),
                 ),
                 MapBottomSheet(
