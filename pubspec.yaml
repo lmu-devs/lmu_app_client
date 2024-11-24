@@ -1,6 +1,6 @@
 name: lmu_app
 description: "A new Flutter project."
-publish_to: 'none' 
+publish_to: 'none'
 version: 1.0.0+2
 
 environment:
@@ -16,11 +16,11 @@ dependencies:
   provider: ^6.1.2
   core:
     path: ./core
-  mensa: 
+  mensa:
     path: ./feature_modules/mensa
   explore:
     path: ./feature_modules/explore
-  settings: 
+  settings:
     path: ./feature_modules/settings
   wunschkonzert:
     path: ./feature_modules/wunschkonzert
@@ -41,11 +41,13 @@ dependencies:
   scrollable_positioned_list: ^0.3.8
   skeletonizer: ^1.4.2
   flutter_native_splash: ^2.3.1
+  shared_api:
+    path: ./shared_api
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^4.0.0
   go_router_builder: ^2.7.1
   build_runner: any
   build_verify: any

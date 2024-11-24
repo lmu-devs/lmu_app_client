@@ -1,3 +1,4 @@
 library explore;
 
-export 'routes/explore_routes.dart';
+export 'src/explore_module.dart';
+export 'src/routes/explore_routes.dart';

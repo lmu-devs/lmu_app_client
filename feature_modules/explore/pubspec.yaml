@@ -24,6 +24,8 @@ dependencies:
     path: ../../core
   mensa:
     path: ../../feature_modules/mensa
+  shared_api:
+    path: ../../shared_api
 
 dev_dependencies:
   flutter_test:

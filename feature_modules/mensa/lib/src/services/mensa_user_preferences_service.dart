@@ -103,6 +103,7 @@ class MensaUserPreferencesService {
   }
 
   Future<void> updatePriceCategory(PriceCategory priceCategory) async {
+    _initialPriceCategory = priceCategory;
     await _mensaRepository.setPriceCategory(priceCategory);
   }
 }

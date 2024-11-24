@@ -27,6 +27,8 @@ dependencies:
   scrollable_positioned_list: ^0.3.8
   skeletonizer: ^1.4.2
   flutter_native_splash: ^2.3.1
+  shared_api:
+    path: ../../shared_api
 
 
 dev_dependencies:
@@ -41,6 +43,6 @@ dev_dependencies:
 
 flutter:
   assets:
-    - assets/star.svg
+    - assets/
 
  

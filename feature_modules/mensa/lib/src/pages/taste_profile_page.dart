@@ -4,7 +4,6 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -37,17 +36,9 @@ class TasteProfilePage extends StatelessWidget {
     final localizations = context.locals.canteen;
 
     return LmuScaffoldWithAppBar(
-      collapsedTitleHeight: 54,
       stretch: false,
       largeTitle: localizations.myTaste,
-      leadingWidget: GestureDetector(
-        onTap: () => Navigator.of(context, rootNavigator: true).pop(),
-        child: LmuIcon(
-          icon: LucideIcons.x,
-          size: 28,
-          color: context.colors.neutralColors.textColors.strongColors.base,
-        ),
-      ),
+      leadingAction: LeadingAction.close,
       trailingWidget: ValueListenableBuilder(
         valueListenable: _isActiveNotifier,
         builder: (context, isActive, _) {
@@ -80,18 +71,16 @@ class TasteProfilePage extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildTitleSection(localizations, context),
-                      _buildToggleSection(localizations),
-                      _buildPresetsSection(localizations, selectedLanguage, presets),
-                      _buildPreferencesSection(localizations, context.colors, selectedLanguage, presets, sortedLabels),
-                      _buildFooter(context, localizations),
-                    ],
-                  ),
+              SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildTitleSection(localizations, context),
+                    _buildToggleSection(localizations),
+                    _buildPresetsSection(localizations, selectedLanguage, presets),
+                    _buildPreferencesSection(localizations, context.colors, selectedLanguage, presets, sortedLabels),
+                    _buildFooter(context, localizations),
+                  ],
                 ),
               ),
             ],

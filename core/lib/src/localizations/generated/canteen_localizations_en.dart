@@ -114,4 +114,13 @@ class CanteenLocalizationsEn extends CanteenLocalizations {
 
   @override
   String get guests => 'Guests';
+
+  @override
+  String get canteenInfo => '300+ seats, daily changing main meals, including vegetarian and vegan options.';
+
+  @override
+  String get bistroInfo => '100-300 seats, specialized in snacks and smaller dishes.';
+
+  @override
+  String get cafeInfo => 'under 100 seats, focused on beverages and small snacks.';
 }

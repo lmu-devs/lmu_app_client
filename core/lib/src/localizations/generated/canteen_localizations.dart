@@ -302,6 +302,24 @@ abstract class CanteenLocalizations {
   /// In en, this message translates to:
   /// **'Guests'**
   String get guests;
+
+  /// Longer description of a canteen
+  ///
+  /// In en, this message translates to:
+  /// **'300+ seats, daily changing main meals, including vegetarian and vegan options.'**
+  String get canteenInfo;
+
+  /// Longer description of a bistro
+  ///
+  /// In en, this message translates to:
+  /// **'100-300 seats, specialized in snacks and smaller dishes.'**
+  String get bistroInfo;
+
+  /// Longer description of a cafe
+  ///
+  /// In en, this message translates to:
+  /// **'under 100 seats, focused on beverages and small snacks.'**
+  String get cafeInfo;
 }
 
 class _CanteenLocalizationsDelegate extends LocalizationsDelegate<CanteenLocalizations> {

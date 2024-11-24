@@ -5,7 +5,7 @@ part 'image_model.g.dart';
 
 @JsonSerializable()
 class ImageModel extends Equatable {
-  final String? url;
+  final String url;
   final String? name;
 
   const ImageModel({
