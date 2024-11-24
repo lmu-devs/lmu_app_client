@@ -289,7 +289,7 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
                                           Transform.scale(
                                             scale: _hasImage ? 1.0 : largeTitleScale,
                                             filterQuality: FilterQuality.high,
-                                            alignment: Alignment.bottomLeft,
+                                            alignment: _largeTitleTrailingWidgetAlignment.scaleAlignment,
                                             child: Text(
                                               _largeTitle,
                                               style: largeTitleStyle,
@@ -297,8 +297,11 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
                                               overflow: TextOverflow.ellipsis,
                                             ),
                                           ),
-                                          const SizedBox(width: LmuSizes.medium),
-                                          if (_largeTitleTrailingWidget != null) _largeTitleTrailingWidget!
+                                          if (_largeTitleTrailingWidget != null)
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: LmuSizes.medium),
+                                              child: _largeTitleTrailingWidget!,
+                                            )
                                         ],
                                       ),
                                     ),
@@ -479,5 +482,12 @@ extension LeadingActionIconExtension on LeadingAction {
       case LeadingAction.close:
         return Icons.close;
     }
+  }
+}
+
+
+extension ScaleAlignmentExtension on MainAxisAlignment {
+  Alignment get scaleAlignment {
+    return this == MainAxisAlignment.center ? Alignment.bottomCenter : Alignment.bottomLeft;
   }
 }
