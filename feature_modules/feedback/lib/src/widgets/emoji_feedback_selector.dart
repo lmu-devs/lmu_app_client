@@ -1,19 +1,18 @@
 import 'package:core/constants.dart';
-
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-
-
 
 class EmojiFeedbackSelector extends StatelessWidget {
   final String? selectedFeedback;
   final Function(String) onFeedbackSelected;
+  final _selectedFeedbackNotifier = ValueNotifier<String?>(null);
 
-  const EmojiFeedbackSelector({
+  EmojiFeedbackSelector({
     super.key,
     required this.onFeedbackSelected,
     this.selectedFeedback,
-  });
+  }) {
+    _selectedFeedbackNotifier.value = selectedFeedback;
+  }
 
   static const feedbackOptions = [
     {'emoji': '😕️', 'value': 'Bad'},
@@ -23,32 +22,38 @@ class EmojiFeedbackSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: feedbackOptions.map((option) {
-        final isSelected = selectedFeedback == option['value'];
-        return GestureDetector(
-          onTap: () => onFeedbackSelected(option['value']!),
-          child: Container(
-            width: LmuActionSizes.large + LmuSizes.medium,
-            height: LmuActionSizes.large,
-            decoration: BoxDecoration(
-              border: isSelected ? Border.all(
-                color: context.colors.neutralColors.textColors.mediumColors.base,
-                width: 2,
-              ) : null,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Center(
-              child: Text(
-                option['emoji']!,
-                style: const TextStyle(fontSize: 32),
+    return ValueListenableBuilder<String?>(
+      valueListenable: _selectedFeedbackNotifier,
+      builder: (context, currentFeedback, _) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: feedbackOptions.map((option) {
+            final isSelected = currentFeedback == null || currentFeedback == option['value'];
+            return GestureDetector(
+              onTap: () {
+                _selectedFeedbackNotifier.value = option['value'];
+                onFeedbackSelected(option['value']!);
+              },
+              child: SizedBox(
+                width: LmuActionSizes.large + LmuSizes.large,
+                height: LmuActionSizes.large,
+                child: Center(
+                  child: Opacity(
+                    opacity: isSelected ? 1 : 0.4,
+                    child: Text(
+                      option['emoji']!,
+                      style: const TextStyle(
+                        fontSize: 36,
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
+            );
+          }).toList(),
         );
-      }).toList(),
+      },
     );
   }
 }

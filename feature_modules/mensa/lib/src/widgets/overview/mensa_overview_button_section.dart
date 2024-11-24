@@ -40,6 +40,9 @@ class MensaOverviewButtonSection extends StatelessWidget {
             width: LmuActionSizes.base,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(LmuRadiusSizes.medium),
+              border: Border.all(
+                color: context.colors.neutralColors.borderColors.seperatorLight,
+              ),
               image: DecorationImage(
                 image: AssetImage(getPngAssetTheme(context, 'assets/maps_icon'), package: "mensa"),
               ),

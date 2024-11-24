@@ -28,7 +28,7 @@ class MensaOverviewInfoSection extends StatelessWidget {
           color:
               context.colors.neutralColors.textColors.mediumColors.base,
         ),
-        const SizedBox(height: LmuSizes.mediumLarge),
+        const SizedBox(height: LmuSizes.large),
         const MensaTag(type: MensaType.stuBistro),
         const SizedBox(height: LmuSizes.mediumSmall),
         LmuText.body(
@@ -36,7 +36,7 @@ class MensaOverviewInfoSection extends StatelessWidget {
           color:
               context.colors.neutralColors.textColors.mediumColors.base,
         ),
-        const SizedBox(height: LmuSizes.mediumLarge),
+        const SizedBox(height: LmuSizes.large),
         const MensaTag(type: MensaType.stuCafe),
         const SizedBox(height: LmuSizes.mediumSmall),
         LmuText.body(

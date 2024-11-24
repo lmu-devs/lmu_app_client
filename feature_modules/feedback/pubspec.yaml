@@ -14,7 +14,7 @@ dependencies:
     path: ../../core
   shared_api:
     path: ../../shared_api
-  get_it: ^7.2.0
+  get_it: ^8.0.1
 
 dev_dependencies:
   flutter_test:

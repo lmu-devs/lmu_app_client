@@ -24,6 +24,8 @@ dependencies:
     path: ./feature_modules/settings
   wunschkonzert:
     path: ./feature_modules/wunschkonzert
+  feedback:
+    path: ./feature_modules/feedback
   http: ^0.13.3
   mapbox_maps_flutter: ^2.4.0
   shared_preferences: ^2.0.7

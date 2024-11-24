@@ -13,18 +13,51 @@ class FeedbackModal extends StatelessWidget {
     return LmuScaffoldWithAppBar(
       largeTitle: 'Feedback',
       largeTitleTrailingWidgetAlignment: MainAxisAlignment.center,
-      body: Column(
+      stretch: false,
+
+      body: Stack(
         children: [
-          const SizedBox(height: LmuSizes.small),
-          LmuText.body(
-            'How\'s your experience with the app?',
-            color: context.colors.neutralColors.textColors.mediumColors.base,
+          SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.all(LmuSizes.medium),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: LmuSizes.small),
+                  LmuText.body(
+                    'How\'s your experience with the app?',
+                    color: context.colors.neutralColors.textColors.mediumColors.base,
+                  ),
+                  const SizedBox(height: LmuSizes.xxxlarge),
+                  EmojiFeedbackSelector(
+                    onFeedbackSelected: (feedback) {
+                      print(feedback);
+                    },
+                  ),
+                  const SizedBox(height: 400),
+
+                ],
+              ),
+            ),
           ),
-          const SizedBox(height: LmuSizes.xxxlarge),
-          EmojiFeedbackSelector(
-            onFeedbackSelected: (feedback) {
-              print(feedback);
-            },
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(LmuSizes.medium),
+                child: LmuButton(
+                  title: 'Submit Feedback',
+                  size: ButtonSize.large,
+                  showFullWidth: true,
+                  onTap: () {
+                    // Add your button action here
+                  },
+                ),
+              ),
+            ),
           ),
         ],
       ),

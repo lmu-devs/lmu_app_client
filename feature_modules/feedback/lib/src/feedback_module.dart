@@ -4,12 +4,10 @@ import 'package:shared_api/feedback.dart';
 
 import 'services/default_feedback_service.dart';
 
-class FeedbackModule extends AppModule with LocalDependenciesProvidingAppModule, PublicApiProvidingAppModule {
+class FeedbackModule extends AppModule with PublicApiProvidingAppModule {
   @override
   String get moduleName => 'FeedbackModule';
 
-  @override
-  void provideLocalDependcies() {}
 
   @override
   void providePublicApi() {
