@@ -1,31 +1,24 @@
-name: settings
+name: feedback
 description: "A new Flutter package project."
 version: 0.0.1
 publish_to: 'none'
 
 environment:
-  sdk: '>=3.3.4 <4.0.0'
+  sdk: '>=3.4.3 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
   core:
-    path: ../../core 
-  equatable: ^2.0.5
-  flutter_bloc: ^8.1.3
-  go_router: ^14.3.0
-  provider: ^6.1.2
-  super_cupertino_navigation_bar: ^2.1.2
-  get_it: ^8.0.1
+    path: ../../core
   shared_api:
     path: ../../shared_api
+  get_it: ^8.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
-  go_router_builder: ^2.7.1
-  build_runner: any
-  build_verify: any
-
+  build_runner: ^2.4.9
+  build_verify: ^3.1.0

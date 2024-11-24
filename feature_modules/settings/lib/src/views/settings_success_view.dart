@@ -6,6 +6,8 @@ import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:provider/provider.dart';
+import 'package:get_it/get_it.dart';
+import 'package:shared_api/feedback.dart';
 
 import '../routes/settings_routes.dart';
 
@@ -47,11 +49,14 @@ class SettingsSuccessView extends StatelessWidget {
                   trailingArea: Icon(
                     LucideIcons.external_link,
                     size: LmuSizes.large,
-                    color: context.colors.neutralColors.textColors.weakColors.base,
+                    color:
+                        context.colors.neutralColors.textColors.weakColors.base,
                   ),
                   onTap: () {
                     LmuUrlLauncher.launchWebsite(
-                        context: context, url: "https://lmu-dev.org", mode: LmuUrlLauncherMode.externalApplication);
+                        context: context,
+                        url: "https://lmu-dev.org",
+                        mode: LmuUrlLauncherMode.externalApplication);
                   },
                 ),
                 LmuListItem.base(
@@ -59,7 +64,8 @@ class SettingsSuccessView extends StatelessWidget {
                   trailingArea: Icon(
                     LucideIcons.mail,
                     size: LmuSizes.large,
-                    color: context.colors.neutralColors.textColors.weakColors.base,
+                    color:
+                        context.colors.neutralColors.textColors.weakColors.base,
                   ),
                   onTap: () {
                     LmuUrlLauncher.launchEmail(
@@ -122,6 +128,17 @@ class SettingsSuccessView extends StatelessWidget {
                 ),
               ],
             ),
+            const SizedBox(
+              height: LmuSizes.mediumLarge,
+            ),
+            LmuButton(
+              title: 'Feedback',
+              onTap: () =>
+                  GetIt.I.get<FeedbackService>().navigateToFeedback(context),
+            ),
+            const SizedBox(
+              height: LmuSizes.xhuge,
+            ),
           ],
         ),
       ),
@@ -136,7 +153,8 @@ class _LeadingFancyIcons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final backgroundColor = context.colors.neutralColors.backgroundColors.mediumColors.base;
+    final backgroundColor =
+        context.colors.neutralColors.backgroundColors.mediumColors.base;
     return Container(
       width: LmuSizes.xxxlarge,
       height: LmuSizes.xxxlarge,
@@ -155,8 +173,10 @@ class _LeadingFancyIcons extends StatelessWidget {
   }
 }
 
-String _getThemeModeString(BuildContext context, SettingsLocalizations localizaitons) {
-  final String themeName = Provider.of<ThemeProvider>(context, listen: true).themeMode.name;
+String _getThemeModeString(
+    BuildContext context, SettingsLocalizations localizaitons) {
+  final String themeName =
+      Provider.of<ThemeProvider>(context, listen: true).themeMode.name;
   switch (themeName.toLowerCase()) {
     case 'system':
       return localizaitons.systemMode;
