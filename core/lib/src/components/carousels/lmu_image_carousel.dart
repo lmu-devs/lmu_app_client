@@ -1,4 +1,5 @@
 import 'package:core/constants.dart';
+import 'package:core/src/core.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
@@ -50,6 +51,7 @@ class _LmuImageCarouselState extends State<LmuImageCarousel> {
   }
 
   List<String> get imageUrls => widget.imageUrls;
+
   double get height => widget.height;
 
   @override
@@ -74,19 +76,21 @@ class _LmuImageCarouselState extends State<LmuImageCarousel> {
 
     return Stack(
       children: [
-        PageView.builder(
-          scrollDirection: Axis.horizontal,
-          physics: const ClampingScrollPhysics(),
-          clipBehavior: Clip.none,
-          controller: _pageController,
-          itemCount: imageUrls.length,
-          itemBuilder: (context, index) {
-            return Image.network(
-              imageUrls[index],
-              height: height,
-              fit: BoxFit.cover,
-            );
-          },
+        SoftBlur(
+          child: PageView.builder(
+            scrollDirection: Axis.horizontal,
+            physics: const ClampingScrollPhysics(),
+            clipBehavior: Clip.none,
+            controller: _pageController,
+            itemCount: imageUrls.length,
+            itemBuilder: (context, index) {
+              return Image.network(
+                imageUrls[index],
+                height: height,
+                fit: BoxFit.cover,
+              );
+            },
+          ),
         ),
         Positioned(
           bottom: LmuSizes.medium,

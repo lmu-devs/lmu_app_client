@@ -36,7 +36,6 @@ dependencies:
   intl: any
   tuple: ^2.0.2
   flutter_svg: ^2.0.9
-  soft_edge_blur: ^0.1.3
   fluttertoast: ^8.2.8
   scrollable_positioned_list: ^0.3.8
   skeletonizer: ^1.4.2
