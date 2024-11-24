@@ -1,4 +1,5 @@
 import 'package:core/components.dart';
+import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +16,15 @@ class MensaDetailsMenuSection extends StatefulWidget {
 }
 
 class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
-  final _pageController = PageController();
-  final _tabNotifier = ValueNotifier<int>(0);
+  late PageController _pageController;
+  late ValueNotifier<int> _tabNotifier;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+    _tabNotifier = ValueNotifier<int>(0);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +35,11 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
         if (state is! MenuLoadSuccess) {
           return const MenuLoadingView();
         }
+
         final menuModels = state.menuModels;
 
         return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             LmuTabBar(
@@ -55,7 +65,7 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
               color: colors.neutralColors.borderColors.seperatorLight,
             ),
             SizedBox(
-              height: 1000,
+              height: 1500,
               child: PageView.builder(
                 itemCount: menuModels.length,
                 controller: _pageController,
@@ -69,6 +79,7 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
                 },
               ),
             ),
+            const SizedBox(height: LmuSizes.medium),
           ],
         );
       },

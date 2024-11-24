@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
@@ -31,21 +32,24 @@ class MensaDetailsContentView extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.small),
           child: ValueListenableBuilder(
-              valueListenable: mensaUserPreferencesService.favoriteMensaIdsNotifier,
-              builder: (context, favoriteMensaIds, _) {
-                return GestureDetector(
-                  onTap: () {
-                    mensaUserPreferencesService.toggleFavoriteMensaId(mensaModel.canteenId);
-                  },
-                  child: Row(
-                    children: [
-                      LmuText.bodySmall(mensaModel.ratingModel.likeCount.formattedLikes),
-                      const SizedBox(width: LmuSizes.small),
-                      StarIcon(isActive: favoriteMensaIds.contains(mensaModel.canteenId)),
-                    ],
-                  ),
-                );
-              }),
+            valueListenable: mensaUserPreferencesService.favoriteMensaIdsNotifier,
+            builder: (context, favoriteMensaIds, _) {
+              return GestureDetector(
+                onTap: () {
+                  mensaUserPreferencesService.toggleFavoriteMensaId(mensaModel.canteenId);
+                },
+                child: Row(
+                  children: [
+                    LmuText.bodySmall(mensaModel.ratingModel.likeCount.formattedLikes),
+                    const SizedBox(width: LmuSizes.small),
+                    StarIcon(
+                        isActive: favoriteMensaIds.contains(mensaModel.canteenId),
+                        disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active),
+                  ],
+                ),
+              );
+            },
+          ),
         ),
         const LmuIcon(
           icon: LucideIcons.share,
@@ -54,11 +58,11 @@ class MensaDetailsContentView extends StatelessWidget {
       ],
       largeTitleTrailingWidget: MensaTag(type: mensaModel.type),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           MensaDetailsInfoSection(mensaModel: mensaModel),
           const MensaDetailsMenuSection(),
-          const SizedBox(height: LmuSizes.medium),
         ],
       ),
     );

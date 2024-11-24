@@ -36,31 +36,33 @@ class TasteProfilePage extends StatelessWidget {
     final localizations = context.locals.canteen;
 
     return LmuScaffoldWithAppBar(
-      collapsedTitleHeight: 54,
+      useModalSheetScrollController: true,
       stretch: false,
       largeTitle: localizations.myTaste,
       leadingAction: LeadingAction.close,
-      trailingWidget: ValueListenableBuilder(
-        valueListenable: _isActiveNotifier,
-        builder: (context, isActive, _) {
-          return ValueListenableBuilder(
-            valueListenable: _excludedLabelsNotifier,
-            builder: (context, excludedLabels, _) {
-              final isDisabled = setEquals(excludedLabels, _initialExcludedLabels) && _initialIsActive == isActive;
+      trailingWidgets: [
+        ValueListenableBuilder(
+          valueListenable: _isActiveNotifier,
+          builder: (context, isActive, _) {
+            return ValueListenableBuilder(
+              valueListenable: _excludedLabelsNotifier,
+              builder: (context, excludedLabels, _) {
+                final isDisabled = setEquals(excludedLabels, _initialExcludedLabels) && _initialIsActive == isActive;
 
-              return LmuButton(
-                title: localizations.save,
-                emphasis: ButtonEmphasis.link,
-                state: isDisabled ? ButtonState.disabled : ButtonState.enabled,
-                size: ButtonSize.large,
-                onTap: () {
-                  _saveTasteProfile(context);
-                },
-              );
-            },
-          );
-        },
-      ),
+                return LmuButton(
+                  title: localizations.save,
+                  emphasis: ButtonEmphasis.link,
+                  state: isDisabled ? ButtonState.disabled : ButtonState.enabled,
+                  size: ButtonSize.large,
+                  onTap: () {
+                    _saveTasteProfile(context);
+                  },
+                );
+              },
+            );
+          },
+        ),
+      ],
       body: ValueListenableBuilder(
         valueListenable: tasteProfileNotifier,
         builder: (context, tasteProfileModel, _) {
@@ -72,20 +74,11 @@ class TasteProfilePage extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildTitleSection(localizations, context),
-                      _buildToggleSection(localizations),
-                      _buildPresetsSection(localizations, selectedLanguage, presets),
-                      _buildPreferencesSection(localizations, context.colors, selectedLanguage, presets, sortedLabels),
-                      _buildFooter(context, localizations),
-                    ],
-                  ),
-                ),
-              ),
+              _buildTitleSection(localizations, context),
+              _buildToggleSection(localizations),
+              _buildPresetsSection(localizations, selectedLanguage, presets),
+              _buildPreferencesSection(localizations, context.colors, selectedLanguage, presets, sortedLabels),
+              _buildFooter(context, localizations),
             ],
           );
         },
@@ -190,6 +183,7 @@ class TasteProfilePage extends StatelessWidget {
     });
 
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
@@ -201,104 +195,58 @@ class TasteProfilePage extends StatelessWidget {
           ),
         ),
         LmuTabBar(
-          items: const [
-            LmuTabBarItemData(title: "Fleisch"),
-            LmuTabBarItemData(title: "Fisch"),
-            LmuTabBarItemData(title: "Milchprodukte"),
-            LmuTabBarItemData(title: "Nüsse"),
-            LmuTabBarItemData(title: "Zusatzstoffe"),
-            LmuTabBarItemData(title: "Allergene"),
-          ],
+          items: sortedLabels.map((e) => LmuTabBarItemData(title: e.name)).toList(),
           activeTabIndexNotifier: activeIndexNotifier,
           onTabChanged: (index, tabItem) {
-            itemScrollController.jumpTo(index: index);
+            //itemScrollController.jumpTo(index: index);
           },
         ),
         Divider(
           height: 0.5,
           color: colors.neutralColors.borderColors.seperatorLight,
         ),
-        SizedBox(
-          height: 1000,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
-            child: ValueListenableBuilder(
-              valueListenable: _excludedLabelsNotifier,
-              builder: (context, excludedLabels, _) {
-                return ScrollablePositionedList.separated(
-                  padding: const EdgeInsets.only(top: LmuSizes.mediumLarge),
-                  itemCount: sortedLabels.length,
-                  itemScrollController: itemScrollController,
-                  itemPositionsListener: itemPositionsListener,
-                  separatorBuilder: (context, index) => const SizedBox(height: LmuSizes.mediumLarge),
-                  itemBuilder: (context, index) {
-                    final label = sortedLabels[index];
-                    return Column(
-                      children: [
-                        LmuContentTile(
-                          content: [
-                            for (final item in label.items)
-                              LmuListItem.action(
-                                title: item.text[selectedLanguage],
-                                leadingArea: LmuText.body(
-                                  (item.emojiAbbreviation ?? "").isEmpty ? "😀" : item.emojiAbbreviation,
-                                ),
-                                actionType: LmuListItemAction.checkbox,
-                                mainContentAlignment: MainContentAlignment.center,
-                                initialValue: !excludedLabels.contains(item.enumName),
-                                onChange: (value) => _handleLabelChange(
-                                  item,
-                                  value,
-                                  presets,
-                                ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
+          child: ValueListenableBuilder(
+            valueListenable: _excludedLabelsNotifier,
+            builder: (context, excludedLabels, _) {
+              return ScrollablePositionedList.separated(
+                padding: const EdgeInsets.only(top: LmuSizes.mediumLarge),
+                itemCount: sortedLabels.length,
+                shrinkWrap: true,
+                itemScrollController: itemScrollController,
+                itemPositionsListener: itemPositionsListener,
+                separatorBuilder: (context, index) => const SizedBox(height: LmuSizes.mediumLarge),
+                itemBuilder: (context, index) {
+                  final label = sortedLabels[index];
+                  return Column(
+                    children: [
+                      LmuContentTile(
+                        content: [
+                          for (final item in label.items)
+                            LmuListItem.action(
+                              title: item.text[selectedLanguage],
+                              leadingArea: LmuText.body(
+                                (item.emojiAbbreviation ?? "").isEmpty ? "😀" : item.emojiAbbreviation,
                               ),
-                          ],
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-            ),
+                              actionType: LmuListItemAction.checkbox,
+                              mainContentAlignment: MainContentAlignment.center,
+                              initialValue: !excludedLabels.contains(item.enumName),
+                              onChange: (value) => _handleLabelChange(
+                                item,
+                                value,
+                                presets,
+                              ),
+                            ),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
           ),
         ),
-        // Padding(
-        //   padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
-        //   child: ValueListenableBuilder(
-        //     valueListenable: _excludedLabelsNotifier,
-        //     builder: (context, excludedLabels, _) {
-        //       return Column(
-        //         children: [
-        //           for (final label in sortedLabels)
-        //             Column(
-        //               children: [
-        //                 LmuContentTile(
-        //                   content: [
-        //                     for (final item in label.items)
-        //                       LmuListItem.action(
-        //                         title: item.text[selectedLanguage],
-        //                         leadingArea: LmuText.body(
-        //                           (item.emojiAbbreviation ?? "").isEmpty ? "😀" : item.emojiAbbreviation,
-        //                         ),
-        //                         actionType: LmuListItemAction.checkbox,
-        //                         mainContentAlignment: MainContentAlignment.center,
-        //                         initialValue: !excludedLabels.contains(item.enumName),
-        //                         onChange: (value) => _handleLabelChange(
-        //                           item,
-        //                           value,
-        //                           presets,
-        //                         ),
-        //                       ),
-        //                   ],
-        //                 ),
-        //                 const SizedBox(height: LmuSizes.mediumLarge),
-        //               ],
-        //             ),
-        //         ],
-        //       );
-        //     },
-        //   ),
-        // ),
       ],
     );
   }

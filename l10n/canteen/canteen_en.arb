@@ -162,5 +162,21 @@
   "guests": "Guests",
   "@guests": {
     "description": "Guests"
+  },
+  "mainDish": "Main Dish",
+  "@mainDish": {
+    "description": "Main Dish"
+  },
+  "soupDish": "Soups / Studitopf",
+  "@soupDish": {
+    "description": "Soups / Studitopf"
+  },
+  "sideDish": "Sides",
+  "@sideDish": {
+    "description": "Sides"
+  },
+  "dessertDish": "Desserts",
+  "@dessertDish": {
+    "description": "Desserts"
   }
 }

@@ -80,9 +80,9 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
       text: _largeTitle,
       style: widget.textTheme.h0,
     );
-    final tp = TextPainter(text: span, textDirection: TextDirection.ltr, maxLines: 3);
+    final tp = TextPainter(text: span, textDirection: TextDirection.ltr, maxLines: 4);
     tp.layout(maxWidth: widget.appBarWidth - LmuSizes.xxlarge);
-    _maxLines = min(tp.computeLineMetrics().length, 3);
+    _maxLines = min(tp.computeLineMetrics().length, 4);
 
     _calculatedLargeTitleHeight = _largeTitleLineHeight * _maxLines;
 
@@ -104,7 +104,7 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
   bool get _alwaysShowCollapsedTitle => widget.alwaysShowCollapsedTitle;
   bool get _stretch => widget.stretch;
 
-  double get _collapsedTitleHeight => widget.collapsedTitleHeight ?? 40.0;
+  double get _collapsedTitleHeight => widget.collapsedTitleHeight ?? 54.0;
   double get _largeTitleHeight => _calculatedLargeTitleHeight + (_hasImage ? LmuSizes.xlarge : LmuSizes.medium);
   double get _appBarHeight => _collapsedTitleHeight + _largeTitleHeight;
 
@@ -134,18 +134,15 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
         CustomScrollView(
           controller: _scrollController,
           physics: SnapScrollPhysics(
-            parent: const AlwaysScrollableScrollPhysics(),
+            parent: _stretch ? const AlwaysScrollableScrollPhysics() : const ClampingScrollPhysics(),
             snaps: [
               Snap.avoidZone(0 + imageOffset, _largeTitleHeight + imageOffset),
             ],
           ),
           slivers: [
-            SliverOverlapAbsorber(
-              handle: SliverOverlapAbsorberHandle(),
-              sliver: SliverToBoxAdapter(
-                child: Container(
-                  height: defaultHeight,
-                ),
+            SliverToBoxAdapter(
+              child: Container(
+                height: defaultHeight,
               ),
             ),
             SliverToBoxAdapter(
@@ -286,19 +283,24 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
                                       child: Row(
                                         mainAxisAlignment: _largeTitleTrailingWidgetAlignment,
                                         children: [
-                                          Transform.scale(
-                                            scale: _hasImage ? 1.0 : largeTitleScale,
-                                            filterQuality: FilterQuality.high,
-                                            alignment: Alignment.bottomLeft,
-                                            child: Text(
-                                              _largeTitle,
-                                              style: largeTitleStyle,
-                                              maxLines: 3,
-                                              overflow: TextOverflow.ellipsis,
+                                          Flexible(
+                                            child: Transform.scale(
+                                              scale: _hasImage ? 1.0 : largeTitleScale,
+                                              filterQuality: FilterQuality.high,
+                                              alignment: Alignment.bottomLeft,
+                                              child: Text(
+                                                _largeTitle,
+                                                style: largeTitleStyle,
+                                                maxLines: 4,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
                                             ),
                                           ),
-                                          const SizedBox(width: LmuSizes.medium),
-                                          if (_largeTitleTrailingWidget != null) _largeTitleTrailingWidget!
+                                          if (_largeTitleTrailingWidget != null)
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: LmuSizes.medium),
+                                              child: _largeTitleTrailingWidget!,
+                                            )
                                         ],
                                       ),
                                     ),

@@ -35,5 +35,9 @@
     "emptyFavoritesAfter": " Symbol hinzu",
     "students": "Studenten",
     "staff": "Mitarbeiter",
-    "guests": "Gäste"
+    "guests": "Gäste",
+    "mainDish": "Hauptgerichte",
+    "soupDish": "Suppen",
+    "sideDish": "Beilagen",
+    "dessertDish": "Nachspeisen"
 }

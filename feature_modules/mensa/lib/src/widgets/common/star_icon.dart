@@ -5,9 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class StarIcon extends StatelessWidget {
-  const StarIcon({Key? key, this.isActive = false}) : super(key: key);
+  const StarIcon({
+    Key? key,
+    this.isActive = false,
+    this.disabledColor,
+  }) : super(key: key);
 
   final bool isActive;
+  final Color? disabledColor;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +42,7 @@ class StarIcon extends StatelessWidget {
         colorFilter: ColorFilter.mode(
           isActive
               ? context.colors.warningColors.textColors.strongColors.base
-              : context.colors.neutralColors.backgroundColors.base,
+              : disabledColor ?? context.colors.neutralColors.backgroundColors.base,
           BlendMode.srcIn,
         ),
       ),

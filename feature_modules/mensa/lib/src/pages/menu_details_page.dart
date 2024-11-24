@@ -25,93 +25,91 @@ class MenuDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LmuScaffoldWithAppBar(
-      collapsedTitleHeight: 54,
       largeTitle: menuItemModel.title,
       stretch: false,
+      useModalSheetScrollController: true,
       leadingAction: LeadingAction.close,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: LmuSizes.mediumLarge),
-              Row(
-                children: [
-                  LmuButton(
-                    leadingIcon: LucideIcons.heart,
-                    title: "${menuItemModel.ratingModel.likeCount} Likes",
-                    emphasis: ButtonEmphasis.secondary,
-                  ),
-                  const SizedBox(width: LmuSizes.mediumSmall),
-                  const LmuButton(
-                    title: "Erinnere mich",
-                    trailingIcon: LucideIcons.bell,
-                    emphasis: ButtonEmphasis.secondary,
-                  ),
-                  const SizedBox(width: LmuSizes.mediumSmall),
-                  const LmuButton(
-                    title: "Teilen",
-                    emphasis: ButtonEmphasis.secondary,
-                  ),
-                ],
-              ),
-              const SizedBox(height: LmuSizes.xxlarge),
-              LmuTileHeadline.base(title: "Inhalte"),
-              LmuContentTile(
-                content: menuItemModel.labels
-                    .map(
-                      (e) => LmuListItem.base(
-                        title: e,
+        child: Column(
+          children: [
+            const SizedBox(height: LmuSizes.mediumLarge),
+            Row(
+              children: [
+                LmuButton(
+                  leadingIcon: LucideIcons.heart,
+                  title: "${menuItemModel.ratingModel.likeCount} Likes",
+                  emphasis: ButtonEmphasis.secondary,
+                ),
+                const SizedBox(width: LmuSizes.mediumSmall),
+                const LmuButton(
+                  title: "Erinnere mich",
+                  trailingIcon: LucideIcons.bell,
+                  emphasis: ButtonEmphasis.secondary,
+                ),
+                const SizedBox(width: LmuSizes.mediumSmall),
+                const LmuButton(
+                  title: "Teilen",
+                  emphasis: ButtonEmphasis.secondary,
+                ),
+              ],
+            ),
+            const SizedBox(height: LmuSizes.xxlarge),
+            LmuTileHeadline.base(title: "Inhalte"),
+            LmuContentTile(
+              content: menuItemModel.labels
+                  .map(
+                    (e) => LmuListItem.base(
+                      title: e,
+                    ),
+                  )
+                  .toList(),
+            ),
+            const SizedBox(height: LmuSizes.xxlarge),
+            LmuTileHeadline.base(title: "Price"),
+            ValueListenableBuilder(
+                valueListenable: _selectedPriceCategoryNotifier,
+                builder: (context, selectedPriceCategory, _) {
+                  final price = menuItemModel.prices.firstWhere(
+                    (element) => element.category == selectedPriceCategory,
+                  );
+
+                  final priceString = "${price.pricePerUnit} € je ${price.unit}";
+
+                  return LmuContentTile(
+                    content: [
+                      if (price.basePrice > 0.0)
+                        LmuListItem.base(
+                          title: "Base Price",
+                          trailingTitle: '${price.basePrice} €',
+                        ),
+                      LmuListItem.base(
+                        title: selectedPriceCategory.name(context.locals.canteen),
+                        trailingTitle: priceString,
+                        trailingTitleInTextVisuals: [
+                          LmuInTextVisual.iconBox(
+                            icon: LucideIcons.chevrons_up_down,
+                          )
+                        ],
+                        onTap: () {
+                          LmuBottomSheet.show(
+                            context,
+                            content: _PriceCategoryActionSheetContent(
+                              priceModels: menuItemModel.prices,
+                              priceCategoryNotifier: _selectedPriceCategoryNotifier,
+                            ),
+                          );
+                        },
                       ),
-                    )
-                    .toList(),
-              ),
-              const SizedBox(height: LmuSizes.xxlarge),
-              LmuTileHeadline.base(title: "Price"),
-              ValueListenableBuilder(
-                  valueListenable: _selectedPriceCategoryNotifier,
-                  builder: (context, selectedPriceCategory, _) {
-                    final price = menuItemModel.prices.firstWhere(
-                      (element) => element.category == selectedPriceCategory,
-                    );
-
-                    final priceString = "${price.pricePerUnit} € je ${price.unit}";
-
-                    return LmuContentTile(
-                      content: [
-                        if (price.basePrice > 0.0)
-                          LmuListItem.base(
-                            title: "Base Price",
-                            trailingTitle: '${price.basePrice} €',
-                          ),
-                        LmuListItem.base(
-                          title: selectedPriceCategory.name(context.locals.canteen),
-                          trailingTitle: priceString,
-                          trailingTitleInTextVisuals: [
-                            LmuInTextVisual.iconBox(
-                              icon: LucideIcons.chevrons_up_down,
-                            )
-                          ],
-                          onTap: () {
-                            LmuBottomSheet.show(
-                              context,
-                              content: _PriceCategoryActionSheetContent(
-                                priceModels: menuItemModel.prices,
-                                priceCategoryNotifier: _selectedPriceCategoryNotifier,
-                              ),
-                            );
-                          },
-                        ),
-                        LmuListItem.base(
-                          title: "Simple Price",
-                          trailingTitle: menuItemModel.priceSimple,
-                        ),
-                      ],
-                    );
-                  }),
-              const SizedBox(height: LmuSizes.xhuge),
-            ],
-          ),
+                      LmuListItem.base(
+                        title: "Simple Price",
+                        trailingTitle: menuItemModel.priceSimple,
+                      ),
+                    ],
+                  );
+                }),
+            const SizedBox(height: LmuSizes.xhuge),
+          ],
         ),
       ),
     );

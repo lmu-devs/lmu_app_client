@@ -21,9 +21,15 @@ class LmuBottomSheet {
         ),
       ),
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
-      builder: (_) {
-        return LmuBottomSheetContent(content: content);
-      },
+      builder: (_) => Padding(
+        padding: const EdgeInsets.only(
+          top: LmuSizes.mediumLarge,
+          left: LmuSizes.mediumLarge,
+          right: LmuSizes.mediumLarge,
+          bottom: LmuSizes.xxxlarge,
+        ),
+        child: content,
+      ),
     );
   }
 
@@ -31,7 +37,7 @@ class LmuBottomSheet {
     BuildContext context, {
     required Widget content,
   }) {
-    showBarModalBottomSheet(
+    showCupertinoModalBottomSheet(
       context: context,
       useRootNavigator: true,
       shape: const RoundedRectangleBorder(
@@ -45,32 +51,10 @@ class LmuBottomSheet {
       duration: const Duration(milliseconds: 500),
       closeProgressThreshold: .9,
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
-      builder: (context) => Padding(
-        padding: const EdgeInsets.only(),
+      builder: (context) => PopScope(
+        canPop: false,
         child: content,
       ),
-    );
-  }
-}
-
-class LmuBottomSheetContent extends StatelessWidget {
-  const LmuBottomSheetContent({
-    super.key,
-    required this.content,
-  });
-
-  final Widget content;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: LmuSizes.mediumLarge,
-        left: LmuSizes.mediumLarge,
-        right: LmuSizes.mediumLarge,
-        bottom: LmuSizes.xxxlarge,
-      ),
-      child: content,
     );
   }
 }
