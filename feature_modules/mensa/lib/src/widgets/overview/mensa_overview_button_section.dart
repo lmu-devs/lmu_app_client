@@ -2,10 +2,12 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/explore.dart';
 
 import '../../extensions/sort_option_sort_extension.dart';
 import '../../repository/api/models/mensa/mensa_model.dart';
@@ -31,6 +33,20 @@ class MensaOverviewButtonSection extends StatelessWidget {
     final localizations = context.locals.canteen;
     return Row(
       children: [
+        GestureDetector(
+          onTap: () => GetIt.I.get<ExploreService>().navigateToExplore(context),
+          child: Container(
+            height: LmuActionSizes.base,
+            width: LmuActionSizes.base,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(LmuRadiusSizes.medium),
+              image: DecorationImage(
+                image: AssetImage(getPngAssetTheme(context, 'assets/maps_icon'), package: "mensa"),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: LmuSizes.mediumSmall),
         ValueListenableBuilder(
           valueListenable: sortOptionNotifier,
           builder: (context, activeSortOption, _) {

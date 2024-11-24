@@ -88,10 +88,7 @@ abstract class CanteenLocalizations {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[
-    Locale('de'),
-    Locale('en')
-  ];
+  static const List<Locale> supportedLocales = <Locale>[Locale('de'), Locale('en')];
 
   /// The title of the meals tab
   ///
@@ -326,6 +323,24 @@ abstract class CanteenLocalizations {
   /// In en, this message translates to:
   /// **'Desserts'**
   String get dessertDish;
+
+  /// Longer description of a canteen
+  ///
+  /// In en, this message translates to:
+  /// **'300+ seats, daily changing main meals, including vegetarian and vegan options.'**
+  String get canteenInfo;
+
+  /// Longer description of a bistro
+  ///
+  /// In en, this message translates to:
+  /// **'100-300 seats, specialized in snacks and smaller dishes.'**
+  String get bistroInfo;
+
+  /// Longer description of a cafe
+  ///
+  /// In en, this message translates to:
+  /// **'under 100 seats, focused on beverages and small snacks.'**
+  String get cafeInfo;
 }
 
 class _CanteenLocalizationsDelegate extends LocalizationsDelegate<CanteenLocalizations> {
@@ -344,18 +359,16 @@ class _CanteenLocalizationsDelegate extends LocalizationsDelegate<CanteenLocaliz
 }
 
 CanteenLocalizations lookupCanteenLocalizations(Locale locale) {
-
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'de': return CanteenLocalizationsDe();
-    case 'en': return CanteenLocalizationsEn();
+    case 'de':
+      return CanteenLocalizationsDe();
+    case 'en':
+      return CanteenLocalizationsEn();
   }
 
-  throw FlutterError(
-    'CanteenLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-    'an issue with the localizations generation tool. Please file an issue '
-    'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.'
-  );
+  throw FlutterError('CanteenLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+      'an issue with the localizations generation tool. Please file an issue '
+      'on GitHub with a reproducible sample app and the gen-l10n configuration '
+      'that was used.');
 }

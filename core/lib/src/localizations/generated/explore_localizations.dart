@@ -93,11 +93,35 @@ abstract class ExploreLocalizations {
     Locale('en')
   ];
 
-  /// The title of the explore tab
+  /// Navigation option with Google Maps
   ///
   /// In en, this message translates to:
   /// **'Explore'**
   String get tabTitle;
+
+  /// No description provided for @navigate.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigate'**
+  String get navigate;
+
+  /// No description provided for @openWith.
+  ///
+  /// In en, this message translates to:
+  /// **'Open with'**
+  String get openWith;
+
+  /// No description provided for @appleMaps.
+  ///
+  /// In en, this message translates to:
+  /// **'Apple Maps'**
+  String get appleMaps;
+
+  /// No description provided for @googleMaps.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Maps'**
+  String get googleMaps;
 }
 
 class _ExploreLocalizationsDelegate extends LocalizationsDelegate<ExploreLocalizations> {

@@ -5,5 +5,21 @@
   "tabTitle": "Explore",
   "@tabTitle": {
     "description": "The title of the explore tab"
-  }
+  },
+  "navigate": "Navigate",
+  "@tabTitle": {
+      "description": "Navigate"
+    },
+  "openWith": "Open with",
+  "@tabTitle": {
+      "description": "Open with"
+    },
+   "appleMaps": "Apple Maps",
+   "@tabTitle": {
+      "description": "Navigation option with Apple Maps"
+   },
+   "googleMaps": "Google Maps",
+    "@tabTitle": {
+      "description": "Navigation option with Google Maps"
+    }
 }

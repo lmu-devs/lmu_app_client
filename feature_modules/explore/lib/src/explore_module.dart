@@ -9,10 +9,12 @@ class ExploreModule extends AppModule with LocalDependenciesProvidingAppModule, 
   String get moduleName => 'ExploreModule';
 
   @override
-  void provideLocalDependcies() {}
-
-  @override
   void providePublicApi() {
     GetIt.I.registerSingleton<ExploreService>(DefaultExploreService());
+  }
+
+  @override
+  void provideLocalDependencies() {
+    // TODO: implement provideLocalDependencies
   }
 }

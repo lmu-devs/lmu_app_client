@@ -178,5 +178,17 @@
   "dessertDish": "Desserts",
   "@dessertDish": {
     "description": "Desserts"
+  },
+  "canteenInfo": "300+ seats, daily changing main meals, including vegetarian and vegan options.",
+  "@canteenInfo": {
+    "description": "Longer description of a canteen"
+  },
+  "bistroInfo": "100-300 seats, specialized in snacks and smaller dishes.",
+  "@bistroInfo": {
+    "description": "Longer description of a bistro"
+  },
+  "cafeInfo": "under 100 seats, focused on beverages and small snacks.",
+  "@cafeInfo": {
+    "description": "Longer description of a cafe"
   }
 }

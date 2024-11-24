@@ -21,16 +21,17 @@ class MensaOverviewPlaceholderTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: LmuSizes.small,
+        vertical: LmuSizes.large,
       ),
       width: double.infinity,
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (leadingWidget != null) leadingWidget!,
           if (icon != null)
             LmuIcon(
               icon: icon!,
-              size: LmuIconSizes.medium,
+              size: LmuIconSizes.small,
               color: color,
             ),
           const SizedBox(width: LmuSizes.mediumSmall),

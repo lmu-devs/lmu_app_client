@@ -1,6 +1,6 @@
 name: lmu_app
 description: "A new Flutter project."
-publish_to: 'none' 
+publish_to: 'none'
 version: 1.0.0+2
 
 environment:
@@ -9,22 +9,24 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_dotenv: ^5.2.1
   cupertino_icons: ^1.0.2
   go_router: any
   flutter_bloc: ^8.1.3
   provider: ^6.1.2
   core:
     path: ./core
-  mensa: 
+  mensa:
     path: ./feature_modules/mensa
   explore:
     path: ./feature_modules/explore
-  settings: 
+  settings:
     path: ./feature_modules/settings
   wunschkonzert:
     path: ./feature_modules/wunschkonzert
   http: ^0.13.3
-  mapbox_maps_flutter: ^2.2.0
+  mapbox_maps_flutter: ^2.4.0
+  shared_preferences: ^2.0.7
   permission_handler: ^11.3.1
   flutter_lucide: ^1.2.0
   collection: ^1.18.0
@@ -45,7 +47,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^4.0.0
   go_router_builder: ^2.7.1
   build_runner: any
   build_verify: any
@@ -54,5 +56,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  generate: true 
+  generate: true
+  assets:
+    - .env
+    - feature_modules/mensa/assets/
+    - feature_modules/explore/assets/
 

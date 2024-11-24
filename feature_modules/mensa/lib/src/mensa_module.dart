@@ -18,7 +18,7 @@ class MensaModule extends AppModule
   String get moduleName => 'MensaModule';
 
   @override
-  void provideLocalDependcies() {
+  void provideLocalDependencies() {
     final repository = ConnectedMensaRepository(
       mensaApiClient: MensaApiClient(),
     );
