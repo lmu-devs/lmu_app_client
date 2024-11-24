@@ -2,6 +2,7 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
@@ -39,9 +40,8 @@ class MensaOverviewButtonSection extends StatelessWidget {
             width: LmuActionSizes.base,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(LmuRadiusSizes.medium),
-              image: const DecorationImage(
-                image:
-                    AssetImage("assets/maps_icon_dark.png", package: "mensa"),
+              image: DecorationImage(
+                image: AssetImage(getPngAssetTheme(context, 'assets/maps_icon'), package: "mensa"),
               ),
             ),
           ),
@@ -51,9 +51,7 @@ class MensaOverviewButtonSection extends StatelessWidget {
           valueListenable: sortOptionNotifier,
           builder: (context, activeSortOption, _) {
             return LmuButton(
-              title: SortOption.values
-                  .firstWhere((option) => option == activeSortOption)
-                  .title(localizations),
+              title: SortOption.values.firstWhere((option) => option == activeSortOption).title(localizations),
               emphasis: ButtonEmphasis.secondary,
               trailingIcon: LucideIcons.chevron_down,
               onTap: () => _showSortOptionActionSheet(context),
@@ -66,11 +64,8 @@ class MensaOverviewButtonSection extends StatelessWidget {
           builder: (context, isOpenNowFilterActive, _) {
             return LmuButton(
               title: localizations.openNow,
-              emphasis: isOpenNowFilterActive
-                  ? ButtonEmphasis.primary
-                  : ButtonEmphasis.secondary,
-              onTap: () =>
-                  isOpenNowFilerNotifier.value = !isOpenNowFilerNotifier.value,
+              emphasis: isOpenNowFilterActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
+              onTap: () => isOpenNowFilerNotifier.value = !isOpenNowFilerNotifier.value,
             );
           },
         )
@@ -121,13 +116,9 @@ class _SortOptionActionSheetContent extends StatelessWidget {
                 return Column(
                   children: [
                     LmuListItem.base(
-                      title: sortOption == activeValue
-                          ? sortOption.title(context.locals.canteen)
-                          : null,
+                      title: sortOption == activeValue ? sortOption.title(context.locals.canteen) : null,
                       titleColor: textColor,
-                      subtitle: sortOption == activeValue
-                          ? null
-                          : sortOption.title(context.locals.canteen),
+                      subtitle: sortOption == activeValue ? null : sortOption.title(context.locals.canteen),
                       mainContentAlignment: MainContentAlignment.center,
                       leadingArea: LmuIcon(
                         icon: sortOption.icon,
@@ -136,11 +127,8 @@ class _SortOptionActionSheetContent extends StatelessWidget {
                       ),
                       onTap: () async {
                         sortOptionNotifier.value = sortOption;
-                        sortedMensaModelsNotifier.value =
-                            sortOption.sort(mensaModels);
-                        await GetIt.I
-                            .get<MensaUserPreferencesService>()
-                            .updateSortOption(sortOption);
+                        sortedMensaModelsNotifier.value = sortOption.sort(mensaModels);
+                        await GetIt.I.get<MensaUserPreferencesService>().updateSortOption(sortOption);
                         Future.delayed(
                           const Duration(milliseconds: 100),
                           () {
