@@ -10,7 +10,7 @@ class ModuleRegistry {
   Future init() async {
     final localDependenciesModules = modules.whereType<LocalDependenciesProvidingAppModule>();
     for (final localDependencyModule in localDependenciesModules) {
-      localDependencyModule.provideLocalDependcies();
+      localDependencyModule.provideLocalDependencies();
     }
 
     final publicApiModules = modules.whereType<PublicApiProvidingAppModule>();

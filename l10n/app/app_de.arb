@@ -1,7 +1,7 @@
 {
   "@@locale": "de",
   "@@context": "AppWide",
-  "appTitle": "Munich Students",
+  "appTitle": "LMU Students",
   "monday": "Montag",
   "tuesday": "Dienstag",
   "wednesday": "Mittwoch",
@@ -13,5 +13,6 @@
   "favoriteRemoved": "Favorit entfernt",
   "iconStar": "Stern",
   "today": "Heute",
-  "tomorrow": "Morgen"
+  "tomorrow": "Morgen",
+  "search": "Suchen"
 }

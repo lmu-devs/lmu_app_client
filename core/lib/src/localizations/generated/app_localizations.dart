@@ -96,7 +96,7 @@ abstract class AppLocalizations {
   /// The title of the app
   ///
   /// In en, this message translates to:
-  /// **'Munich Students'**
+  /// **'LMU Students'**
   String get appTitle;
 
   /// Monday
@@ -170,6 +170,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tomorrow'**
   String get tomorrow;
+
+  /// Search
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

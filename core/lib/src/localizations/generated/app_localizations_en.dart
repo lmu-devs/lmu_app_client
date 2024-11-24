@@ -5,7 +5,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'Munich Students';
+  String get appTitle => 'LMU Students';
 
   @override
   String get monday => 'Monday';
@@ -42,4 +42,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tomorrow => 'Tomorrow';
+
+  @override
+  String get search => 'Search';
 }

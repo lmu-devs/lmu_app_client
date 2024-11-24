@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
   "@@context": "AppWide",
-  "appTitle": "Munich Students",
+  "appTitle": "LMU Students",
   "@appTitle": {
     "description": "The title of the app"
   },
@@ -52,5 +52,9 @@
   "tomorrow": "Tomorrow",
   "@tomorrow": {
     "description": "Tomorrow"
-  }
+  },
+  "search": "Search",
+    "@search": {
+      "description": "Search"
+    }
 }

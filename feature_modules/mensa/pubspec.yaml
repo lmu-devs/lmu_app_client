@@ -19,7 +19,6 @@ dependencies:
   http: ^0.13.3
   json_annotation: ^4.0.1
   shared_preferences: ^2.0.7
-  mapbox_maps_flutter: ^2.2.0
   permission_handler: ^11.3.1
   flutter_lucide: ^1.2.0
   get_it: ^8.0.1

@@ -54,7 +54,7 @@ class MensaOverviewFavoriteSectionState extends State<MensaOverviewFavoriteSecti
 
     _emptyStateAnimationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 1200),
     );
     _emptyStateAnimation = CurvedAnimation(
       parent: _emptyStateAnimationController,

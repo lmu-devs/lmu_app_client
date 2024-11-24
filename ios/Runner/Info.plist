@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>LMU</string>
+	<string>LMU Students</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -24,37 +24,40 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>http</string>
+		<string>https</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>MBXAccessToken</key>
+	<string>pk.eyJ1IjoibHVrYXNwbGVuayIsImEiOiJjbTJ4OWRvcXkwMmJoMmxyMzNreHJnemp0In0.Y2tZBr2Ek1F-s-yP2DxnNA</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>Your location is needed to show distances to university buildings and cafeterias, and to display nearby facilities on the map.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Your location is needed to show distances to university buildings and cafeterias, and to display nearby facilities on the map.</string>
+	<key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>comgooglemaps</string>
+        <string>maps</string>
+    </array>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>UIStatusBarHidden</key>
+	<false/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>MBXAccessToken</key>
-	<string>sk.eyJ1IjoiZWFkcmF4LW15am91cm5leSIsImEiOiJjbGs2bjlrdzYwMDR6M2RwaHA4d25meXlsIn0.a0jbkKjoon1rk79B5_piuQ</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Location is needed to show distances to university buildings and cafeterias, and to display nearby facilities on the map.</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>http</string>
-		<string>https</string>
-	</array>
-	<key>UIStatusBarHidden</key>
-	<false/>
 </dict>
 </plist>
