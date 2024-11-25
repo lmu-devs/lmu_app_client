@@ -416,7 +416,6 @@ class _TrailingActions extends StatelessWidget {
             .mapIndexed(
               (index, element) => Container(
                 margin: EdgeInsets.only(left: index == 0 ? 0 : LmuSizes.mediumSmall),
-                padding: _hasImage ? const EdgeInsets.all(LmuSizes.mediumSmall) : null,
                 decoration: _hasImage
                     ? BoxDecoration(
                         color: _backgroundColor,

@@ -26,6 +26,8 @@ dependencies:
     path: ./feature_modules/wunschkonzert
   feedback:
     path: ./feature_modules/feedback
+  shared_api:
+    path: ./shared_api
   http: ^0.13.3
   mapbox_maps_flutter: ^2.4.0
   shared_preferences: ^2.0.7
@@ -42,8 +44,7 @@ dependencies:
   scrollable_positioned_list: ^0.3.8
   skeletonizer: ^1.4.2
   flutter_native_splash: ^2.3.1
-  shared_api:
-    path: ./shared_api
+  share_plus: ^10.1.2
 
 dev_dependencies:
   flutter_test:
