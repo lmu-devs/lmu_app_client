@@ -58,7 +58,7 @@ class MensaDetailsContentView extends StatelessWidget {
         children: [
           MensaDetailsInfoSection(mensaModel: mensaModel),
           const MensaDetailsMenuSection(),
-          const SizedBox(height: LmuSizes.medium),
+          const SizedBox(height: LmuSizes.xhuge),
         ],
       ),
     );
