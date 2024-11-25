@@ -66,5 +66,66 @@
   "contactBody": "Dear lovely LMU Developers,\n\n",
   "@contactBody": {
     "description": "The body of the contact form"
+  },
+  "account": "Account",
+  "@account": {
+    "description": "Account"
+  },
+  "accountStatus": "Status",
+  "@accountStatus": {
+    "description": "Account status"
+  },
+  "accountStatusLocal": "Local Account",
+  "@accountStatusLocal": {
+    "description": "Local account status"
+  },
+  "accountStatusSynced": "Synced",
+  "@accountStatusSynced": {
+    "description": "Synced account status"
+  },
+  "accountMemberSince": "Member since",
+  "@accountMemberSince": {
+    "description": "Member since"
+  },
+  "connectToAccount": "Connect to LMU Account",
+  "@connectToAccount": {
+    "description": "Connect with LMU Login"
+  },
+  "connectToAccountDescription": "Currently, your account is only accessible via your current device. We are working on establishing a connection to your LMU account to synchronize your data.",
+  "@connectToAccountDescription": {
+    "description": "Description for the connect to LMU account button"
+  },
+  "manageData": "Your Data",
+  "@manageData": {
+    "description": "Your data"
+  },
+  "technicalDetails": "Technical Details",
+  "@technicalDetails": {
+    "description": "Technical details"
+  },
+  "deleteDataDescription": "We securely store your data (e.g. likes) on our servers. You have full control over your data and can delete it at any time.",
+  "@deleteDataDescription": {
+    "description": "Description for the delete data button"
+  },
+  "deleteDataTitleFinal": "Delete your account data",
+  "@deleteDataTitleFinal": {
+    "description": "Delete all Data"
+  },
+  "deleteDataDescriptionFinal": "This action will permanently delete all account data from our server and your device. This includes all dish likes, canteen likes, taste profile.",
+  "@deleteDataDescriptionFinal": {
+    "description": "Final description for the delete data button"
+  },
+  "deleteDataButton": "Delete all Data",
+  "@deleteDataButton": {
+    "description": "Delete all Data"
+  },
+  "deleteDataButtonFinal": "Delete all Data",
+  "@deleteDataButtonFinal": {
+    "description": "Final delete data button"
+  },
+  "deviceId": "Device ID",
+  "@deviceId": {
+    "description": "Device ID"
   }
+
 }

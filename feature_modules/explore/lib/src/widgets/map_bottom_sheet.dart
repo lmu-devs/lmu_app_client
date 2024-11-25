@@ -7,7 +7,7 @@ import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mensa/mensa.dart';
 import 'map_bottom_sheet_sizes.dart';
-import 'navigation_sheet.dart';
+import 'package:core/widgets.dart';
 
 class MapBottomSheet extends StatelessWidget {
   final ValueNotifier<MensaModel?> selectedMensaNotifier;
@@ -84,7 +84,10 @@ class MapBottomSheet extends StatelessWidget {
                                   buttonText: context.locals.explore.navigate,
                                   buttonAction: () => LmuBottomSheet.show(
                                     context,
-                                    content: NavigationSheet(mensaLocation: selectedMensa.location),
+                                    content: NavigationSheet(
+                                      latitude: selectedMensa.location.latitude,
+                                      longitude: selectedMensa.location.longitude,
+                                    ),
                                   ),
                                 );
                               },

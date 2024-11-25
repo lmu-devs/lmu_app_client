@@ -1,39 +1,48 @@
 import 'package:core/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+enum EmojiFeedback {
+  @JsonValue('BAD')
+  bad,
+  @JsonValue('NEUTRAL')
+  neutral,
+  @JsonValue('GOOD')
+  good,
+}
 
 class EmojiFeedbackSelector extends StatelessWidget {
-  final String? selectedFeedback;
+  final ValueNotifier<String?> feedbackNotifier;
   final Function(String) onFeedbackSelected;
-  final _selectedFeedbackNotifier = ValueNotifier<String?>(null);
 
-  EmojiFeedbackSelector({
-    super.key,
+  const EmojiFeedbackSelector({
+    required this.feedbackNotifier,
     required this.onFeedbackSelected,
-    this.selectedFeedback,
-  }) {
-    _selectedFeedbackNotifier.value = selectedFeedback;
-  }
+    super.key,
+  });
 
   static const feedbackOptions = [
-    {'emoji': '😕️', 'value': 'Bad'},
-    {'emoji': '😄', 'value': 'Neutral'},
-    {'emoji': '🥳', 'value': 'Great'},
+    {'emoji': '😕️', 'value': EmojiFeedback.bad},
+    {'emoji': '😄', 'value': EmojiFeedback.neutral},
+    {'emoji': '🥳', 'value': EmojiFeedback.good},
   ];
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<String?>(
-      valueListenable: _selectedFeedbackNotifier,
+      valueListenable: feedbackNotifier,
       builder: (context, currentFeedback, _) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: feedbackOptions.map((option) {
-            final isSelected = currentFeedback == null || currentFeedback == option['value'];
+            final EmojiFeedback feedbackValue = option['value'] as EmojiFeedback;
+            final String apiValue = feedbackValue.toString().split('.').last.toUpperCase();
+            final isSelected = currentFeedback == apiValue;
             return GestureDetector(
               onTap: () {
-                _selectedFeedbackNotifier.value = option['value'];
-                onFeedbackSelected(option['value']!);
+                feedbackNotifier.value = apiValue;
+                onFeedbackSelected(apiValue);
               },
               child: SizedBox(
                 width: LmuActionSizes.large + LmuSizes.large,
@@ -42,7 +51,7 @@ class EmojiFeedbackSelector extends StatelessWidget {
                   child: Opacity(
                     opacity: isSelected ? 1 : 0.4,
                     child: Text(
-                      option['emoji']!,
+                      option['emoji'].toString(),
                       style: const TextStyle(
                         fontSize: 36,
                       ),

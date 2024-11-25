@@ -17,5 +17,22 @@
   "suggestFeature": "Feature vorschlagen",
   "reportBug": "Fehler melden",
   "contactSubject": "Munich Students App",
-  "contactBody": "Liebes LMU Developers Team,\n\n"
+  "contactBody": "Liebes LMU Developers Team,\n\n",
+
+  "account": "Account",
+  "accountStatus": "Status",
+  "accountStatusLocal": "Lokal",
+  "accountStatusSynced": "Synchronisiert",
+  "accountMemberSince": "Mitglied seit",
+  "connectToAccount": "Mit LMU Account verbinden",
+  "connectToAccountDescription": "Momentan ist dein Account nur über dein aktuelles Endgerät abrufbar. Wir arbeiten daran, eine Verbindung zu deinem LMU-Account herzustellen, um deine Daten zu synchronisieren.",
+  "manageData": "Deine Daten",
+  "technicalDetails": "Technische Details",
+  "deleteDataTitle": "Daten löschen",
+  "deleteDataDescription": "Wir speichern deine Daten (z. B. Likes) sicher auf unseren Servern. Du hast die volle Kontrolle über deine Daten und kannst diese jederzeit löschen.",
+  "deleteDataDescriptionFinal": "Durch diese Aktion werden sämtliche Accountdaten dauerhaft von unserem Server und Deinem Gerät gelöscht. Dazu zählen alle Gerichte-Likes, Kantinen-Likes, MyTaste.",
+  "deleteDataButton": "Alle Daten löschen",
+  "deleteDataButtonFinal": "Alle Daten löschen",
+  "deviceId": "Geräte-ID"
+
 }

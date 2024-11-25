@@ -20,6 +20,7 @@ class LmuBottomSheet {
           topRight: Radius.circular(LmuSizes.xlarge),
         ),
       ),
+      barrierColor: Colors.black.withOpacity(0.6),
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
       builder: (_) {
         return LmuBottomSheetContent(content: content);
@@ -63,14 +64,14 @@ class LmuBottomSheetContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: LmuSizes.mediumLarge,
-        left: LmuSizes.mediumLarge,
-        right: LmuSizes.mediumLarge,
-        bottom: LmuSizes.xxxlarge,
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.all(
+          LmuSizes.mediumLarge,
+        ),
+        child: content,
       ),
-      child: content,
     );
   }
 }

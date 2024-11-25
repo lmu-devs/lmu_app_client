@@ -19,6 +19,9 @@ part 'settings_routes.g.dart';
         TypedGoRoute<SettingsLicenceRoute>(
           path: 'licence',
         ),
+        TypedGoRoute<SettingsAccountRoute>(
+          path: 'account',
+        ),
       ],
     ),
   ],
@@ -39,6 +42,12 @@ class SettingsApperanceRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => const SettingsApperancePage();
+}
+class SettingsAccountRoute extends GoRouteData {
+  const SettingsAccountRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const SettingsAccountPage();
 }
 
 class SettingsLanguageRoute extends GoRouteData {

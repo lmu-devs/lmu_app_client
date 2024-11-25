@@ -1,8 +1,10 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../extensions/extensions.dart';
 import '../../repository/api/api.dart';
@@ -28,29 +30,51 @@ class MensaDetailsContentView extends StatelessWidget {
       leadingAction: LeadingAction.back,
       largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
       trailingWidgets: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.small),
-          child: ValueListenableBuilder(
-              valueListenable: mensaUserPreferencesService.favoriteMensaIdsNotifier,
-              builder: (context, favoriteMensaIds, _) {
-                return GestureDetector(
-                  onTap: () {
-                    mensaUserPreferencesService.toggleFavoriteMensaId(mensaModel.canteenId);
-                  },
+        ValueListenableBuilder(
+            valueListenable:
+                mensaUserPreferencesService.favoriteMensaIdsNotifier,
+            builder: (context, favoriteMensaIds, _) {
+              return GestureDetector(
+                onTap: () {
+
+                  mensaUserPreferencesService
+                      .toggleFavoriteMensaId(mensaModel.canteenId);
+                  LmuVibrations.vibrate(type: VibrationType.secondary);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: LmuSizes.medium,
+                    vertical: LmuSizes.mediumSmall,
+                  ),
                   child: Row(
                     children: [
-                      LmuText.bodySmall(mensaModel.ratingModel.likeCount.formattedLikes),
+                      LmuText.bodySmall(
+                        mensaModel.ratingModel.likeCount.formattedLikes,
+                      ),
                       const SizedBox(width: LmuSizes.small),
-                      StarIcon(isActive: favoriteMensaIds.contains(mensaModel.canteenId)),
+                      StarIcon(
+                        isActive:
+                            favoriteMensaIds.contains(mensaModel.canteenId),
+                      ),
                     ],
                   ),
-                );
-              }),
-        ),
-        const LmuIcon(
-          icon: LucideIcons.share,
-          size: LmuSizes.large,
-        ),
+                ),
+              );
+            }),
+        // GestureDetector(
+        //   onTap: () {
+        //     // TODO: Deep link to the mensa details page or app
+        //     Share.share(mensaModel.name);
+        //     LmuVibrations.vibrate(type: VibrationType.secondary);
+        //   },
+        //   child: const Padding(
+        //     padding: EdgeInsets.all(LmuSizes.mediumSmall),
+        //     child: LmuIcon(
+        //       icon: LucideIcons.share,
+        //       size: LmuSizes.large,
+        //     ),
+        //   ),
+        // ),
       ],
       largeTitleTrailingWidget: MensaTag(type: mensaModel.type),
       body: Column(
@@ -58,7 +82,7 @@ class MensaDetailsContentView extends StatelessWidget {
         children: [
           MensaDetailsInfoSection(mensaModel: mensaModel),
           const MensaDetailsMenuSection(),
-          const SizedBox(height: LmuSizes.medium),
+          const SizedBox(height: LmuSizes.xhuge),
         ],
       ),
     );

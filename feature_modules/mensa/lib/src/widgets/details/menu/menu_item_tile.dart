@@ -63,7 +63,7 @@ class MenuItemTile extends StatelessWidget {
                     ),
                   ),
                   LmuText.bodyXSmall(
-                    menuItemModel.ratingModel.likeCount.toString(),
+                    menuItemModel.ratingModel.likeCount == -1 ? "" : menuItemModel.ratingModel.likeCount.toString(),
                     color: context.colors.neutralColors.textColors.weakColors.base,
                   ),
                   const SizedBox(width: LmuSizes.small),
