@@ -5,7 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'generated/canteen_localizations.dart';
 import 'generated/settings_localizations.dart';
-
+import 'generated/feedback_localizations.dart';
 extension LocalizationExtension on BuildContext {
   LmuLocalizations get locals => LmuLocalizations(this);
 }
@@ -19,6 +19,7 @@ class LmuLocalizations {
   CanteenLocalizations get canteen => CanteenLocalizations.of(_context)!;
   ExploreLocalizations get explore => ExploreLocalizations.of(_context)!;
   SettingsLocalizations get settings => SettingsLocalizations.of(_context)!;
+  FeedbackLocalizations get feedback => FeedbackLocalizations.of(_context)!;
   // Add other localizations
 
   /// List of all supported localizations delegates
@@ -27,6 +28,7 @@ class LmuLocalizations {
         CanteenLocalizations.delegate,
         ExploreLocalizations.delegate,
         SettingsLocalizations.delegate,
+        FeedbackLocalizations.delegate,
         // Add other localizations delegates
 
         GlobalMaterialLocalizations.delegate,

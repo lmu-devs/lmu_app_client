@@ -46,7 +46,7 @@ class ColorPrimitives {
   static const Color trspBlack95 = Color(0xF2000000);
 
   static const Color trspWhite00 = Color.fromARGB(0, 255, 255, 255);
-  static const Color trspWhite05 = Color(0x0DFFFFFF);
+  static const Color trspWhite07 = Color(0x12FFFFFF);
   static const Color trspWhite10 = Color(0x1AFFFFFF);
   static const Color trspWhite20 = Color(0x33FFFFFF);
   static const Color trspWhite30 = Color(0x4DFFFFFF);

@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 
-import 'package:core/themes.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/themes.dart';
 import 'package:core/localizations.dart';
-import 'package:feedback/src/widgets/widgets.dart';
-
-class FeedbackModal extends StatelessWidget {
-  const FeedbackModal({super.key});
+class SuggestionModal extends StatelessWidget {
+  const SuggestionModal({super.key});
 
   @override
   Widget build(BuildContext context) {
     final localizations = context.locals.feedback;
     return LmuScaffoldWithAppBar(
-      largeTitle: localizations.feedbackTitle,
-      largeTitleTrailingWidgetAlignment: MainAxisAlignment.center,
+      largeTitle: localizations.suggestionTitle,
       stretch: false,
+
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -23,31 +21,24 @@ class FeedbackModal extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(LmuSizes.mediumLarge),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: LmuSizes.small),
                   LmuText.body(
-                    localizations.feedbackDescription,
+                    localizations.suggestionDescription,
                     color: context
                         .colors.neutralColors.textColors.mediumColors.base,
                   ),
-                  const SizedBox(height: LmuSizes.xxxlarge),
-                  EmojiFeedbackSelector(
-                    onFeedbackSelected: (feedback) {
-                      print(feedback);
-                    },
-                  ),
-                  const SizedBox(height: LmuSizes.xlarge),
+                  const SizedBox(height: LmuSizes.xxlarge),
                   LmuInputField(
-                    hintText: localizations.feedbackInputHint,
-                    isMultiline: true,
+                    hintText: localizations.suggestionInputHint,
                     controller: TextEditingController(),
+                    isAutofocus: true,
+                    isMultiline: true,
                     isAutocorrect: true,
-                    onSubmitted: (value) {
-                      print(value);
-                    },
                   ),
                   const SizedBox(height: 400),
+
                 ],
               ),
             ),
@@ -60,7 +51,7 @@ class FeedbackModal extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(LmuSizes.medium),
                 child: LmuButton(
-                  title: localizations.feedbackButton,
+                  title: localizations.suggestionButton,
                   size: ButtonSize.large,
                   showFullWidth: true,
                   onTap: () {
@@ -68,7 +59,7 @@ class FeedbackModal extends StatelessWidget {
                     Navigator.pop(context);
                     LmuToast.show(
                       context: context,
-                      message: localizations.feedbackSuccess,
+                      message: localizations.suggestionSuccess,
                       type: ToastType.success,
                     );
                   },

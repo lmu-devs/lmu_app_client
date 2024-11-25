@@ -112,19 +112,21 @@ class SettingsSuccessView extends StatelessWidget {
             ),
             LmuContentTile(
               content: [
-                LmuListItem.action(
+                LmuListItem.base(
                   title: localizaitons.suggestFeature,
-                  actionType: LmuListItemAction.chevron,
                   mainContentAlignment: MainContentAlignment.center,
                   leadingArea: const _LeadingFancyIcons(icon: LucideIcons.plus),
-                  onTap: () {},
+                  onTap: () {
+                    GetIt.I.get<FeedbackService>().navigateToSuggestion(context);
+                  },
                 ),
-                LmuListItem.action(
+                LmuListItem.base(
                   title: localizaitons.reportBug,
-                  actionType: LmuListItemAction.chevron,
                   mainContentAlignment: MainContentAlignment.center,
                   leadingArea: const _LeadingFancyIcons(icon: LucideIcons.bug),
-                  onTap: () {},
+                  onTap: () {
+                    GetIt.I.get<FeedbackService>().navigateToBugReport(context);
+                  },
                 ),
               ],
             ),
