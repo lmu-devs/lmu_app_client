@@ -19,6 +19,9 @@ part 'settings_routes.g.dart';
         TypedGoRoute<SettingsLicenceRoute>(
           path: 'licence',
         ),
+        TypedGoRoute<SettingsAccountRoute>(
+          path: 'account',
+        ),
       ],
     ),
   ],

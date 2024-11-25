@@ -38,7 +38,7 @@ class SettingsSuccessView extends StatelessWidget {
                   },
                 ),
                 LmuListItem.action(
-                  title: "localizaitons.account",
+                  title: localizaitons.account,
                   actionType: LmuListItemAction.chevron,
                   onTap: () {
                     const SettingsAccountRoute().go(context);

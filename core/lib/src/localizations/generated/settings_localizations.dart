@@ -188,6 +188,96 @@ abstract class SettingsLocalizations {
   /// In en, this message translates to:
   /// **'Dear lovely LMU Developers,\n\n'**
   String get contactBody;
+
+  /// Account
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get account;
+
+  /// Account status
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get accountStatus;
+
+  /// Local account status
+  ///
+  /// In en, this message translates to:
+  /// **'Local Account'**
+  String get accountStatusLocal;
+
+  /// Synced account status
+  ///
+  /// In en, this message translates to:
+  /// **'Synced'**
+  String get accountStatusSynced;
+
+  /// Member since
+  ///
+  /// In en, this message translates to:
+  /// **'Member since'**
+  String get accountMemberSince;
+
+  /// Connect with LMU Login
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to LMU Account'**
+  String get connectToAccount;
+
+  /// Description for the connect to LMU account button
+  ///
+  /// In en, this message translates to:
+  /// **'Currently, your account is only accessible via your current device. We are working on establishing a connection to your LMU account to synchronize your data.'**
+  String get connectToAccountDescription;
+
+  /// Your data
+  ///
+  /// In en, this message translates to:
+  /// **'Your Data'**
+  String get manageData;
+
+  /// Technical details
+  ///
+  /// In en, this message translates to:
+  /// **'Technical Details'**
+  String get technicalDetails;
+
+  /// Description for the delete data button
+  ///
+  /// In en, this message translates to:
+  /// **'We securely store your data (e.g. likes) on our servers. You have full control over your data and can delete it at any time.'**
+  String get deleteDataDescription;
+
+  /// Delete all Data
+  ///
+  /// In en, this message translates to:
+  /// **'Delete your account data'**
+  String get deleteDataTitleFinal;
+
+  /// Final description for the delete data button
+  ///
+  /// In en, this message translates to:
+  /// **'This action will permanently delete all account data from our server and your device. This includes all dish likes, canteen likes, taste profile.'**
+  String get deleteDataDescriptionFinal;
+
+  /// Delete all Data
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all Data'**
+  String get deleteDataButton;
+
+  /// Final delete data button
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all Data'**
+  String get deleteDataButtonFinal;
+
+  /// Device ID
+  ///
+  /// In en, this message translates to:
+  /// **'Device ID'**
+  String get deviceId;
 }
 
 class _SettingsLocalizationsDelegate extends LocalizationsDelegate<SettingsLocalizations> {
