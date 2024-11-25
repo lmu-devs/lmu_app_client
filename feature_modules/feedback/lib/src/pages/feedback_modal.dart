@@ -12,6 +12,9 @@ class FeedbackModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = context.locals.feedback;
+    final textController = TextEditingController();
+    final feedbackNotifier = ValueNotifier<String?>(null);
+
     return LmuScaffoldWithAppBar(
       largeTitle: localizations.feedbackTitle,
       largeTitleTrailingWidgetAlignment: MainAxisAlignment.center,
@@ -33,6 +36,7 @@ class FeedbackModal extends StatelessWidget {
                   ),
                   const SizedBox(height: LmuSizes.xxxlarge),
                   EmojiFeedbackSelector(
+                    feedbackNotifier: feedbackNotifier,
                     onFeedbackSelected: (feedback) {
                       print(feedback);
                     },
@@ -41,7 +45,7 @@ class FeedbackModal extends StatelessWidget {
                   LmuInputField(
                     hintText: localizations.feedbackInputHint,
                     isMultiline: true,
-                    controller: TextEditingController(),
+                    controller: textController,
                     isAutocorrect: true,
                     onSubmitted: (value) {
                       print(value);
@@ -59,17 +63,23 @@ class FeedbackModal extends StatelessWidget {
             child: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.all(LmuSizes.medium),
-                child: LmuButton(
-                  title: localizations.feedbackButton,
-                  size: ButtonSize.large,
-                  showFullWidth: true,
-                  onTap: () {
-                    // TODO: send data to backend
-                    Navigator.pop(context);
-                    LmuToast.show(
-                      context: context,
-                      message: localizations.feedbackSuccess,
-                      type: ToastType.success,
+                child: ValueListenableBuilder<String?>(
+                  valueListenable: feedbackNotifier,
+                  builder: (context, selectedFeedback, _) {
+                    return LmuButton(
+                      title: localizations.feedbackButton,
+                      size: ButtonSize.large,
+                      showFullWidth: true,
+                      state: selectedFeedback == null ? ButtonState.disabled : ButtonState.enabled,
+                      onTap: selectedFeedback == null ? null : () {
+                        // TODO: send data to backend with selectedFeedback and textController.text
+                        Navigator.pop(context);
+                        LmuToast.show(
+                          context: context,
+                          message: localizations.feedbackSuccess,
+                          type: ToastType.success,
+                        );
+                      },
                     );
                   },
                 ),

@@ -36,7 +36,7 @@ class MensaDetailsContentView extends StatelessWidget {
             builder: (context, favoriteMensaIds, _) {
               return GestureDetector(
                 onTap: () {
-                  
+
                   mensaUserPreferencesService
                       .toggleFavoriteMensaId(mensaModel.canteenId);
                   LmuVibrations.vibrate(type: VibrationType.secondary);
@@ -61,20 +61,20 @@ class MensaDetailsContentView extends StatelessWidget {
                 ),
               );
             }),
-        GestureDetector(
-          onTap: () {
-            // TODO: Deep link to the mensa details page or app
-            Share.share(mensaModel.name);
-            LmuVibrations.vibrate(type: VibrationType.secondary);
-          },
-          child: const Padding(
-            padding: EdgeInsets.all(LmuSizes.mediumSmall),
-            child: LmuIcon(
-              icon: LucideIcons.share,
-              size: LmuSizes.large,
-            ),
-          ),
-        ),
+        // GestureDetector(
+        //   onTap: () {
+        //     // TODO: Deep link to the mensa details page or app
+        //     Share.share(mensaModel.name);
+        //     LmuVibrations.vibrate(type: VibrationType.secondary);
+        //   },
+        //   child: const Padding(
+        //     padding: EdgeInsets.all(LmuSizes.mediumSmall),
+        //     child: LmuIcon(
+        //       icon: LucideIcons.share,
+        //       size: LmuSizes.large,
+        //     ),
+        //   ),
+        // ),
       ],
       largeTitleTrailingWidget: MensaTag(type: mensaModel.type),
       body: Column(
