@@ -37,6 +37,13 @@ class SettingsSuccessView extends StatelessWidget {
                     const SettingsApperanceRoute().go(context);
                   },
                 ),
+                LmuListItem.action(
+                  title: "localizaitons.account",
+                  actionType: LmuListItemAction.chevron,
+                  onTap: () {
+                    const SettingsAccountRoute().go(context);
+                  },
+                ),
               ],
             ),
             const SizedBox(
@@ -91,12 +98,22 @@ class SettingsSuccessView extends StatelessWidget {
                 LmuListItem.action(
                   title: localizaitons.dataPrivacy,
                   actionType: LmuListItemAction.chevron,
-                  onTap: () {},
+                  onTap: () {
+                    LmuUrlLauncher.launchWebsite(
+                        context: context,
+                        url: "https://lmu-dev.org/datenschutz",
+                        mode: LmuUrlLauncherMode.inAppWebView);
+                  },
                 ),
                 LmuListItem.action(
                   title: localizaitons.imprint,
                   actionType: LmuListItemAction.chevron,
-                  onTap: () {},
+                  onTap: () {
+                    LmuUrlLauncher.launchWebsite(
+                        context: context,
+                        url: "https://lmu-dev.org/impressum",
+                        mode: LmuUrlLauncherMode.inAppWebView);
+                  },
                 ),
                 LmuListItem.action(
                   title: localizaitons.licenses,
