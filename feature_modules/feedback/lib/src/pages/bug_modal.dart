@@ -61,6 +61,7 @@ class BugModal extends StatelessWidget {
                       message: localizations.bugSuccess,
                       type: ToastType.success,
                     );
+                    LmuVibrations.success();
                   },
                 ),
               ),

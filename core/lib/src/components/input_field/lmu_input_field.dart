@@ -2,12 +2,15 @@ import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
+
+
 class LmuInputField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
   final bool isPassword;
   final bool isMultiline;
-  final Widget? icon;
+  final Widget? leadingIcon;
+  final Widget? trailingIcon;
   final bool isDisabled;
   final bool isAutocorrect;
   final bool isAutofocus;
@@ -18,7 +21,13 @@ class LmuInputField extends StatelessWidget {
   final void Function(String)? onChanged;
   final void Function(String)? onSubmitted;
   final void Function()? onTap;
+  final void Function()? onTapOutside;
   final Iterable<String>? autofillHints;
+  final EdgeInsetsGeometry? contentPadding;
+  final Widget? prefix;
+  final Widget? suffix;
+  final String? suffixText;
+  final bool closeKeyboardOnTapOutside;
 
   const LmuInputField({
     super.key,
@@ -26,7 +35,8 @@ class LmuInputField extends StatelessWidget {
     required this.controller,
     this.isPassword = false,
     this.isMultiline = false,
-    this.icon,
+    this.leadingIcon,
+    this.trailingIcon,
     this.isDisabled = false,
     this.isAutocorrect = false,
     this.isAutofocus = false,
@@ -38,10 +48,20 @@ class LmuInputField extends StatelessWidget {
     this.onSubmitted,
     this.onTap,
     this.autofillHints,
+    this.contentPadding,
+    this.prefix,
+    this.suffix,
+    this.suffixText,
+    this.closeKeyboardOnTapOutside = true,
+    this.onTapOutside,
   });
+
+  
 
   @override
   Widget build(BuildContext context) {
+    final borderRadius = BorderRadius.circular(LmuRadiusSizes.medium);
+    final borderColor = Colors.transparent;
     return TextField(
       controller: controller,
       obscureText: isPassword,
@@ -59,40 +79,36 @@ class LmuInputField extends StatelessWidget {
       onTap: onTap,
       autofillHints: autofillHints,
 
+
       style: TextStyle(
         color: context.colors.neutralColors.textColors.strongColors.base,
       ),
 
       onTapOutside: (value) {
-        // close keyboard
-        FocusManager.instance.primaryFocus?.unfocus();
+        if (closeKeyboardOnTapOutside) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        }
+        onTapOutside?.call();
       },
+
       cursorHeight: 20,
       cursorErrorColor: context.colors.dangerColors.textColors.strongColors.base,
       cursorOpacityAnimates: true,
       decoration: InputDecoration(
+        contentPadding: contentPadding,
         filled: true,
         fillColor: _getFillColor(context),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(LmuRadiusSizes.medium),
-          borderSide: BorderSide(
-            width: .5,
-            color: context.colors.neutralColors.borderColors.seperatorLight,
-          ),
+          borderRadius: borderRadius,
+          borderSide: BorderSide(color: borderColor),
         ),
         border: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: .5,
-            color: context.colors.neutralColors.borderColors.seperatorLight,
-          ),
-          borderRadius: BorderRadius.circular(LmuRadiusSizes.medium),
+          borderRadius: borderRadius,
+          borderSide: BorderSide(color: borderColor),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            width: .5,
-            color: context.colors.neutralColors.borderColors.seperatorLight,
-          ),
-          borderRadius: BorderRadius.circular(LmuRadiusSizes.medium),
+          borderRadius: borderRadius,
+          borderSide: BorderSide(color: borderColor),
         ),
         hoverColor:
             context.colors.neutralColors.backgroundColors.mediumColors.base,
@@ -101,8 +117,16 @@ class LmuInputField extends StatelessWidget {
           color: context.colors.neutralColors.textColors.weakColors.base,
           fontWeight: FontWeight.w400,
         ),
-        icon: icon,
-        // cursor color
+        prefixIcon: leadingIcon,
+        prefixIconColor: context.colors.neutralColors.textColors.weakColors.base,
+        prefixIconConstraints: const BoxConstraints(
+          minWidth: 56,
+        ),
+        suffixIcon: trailingIcon,
+        suffixIconColor: context.colors.neutralColors.textColors.weakColors.base,
+        prefix: prefix,
+        suffix: suffix,
+        suffixText: suffixText,
       ),
     );
   }
@@ -118,8 +142,9 @@ class LmuInputField extends StatelessWidget {
       if (states.contains(WidgetState.hovered)) {
         return context.colors.neutralColors.backgroundColors.mediumColors.pressed!;
       }
-      // Default state
       return context.colors.neutralColors.backgroundColors.mediumColors.base;
     });
   }
+
+  
 }

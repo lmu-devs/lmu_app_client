@@ -1,13 +1,10 @@
 import 'package:core/constants.dart';
+import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 enum EmojiFeedback {
-  @JsonValue('BAD')
   bad,
-  @JsonValue('NEUTRAL')
   neutral,
-  @JsonValue('GOOD')
   good,
 }
 
@@ -36,13 +33,16 @@ class EmojiFeedbackSelector extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: feedbackOptions.map((option) {
-            final EmojiFeedback feedbackValue = option['value'] as EmojiFeedback;
-            final String apiValue = feedbackValue.toString().split('.').last.toUpperCase();
+            final EmojiFeedback feedbackValue =
+                option['value'] as EmojiFeedback;
+            final String apiValue =
+                feedbackValue.toString().split('.').last.toUpperCase();
             final isSelected = currentFeedback == apiValue;
             return GestureDetector(
               onTap: () {
                 feedbackNotifier.value = apiValue;
                 onFeedbackSelected(apiValue);
+                LmuVibrations.secondary();
               },
               child: SizedBox(
                 width: LmuActionSizes.large + LmuSizes.large,

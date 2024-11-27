@@ -4,6 +4,7 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:core/localizations.dart';
+
 class SuggestionModal extends StatelessWidget {
   const SuggestionModal({super.key});
 
@@ -13,7 +14,6 @@ class SuggestionModal extends StatelessWidget {
     return LmuScaffoldWithAppBar(
       largeTitle: localizations.suggestionTitle,
       stretch: false,
-
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -38,7 +38,6 @@ class SuggestionModal extends StatelessWidget {
                     isAutocorrect: true,
                   ),
                   const SizedBox(height: 400),
-
                 ],
               ),
             ),
@@ -62,6 +61,7 @@ class SuggestionModal extends StatelessWidget {
                       message: localizations.suggestionSuccess,
                       type: ToastType.success,
                     );
+                    LmuVibrations.success();
                   },
                 ),
               ),

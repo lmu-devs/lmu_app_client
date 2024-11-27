@@ -19,7 +19,7 @@
   "@feedbackSuccess": {
     "description": "The message shown when feedback is sent"
   },
-  "feedbackInputHint": "Optional",
+  "feedbackInputHint": "Tell us more sweetie ...",
   "@feedbackInputHint": {
     "description": "The hint text of the feedback input field"
   },
