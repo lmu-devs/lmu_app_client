@@ -120,7 +120,7 @@ abstract class FeedbackLocalizations {
   /// The hint text of the feedback input field
   ///
   /// In en, this message translates to:
-  /// **'Optional'**
+  /// **'Tell us more sweetie ...'**
   String get feedbackInputHint;
 
   /// The title of the Bug Report Page

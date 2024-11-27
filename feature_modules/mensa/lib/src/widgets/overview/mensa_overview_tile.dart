@@ -182,7 +182,7 @@ class MensaOverviewTile extends StatelessWidget {
                         final userPreferencesService = GetIt.I.get<MensaUserPreferencesService>();
                         final id = mensaModel.canteenId;
 
-                        LmuVibrations.vibrate(type: VibrationType.secondary);
+                        LmuVibrations.secondary();
 
                         if (isFavorite) {
                           LmuToast.show(

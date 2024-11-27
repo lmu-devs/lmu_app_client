@@ -159,13 +159,13 @@ extension SortOptionExtension on SortOption {
   IconData get icon {
     switch (this) {
       case SortOption.alphabetically:
-        return LucideIcons.arrow_down_a_z;
+        return LucideIcons.a_large_small;
       case SortOption.distance:
-        return LucideIcons.arrow_down_0_1;
+        return LucideIcons.arrow_right_from_line;
       case SortOption.rating:
-        return LucideIcons.arrow_down_1_0;
+        return LucideIcons.star;
       case SortOption.type:
-        return LucideIcons.arrow_down_1_0;
+        return LucideIcons.stretch_horizontal;
     }
   }
 
