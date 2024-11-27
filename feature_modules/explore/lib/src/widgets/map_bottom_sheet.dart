@@ -28,7 +28,7 @@ class MapBottomSheet extends StatelessWidget {
         sheetController.animateTo(
           SheetSizes.medium.size,
           duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
+          curve: Curves.easeIn,
         );
       });
     } else {
@@ -36,7 +36,7 @@ class MapBottomSheet extends StatelessWidget {
         sheetController.animateTo(
           SheetSizes.small.size,
           duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
+          curve: Curves.easeOut,
         );
       });
     }
@@ -53,7 +53,7 @@ class MapBottomSheet extends StatelessWidget {
           controller: sheetController,
           initialChildSize: SheetSizes.small.size,
           minChildSize: SheetSizes.small.size,
-          maxChildSize: SheetSizes.medium.size,
+          maxChildSize: SheetSizes.large.size,
           builder: (context, scrollController) {
             return Container(
               padding: const EdgeInsets.all(LmuSizes.mediumLarge),

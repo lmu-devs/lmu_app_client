@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:core/constants.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart' hide Visibility;
@@ -50,7 +48,9 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   Map<String, MensaModel> mensaPins = {};
   PointAnnotation? previouslySelectedAnnotation;
   final ValueNotifier<MensaModel?> selectedMensaNotifier = ValueNotifier<MensaModel?>(null);
-  final DraggableScrollableController _sheetController = DraggableScrollableController();
+
+  late final DraggableScrollableController _sheetController;
+  late final ValueNotifier<int> _sheetSizeNotifier;
 
   Future<void> _addMarkersToMap(MapboxMap mapboxMap) async {
     final List<String> pinTypes = ['mensa_pin', 'bistro_pin', 'cafe_pin'];
@@ -67,7 +67,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
 
       await mapboxMap.style.addStyleImage(
         pinType,
-        7,
+        6,
         mbxImage,
         false,
         [],
@@ -120,22 +120,30 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   }
 
   Future<void> _configureAttribution(MapboxMap mapboxMap, BuildContext context) async {
-    Color attributionColor;
+    await Future.wait(
+      [
+        mapboxMap.attribution.updateSettings(
+          AttributionSettings(
+            marginBottom: _sheetSizeNotifier.value + LmuSizes.medium,
+            marginRight: LmuSizes.medium,
+            position: OrnamentPosition.BOTTOM_RIGHT,
+            iconColor: context.colors.neutralColors.textColors.weakColors.base.value,
+          ),
+        ),
+        mapboxMap.logo.updateSettings(
+          LogoSettings(
+            marginBottom: _sheetSizeNotifier.value + LmuSizes.medium,
+            marginLeft: LmuSizes.medium,
+            position: OrnamentPosition.BOTTOM_LEFT,
+          ),
+        ),
+      ],
+    );
+  }
 
-    if (Provider.of<ThemeProvider>(context, listen: false).themeMode == ThemeMode.light) {
-      attributionColor = Colors.black;
-    } else if (Provider.of<ThemeProvider>(context, listen: false).themeMode == ThemeMode.dark) {
-      attributionColor = Colors.white;
-    } else {
-      attributionColor = MediaQuery.of(context).platformBrightness == Brightness.light ? Colors.black : Colors.white;
-    }
-
-    await mapboxMap.attribution.updateSettings(
-      AttributionSettings(
-        marginTop: LmuSizes.large,
-        position: OrnamentPosition.TOP_LEFT,
-        iconColor: attributionColor.value,
-      ),
+  Future<void> _configureScale(MapboxMap mapboxMap) async {
+    await mapboxMap.scaleBar.updateSettings(
+      ScaleBarSettings(enabled: false),
     );
   }
 
@@ -143,6 +151,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
     this.mapboxMap = mapboxMap;
 
     await _configureAttribution(mapboxMap, context);
+    await _configureScale(mapboxMap);
     await _addMarkersToMap(mapboxMap);
     pointAnnotationManager = await mapboxMap.annotations.createPointAnnotationManager();
 
@@ -179,7 +188,6 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
             selectedMensaNotifier.value = selectedMensa;
 
             if (previouslySelectedAnnotation != null) {
-              // Check if the previouslySelectedAnnotation still exists
               await pointAnnotationManager?.update(
                 previouslySelectedAnnotation!..iconSize = 1.0,
               );
@@ -222,11 +230,34 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   void initState() {
     super.initState();
     mensaData = GetIt.I.get<MensaPublicApi>().mensaData;
+    _sheetController = DraggableScrollableController();
+    _sheetSizeNotifier = ValueNotifier<int>(0);
+
+    _sheetSizeNotifier.addListener(() {
+      if (mapboxMap != null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          await _configureAttribution(mapboxMap!, context);
+        });
+      }
+    });
+
+    _sheetController.addListener(() {
+      int newSize = (_sheetController.sizeToPixels(_sheetController.size)).ceil();
+      if (_sheetSizeNotifier.value != newSize) {
+        _sheetSizeNotifier.value = newSize;
+      }
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _sheetSizeNotifier.value = _sheetController.sizeToPixels(_sheetController.size).ceil();
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
+    _sheetController.dispose();
+    _sheetSizeNotifier.dispose();
   }
 
   @override
