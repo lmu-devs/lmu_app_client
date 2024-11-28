@@ -60,7 +60,10 @@ class SettingsSuccessView extends StatelessWidget {
                   ),
                   onTap: () {
                     LmuUrlLauncher.launchWebsite(
-                        context: context, url: "https://lmu-dev.org", mode: LmuUrlLauncherMode.externalApplication);
+                      context: context,
+                      url: "https://lmu-dev.org",
+                      mode: LmuUrlLauncherMode.externalApplication,
+                    );
                   },
                 ),
                 LmuListItem.base(
