@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:core/constants.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart' hide Visibility;
@@ -47,41 +45,54 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   MapboxMap? mapboxMap;
   PointAnnotationManager? pointAnnotationManager;
   List<MensaModel> mensaData = [];
-  Map<String, MensaModel> mensaPins = {};
+  Map<PointAnnotation, MensaModel> mensaPins = {};
   PointAnnotation? previouslySelectedAnnotation;
   final ValueNotifier<MensaModel?> selectedMensaNotifier = ValueNotifier<MensaModel?>(null);
-  final DraggableScrollableController _sheetController = DraggableScrollableController();
 
-  Future<void> _addMarkersToMap(MapboxMap mapboxMap) async {
+  late final DraggableScrollableController _sheetController;
+  late final ValueNotifier<int> _sheetSizeNotifier;
+
+  Future<void> _loadMarkerImages(MapboxMap mapboxMap, BuildContext context) async {
     final List<String> pinTypes = ['mensa_pin', 'bistro_pin', 'cafe_pin'];
 
     for (final pinType in pinTypes) {
-      final ByteData bytes =
+      final ByteData imageBytes =
           await rootBundle.load(getPngAssetTheme(context, 'feature_modules/explore/assets/$pinType'));
-      final Uint8List imageData = bytes.buffer.asUint8List();
-      final MbxImage mbxImage = MbxImage(
-        data: imageData,
-        width: LmuSizes.small.floor(),
-        height: LmuSizes.small.floor(),
-      );
 
       await mapboxMap.style.addStyleImage(
         pinType,
-        7,
-        mbxImage,
+        6,
+        MbxImage(
+          data: imageBytes.buffer.asUint8List(),
+          width: LmuSizes.small.floor(),
+          height: LmuSizes.small.floor(),
+        ),
         false,
         [],
         [],
         null,
       );
     }
+  }
 
+  String _getMarkerByType(MensaType mensaType) {
+    switch (mensaType) {
+      case MensaType.mensa:
+        return 'mensa_pin';
+      case MensaType.stuBistro:
+        return 'bistro_pin';
+      default:
+        return 'cafe_pin';
+    }
+  }
+
+  Future<void> _addMarkers(MapboxMap mapboxMap) async {
+    await _loadMarkerImages(mapboxMap, context);
     await pointAnnotationManager?.deleteAll();
 
     var options = <PointAnnotationOptions>[];
 
     for (final mensa in mensaData) {
-      final String pinType = _getPinTypeForMensa(mensa.type);
       var annotationOptions = PointAnnotationOptions(
         geometry: Point(
           coordinates: Position(
@@ -89,7 +100,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
             mensa.location.latitude,
           ),
         ),
-        iconImage: pinType,
+        iconImage: _getMarkerByType(mensa.type),
         iconSize: selectedMensaNotifier.value?.canteenId == mensa.canteenId ? 1.5 : 1.0,
       );
 
@@ -102,40 +113,45 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
       mensaPins.clear();
       for (int i = 0; i < annotations.length; i++) {
         if (annotations[i] != null) {
-          mensaPins[annotations[i]!.id] = mensaData[i];
+          mensaPins[annotations[i]!] = mensaData[i];
         }
       }
     }
   }
 
-  String _getPinTypeForMensa(MensaType mensaType) {
-    switch (mensaType) {
-      case MensaType.mensa:
-        return 'mensa_pin';
-      case MensaType.stuBistro:
-        return 'bistro_pin';
-      default:
-        return 'cafe_pin';
+  Future<void> _updateMarkers(MapboxMap mapboxMap) async {
+    await _loadMarkerImages(mapboxMap, context);
+
+    for (final mensaPin in mensaPins.entries) {
+      mensaPin.key.iconImage = _getMarkerByType(mensaPin.value.type);
     }
   }
 
   Future<void> _configureAttribution(MapboxMap mapboxMap, BuildContext context) async {
-    Color attributionColor;
+    await Future.wait(
+      [
+        mapboxMap.attribution.updateSettings(
+          AttributionSettings(
+            marginBottom: _sheetSizeNotifier.value + LmuSizes.medium,
+            marginRight: LmuSizes.medium,
+            position: OrnamentPosition.BOTTOM_RIGHT,
+            iconColor: context.colors.neutralColors.textColors.weakColors.base.value,
+          ),
+        ),
+        mapboxMap.logo.updateSettings(
+          LogoSettings(
+            marginBottom: _sheetSizeNotifier.value + LmuSizes.medium,
+            marginLeft: LmuSizes.medium,
+            position: OrnamentPosition.BOTTOM_LEFT,
+          ),
+        ),
+      ],
+    );
+  }
 
-    if (Provider.of<ThemeProvider>(context, listen: false).themeMode == ThemeMode.light) {
-      attributionColor = Colors.black;
-    } else if (Provider.of<ThemeProvider>(context, listen: false).themeMode == ThemeMode.dark) {
-      attributionColor = Colors.white;
-    } else {
-      attributionColor = MediaQuery.of(context).platformBrightness == Brightness.light ? Colors.black : Colors.white;
-    }
-
-    await mapboxMap.attribution.updateSettings(
-      AttributionSettings(
-        marginTop: LmuSizes.large,
-        position: OrnamentPosition.TOP_LEFT,
-        iconColor: attributionColor.value,
-      ),
+  Future<void> _configureScale(MapboxMap mapboxMap) async {
+    await mapboxMap.scaleBar.updateSettings(
+      ScaleBarSettings(enabled: false),
     );
   }
 
@@ -143,7 +159,8 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
     this.mapboxMap = mapboxMap;
 
     await _configureAttribution(mapboxMap, context);
-    await _addMarkersToMap(mapboxMap);
+    await _configureScale(mapboxMap);
+    await _addMarkers(mapboxMap);
     pointAnnotationManager = await mapboxMap.annotations.createPointAnnotationManager();
 
     var options = <PointAnnotationOptions>[];
@@ -155,7 +172,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
             mensa.location.latitude,
           ),
         ),
-        iconImage: _getPinTypeForMensa(mensa.type),
+        iconImage: _getMarkerByType(mensa.type),
         iconSize: selectedMensaNotifier.value?.canteenId == mensa.canteenId ? 1.5 : 1.0,
       );
 
@@ -165,7 +182,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
     List<PointAnnotation?>? annotations = await pointAnnotationManager?.createMulti(options);
 
     for (int i = 0; i < annotations!.length; i++) {
-      mensaPins[annotations[i]!.id] = mensaData[i];
+      mensaPins[annotations[i]!] = mensaData[i];
     }
 
     await pointAnnotationManager?.createMulti(options);
@@ -173,13 +190,18 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
     pointAnnotationManager?.addOnPointAnnotationClickListener(
       AnnotationClickListener(
         onAnnotationClick: (annotation) async {
-          MensaModel? selectedMensa = mensaPins[annotation.id];
+          MapEntry<PointAnnotation, MensaModel>? mapEntry =
+              mensaPins.entries.cast<MapEntry<PointAnnotation, MensaModel>?>().firstWhere(
+                    (entry) => entry?.key.id == annotation.id,
+                    orElse: () => null,
+                  );
+
+          MensaModel? selectedMensa = mapEntry?.value;
 
           if (selectedMensa != null) {
             selectedMensaNotifier.value = selectedMensa;
 
             if (previouslySelectedAnnotation != null) {
-              // Check if the previouslySelectedAnnotation still exists
               await pointAnnotationManager?.update(
                 previouslySelectedAnnotation!..iconSize = 1.0,
               );
@@ -190,16 +212,16 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
             );
 
             previouslySelectedAnnotation = annotation;
-
-            mapboxMap.easeTo(
-              CameraOptions(
-                center: annotation.geometry,
-              ),
-              MapAnimationOptions(
-                duration: 8,
-              ),
-            );
           }
+
+          mapboxMap.easeTo(
+            CameraOptions(
+              center: annotation.geometry,
+            ),
+            MapAnimationOptions(
+              duration: 60,
+            ),
+          );
         },
       ),
     );
@@ -222,11 +244,34 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   void initState() {
     super.initState();
     mensaData = GetIt.I.get<MensaPublicApi>().mensaData;
+    _sheetController = DraggableScrollableController();
+    _sheetSizeNotifier = ValueNotifier<int>(0);
+
+    _sheetSizeNotifier.addListener(() {
+      if (mapboxMap != null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          await _configureAttribution(mapboxMap!, context);
+        });
+      }
+    });
+
+    _sheetController.addListener(() {
+      int newSize = (_sheetController.sizeToPixels(_sheetController.size)).ceil();
+      if (_sheetSizeNotifier.value != newSize) {
+        _sheetSizeNotifier.value = newSize;
+      }
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _sheetSizeNotifier.value = _sheetController.sizeToPixels(_sheetController.size).ceil();
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
+    _sheetController.dispose();
+    _sheetSizeNotifier.dispose();
   }
 
   @override
@@ -248,7 +293,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
               if (mapboxMap != null) {
                 mapboxMap!.loadStyleURI(mapStyleUri);
                 _configureAttribution(mapboxMap!, context);
-                _addMarkersToMap(mapboxMap!);
+                _updateMarkers(mapboxMap!);
               }
             });
 

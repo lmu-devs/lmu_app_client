@@ -8,45 +8,94 @@ import 'package:mensa/mensa.dart';
 import 'map_bottom_sheet_sizes.dart';
 import 'package:core/widgets.dart';
 
-class MapBottomSheet extends StatelessWidget {
+class MapBottomSheet extends StatefulWidget {
   final ValueNotifier<MensaModel?> selectedMensaNotifier;
   final DraggableScrollableController sheetController;
-  final TextEditingController _searchController = TextEditingController();
 
-  MapBottomSheet({
+  const MapBottomSheet({
     required this.selectedMensaNotifier,
     required this.sheetController,
     super.key,
   });
 
-  final ValueNotifier<List<String>> favoriteMensasNotifier =
-      GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier;
+  @override
+  MapBottomSheetState createState() => MapBottomSheetState();
+}
+
+class MapBottomSheetState extends State<MapBottomSheet> {
+  late ValueNotifier<List<String>> _favoriteMensasNotifier;
+  late TextEditingController _searchController;
+  late DraggableScrollableController _sheetController;
+  double _previousSize = SheetSizes.small.size;
+
+  late AnimationController _fadeController;
+  late Animation<double> _fadeAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _favoriteMensasNotifier = GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier;
+    _searchController = TextEditingController();
+    _sheetController = widget.sheetController;
+    _sheetController.addListener(_onSheetScroll);
+
+    _fadeController = AnimationController(
+      vsync: Navigator.of(context),
+      duration: const Duration(milliseconds: 250),
+    );
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _fadeController, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    _sheetController.removeListener(_onSheetScroll);
+    _fadeController.dispose();
+    super.dispose();
+  }
+
+  void _onSheetScroll() {
+    if (_previousSize >= SheetSizes.medium.size && _sheetController.size < SheetSizes.medium.size) {
+      if (widget.selectedMensaNotifier.value != null) {
+        widget.selectedMensaNotifier.value = null;
+      }
+    }
+    _previousSize = _sheetController.size;
+  }
 
   void _animateSheet(MensaModel? selectedMensa) {
     if (selectedMensa != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        sheetController.animateTo(
+        _sheetController.animateTo(
           SheetSizes.medium.size,
           duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
+          curve: Curves.easeIn,
         );
       });
+      _fadeController.forward();
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        sheetController.animateTo(
+        _sheetController.animateTo(
           SheetSizes.small.size,
           duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
+          curve: Curves.easeOut,
         );
       });
+      _fadeController.reverse();
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<MensaModel?>(
-      valueListenable: selectedMensaNotifier,
+      valueListenable: widget.selectedMensaNotifier,
       builder: (context, selectedMensa, child) {
+        List<double> snapSizes = selectedMensa != null
+            ? [SheetSizes.medium.size, SheetSizes.large.size]
+            : [SheetSizes.small.size, SheetSizes.medium.size, SheetSizes.large.size];
+
         _animateSheet(selectedMensa);
 
         if (selectedMensa != null) {
@@ -55,13 +104,18 @@ class MapBottomSheet extends StatelessWidget {
           _searchController.text = '';
         }
 
+
         return DraggableScrollableSheet(
-          controller: sheetController,
+          controller: _sheetController,
           initialChildSize: SheetSizes.small.size,
           minChildSize: SheetSizes.small.size,
-          maxChildSize: SheetSizes.medium.size,
+          maxChildSize: SheetSizes.large.size,
+          snap: true,
+          snapSizes: snapSizes,
+          snapAnimationDuration: const Duration(milliseconds: 250),
           builder: (context, scrollController) {
             return Container(
+              padding: const EdgeInsets.all(LmuSizes.mediumLarge),
               decoration: BoxDecoration(
                 color: context.colors.neutralColors.backgroundColors.base,
                 border: Border(
@@ -73,48 +127,48 @@ class MapBottomSheet extends StatelessWidget {
               child: SingleChildScrollView(
                 controller: scrollController,
                 physics: const ClampingScrollPhysics(),
-                child: Padding(
-                  padding: const EdgeInsets.all(LmuSizes.mediumLarge),
-                  child: Column(
-                    children: [
-                      selectedMensa != null
-                          ? Padding(
-                              padding: const EdgeInsets.only(bottom: LmuSizes.small),
-                              child: ValueListenableBuilder<List<String>>(
-                                valueListenable: favoriteMensasNotifier,
-                                builder: (context, favoriteMensas, _) {
-                                  return MensaOverviewTile(
-                                    mensaModel: selectedMensa,
-                                    isFavorite: favoriteMensas.contains(selectedMensa.canteenId),
-                                    hasLargeImage: false,
-                                    hasButton: true,
-                                    buttonText: context.locals.explore.navigate,
-                                    buttonAction: () => LmuBottomSheet.show(
-                                      context,
-                                      content: NavigationSheet(
-                                        latitude: selectedMensa.location.latitude,
-                                        longitude: selectedMensa.location.longitude,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            )
-                          : const SizedBox.shrink(),
-                      const SizedBox(height: LmuSizes.small),
-                      LmuSearchInputField(
-                        context: context,
-                        controller: _searchController,
-                        searchState: selectedMensa != null 
-                            ? SearchState.filled 
-                            : SearchState.base,
-                        onClearPressed: () {
-                          _searchController.clear();
-                          selectedMensaNotifier.value = null;
-                        },
-                      ),
-                    ],
-                  ),
+                child: Column(
+                  children: [
+                    if (selectedMensa != null)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: LmuSizes.small),
+                        child: FadeTransition(
+                          opacity: _fadeAnimation,
+                          child: ValueListenableBuilder<List<String>>(
+                            valueListenable: _favoriteMensasNotifier,
+                            builder: (context, favoriteMensas, _) {
+                              return MensaOverviewTile(
+                                mensaModel: selectedMensa,
+                                isFavorite: favoriteMensas.contains(selectedMensa.canteenId),
+                                hasLargeImage: false,
+                                hasButton: true,
+                                buttonText: context.locals.explore.navigate,
+                                buttonAction: () => LmuBottomSheet.show(
+                                  context,
+                                  content: NavigationSheet(
+                                    latitude: selectedMensa.location.latitude,
+                                    longitude: selectedMensa.location.longitude,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      )
+                    else
+                      const SizedBox.shrink(),
+                    LmuSearchInputField(
+                      context: context,
+                      controller: _searchController,
+                      searchState: selectedMensa != null
+                          ? SearchState.filled
+                          : SearchState.base,
+                      onClearPressed: () {
+                        _searchController.clear();
+                        widget.selectedMensaNotifier.value = null;
+                      },
+                    ),
+                  ],
                 ),
               ),
             );
