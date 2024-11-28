@@ -22,14 +22,8 @@ class MenuCubit extends Cubit<MenuState> {
       final mensaMenuModels = await _mensaRepository.getMenuDayForMensa(_canteenId);
 
       emit(MenuLoadSuccess(menuModels: mensaMenuModels));
-    } catch (e) {
+    } catch (_) {
       emit(MenuLoadFailure());
     }
-  }
-
-  @override
-  Future<void> close() {
-    print(_canteenId);
-    return super.close();
   }
 }

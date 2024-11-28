@@ -17,7 +17,7 @@ class TasteProfileStateModel extends Equatable {
   final Set<String> excludedLabels;
 
   factory TasteProfileStateModel.empty() => const TasteProfileStateModel(
-        isActive: true,
+        isActive: false,
         selectedPresets: {},
         excludedLabels: {},
       );

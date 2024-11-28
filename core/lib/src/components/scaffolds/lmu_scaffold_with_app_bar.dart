@@ -15,6 +15,7 @@ class LmuScaffoldWithAppBar extends StatelessWidget {
     this.largeTitleTrailingWidget,
     this.trailingWidget,
     this.leadingAction,
+    this.onLeadingActionTap,
     this.customScrollController,
     this.stretch = true,
     this.collapsedTitleHeight,
@@ -37,6 +38,7 @@ class LmuScaffoldWithAppBar extends StatelessWidget {
   final LeadingAction? leadingAction;
   final MainAxisAlignment largeTitleTrailingWidgetAlignment;
   final bool useModalSheetScrollController;
+  final void Function()? onLeadingActionTap;
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +64,7 @@ class LmuScaffoldWithAppBar extends StatelessWidget {
         trailingWidgets: trailingWidgets,
         leadingAction: leadingAction,
         largeTitleTrailingWidgetAlignment: largeTitleTrailingWidgetAlignment,
+        onLeadingActionTap: onLeadingActionTap,
       ),
     );
   }

@@ -46,12 +46,7 @@ class MensaWeekViewState extends State<MensaWeekView> {
     return Column(
       children: [
         _buildPageView(),
-        if (_hasDivider)
-          Divider(
-            thickness: .5,
-            height: 0,
-            color: context.colors.neutralColors.borderColors.seperatorLight,
-          ),
+        if (_hasDivider) const LmuDivider(),
       ],
     );
   }

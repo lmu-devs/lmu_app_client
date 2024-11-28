@@ -35,6 +35,7 @@ class LmuBaseAppBar extends StatefulWidget {
     this.imageUrls,
     this.trailingWidgets,
     this.leadingAction,
+    this.onLeadingActionTap,
   }) : super(key: key);
 
   final Widget body;
@@ -52,6 +53,7 @@ class LmuBaseAppBar extends StatefulWidget {
   final List<String>? imageUrls;
   final List<Widget>? trailingWidgets;
   final LeadingAction? leadingAction;
+  final void Function()? onLeadingActionTap;
 
   //TODO: Improve retrival of these values
   final double appBarWidth;
@@ -244,6 +246,7 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
                                         leadingAction: _leadingAction!,
                                         hasImage: _hasImage,
                                         backgroundColor: _backgroundColor,
+                                        onLeadingActionTap: widget.onLeadingActionTap,
                                       )
                                     : null,
                                 middle: Opacity(
@@ -435,6 +438,7 @@ class _LeadingAction extends StatelessWidget {
     required LeadingAction leadingAction,
     required bool hasImage,
     required Color backgroundColor,
+    this.onLeadingActionTap,
   })  : _hasImage = hasImage,
         _backgroundColor = backgroundColor,
         _leadingAction = leadingAction;
@@ -442,6 +446,7 @@ class _LeadingAction extends StatelessWidget {
   final bool _hasImage;
   final Color _backgroundColor;
   final LeadingAction? _leadingAction;
+  final void Function()? onLeadingActionTap;
 
   @override
   Widget build(BuildContext context) {
@@ -452,6 +457,7 @@ class _LeadingAction extends StatelessWidget {
       ),
       child: GestureDetector(
         onTap: () {
+          onLeadingActionTap?.call();
           Navigator.of(context).pop();
         },
         child: Container(

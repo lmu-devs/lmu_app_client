@@ -194,5 +194,13 @@
   "notYourTaste": "Not your taste",
   "@notYourTaste": {
     "description": "Not your taste"
+  },
+  "tasteProfilePlaceholderNotActive": "Activate your taste profile to filter dishes by preferences and allergies.",
+  "@tasteProfilePlaceholderNotActive": {
+    "description": "Taste profile placeholder when not active"
+  },
+  "tasteProfilePlaceholderActive": "Adjust your taste profile to filter dishes by preferences and allergies.",
+  "@tasteProfilePlaceholderActive": {
+    "description": "Taste profile placeholder when active"
   }
 }

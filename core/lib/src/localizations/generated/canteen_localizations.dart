@@ -347,6 +347,18 @@ abstract class CanteenLocalizations {
   /// In en, this message translates to:
   /// **'Not your taste'**
   String get notYourTaste;
+
+  /// Taste profile placeholder when not active
+  ///
+  /// In en, this message translates to:
+  /// **'Activate your taste profile to filter dishes by preferences and allergies.'**
+  String get tasteProfilePlaceholderNotActive;
+
+  /// Taste profile placeholder when active
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust your taste profile to filter dishes by preferences and allergies.'**
+  String get tasteProfilePlaceholderActive;
 }
 
 class _CanteenLocalizationsDelegate extends LocalizationsDelegate<CanteenLocalizations> {

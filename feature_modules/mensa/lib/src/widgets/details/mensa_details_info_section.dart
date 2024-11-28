@@ -44,7 +44,7 @@ class MensaDetailsInfoSection extends StatelessWidget {
               );
             },
           ),
-          Divider(thickness: .5, height: 0, color: colors.neutralColors.borderColors.seperatorLight),
+          const LmuDivider(),
           LmuListDropdown(
             title: mensaStatus.text(context.locals.canteen, openingHours: openingHours),
             titleColor: openingHours.mensaStatus.color(colors),

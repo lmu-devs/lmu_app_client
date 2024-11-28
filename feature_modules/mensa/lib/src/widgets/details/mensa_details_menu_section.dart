@@ -1,7 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -34,19 +33,14 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
-
     return BlocBuilder<MenuCubit, MenuState>(
       bloc: GetIt.I.get<MenuService>().getMenuCubit(_canteenId),
       builder: (context, state) {
         if (state is! MenuLoadSuccess) {
-          return MenuLoadingView(
-            canteendId: _canteenId,
-          );
+          return MenuLoadingView(canteendId: _canteenId);
         }
 
         final menuModels = state.menuModels;
-
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -65,14 +59,11 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
                 _pageController.animateToPage(
                   index,
                   duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
+                  curve: Curves.easeIn,
                 );
               },
             ),
-            Divider(
-              height: 0.5,
-              color: colors.neutralColors.borderColors.seperatorLight,
-            ),
+            const LmuDivider(),
             SizedBox(
               height: 1500,
               child: PageView.builder(
@@ -96,7 +87,7 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
   }
 }
 
-extension DateTimeName on DateTime {
+extension _DateTimeName on DateTime {
   String dayName(AppLocalizations localizations) {
     final weekdays = [
       localizations.monday,

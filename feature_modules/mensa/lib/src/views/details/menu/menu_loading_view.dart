@@ -1,7 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -21,10 +20,10 @@ class MenuLoadingView extends StatelessWidget {
 
     return BlocListener<MenuCubit, MenuState>(
       bloc: mensaCubit,
+      listenWhen: (_, current) => current is MenuLoadFailure,
       listener: (context, state) {
         if (state is MenuLoadFailure) {
           final localizations = context.locals.canteen;
-          final isSuccessfullStream = mensaCubit.stream.map((state) => state is MenuLoadSuccess);
 
           LmuToast.show(
             context: context,
@@ -32,18 +31,14 @@ class MenuLoadingView extends StatelessWidget {
             actionText: localizations.retry,
             type: ToastType.error,
             onActionPressed: () => mensaCubit.loadMensaMenuData(),
-            duration: const Duration(minutes: 66),
-            removeStream: isSuccessfullStream,
+            duration: const Duration(minutes: 5),
           );
         }
       },
       child: Column(
         children: [
           const LmuTabBarLoading(),
-          Divider(
-            height: 0.5,
-            color: context.colors.neutralColors.borderColors.seperatorLight,
-          ),
+          const LmuDivider(),
           ListView.builder(
             shrinkWrap: true,
             padding: const EdgeInsets.all(LmuSizes.mediumLarge),

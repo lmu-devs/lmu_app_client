@@ -12,6 +12,15 @@ enum ToastType {
 }
 
 class LmuToast {
+  static removeAll({
+    required BuildContext context,
+  }) {
+    final fToast = FToast();
+    fToast.init(context);
+
+    fToast.removeCustomToast();
+  }
+
   static void show({
     required BuildContext context,
     required String message,
@@ -19,7 +28,6 @@ class LmuToast {
     VoidCallback? onActionPressed,
     ToastType type = ToastType.base,
     Duration? duration,
-    Stream<bool>? removeStream,
   }) {
     final fToast = FToast();
     fToast.init(context);
@@ -106,10 +114,6 @@ class LmuToast {
           ),
       fadeDuration: const Duration(milliseconds: 200),
     );
-
-    removeStream?.listen((_) {
-      fToast.removeCustomToast();
-    });
   }
 
   /// Calculates the duration of the toast based on the number of words in the message

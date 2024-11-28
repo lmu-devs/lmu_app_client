@@ -140,4 +140,12 @@ class CanteenLocalizationsEn extends CanteenLocalizations {
 
   @override
   String get notYourTaste => 'Not your taste';
+
+  @override
+  String get tasteProfilePlaceholderNotActive =>
+      'Activate your taste profile to filter dishes by preferences and allergies.';
+
+  @override
+  String get tasteProfilePlaceholderActive =>
+      'Adjust your taste profile to filter dishes by preferences and allergies.';
 }

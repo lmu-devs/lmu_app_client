@@ -209,10 +209,7 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
             //itemScrollController.jumpTo(index: index);
           },
         ),
-        Divider(
-          height: 0.5,
-          color: colors.neutralColors.borderColors.seperatorLight,
-        ),
+        const LmuDivider(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
           child: ValueListenableBuilder(

@@ -9,8 +9,8 @@ import '../services/services.dart';
 import '../views/views.dart';
 import 'taste_profile_page.dart';
 
-class MensaMainPage extends StatelessWidget {
-  const MensaMainPage({super.key});
+class MensaPage extends StatelessWidget {
+  const MensaPage({super.key});
 
   @override
   Widget build(BuildContext context) {
