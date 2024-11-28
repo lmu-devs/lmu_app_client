@@ -45,4 +45,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get search => 'Suchen';
+
+  @override
+  String get cancel => 'Abbrechen';
 }

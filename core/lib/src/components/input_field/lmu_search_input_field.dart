@@ -1,53 +1,193 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
-import 'lmu_input_field.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 
-enum SearchState {
-  base,
-  active,
-  typing,
-  filled,
-  loading,
-}
-
-class LmuSearchInputField extends LmuInputField {
-  final SearchState searchState;
+class LmuSearchInputField extends StatefulWidget {
+  final TextEditingController controller;
+  final BuildContext context;
+  final String? hintText;
+  final void Function(String)? onChanged;
+  final void Function(String)? onSubmitted;
+  final bool isDisabled;
   final VoidCallback? onClearPressed;
 
-  LmuSearchInputField({
+  const LmuSearchInputField({
     super.key,
-    required TextEditingController controller,
-    required BuildContext context,
-    String hintText = 'Search',
-    void Function(String)? onChanged,
-    void Function(String)? onSubmitted,
-    bool isDisabled = false,
-    this.searchState = SearchState.base,
+    required this.controller,
+    required this.context,
+    this.hintText,
+    this.onChanged,
+    this.onSubmitted,
+    this.isDisabled = false,
     this.onClearPressed,
-  }) : super(
-          hintText: hintText,
-          controller: controller,
-          keyboardType: TextInputType.text,
-          isAutocorrect: false,
-          leadingIcon: const Icon(LucideIcons.search),
-          trailingIcon: _buildTrailingIcon(
-            searchState: searchState,
-            onClearPressed: onClearPressed,
-            context: context,
+  });
+
+  @override
+  State<LmuSearchInputField> createState() => _LmuSearchInputFieldState();
+}
+
+class _LmuSearchInputFieldState extends State<LmuSearchInputField> {
+  late final FocusNode _focusNode;
+  InputStates _inputState = InputStates.base;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode = FocusNode();
+
+    widget.controller.addListener(_updateInputState);
+    _focusNode.addListener(_updateInputState);
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(_updateInputState);
+    _focusNode.removeListener(_updateInputState);
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  void _updateInputState() {
+    setState(() {
+      if (widget.controller.text.isEmpty) {
+        _inputState =
+            _focusNode.hasFocus ? InputStates.active : InputStates.base;
+        print('Debug - Empty text -> State: $_inputState');
+      } else {
+        _inputState =
+            _focusNode.hasFocus ? InputStates.typing : InputStates.filled;
+        print('Debug - Has text -> State: $_inputState');
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localizations = context.locals.app;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: LmuInputField(
+            hintText: localizations.search,
+            controller: widget.controller,
+            keyboardType: TextInputType.text,
+            isAutocorrect: false,
+            focusNode: _focusNode,
+            leadingIcon: _buildLeadingIcon(
+              inputState: _inputState,
+              context: widget.context,
+            ),
+            leadingIconConstraints: _buildLeadingIconConstraints(_inputState),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: LmuSizes.mediumLarge,
+              vertical: LmuSizes.small,
+            ),
+            trailingIcon: _buildTrailingIcon(
+              inputState: _inputState,
+              onClearPressed: widget.onClearPressed,
+              context: widget.context,
+            ),
+            onSubmitted: widget.onSubmitted,
+            isDisabled: widget.isDisabled,
+            onChanged: (value) {
+              widget.onChanged?.call(value);
+            },
           ),
-          onChanged: onChanged,
-          onSubmitted: onSubmitted,
-          isDisabled: isDisabled,
-          contentPadding: const EdgeInsets.symmetric(
-            vertical: LmuSizes.small,
+        ),
+        _buildSuffix(
+          inputState: _inputState,
+          context: widget.context,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSuffix({
+    required InputStates inputState,
+    required BuildContext context,
+  }) {
+    const animationDuration = Duration(milliseconds: 500);
+    final animationCurve = LmuAnimations.fastSmooth;
+    return AnimatedSize(
+      duration: animationDuration,
+      curve: animationCurve,
+      child: AnimatedSwitcher(
+        duration: animationDuration,
+        switchInCurve: animationCurve,
+        switchOutCurve: animationCurve.flipped,
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return FadeTransition(
+            opacity: animation,
+            child: SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(1, 0),
+                end: Offset.zero,
+              ).animate(animation),
+              child: child,
+            ),
+          );
+        },
+        child: _getSuffixByState(inputState, context),
+      ),
+    );
+  }
+
+  Widget _getSuffixByState(
+    InputStates inputState,
+    BuildContext context,
+  ) {
+    final defaultButton = Padding(
+      padding: const EdgeInsets.only(left: LmuSizes.medium),
+      child: LmuButton(
+        title: context.locals.app.cancel,
+        emphasis: ButtonEmphasis.link,
+        size: ButtonSize.large,
+        onTap: () {},
+      ),
+    );
+    switch (inputState) {
+      case InputStates.base:
+        return const SizedBox.shrink();
+      case InputStates.active:
+        return defaultButton;
+      case InputStates.typing:
+        return defaultButton;
+      case InputStates.filled:
+        return const SizedBox.shrink();
+      case InputStates.loading:
+        return const SizedBox.shrink();
+    }
+  }
+
+  Widget? _buildLeadingIcon({
+    required InputStates inputState,
+    required BuildContext context,
+  }) {
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 200),
+      transitionBuilder: (Widget child, Animation<double> animation) {
+        return FadeTransition(
+          opacity: animation,
+          child: ScaleTransition(
+            scale: animation,
+            child: child,
           ),
         );
+      },
+      child: _getLeadingIconByState(inputState, context),
+    );
+  }
 
-  static Widget _buildTrailingIcon({
-    required SearchState searchState,
+  BoxConstraints? _buildLeadingIconConstraints(InputStates state) {
+    return _getLeadingIconConstraints(state);
+  }
+
+  Widget _buildTrailingIcon({
+    required InputStates inputState,
     VoidCallback? onClearPressed,
     required BuildContext context,
   }) {
@@ -62,34 +202,83 @@ class LmuSearchInputField extends LmuInputField {
           ),
         );
       },
-      child: _getTrailingIconByState(searchState, onClearPressed, context),
+      child: _getTrailingIconByState(inputState, onClearPressed, context),
     );
   }
 
+  static BoxConstraints? _getLeadingIconConstraints(InputStates state) {
+    const defaultConstraints = BoxConstraints(
+      minWidth: 16,
+      maxWidth: 16,
+    );
+    const wideConstraints = BoxConstraints(
+      minWidth: 48,
+      maxWidth: 48,
+      minHeight: 48,
+      maxHeight: 48,
+    );
+    switch (state) {
+      case InputStates.base:
+        return wideConstraints;
+      case InputStates.active:
+        return defaultConstraints;
+      case InputStates.typing:
+        return defaultConstraints;
+      case InputStates.filled:
+        return defaultConstraints;
+      case InputStates.loading:
+        return wideConstraints;
+    }
+  }
+
+  static Widget? _getLeadingIconByState(
+    InputStates inputState,
+    BuildContext context,
+  ) {
+    switch (inputState) {
+      case InputStates.base:
+        return const Icon(LucideIcons.search);
+      case InputStates.active:
+        return null;
+      case InputStates.typing:
+        return null;
+      case InputStates.filled:
+        return null;
+      case InputStates.loading:
+        return null;
+    }
+  }
+
   static Widget _getTrailingIconByState(
-    SearchState state,
+    InputStates inputState,
     VoidCallback? onClearPressed,
     BuildContext context,
   ) {
-    switch (state) {
-      case SearchState.base:
-      case SearchState.active:
+    switch (inputState) {
+      case InputStates.base:
+      case InputStates.active:
         return const SizedBox.shrink();
-      case SearchState.typing:
-        return IconButton(
+      case InputStates.typing:
+        return GestureDetector(
           key: const ValueKey('typing'),
-          icon: const Icon(LucideIcons.x),
-          onPressed: onClearPressed,
-          color: context.colors.neutralColors.textColors.weakColors.base,
+          onTap: onClearPressed,
+          child: Icon(
+            LucideIcons.x,
+            color: context.colors.neutralColors.textColors.weakColors.base,
+            size: LmuIconSizes.medium,
+          ),
         );
-      case SearchState.filled:
-        return IconButton(
+      case InputStates.filled:
+        return GestureDetector(
           key: const ValueKey('filled'),
-          icon: const Icon(LucideIcons.x),
-          onPressed: onClearPressed,
-          color: context.colors.neutralColors.textColors.strongColors.base,
+          onTap: onClearPressed,
+          child: Icon(
+            LucideIcons.x,
+            color: context.colors.neutralColors.textColors.strongColors.base,
+            size: LmuIconSizes.medium,
+          ),
         );
-      case SearchState.loading:
+      case InputStates.loading:
         return const SizedBox(
           key: ValueKey('loading'),
           width: 24,

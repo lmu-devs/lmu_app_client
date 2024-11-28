@@ -27,6 +27,16 @@ class SettingsSuccessView extends StatelessWidget {
             const SizedBox(
               height: LmuSizes.mediumLarge,
             ),
+            const SizedBox(height: LmuSizes.small),
+            const SizedBox(height: LmuSizes.small),
+            LmuSearchInputField(
+              context: context,
+              controller: TextEditingController(),
+            ),
+            const SizedBox(height: LmuSizes.small),
+
+
+            const SizedBox(height: LmuSizes.large),
             LmuContentTile(
               content: [
                 LmuListItem.action(
