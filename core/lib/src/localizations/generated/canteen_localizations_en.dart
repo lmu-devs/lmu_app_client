@@ -137,4 +137,7 @@ class CanteenLocalizationsEn extends CanteenLocalizations {
 
   @override
   String get cafeInfo => 'under 100 seats, focused on beverages and small snacks.';
+
+  @override
+  String get notYourTaste => 'Not your taste';
 }

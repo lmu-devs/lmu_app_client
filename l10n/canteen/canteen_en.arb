@@ -190,5 +190,9 @@
   "cafeInfo": "under 100 seats, focused on beverages and small snacks.",
   "@cafeInfo": {
     "description": "Longer description of a cafe"
+  },
+  "notYourTaste": "Not your taste",
+  "@notYourTaste": {
+    "description": "Not your taste"
   }
 }

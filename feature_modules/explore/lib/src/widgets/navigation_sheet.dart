@@ -28,13 +28,13 @@ class NavigationSheet extends StatelessWidget {
     final String googleMapsUrlWeb = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
 
     final bool isGoogleMapsInstalled =
-    await LmuUrlLauncher.canLaunch(url: Platform.isIOS ? googleMapsUrlIOS : googleMapsUrlAndroid);
+        await LmuUrlLauncher.canLaunch(url: Platform.isIOS ? googleMapsUrlIOS : googleMapsUrlAndroid);
 
     final String urlToLaunch = isApple
         ? appleMapsUrl
         : isGoogleMapsInstalled
-        ? (Platform.isIOS ? googleMapsUrlIOS : googleMapsUrlAndroid)
-        : googleMapsUrlWeb;
+            ? (Platform.isIOS ? googleMapsUrlIOS : googleMapsUrlAndroid)
+            : googleMapsUrlWeb;
 
     if (context.mounted) {
       LmuUrlLauncher.launchWebsite(

@@ -19,6 +19,7 @@ class MenuItemTileLoading extends StatelessWidget {
           title: BoneMock.words(7),
         ),
         isFavorite: false,
+        hasDivider: true,
       ),
     );
   }

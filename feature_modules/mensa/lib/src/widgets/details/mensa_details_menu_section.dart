@@ -4,12 +4,16 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../bloc/menu_cubit/cubit.dart';
+import '../../services/menu_service.dart';
 import '../../views/views.dart';
 
 class MensaDetailsMenuSection extends StatefulWidget {
-  const MensaDetailsMenuSection({super.key});
+  const MensaDetailsMenuSection({super.key, required this.canteenId});
+
+  final String canteenId;
 
   @override
   State<MensaDetailsMenuSection> createState() => _MensaDetailsMenuSectionState();
@@ -18,6 +22,8 @@ class MensaDetailsMenuSection extends StatefulWidget {
 class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
   late PageController _pageController;
   late ValueNotifier<int> _tabNotifier;
+
+  String get _canteenId => widget.canteenId;
 
   @override
   void initState() {
@@ -31,9 +37,12 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
     final colors = context.colors;
 
     return BlocBuilder<MenuCubit, MenuState>(
+      bloc: GetIt.I.get<MenuService>().getMenuCubit(_canteenId),
       builder: (context, state) {
         if (state is! MenuLoadSuccess) {
-          return const MenuLoadingView();
+          return MenuLoadingView(
+            canteendId: _canteenId,
+          );
         }
 
         final menuModels = state.menuModels;

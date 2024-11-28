@@ -97,7 +97,7 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
   String get _largeTitle => widget.largeTitle;
   String get _collapsedTitle => widget.collapsedTitle ?? _largeTitle;
 
-  bool get _hasImage => widget.imageUrls != null;
+  bool get _hasImage => widget.imageUrls?.isNotEmpty ?? false;
 
   Widget? get _largeTitleTrailingWidget => widget.largeTitleTrailingWidget;
 
@@ -108,7 +108,7 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
   double get _largeTitleHeight => _calculatedLargeTitleHeight + (_hasImage ? LmuSizes.xlarge : LmuSizes.medium);
   double get _appBarHeight => _collapsedTitleHeight + _largeTitleHeight;
 
-  double get _imageSize => widget.imageUrls != null ? _imageHeight : 0.0;
+  double get _imageSize => _hasImage ? _imageHeight : 0.0;
 
   Color get _backgroundColor => widget.backgroundColor ?? Colors.transparent;
 

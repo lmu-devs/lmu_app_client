@@ -9,10 +9,12 @@ class StarIcon extends StatelessWidget {
     Key? key,
     this.isActive = false,
     this.disabledColor,
+    this.size = LmuSizes.large,
   }) : super(key: key);
 
   final bool isActive;
   final Color? disabledColor;
+  final double? size;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class StarIcon extends StatelessWidget {
         semanticsLabel: localization.iconStar,
         key: ValueKey(isActive),
         package: "mensa",
-        width: LmuSizes.large,
+        width: size,
         colorFilter: ColorFilter.mode(
           isActive
               ? context.colors.warningColors.textColors.strongColors.base

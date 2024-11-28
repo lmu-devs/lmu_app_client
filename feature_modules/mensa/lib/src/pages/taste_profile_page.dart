@@ -10,23 +10,31 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../repository/api/models/taste_profile/taste_profile.dart';
 import '../services/taste_profile_service.dart';
 
-class TasteProfilePage extends StatelessWidget {
-  TasteProfilePage({
-    super.key,
-    required Set<String> selectedPresets,
-    required Set<String> excludedLabels,
-    required bool isActive,
-  })  : _selectedPresetNotifier = ValueNotifier<Set<String>>(selectedPresets),
-        _excludedLabelsNotifier = ValueNotifier<Set<String>>(excludedLabels),
-        _isActiveNotifier = ValueNotifier<bool>(isActive),
-        _initialExcludedLabels = excludedLabels,
-        _initialIsActive = isActive;
+class TasteProfilePage extends StatefulWidget {
+  const TasteProfilePage({super.key});
 
-  final ValueNotifier<Set<String>> _selectedPresetNotifier;
-  final ValueNotifier<Set<String>> _excludedLabelsNotifier;
-  final ValueNotifier<bool> _isActiveNotifier;
-  final Set<String> _initialExcludedLabels;
-  final bool _initialIsActive;
+  @override
+  State<TasteProfilePage> createState() => _TasteProfilePageState();
+}
+
+class _TasteProfilePageState extends State<TasteProfilePage> {
+  late ValueNotifier<Set<String>> _selectedPresetNotifier;
+  late ValueNotifier<Set<String>> _excludedLabelsNotifier;
+  late ValueNotifier<bool> _isActiveNotifier;
+  late Set<String> _initialExcludedLabels;
+  late bool _initialIsActive;
+
+  @override
+  void initState() {
+    super.initState();
+    final tasteProfileService = GetIt.I.get<TasteProfileService>();
+    final tasteProfileState = tasteProfileService.tasteProfileState.value;
+    _selectedPresetNotifier = ValueNotifier<Set<String>>(tasteProfileState.selectedPresets);
+    _excludedLabelsNotifier = ValueNotifier<Set<String>>(tasteProfileState.excludedLabels);
+    _isActiveNotifier = ValueNotifier<bool>(tasteProfileState.isActive);
+    _initialExcludedLabels = tasteProfileState.excludedLabels;
+    _initialIsActive = tasteProfileState.isActive;
+  }
 
   @override
   Widget build(BuildContext context) {

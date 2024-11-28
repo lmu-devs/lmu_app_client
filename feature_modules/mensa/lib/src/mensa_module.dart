@@ -6,6 +6,7 @@ import 'public_api/default_mensa_public_api.dart';
 import 'public_api/public_api.dart';
 import 'repository/repository.dart';
 import 'services/mensa_user_preferences_service.dart';
+import 'services/menu_service.dart';
 import 'services/taste_profile_service.dart';
 
 class MensaModule extends AppModule
@@ -36,6 +37,10 @@ class MensaModule extends AppModule
 
     GetIt.I.registerSingleton<MensaUserPreferencesService>(
       MensaUserPreferencesService(mensaRepository: repository),
+    );
+
+    GetIt.I.registerSingleton<MenuService>(
+      MenuService(),
     );
   }
 

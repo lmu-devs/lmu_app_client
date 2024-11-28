@@ -10,6 +10,7 @@ import '../repository/api/models/menu/menu_item_model.dart';
 import '../repository/api/models/menu/price_category.dart';
 import '../repository/api/models/menu/price_model.dart';
 import '../services/mensa_user_preferences_service.dart';
+import '../services/taste_profile_service.dart';
 
 class MenuDetailsPage extends StatelessWidget {
   MenuDetailsPage({
@@ -24,6 +25,9 @@ class MenuDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tasteProfileService = GetIt.I<TasteProfileService>();
+    final selectedLanguage = Localizations.localeOf(context).languageCode.toUpperCase();
+
     return LmuScaffoldWithAppBar(
       largeTitle: menuItemModel.title,
       stretch: false,
@@ -57,13 +61,17 @@ class MenuDetailsPage extends StatelessWidget {
             const SizedBox(height: LmuSizes.xxlarge),
             LmuTileHeadline.base(title: "Inhalte"),
             LmuContentTile(
-              content: menuItemModel.labels
-                  .map(
-                    (e) => LmuListItem.base(
-                      title: e,
-                    ),
-                  )
-                  .toList(),
+              content: menuItemModel.labels.map(
+                (e) {
+                  final labelItem = tasteProfileService.getLabelItemFromId(e);
+                  if (labelItem == null) return const SizedBox.shrink();
+                  final emoji = labelItem.emojiAbbreviation?.isEmpty ?? true ? "😀" : labelItem.emojiAbbreviation;
+                  return LmuListItem.base(
+                    leadingArea: LmuText.h1(emoji),
+                    title: labelItem.text[selectedLanguage],
+                  );
+                },
+              ).toList(),
             ),
             const SizedBox(height: LmuSizes.xxlarge),
             LmuTileHeadline.base(title: "Price"),

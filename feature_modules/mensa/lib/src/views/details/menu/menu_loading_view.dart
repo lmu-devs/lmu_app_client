@@ -4,19 +4,23 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../bloc/menu_cubit/cubit.dart';
+import '../../../services/menu_service.dart';
 import '../../../widgets/details/menu/loading/menu_item_tile_loading.dart';
 
 class MenuLoadingView extends StatelessWidget {
-  const MenuLoadingView({super.key});
+  const MenuLoadingView({super.key, required this.canteendId});
+
+  final String canteendId;
 
   @override
   Widget build(BuildContext context) {
-    final mensaCubit = context.read<MenuCubit>();
+    final mensaCubit = GetIt.I.get<MenuService>().getMenuCubit(canteendId);
+
     return BlocListener<MenuCubit, MenuState>(
       bloc: mensaCubit,
-      listenWhen: (_, current) => current is MenuLoadFailure,
       listener: (context, state) {
         if (state is MenuLoadFailure) {
           final localizations = context.locals.canteen;
@@ -46,12 +50,9 @@ class MenuLoadingView extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: 7,
             itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: LmuSizes.mediumSmall),
-                child: LmuSkeleton(
-                  context: context,
-                  child: const MenuItemTileLoading(),
-                ),
+              return LmuSkeleton(
+                context: context,
+                child: const MenuItemTileLoading(),
               );
             },
           ),

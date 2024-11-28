@@ -341,6 +341,12 @@ abstract class CanteenLocalizations {
   /// In en, this message translates to:
   /// **'under 100 seats, focused on beverages and small snacks.'**
   String get cafeInfo;
+
+  /// Not your taste
+  ///
+  /// In en, this message translates to:
+  /// **'Not your taste'**
+  String get notYourTaste;
 }
 
 class _CanteenLocalizationsDelegate extends LocalizationsDelegate<CanteenLocalizations> {

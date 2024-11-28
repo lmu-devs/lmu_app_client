@@ -128,6 +128,8 @@ class CanteenLocalizationsDe extends CanteenLocalizations {
 
   @override
   String get dessertDish => 'Nachspeisen';
+
+  @override
   String get canteenInfo =>
       '300+ Sitzplätze, täglich wechselnde Hauptmahlzeiten, inklusive vegetarischer und veganer Optionen.';
 
@@ -136,4 +138,7 @@ class CanteenLocalizationsDe extends CanteenLocalizations {
 
   @override
   String get cafeInfo => 'unter 100 Sitzplätze, fokussiert auf Getränke und kleine Snacks.';
+
+  @override
+  String get notYourTaste => 'Nicht nach deinem Geschmack';
 }

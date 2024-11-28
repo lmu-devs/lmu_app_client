@@ -1,30 +1,18 @@
-import 'package:flutter/foundation.dart';
-import 'package:get_it/get_it.dart';
-
-import '../repository/api/models/menu/menu_day_model.dart';
-import '../repository/mensa_repository.dart';
+import '../bloc/bloc.dart';
 
 class MenuService {
-  MenuService({
-    required this.canteenId,
-  }) {
-    loadMensaMenuData();
+  final Map<String, MenuCubit> _menuCubits = {};
+
+  MenuCubit getMenuCubit(String canteenId) {
+    final cubit = _menuCubits[canteenId];
+    if (cubit == null) throw Exception("No MenuCubit found for canteenId $canteenId");
+    return cubit;
   }
-  final String canteenId;
 
-  final MensaRepository _mensaRepository = GetIt.I.get<MensaRepository>();
+  bool hasMenuCubit(String canteenId) => _menuCubits.containsKey(canteenId);
 
-  final ValueNotifier<List<MenuDayModel>?> _mensaMenuModels = ValueNotifier(null);
-
-  ValueNotifier<List<MenuDayModel>?> get mensaMenuModels => _mensaMenuModels;
-
-  Future<void> loadMensaMenuData() async {
-    try {
-      final mensaMenuModels = await _mensaRepository.getMenuDayForMensa(canteenId);
-
-      _mensaMenuModels.value = mensaMenuModels;
-    } catch (e) {
-      _mensaMenuModels.value = [];
-    }
+  void initMenuCubit(String canteenId) {
+    if (_menuCubits.containsKey(canteenId)) throw Exception("MenuCubit already initialized for canteenId $canteenId");
+    _menuCubits[canteenId] = MenuCubit(canteenId: canteenId);
   }
 }

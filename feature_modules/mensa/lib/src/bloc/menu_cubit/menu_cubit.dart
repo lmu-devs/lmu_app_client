@@ -26,4 +26,10 @@ class MenuCubit extends Cubit<MenuState> {
       emit(MenuLoadFailure());
     }
   }
+
+  @override
+  Future<void> close() {
+    print(_canteenId);
+    return super.close();
+  }
 }
