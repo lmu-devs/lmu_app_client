@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
@@ -58,7 +60,8 @@ class MapBottomSheetState extends State<MapBottomSheet> {
   }
 
   void _onSheetScroll() {
-    if (_previousSize >= SheetSizes.medium.size && _sheetController.size < SheetSizes.medium.size) {
+    if (double.parse(_previousSize.toStringAsFixed(2)) >= SheetSizes.medium.size &&
+        double.parse(_sheetController.size.toStringAsFixed(2)) < SheetSizes.medium.size) {
       if (widget.selectedMensaNotifier.value != null) {
         widget.selectedMensaNotifier.value = null;
       }

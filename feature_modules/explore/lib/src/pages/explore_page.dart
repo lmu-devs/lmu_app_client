@@ -1,6 +1,7 @@
 import 'package:core/constants.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart' hide Visibility;
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:mensa/mensa.dart';
@@ -44,9 +45,19 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
 
   MapboxMap? mapboxMap;
   PointAnnotationManager? pointAnnotationManager;
+  PointAnnotation? previouslySelectedAnnotation;
+  final int animationToLocationDuration = 240;
+
+  // ToDo: User location or this point as the center of MUC
+  final Point spawnLocation = Point(
+    coordinates: Position(
+      11.575328,
+      48.137371,
+    ),
+  );
+
   List<MensaModel> mensaData = [];
   Map<PointAnnotation, MensaModel> mensaPins = {};
-  PointAnnotation? previouslySelectedAnnotation;
   final ValueNotifier<MensaModel?> selectedMensaNotifier = ValueNotifier<MensaModel?>(null);
 
   late final DraggableScrollableController _sheetController;
@@ -127,17 +138,9 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
     }
   }
 
-  Future<void> _configureAttribution(MapboxMap mapboxMap, BuildContext context) async {
+  Future<void> _configureAttributionElements(MapboxMap mapboxMap, BuildContext context) async {
     await Future.wait(
       [
-        mapboxMap.attribution.updateSettings(
-          AttributionSettings(
-            marginBottom: _sheetSizeNotifier.value + LmuSizes.medium,
-            marginRight: LmuSizes.medium,
-            position: OrnamentPosition.BOTTOM_RIGHT,
-            iconColor: context.colors.neutralColors.textColors.weakColors.base.value,
-          ),
-        ),
         mapboxMap.logo.updateSettings(
           LogoSettings(
             marginBottom: _sheetSizeNotifier.value + LmuSizes.medium,
@@ -145,21 +148,39 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
             position: OrnamentPosition.BOTTOM_LEFT,
           ),
         ),
+        mapboxMap.attribution.updateSettings(
+          AttributionSettings(
+            marginBottom: _sheetSizeNotifier.value + LmuSizes.medium,
+            marginRight: LmuSizes.small,
+            position: OrnamentPosition.BOTTOM_RIGHT,
+            iconColor: context.colors.neutralColors.textColors.weakColors.base.value,
+          ),
+        ),
       ],
     );
   }
 
-  Future<void> _configureScale(MapboxMap mapboxMap) async {
-    await mapboxMap.scaleBar.updateSettings(
-      ScaleBarSettings(enabled: false),
+  Future<void> _configureGeoElements(MapboxMap mapboxMap) async {
+    await Future.wait(
+      [
+        mapboxMap.scaleBar.updateSettings(
+          ScaleBarSettings(enabled: false),
+        ),
+        mapboxMap.compass.updateSettings(
+          CompassSettings(
+            marginTop: LmuSizes.xxxlarge + LmuSizes.medium,
+            marginRight: LmuSizes.medium,
+          ),
+        ),
+      ],
     );
   }
 
   Future<void> _onMapCreated(MapboxMap mapboxMap) async {
     this.mapboxMap = mapboxMap;
 
-    await _configureAttribution(mapboxMap, context);
-    await _configureScale(mapboxMap);
+    await _configureAttributionElements(mapboxMap, context);
+    await _configureGeoElements(mapboxMap);
     await _addMarkers(mapboxMap);
     pointAnnotationManager = await mapboxMap.annotations.createPointAnnotationManager();
 
@@ -219,7 +240,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
               center: annotation.geometry,
             ),
             MapAnimationOptions(
-              duration: 60,
+              duration: animationToLocationDuration,
             ),
           );
         },
@@ -250,7 +271,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
     _sheetSizeNotifier.addListener(() {
       if (mapboxMap != null) {
         WidgetsBinding.instance.addPostFrameCallback((_) async {
-          await _configureAttribution(mapboxMap!, context);
+          await _configureAttributionElements(mapboxMap!, context);
         });
       }
     });
@@ -292,7 +313,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (mapboxMap != null) {
                 mapboxMap!.loadStyleURI(mapStyleUri);
-                _configureAttribution(mapboxMap!, context);
+                _configureAttributionElements(mapboxMap!, context);
                 _updateMarkers(mapboxMap!);
               }
             });
@@ -305,13 +326,34 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
                     styleUri: mapStyleUri,
                     onMapCreated: _onMapCreated,
                     cameraOptions: CameraOptions(
-                      center: Point(
-                        coordinates: Position(
-                          11.582,
-                          48.1351,
-                        ),
+                      center: spawnLocation,
+                      zoom: 12.125,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: LmuSizes.huge + LmuSizes.small,
+                  right: LmuSizes.medium,
+                  child: GestureDetector(
+                    onTap: () => mapboxMap?.easeTo(
+                      CameraOptions(
+                        center: spawnLocation,
                       ),
-                      zoom: 12.0,
+                      MapAnimationOptions(
+                        duration: animationToLocationDuration,
+                      ),
+                    ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: context.colors.neutralColors.backgroundColors.tile,
+                        border: Border.all(color: context.colors.neutralColors.textColors.weakColors.base, width: 0.25),
+                        shape: BoxShape.circle,
+                      ),
+                      padding: const EdgeInsets.all(LmuSizes.mediumSmall),
+                      child: const Icon(
+                        LucideIcons.map_pin,
+                        size: LmuIconSizes.medium,
+                      ),
                     ),
                   ),
                 ),
