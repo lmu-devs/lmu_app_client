@@ -9,11 +9,10 @@ class LmuSearchInputField extends StatefulWidget {
   final TextEditingController controller;
   final BuildContext context;
   final String? hintText;
+  final bool focusAfterClear;
   final void Function(String)? onChanged;
   final void Function(String)? onSubmitted;
-  final bool isDisabled;
   final VoidCallback? onClearPressed;
-
   const LmuSearchInputField({
     super.key,
     required this.controller,
@@ -21,8 +20,8 @@ class LmuSearchInputField extends StatefulWidget {
     this.hintText,
     this.onChanged,
     this.onSubmitted,
-    this.isDisabled = false,
     this.onClearPressed,
+    this.focusAfterClear = true,
   });
 
   @override
@@ -48,12 +47,6 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> {
     _focusNode.removeListener(_updateInputState);
     _focusNode.dispose();
     super.dispose();
-  }
-
-  void _handleClear() {
-    print('Debug - Clear pressed');
-    widget.controller.clear();
-    widget.onClearPressed?.call();
   }
 
   void _updateInputState() {
@@ -95,15 +88,13 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> {
             ),
             trailingIcon: _buildTrailingIcon(
               inputState: _inputState,
-              onClearPressed: widget.onClearPressed,
               context: widget.context,
             ),
             onSubmitted: widget.onSubmitted,
-            isDisabled: widget.isDisabled,
             onChanged: (value) {
               widget.onChanged?.call(value);
             },
-            onClearPressed: _handleClear,
+            onClearPressed: widget.onClearPressed,
           ),
         ),
         _buildSuffix(
@@ -199,23 +190,6 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> {
     return _getLeadingIconConstraints(state);
   }
 
-  Widget _buildTrailingIcon({
-    required InputStates inputState,
-    VoidCallback? onClearPressed,
-    required BuildContext context,
-  }) {
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 200),
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      },
-      child: _getTrailingIconByState(inputState, onClearPressed, context),
-    );
-  }
-
   static BoxConstraints? _getLeadingIconConstraints(InputStates state) {
     const defaultConstraints = BoxConstraints(
       minWidth: 16,
@@ -259,9 +233,24 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> {
     }
   }
 
+  Widget _buildTrailingIcon({
+    required InputStates inputState,
+    required BuildContext context,
+  }) {
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 200),
+      transitionBuilder: (Widget child, Animation<double> animation) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+      child: _getTrailingIconByState(inputState, context),
+    );
+  }
+
   static Widget _getTrailingIconByState(
     InputStates inputState,
-    VoidCallback? onClearPressed,
     BuildContext context,
   ) {
     switch (inputState) {

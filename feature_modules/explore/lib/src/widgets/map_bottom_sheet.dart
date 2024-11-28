@@ -164,6 +164,7 @@ class MapBottomSheetState extends State<MapBottomSheet> {
                         _searchController.clear();
                         widget.selectedMensaNotifier.value = null;
                       },
+                      focusAfterClear: false,
                     ),
                   ],
                 ),

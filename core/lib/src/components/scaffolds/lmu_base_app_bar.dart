@@ -450,16 +450,16 @@ class _LeadingAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: _hasImage ? LmuSizes.medium : LmuSizes.mediumLarge,
-        vertical: LmuSizes.xsmall,
-      ),
-      child: GestureDetector(
-        onTap: () {
-          onLeadingActionTap?.call();
-          Navigator.of(context).pop();
-        },
+    return GestureDetector(
+      onTap: () {
+        onLeadingActionTap?.call();
+        Navigator.of(context).pop();
+      },
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: _hasImage ? LmuSizes.medium : LmuSizes.mediumLarge,
+          vertical: LmuSizes.xsmall,
+        ),
         child: Container(
           padding: _hasImage ? const EdgeInsets.all(6) : null,
           decoration: _hasImage

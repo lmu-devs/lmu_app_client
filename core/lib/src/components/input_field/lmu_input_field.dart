@@ -40,6 +40,7 @@ class LmuInputField extends StatefulWidget {
   final String? suffixText;
   final bool closeKeyboardOnTapOutside;
   final FocusNode? focusNode;
+  final bool focusAfterClear;
 
   const LmuInputField({
     super.key,
@@ -70,6 +71,7 @@ class LmuInputField extends StatefulWidget {
     this.onTapOutside,
     this.focusNode,
     this.onClearPressed,
+    this.focusAfterClear = false,
   });
 
   @override
@@ -99,6 +101,9 @@ class _LmuInputFieldState extends State<LmuInputField> {
 
   void _handleClear() {
     widget.controller.clear();
+    if (widget.focusAfterClear) {
+      widget.focusNode?.requestFocus();
+    }
     widget.onClearPressed?.call();
   }
 
