@@ -9,51 +9,101 @@ import 'package:mensa/mensa.dart';
 import 'map_bottom_sheet_sizes.dart';
 import 'package:core/widgets.dart';
 
-class MapBottomSheet extends StatelessWidget {
+class MapBottomSheet extends StatefulWidget {
   final ValueNotifier<MensaModel?> selectedMensaNotifier;
   final DraggableScrollableController sheetController;
 
-  MapBottomSheet({
+  const MapBottomSheet({
     required this.selectedMensaNotifier,
     required this.sheetController,
     super.key,
   });
 
-  final ValueNotifier<List<String>> favoriteMensasNotifier =
-      GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier;
+  @override
+  MapBottomSheetState createState() => MapBottomSheetState();
+}
+
+class MapBottomSheetState extends State<MapBottomSheet> {
+  late ValueNotifier<List<String>> _favoriteMensasNotifier;
+  late DraggableScrollableController _sheetController;
+  double _previousSize = SheetSizes.small.size;
+
+  late AnimationController _fadeController;
+  late Animation<double> _fadeAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _favoriteMensasNotifier = GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier;
+    _sheetController = widget.sheetController;
+    _sheetController.addListener(_onSheetScroll);
+
+    _fadeController = AnimationController(
+      vsync: Navigator.of(context),
+      duration: const Duration(milliseconds: 250),
+    );
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _fadeController, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _sheetController.removeListener(_onSheetScroll);
+    _fadeController.dispose();
+    super.dispose();
+  }
+
+  void _onSheetScroll() {
+    if (_previousSize >= SheetSizes.medium.size && _sheetController.size < SheetSizes.medium.size) {
+      if (widget.selectedMensaNotifier.value != null) {
+        widget.selectedMensaNotifier.value = null;
+      }
+    }
+    _previousSize = _sheetController.size;
+  }
 
   void _animateSheet(MensaModel? selectedMensa) {
     if (selectedMensa != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        sheetController.animateTo(
+        _sheetController.animateTo(
           SheetSizes.medium.size,
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeIn,
         );
       });
+      _fadeController.forward();
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        sheetController.animateTo(
+        _sheetController.animateTo(
           SheetSizes.small.size,
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeOut,
         );
       });
+      _fadeController.reverse();
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<MensaModel?>(
-      valueListenable: selectedMensaNotifier,
+      valueListenable: widget.selectedMensaNotifier,
       builder: (context, selectedMensa, child) {
+        List<double> snapSizes = selectedMensa != null
+            ? [SheetSizes.medium.size, SheetSizes.large.size]
+            : [SheetSizes.small.size, SheetSizes.medium.size, SheetSizes.large.size];
+
         _animateSheet(selectedMensa);
 
         return DraggableScrollableSheet(
-          controller: sheetController,
+          controller: _sheetController,
           initialChildSize: SheetSizes.small.size,
           minChildSize: SheetSizes.small.size,
           maxChildSize: SheetSizes.large.size,
+          snap: true,
+          snapSizes: snapSizes,
+          snapAnimationDuration: const Duration(milliseconds: 250),
           builder: (context, scrollController) {
             return Container(
               padding: const EdgeInsets.all(LmuSizes.mediumLarge),
@@ -70,30 +120,34 @@ class MapBottomSheet extends StatelessWidget {
                 physics: const ClampingScrollPhysics(),
                 child: Column(
                   children: [
-                    selectedMensa != null
-                        ? Padding(
-                            padding: const EdgeInsets.only(bottom: LmuSizes.small),
-                            child: ValueListenableBuilder<List<String>>(
-                              valueListenable: favoriteMensasNotifier,
-                              builder: (context, favoriteMensas, _) {
-                                return MensaOverviewTile(
-                                  mensaModel: selectedMensa,
-                                  isFavorite: favoriteMensas.contains(selectedMensa.canteenId),
-                                  hasLargeImage: false,
-                                  hasButton: true,
-                                  buttonText: context.locals.explore.navigate,
-                                  buttonAction: () => LmuBottomSheet.show(
-                                    context,
-                                    content: NavigationSheet(
-                                      latitude: selectedMensa.location.latitude,
-                                      longitude: selectedMensa.location.longitude,
-                                    ),
+                    if (selectedMensa != null)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: LmuSizes.small),
+                        child: FadeTransition(
+                          opacity: _fadeAnimation,
+                          child: ValueListenableBuilder<List<String>>(
+                            valueListenable: _favoriteMensasNotifier,
+                            builder: (context, favoriteMensas, _) {
+                              return MensaOverviewTile(
+                                mensaModel: selectedMensa,
+                                isFavorite: favoriteMensas.contains(selectedMensa.canteenId),
+                                hasLargeImage: false,
+                                hasButton: true,
+                                buttonText: context.locals.explore.navigate,
+                                buttonAction: () => LmuBottomSheet.show(
+                                  context,
+                                  content: NavigationSheet(
+                                    latitude: selectedMensa.location.latitude,
+                                    longitude: selectedMensa.location.longitude,
                                   ),
-                                );
-                              },
-                            ),
-                          )
-                        : const SizedBox.shrink(),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      )
+                    else
+                      const SizedBox.shrink(),
                     Container(
                       padding: const EdgeInsets.symmetric(
                         vertical: LmuSizes.medium,
@@ -121,16 +175,15 @@ class MapBottomSheet extends StatelessWidget {
                               LmuText.bodySmall(selectedMensa?.name ?? context.locals.app.search),
                             ],
                           ),
-                          selectedMensa != null
-                              ? GestureDetector(
-                                  onTap: () => selectedMensaNotifier.value = null,
-                                  child: Icon(
-                                    LucideIcons.x,
-                                    size: LmuSizes.xlarge,
-                                    color: context.colors.neutralColors.textColors.strongColors.base,
-                                  ),
-                                )
-                              : const SizedBox.shrink(),
+                          if (selectedMensa != null)
+                            GestureDetector(
+                              onTap: () => widget.selectedMensaNotifier.value = null,
+                              child: Icon(
+                                LucideIcons.x,
+                                size: LmuSizes.xlarge,
+                                color: context.colors.neutralColors.textColors.strongColors.base,
+                              ),
+                            ),
                         ],
                       ),
                     ),
