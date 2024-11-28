@@ -86,47 +86,15 @@ class _LmuInputFieldState extends State<LmuInputField> {
     _stateNotifier = ValueNotifier(InputStates.base);
     _focusNode = widget.focusNode ?? FocusNode();
 
-    widget.controller.addListener(_handleControllerChange);
-    _focusNode.addListener(_handleFocusChange);
   }
 
   @override
   void dispose() {
     _stateNotifier.dispose();
-    widget.controller.removeListener(_handleControllerChange);
-    _focusNode.removeListener(_handleFocusChange);
     if (widget.focusNode == null) {
       _focusNode.dispose();
     }
     super.dispose();
-  }
-
-  void _handleControllerChange() {
-    if (widget.controller.text.isEmpty) {
-      if (_focusNode.hasFocus) {
-        _stateNotifier.value = InputStates.typing;
-      } else {
-
-        _stateNotifier.value = InputStates.base;
-      }
-    } else {
-
-      _stateNotifier.value = InputStates.filled;
-    }
-  }
-
-  void _handleFocusChange() {
-    if (_focusNode.hasFocus) {
-      if (widget.controller.text.isEmpty) {
-
-        _stateNotifier.value = InputStates.active;
-      }
-    } else {
-
-      if (widget.controller.text.isEmpty) {
-        _stateNotifier.value = InputStates.base;
-      }
-    }
   }
 
   void _handleClear() {
@@ -196,9 +164,12 @@ class _LmuInputFieldState extends State<LmuInputField> {
         prefixIconColor:
             context.colors.neutralColors.textColors.weakColors.base,
         prefixIconConstraints: widget.leadingIconConstraints,
-        suffixIcon: widget.trailingIcon,
-        suffixIconColor:
-            context.colors.neutralColors.textColors.weakColors.base,
+        suffixIcon: widget.trailingIcon != null 
+          ? GestureDetector(
+              onTap: _handleClear,
+              child: widget.trailingIcon!,
+            )
+          : null,
         prefix: widget.prefix,
         suffix: widget.suffix,
         suffixText: widget.suffixText,

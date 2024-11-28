@@ -50,6 +50,12 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> {
     super.dispose();
   }
 
+  void _handleClear() {
+    print('Debug - Clear pressed');
+    widget.controller.clear();
+    widget.onClearPressed?.call();
+  }
+
   void _updateInputState() {
     setState(() {
       if (widget.controller.text.isEmpty) {
@@ -97,6 +103,7 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> {
             onChanged: (value) {
               widget.onChanged?.call(value);
             },
+            onClearPressed: _handleClear,
           ),
         ),
         _buildSuffix(
@@ -113,7 +120,7 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> {
   }) {
     const animationDuration = Duration(milliseconds: 300);
     final animationCurve = LmuAnimations.fastSmooth;
-    
+
     return AnimatedSwitcher(
       duration: animationDuration,
       switchInCurve: animationCurve,
@@ -262,19 +269,16 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> {
       case InputStates.active:
         return const SizedBox.shrink();
       case InputStates.typing:
-        return GestureDetector(
+        return Icon(
           key: const ValueKey('typing'),
-          onTap: onClearPressed,
-          child: Icon(
-            LucideIcons.x,
-            color: context.colors.neutralColors.textColors.weakColors.base,
-            size: LmuIconSizes.medium,
-          ),
+          LucideIcons.x,
+          color: context.colors.neutralColors.textColors.weakColors.base,
+          size: LmuIconSizes.medium,
         );
       case InputStates.filled:
-        return GestureDetector(
+        return Padding(
           key: const ValueKey('filled'),
-          onTap: onClearPressed,
+          padding: const EdgeInsets.all(LmuSizes.medium),
           child: Icon(
             LucideIcons.x,
             color: context.colors.neutralColors.textColors.strongColors.base,
