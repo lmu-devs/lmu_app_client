@@ -34,6 +34,7 @@ class MenuContentView extends StatelessWidget {
 
     if (menuItems.isEmpty) {
       return const Center(
+        // TODO: Add localization
         child: Text("No menu items available"),
       );
     }

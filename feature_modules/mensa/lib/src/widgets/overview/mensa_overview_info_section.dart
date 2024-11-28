@@ -27,14 +27,14 @@ class MensaOverviewInfoSection extends StatelessWidget {
           localizations.canteenInfo,
           color: context.colors.neutralColors.textColors.mediumColors.base,
         ),
-        const SizedBox(height: LmuSizes.mediumLarge),
+        const SizedBox(height: LmuSizes.large),
         const MensaTag(type: MensaType.stuBistro),
         const SizedBox(height: LmuSizes.mediumSmall),
         LmuText.body(
           localizations.bistroInfo,
           color: context.colors.neutralColors.textColors.mediumColors.base,
         ),
-        const SizedBox(height: LmuSizes.mediumLarge),
+        const SizedBox(height: LmuSizes.large),
         const MensaTag(type: MensaType.stuCafe),
         const SizedBox(height: LmuSizes.mediumSmall),
         LmuText.body(

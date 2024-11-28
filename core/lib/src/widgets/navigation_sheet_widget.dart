@@ -6,15 +6,16 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:mensa/mensa.dart';
 
 class NavigationSheet extends StatelessWidget {
   const NavigationSheet({
     super.key,
-    required this.mensaLocation,
+    required this.latitude,
+    required this.longitude,
   });
 
-  final MensaLocationData mensaLocation;
+  final double latitude;
+  final double longitude;
 
   void _openExternalApplication({
     required BuildContext context,
@@ -74,8 +75,8 @@ class NavigationSheet extends StatelessWidget {
             onTap: () => _openExternalApplication(
               context: context,
               isApple: true,
-              latitude: mensaLocation.latitude,
-              longitude: mensaLocation.longitude,
+              latitude: latitude,
+              longitude: longitude,
             ),
           ),
         LmuListItem.base(
@@ -89,8 +90,8 @@ class NavigationSheet extends StatelessWidget {
           onTap: () => _openExternalApplication(
             context: context,
             isApple: false,
-            latitude: mensaLocation.latitude,
-            longitude: mensaLocation.longitude,
+            latitude: latitude,
+            longitude: longitude,
           ),
         ),
       ],

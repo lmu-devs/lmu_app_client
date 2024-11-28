@@ -20,6 +20,7 @@ class LmuBottomSheet {
           topRight: Radius.circular(LmuSizes.xlarge),
         ),
       ),
+      barrierColor: Colors.black.withOpacity(0.6),
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
       builder: (_) => Padding(
         padding: const EdgeInsets.only(

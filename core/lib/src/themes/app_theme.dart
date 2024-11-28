@@ -17,6 +17,11 @@ class AppTheme {
       elevation: 0,
       surfaceTintColor: lmuColorsLight.neutralColors.backgroundColors.base,
     ),
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: lmuColorsLight.brandColors.textColors.strongColors.base,
+      selectionHandleColor: lmuColorsLight.brandColors.textColors.strongColors.base,
+      selectionColor: lmuColorsLight.neutralColors.backgroundColors.mediumColors.base,
+    ),
   );
 
   static ThemeData dark = ThemeData(
@@ -35,6 +40,11 @@ class AppTheme {
       backgroundColor: lmuColorsDark.neutralColors.backgroundColors.base,
       elevation: 0,
       surfaceTintColor: lmuColorsDark.neutralColors.backgroundColors.base,
+    ),
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: lmuColorsDark.brandColors.textColors.strongColors.base,
+      selectionHandleColor: lmuColorsDark.brandColors.textColors.strongColors.base,
+      selectionColor: lmuColorsDark.neutralColors.backgroundColors.mediumColors.base,
     ),
   );
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:soft_edge_blur/soft_edge_blur.dart';
+import 'dart:ui';
+
+import '../../../constants.dart';
 
 class SoftBlur extends StatelessWidget {
   final Widget child;
@@ -8,25 +10,26 @@ class SoftBlur extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SoftEdgeBlur(
-      edges: [
-        EdgeBlur(
-          type: EdgeType.topEdge,
-          size: MediaQuery.of(context).padding.top,
-          sigma: 25,
-          controlPoints: [
-            ControlPoint(
-              position: 0.5,
-              type: ControlPointType.visible,
+    return Stack(
+      children: [
+        Positioned.fill(child: child),
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: SizedBox(
+            height: MediaQuery.of(context).padding.top - LmuSizes.mediumSmall,
+            child: ClipRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 1.25, sigmaY: 1.25),
+                child: Container(
+                  color: Colors.transparent,
+                ),
+              ),
             ),
-            ControlPoint(
-              position: 1,
-              type: ControlPointType.transparent,
-            ),
-          ],
+          ),
         ),
       ],
-      child: child,
     );
   }
 }

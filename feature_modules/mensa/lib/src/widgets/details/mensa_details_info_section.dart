@@ -2,6 +2,7 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:core/widgets.dart';
 import 'package:flutter/material.dart';
 
 import '../../extensions/extensions.dart';
@@ -33,6 +34,15 @@ class MensaDetailsInfoSection extends StatelessWidget {
           LmuListItem.base(
             subtitle: mensaModel.location.address,
             hasHorizontalPadding: false,
+            onTap: () {
+              LmuBottomSheet.show(
+                context,
+                content: NavigationSheet(
+                  latitude: mensaModel.location.latitude,
+                  longitude: mensaModel.location.longitude,
+                ),
+              );
+            },
           ),
           Divider(thickness: .5, height: 0, color: colors.neutralColors.borderColors.seperatorLight),
           LmuListDropdown(

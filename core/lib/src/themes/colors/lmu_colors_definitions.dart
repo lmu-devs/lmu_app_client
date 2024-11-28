@@ -54,10 +54,10 @@ const lmuColorsDark = LmuColors(
         disabled: ColorPrimitives.trspWhite00,
       ),
       mediumColors: MediumColors(
-        base: ColorPrimitives.trspWhite05,
+        base: ColorPrimitives.trspWhite07,
         pressed: ColorPrimitives.trspWhite10,
         active: ColorPrimitives.trspWhite20,
-        disabled: ColorPrimitives.trspWhite00,
+        disabled: ColorPrimitives.trspWhite07,
       ),
       strongColors: StrongColors(
         base: ColorPrimitives.trspWhite20,
@@ -79,7 +79,7 @@ const lmuColorsDark = LmuColors(
     ),
     borderColors: BorderColors(
       seperatorLight: ColorPrimitives.trspWhite10,
-      inputStroke: ColorPrimitives.trspWhite05,
+      inputStroke: ColorPrimitives.trspWhite07,
       cutout: ColorPrimitives.black,
       seperatorDark: ColorPrimitives.black,
     ),
@@ -169,7 +169,7 @@ const lmuColorsDark = LmuColors(
   gradientColors: GradientColors(
     gradientLoadingColors: GradientLoadingColors(
       base: ColorPrimitives.trspWhite10,
-      highlight: ColorPrimitives.trspWhite05,
+      highlight: ColorPrimitives.trspWhite07,
     ),
   ),
 );
@@ -218,10 +218,10 @@ const lmuColorsLight = LmuColors(
         disabled: ColorPrimitives.trspBlack00,
       ),
       mediumColors: MediumColors(
-        base: ColorPrimitives.trspBlack10,
-        pressed: ColorPrimitives.trspBlack20,
-        active: ColorPrimitives.trspBlack30,
-        disabled: ColorPrimitives.trspBlack10,
+        base: ColorPrimitives.trspBlack05,
+        pressed: ColorPrimitives.trspBlack10,
+        active: ColorPrimitives.trspBlack20,
+        disabled: ColorPrimitives.trspBlack05,
       ),
       strongColors: StrongColors(
         base: ColorPrimitives.trspBlack20,

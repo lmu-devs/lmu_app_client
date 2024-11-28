@@ -1,0 +1,68 @@
+{
+  "@@locale": "en",
+  "@@context": "Feedback",
+
+
+  "feedbackTitle": "Feedback",
+  "@feedbackTitle": {
+    "description": "The title of the Feedback Page"
+  },
+  "feedbackDescription": "How's your experience with the app?",
+  "@feedbackDescription": {
+    "description": "The description of the Feedback Page"
+  },
+  "feedbackButton": "Send Feedback",
+  "@feedbackButton": {
+    "description": "The button to send feedback"
+  },
+  "feedbackSuccess": "Feedback sent",
+  "@feedbackSuccess": {
+    "description": "The message shown when feedback is sent"
+  },
+  "feedbackInputHint": "Tell us more sweetie ...",
+  "@feedbackInputHint": {
+    "description": "The hint text of the feedback input field"
+  },
+  "bugTitle": "Report a Bug",
+  "@bugTitle": {
+    "description": "The title of the Bug Report Page"
+  },
+  "bugDescription": "Have you discovered a bug? Let us know! Your feedback helps us improve the app.",
+  "@bugDescription": {
+    "description": "The description of the Bug Report Page"
+  },
+  "bugInputHint": "I had a bug where ...",
+  "@bugInputHint": {
+    "description": "The hint text of the bug input field"
+  },
+  "bugButton": "Report Bug",
+  "@bugButton": {
+    "description": "The button to report a bug"
+  },
+  "bugSuccess": "Bug reported",
+  "@bugSuccess": {
+    "description": "The message shown when a bug is reported"
+  },
+
+  "suggestionTitle": "Suggest a Feature",
+  "@suggestionTitle": {
+    "description": "The title of the Suggestion Page"
+  },
+  "suggestionDescription": "No matter whether small, big, crazy, complicated, boring or visionary – share your ideas with us here.",
+  "@suggestionDescription": {
+    "description": "The description of the Suggestion Page"
+  },
+  "suggestionInputHint": "I wish the app had ...",
+  "@suggestionInputHint": {
+    "description": "The hint text of the suggestion input field"
+  },
+  "suggestionButton": "Send Suggestion",
+  "@suggestionButton": {
+    "description": "The button to send a suggestion"
+  },
+  "suggestionSuccess": "Suggestion sent",
+  "@suggestionSuccess": {
+    "description": "The message shown when a suggestion is sent"
+  }
+
+}

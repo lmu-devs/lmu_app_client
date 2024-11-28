@@ -1,0 +1,20 @@
+{
+  "@@locale": "de",
+  "@@context": "Feedback",
+  
+  "feedbackTitle": "Feedback",
+  "feedbackDescription": "Wie ist Deine Erfahrung mit der App?",
+  "feedbackButton": "Feedback senden",
+  "feedbackSuccess": "Feedback gesendet",
+  "feedbackInputHint": "Erzähl uns mehr ...",
+  "bugTitle": "Fehler melden",
+  "bugDescription": "Du hast einen Fehler entdeckt? Lass es uns wissen! Dein Feedback hilft uns, die App zu verbessern.",
+  "bugInputHint": "Ich hatte einen Fehler bei ...",
+  "bugButton": "Fehler melden",
+  "bugSuccess": "Fehler gemeldet",
+  "suggestionTitle": "Funktion vorschlagen",
+  "suggestionDescription": "Egal ob klein, groß, verrückt, kompliziert, langweilig oder visionär – teile Deine Ideen hier mit uns.",
+  "suggestionInputHint": "Ich wünsche mir ...",
+  "suggestionButton": "Vorschlag senden",
+  "suggestionSuccess": "Vorschlag gesendet"
+}

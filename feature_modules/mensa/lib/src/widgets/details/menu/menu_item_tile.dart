@@ -96,7 +96,9 @@ class MenuItemTile extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 LmuText.bodyXSmall(
-                                  menuItemModel.ratingModel.likeCount.toString(),
+                                  menuItemModel.ratingModel.likeCount == -1
+                                      ? ""
+                                      : menuItemModel.ratingModel.likeCount.toString(),
                                   color: context.colors.neutralColors.textColors.weakColors.base,
                                 ),
                                 const SizedBox(width: LmuSizes.small),
@@ -132,7 +134,7 @@ class MenuItemTile extends StatelessWidget {
     final userPreferencesService = GetIt.I.get<MensaUserPreferencesService>();
     final id = menuItemModel.id;
 
-    LmuVibrations.vibrate(type: VibrationType.secondary);
+    LmuVibrations.secondary();
 
     if (isFavorite) {
       LmuToast.show(

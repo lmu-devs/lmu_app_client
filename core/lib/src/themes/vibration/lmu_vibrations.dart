@@ -1,29 +1,36 @@
 import 'dart:io';
 import 'package:flutter/services.dart';
 
-enum VibrationType { primary, secondary, error, success }
-
 class LmuVibrations {
-  static void vibrate({VibrationType? type}) async {
-    switch (type) {
-      case VibrationType.primary:
-        HapticFeedback.mediumImpact();
-        break;
-      case VibrationType.secondary:
-        HapticFeedback.lightImpact();
-        break;
-      case VibrationType.error:
-        HapticFeedback.mediumImpact();
-        sleep(const Duration(milliseconds: 100));
-        HapticFeedback.lightImpact();
-        break;
-      case VibrationType.success:
-        HapticFeedback.mediumImpact();
-        sleep(const Duration(milliseconds: 140));
-        HapticFeedback.heavyImpact();
-        break;
-      default:
-        HapticFeedback.mediumImpact();
+  static Future<void> primary({Duration? delay}) async {
+    if (delay != null) {
+      await Future.delayed(delay);
     }
+    HapticFeedback.mediumImpact();
+  }
+
+  static Future<void> secondary({Duration? delay}) async {
+    if (delay != null) {
+      await Future.delayed(delay);
+    }
+    HapticFeedback.lightImpact();
+  }
+
+  static Future<void> error({Duration? delay}) async {
+    if (delay != null) {
+      await Future.delayed(delay);
+    }
+    HapticFeedback.mediumImpact();
+    sleep(const Duration(milliseconds: 100));
+    HapticFeedback.lightImpact();
+  }
+
+  static Future<void> success({Duration? delay}) async {
+    if (delay != null) {
+      await Future.delayed(delay);
+    }
+    HapticFeedback.mediumImpact();
+    sleep(const Duration(milliseconds: 140));
+    HapticFeedback.heavyImpact();
   }
 }

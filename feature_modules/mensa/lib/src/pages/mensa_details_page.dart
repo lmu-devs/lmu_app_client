@@ -52,6 +52,7 @@ class _MensaDetailsPageState extends State<MensaDetailsPage> {
               return GestureDetector(
                 onTap: () {
                   mensaUserPreferencesService.toggleFavoriteMensaId(_mensaModel.canteenId);
+                  LmuVibrations.secondary();
                 },
                 child: Row(
                   children: [

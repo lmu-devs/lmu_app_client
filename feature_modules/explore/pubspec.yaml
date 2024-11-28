@@ -8,8 +8,6 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  build_runner: ^2.4.9
-  build_verify: ^3.1.0
   flutter:
     sdk: flutter
   get_it: ^8.0.1
@@ -31,6 +29,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  build_runner: ^2.4.9
+  build_verify: ^3.1.0
 
 flutter:
   assets:

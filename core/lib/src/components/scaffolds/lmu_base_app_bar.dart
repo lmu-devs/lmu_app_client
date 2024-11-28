@@ -287,7 +287,7 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
                                             child: Transform.scale(
                                               scale: _hasImage ? 1.0 : largeTitleScale,
                                               filterQuality: FilterQuality.high,
-                                              alignment: Alignment.bottomLeft,
+                                              alignment: _largeTitleTrailingWidgetAlignment.scaleAlignment,
                                               child: Text(
                                                 _largeTitle,
                                                 style: largeTitleStyle,
@@ -415,7 +415,6 @@ class _TrailingActions extends StatelessWidget {
             .mapIndexed(
               (index, element) => Container(
                 margin: EdgeInsets.only(left: index == 0 ? 0 : LmuSizes.mediumSmall),
-                padding: _hasImage ? const EdgeInsets.all(LmuSizes.mediumSmall) : null,
                 decoration: _hasImage
                     ? BoxDecoration(
                         color: _backgroundColor,
@@ -481,5 +480,11 @@ extension LeadingActionIconExtension on LeadingAction {
       case LeadingAction.close:
         return Icons.close;
     }
+  }
+}
+
+extension ScaleAlignmentExtension on MainAxisAlignment {
+  Alignment get scaleAlignment {
+    return this == MainAxisAlignment.center ? Alignment.bottomCenter : Alignment.bottomLeft;
   }
 }
