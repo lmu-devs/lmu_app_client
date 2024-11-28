@@ -26,8 +26,7 @@ class BugModal extends StatelessWidget {
                   const SizedBox(height: LmuSizes.small),
                   LmuText.body(
                     localizations.bugDescription,
-                    color: context
-                        .colors.neutralColors.textColors.mediumColors.base,
+                    color: context.colors.neutralColors.textColors.mediumColors.base,
                   ),
                   const SizedBox(height: LmuSizes.xxlarge),
                   LmuInputField(

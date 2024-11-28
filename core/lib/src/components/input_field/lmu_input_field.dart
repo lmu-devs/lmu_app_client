@@ -2,8 +2,6 @@ import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
-
-
 class LmuInputField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
@@ -56,12 +54,10 @@ class LmuInputField extends StatelessWidget {
     this.onTapOutside,
   });
 
-  
-
   @override
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.circular(LmuRadiusSizes.medium);
-    final borderColor = Colors.transparent;
+    const borderColor = Colors.transparent;
     return TextField(
       controller: controller,
       obscureText: isPassword,
@@ -78,19 +74,15 @@ class LmuInputField extends StatelessWidget {
       onSubmitted: onSubmitted,
       onTap: onTap,
       autofillHints: autofillHints,
-
-
       style: TextStyle(
         color: context.colors.neutralColors.textColors.strongColors.base,
       ),
-
       onTapOutside: (value) {
         if (closeKeyboardOnTapOutside) {
           FocusManager.instance.primaryFocus?.unfocus();
         }
         onTapOutside?.call();
       },
-
       cursorHeight: 20,
       cursorErrorColor: context.colors.dangerColors.textColors.strongColors.base,
       cursorOpacityAnimates: true,
@@ -100,18 +92,17 @@ class LmuInputField extends StatelessWidget {
         fillColor: _getFillColor(context),
         focusedBorder: OutlineInputBorder(
           borderRadius: borderRadius,
-          borderSide: BorderSide(color: borderColor),
+          borderSide: const BorderSide(color: borderColor),
         ),
         border: OutlineInputBorder(
           borderRadius: borderRadius,
-          borderSide: BorderSide(color: borderColor),
+          borderSide: const BorderSide(color: borderColor),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: borderRadius,
-          borderSide: BorderSide(color: borderColor),
+          borderSide: const BorderSide(color: borderColor),
         ),
-        hoverColor:
-            context.colors.neutralColors.backgroundColors.mediumColors.base,
+        hoverColor: context.colors.neutralColors.backgroundColors.mediumColors.base,
         hintText: hintText,
         hintStyle: TextStyle(
           color: context.colors.neutralColors.textColors.weakColors.base,
@@ -145,6 +136,4 @@ class LmuInputField extends StatelessWidget {
       return context.colors.neutralColors.backgroundColors.mediumColors.base;
     });
   }
-
-  
 }

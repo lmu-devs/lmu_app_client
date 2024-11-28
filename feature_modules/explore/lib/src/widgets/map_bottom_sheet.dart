@@ -105,9 +105,7 @@ class MapBottomSheet extends StatelessWidget {
                       LmuSearchInputField(
                         context: context,
                         controller: _searchController,
-                        searchState: selectedMensa != null 
-                            ? SearchState.filled 
-                            : SearchState.base,
+                        searchState: selectedMensa != null ? SearchState.filled : SearchState.base,
                         onClearPressed: () {
                           _searchController.clear();
                           selectedMensaNotifier.value = null;

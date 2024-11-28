@@ -11,6 +11,7 @@ class DefaultFeedbackService implements FeedbackService {
       content: const FeedbackModal(),
     );
   }
+
   @override
   void navigateToBugReport(BuildContext context) {
     LmuBottomSheet.showExtended(
@@ -18,6 +19,7 @@ class DefaultFeedbackService implements FeedbackService {
       content: const BugModal(),
     );
   }
+
   @override
   void navigateToSuggestion(BuildContext context) {
     LmuBottomSheet.showExtended(

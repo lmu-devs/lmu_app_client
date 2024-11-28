@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 class SettingsAccountPage extends StatelessWidget {
   const SettingsAccountPage({super.key});
 
-
-
   @override
   Widget build(BuildContext context) {
     final localization = context.locals.settings;
@@ -105,9 +103,7 @@ class SettingsAccountPage extends StatelessWidget {
     );
   }
 
-
-
-    Widget _buildDeleteDataBottomSheet(BuildContext context, SettingsLocalizations localization) {
+  Widget _buildDeleteDataBottomSheet(BuildContext context, SettingsLocalizations localization) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
