@@ -83,8 +83,8 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> {
             ),
             leadingIconConstraints: _buildLeadingIconConstraints(_inputState),
             contentPadding: const EdgeInsets.symmetric(
+              vertical: 0,
               horizontal: LmuSizes.mediumLarge,
-              vertical: LmuSizes.small,
             ),
             trailingIcon: _buildTrailingIcon(
               inputState: _inputState,
@@ -110,29 +110,34 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> {
     required InputStates inputState,
     required BuildContext context,
   }) {
-    const animationDuration = Duration(milliseconds: 500);
+    const animationDuration = Duration(milliseconds: 300);
     final animationCurve = LmuAnimations.fastSmooth;
-    return AnimatedSize(
+    
+    return AnimatedSwitcher(
       duration: animationDuration,
-      curve: animationCurve,
-      child: AnimatedSwitcher(
-        duration: animationDuration,
-        switchInCurve: animationCurve,
-        switchOutCurve: animationCurve.flipped,
-        transitionBuilder: (Widget child, Animation<double> animation) {
-          return FadeTransition(
-            opacity: animation,
-            child: SlideTransition(
-              position: Tween<Offset>(
-                begin: const Offset(1, 0),
-                end: Offset.zero,
-              ).animate(animation),
-              child: child,
-            ),
-          );
-        },
-        child: _getSuffixByState(inputState, context),
-      ),
+      switchInCurve: animationCurve,
+      switchOutCurve: animationCurve.flipped,
+      layoutBuilder: (Widget? currentChild, List<Widget> previousChildren) {
+        return Stack(
+          alignment: Alignment.centerRight,
+          children: <Widget>[
+            ...previousChildren,
+            if (currentChild != null) currentChild,
+          ],
+        );
+      },
+      transitionBuilder: (Widget child, Animation<double> animation) {
+        return FadeTransition(
+          opacity: animation,
+          child: SizeTransition(
+            sizeFactor: animation,
+            axis: Axis.horizontal,
+            axisAlignment: 1.0,
+            child: child,
+          ),
+        );
+      },
+      child: _getSuffixByState(inputState, context),
     );
   }
 
@@ -196,10 +201,7 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> {
       transitionBuilder: (Widget child, Animation<double> animation) {
         return FadeTransition(
           opacity: animation,
-          child: ScaleTransition(
-            scale: animation,
-            child: child,
-          ),
+          child: child,
         );
       },
       child: _getTrailingIconByState(inputState, onClearPressed, context),
