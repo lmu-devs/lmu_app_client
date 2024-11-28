@@ -3,7 +3,6 @@ import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mensa/mensa.dart';
 import 'map_bottom_sheet_sizes.dart';
@@ -25,6 +24,7 @@ class MapBottomSheet extends StatefulWidget {
 
 class MapBottomSheetState extends State<MapBottomSheet> {
   late ValueNotifier<List<String>> _favoriteMensasNotifier;
+  late TextEditingController _searchController;
   late DraggableScrollableController _sheetController;
   double _previousSize = SheetSizes.small.size;
 
@@ -35,6 +35,7 @@ class MapBottomSheetState extends State<MapBottomSheet> {
   void initState() {
     super.initState();
     _favoriteMensasNotifier = GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier;
+    _searchController = TextEditingController();
     _sheetController = widget.sheetController;
     _sheetController.addListener(_onSheetScroll);
 
@@ -49,6 +50,7 @@ class MapBottomSheetState extends State<MapBottomSheet> {
 
   @override
   void dispose() {
+    _searchController.dispose();
     _sheetController.removeListener(_onSheetScroll);
     _fadeController.dispose();
     super.dispose();
@@ -95,6 +97,13 @@ class MapBottomSheetState extends State<MapBottomSheet> {
             : [SheetSizes.small.size, SheetSizes.medium.size, SheetSizes.large.size];
 
         _animateSheet(selectedMensa);
+
+        if (selectedMensa != null) {
+          _searchController.text = selectedMensa.name;
+        } else {
+          _searchController.text = '';
+        }
+
 
         return DraggableScrollableSheet(
           controller: _sheetController,
@@ -148,44 +157,16 @@ class MapBottomSheetState extends State<MapBottomSheet> {
                       )
                     else
                       const SizedBox.shrink(),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: LmuSizes.medium,
-                        horizontal: LmuSizes.mediumLarge,
-                      ),
-                      decoration: BoxDecoration(
-                        color: context.colors.neutralColors.backgroundColors.tile,
-                        borderRadius: const BorderRadius.all(Radius.circular(LmuRadiusSizes.medium)),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              selectedMensa?.name == null
-                                  ? Padding(
-                                      padding: const EdgeInsets.only(right: LmuSizes.mediumLarge),
-                                      child: Icon(
-                                        LucideIcons.search,
-                                        size: LmuSizes.xlarge,
-                                        color: context.colors.neutralColors.textColors.weakColors.base,
-                                      ),
-                                    )
-                                  : const SizedBox.shrink(),
-                              LmuText.bodySmall(selectedMensa?.name ?? context.locals.app.search),
-                            ],
-                          ),
-                          if (selectedMensa != null)
-                            GestureDetector(
-                              onTap: () => widget.selectedMensaNotifier.value = null,
-                              child: Icon(
-                                LucideIcons.x,
-                                size: LmuSizes.xlarge,
-                                color: context.colors.neutralColors.textColors.strongColors.base,
-                              ),
-                            ),
-                        ],
-                      ),
+                    LmuSearchInputField(
+                      context: context,
+                      controller: _searchController,
+                      searchState: selectedMensa != null
+                          ? SearchState.filled
+                          : SearchState.base,
+                      onClearPressed: () {
+                        _searchController.clear();
+                        widget.selectedMensaNotifier.value = null;
+                      },
                     ),
                   ],
                 ),

@@ -47,6 +47,9 @@ class FeedbackModal extends StatelessWidget {
                     isMultiline: true,
                     controller: textController,
                     isAutocorrect: true,
+                    onTapOutside: () {
+                      print('tap outside');
+                    },
                     onSubmitted: (value) {
                       print(value);
                     },
@@ -79,6 +82,7 @@ class FeedbackModal extends StatelessWidget {
                           message: localizations.feedbackSuccess,
                           type: ToastType.success,
                         );
+                        LmuVibrations.success();
                       },
                     );
                   },

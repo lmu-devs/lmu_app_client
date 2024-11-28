@@ -93,7 +93,7 @@ class MenuItemTile extends StatelessWidget {
                   final userPreferencesService = GetIt.I.get<MensaUserPreferencesService>();
                   final id = menuItemModel.id;
 
-                  LmuVibrations.vibrate(type: VibrationType.secondary);
+                  LmuVibrations.secondary();
 
                   if (isFavorite) {
                     LmuToast.show(

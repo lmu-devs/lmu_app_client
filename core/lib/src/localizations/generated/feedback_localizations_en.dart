@@ -17,7 +17,7 @@ class FeedbackLocalizationsEn extends FeedbackLocalizations {
   String get feedbackSuccess => 'Feedback sent';
 
   @override
-  String get feedbackInputHint => 'Optional';
+  String get feedbackInputHint => 'Tell us more sweetie ...';
 
   @override
   String get bugTitle => 'Report a Bug';

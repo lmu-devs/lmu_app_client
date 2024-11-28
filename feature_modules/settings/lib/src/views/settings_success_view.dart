@@ -30,18 +30,18 @@ class SettingsSuccessView extends StatelessWidget {
             LmuContentTile(
               content: [
                 LmuListItem.action(
+                  title: localizaitons.account,
+                  actionType: LmuListItemAction.chevron,
+                  onTap: () {
+                    const SettingsAccountRoute().go(context);
+                  },
+                ),
+                LmuListItem.action(
                   title: localizaitons.appearance,
                   actionType: LmuListItemAction.chevron,
                   chevronTitle: _getThemeModeString(context, localizaitons),
                   onTap: () {
                     const SettingsApperanceRoute().go(context);
-                  },
-                ),
-                LmuListItem.action(
-                  title: localizaitons.account,
-                  actionType: LmuListItemAction.chevron,
-                  onTap: () {
-                    const SettingsAccountRoute().go(context);
                   },
                 ),
               ],
@@ -128,7 +128,9 @@ class SettingsSuccessView extends StatelessWidget {
                   mainContentAlignment: MainContentAlignment.center,
                   leadingArea: const _LeadingFancyIcons(icon: LucideIcons.plus),
                   onTap: () {
-                    GetIt.I.get<FeedbackService>().navigateToSuggestion(context);
+                    GetIt.I
+                        .get<FeedbackService>()
+                        .navigateToSuggestion(context);
                   },
                 ),
                 LmuListItem.base(

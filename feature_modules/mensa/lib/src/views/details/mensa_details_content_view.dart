@@ -39,7 +39,7 @@ class MensaDetailsContentView extends StatelessWidget {
 
                   mensaUserPreferencesService
                       .toggleFavoriteMensaId(mensaModel.canteenId);
-                  LmuVibrations.vibrate(type: VibrationType.secondary);
+                  LmuVibrations.secondary();
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
