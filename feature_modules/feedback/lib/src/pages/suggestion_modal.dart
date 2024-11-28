@@ -26,8 +26,7 @@ class SuggestionModal extends StatelessWidget {
                   const SizedBox(height: LmuSizes.small),
                   LmuText.body(
                     localizations.suggestionDescription,
-                    color: context
-                        .colors.neutralColors.textColors.mediumColors.base,
+                    color: context.colors.neutralColors.textColors.mediumColors.base,
                   ),
                   const SizedBox(height: LmuSizes.xxlarge),
                   LmuInputField(

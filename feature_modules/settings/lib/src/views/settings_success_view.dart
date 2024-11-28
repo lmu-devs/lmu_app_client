@@ -5,8 +5,8 @@ import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
-import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_api/feedback.dart';
 
 import '../routes/settings_routes.dart';
@@ -60,7 +60,10 @@ class SettingsSuccessView extends StatelessWidget {
                   ),
                   onTap: () {
                     LmuUrlLauncher.launchWebsite(
-                        context: context, url: "https://lmu-dev.org", mode: LmuUrlLauncherMode.inAppWebView);
+                      context: context,
+                      url: "https://lmu-dev.org",
+                      mode: LmuUrlLauncherMode.externalApplication,
+                    );
                   },
                 ),
                 LmuListItem.base(
@@ -128,9 +131,7 @@ class SettingsSuccessView extends StatelessWidget {
                   mainContentAlignment: MainContentAlignment.center,
                   leadingArea: const _LeadingFancyIcons(icon: LucideIcons.plus),
                   onTap: () {
-                    GetIt.I
-                        .get<FeedbackService>()
-                        .navigateToSuggestion(context);
+                    GetIt.I.get<FeedbackService>().navigateToSuggestion(context);
                   },
                 ),
                 LmuListItem.base(

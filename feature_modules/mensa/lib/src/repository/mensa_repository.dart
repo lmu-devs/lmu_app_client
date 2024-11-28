@@ -24,9 +24,9 @@ abstract class MensaRepository {
 
   Future<TasteProfileModel> getTasteProfileContent();
 
-  Future<TasteProfileSaveModel> getTasteProfileState();
+  Future<TasteProfileStateModel> getTasteProfileState();
 
-  Future<void> saveTasteProfileState(TasteProfileSaveModel saveModel);
+  Future<void> saveTasteProfileState(TasteProfileStateModel saveModel);
 
   Future<SortOption?> getSortOption();
 
@@ -162,19 +162,19 @@ class ConnectedMensaRepository implements MensaRepository {
   }
 
   @override
-  Future<TasteProfileSaveModel> getTasteProfileState() async {
+  Future<TasteProfileStateModel> getTasteProfileState() async {
     final prefs = await SharedPreferences.getInstance();
     final saveModel = prefs.getString(_pasteProfileSelectionsKey);
 
     if (saveModel == null) {
-      return TasteProfileSaveModel.empty();
+      return TasteProfileStateModel.empty();
     }
 
-    return TasteProfileSaveModel.fromJson(json.decode(saveModel));
+    return TasteProfileStateModel.fromJson(json.decode(saveModel));
   }
 
   @override
-  Future<void> saveTasteProfileState(TasteProfileSaveModel saveModel) async {
+  Future<void> saveTasteProfileState(TasteProfileStateModel saveModel) async {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setString(_pasteProfileSelectionsKey, json.encode(saveModel.toJson()));

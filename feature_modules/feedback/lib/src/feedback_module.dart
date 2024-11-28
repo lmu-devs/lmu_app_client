@@ -8,7 +8,6 @@ class FeedbackModule extends AppModule with PublicApiProvidingAppModule {
   @override
   String get moduleName => 'FeedbackModule';
 
-
   @override
   void providePublicApi() {
     GetIt.I.registerSingleton<FeedbackService>(DefaultFeedbackService());

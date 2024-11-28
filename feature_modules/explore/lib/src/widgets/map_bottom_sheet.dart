@@ -2,11 +2,12 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:core/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mensa/mensa.dart';
+
 import 'map_bottom_sheet_sizes.dart';
-import 'package:core/widgets.dart';
 
 class MapBottomSheet extends StatefulWidget {
   final ValueNotifier<MensaModel?> selectedMensaNotifier;
@@ -104,7 +105,6 @@ class MapBottomSheetState extends State<MapBottomSheet> {
           _searchController.text = '';
         }
 
-
         return DraggableScrollableSheet(
           controller: _sheetController,
           initialChildSize: SheetSizes.small.size,
@@ -160,9 +160,7 @@ class MapBottomSheetState extends State<MapBottomSheet> {
                     LmuSearchInputField(
                       context: context,
                       controller: _searchController,
-                      searchState: selectedMensa != null
-                          ? SearchState.filled
-                          : SearchState.base,
+                      searchState: selectedMensa != null ? SearchState.filled : SearchState.base,
                       onClearPressed: () {
                         _searchController.clear();
                         widget.selectedMensaNotifier.value = null;

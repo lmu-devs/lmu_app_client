@@ -24,7 +24,6 @@ class MensaOverviewLoadingView extends StatelessWidget {
       listener: (context, state) {
         if (state is MensaLoadFailure) {
           final localizations = context.locals.canteen;
-          final isSuccessfullStream = mensaCubit.stream.map((state) => state is MensaLoadSuccess);
 
           LmuToast.show(
             context: context,
@@ -33,7 +32,6 @@ class MensaOverviewLoadingView extends StatelessWidget {
             type: ToastType.error,
             onActionPressed: () => mensaCubit.loadMensaData(),
             duration: const Duration(minutes: 66),
-            removeStream: isSuccessfullStream,
           );
         }
       },

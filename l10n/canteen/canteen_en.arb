@@ -162,8 +162,24 @@
   "guests": "Guests",
   "@guests": {
     "description": "Guests"
-    },
-    "canteenInfo": "300+ seats, daily changing main meals, including vegetarian and vegan options.",
+  },
+  "mainDish": "Main Dish",
+  "@mainDish": {
+    "description": "Main Dish"
+  },
+  "soupDish": "Soups / Studitopf",
+  "@soupDish": {
+    "description": "Soups / Studitopf"
+  },
+  "sideDish": "Sides",
+  "@sideDish": {
+    "description": "Sides"
+  },
+  "dessertDish": "Desserts",
+  "@dessertDish": {
+    "description": "Desserts"
+  },
+  "canteenInfo": "300+ seats, daily changing main meals, including vegetarian and vegan options.",
   "@canteenInfo": {
     "description": "Longer description of a canteen"
   },
@@ -174,5 +190,17 @@
   "cafeInfo": "under 100 seats, focused on beverages and small snacks.",
   "@cafeInfo": {
     "description": "Longer description of a cafe"
+  },
+  "notYourTaste": "Not your taste",
+  "@notYourTaste": {
+    "description": "Not your taste"
+  },
+  "tasteProfilePlaceholderNotActive": "Activate your taste profile to filter dishes by preferences and allergies.",
+  "@tasteProfilePlaceholderNotActive": {
+    "description": "Taste profile placeholder when not active"
+  },
+  "tasteProfilePlaceholderActive": "Adjust your taste profile to filter dishes by preferences and allergies.",
+  "@tasteProfilePlaceholderActive": {
+    "description": "Taste profile placeholder when active"
   }
 }

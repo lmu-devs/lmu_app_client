@@ -13,6 +13,7 @@ class MensaUserPreferencesService {
     return Future.wait([
       getSortOption(),
       getFavoriteMensaIds(),
+      getFavoriteDishIds(),
       getSelectedPriceCategory(),
     ]);
   }

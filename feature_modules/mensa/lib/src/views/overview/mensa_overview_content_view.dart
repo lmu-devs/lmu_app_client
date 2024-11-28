@@ -9,20 +9,36 @@ import '../../repository/api/models/user_preferences/sort_option.dart';
 import '../../repository/repository.dart';
 import '../../widgets/widgets.dart';
 
-class MensaOverviewContentView extends StatelessWidget {
-  MensaOverviewContentView({
-    Key? key,
+class MensaOverviewContentView extends StatefulWidget {
+  const MensaOverviewContentView({
+    super.key,
     required this.mensaModels,
-    SortOption initalSortOption = SortOption.alphabetically,
-  })  : sortOptionNotifier = ValueNotifier(initalSortOption),
-        sortedMensaModelsNotifier =
-            ValueNotifier(initalSortOption.sort(mensaModels)),
-        super(key: key);
+    this.initialSortOption = SortOption.alphabetically,
+  });
 
   final List<MensaModel> mensaModels;
-  final ValueNotifier<SortOption> sortOptionNotifier;
-  final ValueNotifier<List<MensaModel>> sortedMensaModelsNotifier;
-  final ValueNotifier<bool> isOpenNowFilerNotifier = ValueNotifier(false);
+  final SortOption initialSortOption;
+
+  @override
+  State<MensaOverviewContentView> createState() => _MensaOverviewContentViewState();
+}
+
+class _MensaOverviewContentViewState extends State<MensaOverviewContentView> {
+  late ValueNotifier<bool> _isOpenNowFilerNotifier;
+  late ValueNotifier<SortOption> _sortOptionNotifier;
+  late ValueNotifier<List<MensaModel>> _sortedMensaModelsNotifier;
+
+  SortOption get _initialSortOption => widget.initialSortOption;
+  List<MensaModel> get _mensaModels => widget.mensaModels;
+
+  @override
+  void initState() {
+    super.initState();
+    _isOpenNowFilerNotifier = ValueNotifier(false);
+    _sortOptionNotifier = ValueNotifier(_initialSortOption);
+    _sortedMensaModelsNotifier = ValueNotifier(_initialSortOption.sort(_mensaModels));
+    print("Print statement");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,21 +52,21 @@ class MensaOverviewContentView extends StatelessWidget {
             LmuTileHeadline.base(
               title: localizations.favorites,
             ),
-            MensaOverviewFavoriteSection(mensaModels: mensaModels),
+            MensaOverviewFavoriteSection(mensaModels: widget.mensaModels),
             const SizedBox(height: LmuSizes.xxlarge),
             LmuTileHeadline.base(
               title: localizations.allCanteens,
               bottomWidget: MensaOverviewButtonSection(
-                sortOptionNotifier: sortOptionNotifier,
-                isOpenNowFilerNotifier: isOpenNowFilerNotifier,
-                sortedMensaModelsNotifier: sortedMensaModelsNotifier,
-                mensaModels: mensaModels,
+                sortOptionNotifier: _sortOptionNotifier,
+                isOpenNowFilerNotifier: _isOpenNowFilerNotifier,
+                sortedMensaModelsNotifier: _sortedMensaModelsNotifier,
+                mensaModels: widget.mensaModels,
               ),
             ),
             MensaOverviewAllSection(
-              sortedMensaModelsNotifier: sortedMensaModelsNotifier,
-              isOpenNowFilerNotifier: isOpenNowFilerNotifier,
-              mensaModels: mensaModels,
+              sortedMensaModelsNotifier: _sortedMensaModelsNotifier,
+              isOpenNowFilerNotifier: _isOpenNowFilerNotifier,
+              mensaModels: widget.mensaModels,
             ),
             MensaOverviewInfoSection(localizations: localizations),
             const SizedBox(height: LmuSizes.xhuge),
@@ -60,5 +76,3 @@ class MensaOverviewContentView extends StatelessWidget {
     );
   }
 }
-
-

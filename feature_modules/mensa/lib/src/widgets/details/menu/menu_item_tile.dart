@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
@@ -14,113 +15,145 @@ class MenuItemTile extends StatelessWidget {
   const MenuItemTile({
     super.key,
     required this.menuItemModel,
-    required this.onFavoriteTap,
     required this.isFavorite,
+    this.hasDivider = false,
+    this.excludedLabelItemsName,
     this.onTap,
   });
 
   final MenuItemModel menuItemModel;
   final void Function()? onTap;
-  final void Function()? onFavoriteTap;
+  final bool hasDivider;
   final bool isFavorite;
+  final List<String>? excludedLabelItemsName;
+
   @override
   Widget build(BuildContext context) {
-    final localizations = context.locals.app;
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: context.colors.neutralColors.backgroundColors.tile,
-          borderRadius: BorderRadius.circular(LmuSizes.medium),
-        ),
-        width: double.infinity,
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(LmuSizes.mediumLarge),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        LmuText.body(
-                          getDishTypeEmoji(menuItemModel.dishType),
-                        ),
-                        const SizedBox(
-                          width: LmuSizes.medium,
-                        ),
-                        Flexible(
-                          child: LmuText.body(
-                            menuItemModel.title,
+    return Padding(
+      padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.medium : LmuSizes.none),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          decoration: BoxDecoration(
+            color: context.colors.neutralColors.backgroundColors.tile,
+            borderRadius: BorderRadius.circular(LmuSizes.medium),
+          ),
+          width: double.infinity,
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(LmuSizes.mediumLarge),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    LmuText.h3(getDishTypeEmoji(menuItemModel.dishType)),
+                    const SizedBox(width: LmuSizes.medium),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Flexible(
+                                child: LmuText.body(
+                                  menuItemModel.title,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        const SizedBox(
-                          width: LmuSizes.xlarge,
-                        ),
-                      ],
+                          if (excludedLabelItemsName != null && excludedLabelItemsName!.isNotEmpty)
+                            Padding(
+                              padding: const EdgeInsets.only(top: LmuSizes.mediumSmall),
+                              child: Wrap(
+                                spacing: LmuSizes.small,
+                                runSpacing: LmuSizes.small,
+                                children: excludedLabelItemsName!.mapIndexed(
+                                  (index, name) {
+                                    return LmuInTextVisual.text(
+                                      title: name,
+                                      destructive: true,
+                                    );
+                                  },
+                                ).toList(),
+                              ),
+                            )
+                        ],
+                      ),
                     ),
-                  ),
-                  LmuText.bodyXSmall(
-                    menuItemModel.ratingModel.likeCount == -1 ? "" : menuItemModel.ratingModel.likeCount.toString(),
-                    color: context.colors.neutralColors.textColors.weakColors.base,
-                  ),
-                  const SizedBox(width: LmuSizes.small),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      StarIcon(isActive: isFavorite),
-                      const SizedBox(
-                        height: LmuSizes.small,
+                    const SizedBox(width: LmuSizes.medium),
+                    GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () => _toggleDishFavorite(context),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: LmuSizes.xsmall),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                LmuText.bodyXSmall(
+                                  menuItemModel.ratingModel.likeCount == -1
+                                      ? ""
+                                      : menuItemModel.ratingModel.likeCount.toString(),
+                                  color: context.colors.neutralColors.textColors.weakColors.base,
+                                ),
+                                const SizedBox(width: LmuSizes.small),
+                                StarIcon(isActive: isFavorite),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: LmuSizes.small),
+                          ConstrainedBox(
+                            constraints: const BoxConstraints(minWidth: LmuSizes.large),
+                            child: Center(
+                              child: LmuText.bodyXSmall(
+                                menuItemModel.priceSimple,
+                                color: context.colors.neutralColors.textColors.weakColors.base,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      LmuText.bodyXSmall(
-                        menuItemModel.priceSimple,
-                        color: context.colors.neutralColors.textColors.weakColors.base,
-                      ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Positioned(
-              right: 0,
-              bottom: LmuSizes.mediumLarge,
-              top: LmuSizes.mediumSmall,
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  final userPreferencesService = GetIt.I.get<MensaUserPreferencesService>();
-                  final id = menuItemModel.id;
-
-                  LmuVibrations.secondary();
-
-                  if (isFavorite) {
-                    LmuToast.show(
-                      context: context,
-                      type: ToastType.success,
-                      message: localizations.favoriteRemoved,
-                      actionText: localizations.undo,
-                      onActionPressed: () {
-                        userPreferencesService.toggleFavoriteDishId(id.toString());
-                      },
-                    );
-                  } else {
-                    LmuToast.show(
-                      context: context,
-                      type: ToastType.success,
-                      message: localizations.favoriteAdded,
-                    );
-                  }
-
-                  userPreferencesService.toggleFavoriteDishId(id.toString());
-                },
-                child: const SizedBox(width: 64),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  void _toggleDishFavorite(BuildContext context) {
+    final localizations = context.locals.app;
+    final userPreferencesService = GetIt.I.get<MensaUserPreferencesService>();
+    final id = menuItemModel.id;
+
+    LmuVibrations.secondary();
+
+    if (isFavorite) {
+      LmuToast.show(
+        context: context,
+        type: ToastType.success,
+        message: localizations.favoriteRemoved,
+        actionText: localizations.undo,
+        onActionPressed: () {
+          userPreferencesService.toggleFavoriteDishId(id.toString());
+        },
+      );
+    } else {
+      LmuToast.show(
+        context: context,
+        type: ToastType.success,
+        message: localizations.favoriteAdded,
+      );
+    }
+
+    userPreferencesService.toggleFavoriteDishId(id.toString());
   }
 }
