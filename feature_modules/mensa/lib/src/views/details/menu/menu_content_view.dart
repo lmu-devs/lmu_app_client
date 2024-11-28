@@ -1,12 +1,11 @@
-import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../pages/pages.dart';
 import '../../../repository/api/models/menu/menu_day_model.dart';
-import '../../../services/mensa_user_preferences_service.dart';
-import '../../../widgets/details/menu/menu_item_tile.dart';
+import '../../../repository/api/models/menu/menu_item_model.dart';
+import '../../../services/taste_profile_service.dart';
+import '../../../widgets/widgets.dart';
 
 class MenuContentView extends StatelessWidget {
   const MenuContentView({
@@ -18,7 +17,10 @@ class MenuContentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final favoriteDishIdsNotifier = GetIt.I.get<MensaUserPreferencesService>().favoriteDishIdsNotifier;
+    final tasteProfileService = GetIt.I.get<TasteProfileService>();
+    final tasteProfileActiveNotifier = tasteProfileService.tasteProfileActiveNotifier;
+    final excludedLabelItemNotifier = tasteProfileService.excludedLabelItemNotifier;
+
     final menuItems = mensaMenuModel.menuItems;
 
     if (menuItems.isEmpty) {
@@ -28,40 +30,42 @@ class MenuContentView extends StatelessWidget {
       );
     }
 
-    return ValueListenableBuilder(
-      valueListenable: favoriteDishIdsNotifier,
-      builder: (context, favoriteDishIds, _) {
-        return ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.all(LmuSizes.mediumLarge),
-          itemCount: menuItems.length,
-          itemBuilder: (context, index) {
-            final isFavorite = favoriteDishIds.contains(
-              menuItems[index].id.toString(),
-            );
-            final dishModel = menuItems[index];
-            return Padding(
-              padding: const EdgeInsets.only(bottom: LmuSizes.mediumSmall),
-              child: MenuItemTile(
-                menuItemModel: dishModel,
-                onTap: () {
-                  final initialPriceCategory = GetIt.I.get<MensaUserPreferencesService>().initialPriceCategory;
-                  LmuBottomSheet.showExtended(
-                    context,
-                    content: MenuDetailsPage(
-                      menuItemModel: dishModel,
-                      initialPriceCategory: initialPriceCategory,
-                    ),
-                  );
-                },
-                isFavorite: isFavorite,
-                onFavoriteTap: () {},
-              ),
-            );
-          },
-        );
-      },
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
+      child: ValueListenableBuilder(
+        valueListenable: tasteProfileActiveNotifier,
+        builder: (context, isActive, _) {
+          return ValueListenableBuilder(
+            valueListenable: excludedLabelItemNotifier,
+            builder: (context, excludedLabelItems, _) {
+              final excludedLabelItemsName =
+                  isActive ? excludedLabelItems.map((labelItem) => labelItem.enumName).toSet() : <String>{};
+
+              final filteredMenuitems = List.of(menuItems);
+              filteredMenuitems.removeWhere(
+                (itemModel) => itemModel.labels.toSet().intersection(excludedLabelItemsName).isNotEmpty,
+              );
+
+              final excludedMenuItems =
+                  isActive ? menuItems.where((item) => !filteredMenuitems.contains(item)).toList() : <MenuItemModel>[];
+
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: LmuSizes.xlarge),
+                  MenuFilteredSection(filteredMenuitems: filteredMenuitems),
+                  MenuExcludedSection(
+                    excludedMenuItems: excludedMenuItems,
+                    excludedLabelItems: excludedLabelItems,
+                    isActive: isActive,
+                  ),
+                  const SizedBox(height: LmuSizes.xxlarge),
+                ],
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

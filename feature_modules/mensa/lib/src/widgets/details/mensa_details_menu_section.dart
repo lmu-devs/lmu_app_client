@@ -1,35 +1,48 @@
 import 'package:core/components.dart';
+import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../bloc/menu_cubit/cubit.dart';
+import '../../services/menu_service.dart';
 import '../../views/views.dart';
 
 class MensaDetailsMenuSection extends StatefulWidget {
-  const MensaDetailsMenuSection({super.key});
+  const MensaDetailsMenuSection({super.key, required this.canteenId});
+
+  final String canteenId;
 
   @override
   State<MensaDetailsMenuSection> createState() => _MensaDetailsMenuSectionState();
 }
 
 class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
-  final _pageController = PageController();
-  final _tabNotifier = ValueNotifier<int>(0);
+  late PageController _pageController;
+  late ValueNotifier<int> _tabNotifier;
+
+  String get _canteenId => widget.canteenId;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+    _tabNotifier = ValueNotifier<int>(0);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
-
     return BlocBuilder<MenuCubit, MenuState>(
+      bloc: GetIt.I.get<MenuService>().getMenuCubit(_canteenId),
       builder: (context, state) {
         if (state is! MenuLoadSuccess) {
-          return const MenuLoadingView();
+          return MenuLoadingView(canteendId: _canteenId);
         }
-        final menuModels = state.menuModels;
 
+        final menuModels = state.menuModels;
         return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             LmuTabBar(
@@ -46,16 +59,13 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
                 _pageController.animateToPage(
                   index,
                   duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
+                  curve: Curves.easeIn,
                 );
               },
             ),
-            Divider(
-              height: 0.5,
-              color: colors.neutralColors.borderColors.seperatorLight,
-            ),
+            const LmuDivider(),
             SizedBox(
-              height: 1000,
+              height: 1500,
               child: PageView.builder(
                 itemCount: menuModels.length,
                 controller: _pageController,
@@ -69,6 +79,7 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
                 },
               ),
             ),
+            const SizedBox(height: LmuSizes.medium),
           ],
         );
       },
@@ -76,7 +87,7 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
   }
 }
 
-extension DateTimeName on DateTime {
+extension _DateTimeName on DateTime {
   String dayName(AppLocalizations localizations) {
     final weekdays = [
       localizations.monday,

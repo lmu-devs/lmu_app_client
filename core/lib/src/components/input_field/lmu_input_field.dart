@@ -23,6 +23,7 @@ class LmuInputField extends StatefulWidget {
   final bool isAutocorrect;
   final bool isAutofocus;
   final TextInputType keyboardType;
+  final InputStates inputState;
   final int? maxLength;
   final int? minLines;
   final int? maxLines;
@@ -52,6 +53,7 @@ class LmuInputField extends StatefulWidget {
     this.isAutocorrect = false,
     this.isAutofocus = false,
     this.keyboardType = TextInputType.text,
+    this.inputState = InputStates.base,
     this.maxLength,
     this.minLines,
     this.maxLines,
@@ -173,15 +175,15 @@ class _LmuInputFieldState extends State<LmuInputField> {
         fillColor: fillColor,
         focusedBorder: OutlineInputBorder(
           borderRadius: borderRadius,
-          borderSide: BorderSide(color: borderColor),
+          borderSide: const BorderSide(color: borderColor),
         ),
         border: OutlineInputBorder(
           borderRadius: borderRadius,
-          borderSide: BorderSide(color: borderColor),
+          borderSide: const BorderSide(color: borderColor),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: borderRadius,
-          borderSide: BorderSide(color: borderColor),
+          borderSide: const BorderSide(color: borderColor),
         ),
         hoverColor:
             context.colors.neutralColors.backgroundColors.mediumColors.base,

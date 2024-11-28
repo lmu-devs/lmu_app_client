@@ -1,5 +1,6 @@
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'lmu_base_app_bar.dart';
 
@@ -8,18 +9,20 @@ export 'lmu_base_app_bar.dart' show LeadingAction;
 class LmuScaffoldWithAppBar extends StatelessWidget {
   const LmuScaffoldWithAppBar({
     super.key,
-    required this.body,
     required this.largeTitle,
+    required this.body,
     this.collapsedTitle,
     this.largeTitleTrailingWidget,
     this.trailingWidget,
     this.leadingAction,
+    this.onLeadingActionTap,
     this.customScrollController,
     this.stretch = true,
     this.collapsedTitleHeight,
     this.imageUrls,
     this.trailingWidgets,
     this.largeTitleTrailingWidgetAlignment = MainAxisAlignment.spaceBetween,
+    this.useModalSheetScrollController = false,
   });
 
   final Widget body;
@@ -34,6 +37,8 @@ class LmuScaffoldWithAppBar extends StatelessWidget {
   final List<Widget>? trailingWidgets;
   final LeadingAction? leadingAction;
   final MainAxisAlignment largeTitleTrailingWidgetAlignment;
+  final bool useModalSheetScrollController;
+  final void Function()? onLeadingActionTap;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +52,7 @@ class LmuScaffoldWithAppBar extends StatelessWidget {
         body: body,
         largeTitle: largeTitle,
         collapsedTitle: collapsedTitle,
-        scrollController: customScrollController,
+        scrollController: useModalSheetScrollController ? ModalScrollController.of(context) : customScrollController,
         stretch: stretch,
         backgroundColor: neutralColors.backgroundColors.base,
         trailingWidget: trailingWidget,
@@ -59,6 +64,7 @@ class LmuScaffoldWithAppBar extends StatelessWidget {
         trailingWidgets: trailingWidgets,
         leadingAction: leadingAction,
         largeTitleTrailingWidgetAlignment: largeTitleTrailingWidgetAlignment,
+        onLeadingActionTap: onLeadingActionTap,
       ),
     );
   }

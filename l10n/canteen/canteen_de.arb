@@ -36,8 +36,14 @@
     "students": "Studenten",
     "staff": "Mitarbeiter",
     "guests": "Gäste",
+    "mainDish": "Hauptgerichte",
+    "soupDish": "Suppen",
+    "sideDish": "Beilagen",
+    "dessertDish": "Nachspeisen",
     "canteenInfo": "300+ Sitzplätze, täglich wechselnde Hauptmahlzeiten, inklusive vegetarischer und veganer Optionen.",
     "bistroInfo": "100-300 Sitzplätze, spezialisiert auf Snacks und kleinere Gerichte.",
-    "cafeInfo": "unter 100 Sitzplätze, fokussiert auf Getränke und kleine Snacks."
-
+    "cafeInfo": "unter 100 Sitzplätze, fokussiert auf Getränke und kleine Snacks.",
+    "notYourTaste": "Nicht nach deinem Geschmack",
+    "tasteProfilePlaceholderNotActive": "Dein Geschmacksprofil ist nicht aktiv",
+    "tasteProfilePlaceholderActive": "Dein Geschmacksprofil ist aktiv"
 }

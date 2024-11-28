@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'generated/canteen_localizations.dart';
 import 'generated/settings_localizations.dart';
 import 'generated/feedback_localizations.dart';
+
 extension LocalizationExtension on BuildContext {
   LmuLocalizations get locals => LmuLocalizations(this);
 }

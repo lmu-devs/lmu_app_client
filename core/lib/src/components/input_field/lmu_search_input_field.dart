@@ -77,6 +77,7 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> {
             keyboardType: TextInputType.text,
             isAutocorrect: false,
             focusNode: _focusNode,
+            inputState: _inputState,
             leadingIcon: _buildLeadingIcon(
               inputState: _inputState,
               context: widget.context,

@@ -31,8 +31,7 @@ class FeedbackModal extends StatelessWidget {
                   const SizedBox(height: LmuSizes.small),
                   LmuText.body(
                     localizations.feedbackDescription,
-                    color: context
-                        .colors.neutralColors.textColors.mediumColors.base,
+                    color: context.colors.neutralColors.textColors.mediumColors.base,
                   ),
                   const SizedBox(height: LmuSizes.xxxlarge),
                   EmojiFeedbackSelector(
@@ -74,16 +73,18 @@ class FeedbackModal extends StatelessWidget {
                       size: ButtonSize.large,
                       showFullWidth: true,
                       state: selectedFeedback == null ? ButtonState.disabled : ButtonState.enabled,
-                      onTap: selectedFeedback == null ? null : () {
-                        // TODO: send data to backend with selectedFeedback and textController.text
-                        Navigator.pop(context);
-                        LmuToast.show(
-                          context: context,
-                          message: localizations.feedbackSuccess,
-                          type: ToastType.success,
-                        );
-                        LmuVibrations.success();
-                      },
+                      onTap: selectedFeedback == null
+                          ? null
+                          : () {
+                              // TODO: send data to backend with selectedFeedback and textController.text
+                              Navigator.pop(context);
+                              LmuToast.show(
+                                context: context,
+                                message: localizations.feedbackSuccess,
+                                type: ToastType.success,
+                              );
+                              LmuVibrations.success();
+                            },
                     );
                   },
                 ),

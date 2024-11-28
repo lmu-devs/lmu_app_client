@@ -23,8 +23,7 @@ class MensaOverviewAllSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final favoriteMensaIdsNotifier =
-        GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier;
+    final favoriteMensaIdsNotifier = GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier;
 
     return ValueListenableBuilder(
       valueListenable: sortedMensaModelsNotifier,
@@ -37,27 +36,24 @@ class MensaOverviewAllSection extends StatelessWidget {
                 if (!isFilterActive) {
                   return true;
                 }
-                return element.openingHours.mensaStatus !=
-                    MensaStatus.closed;
+                return element.openingHours.mensaStatus != MensaStatus.closed;
               },
             ).toList();
-    
+
             if (filteredMensaModels.isEmpty) {
               return MensaOverviewPlaceholderTile(
                 title: context.locals.canteen.allClosed,
                 icon: LucideIcons.bone,
               );
             }
-    
+
             return AnimatedSwitcher(
               duration: const Duration(milliseconds: 500),
               switchInCurve: LmuAnimations.fastSmooth,
               switchOutCurve: LmuAnimations.fastSmooth,
               reverseDuration: const Duration(milliseconds: 50),
               transitionBuilder: (child, animation) => SlideTransition(
-                position: Tween<Offset>(
-                        begin: const Offset(0, .7), end: Offset.zero)
-                    .animate(animation),
+                position: Tween<Offset>(begin: const Offset(0, .7), end: Offset.zero).animate(animation),
                 child: child,
               ),
               child: ListView.builder(
@@ -70,14 +66,12 @@ class MensaOverviewAllSection extends StatelessWidget {
                   return ValueListenableBuilder(
                       valueListenable: favoriteMensaIdsNotifier,
                       builder: (context, favoriteMensaIds, _) {
-                        final isFavorite = favoriteMensaIds
-                            .contains(filteredMensaModels[index].canteenId);
+                        final isFavorite = favoriteMensaIds.contains(filteredMensaModels[index].canteenId);
                         return MensaOverviewTile(
                           mensaModel: filteredMensaModels[index],
                           isFavorite: isFavorite,
                           hasDivider: index == mensaModels.length - 1,
-                          hasLargeImage:
-                              filteredMensaModels[index].images.isNotEmpty,
+                          hasLargeImage: filteredMensaModels[index].images.isNotEmpty,
                         );
                       });
                 },

@@ -6,11 +6,11 @@ import 'package:core/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../repository/api/models/mensa/mensa_model.dart';
 import '../../services/mensa_user_preferences_service.dart';
+import '../mensa_placeholder_tile.dart';
 import '../widgets.dart';
 
 class MensaOverviewFavoriteSection extends StatefulWidget {
@@ -113,7 +113,25 @@ class MensaOverviewFavoriteSectionState extends State<MensaOverviewFavoriteSecti
           children: [
             FadeTransition(
               opacity: _emptyStateAnimation,
-              child: isEmpty ? const EmptyFavoritesContainer() : const SizedBox.shrink(),
+              child: isEmpty
+                  ? MensaPlaceholderTile(
+                      content: [
+                        LmuText.bodySmall(
+                          context.locals.canteen.emptyFavoritesBefore,
+                          color: context.colors.neutralColors.textColors.mediumColors.base,
+                        ),
+                        StarIcon(
+                          isActive: false,
+                          disabledColor: context.colors.neutralColors.textColors.weakColors.base,
+                          size: LmuSizes.mediumLarge,
+                        ),
+                        LmuText.bodySmall(
+                          context.locals.canteen.emptyFavoritesAfter,
+                          color: context.colors.neutralColors.textColors.mediumColors.base,
+                        ),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
             ),
             AnimatedList(
               shrinkWrap: true,
@@ -133,59 +151,6 @@ class MensaOverviewFavoriteSectionState extends State<MensaOverviewFavoriteSecti
           ],
         );
       },
-    );
-  }
-}
-
-class EmptyFavoritesContainer extends StatelessWidget {
-  const EmptyFavoritesContainer({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: LmuSizes.mediumLarge),
-      child: DashedBorderContainer(
-        width: double.infinity,
-        borderRadius: LmuRadiusSizes.mediumLarge,
-        borderColor: context.colors.neutralColors.backgroundColors.strongColors.base,
-        dashWidth: 7.5,
-        dashSpace: 7.5,
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: LmuSizes.large,
-              vertical: LmuSizes.xlarge,
-            ),
-            child: Wrap(
-              alignment: WrapAlignment.center,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              spacing: LmuSizes.xsmall,
-              runSpacing: LmuSizes.xsmall,
-              children: [
-                LmuText.bodySmall(
-                  context.locals.canteen.emptyFavoritesBefore,
-                  color: context.colors.neutralColors.textColors.mediumColors.base,
-                ),
-                SvgPicture.asset(
-                  'assets/star.svg',
-                  package: 'mensa',
-                  semanticsLabel: context.locals.app.iconStar,
-                  width: LmuSizes.mediumLarge,
-                  height: LmuSizes.mediumLarge,
-                  colorFilter: ColorFilter.mode(
-                    context.colors.neutralColors.textColors.weakColors.base,
-                    BlendMode.srcIn,
-                  ),
-                ),
-                LmuText.bodySmall(
-                  context.locals.canteen.emptyFavoritesAfter,
-                  color: context.colors.neutralColors.textColors.mediumColors.base,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

@@ -35,6 +35,7 @@ class LmuBaseAppBar extends StatefulWidget {
     this.imageUrls,
     this.trailingWidgets,
     this.leadingAction,
+    this.onLeadingActionTap,
   }) : super(key: key);
 
   final Widget body;
@@ -52,6 +53,7 @@ class LmuBaseAppBar extends StatefulWidget {
   final List<String>? imageUrls;
   final List<Widget>? trailingWidgets;
   final LeadingAction? leadingAction;
+  final void Function()? onLeadingActionTap;
 
   //TODO: Improve retrival of these values
   final double appBarWidth;
@@ -80,9 +82,9 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
       text: _largeTitle,
       style: widget.textTheme.h0,
     );
-    final tp = TextPainter(text: span, textDirection: TextDirection.ltr, maxLines: 3);
+    final tp = TextPainter(text: span, textDirection: TextDirection.ltr, maxLines: 4);
     tp.layout(maxWidth: widget.appBarWidth - LmuSizes.xxlarge);
-    _maxLines = min(tp.computeLineMetrics().length, 3);
+    _maxLines = min(tp.computeLineMetrics().length, 4);
 
     _calculatedLargeTitleHeight = _largeTitleLineHeight * _maxLines;
 
@@ -97,7 +99,7 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
   String get _largeTitle => widget.largeTitle;
   String get _collapsedTitle => widget.collapsedTitle ?? _largeTitle;
 
-  bool get _hasImage => widget.imageUrls != null;
+  bool get _hasImage => widget.imageUrls?.isNotEmpty ?? false;
 
   Widget? get _largeTitleTrailingWidget => widget.largeTitleTrailingWidget;
 
@@ -108,7 +110,7 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
   double get _largeTitleHeight => _calculatedLargeTitleHeight + (_hasImage ? LmuSizes.xlarge : LmuSizes.medium);
   double get _appBarHeight => _collapsedTitleHeight + _largeTitleHeight;
 
-  double get _imageSize => widget.imageUrls != null ? _imageHeight : 0.0;
+  double get _imageSize => _hasImage ? _imageHeight : 0.0;
 
   Color get _backgroundColor => widget.backgroundColor ?? Colors.transparent;
 
@@ -134,18 +136,15 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
         CustomScrollView(
           controller: _scrollController,
           physics: SnapScrollPhysics(
-            parent: const AlwaysScrollableScrollPhysics(),
+            parent: _stretch ? const AlwaysScrollableScrollPhysics() : const ClampingScrollPhysics(),
             snaps: [
               Snap.avoidZone(0 + imageOffset, _largeTitleHeight + imageOffset),
             ],
           ),
           slivers: [
-            SliverOverlapAbsorber(
-              handle: SliverOverlapAbsorberHandle(),
-              sliver: SliverToBoxAdapter(
-                child: Container(
-                  height: defaultHeight,
-                ),
+            SliverToBoxAdapter(
+              child: Container(
+                height: defaultHeight,
               ),
             ),
             SliverToBoxAdapter(
@@ -247,6 +246,7 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
                                         leadingAction: _leadingAction!,
                                         hasImage: _hasImage,
                                         backgroundColor: _backgroundColor,
+                                        onLeadingActionTap: widget.onLeadingActionTap,
                                       )
                                     : null,
                                 middle: Opacity(
@@ -286,15 +286,17 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
                                       child: Row(
                                         mainAxisAlignment: _largeTitleTrailingWidgetAlignment,
                                         children: [
-                                          Transform.scale(
-                                            scale: _hasImage ? 1.0 : largeTitleScale,
-                                            filterQuality: FilterQuality.high,
-                                            alignment: _largeTitleTrailingWidgetAlignment.scaleAlignment,
-                                            child: Text(
-                                              _largeTitle,
-                                              style: largeTitleStyle,
-                                              maxLines: 3,
-                                              overflow: TextOverflow.ellipsis,
+                                          Flexible(
+                                            child: Transform.scale(
+                                              scale: _hasImage ? 1.0 : largeTitleScale,
+                                              filterQuality: FilterQuality.high,
+                                              alignment: _largeTitleTrailingWidgetAlignment.scaleAlignment,
+                                              child: Text(
+                                                _largeTitle,
+                                                style: largeTitleStyle,
+                                                maxLines: 4,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
                                             ),
                                           ),
                                           if (_largeTitleTrailingWidget != null)
@@ -436,6 +438,7 @@ class _LeadingAction extends StatelessWidget {
     required LeadingAction leadingAction,
     required bool hasImage,
     required Color backgroundColor,
+    this.onLeadingActionTap,
   })  : _hasImage = hasImage,
         _backgroundColor = backgroundColor,
         _leadingAction = leadingAction;
@@ -443,6 +446,7 @@ class _LeadingAction extends StatelessWidget {
   final bool _hasImage;
   final Color _backgroundColor;
   final LeadingAction? _leadingAction;
+  final void Function()? onLeadingActionTap;
 
   @override
   Widget build(BuildContext context) {
@@ -453,6 +457,7 @@ class _LeadingAction extends StatelessWidget {
       ),
       child: GestureDetector(
         onTap: () {
+          onLeadingActionTap?.call();
           Navigator.of(context).pop();
         },
         child: Container(
@@ -483,7 +488,6 @@ extension LeadingActionIconExtension on LeadingAction {
     }
   }
 }
-
 
 extension ScaleAlignmentExtension on MainAxisAlignment {
   Alignment get scaleAlignment {

@@ -5,8 +5,8 @@ import 'package:json_annotation/json_annotation.dart';
 part 'taste_profile_save_model.g.dart';
 
 @JsonSerializable()
-class TasteProfileSaveModel extends Equatable {
-  const TasteProfileSaveModel({
+class TasteProfileStateModel extends Equatable {
+  const TasteProfileStateModel({
     required this.isActive,
     required this.selectedPresets,
     required this.excludedLabels,
@@ -16,8 +16,8 @@ class TasteProfileSaveModel extends Equatable {
   final Set<String> selectedPresets;
   final Set<String> excludedLabels;
 
-  factory TasteProfileSaveModel.empty() => const TasteProfileSaveModel(
-        isActive: true,
+  factory TasteProfileStateModel.empty() => const TasteProfileStateModel(
+        isActive: false,
         selectedPresets: {},
         excludedLabels: {},
       );
@@ -25,16 +25,16 @@ class TasteProfileSaveModel extends Equatable {
   @override
   List<Object?> get props => [isActive, selectedPresets, excludedLabels];
 
-  factory TasteProfileSaveModel.fromJson(Map<String, dynamic> json) => _$TasteProfileSaveModelFromJson(json);
+  factory TasteProfileStateModel.fromJson(Map<String, dynamic> json) => _$TasteProfileSaveModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$TasteProfileSaveModelToJson(this);
 
-  TasteProfileSaveModel copyWith({
+  TasteProfileStateModel copyWith({
     bool? isActive,
     Set<String>? selectedPresets,
     Set<String>? excludedLabels,
   }) {
-    return TasteProfileSaveModel(
+    return TasteProfileStateModel(
       isActive: isActive ?? this.isActive,
       selectedPresets: selectedPresets ?? this.selectedPresets,
       excludedLabels: excludedLabels ?? this.excludedLabels,

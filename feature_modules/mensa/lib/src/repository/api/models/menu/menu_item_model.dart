@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../rating_model.dart';
+import 'dish_category.dart';
 import 'price_model.dart';
 
 part 'menu_item_model.g.dart';
@@ -12,6 +13,8 @@ class MenuItemModel extends Equatable {
   final String title;
   @JsonKey(name: 'dish_type')
   final String dishType;
+  @JsonKey(name: 'dish_category')
+  final DishCategory dishCategory;
   @JsonKey(name: 'rating')
   final RatingModel ratingModel;
   @JsonKey(name: 'price_simple')
@@ -23,11 +26,23 @@ class MenuItemModel extends Equatable {
     required this.id,
     required this.title,
     required this.dishType,
+    required this.dishCategory,
     required this.ratingModel,
     required this.priceSimple,
     required this.labels,
     required this.prices,
   });
+
+  factory MenuItemModel.placeholder({String? title}) => MenuItemModel(
+        id: 0,
+        title: title ?? 'Title',
+        dishType: 'E',
+        dishCategory: DishCategory.main,
+        ratingModel: RatingModel.placeholder(),
+        priceSimple: '',
+        labels: const [],
+        prices: const [],
+      );
 
   factory MenuItemModel.fromJson(Map<String, dynamic> json) => _$MenuItemModelFromJson(json);
 
