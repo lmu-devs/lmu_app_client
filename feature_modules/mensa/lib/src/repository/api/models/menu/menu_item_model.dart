@@ -39,7 +39,7 @@ class MenuItemModel extends Equatable {
         dishType: 'E',
         dishCategory: DishCategory.main,
         ratingModel: RatingModel.placeholder(),
-        priceSimple: '€€€',
+        priceSimple: '',
         labels: const [],
         prices: const [],
       );
