@@ -142,8 +142,8 @@ class MapBottomSheetState extends State<MapBottomSheet> {
                 ],
                 color: context.colors.neutralColors.backgroundColors.base,
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(LmuSizes.large),
-                  topRight: Radius.circular(LmuSizes.large),
+                  topLeft: Radius.circular(LmuSizes.xlarge),
+                  topRight: Radius.circular(LmuSizes.xlarge),
                 ),
               ),
               child: SingleChildScrollView(
@@ -154,32 +154,28 @@ class MapBottomSheetState extends State<MapBottomSheet> {
                   child: Column(
                     children: [
                       if (selectedMensa != null)
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(bottom: LmuSizes.small),
-                          child: FadeTransition(
-                            opacity: _fadeAnimation,
-                            child: ValueListenableBuilder<List<String>>(
-                              valueListenable: _favoriteMensasNotifier,
-                              builder: (context, favoriteMensas, _) {
-                                return MensaOverviewTile(
-                                  mensaModel: selectedMensa,
-                                  isFavorite: favoriteMensas
-                                      .contains(selectedMensa.canteenId),
-                                  hasLargeImage: false,
-                                  hasButton: true,
-                                  buttonText: context.locals.explore.navigate,
-                                  buttonAction: () => LmuBottomSheet.show(
-                                    context,
-                                    content: NavigationSheet(
-                                      latitude: selectedMensa.location.latitude,
-                                      longitude:
-                                          selectedMensa.location.longitude,
-                                    ),
+                        FadeTransition(
+                          opacity: _fadeAnimation,
+                          child: ValueListenableBuilder<List<String>>(
+                            valueListenable: _favoriteMensasNotifier,
+                            builder: (context, favoriteMensas, _) {
+                              return MensaOverviewTile(
+                                mensaModel: selectedMensa,
+                                isFavorite: favoriteMensas
+                                    .contains(selectedMensa.canteenId),
+                                hasLargeImage: false,
+                                hasButton: true,
+                                buttonText: context.locals.explore.navigate,
+                                buttonAction: () => LmuBottomSheet.show(
+                                  context,
+                                  content: NavigationSheet(
+                                    latitude: selectedMensa.location.latitude,
+                                    longitude:
+                                        selectedMensa.location.longitude,
                                   ),
-                                );
-                              },
-                            ),
+                                ),
+                              );
+                            },
                           ),
                         )
                       else

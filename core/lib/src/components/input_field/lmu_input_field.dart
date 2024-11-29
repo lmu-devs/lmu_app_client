@@ -22,7 +22,7 @@ class LmuInputField extends StatefulWidget {
   final bool isDisabled;
   final bool isAutocorrect;
   final bool isAutofocus;
-  final TextInputType keyboardType;
+  final TextInputType? keyboardType;
   final InputStates inputState;
   final int? maxLength;
   final int? minLines;
@@ -51,9 +51,9 @@ class LmuInputField extends StatefulWidget {
     this.leadingIcon,
     this.trailingIcon,
     this.isDisabled = false,
-    this.isAutocorrect = false,
+    this.isAutocorrect = true,
     this.isAutofocus = false,
-    this.keyboardType = TextInputType.text,
+    this.keyboardType,
     this.inputState = InputStates.base,
     this.maxLength,
     this.minLines,

@@ -28,14 +28,10 @@ class SettingsSuccessView extends StatelessWidget {
               height: LmuSizes.mediumLarge,
             ),
             const SizedBox(height: LmuSizes.small),
-            const SizedBox(height: LmuSizes.small),
             LmuSearchInputField(
               context: context,
               controller: TextEditingController(),
             ),
-            const SizedBox(height: LmuSizes.small),
-
-
             const SizedBox(height: LmuSizes.large),
             LmuContentTile(
               content: [
@@ -66,7 +62,8 @@ class SettingsSuccessView extends StatelessWidget {
                   trailingArea: Icon(
                     LucideIcons.external_link,
                     size: LmuSizes.large,
-                    color: context.colors.neutralColors.textColors.weakColors.base,
+                    color:
+                        context.colors.neutralColors.textColors.weakColors.base,
                   ),
                   onTap: () {
                     LmuUrlLauncher.launchWebsite(
@@ -81,7 +78,8 @@ class SettingsSuccessView extends StatelessWidget {
                   trailingArea: Icon(
                     LucideIcons.mail,
                     size: LmuSizes.large,
-                    color: context.colors.neutralColors.textColors.weakColors.base,
+                    color:
+                        context.colors.neutralColors.textColors.weakColors.base,
                   ),
                   onTap: () {
                     LmuUrlLauncher.launchEmail(
@@ -119,7 +117,9 @@ class SettingsSuccessView extends StatelessWidget {
                   actionType: LmuListItemAction.chevron,
                   onTap: () {
                     LmuUrlLauncher.launchWebsite(
-                        context: context, url: "https://lmu-dev.org/impressum", mode: LmuUrlLauncherMode.inAppWebView);
+                        context: context,
+                        url: "https://lmu-dev.org/impressum",
+                        mode: LmuUrlLauncherMode.inAppWebView);
                   },
                 ),
                 LmuListItem.action(
@@ -141,7 +141,9 @@ class SettingsSuccessView extends StatelessWidget {
                   mainContentAlignment: MainContentAlignment.center,
                   leadingArea: const _LeadingFancyIcons(icon: LucideIcons.plus),
                   onTap: () {
-                    GetIt.I.get<FeedbackService>().navigateToSuggestion(context);
+                    GetIt.I
+                        .get<FeedbackService>()
+                        .navigateToSuggestion(context);
                   },
                 ),
                 LmuListItem.base(
@@ -159,7 +161,8 @@ class SettingsSuccessView extends StatelessWidget {
             ),
             LmuButton(
               title: 'Feedback',
-              onTap: () => GetIt.I.get<FeedbackService>().navigateToFeedback(context),
+              onTap: () =>
+                  GetIt.I.get<FeedbackService>().navigateToFeedback(context),
             ),
             const SizedBox(
               height: LmuSizes.xhuge,
@@ -178,7 +181,8 @@ class _LeadingFancyIcons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final backgroundColor = context.colors.neutralColors.backgroundColors.mediumColors.base;
+    final backgroundColor =
+        context.colors.neutralColors.backgroundColors.mediumColors.base;
     return Container(
       width: LmuSizes.xxxlarge,
       height: LmuSizes.xxxlarge,
@@ -197,8 +201,10 @@ class _LeadingFancyIcons extends StatelessWidget {
   }
 }
 
-String _getThemeModeString(BuildContext context, SettingsLocalizations localizaitons) {
-  final String themeName = Provider.of<ThemeProvider>(context, listen: true).themeMode.name;
+String _getThemeModeString(
+    BuildContext context, SettingsLocalizations localizaitons) {
+  final String themeName =
+      Provider.of<ThemeProvider>(context, listen: true).themeMode.name;
   switch (themeName.toLowerCase()) {
     case 'system':
       return localizaitons.systemMode;

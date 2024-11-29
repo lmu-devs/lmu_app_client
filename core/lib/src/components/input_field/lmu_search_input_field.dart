@@ -13,6 +13,8 @@ class LmuSearchInputField extends StatefulWidget {
   final void Function(String)? onChanged;
   final void Function(String)? onSubmitted;
   final VoidCallback? onClearPressed;
+  final bool isAutofocus;
+  final bool isAutocorrect;
   const LmuSearchInputField({
     super.key,
     required this.controller,
@@ -22,6 +24,8 @@ class LmuSearchInputField extends StatefulWidget {
     this.onSubmitted,
     this.onClearPressed,
     this.focusAfterClear = true,
+    this.isAutofocus = false,
+    this.isAutocorrect = true,
   });
 
   @override
@@ -35,6 +39,7 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> {
   @override
   void initState() {
     super.initState();
+    widget.controller.addListener(_updateInputState);
     _focusNode = FocusNode();
     _focusNode.addListener(_updateInputState);
 
@@ -43,6 +48,7 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> {
 
   @override
   void dispose() {
+    widget.controller.removeListener(_updateInputState);
     _focusNode.removeListener(_updateInputState);
     _focusNode.dispose();
     super.dispose();
@@ -76,9 +82,9 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> {
             hintText: localizations.search,
             controller: widget.controller,
             keyboardType: TextInputType.text,
-            isAutocorrect: false,
             focusNode: _focusNode,
             inputState: _inputState,
+            isAutocorrect: widget.isAutocorrect,
             leadingIcon: _buildLeadingIcon(
               inputState: _inputState,
               context: widget.context,
@@ -97,8 +103,12 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> {
               _updateInputState();
               widget.onChanged?.call(value);
             },
-            onClearPressed: widget.onClearPressed,
+            onClearPressed: () {
+              widget.onClearPressed?.call();
+              _updateInputState();
+            },
             focusAfterClear: widget.focusAfterClear,
+            isAutofocus: widget.isAutofocus,
           ),
         ),
         _buildSuffix(

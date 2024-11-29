@@ -8,7 +8,7 @@ extension SheetSizesExtension on SheetSizes {
   double get size {
     switch (this) {
       case SheetSizes.small:
-        return 0.12;
+        return 0.11;
       case SheetSizes.medium:
         return 0.31;
       case SheetSizes.large:
