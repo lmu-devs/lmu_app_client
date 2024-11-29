@@ -35,17 +35,21 @@ class MapBottomSheetState extends State<MapBottomSheet> {
   @override
   void initState() {
     super.initState();
-    _favoriteMensasNotifier = GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier;
+    _favoriteMensasNotifier =
+        GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier;
     _searchController = TextEditingController();
     _sheetController = widget.sheetController;
     _sheetController.addListener(_onSheetScroll);
 
     _fadeController = AnimationController(
       vsync: Navigator.of(context),
-      duration: const Duration(milliseconds: 250),
+      duration: const Duration(milliseconds: 550),
     );
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _fadeController, curve: Curves.easeInOut),
+      CurvedAnimation(
+        parent: _fadeController,
+        curve: LmuAnimations.fastSmooth,
+      ),
     );
   }
 
@@ -58,7 +62,8 @@ class MapBottomSheetState extends State<MapBottomSheet> {
   }
 
   void _onSheetScroll() {
-    if (_previousSize >= SheetSizes.medium.size && _sheetController.size < SheetSizes.medium.size) {
+    if (_previousSize >= SheetSizes.medium.size &&
+        _sheetController.size < SheetSizes.medium.size) {
       if (widget.selectedMensaNotifier.value != null) {
         widget.selectedMensaNotifier.value = null;
       }
@@ -71,18 +76,16 @@ class MapBottomSheetState extends State<MapBottomSheet> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _sheetController.animateTo(
           SheetSizes.medium.size,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeIn,
+          duration: const Duration(milliseconds: 500),
+          curve: LmuAnimations.fastSmooth,
         );
       });
       _fadeController.forward();
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        _sheetController.animateTo(
-          SheetSizes.small.size,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeOut,
-        );
+        _sheetController.animateTo(SheetSizes.small.size,
+            duration: const Duration(milliseconds: 500),
+            curve: LmuAnimations.fastSmooth);
       });
       _fadeController.reverse();
     }
@@ -95,7 +98,11 @@ class MapBottomSheetState extends State<MapBottomSheet> {
       builder: (context, selectedMensa, child) {
         List<double> snapSizes = selectedMensa != null
             ? [SheetSizes.medium.size, SheetSizes.large.size]
-            : [SheetSizes.small.size, SheetSizes.medium.size, SheetSizes.large.size];
+            : [
+                SheetSizes.small.size,
+                SheetSizes.medium.size,
+                SheetSizes.large.size
+              ];
 
         _animateSheet(selectedMensa);
 
@@ -115,58 +122,79 @@ class MapBottomSheetState extends State<MapBottomSheet> {
           snapAnimationDuration: const Duration(milliseconds: 250),
           builder: (context, scrollController) {
             return Container(
-              padding: const EdgeInsets.all(LmuSizes.mediumLarge),
               decoration: BoxDecoration(
-                color: context.colors.neutralColors.backgroundColors.base,
                 border: Border(
                   top: BorderSide(
-                    color: context.colors.neutralColors.backgroundColors.strongColors.base,
+                    color:
+                        context.colors.neutralColors.borderColors.seperatorDark,
+                    width: .5,
                   ),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.10),
+                    blurRadius: 24,
+                  ),
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.10),
+                    blurRadius: 64,
+                  ),
+                ],
+                color: context.colors.neutralColors.backgroundColors.base,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(LmuSizes.large),
+                  topRight: Radius.circular(LmuSizes.large),
                 ),
               ),
               child: SingleChildScrollView(
                 controller: scrollController,
                 physics: const ClampingScrollPhysics(),
-                child: Column(
-                  children: [
-                    if (selectedMensa != null)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: LmuSizes.small),
-                        child: FadeTransition(
-                          opacity: _fadeAnimation,
-                          child: ValueListenableBuilder<List<String>>(
-                            valueListenable: _favoriteMensasNotifier,
-                            builder: (context, favoriteMensas, _) {
-                              return MensaOverviewTile(
-                                mensaModel: selectedMensa,
-                                isFavorite: favoriteMensas.contains(selectedMensa.canteenId),
-                                hasLargeImage: false,
-                                hasButton: true,
-                                buttonText: context.locals.explore.navigate,
-                                buttonAction: () => LmuBottomSheet.show(
-                                  context,
-                                  content: NavigationSheet(
-                                    latitude: selectedMensa.location.latitude,
-                                    longitude: selectedMensa.location.longitude,
+                child: Padding(
+                  padding: const EdgeInsets.all(LmuSizes.mediumLarge),
+                  child: Column(
+                    children: [
+                      if (selectedMensa != null)
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(bottom: LmuSizes.small),
+                          child: FadeTransition(
+                            opacity: _fadeAnimation,
+                            child: ValueListenableBuilder<List<String>>(
+                              valueListenable: _favoriteMensasNotifier,
+                              builder: (context, favoriteMensas, _) {
+                                return MensaOverviewTile(
+                                  mensaModel: selectedMensa,
+                                  isFavorite: favoriteMensas
+                                      .contains(selectedMensa.canteenId),
+                                  hasLargeImage: false,
+                                  hasButton: true,
+                                  buttonText: context.locals.explore.navigate,
+                                  buttonAction: () => LmuBottomSheet.show(
+                                    context,
+                                    content: NavigationSheet(
+                                      latitude: selectedMensa.location.latitude,
+                                      longitude:
+                                          selectedMensa.location.longitude,
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                      )
-                    else
-                      const SizedBox.shrink(),
-                    LmuSearchInputField(
-                      context: context,
-                      controller: _searchController,
-                      onClearPressed: () {
-                        _searchController.clear();
-                        widget.selectedMensaNotifier.value = null;
-                      },
-                      focusAfterClear: false,
-                    ),
-                  ],
+                        )
+                      else
+                        const SizedBox.shrink(),
+                      LmuSearchInputField(
+                        context: context,
+                        controller: _searchController,
+                        focusAfterClear: false,
+                        onClearPressed: () {
+                          _searchController.clear();
+                          widget.selectedMensaNotifier.value = null;
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
