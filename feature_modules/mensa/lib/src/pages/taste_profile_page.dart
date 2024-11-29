@@ -62,6 +62,7 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
                   emphasis: ButtonEmphasis.link,
                   state: isDisabled ? ButtonState.disabled : ButtonState.enabled,
                   size: ButtonSize.large,
+                  increaseTouchTarget: true,
                   onTap: () {
                     _saveTasteProfile(context);
                   },

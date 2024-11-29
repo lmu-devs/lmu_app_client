@@ -36,29 +36,31 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> {
   void initState() {
     super.initState();
     _focusNode = FocusNode();
-
-    widget.controller.addListener(_updateInputState);
     _focusNode.addListener(_updateInputState);
+
+    _updateInputState();
   }
 
   @override
   void dispose() {
-    widget.controller.removeListener(_updateInputState);
     _focusNode.removeListener(_updateInputState);
     _focusNode.dispose();
     super.dispose();
   }
 
   void _updateInputState() {
+    if (!mounted) return;
+
     setState(() {
       if (widget.controller.text.isEmpty) {
+        print('Debug - Empty text -> State: $_inputState');
         _inputState =
             _focusNode.hasFocus ? InputStates.active : InputStates.base;
-        print('Debug - Empty text -> State: $_inputState');
       } else {
+        print('Debug - Has text -> State: $_inputState');
+
         _inputState =
             _focusNode.hasFocus ? InputStates.typing : InputStates.filled;
-        print('Debug - Has text -> State: $_inputState');
       }
     });
   }
@@ -92,9 +94,11 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> {
             ),
             onSubmitted: widget.onSubmitted,
             onChanged: (value) {
+              _updateInputState();
               widget.onChanged?.call(value);
             },
             onClearPressed: widget.onClearPressed,
+            focusAfterClear: widget.focusAfterClear,
           ),
         ),
         _buildSuffix(
@@ -150,7 +154,12 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> {
         title: context.locals.app.cancel,
         emphasis: ButtonEmphasis.link,
         size: ButtonSize.large,
-        onTap: () {},
+        increaseTouchTarget: true,
+        onTap: () {
+          widget.controller.clear();
+          widget.onClearPressed?.call();
+          _updateInputState();
+        },
       ),
     );
     switch (inputState) {

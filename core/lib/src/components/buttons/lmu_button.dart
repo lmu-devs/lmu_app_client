@@ -44,6 +44,7 @@ class LmuButton extends StatelessWidget {
     this.onTap,
     this.customSemanticsLabel,
     this.showFullWidth = false,
+    this.increaseTouchTarget = false,
   }) : assert(title != null || leadingIcon != null || trailingIcon != null);
 
   final ButtonSize size;
@@ -56,6 +57,7 @@ class LmuButton extends StatelessWidget {
   final void Function()? onTap;
   final String? customSemanticsLabel;
   final bool showFullWidth;
+  final bool increaseTouchTarget;
 
   bool get _hasTitle => title != null && !_isLoading;
   bool get _hasLeadingIcon => leadingIcon != null && !_isLoading;
@@ -77,7 +79,9 @@ class LmuButton extends StatelessWidget {
 
   EdgeInsetsGeometry? get _padding {
     if (_hasTextOnly) {
-      return null;
+      return increaseTouchTarget
+          ? EdgeInsets.symmetric(vertical: size.verticalPadding)
+          : null;
     }
     return EdgeInsets.only(
       left: _hasLeadingIcon ? size.smallerVerticalPadding : size.defaultVerticalPadding,
@@ -118,6 +122,7 @@ class LmuButton extends StatelessWidget {
       enabled: _isButtonEnabled,
       label: customSemanticsLabel ?? title,
       child: GestureDetector(
+        behavior: increaseTouchTarget ? HitTestBehavior.opaque : HitTestBehavior.deferToChild,
         onTap: _isButtonEnabled ? onTap : null,
         child: Container(
           width: _width,

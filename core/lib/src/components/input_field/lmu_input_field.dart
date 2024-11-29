@@ -71,7 +71,7 @@ class LmuInputField extends StatefulWidget {
     this.onTapOutside,
     this.focusNode,
     this.onClearPressed,
-    this.focusAfterClear = false,
+    this.focusAfterClear = true,
   });
 
   @override
