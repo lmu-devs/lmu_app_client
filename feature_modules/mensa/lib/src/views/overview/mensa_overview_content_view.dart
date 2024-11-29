@@ -37,7 +37,6 @@ class _MensaOverviewContentViewState extends State<MensaOverviewContentView> {
     _isOpenNowFilerNotifier = ValueNotifier(false);
     _sortOptionNotifier = ValueNotifier(_initialSortOption);
     _sortedMensaModelsNotifier = ValueNotifier(_initialSortOption.sort(_mensaModels));
-    print("Print statement");
   }
 
   @override
