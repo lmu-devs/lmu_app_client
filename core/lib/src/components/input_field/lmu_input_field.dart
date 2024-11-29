@@ -79,23 +79,22 @@ class LmuInputField extends StatefulWidget {
 }
 
 class _LmuInputFieldState extends State<LmuInputField> {
-  late final ValueNotifier<InputStates> _stateNotifier;
   late final FocusNode _focusNode;
+  InputStates _inputState = InputStates.base;
 
   @override
   void initState() {
     super.initState();
-    _stateNotifier = ValueNotifier(InputStates.base);
     _focusNode = widget.focusNode ?? FocusNode();
-
+    widget.controller.addListener(_updateInputState);
+    _focusNode.addListener(_updateInputState);
   }
 
   @override
   void dispose() {
-    _stateNotifier.dispose();
-    if (widget.focusNode == null) {
-      _focusNode.dispose();
-    }
+    _focusNode.dispose();
+    widget.controller.removeListener(_updateInputState);
+
     super.dispose();
   }
 
@@ -107,10 +106,27 @@ class _LmuInputFieldState extends State<LmuInputField> {
     widget.onClearPressed?.call();
   }
 
+  void _updateInputState() {
+    if (!mounted) return;
+
+    setState(() {
+      if (widget.controller.text.isEmpty) {
+        _inputState = _focusNode.hasFocus
+            ? InputStates.active
+            : InputStates.base;
+      } else {
+        _inputState = _focusNode.hasFocus
+            ? InputStates.typing
+            : InputStates.filled;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.circular(LmuRadiusSizes.medium);
-    final fillColor = InputFieldColorHelper.getFillColor(context);
+    final fillColor =
+        InputFieldColorHelper.getFillColor(context, _inputState);
     const borderColor = Colors.transparent;
 
     return TextField(
@@ -125,7 +141,10 @@ class _LmuInputFieldState extends State<LmuInputField> {
       maxLength: widget.maxLength,
       minLines: widget.minLines,
       maxLines: widget.isMultiline ? widget.maxLines : 1,
-      onChanged: widget.onChanged,
+      onChanged: (value) {
+        _updateInputState();
+        widget.onChanged?.call(value);
+      },
       onSubmitted: widget.onSubmitted,
       onTap: widget.onTap,
       autofillHints: widget.autofillHints,
@@ -169,12 +188,16 @@ class _LmuInputFieldState extends State<LmuInputField> {
         prefixIconColor:
             context.colors.neutralColors.textColors.weakColors.base,
         prefixIconConstraints: widget.leadingIconConstraints,
-        suffixIcon: widget.trailingIcon != null 
-          ? GestureDetector(
-              onTap: _handleClear,
-              child: widget.trailingIcon!,
-            )
-          : null,
+        suffixIcon: widget.trailingIcon != null
+            ? GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: _handleClear,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: LmuSizes.mediumSmall),
+                  child: widget.trailingIcon!,
+                ),
+              )
+            : null,
         prefix: widget.prefix,
         suffix: widget.suffix,
         suffixText: widget.suffixText,

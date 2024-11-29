@@ -6,15 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
 class LmuSearchInputField extends StatefulWidget {
-  final TextEditingController controller;
-  final BuildContext context;
-  final String? hintText;
-  final bool focusAfterClear;
-  final void Function(String)? onChanged;
-  final void Function(String)? onSubmitted;
-  final VoidCallback? onClearPressed;
-  final bool isAutofocus;
-  final bool isAutocorrect;
   const LmuSearchInputField({
     super.key,
     required this.controller,
@@ -26,7 +17,19 @@ class LmuSearchInputField extends StatefulWidget {
     this.focusAfterClear = true,
     this.isAutofocus = false,
     this.isAutocorrect = true,
+    this.isLoading = false,
   });
+
+  final TextEditingController controller;
+  final BuildContext context;
+  final String? hintText;
+  final bool focusAfterClear;
+  final void Function(String)? onChanged;
+  final void Function(String)? onSubmitted;
+  final VoidCallback? onClearPressed;
+  final bool isAutofocus;
+  final bool isAutocorrect;
+  final bool isLoading;
 
   @override
   State<LmuSearchInputField> createState() => _LmuSearchInputFieldState();
@@ -34,12 +37,30 @@ class LmuSearchInputField extends StatefulWidget {
 
 class _LmuSearchInputFieldState extends State<LmuSearchInputField>
     with SingleTickerProviderStateMixin {
+  static const _animationDuration = Duration(milliseconds: 300);
+  final Curve _animationCurve = LmuAnimations.fastSmooth;
+  static const _baseIconConstraints = BoxConstraints(
+    minWidth: 48,
+    maxWidth: 48,
+    minHeight: 48,
+    maxHeight: 48,
+  );
+  static const _focusedIconConstraints = BoxConstraints(
+    minHeight: 16,
+    maxHeight: 16,
+    minWidth: 16,
+    maxWidth: 16,
+  );
+
   late final FocusNode _focusNode;
   late final AnimationController _constraintsController;
   late Animation<double> _constraintsAnimation;
+  
+
   InputStates _inputState = InputStates.base;
-  final Duration _animationDuration = const Duration(milliseconds: 300);
-  final Curve _animationCurve = LmuAnimations.fastSmooth;
+
+  bool get _showCancelButton =>
+      _inputState == InputStates.active || _inputState == InputStates.typing;
 
   @override
   void initState() {
@@ -55,7 +76,7 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField>
 
     _constraintsAnimation = _constraintsController.drive(
       CurveTween(
-        curve: _animationCurve,
+        curve: LmuAnimations.fastSmooth,
       ),
     );
 
@@ -78,7 +99,9 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField>
 
     setState(() {
       final oldState = _inputState;
-      if (widget.controller.text.isEmpty) {
+      if (widget.isLoading) {
+        _inputState = InputStates.loading;
+      } else if (widget.controller.text.isEmpty) {
         _inputState =
             _focusNode.hasFocus ? InputStates.active : InputStates.base;
       } else {
@@ -146,24 +169,11 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField>
   }
 
   BoxConstraints? _buildLeadingIconConstraints(InputStates state) {
-    const baseConstraints = BoxConstraints(
-      minWidth: 48,
-      maxWidth: 48,
-      minHeight: 48,
-      maxHeight: 48,
-    );
-    const focusedOrFilledConstraints = BoxConstraints(
-      minHeight: 16,
-      maxHeight: 16,
-      minWidth: 16,
-      maxWidth: 16,
-    );
-
     final isBaseState = state == InputStates.base;
     final startConstraints =
-        isBaseState ? focusedOrFilledConstraints : baseConstraints;
+        isBaseState ? _focusedIconConstraints : _baseIconConstraints;
     final endConstraints =
-        isBaseState ? baseConstraints : focusedOrFilledConstraints;
+        isBaseState ? _baseIconConstraints : _focusedIconConstraints;
 
     return BoxConstraints.lerp(
         startConstraints, endConstraints, _constraintsAnimation.value);
@@ -213,7 +223,9 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField>
     required BuildContext context,
   }) {
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 200),
+      duration: _animationDuration,
+      switchInCurve: _animationCurve,
+      switchOutCurve: _animationCurve.flipped,
       transitionBuilder: (Widget child, Animation<double> animation) {
         return FadeTransition(
           opacity: animation,
@@ -247,13 +259,9 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField>
           size: LmuIconSizes.medium,
         );
       case InputStates.loading:
-        return const SizedBox(
-          key: ValueKey('loading'),
-          width: 24,
-          height: 24,
-          child: CircularProgressIndicator(
-            strokeWidth: 2,
-          ),
+        return const LmuProgressIndicator(
+          color: ProgressIndicatorColor.weak,
+          size: ProgressIndicatorSize.small,
         );
     }
   }
@@ -264,8 +272,8 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField>
   }) {
     return AnimatedSwitcher(
       duration: _animationDuration,
-      switchInCurve: _animationCurve,
-      switchOutCurve: _animationCurve.flipped,
+      switchInCurve: LmuAnimations.fastSmooth,
+      switchOutCurve: LmuAnimations.fastSmooth.flipped,
       layoutBuilder: (Widget? currentChild, List<Widget> previousChildren) {
         return Stack(
           alignment: Alignment.centerRight,
@@ -294,31 +302,26 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField>
     InputStates inputState,
     BuildContext context,
   ) {
-    final cancelButton = Padding(
-      key: const ValueKey('cancel_button'),
-      padding: const EdgeInsets.only(left: LmuSizes.medium),
-      child: LmuButton(
-        title: context.locals.app.cancel,
-        emphasis: ButtonEmphasis.link,
-        size: ButtonSize.large,
-        increaseTouchTarget: true,
-        onTap: () {
-          widget.controller.clear();
-          widget.onClearPressed?.call();
-          _updateInputState();
-        },
-      ),
-    );
-
-    switch (inputState) {
-      case InputStates.base:
-        return const SizedBox.shrink(key: ValueKey('empty'));
-      case InputStates.active:
-      case InputStates.typing:
-        return cancelButton;
-      case InputStates.filled:
-      case InputStates.loading:
-        return const SizedBox.shrink(key: ValueKey('empty'));
+    if (_showCancelButton) {
+      return Padding(
+        key: const ValueKey('cancel_button'),
+        padding: const EdgeInsets.only(left: LmuSizes.medium),
+        child: LmuButton(
+          title: context.locals.app.cancel,
+          emphasis: ButtonEmphasis.link,
+          size: ButtonSize.large,
+          increaseTouchTarget: true,
+          onTap: _handleCancelTap,
+        ),
+      );
     }
+
+    return const SizedBox.shrink(key: ValueKey('empty'));
+  }
+
+  void _handleCancelTap() {
+    widget.controller.clear();
+    widget.onClearPressed?.call();
+    _updateInputState();
   }
 }
