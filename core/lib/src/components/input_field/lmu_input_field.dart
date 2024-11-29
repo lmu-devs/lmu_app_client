@@ -2,7 +2,17 @@ import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
-class LmuInputField extends StatelessWidget {
+import 'helper/input_field_color_helper.dart';
+
+enum InputStates {
+  base,
+  active,
+  typing,
+  filled,
+  loading,
+}
+
+class LmuInputField extends StatefulWidget {
   final String hintText;
   final TextEditingController controller;
   final bool isPassword;
@@ -12,7 +22,8 @@ class LmuInputField extends StatelessWidget {
   final bool isDisabled;
   final bool isAutocorrect;
   final bool isAutofocus;
-  final TextInputType keyboardType;
+  final TextInputType? keyboardType;
+  final InputStates inputState;
   final int? maxLength;
   final int? minLines;
   final int? maxLines;
@@ -20,12 +31,16 @@ class LmuInputField extends StatelessWidget {
   final void Function(String)? onSubmitted;
   final void Function()? onTap;
   final void Function()? onTapOutside;
+  final void Function()? onClearPressed;
   final Iterable<String>? autofillHints;
   final EdgeInsetsGeometry? contentPadding;
   final Widget? prefix;
+  final BoxConstraints? leadingIconConstraints;
   final Widget? suffix;
   final String? suffixText;
   final bool closeKeyboardOnTapOutside;
+  final FocusNode? focusNode;
+  final bool focusAfterClear;
 
   const LmuInputField({
     super.key,
@@ -36,9 +51,10 @@ class LmuInputField extends StatelessWidget {
     this.leadingIcon,
     this.trailingIcon,
     this.isDisabled = false,
-    this.isAutocorrect = false,
+    this.isAutocorrect = true,
     this.isAutofocus = false,
-    this.keyboardType = TextInputType.text,
+    this.keyboardType,
+    this.inputState = InputStates.base,
     this.maxLength,
     this.minLines,
     this.maxLines,
@@ -48,48 +64,107 @@ class LmuInputField extends StatelessWidget {
     this.autofillHints,
     this.contentPadding,
     this.prefix,
+    this.leadingIconConstraints,
     this.suffix,
     this.suffixText,
     this.closeKeyboardOnTapOutside = true,
     this.onTapOutside,
+    this.focusNode,
+    this.onClearPressed,
+    this.focusAfterClear = true,
   });
+
+  @override
+  State<LmuInputField> createState() => _LmuInputFieldState();
+}
+
+class _LmuInputFieldState extends State<LmuInputField> {
+  late final FocusNode _focusNode;
+  InputStates _inputState = InputStates.base;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode = widget.focusNode ?? FocusNode();
+    widget.controller.addListener(_updateInputState);
+    _focusNode.addListener(_updateInputState);
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    widget.controller.removeListener(_updateInputState);
+
+    super.dispose();
+  }
+
+  void _handleClear() {
+    widget.controller.clear();
+    if (widget.focusAfterClear) {
+      widget.focusNode?.requestFocus();
+    }
+    widget.onClearPressed?.call();
+  }
+
+  void _updateInputState() {
+    if (!mounted) return;
+
+    setState(() {
+      if (widget.controller.text.isEmpty) {
+        _inputState = _focusNode.hasFocus
+            ? InputStates.active
+            : InputStates.base;
+      } else {
+        _inputState = _focusNode.hasFocus
+            ? InputStates.typing
+            : InputStates.filled;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.circular(LmuRadiusSizes.medium);
+    final fillColor =
+        InputFieldColorHelper.getFillColor(context, _inputState);
     const borderColor = Colors.transparent;
+
     return TextField(
-      controller: controller,
-      obscureText: isPassword,
+      controller: widget.controller,
+      obscureText: widget.isPassword,
       cursorColor: context.colors.brandColors.textColors.strongColors.base,
-      enabled: !isDisabled,
-      autocorrect: isAutocorrect,
-      enableSuggestions: isAutocorrect,
-      autofocus: isAutofocus,
-      keyboardType: keyboardType,
-      maxLength: maxLength,
-      minLines: minLines,
-      maxLines: isMultiline ? maxLines : 1,
-      onChanged: onChanged,
-      onSubmitted: onSubmitted,
-      onTap: onTap,
-      autofillHints: autofillHints,
+      enabled: !widget.isDisabled,
+      autocorrect: widget.isAutocorrect,
+      enableSuggestions: widget.isAutocorrect,
+      autofocus: widget.isAutofocus,
+      keyboardType: widget.keyboardType,
+      maxLength: widget.maxLength,
+      minLines: widget.minLines,
+      maxLines: widget.isMultiline ? widget.maxLines : 1,
+      onChanged: (value) {
+        _updateInputState();
+        widget.onChanged?.call(value);
+      },
+      onSubmitted: widget.onSubmitted,
+      onTap: widget.onTap,
+      autofillHints: widget.autofillHints,
       style: TextStyle(
         color: context.colors.neutralColors.textColors.strongColors.base,
       ),
       onTapOutside: (value) {
-        if (closeKeyboardOnTapOutside) {
+        if (widget.closeKeyboardOnTapOutside) {
           FocusManager.instance.primaryFocus?.unfocus();
         }
-        onTapOutside?.call();
+        widget.onTapOutside?.call();
       },
       cursorHeight: 20,
-      cursorErrorColor: context.colors.dangerColors.textColors.strongColors.base,
+      cursorErrorColor:
+          context.colors.dangerColors.textColors.strongColors.base,
       cursorOpacityAnimates: true,
       decoration: InputDecoration(
-        contentPadding: contentPadding,
+        contentPadding: widget.contentPadding,
         filled: true,
-        fillColor: _getFillColor(context),
+        fillColor: fillColor,
         focusedBorder: OutlineInputBorder(
           borderRadius: borderRadius,
           borderSide: const BorderSide(color: borderColor),
@@ -102,38 +177,32 @@ class LmuInputField extends StatelessWidget {
           borderRadius: borderRadius,
           borderSide: const BorderSide(color: borderColor),
         ),
-        hoverColor: context.colors.neutralColors.backgroundColors.mediumColors.base,
-        hintText: hintText,
+        hoverColor:
+            context.colors.neutralColors.backgroundColors.mediumColors.base,
+        hintText: widget.hintText,
         hintStyle: TextStyle(
           color: context.colors.neutralColors.textColors.weakColors.base,
           fontWeight: FontWeight.w400,
         ),
-        prefixIcon: leadingIcon,
-        prefixIconColor: context.colors.neutralColors.textColors.weakColors.base,
-        prefixIconConstraints: const BoxConstraints(
-          minWidth: 56,
-        ),
-        suffixIcon: trailingIcon,
-        suffixIconColor: context.colors.neutralColors.textColors.weakColors.base,
-        prefix: prefix,
-        suffix: suffix,
-        suffixText: suffixText,
+        prefixIcon: widget.leadingIcon,
+        prefixIconColor:
+            context.colors.neutralColors.textColors.weakColors.base,
+        prefixIconConstraints: widget.leadingIconConstraints,
+        suffixIcon: widget.trailingIcon != null
+            ? GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: _handleClear,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: LmuSizes.mediumSmall),
+                  child: widget.trailingIcon!,
+                ),
+              )
+            : null,
+        prefix: widget.prefix,
+        suffix: widget.suffix,
+        suffixText: widget.suffixText,
       ),
+      focusNode: _focusNode,
     );
-  }
-
-  Color _getFillColor(BuildContext context) {
-    return WidgetStateColor.resolveWith((states) {
-      if (states.contains(WidgetState.disabled)) {
-        return context.colors.neutralColors.backgroundColors.mediumColors.base;
-      }
-      if (states.contains(WidgetState.focused)) {
-        return context.colors.neutralColors.backgroundColors.mediumColors.pressed!;
-      }
-      if (states.contains(WidgetState.hovered)) {
-        return context.colors.neutralColors.backgroundColors.mediumColors.pressed!;
-      }
-      return context.colors.neutralColors.backgroundColors.mediumColors.base;
-    });
   }
 }

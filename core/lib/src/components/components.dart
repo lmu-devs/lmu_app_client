@@ -14,3 +14,4 @@ export 'texts/texts.dart';
 export 'tiles/dashed_container.dart';
 export 'tiles/tiles.dart';
 export 'toasts/toasts.dart';
+export 'progress_indicators/progress_indicators.dart';

@@ -56,5 +56,9 @@
   "search": "Search",
     "@search": {
       "description": "Search"
-    }
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel"
+  }
 }

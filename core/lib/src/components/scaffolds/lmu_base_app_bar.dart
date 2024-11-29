@@ -8,6 +8,7 @@ import 'package:core/src/components/carousels/lmu_image_carousel.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:snap_scroll_physics/snap_scroll_physics.dart';
 
 enum LeadingAction {
@@ -450,29 +451,30 @@ class _LeadingAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: _hasImage ? LmuSizes.medium : LmuSizes.mediumLarge,
-        vertical: LmuSizes.xsmall,
-      ),
-      child: GestureDetector(
-        onTap: () {
-          onLeadingActionTap?.call();
-          Navigator.of(context).pop();
-        },
-        child: Container(
-          padding: _hasImage ? const EdgeInsets.all(6) : null,
-          decoration: _hasImage
-              ? BoxDecoration(
-                  color: _backgroundColor,
-                  shape: BoxShape.circle,
-                )
-              : null,
-          child: LmuIcon(
-            icon: _leadingAction!.icon,
-            size: _hasImage ? 24 : 28,
+    return GestureDetector(
+      onTap: () {
+        onLeadingActionTap?.call();
+        Navigator.of(context).pop();
+      },
+      behavior: HitTestBehavior.opaque,
+      child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: _hasImage ? LmuSizes.medium : LmuSizes.mediumLarge,
+            vertical: LmuSizes.xsmall,
           ),
-        ),
+          child: Container(
+            padding: _hasImage ? const EdgeInsets.all(6) : null,
+            decoration: _hasImage
+                ? BoxDecoration(
+                    color: _backgroundColor,
+                    shape: BoxShape.circle,
+                  )
+                : null,
+            child: LmuIcon(
+              icon: _leadingAction!.icon,
+              size: _hasImage ? 24 : 28,
+            ),
+          ),
       ),
     );
   }
@@ -482,9 +484,9 @@ extension LeadingActionIconExtension on LeadingAction {
   IconData get icon {
     switch (this) {
       case LeadingAction.back:
-        return Icons.arrow_back;
+        return LucideIcons.arrow_left;
       case LeadingAction.close:
-        return Icons.close;
+        return LucideIcons.x;
     }
   }
 }
