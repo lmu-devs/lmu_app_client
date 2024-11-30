@@ -2,6 +2,7 @@ import 'package:core/constants.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart' hide Visibility;
 import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:geolocator/geolocator.dart' as geo;
 import 'package:get_it/get_it.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:mensa/mensa.dart';
@@ -47,14 +48,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   PointAnnotationManager? pointAnnotationManager;
   PointAnnotation? previouslySelectedAnnotation;
   final int animationToLocationDuration = 240;
-
-  // ToDo: User location or this point as the center of MUC
-  final Point spawnLocation = Point(
-    coordinates: Position(
-      11.575328,
-      48.137371,
-    ),
-  );
+  CameraOptions? spawnLocation;
 
   List<MensaModel> mensaData = [];
   Map<PointAnnotation, MensaModel> mensaPins = {};
@@ -68,7 +62,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
 
     for (final pinType in pinTypes) {
       final ByteData imageBytes =
-          await rootBundle.load(getPngAssetTheme(context, 'feature_modules/explore/assets/$pinType'));
+      await rootBundle.load(getPngAssetTheme(context, 'feature_modules/explore/assets/$pinType'));
 
       await mapboxMap.style.addStyleImage(
         pinType,
@@ -138,6 +132,44 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
     }
   }
 
+  Future<void> _addUserLocation(MapboxMap mapboxMap) async {
+    await mapboxMap.location.updateSettings(
+      LocationComponentSettings(
+        enabled: true,
+        pulsingEnabled: true,
+        showAccuracyRing: true,
+      ),
+    );
+  }
+
+  Future<CameraOptions> _getUserLocation() async {
+    Point targetLocation;
+
+    try {
+      geo.Position position = await geo.Geolocator.getCurrentPosition();
+
+      targetLocation = Point(
+        coordinates: Position(
+          position.longitude,
+          position.latitude,
+        ),
+      );
+    } catch (e) {
+      debugPrint('Failed to retrieve user location: $e');
+      targetLocation = Point(
+        coordinates: Position(
+          11.575328,
+          48.137371,
+        ),
+      );
+    }
+
+    return CameraOptions(
+      center: targetLocation,
+      zoom: 13.5,
+    );
+  }
+
   Future<void> _configureAttributionElements(MapboxMap mapboxMap, BuildContext context) async {
     await Future.wait(
       [
@@ -168,7 +200,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
         ),
         mapboxMap.compass.updateSettings(
           CompassSettings(
-            marginTop: LmuSizes.xxxlarge + LmuSizes.medium,
+            marginTop: LmuSizes.xxxlarge + LmuSizes.mediumSmall,
             marginRight: LmuSizes.medium,
           ),
         ),
@@ -181,6 +213,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
 
     await _configureAttributionElements(mapboxMap, context);
     await _configureGeoElements(mapboxMap);
+    await _addUserLocation(mapboxMap);
     await _addMarkers(mapboxMap);
     pointAnnotationManager = await mapboxMap.annotations.createPointAnnotationManager();
 
@@ -212,10 +245,10 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
       AnnotationClickListener(
         onAnnotationClick: (annotation) async {
           MapEntry<PointAnnotation, MensaModel>? mapEntry =
-              mensaPins.entries.cast<MapEntry<PointAnnotation, MensaModel>?>().firstWhere(
-                    (entry) => entry?.key.id == annotation.id,
-                    orElse: () => null,
-                  );
+          mensaPins.entries.cast<MapEntry<PointAnnotation, MensaModel>?>().firstWhere(
+                (entry) => entry?.key.id == annotation.id,
+            orElse: () => null,
+          );
 
           MensaModel? selectedMensa = mapEntry?.value;
 
@@ -224,7 +257,8 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
 
             if (previouslySelectedAnnotation != null) {
               await pointAnnotationManager?.update(
-                previouslySelectedAnnotation!..iconSize = 1.0,
+                previouslySelectedAnnotation!
+                  ..iconSize = 1.0,
               );
             }
 
@@ -258,7 +292,9 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
       return mapStyleDark;
     }
 
-    return MediaQuery.of(context).platformBrightness == Brightness.light ? mapStyleLight : mapStyleDark;
+    return MediaQuery
+        .of(context)
+        .platformBrightness == Brightness.light ? mapStyleLight : mapStyleDark;
   }
 
   @override
@@ -267,6 +303,10 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
     mensaData = GetIt.I.get<MensaPublicApi>().mensaData;
     _sheetController = DraggableScrollableController();
     _sheetSizeNotifier = ValueNotifier<int>(0);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      spawnLocation = await _getUserLocation();
+    });
 
     _sheetSizeNotifier.addListener(() {
       if (mapboxMap != null) {
@@ -302,7 +342,8 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
       builder: (context, selectedMensa, child) {
         if (selectedMensa == null && previouslySelectedAnnotation != null) {
           pointAnnotationManager?.update(
-            previouslySelectedAnnotation!..iconSize = 1.0,
+            previouslySelectedAnnotation!
+              ..iconSize = 1.0,
           );
           previouslySelectedAnnotation = null;
         }
@@ -325,37 +366,18 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
                     key: const ValueKey("mapWidget"),
                     styleUri: mapStyleUri,
                     onMapCreated: _onMapCreated,
-                    cameraOptions: CameraOptions(
-                      center: spawnLocation,
-                      zoom: 12.125,
-                    ),
+                    cameraOptions: spawnLocation,
                   ),
                 ),
-                Positioned(
-                  top: LmuSizes.huge + LmuSizes.small,
-                  right: LmuSizes.medium,
-                  child: GestureDetector(
-                    onTap: () => mapboxMap?.easeTo(
-                      CameraOptions(
-                        center: spawnLocation,
+                MapActionButton(
+                  icon: LucideIcons.map_pin,
+                  onTap: () async =>
+                      mapboxMap?.easeTo(
+                        await _getUserLocation(),
+                        MapAnimationOptions(
+                          duration: animationToLocationDuration,
+                        ),
                       ),
-                      MapAnimationOptions(
-                        duration: animationToLocationDuration,
-                      ),
-                    ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: context.colors.neutralColors.backgroundColors.tile,
-                        border: Border.all(color: context.colors.neutralColors.textColors.weakColors.base, width: 0.25),
-                        shape: BoxShape.circle,
-                      ),
-                      padding: const EdgeInsets.all(LmuSizes.mediumSmall),
-                      child: const Icon(
-                        LucideIcons.map_pin,
-                        size: LmuIconSizes.medium,
-                      ),
-                    ),
-                  ),
                 ),
                 MapBottomSheet(
                   selectedMensaNotifier: selectedMensaNotifier,
@@ -366,6 +388,43 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
           },
         );
       },
+    );
+  }
+}
+
+class MapActionButton extends StatelessWidget {
+  const MapActionButton({
+    super.key,
+    required this.icon,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: MediaQuery
+          .of(context)
+          .padding
+          .top + LmuSizes.mediumSmall,
+      right: LmuSizes.medium,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          decoration: BoxDecoration(
+            color: context.colors.neutralColors.backgroundColors.tile,
+            border: Border.all(color: context.colors.neutralColors.textColors.weakColors.base, width: 0.25),
+            shape: BoxShape.circle,
+          ),
+          padding: const EdgeInsets.all(LmuSizes.mediumSmall),
+          child: Icon(
+            icon,
+            size: LmuIconSizes.medium,
+          ),
+        ),
+      ),
     );
   }
 }
