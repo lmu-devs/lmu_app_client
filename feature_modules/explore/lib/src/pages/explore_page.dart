@@ -1,4 +1,5 @@
 import 'package:core/constants.dart';
+import 'package:core/permissions.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart' hide Visibility;
 import 'package:flutter_lucide/flutter_lucide.dart';
@@ -10,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/services.dart';
 
+import '../widgets/map_action_button.dart';
 import '../widgets/map_bottom_sheet.dart';
 
 class ExplorePage extends StatelessWidget {
@@ -62,7 +64,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
 
     for (final pinType in pinTypes) {
       final ByteData imageBytes =
-      await rootBundle.load(getPngAssetTheme(context, 'feature_modules/explore/assets/$pinType'));
+          await rootBundle.load(getPngAssetTheme(context, 'feature_modules/explore/assets/$pinType'));
 
       await mapboxMap.style.addStyleImage(
         pinType,
@@ -210,11 +212,13 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
 
   Future<void> _onMapCreated(MapboxMap mapboxMap) async {
     this.mapboxMap = mapboxMap;
+    spawnLocation = await _getUserLocation();
 
     await _configureAttributionElements(mapboxMap, context);
     await _configureGeoElements(mapboxMap);
     await _addUserLocation(mapboxMap);
     await _addMarkers(mapboxMap);
+
     pointAnnotationManager = await mapboxMap.annotations.createPointAnnotationManager();
 
     var options = <PointAnnotationOptions>[];
@@ -245,10 +249,10 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
       AnnotationClickListener(
         onAnnotationClick: (annotation) async {
           MapEntry<PointAnnotation, MensaModel>? mapEntry =
-          mensaPins.entries.cast<MapEntry<PointAnnotation, MensaModel>?>().firstWhere(
-                (entry) => entry?.key.id == annotation.id,
-            orElse: () => null,
-          );
+              mensaPins.entries.cast<MapEntry<PointAnnotation, MensaModel>?>().firstWhere(
+                    (entry) => entry?.key.id == annotation.id,
+                    orElse: () => null,
+                  );
 
           MensaModel? selectedMensa = mapEntry?.value;
 
@@ -257,8 +261,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
 
             if (previouslySelectedAnnotation != null) {
               await pointAnnotationManager?.update(
-                previouslySelectedAnnotation!
-                  ..iconSize = 1.0,
+                previouslySelectedAnnotation!..iconSize = 1.0,
               );
             }
 
@@ -292,21 +295,19 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
       return mapStyleDark;
     }
 
-    return MediaQuery
-        .of(context)
-        .platformBrightness == Brightness.light ? mapStyleLight : mapStyleDark;
+    return MediaQuery.of(context).platformBrightness == Brightness.light ? mapStyleLight : mapStyleDark;
   }
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await askForLocationPermission(context: context, askEveryTime: false);
+    });
+
     mensaData = GetIt.I.get<MensaPublicApi>().mensaData;
     _sheetController = DraggableScrollableController();
     _sheetSizeNotifier = ValueNotifier<int>(0);
-
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      spawnLocation = await _getUserLocation();
-    });
 
     _sheetSizeNotifier.addListener(() {
       if (mapboxMap != null) {
@@ -342,8 +343,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
       builder: (context, selectedMensa, child) {
         if (selectedMensa == null && previouslySelectedAnnotation != null) {
           pointAnnotationManager?.update(
-            previouslySelectedAnnotation!
-              ..iconSize = 1.0,
+            previouslySelectedAnnotation!..iconSize = 1.0,
           );
           previouslySelectedAnnotation = null;
         }
@@ -371,13 +371,12 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
                 ),
                 MapActionButton(
                   icon: LucideIcons.map_pin,
-                  onTap: () async =>
-                      mapboxMap?.easeTo(
-                        await _getUserLocation(),
-                        MapAnimationOptions(
-                          duration: animationToLocationDuration,
-                        ),
-                      ),
+                  onTap: () async => mapboxMap?.easeTo(
+                    await _getUserLocation(),
+                    MapAnimationOptions(
+                      duration: animationToLocationDuration,
+                    ),
+                  ),
                 ),
                 MapBottomSheet(
                   selectedMensaNotifier: selectedMensaNotifier,
@@ -388,43 +387,6 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
           },
         );
       },
-    );
-  }
-}
-
-class MapActionButton extends StatelessWidget {
-  const MapActionButton({
-    super.key,
-    required this.icon,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      top: MediaQuery
-          .of(context)
-          .padding
-          .top + LmuSizes.mediumSmall,
-      right: LmuSizes.medium,
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          decoration: BoxDecoration(
-            color: context.colors.neutralColors.backgroundColors.tile,
-            border: Border.all(color: context.colors.neutralColors.textColors.weakColors.base, width: 0.25),
-            shape: BoxShape.circle,
-          ),
-          padding: const EdgeInsets.all(LmuSizes.mediumSmall),
-          child: Icon(
-            icon,
-            size: LmuIconSizes.medium,
-          ),
-        ),
-      ),
     );
   }
 }

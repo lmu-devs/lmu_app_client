@@ -10,6 +10,9 @@ class AppTheme {
       lmuColorsLight.neutralColors.textColors,
     ),
     extensions: const <ThemeExtension<dynamic>>[lmuColorsLight],
+    colorScheme: const ColorScheme.light().copyWith(
+      primary: lmuColorsLight.brandColors.backgroundColors.nonInvertableColors.base,
+    ),
     scaffoldBackgroundColor: lmuColorsLight.neutralColors.backgroundColors.base,
     cardColor: lmuColorsLight.neutralColors.backgroundColors.base,
     appBarTheme: AppBarTheme(
@@ -30,7 +33,9 @@ class AppTheme {
       lmuColorsDark.neutralColors.textColors,
     ),
     extensions: const <ThemeExtension<dynamic>>[lmuColorsDark],
-    colorScheme: const ColorScheme.dark(),
+    colorScheme: const ColorScheme.dark().copyWith(
+      primary: lmuColorsDark.brandColors.backgroundColors.nonInvertableColors.base,
+    ),
     scaffoldBackgroundColor: lmuColorsDark.neutralColors.backgroundColors.base,
     cardColor: lmuColorsDark.neutralColors.backgroundColors.base,
     cardTheme: CardTheme(

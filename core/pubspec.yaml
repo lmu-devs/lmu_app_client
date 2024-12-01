@@ -17,6 +17,7 @@ dependencies:
   flutter_lucide: ^1.2.0
   flutter_localizations:
     sdk: flutter
+  permission_handler: ^11.3.1
   intl: any
   tuple: ^2.0.2
   modal_bottom_sheet: ^3.0.0

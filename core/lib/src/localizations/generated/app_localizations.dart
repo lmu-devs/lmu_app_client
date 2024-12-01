@@ -88,7 +88,10 @@ abstract class AppLocalizations {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('de'), Locale('en')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('de'),
+    Locale('en')
+  ];
 
   /// The title of the app
   ///
@@ -173,6 +176,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search'**
   String get search;
+
+  /// Dialog title if location services are off
+  ///
+  /// In en, this message translates to:
+  /// **'Location Services Disabled'**
+  String get locationServiceDialogTitle;
+
+  /// Dialog text if location services are off
+  ///
+  /// In en, this message translates to:
+  /// **'To access all features of the app, please enable location services. This will allow us to provide you with more personalized and accurate information.'**
+  String get locationServiceDialogText;
+
+  /// OK
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// Dialog title if permissions are required
+  ///
+  /// In en, this message translates to:
+  /// **'Permission Required'**
+  String get locationPermissionDialogTitle;
+
+  /// Dialog text if permissions are required
+  ///
+  /// In en, this message translates to:
+  /// **'This feature needs location access. Open settings to grant the permission.'**
+  String get locationPermissionDialogText;
+
+  /// Cancel
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// Settings
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
@@ -191,16 +236,18 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'de':
-      return AppLocalizationsDe();
-    case 'en':
-      return AppLocalizationsEn();
+    case 'de': return AppLocalizationsDe();
+    case 'en': return AppLocalizationsEn();
   }
 
-  throw FlutterError('AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+  throw FlutterError(
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.'
+  );
 }

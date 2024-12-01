@@ -2,7 +2,6 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import '../../extensions/sort_option_sort_extension.dart';
 import '../../repository/api/models/mensa/mensa_model.dart';
@@ -33,33 +32,12 @@ class _MensaOverviewContentViewState extends State<MensaOverviewContentView> {
 
   List<MensaModel> get _mensaModels => widget.mensaModels;
 
-  Future<void> _getPermission() async {
-    await Permission.location.onGrantedCallback(
-      () {
-        print("GRANTED");
-        print(Permission.location.status.isGranted);
-      },
-    ).onDeniedCallback(
-      () {
-        print("DENIED");
-      },
-    ).onPermanentlyDeniedCallback(
-      () {
-        print("MOTHERFUCKER");
-      },
-    ).request();
-  }
-
   @override
   void initState() {
     super.initState();
     _isOpenNowFilerNotifier = ValueNotifier(false);
     _sortOptionNotifier = ValueNotifier(_initialSortOption);
     _sortedMensaModelsNotifier = ValueNotifier(_initialSortOption.sort(_mensaModels));
-
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await _getPermission();
-    });
   }
 
   @override
