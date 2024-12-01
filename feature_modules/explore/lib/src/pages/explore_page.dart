@@ -47,10 +47,10 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   MapWithAnnotationsState();
 
   MapboxMap? mapboxMap;
+  CameraOptions? spawnLocation;
   PointAnnotationManager? pointAnnotationManager;
   PointAnnotation? previouslySelectedAnnotation;
   final int animationToLocationDuration = 240;
-  CameraOptions? spawnLocation;
 
   List<MensaModel> mensaData = [];
   Map<PointAnnotation, MensaModel> mensaPins = {};
@@ -64,7 +64,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
 
     for (final pinType in pinTypes) {
       final ByteData imageBytes =
-          await rootBundle.load(getPngAssetTheme(context, 'feature_modules/explore/assets/$pinType'));
+      await rootBundle.load(getPngAssetTheme(context, 'feature_modules/explore/assets/$pinType'));
 
       await mapboxMap.style.addStyleImage(
         pinType,
@@ -249,10 +249,10 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
       AnnotationClickListener(
         onAnnotationClick: (annotation) async {
           MapEntry<PointAnnotation, MensaModel>? mapEntry =
-              mensaPins.entries.cast<MapEntry<PointAnnotation, MensaModel>?>().firstWhere(
-                    (entry) => entry?.key.id == annotation.id,
-                    orElse: () => null,
-                  );
+          mensaPins.entries.cast<MapEntry<PointAnnotation, MensaModel>?>().firstWhere(
+                (entry) => entry?.key.id == annotation.id,
+            orElse: () => null,
+          );
 
           MensaModel? selectedMensa = mapEntry?.value;
 

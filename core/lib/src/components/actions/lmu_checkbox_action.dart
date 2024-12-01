@@ -1,8 +1,7 @@
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-
-import '../icons/lmu_icon.dart';
+import 'package:lucide_icons_svg/lucide_icons_svg.dart';
 
 class LmuCheckboxAction extends StatelessWidget {
   const LmuCheckboxAction({
@@ -14,11 +13,14 @@ class LmuCheckboxAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final enabledColor = context.colors.brandColors.backgroundColors.nonInvertableColors.base;
-    final disabledColor = context.colors.neutralColors.backgroundColors.strongColors.pressed!;
+    final enabledColor =
+        context.colors.brandColors.backgroundColors.nonInvertableColors.base;
+    final disabledColor =
+        context.colors.neutralColors.backgroundColors.strongColors.pressed!;
     final backgroundColor = context.colors.neutralColors.backgroundColors.base;
-    final iconColor = context.colors.neutralColors.backgroundColors.nonInvertableColors.active!;
-    const animationDuration = Duration(milliseconds: 80);
+    final iconColor = context
+        .colors.neutralColors.backgroundColors.nonInvertableColors.active!;
+    const animationDuration = Duration(milliseconds: 120);
     return AnimatedContainer(
       duration: animationDuration,
       curve: Curves.easeOut,
@@ -37,10 +39,11 @@ class LmuCheckboxAction extends StatelessWidget {
         duration: animationDuration,
         curve: Curves.easeOut,
         child: Center(
-          child: LmuIcon(
-            icon: Icons.check,
-            color: iconColor,
+          child: LucideIcon(
+            LucideIcons.check,
             size: LmuIconSizes.small,
+            strokeWidth: 3,
+            color: iconColor,
           ),
         ),
       ),

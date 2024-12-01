@@ -20,6 +20,6 @@
   "ok": "OK",
   "locationPermissionDialogTitle": "Fehlende Berechtigung",
   "locationPermissionDialogText": "Diese Funktion benötigt deinen Standort. Öffne Einstellungen, um diese Berechtigung zu erteilen.",
-  "cancel": "Zurück",
+  "cancel": "Abbrechen",
   "settings": "Einstellungen"
 }

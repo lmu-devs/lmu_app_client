@@ -1,5 +1,3 @@
-import 'dart:core';
-
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
@@ -27,9 +25,10 @@ class MapBottomSheet extends StatefulWidget {
 
 class MapBottomSheetState extends State<MapBottomSheet> {
   late ValueNotifier<List<String>> _favoriteMensasNotifier;
-  late TextEditingController _searchController;
   late DraggableScrollableController _sheetController;
   double _previousSize = SheetSizes.small.size;
+
+  late TextEditingController _searchController;
 
   late AnimationController _fadeController;
   late Animation<double> _fadeAnimation;
@@ -38,9 +37,9 @@ class MapBottomSheetState extends State<MapBottomSheet> {
   void initState() {
     super.initState();
     _favoriteMensasNotifier = GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier;
-    _searchController = TextEditingController();
     _sheetController = widget.sheetController;
     _sheetController.addListener(_onSheetScroll);
+    _searchController = TextEditingController();
 
     _fadeController = AnimationController(
       vsync: Navigator.of(context),
@@ -118,24 +117,37 @@ class MapBottomSheetState extends State<MapBottomSheet> {
           snapAnimationDuration: const Duration(milliseconds: 250),
           builder: (context, scrollController) {
             return Container(
-              padding: const EdgeInsets.all(LmuSizes.mediumLarge),
               decoration: BoxDecoration(
                 color: context.colors.neutralColors.backgroundColors.base,
                 border: Border(
                   top: BorderSide(
-                    color: context.colors.neutralColors.backgroundColors.strongColors.base,
+                    color: context.colors.neutralColors.borderColors.seperatorDark,
                   ),
                 ),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(LmuSizes.xlarge),
+                  topRight: Radius.circular(LmuSizes.xlarge),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.10),
+                    blurRadius: 24,
+                  ),
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.10),
+                    blurRadius: 64,
+                  ),
+                ],
               ),
               child: SingleChildScrollView(
                 controller: scrollController,
                 physics: const ClampingScrollPhysics(),
-                child: Column(
-                  children: [
-                    if (selectedMensa != null)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: LmuSizes.small),
-                        child: FadeTransition(
+                child: Padding(
+                  padding: const EdgeInsets.all(LmuSizes.mediumLarge),
+                  child: Column(
+                    children: [
+                      if (selectedMensa != null)
+                        FadeTransition(
                           opacity: _fadeAnimation,
                           child: ValueListenableBuilder<List<String>>(
                             valueListenable: _favoriteMensasNotifier,
@@ -156,20 +168,21 @@ class MapBottomSheetState extends State<MapBottomSheet> {
                               );
                             },
                           ),
-                        ),
-                      )
-                    else
-                      const SizedBox.shrink(),
-                    LmuSearchInputField(
-                      context: context,
-                      controller: _searchController,
-                      searchState: selectedMensa != null ? SearchState.filled : SearchState.base,
-                      onClearPressed: () {
-                        _searchController.clear();
-                        widget.selectedMensaNotifier.value = null;
-                      },
-                    ),
-                  ],
+                        )
+                      else
+                        const SizedBox.shrink(),
+                      LmuSearchInputField(
+                        context: context,
+                        controller: _searchController,
+                        focusAfterClear: false,
+                        onClearPressed: () {
+                          _searchController.clear();
+                          widget.selectedMensaNotifier.value = null;
+                        },
+                        isLoading: false,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );

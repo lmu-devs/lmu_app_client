@@ -7,8 +7,8 @@ class LmuDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Divider(
-      thickness: 0.5,
-      height: 0.5,
+      thickness: 1,
+      height: 1,
       color: context.colors.neutralColors.borderColors.seperatorLight,
     );
   }
