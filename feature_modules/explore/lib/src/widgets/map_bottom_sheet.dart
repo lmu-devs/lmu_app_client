@@ -29,6 +29,7 @@ class MapBottomSheetState extends State<MapBottomSheet> {
   double _previousSize = SheetSizes.small.size;
 
   late TextEditingController _searchController;
+  late FocusNode _searchFocusNode;
 
   late AnimationController _fadeController;
   late Animation<double> _fadeAnimation;
@@ -37,9 +38,13 @@ class MapBottomSheetState extends State<MapBottomSheet> {
   void initState() {
     super.initState();
     _favoriteMensasNotifier = GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier;
+
     _sheetController = widget.sheetController;
     _sheetController.addListener(_onSheetScroll);
+
     _searchController = TextEditingController();
+    _searchFocusNode = FocusNode();
+    _searchFocusNode.addListener(_onSearchFocusChange);
 
     _fadeController = AnimationController(
       vsync: Navigator.of(context),
@@ -54,6 +59,8 @@ class MapBottomSheetState extends State<MapBottomSheet> {
   void dispose() {
     _searchController.dispose();
     _sheetController.removeListener(_onSheetScroll);
+    _searchFocusNode.removeListener(_onSearchFocusChange);
+    _searchFocusNode.dispose();
     _fadeController.dispose();
     super.dispose();
   }
@@ -66,6 +73,18 @@ class MapBottomSheetState extends State<MapBottomSheet> {
       }
     }
     _previousSize = _sheetController.size;
+  }
+
+  void _onSearchFocusChange() {
+    if (_searchFocusNode.hasFocus) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _sheetController.animateTo(
+          SheetSizes.large.size,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeIn,
+        );
+      });
+    }
   }
 
   void _animateSheet(MensaModel? selectedMensa) {
@@ -174,6 +193,7 @@ class MapBottomSheetState extends State<MapBottomSheet> {
                       LmuSearchInputField(
                         context: context,
                         controller: _searchController,
+                        focusNode: _searchFocusNode,
                         focusAfterClear: false,
                         onClearPressed: () {
                           _searchController.clear();

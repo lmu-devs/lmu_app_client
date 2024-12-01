@@ -64,7 +64,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
 
     for (final pinType in pinTypes) {
       final ByteData imageBytes =
-      await rootBundle.load(getPngAssetTheme(context, 'feature_modules/explore/assets/$pinType'));
+          await rootBundle.load(getPngAssetTheme(context, 'feature_modules/explore/assets/$pinType'));
 
       await mapboxMap.style.addStyleImage(
         pinType,
@@ -249,10 +249,10 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
       AnnotationClickListener(
         onAnnotationClick: (annotation) async {
           MapEntry<PointAnnotation, MensaModel>? mapEntry =
-          mensaPins.entries.cast<MapEntry<PointAnnotation, MensaModel>?>().firstWhere(
-                (entry) => entry?.key.id == annotation.id,
-            orElse: () => null,
-          );
+              mensaPins.entries.cast<MapEntry<PointAnnotation, MensaModel>?>().firstWhere(
+                    (entry) => entry?.key.id == annotation.id,
+                    orElse: () => null,
+                  );
 
           MensaModel? selectedMensa = mapEntry?.value;
 
@@ -338,55 +338,58 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<MensaModel?>(
-      valueListenable: selectedMensaNotifier,
-      builder: (context, selectedMensa, child) {
-        if (selectedMensa == null && previouslySelectedAnnotation != null) {
-          pointAnnotationManager?.update(
-            previouslySelectedAnnotation!..iconSize = 1.0,
-          );
-          previouslySelectedAnnotation = null;
-        }
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: ValueListenableBuilder<MensaModel?>(
+        valueListenable: selectedMensaNotifier,
+        builder: (context, selectedMensa, child) {
+          if (selectedMensa == null && previouslySelectedAnnotation != null) {
+            pointAnnotationManager?.update(
+              previouslySelectedAnnotation!..iconSize = 1.0,
+            );
+            previouslySelectedAnnotation = null;
+          }
 
-        return Consumer<ThemeProvider>(
-          builder: (context, themeProvider, child) {
-            String mapStyleUri = _getMapStyleUri(themeProvider.themeMode, context);
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              if (mapboxMap != null) {
-                mapboxMap!.loadStyleURI(mapStyleUri);
-                _configureAttributionElements(mapboxMap!, context);
-                _updateMarkers(mapboxMap!);
-              }
-            });
+          return Consumer<ThemeProvider>(
+            builder: (context, themeProvider, child) {
+              String mapStyleUri = _getMapStyleUri(themeProvider.themeMode, context);
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (mapboxMap != null) {
+                  mapboxMap!.loadStyleURI(mapStyleUri);
+                  _configureAttributionElements(mapboxMap!, context);
+                  _updateMarkers(mapboxMap!);
+                }
+              });
 
-            return Stack(
-              children: [
-                SoftBlur(
-                  child: MapWidget(
-                    key: const ValueKey("mapWidget"),
-                    styleUri: mapStyleUri,
-                    onMapCreated: _onMapCreated,
-                    cameraOptions: spawnLocation,
-                  ),
-                ),
-                MapActionButton(
-                  icon: LucideIcons.map_pin,
-                  onTap: () async => mapboxMap?.easeTo(
-                    await _getUserLocation(),
-                    MapAnimationOptions(
-                      duration: animationToLocationDuration,
+              return Stack(
+                children: [
+                  SoftBlur(
+                    child: MapWidget(
+                      key: const ValueKey("mapWidget"),
+                      styleUri: mapStyleUri,
+                      onMapCreated: _onMapCreated,
+                      cameraOptions: spawnLocation,
                     ),
                   ),
-                ),
-                MapBottomSheet(
-                  selectedMensaNotifier: selectedMensaNotifier,
-                  sheetController: _sheetController,
-                ),
-              ],
-            );
-          },
-        );
-      },
+                  MapActionButton(
+                    icon: LucideIcons.map_pin,
+                    onTap: () async => mapboxMap?.easeTo(
+                      await _getUserLocation(),
+                      MapAnimationOptions(
+                        duration: animationToLocationDuration,
+                      ),
+                    ),
+                  ),
+                  MapBottomSheet(
+                    selectedMensaNotifier: selectedMensaNotifier,
+                    sheetController: _sheetController,
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

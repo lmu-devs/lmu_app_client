@@ -12,7 +12,9 @@ import 'package:shared_api/feedback.dart';
 import '../routes/settings_routes.dart';
 
 class SettingsSuccessView extends StatelessWidget {
-  const SettingsSuccessView({super.key});
+  SettingsSuccessView({super.key});
+
+  final FocusNode _searchFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,7 @@ class SettingsSuccessView extends StatelessWidget {
             LmuSearchInputField(
               context: context,
               controller: TextEditingController(),
+              focusNode: _searchFocusNode,
             ),
             const SizedBox(height: LmuSizes.large),
             LmuContentTile(
