@@ -4,7 +4,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'lmu_base_app_bar.dart';
 
-export 'lmu_base_app_bar.dart' show LeadingAction;
+export 'lmu_base_app_bar.dart' show LeadingActionOld;
 
 class LmuScaffoldWithAppBar extends StatelessWidget {
   const LmuScaffoldWithAppBar({
@@ -35,7 +35,7 @@ class LmuScaffoldWithAppBar extends StatelessWidget {
   final double? collapsedTitleHeight;
   final List<String>? imageUrls;
   final List<Widget>? trailingWidgets;
-  final LeadingAction? leadingAction;
+  final LeadingActionOld? leadingAction;
   final MainAxisAlignment largeTitleTrailingWidgetAlignment;
   final bool useModalSheetScrollController;
   final void Function()? onLeadingActionTap;

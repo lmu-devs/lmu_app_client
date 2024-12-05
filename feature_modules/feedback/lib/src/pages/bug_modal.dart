@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
-
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:core/localizations.dart';
+import 'package:core/themes.dart';
+import 'package:flutter/material.dart';
 
 class BugModal extends StatelessWidget {
   const BugModal({super.key});
@@ -11,9 +10,8 @@ class BugModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = context.locals.feedback;
-    return LmuScaffoldWithAppBar(
+    return LmuMasterAppBar(
       largeTitle: localizations.bugTitle,
-      stretch: false,
       body: Stack(
         children: [
           SingleChildScrollView(

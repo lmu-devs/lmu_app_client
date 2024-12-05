@@ -30,6 +30,8 @@ dependencies:
   skeletonizer: ^1.4.2
   flutter_native_splash: ^2.3.1
   share_plus: ^10.1.2
+  flutter_sticky_header: ^0.7.0
+  modal_bottom_sheet: ^3.0.0+1-pre-ohos
 
 dev_dependencies:
   flutter_test:

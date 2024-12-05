@@ -5,6 +5,7 @@ import 'package:core/themes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../repository/api/models/taste_profile/taste_profile.dart';
@@ -43,11 +44,11 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
     final selectedLanguage = Localizations.localeOf(context).languageCode.toUpperCase();
     final localizations = context.locals.canteen;
 
-    return LmuScaffoldWithAppBar(
-      useModalSheetScrollController: true,
-      stretch: false,
+    return LmuMasterAppBar(
       largeTitle: localizations.myTaste,
+      collapsedTitleHeight: CollapsedTitleHeight.large,
       leadingAction: LeadingAction.close,
+      customScrollController: ModalScrollController.of(context),
       trailingWidgets: [
         ValueListenableBuilder(
           valueListenable: _isActiveNotifier,

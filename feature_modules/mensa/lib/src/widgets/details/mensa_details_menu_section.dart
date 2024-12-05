@@ -1,8 +1,8 @@
 import 'package:core/components.dart';
-import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../bloc/menu_cubit/cubit.dart';
@@ -32,55 +32,57 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
   }
 
   @override
+  void dispose() {
+    _pageController.dispose();
+    _tabNotifier.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<MenuCubit, MenuState>(
       bloc: GetIt.I.get<MenuService>().getMenuCubit(_canteenId),
       builder: (context, state) {
         if (state is! MenuLoadSuccess) {
-          return MenuLoadingView(canteendId: _canteenId);
+          return SliverToBoxAdapter(child: MenuLoadingView(canteendId: _canteenId));
         }
 
         final menuModels = state.menuModels;
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            LmuTabBar(
-              activeTabIndexNotifier: _tabNotifier,
-              items: menuModels.map(
-                (dayModel) {
-                  final dateTime = DateTime.parse(dayModel.date);
-                  return LmuTabBarItemData(
-                    title: dateTime.dayName(context.locals.app),
-                  );
-                },
-              ).toList(),
-              onTabChanged: (index, _) {
-                _pageController.animateToPage(
-                  index,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeIn,
+
+        return SliverStickyHeader(
+          sticky: true,
+          header: LmuTabBar(
+            activeTabIndexNotifier: _tabNotifier,
+            items: menuModels.map(
+              (dayModel) {
+                final dateTime = DateTime.parse(dayModel.date);
+                return LmuTabBarItemData(
+                  title: dateTime.dayName(context.locals.app),
+                );
+              },
+            ).toList(),
+            onTabChanged: (index, _) {
+              _pageController.animateToPage(
+                index,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeIn,
+              );
+            },
+          ),
+          sliver: SliverFillRemaining(
+            child: PageView.builder(
+              itemCount: menuModels.length,
+              controller: _pageController,
+              onPageChanged: (index) {
+                _tabNotifier.value = index;
+              },
+              itemBuilder: (_, index) {
+                return MenuContentView(
+                  mensaMenuModel: menuModels[index],
                 );
               },
             ),
-            const LmuDivider(),
-            SizedBox(
-              height: 1500,
-              child: PageView.builder(
-                itemCount: menuModels.length,
-                controller: _pageController,
-                onPageChanged: (index) {
-                  _tabNotifier.value = index;
-                },
-                itemBuilder: (_, index) {
-                  return MenuContentView(
-                    mensaMenuModel: menuModels[index],
-                  );
-                },
-              ),
-            ),
-            const SizedBox(height: LmuSizes.medium),
-          ],
+          ),
         );
       },
     );

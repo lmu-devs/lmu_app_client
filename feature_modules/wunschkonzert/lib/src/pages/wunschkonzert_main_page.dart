@@ -8,7 +8,7 @@ class WunschkonzertMainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const LmuScaffoldWithAppBar(
+    return const LmuMasterAppBar(
       largeTitle: "Wunschkonzert",
       body: WunschkonzertSuccessView(),
     );

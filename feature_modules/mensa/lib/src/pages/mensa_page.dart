@@ -15,7 +15,7 @@ class MensaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = context.locals.canteen;
-    return LmuScaffoldWithAppBar(
+    return LmuMasterAppBar(
       largeTitle: localization.tabTitle,
       largeTitleTrailingWidget: LmuButton(
         title: context.locals.canteen.myTaste,

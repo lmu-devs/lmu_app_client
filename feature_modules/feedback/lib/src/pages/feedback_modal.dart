@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
-
-import 'package:core/themes.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
+import 'package:core/themes.dart';
 import 'package:feedback/src/widgets/widgets.dart';
+import 'package:flutter/material.dart';
 
 class FeedbackModal extends StatelessWidget {
   const FeedbackModal({super.key});
@@ -15,10 +14,9 @@ class FeedbackModal extends StatelessWidget {
     final textController = TextEditingController();
     final feedbackNotifier = ValueNotifier<String?>(null);
 
-    return LmuScaffoldWithAppBar(
+    return LmuMasterAppBar(
       largeTitle: localizations.feedbackTitle,
       largeTitleTrailingWidgetAlignment: MainAxisAlignment.center,
-      stretch: false,
       body: Stack(
         children: [
           SingleChildScrollView(

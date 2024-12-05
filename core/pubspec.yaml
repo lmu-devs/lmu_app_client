@@ -26,6 +26,9 @@ dependencies:
   skeletonizer: ^1.4.2
   snap_scroll_physics: ^0.0.1+3
   lucide_icons_svg: ^0.0.4
+  collection: ^1.18.0
+  flutter_sticky_header: ^0.7.0
+  nested_scroll_view_plus: ^2.0.0
 
 dev_dependencies:
   flutter_test:

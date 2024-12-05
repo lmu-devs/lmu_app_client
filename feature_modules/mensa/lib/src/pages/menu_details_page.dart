@@ -5,6 +5,7 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../repository/api/models/menu/menu_item_model.dart';
 import '../repository/api/models/menu/price_category.dart';
@@ -28,10 +29,9 @@ class MenuDetailsPage extends StatelessWidget {
     final tasteProfileService = GetIt.I<TasteProfileService>();
     final selectedLanguage = Localizations.localeOf(context).languageCode.toUpperCase();
 
-    return LmuScaffoldWithAppBar(
+    return LmuMasterAppBar(
       largeTitle: menuItemModel.title,
-      stretch: false,
-      useModalSheetScrollController: true,
+      customScrollController: ModalScrollController.of(context),
       leadingAction: LeadingAction.close,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),

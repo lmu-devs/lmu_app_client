@@ -11,7 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:snap_scroll_physics/snap_scroll_physics.dart';
 
-enum LeadingAction {
+enum LeadingActionOld {
   back,
   close,
 }
@@ -53,7 +53,7 @@ class LmuBaseAppBar extends StatefulWidget {
   final ScrollController? scrollController;
   final List<String>? imageUrls;
   final List<Widget>? trailingWidgets;
-  final LeadingAction? leadingAction;
+  final LeadingActionOld? leadingAction;
   final void Function()? onLeadingActionTap;
 
   //TODO: Improve retrival of these values
@@ -115,7 +115,7 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
 
   Color get _backgroundColor => widget.backgroundColor ?? Colors.transparent;
 
-  LeadingAction? get _leadingAction => widget.leadingAction;
+  LeadingActionOld? get _leadingAction => widget.leadingAction;
   List<Widget>? get _trailingWidgets => widget.trailingWidgets;
   MainAxisAlignment get _largeTitleTrailingWidgetAlignment => widget.largeTitleTrailingWidgetAlignment;
 
@@ -436,7 +436,7 @@ class _TrailingActions extends StatelessWidget {
 
 class _LeadingAction extends StatelessWidget {
   const _LeadingAction({
-    required LeadingAction leadingAction,
+    required LeadingActionOld leadingAction,
     required bool hasImage,
     required Color backgroundColor,
     this.onLeadingActionTap,
@@ -446,7 +446,7 @@ class _LeadingAction extends StatelessWidget {
 
   final bool _hasImage;
   final Color _backgroundColor;
-  final LeadingAction? _leadingAction;
+  final LeadingActionOld? _leadingAction;
   final void Function()? onLeadingActionTap;
 
   @override
@@ -458,34 +458,34 @@ class _LeadingAction extends StatelessWidget {
       },
       behavior: HitTestBehavior.opaque,
       child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: _hasImage ? LmuSizes.medium : LmuSizes.mediumLarge,
-            vertical: LmuSizes.xsmall,
+        padding: EdgeInsets.symmetric(
+          horizontal: _hasImage ? LmuSizes.medium : LmuSizes.mediumLarge,
+          vertical: LmuSizes.xsmall,
+        ),
+        child: Container(
+          padding: _hasImage ? const EdgeInsets.all(6) : null,
+          decoration: _hasImage
+              ? BoxDecoration(
+                  color: _backgroundColor,
+                  shape: BoxShape.circle,
+                )
+              : null,
+          child: LmuIcon(
+            icon: _leadingAction!.icon,
+            size: _hasImage ? 24 : 28,
           ),
-          child: Container(
-            padding: _hasImage ? const EdgeInsets.all(6) : null,
-            decoration: _hasImage
-                ? BoxDecoration(
-                    color: _backgroundColor,
-                    shape: BoxShape.circle,
-                  )
-                : null,
-            child: LmuIcon(
-              icon: _leadingAction!.icon,
-              size: _hasImage ? 24 : 28,
-            ),
-          ),
+        ),
       ),
     );
   }
 }
 
-extension LeadingActionIconExtension on LeadingAction {
+extension LeadingActionIconExtension on LeadingActionOld {
   IconData get icon {
     switch (this) {
-      case LeadingAction.back:
+      case LeadingActionOld.back:
         return LucideIcons.arrow_left;
-      case LeadingAction.close:
+      case LeadingActionOld.close:
         return LucideIcons.x;
     }
   }
