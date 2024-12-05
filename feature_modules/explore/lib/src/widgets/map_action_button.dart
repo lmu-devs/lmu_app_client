@@ -6,16 +6,18 @@ class MapActionButton extends StatelessWidget {
   const MapActionButton({
     super.key,
     required this.icon,
+    required this.sheetHeight,
     required this.onTap,
   });
 
   final IconData icon;
+  final double sheetHeight;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: MediaQuery.of(context).padding.top + LmuSizes.size_8,
+      bottom: sheetHeight + LmuSizes.size_8,
       right: LmuSizes.size_12,
       child: GestureDetector(
         onTap: onTap,

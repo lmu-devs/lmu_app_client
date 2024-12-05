@@ -12,7 +12,7 @@ extension SheetSizesExtension on SheetSizes {
       case SheetSizes.medium:
         return 0.31;
       case SheetSizes.large:
-        return 0.875;
+        return 0.9;
     }
   }
 }

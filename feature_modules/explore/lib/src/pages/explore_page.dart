@@ -13,6 +13,7 @@ import 'package:flutter/services.dart';
 
 import '../widgets/map_action_button.dart';
 import '../widgets/map_bottom_sheet.dart';
+import '../widgets/map_bottom_sheet_sizes.dart';
 
 class ExplorePage extends StatelessWidget {
   const ExplorePage({super.key});
@@ -57,28 +58,31 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   final ValueNotifier<MensaModel?> selectedMensaNotifier = ValueNotifier<MensaModel?>(null);
 
   late final DraggableScrollableController _sheetController;
-  late final ValueNotifier<int> _sheetSizeNotifier;
+  late final ValueNotifier<double> _sheetSizeNotifier;
 
   Future<void> _loadMarkerImages(MapboxMap mapboxMap, BuildContext context) async {
     final List<String> pinTypes = ['mensa_pin', 'bistro_pin', 'cafe_pin'];
 
     for (final pinType in pinTypes) {
-      final ByteData imageBytes =
-          await rootBundle.load(getPngAssetTheme(context, 'feature_modules/explore/assets/$pinType'));
+      if (context.mounted) {
+        final ByteData imageBytes = await rootBundle.load(
+          getPngAssetTheme(context, 'feature_modules/explore/assets/$pinType'),
+        );
 
-      await mapboxMap.style.addStyleImage(
-        pinType,
-        6,
-        MbxImage(
-          data: imageBytes.buffer.asUint8List(),
-          width: LmuSizes.size_4.floor(),
-          height: LmuSizes.size_4.floor(),
-        ),
-        false,
-        [],
-        [],
-        null,
-      );
+        await mapboxMap.style.addStyleImage(
+          pinType,
+          6,
+          MbxImage(
+            data: imageBytes.buffer.asUint8List(),
+            width: LmuSizes.size_4.floor(),
+            height: LmuSizes.size_4.floor(),
+          ),
+          false,
+          [],
+          [],
+          null,
+        );
+      }
     }
   }
 
@@ -172,19 +176,19 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
     );
   }
 
-  Future<void> _configureAttributionElements(MapboxMap mapboxMap, BuildContext context) async {
+  Future<void> _configureAttributionElements(MapboxMap mapboxMap) async {
     await Future.wait(
       [
         mapboxMap.logo.updateSettings(
           LogoSettings(
-            marginBottom: _sheetSizeNotifier.value + LmuSizes.size_64,
+            marginBottom: _sheetSizeNotifier.value + LmuSizes.size_72,
             marginLeft: LmuSizes.size_12,
             position: OrnamentPosition.BOTTOM_LEFT,
           ),
         ),
         mapboxMap.attribution.updateSettings(
           AttributionSettings(
-            marginBottom: _sheetSizeNotifier.value + LmuSizes.size_64,
+            marginBottom: _sheetSizeNotifier.value + LmuSizes.size_72,
             marginLeft: LmuSizes.size_32,
             position: OrnamentPosition.BOTTOM_LEFT,
             iconColor: Colors.transparent.value,
@@ -202,8 +206,9 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
         ),
         mapboxMap.compass.updateSettings(
           CompassSettings(
-            marginTop: LmuSizes.size_48 + LmuSizes.size_8,
+            marginBottom: _sheetSizeNotifier.value + LmuSizes.size_96 + LmuSizes.size_16,
             marginRight: LmuSizes.size_12,
+            position: OrnamentPosition.BOTTOM_RIGHT,
           ),
         ),
       ],
@@ -214,7 +219,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
     this.mapboxMap = mapboxMap;
     spawnLocation = await _getUserLocation();
 
-    await _configureAttributionElements(mapboxMap, context);
+    await _configureAttributionElements(mapboxMap);
     await _configureGeoElements(mapboxMap);
     await _addUserLocation(mapboxMap);
     await _addMarkers(mapboxMap);
@@ -307,25 +312,26 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
 
     mensaData = GetIt.I.get<MensaPublicApi>().mensaData;
     _sheetController = DraggableScrollableController();
-    _sheetSizeNotifier = ValueNotifier<int>(0);
+    _sheetSizeNotifier = ValueNotifier<double>(0.0);
 
     _sheetSizeNotifier.addListener(() {
       if (mapboxMap != null) {
         WidgetsBinding.instance.addPostFrameCallback((_) async {
-          await _configureAttributionElements(mapboxMap!, context);
+          await _configureAttributionElements(mapboxMap!);
+          await _configureGeoElements(mapboxMap!);
         });
       }
     });
 
     _sheetController.addListener(() {
-      int newSize = (_sheetController.sizeToPixels(_sheetController.size)).ceil();
-      if (_sheetSizeNotifier.value != newSize) {
+      double newSize = double.parse(_sheetController.sizeToPixels(_sheetController.size).toStringAsFixed(2));
+      if (_sheetSizeNotifier.value != newSize && newSize <= _sheetController.sizeToPixels(SheetSizes.medium.size)) {
         _sheetSizeNotifier.value = newSize;
       }
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _sheetSizeNotifier.value = _sheetController.sizeToPixels(_sheetController.size).ceil();
+      _sheetSizeNotifier.value = double.parse(_sheetController.sizeToPixels(_sheetController.size).toStringAsFixed(2));
     });
   }
 
@@ -354,7 +360,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (mapboxMap != null) {
                 mapboxMap!.loadStyleURI(mapStyleUri);
-                _configureAttributionElements(mapboxMap!, context);
+                _configureAttributionElements(mapboxMap!);
                 _updateMarkers(mapboxMap!);
               }
             });
@@ -362,11 +368,11 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
             return Stack(
               children: [
                 SingleChildScrollView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      child: SoftBlur(
-                        child: MapWidget(
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: SoftBlur(
+                      child: MapWidget(
                         key: const ValueKey("mapWidget"),
                         styleUri: mapStyleUri,
                         onMapCreated: _onMapCreated,
@@ -375,15 +381,20 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
                     ),
                   ),
                 ),
-                MapActionButton(
-                  icon: LucideIcons.map_pin,
-                  onTap: () async => mapboxMap?.easeTo(
-                    await _getUserLocation(),
-                    MapAnimationOptions(
-                      duration: animationToLocationDuration,
-                    ),
-                  ),
-                ),
+                ValueListenableBuilder(
+                    valueListenable: _sheetSizeNotifier,
+                    builder: (context, sheetSize, child) {
+                      return MapActionButton(
+                        icon: LucideIcons.map_pin,
+                        sheetHeight: sheetSize,
+                        onTap: () async => mapboxMap?.easeTo(
+                          await _getUserLocation(),
+                          MapAnimationOptions(
+                            duration: animationToLocationDuration,
+                          ),
+                        ),
+                      );
+                    }),
                 MapBottomSheet(
                   selectedMensaNotifier: selectedMensaNotifier,
                   sheetController: _sheetController,
