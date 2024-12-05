@@ -206,7 +206,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
         ),
         mapboxMap.compass.updateSettings(
           CompassSettings(
-            marginBottom: _sheetSizeNotifier.value + LmuSizes.size_96 + LmuSizes.size_16,
+            marginBottom: _sheetSizeNotifier.value + LmuSizes.size_112,
             marginRight: LmuSizes.size_12,
             position: OrnamentPosition.BOTTOM_RIGHT,
           ),
@@ -217,7 +217,6 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
 
   Future<void> _onMapCreated(MapboxMap mapboxMap) async {
     this.mapboxMap = mapboxMap;
-    spawnLocation = await _getUserLocation();
 
     await _configureAttributionElements(mapboxMap);
     await _configureGeoElements(mapboxMap);
@@ -308,6 +307,8 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await askForLocationPermission(context: context, askEveryTime: false);
+      spawnLocation = await _getUserLocation();
+      await mapboxMap?.setCamera(spawnLocation!);
     });
 
     mensaData = GetIt.I.get<MensaPublicApi>().mensaData;
@@ -331,7 +332,9 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _sheetSizeNotifier.value = double.parse(_sheetController.sizeToPixels(_sheetController.size).toStringAsFixed(2));
+      _sheetSizeNotifier.value = double.parse(
+        _sheetController.sizeToPixels(_sheetController.size).toStringAsFixed(2),
+      );
     });
   }
 

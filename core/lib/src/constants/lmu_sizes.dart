@@ -41,4 +41,7 @@ class LmuSizes {
 
   /// 96px
   static const double size_96 = 96.0;
+
+  /// 112px
+  static const double size_112 = 112.0;
 }
