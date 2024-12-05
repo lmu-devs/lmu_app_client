@@ -41,7 +41,7 @@ class MenuLoadingView extends StatelessWidget {
           const LmuDivider(),
           ListView.builder(
             shrinkWrap: true,
-            padding: const EdgeInsets.all(LmuSizes.mediumLarge),
+            padding: const EdgeInsets.all(LmuSizes.size_16),
             physics: const NeverScrollableScrollPhysics(),
             itemCount: 7,
             itemBuilder: (context, index) {

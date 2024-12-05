@@ -18,12 +18,12 @@ class MensaPlaceholderTile extends StatelessWidget {
       dashSpace: 7.5,
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.all(LmuSizes.mediumLarge),
+          padding: const EdgeInsets.all(LmuSizes.size_16),
           child: Wrap(
             alignment: WrapAlignment.center,
             crossAxisAlignment: WrapCrossAlignment.center,
-            spacing: LmuSizes.xsmall,
-            runSpacing: LmuSizes.xsmall,
+            spacing: LmuSizes.size_2,
+            runSpacing: LmuSizes.size_2,
             children: content,
           ),
         ),

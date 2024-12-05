@@ -28,7 +28,7 @@ class LmuHeader extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: showExpanded ? LmuSizes.xxlarge : LmuSizes.xxxlarge,
+          height: showExpanded ? LmuSizes.size_32 : LmuSizes.size_48,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -65,7 +65,7 @@ class LmuHeader extends StatelessWidget {
         ),
         if (title != null && showExpanded)
           SizedBox(
-            height: LmuSizes.xxxlarge,
+            height: LmuSizes.size_48,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [

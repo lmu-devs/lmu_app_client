@@ -93,7 +93,7 @@ class _LmuImageCarouselState extends State<LmuImageCarousel> {
           ),
         ),
         Positioned(
-          bottom: LmuSizes.medium,
+          bottom: LmuSizes.size_12,
           left: 0,
           right: 0,
           child: Center(
@@ -108,13 +108,13 @@ class _LmuImageCarouselState extends State<LmuImageCarousel> {
                       onTap: () => _onDotTapped(index),
                       child: Container(
                         margin: const EdgeInsets.symmetric(
-                          horizontal: LmuSizes.small,
+                          horizontal: LmuSizes.size_4,
                         ),
-                        height: LmuSizes.mediumSmall,
-                        width: LmuSizes.mediumSmall,
+                        height: LmuSizes.size_8,
+                        width: LmuSizes.size_8,
                         decoration: BoxDecoration(
                           color: currentPage == index ? enabledColor : disabledColor,
-                          borderRadius: BorderRadius.circular(LmuSizes.mediumSmall),
+                          borderRadius: BorderRadius.circular(LmuSizes.size_8),
                         ),
                       ),
                     ),

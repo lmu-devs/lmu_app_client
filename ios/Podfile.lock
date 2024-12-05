@@ -5,6 +5,8 @@ PODS:
   - fluttertoast (0.0.2):
     - Flutter
     - Toast
+  - geolocator_apple (1.2.0):
+    - Flutter
   - mapbox_maps_flutter (2.4.1):
     - Flutter
     - MapboxMaps (~> 11.8.0)
@@ -35,6 +37,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - mapbox_maps_flutter (from `.symlinks/plugins/mapbox_maps_flutter/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
@@ -57,6 +60,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_native_splash/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
+  geolocator_apple:
+    :path: ".symlinks/plugins/geolocator_apple/ios"
   mapbox_maps_flutter:
     :path: ".symlinks/plugins/mapbox_maps_flutter/ios"
   path_provider_foundation:
@@ -74,6 +79,7 @@ SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_native_splash: edf599c81f74d093a4daf8e17bd7a018854bc778
   fluttertoast: e9a18c7be5413da53898f660530c56f35edfba9c
+  geolocator_apple: 9bcea1918ff7f0062d98345d238ae12718acfbc1
   mapbox_maps_flutter: 84ab1eb6c6c7731e12cc70f6b2d9deb89a78f0fa
   MapboxCommon: 95fe03b74d0d0ca39dc646ca14862deb06875151
   MapboxCoreMaps: f2a82182c5f6c6262220b81547c6df708012932b
@@ -86,6 +92,6 @@ SPEC CHECKSUMS:
   Turf: a1604e74adce15c58462c9ae2acdbf049d5be35e
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
 
-PODFILE CHECKSUM: 7be2f5f74864d463a8ad433546ed1de7e0f29aef
+PODFILE CHECKSUM: b56808864a955218b2ce8efe23ca416d79731a08
 
 COCOAPODS: 1.16.2

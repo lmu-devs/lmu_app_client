@@ -18,4 +18,10 @@ class ExploreLocalizationsDe extends ExploreLocalizations {
 
   @override
   String get googleMaps => 'Google Maps';
+
+  @override
+  String get copyToClipboard => 'Oder Adresse kopieren';
+
+  @override
+  String get copiedToClipboard => 'Adresse kopiert';
 }

@@ -64,7 +64,7 @@ class LmuTileHeadline extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(height: LmuSizes.medium),
+        const SizedBox(height: LmuSizes.size_12),
         if (bottomWidget != null)
           Column(
             children: [
@@ -74,7 +74,7 @@ class LmuTileHeadline extends StatelessWidget {
                 ),
                 child: bottomWidget!,
               ),
-              const SizedBox(height: LmuSizes.mediumLarge),
+              const SizedBox(height: LmuSizes.size_16),
             ],
           ),
       ],

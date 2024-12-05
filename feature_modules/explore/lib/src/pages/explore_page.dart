@@ -1,6 +1,9 @@
 import 'package:core/constants.dart';
+import 'package:core/permissions.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart' hide Visibility;
+import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:geolocator/geolocator.dart' as geo;
 import 'package:get_it/get_it.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:mensa/mensa.dart';
@@ -8,7 +11,9 @@ import 'package:provider/provider.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/services.dart';
 
+import '../widgets/map_action_button.dart';
 import '../widgets/map_bottom_sheet.dart';
+import '../widgets/map_bottom_sheet_sizes.dart';
 
 class ExplorePage extends StatelessWidget {
   const ExplorePage({super.key});
@@ -43,35 +48,41 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   MapWithAnnotationsState();
 
   MapboxMap? mapboxMap;
+  CameraOptions? spawnLocation;
   PointAnnotationManager? pointAnnotationManager;
+  PointAnnotation? previouslySelectedAnnotation;
+  final int animationToLocationDuration = 240;
+
   List<MensaModel> mensaData = [];
   Map<PointAnnotation, MensaModel> mensaPins = {};
-  PointAnnotation? previouslySelectedAnnotation;
   final ValueNotifier<MensaModel?> selectedMensaNotifier = ValueNotifier<MensaModel?>(null);
 
   late final DraggableScrollableController _sheetController;
-  late final ValueNotifier<int> _sheetSizeNotifier;
+  late final ValueNotifier<double> _sheetSizeNotifier;
 
   Future<void> _loadMarkerImages(MapboxMap mapboxMap, BuildContext context) async {
     final List<String> pinTypes = ['mensa_pin', 'bistro_pin', 'cafe_pin'];
 
     for (final pinType in pinTypes) {
-      final ByteData imageBytes =
-          await rootBundle.load(getPngAssetTheme(context, 'feature_modules/explore/assets/$pinType'));
+      if (context.mounted) {
+        final ByteData imageBytes = await rootBundle.load(
+          getPngAssetTheme(context, 'feature_modules/explore/assets/$pinType'),
+        );
 
-      await mapboxMap.style.addStyleImage(
-        pinType,
-        6,
-        MbxImage(
-          data: imageBytes.buffer.asUint8List(),
-          width: LmuSizes.small.floor(),
-          height: LmuSizes.small.floor(),
-        ),
-        false,
-        [],
-        [],
-        null,
-      );
+        await mapboxMap.style.addStyleImage(
+          pinType,
+          6,
+          MbxImage(
+            data: imageBytes.buffer.asUint8List(),
+            width: LmuSizes.size_4.floor(),
+            height: LmuSizes.size_4.floor(),
+          ),
+          false,
+          [],
+          [],
+          null,
+        );
+      }
     }
   }
 
@@ -127,40 +138,91 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
     }
   }
 
-  Future<void> _configureAttribution(MapboxMap mapboxMap, BuildContext context) async {
+  Future<void> _addUserLocation(MapboxMap mapboxMap) async {
+    await mapboxMap.location.updateSettings(
+      LocationComponentSettings(
+        enabled: true,
+        pulsingEnabled: true,
+        showAccuracyRing: true,
+      ),
+    );
+  }
+
+  Future<CameraOptions> _getUserLocation() async {
+    Point targetLocation;
+
+    try {
+      geo.Position position = await geo.Geolocator.getCurrentPosition();
+
+      targetLocation = Point(
+        coordinates: Position(
+          position.longitude,
+          position.latitude,
+        ),
+      );
+    } catch (e) {
+      debugPrint('Failed to retrieve user location: $e');
+      targetLocation = Point(
+        coordinates: Position(
+          11.575328,
+          48.137371,
+        ),
+      );
+    }
+
+    return CameraOptions(
+      center: targetLocation,
+      zoom: 13.5,
+    );
+  }
+
+  Future<void> _configureAttributionElements(MapboxMap mapboxMap) async {
     await Future.wait(
       [
-        mapboxMap.attribution.updateSettings(
-          AttributionSettings(
-            marginBottom: _sheetSizeNotifier.value + LmuSizes.medium,
-            marginRight: LmuSizes.medium,
-            position: OrnamentPosition.BOTTOM_RIGHT,
-            iconColor: context.colors.neutralColors.textColors.weakColors.base.value,
-          ),
-        ),
         mapboxMap.logo.updateSettings(
           LogoSettings(
-            marginBottom: _sheetSizeNotifier.value + LmuSizes.medium,
-            marginLeft: LmuSizes.medium,
+            marginBottom: _sheetSizeNotifier.value + LmuSizes.size_72,
+            marginLeft: LmuSizes.size_12,
             position: OrnamentPosition.BOTTOM_LEFT,
+          ),
+        ),
+        mapboxMap.attribution.updateSettings(
+          AttributionSettings(
+            marginBottom: _sheetSizeNotifier.value + LmuSizes.size_72,
+            marginLeft: LmuSizes.size_32,
+            position: OrnamentPosition.BOTTOM_LEFT,
+            iconColor: Colors.transparent.value,
           ),
         ),
       ],
     );
   }
 
-  Future<void> _configureScale(MapboxMap mapboxMap) async {
-    await mapboxMap.scaleBar.updateSettings(
-      ScaleBarSettings(enabled: false),
+  Future<void> _configureGeoElements(MapboxMap mapboxMap) async {
+    await Future.wait(
+      [
+        mapboxMap.scaleBar.updateSettings(
+          ScaleBarSettings(enabled: false),
+        ),
+        mapboxMap.compass.updateSettings(
+          CompassSettings(
+            marginBottom: _sheetSizeNotifier.value + LmuSizes.size_112,
+            marginRight: LmuSizes.size_12,
+            position: OrnamentPosition.BOTTOM_RIGHT,
+          ),
+        ),
+      ],
     );
   }
 
   Future<void> _onMapCreated(MapboxMap mapboxMap) async {
     this.mapboxMap = mapboxMap;
 
-    await _configureAttribution(mapboxMap, context);
-    await _configureScale(mapboxMap);
+    await _configureAttributionElements(mapboxMap);
+    await _configureGeoElements(mapboxMap);
+    await _addUserLocation(mapboxMap);
     await _addMarkers(mapboxMap);
+
     pointAnnotationManager = await mapboxMap.annotations.createPointAnnotationManager();
 
     var options = <PointAnnotationOptions>[];
@@ -219,7 +281,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
               center: annotation.geometry,
             ),
             MapAnimationOptions(
-              duration: 60,
+              duration: animationToLocationDuration,
             ),
           );
         },
@@ -243,27 +305,36 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await askForLocationPermission(context: context, askEveryTime: false);
+      spawnLocation = await _getUserLocation();
+      await mapboxMap?.setCamera(spawnLocation!);
+    });
+
     mensaData = GetIt.I.get<MensaPublicApi>().mensaData;
     _sheetController = DraggableScrollableController();
-    _sheetSizeNotifier = ValueNotifier<int>(0);
+    _sheetSizeNotifier = ValueNotifier<double>(0.0);
 
     _sheetSizeNotifier.addListener(() {
       if (mapboxMap != null) {
         WidgetsBinding.instance.addPostFrameCallback((_) async {
-          await _configureAttribution(mapboxMap!, context);
+          await _configureAttributionElements(mapboxMap!);
+          await _configureGeoElements(mapboxMap!);
         });
       }
     });
 
     _sheetController.addListener(() {
-      int newSize = (_sheetController.sizeToPixels(_sheetController.size)).ceil();
-      if (_sheetSizeNotifier.value != newSize) {
+      double newSize = double.parse(_sheetController.sizeToPixels(_sheetController.size).toStringAsFixed(2));
+      if (_sheetSizeNotifier.value != newSize && newSize <= _sheetController.sizeToPixels(SheetSizes.medium.size)) {
         _sheetSizeNotifier.value = newSize;
       }
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _sheetSizeNotifier.value = _sheetController.sizeToPixels(_sheetController.size).ceil();
+      _sheetSizeNotifier.value = double.parse(
+        _sheetController.sizeToPixels(_sheetController.size).toStringAsFixed(2),
+      );
     });
   }
 
@@ -292,29 +363,41 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (mapboxMap != null) {
                 mapboxMap!.loadStyleURI(mapStyleUri);
-                _configureAttribution(mapboxMap!, context);
+                _configureAttributionElements(mapboxMap!);
                 _updateMarkers(mapboxMap!);
               }
             });
 
             return Stack(
               children: [
-                SoftBlur(
-                  child: MapWidget(
-                    key: const ValueKey("mapWidget"),
-                    styleUri: mapStyleUri,
-                    onMapCreated: _onMapCreated,
-                    cameraOptions: CameraOptions(
-                      center: Point(
-                        coordinates: Position(
-                          11.582,
-                          48.1351,
-                        ),
+                SingleChildScrollView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: SoftBlur(
+                      child: MapWidget(
+                        key: const ValueKey("mapWidget"),
+                        styleUri: mapStyleUri,
+                        onMapCreated: _onMapCreated,
+                        cameraOptions: spawnLocation,
                       ),
-                      zoom: 12.0,
                     ),
                   ),
                 ),
+                ValueListenableBuilder(
+                    valueListenable: _sheetSizeNotifier,
+                    builder: (context, sheetSize, child) {
+                      return MapActionButton(
+                        icon: LucideIcons.map_pin,
+                        sheetHeight: sheetSize,
+                        onTap: () async => mapboxMap?.easeTo(
+                          await _getUserLocation(),
+                          MapAnimationOptions(
+                            duration: animationToLocationDuration,
+                          ),
+                        ),
+                      );
+                    }),
                 MapBottomSheet(
                   selectedMensaNotifier: selectedMensaNotifier,
                   sheetController: _sheetController,

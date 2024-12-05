@@ -25,9 +25,11 @@ class MapBottomSheet extends StatefulWidget {
 
 class MapBottomSheetState extends State<MapBottomSheet> {
   late ValueNotifier<List<String>> _favoriteMensasNotifier;
-  late TextEditingController _searchController;
   late DraggableScrollableController _sheetController;
   double _previousSize = SheetSizes.small.size;
+
+  late TextEditingController _searchController;
+  late FocusNode _searchFocusNode;
 
   late AnimationController _fadeController;
   late Animation<double> _fadeAnimation;
@@ -35,21 +37,21 @@ class MapBottomSheetState extends State<MapBottomSheet> {
   @override
   void initState() {
     super.initState();
-    _favoriteMensasNotifier =
-        GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier;
-    _searchController = TextEditingController();
+    _favoriteMensasNotifier = GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier;
+
     _sheetController = widget.sheetController;
     _sheetController.addListener(_onSheetScroll);
 
+    _searchController = TextEditingController();
+    _searchFocusNode = FocusNode();
+    _searchFocusNode.addListener(_onSearchFocusChange);
+
     _fadeController = AnimationController(
       vsync: Navigator.of(context),
-      duration: const Duration(milliseconds: 550),
+      duration: const Duration(milliseconds: 250),
     );
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _fadeController,
-        curve: LmuAnimations.fastSmooth,
-      ),
+      CurvedAnimation(parent: _fadeController, curve: Curves.easeInOut),
     );
   }
 
@@ -57,13 +59,15 @@ class MapBottomSheetState extends State<MapBottomSheet> {
   void dispose() {
     _searchController.dispose();
     _sheetController.removeListener(_onSheetScroll);
+    _searchFocusNode.removeListener(_onSearchFocusChange);
+    _searchFocusNode.dispose();
     _fadeController.dispose();
     super.dispose();
   }
 
   void _onSheetScroll() {
-    if (_previousSize >= SheetSizes.medium.size &&
-        _sheetController.size < SheetSizes.medium.size) {
+    if (double.parse(_previousSize.toStringAsFixed(2)) >= SheetSizes.medium.size &&
+        double.parse(_sheetController.size.toStringAsFixed(2)) < SheetSizes.medium.size) {
       if (widget.selectedMensaNotifier.value != null) {
         widget.selectedMensaNotifier.value = null;
       }
@@ -71,21 +75,35 @@ class MapBottomSheetState extends State<MapBottomSheet> {
     _previousSize = _sheetController.size;
   }
 
+  void _onSearchFocusChange() {
+    if (_searchFocusNode.hasFocus) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _sheetController.animateTo(
+          SheetSizes.large.size,
+          duration: const Duration(milliseconds: 300),
+          curve: LmuAnimations.fastSmooth,
+        );
+      });
+    }
+  }
+
   void _animateSheet(MensaModel? selectedMensa) {
     if (selectedMensa != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _sheetController.animateTo(
           SheetSizes.medium.size,
-          duration: const Duration(milliseconds: 500),
-          curve: LmuAnimations.fastSmooth,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeIn,
         );
       });
       _fadeController.forward();
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        _sheetController.animateTo(SheetSizes.small.size,
-            duration: const Duration(milliseconds: 500),
-            curve: LmuAnimations.fastSmooth);
+        _sheetController.animateTo(
+          SheetSizes.small.size,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
       });
       _fadeController.reverse();
     }
@@ -98,11 +116,7 @@ class MapBottomSheetState extends State<MapBottomSheet> {
       builder: (context, selectedMensa, child) {
         List<double> snapSizes = selectedMensa != null
             ? [SheetSizes.medium.size, SheetSizes.large.size]
-            : [
-                SheetSizes.small.size,
-                SheetSizes.medium.size,
-                SheetSizes.large.size
-              ];
+            : [SheetSizes.small.size, SheetSizes.medium.size, SheetSizes.large.size];
 
         _animateSheet(selectedMensa);
 
@@ -123,12 +137,15 @@ class MapBottomSheetState extends State<MapBottomSheet> {
           builder: (context, scrollController) {
             return Container(
               decoration: BoxDecoration(
+                color: context.colors.neutralColors.backgroundColors.base,
                 border: Border(
                   top: BorderSide(
-                    color:
-                        context.colors.neutralColors.borderColors.seperatorDark,
-                    width: .5,
+                    color: context.colors.neutralColors.borderColors.seperatorDark,
                   ),
+                ),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(LmuSizes.size_24),
+                  topRight: Radius.circular(LmuSizes.size_24),
                 ),
                 boxShadow: [
                   BoxShadow(
@@ -140,17 +157,12 @@ class MapBottomSheetState extends State<MapBottomSheet> {
                     blurRadius: 64,
                   ),
                 ],
-                color: context.colors.neutralColors.backgroundColors.base,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(LmuSizes.xlarge),
-                  topRight: Radius.circular(LmuSizes.xlarge),
-                ),
               ),
               child: SingleChildScrollView(
                 controller: scrollController,
                 physics: const ClampingScrollPhysics(),
                 child: Padding(
-                  padding: const EdgeInsets.all(LmuSizes.mediumLarge),
+                  padding: const EdgeInsets.all(LmuSizes.size_16),
                   child: Column(
                     children: [
                       if (selectedMensa != null)
@@ -161,8 +173,7 @@ class MapBottomSheetState extends State<MapBottomSheet> {
                             builder: (context, favoriteMensas, _) {
                               return MensaOverviewTile(
                                 mensaModel: selectedMensa,
-                                isFavorite: favoriteMensas
-                                    .contains(selectedMensa.canteenId),
+                                isFavorite: favoriteMensas.contains(selectedMensa.canteenId),
                                 hasLargeImage: false,
                                 hasButton: true,
                                 buttonText: context.locals.explore.navigate,
@@ -170,8 +181,8 @@ class MapBottomSheetState extends State<MapBottomSheet> {
                                   context,
                                   content: NavigationSheet(
                                     latitude: selectedMensa.location.latitude,
-                                    longitude:
-                                        selectedMensa.location.longitude,
+                                    longitude: selectedMensa.location.longitude,
+                                    address: selectedMensa.location.address,
                                   ),
                                 ),
                               );
@@ -183,12 +194,13 @@ class MapBottomSheetState extends State<MapBottomSheet> {
                       LmuSearchInputField(
                         context: context,
                         controller: _searchController,
+                        focusNode: _searchFocusNode,
                         focusAfterClear: false,
                         onClearPressed: () {
                           _searchController.clear();
                           widget.selectedMensaNotifier.value = null;
                         },
-                        isLoading: true,
+                        isLoading: false,
                       ),
                     ],
                   ),

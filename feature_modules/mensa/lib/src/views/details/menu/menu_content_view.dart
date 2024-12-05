@@ -31,7 +31,7 @@ class MenuContentView extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
+      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
       child: ValueListenableBuilder(
         valueListenable: tasteProfileActiveNotifier,
         builder: (context, isActive, _) {
@@ -52,14 +52,14 @@ class MenuContentView extends StatelessWidget {
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const SizedBox(height: LmuSizes.xlarge),
+                  const SizedBox(height: LmuSizes.size_24),
                   MenuFilteredSection(filteredMenuitems: filteredMenuitems),
                   MenuExcludedSection(
                     excludedMenuItems: excludedMenuItems,
                     excludedLabelItems: excludedLabelItems,
                     isActive: isActive,
                   ),
-                  const SizedBox(height: LmuSizes.xxlarge),
+                  const SizedBox(height: LmuSizes.size_32),
                 ],
               );
             },

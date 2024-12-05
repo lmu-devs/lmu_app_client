@@ -30,24 +30,24 @@ class MenuItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.medium : LmuSizes.none),
+      padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.size_12 : LmuSizes.none),
       child: GestureDetector(
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
             color: context.colors.neutralColors.backgroundColors.tile,
-            borderRadius: BorderRadius.circular(LmuSizes.medium),
+            borderRadius: BorderRadius.circular(LmuSizes.size_12),
           ),
           width: double.infinity,
           child: Stack(
             children: [
               Padding(
-                padding: const EdgeInsets.all(LmuSizes.mediumLarge),
+                padding: const EdgeInsets.all(LmuSizes.size_16),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     LmuText.h3(getDishTypeEmoji(menuItemModel.dishType)),
-                    const SizedBox(width: LmuSizes.medium),
+                    const SizedBox(width: LmuSizes.size_12),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,10 +64,10 @@ class MenuItemTile extends StatelessWidget {
                           ),
                           if (excludedLabelItemsName != null && excludedLabelItemsName!.isNotEmpty)
                             Padding(
-                              padding: const EdgeInsets.only(top: LmuSizes.mediumSmall),
+                              padding: const EdgeInsets.only(top: LmuSizes.size_8),
                               child: Wrap(
-                                spacing: LmuSizes.small,
-                                runSpacing: LmuSizes.small,
+                                spacing: LmuSizes.size_4,
+                                runSpacing: LmuSizes.size_4,
                                 children: excludedLabelItemsName!.mapIndexed(
                                   (index, name) {
                                     return LmuInTextVisual.text(
@@ -81,7 +81,7 @@ class MenuItemTile extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(width: LmuSizes.medium),
+                    const SizedBox(width: LmuSizes.size_12),
                     GestureDetector(
                       behavior: HitTestBehavior.opaque,
                       onTap: () => _toggleDishFavorite(context),
@@ -90,7 +90,7 @@ class MenuItemTile extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.symmetric(vertical: LmuSizes.xsmall),
+                            padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_2),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -101,14 +101,14 @@ class MenuItemTile extends StatelessWidget {
                                       : menuItemModel.ratingModel.likeCount.toString(),
                                   color: context.colors.neutralColors.textColors.weakColors.base,
                                 ),
-                                const SizedBox(width: LmuSizes.small),
+                                const SizedBox(width: LmuSizes.size_4),
                                 StarIcon(isActive: isFavorite),
                               ],
                             ),
                           ),
-                          const SizedBox(height: LmuSizes.small),
+                          const SizedBox(height: LmuSizes.size_4),
                           ConstrainedBox(
-                            constraints: const BoxConstraints(minWidth: LmuSizes.large),
+                            constraints: const BoxConstraints(minWidth: LmuSizes.size_20),
                             child: Center(
                               child: LmuText.bodyXSmall(
                                 menuItemModel.priceSimple,

@@ -47,5 +47,23 @@ class AppLocalizationsDe extends AppLocalizations {
   String get search => 'Suchen';
 
   @override
+  String get locationServiceDialogTitle => 'Standortdienste deaktiviert';
+
+  @override
+  String get locationServiceDialogText => 'Um alle Funktionen der App nutzen zu können, aktiviere bitte deine Standortdienste. So können wir dir personalisierte und genauere Informationen bieten.';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get locationPermissionDialogTitle => 'Fehlende Berechtigung';
+
+  @override
+  String get locationPermissionDialogText => 'Diese Funktion benötigt deinen Standort. Öffne Einstellungen, um diese Berechtigung zu erteilen.';
+
+  @override
   String get cancel => 'Abbrechen';
+
+  @override
+  String get settings => 'Einstellungen';
 }

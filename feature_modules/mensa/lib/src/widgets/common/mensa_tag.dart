@@ -20,12 +20,12 @@ class MensaTag extends StatelessWidget {
     final localizations = context.locals.canteen;
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: LmuSizes.small,
+        horizontal: LmuSizes.size_4,
       ),
       decoration: BoxDecoration(
         color: type.backgroundColor(colors),
         borderRadius: BorderRadius.circular(
-          LmuSizes.small,
+          LmuSizes.size_4,
         ),
       ),
       child: LmuText.bodySmall(

@@ -79,7 +79,7 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
                 },
               ),
             ),
-            const SizedBox(height: LmuSizes.medium),
+            const SizedBox(height: LmuSizes.size_12),
           ],
         );
       },

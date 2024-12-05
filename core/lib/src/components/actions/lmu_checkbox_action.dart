@@ -24,14 +24,14 @@ class LmuCheckboxAction extends StatelessWidget {
     return AnimatedContainer(
       duration: animationDuration,
       curve: Curves.easeOut,
-      width: LmuSizes.xlarge,
-      height: LmuSizes.xlarge,
+      width: LmuSizes.size_24,
+      height: LmuSizes.size_24,
       decoration: BoxDecoration(
         border: Border.all(
           color: isActive ? enabledColor : disabledColor,
-          width: LmuSizes.xsmall,
+          width: LmuSizes.size_2,
         ),
-        borderRadius: BorderRadius.circular(LmuSizes.small),
+        borderRadius: BorderRadius.circular(LmuSizes.size_4),
         color: isActive ? enabledColor : backgroundColor,
       ),
       child: AnimatedOpacity(

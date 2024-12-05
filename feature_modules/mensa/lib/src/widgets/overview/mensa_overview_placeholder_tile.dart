@@ -20,8 +20,8 @@ class MensaOverviewPlaceholderTile extends StatelessWidget {
     final color = context.colors.neutralColors.textColors.mediumColors.base;
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: LmuSizes.small,
-        vertical: LmuSizes.large,
+        horizontal: LmuSizes.size_4,
+        vertical: LmuSizes.size_20,
       ),
       width: double.infinity,
       child: Row(
@@ -34,7 +34,7 @@ class MensaOverviewPlaceholderTile extends StatelessWidget {
               size: LmuIconSizes.small,
               color: color,
             ),
-          const SizedBox(width: LmuSizes.mediumSmall),
+          const SizedBox(width: LmuSizes.size_8),
           Flexible(
             child: LmuText.body(
               title,

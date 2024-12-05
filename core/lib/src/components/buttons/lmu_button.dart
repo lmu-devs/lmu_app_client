@@ -98,7 +98,7 @@ class LmuButton extends StatelessWidget {
     }
     return BoxDecoration(
       color: backgroundColor,
-      borderRadius: BorderRadius.circular(LmuSizes.mediumSmall),
+      borderRadius: BorderRadius.circular(LmuSizes.size_8),
       border: _isOutline
           ? Border.all(
               color: colors.neutralColors.backgroundColors.mediumColors.base,
@@ -142,7 +142,7 @@ class LmuButton extends StatelessWidget {
                     ),
                     if (_hasTitle)
                       const SizedBox(
-                        width: LmuSizes.mediumSmall,
+                        width: LmuSizes.size_8,
                       ),
                   ],
                 ),
@@ -166,7 +166,7 @@ class LmuButton extends StatelessWidget {
                   children: [
                     if (_hasTitle)
                       const SizedBox(
-                        width: LmuSizes.mediumSmall,
+                        width: LmuSizes.size_8,
                       ),
                     LmuIcon(
                       icon: trailingIcon!,
@@ -204,36 +204,36 @@ extension ButtonSizeExtension on ButtonSize {
   double get verticalPadding {
     switch (this) {
       case ButtonSize.medium:
-        return LmuSizes.mediumSmall;
+        return LmuSizes.size_8;
       case ButtonSize.large:
-        return LmuSizes.medium;
+        return LmuSizes.size_12;
     }
   }
 
   double get defaultVerticalPadding {
     switch (this) {
       case ButtonSize.medium:
-        return LmuSizes.mediumLarge;
+        return LmuSizes.size_16;
       case ButtonSize.large:
-        return LmuSizes.large;
+        return LmuSizes.size_20;
     }
   }
 
   double get smallerVerticalPadding {
     switch (this) {
       case ButtonSize.medium:
-        return LmuSizes.mediumSmall;
+        return LmuSizes.size_8;
       case ButtonSize.large:
-        return LmuSizes.medium;
+        return LmuSizes.size_12;
     }
   }
 
   double get loadingIndicatorSize {
     switch (this) {
       case ButtonSize.medium:
-        return LmuSizes.large;
+        return LmuSizes.size_20;
       case ButtonSize.large:
-        return LmuSizes.xlarge;
+        return LmuSizes.size_24;
     }
   }
 
@@ -251,7 +251,7 @@ extension ButtonSizeExtension on ButtonSize {
       case ButtonSize.medium:
         return LmuIconSizes.small;
       case ButtonSize.large:
-        return LmuSizes.large;
+        return LmuSizes.size_20;
     }
   }
 }

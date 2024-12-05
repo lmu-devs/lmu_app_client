@@ -43,7 +43,7 @@ class EmojiFeedbackSelector extends StatelessWidget {
                 LmuVibrations.secondary();
               },
               child: SizedBox(
-                width: LmuActionSizes.large + LmuSizes.large,
+                width: LmuActionSizes.large + LmuSizes.size_20,
                 height: LmuActionSizes.large,
                 child: Center(
                   child: Opacity(

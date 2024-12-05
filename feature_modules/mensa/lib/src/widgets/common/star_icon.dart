@@ -9,7 +9,7 @@ class StarIcon extends StatelessWidget {
     Key? key,
     this.isActive = false,
     this.disabledColor,
-    this.size = LmuSizes.large,
+    this.size = LmuSizes.size_20,
   }) : super(key: key);
 
   final bool isActive;

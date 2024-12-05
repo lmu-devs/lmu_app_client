@@ -38,8 +38,8 @@ class MensaOverviewLoadingView extends StatelessWidget {
       child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: LmuSizes.mediumLarge,
-            vertical: LmuSizes.mediumLarge,
+            horizontal: LmuSizes.size_16,
+            vertical: LmuSizes.size_16,
           ),
           child: Column(
             children: [
@@ -55,7 +55,7 @@ class MensaOverviewLoadingView extends StatelessWidget {
                   return const MensaOverviewTileLoading();
                 },
               ),
-              const SizedBox(height: LmuSizes.xxlarge),
+              const SizedBox(height: LmuSizes.size_32),
               LmuTileHeadline.base(
                 title: context.locals.canteen.allCanteens,
               ),
@@ -67,7 +67,7 @@ class MensaOverviewLoadingView extends StatelessWidget {
                     state: ButtonState.disabled,
                     trailingIcon: LucideIcons.chevron_down,
                   ),
-                  const SizedBox(width: LmuSizes.mediumSmall),
+                  const SizedBox(width: LmuSizes.size_8),
                   LmuButton(
                     title: context.locals.canteen.openNow,
                     emphasis: ButtonEmphasis.secondary,
@@ -75,7 +75,7 @@ class MensaOverviewLoadingView extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: LmuSizes.mediumLarge),
+              const SizedBox(height: LmuSizes.size_16),
               ListView.builder(
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,

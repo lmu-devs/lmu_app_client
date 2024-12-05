@@ -27,7 +27,7 @@ class MenuFilteredSection extends StatelessWidget {
 
     if (filteredMenuitems.isEmpty) {
       return Padding(
-        padding: const EdgeInsets.only(bottom: LmuSizes.xxlarge),
+        padding: const EdgeInsets.only(bottom: LmuSizes.size_32),
         child: MensaPlaceholderTile(
           content: [
             LmuText.body(
@@ -85,7 +85,7 @@ class MenuFilteredSection extends StatelessWidget {
                   },
                 ).toList(),
               ),
-              const SizedBox(height: LmuSizes.xxlarge),
+              const SizedBox(height: LmuSizes.size_32),
             ],
           );
         },

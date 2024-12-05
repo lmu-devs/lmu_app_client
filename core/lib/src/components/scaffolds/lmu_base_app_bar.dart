@@ -84,7 +84,7 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
       style: widget.textTheme.h0,
     );
     final tp = TextPainter(text: span, textDirection: TextDirection.ltr, maxLines: 4);
-    tp.layout(maxWidth: widget.appBarWidth - LmuSizes.xxlarge);
+    tp.layout(maxWidth: widget.appBarWidth - LmuSizes.size_32);
     _maxLines = min(tp.computeLineMetrics().length, 4);
 
     _calculatedLargeTitleHeight = _largeTitleLineHeight * _maxLines;
@@ -108,7 +108,7 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
   bool get _stretch => widget.stretch;
 
   double get _collapsedTitleHeight => widget.collapsedTitleHeight ?? 54.0;
-  double get _largeTitleHeight => _calculatedLargeTitleHeight + (_hasImage ? LmuSizes.xlarge : LmuSizes.medium);
+  double get _largeTitleHeight => _calculatedLargeTitleHeight + (_hasImage ? LmuSizes.size_24 : LmuSizes.size_12);
   double get _appBarHeight => _collapsedTitleHeight + _largeTitleHeight;
 
   double get _imageSize => _hasImage ? _imageHeight : 0.0;
@@ -272,13 +272,13 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
                         ],
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
+                        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
                         child: SizedBox(
                           height: scrolledLargeTitleHeight,
                           child: Stack(
                             children: [
                               Positioned(
-                                bottom: LmuSizes.small,
+                                bottom: LmuSizes.size_4,
                                 left: 0,
                                 right: 0,
                                 child: Row(
@@ -302,7 +302,7 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
                                           ),
                                           if (_largeTitleTrailingWidget != null)
                                             Padding(
-                                              padding: const EdgeInsets.only(left: LmuSizes.medium),
+                                              padding: const EdgeInsets.only(left: LmuSizes.size_12),
                                               child: _largeTitleTrailingWidget!,
                                             )
                                         ],
@@ -362,7 +362,7 @@ class _LmuBaseAppBarState extends State<LmuBaseAppBar> {
     if (_alwaysShowCollapsedTitle) {
       return 1.0;
     }
-    final min = LmuSizes.mediumLarge + imageOffset + (_hasImage ? 10 : 0);
+    final min = LmuSizes.size_16 + imageOffset + (_hasImage ? 10 : 0);
     final max = _largeTitleHeight + imageOffset;
     final mappedValue = (scrollOffset - min) / (max - min);
     return mappedValue.clamp(0.0, 1.0);
@@ -411,14 +411,14 @@ class _TrailingActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: _hasImage ? LmuSizes.medium : LmuSizes.mediumLarge,
+        horizontal: _hasImage ? LmuSizes.size_12 : LmuSizes.size_16,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: _trailingWidgets!
             .mapIndexed(
               (index, element) => Container(
-                margin: EdgeInsets.only(left: index == 0 ? 0 : LmuSizes.mediumSmall),
+                margin: EdgeInsets.only(left: index == 0 ? 0 : LmuSizes.size_8),
                 decoration: _hasImage
                     ? BoxDecoration(
                         color: _backgroundColor,
@@ -459,8 +459,8 @@ class _LeadingAction extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: _hasImage ? LmuSizes.medium : LmuSizes.mediumLarge,
-            vertical: LmuSizes.xsmall,
+            horizontal: _hasImage ? LmuSizes.size_12 : LmuSizes.size_16,
+            vertical: LmuSizes.size_2,
           ),
           child: Container(
             padding: _hasImage ? const EdgeInsets.all(6) : null,

@@ -3,19 +3,24 @@ import 'dart:io';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
+import 'package:core/src/constants/constants.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 
 class NavigationSheet extends StatelessWidget {
   const NavigationSheet({
     super.key,
     required this.latitude,
     required this.longitude,
+    required this.address,
   });
 
   final double latitude;
   final double longitude;
+  final String address;
 
   void _openExternalApplication({
     required BuildContext context,
@@ -46,6 +51,21 @@ class NavigationSheet extends StatelessWidget {
     }
   }
 
+  void _copyToClipboard({
+    required BuildContext context,
+    required String copiedText,
+  }) {
+    Clipboard.setData(ClipboardData(text: copiedText));
+    if (Navigator.of(context).canPop()) {
+      Navigator.of(context).pop();
+    }
+    LmuToast.show(
+      context: context,
+      message: context.locals.explore.copiedToClipboard,
+      type: ToastType.success,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -54,9 +74,9 @@ class NavigationSheet extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(
-            left: LmuSizes.mediumSmall,
-            top: LmuSizes.small,
-            bottom: LmuSizes.mediumSmall,
+            left: LmuSizes.size_8,
+            top: LmuSizes.size_4,
+            bottom: LmuSizes.size_8,
           ),
           child: LmuText.body(
             context.locals.explore.openWith,
@@ -93,6 +113,14 @@ class NavigationSheet extends StatelessWidget {
             latitude: latitude,
             longitude: longitude,
           ),
+        ),
+        LmuListItem.base(
+          title: context.locals.explore.copyToClipboard,
+          leadingArea: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: LmuSizes.size_6),
+            child: Icon(LucideIcons.copy, size: LmuIconSizes.mediumSmall),
+          ),
+          onTap: () => _copyToClipboard(context: context, copiedText: address),
         ),
       ],
     );
