@@ -24,23 +24,23 @@ class FeedbackModal extends StatelessWidget {
           SingleChildScrollView(
             physics: const NeverScrollableScrollPhysics(),
             child: Padding(
-              padding: const EdgeInsets.all(LmuSizes.mediumLarge),
+              padding: const EdgeInsets.all(LmuSizes.size_16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(height: LmuSizes.small),
+                  const SizedBox(height: LmuSizes.size_4),
                   LmuText.body(
                     localizations.feedbackDescription,
                     color: context.colors.neutralColors.textColors.mediumColors.base,
                   ),
-                  const SizedBox(height: LmuSizes.xxxlarge),
+                  const SizedBox(height: LmuSizes.size_48),
                   EmojiFeedbackSelector(
                     feedbackNotifier: feedbackNotifier,
                     onFeedbackSelected: (feedback) {
                       print(feedback);
                     },
                   ),
-                  const SizedBox(height: LmuSizes.xlarge),
+                  const SizedBox(height: LmuSizes.size_24),
                   LmuInputField(
                     hintText: localizations.feedbackInputHint,
                     isMultiline: true,
@@ -64,7 +64,7 @@ class FeedbackModal extends StatelessWidget {
             bottom: 0,
             child: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.all(LmuSizes.medium),
+                padding: const EdgeInsets.all(LmuSizes.size_12),
                 child: ValueListenableBuilder<String?>(
                   valueListenable: feedbackNotifier,
                   builder: (context, selectedFeedback, _) {

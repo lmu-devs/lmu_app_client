@@ -81,7 +81,7 @@ class MapBottomSheetState extends State<MapBottomSheet> {
         _sheetController.animateTo(
           SheetSizes.large.size,
           duration: const Duration(milliseconds: 300),
-          curve: Curves.easeIn,
+          curve: LmuAnimations.fastSmooth,
         );
       });
     }
@@ -144,8 +144,8 @@ class MapBottomSheetState extends State<MapBottomSheet> {
                   ),
                 ),
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(LmuSizes.xlarge),
-                  topRight: Radius.circular(LmuSizes.xlarge),
+                  topLeft: Radius.circular(LmuSizes.size_24),
+                  topRight: Radius.circular(LmuSizes.size_24),
                 ),
                 boxShadow: [
                   BoxShadow(
@@ -162,7 +162,7 @@ class MapBottomSheetState extends State<MapBottomSheet> {
                 controller: scrollController,
                 physics: const ClampingScrollPhysics(),
                 child: Padding(
-                  padding: const EdgeInsets.all(LmuSizes.mediumLarge),
+                  padding: const EdgeInsets.all(LmuSizes.size_16),
                   child: Column(
                     children: [
                       if (selectedMensa != null)
@@ -182,6 +182,7 @@ class MapBottomSheetState extends State<MapBottomSheet> {
                                   content: NavigationSheet(
                                     latitude: selectedMensa.location.latitude,
                                     longitude: selectedMensa.location.longitude,
+                                    address: selectedMensa.location.address,
                                   ),
                                 ),
                               );

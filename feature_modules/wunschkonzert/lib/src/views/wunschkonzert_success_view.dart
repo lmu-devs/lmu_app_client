@@ -10,13 +10,13 @@ class WunschkonzertSuccessView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: LmuSizes.mediumLarge,
+        horizontal: LmuSizes.size_16,
       ),
       child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(
-              vertical: LmuSizes.medium,
+              vertical: LmuSizes.size_12,
             ),
             child: LmuText.body(
               "Die App ist noch lange nicht am Ziel. Gute Dinge brauchen Zeit und durchdachte Entscheidungen. Helft uns herauszufinden, welche Funktionen euch am meisten fehlen.",
@@ -24,7 +24,7 @@ class WunschkonzertSuccessView extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: LmuSizes.mediumLarge,
+            height: LmuSizes.size_16,
           ),
           LmuContentTile(
             content: [

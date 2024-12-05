@@ -210,8 +210,8 @@ class LmuListItem extends StatelessWidget {
       },
       child: Padding(
         padding: EdgeInsets.symmetric(
-          vertical: hasVerticalPadding ? LmuSizes.medium : LmuSizes.mediumSmall,
-          horizontal: hasHorizontalPadding ? LmuSizes.medium : LmuSizes.none,
+          vertical: hasVerticalPadding ? LmuSizes.size_12 : LmuSizes.size_8,
+          horizontal: hasHorizontalPadding ? LmuSizes.size_12 : LmuSizes.none,
         ),
         child: Row(
           crossAxisAlignment: mainContentAlignment == MainContentAlignment.center
@@ -227,7 +227,7 @@ class LmuListItem extends StatelessWidget {
                     if (_hasTitleLine)
                       ConstrainedBox(
                         constraints: const BoxConstraints(
-                          minHeight: LmuSizes.xlarge,
+                          minHeight: LmuSizes.size_24,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -250,7 +250,7 @@ class LmuListItem extends StatelessWidget {
                                     if (_hasTitleInTextVisuals)
                                       ConstrainedBox(
                                         constraints: const BoxConstraints(
-                                          minHeight: LmuSizes.xlarge,
+                                          minHeight: LmuSizes.size_24,
                                         ),
                                         child: LmuPaddedInTextVisuals(
                                           inTextVisuals: titleInTextVisuals!,
@@ -262,7 +262,7 @@ class LmuListItem extends StatelessWidget {
                               ),
                             if (_hasLeadingTitleArea && _hasTrailingTitleArea)
                               const SizedBox(
-                                width: LmuSizes.mediumLarge,
+                                width: LmuSizes.size_16,
                               ),
                             if (_hasTrailingTitleArea)
                               Flexible(
@@ -273,7 +273,7 @@ class LmuListItem extends StatelessWidget {
                                     if (_hasTrailingTitleInTextVisuals)
                                       ConstrainedBox(
                                         constraints: const BoxConstraints(
-                                          minHeight: LmuSizes.xlarge,
+                                          minHeight: LmuSizes.size_24,
                                         ),
                                         child: LmuPaddedInTextVisuals(
                                           inTextVisuals: trailingTitleInTextVisuals!,
@@ -299,7 +299,7 @@ class LmuListItem extends StatelessWidget {
                     if (_hasSubtitleLine)
                       ConstrainedBox(
                         constraints: const BoxConstraints(
-                          minHeight: LmuSizes.xlarge,
+                          minHeight: LmuSizes.size_24,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -321,7 +321,7 @@ class LmuListItem extends StatelessWidget {
                                     if (_hasSubtitleInTextVisuals)
                                       ConstrainedBox(
                                         constraints: const BoxConstraints(
-                                          minHeight: LmuSizes.xlarge,
+                                          minHeight: LmuSizes.size_24,
                                         ),
                                         child: LmuPaddedInTextVisuals(
                                           inTextVisuals: subtitleInTextVisuals!,
@@ -333,7 +333,7 @@ class LmuListItem extends StatelessWidget {
                               ),
                             if (_hasLeadingSubtitleArea && _hasTrailingSubtitleArea)
                               const SizedBox(
-                                width: LmuSizes.mediumLarge,
+                                width: LmuSizes.size_16,
                               ),
                             if (_hasTrailingSubtitleArea)
                               Flexible(
@@ -344,7 +344,7 @@ class LmuListItem extends StatelessWidget {
                                     if (_hasTrailingSubtitleInTextVisuals)
                                       ConstrainedBox(
                                         constraints: const BoxConstraints(
-                                          minHeight: LmuSizes.xlarge,
+                                          minHeight: LmuSizes.size_24,
                                         ),
                                         child: LmuPaddedInTextVisuals(
                                           inTextVisuals: trailingSubtitleInTextVisuals!,
@@ -395,13 +395,13 @@ class _TrailingArea extends StatelessWidget {
     return Row(
       children: [
         const SizedBox(
-          width: LmuSizes.mediumLarge,
+          width: LmuSizes.size_16,
         ),
         Center(
           child: trailingArea!,
         ),
         const SizedBox(
-          width: LmuSizes.small,
+          width: LmuSizes.size_4,
         ),
       ],
     );
@@ -424,12 +424,12 @@ class _ActionArea extends StatelessWidget {
     return Row(
       children: [
         const SizedBox(
-          width: LmuSizes.mediumLarge,
+          width: LmuSizes.size_16,
         ),
         ConstrainedBox(
           constraints: const BoxConstraints(
-            maxHeight: LmuSizes.xxxlarge,
-            minHeight: LmuSizes.xlarge,
+            maxHeight: LmuSizes.size_48,
+            minHeight: LmuSizes.size_24,
           ),
           child: ValueListenableBuilder<bool>(
             valueListenable: tappedNotifier!,
@@ -458,7 +458,7 @@ class _LeadingArea extends StatelessWidget {
           child: leadingArea!,
         ),
         const SizedBox(
-          width: LmuSizes.mediumLarge,
+          width: LmuSizes.size_16,
         )
       ],
     );

@@ -34,10 +34,10 @@ class MenuDetailsPage extends StatelessWidget {
       useModalSheetScrollController: true,
       leadingAction: LeadingAction.close,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
+        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
         child: Column(
           children: [
-            const SizedBox(height: LmuSizes.mediumLarge),
+            const SizedBox(height: LmuSizes.size_16),
             Row(
               children: [
                 LmuButton(
@@ -45,20 +45,20 @@ class MenuDetailsPage extends StatelessWidget {
                   title: "${menuItemModel.ratingModel.likeCount} Likes",
                   emphasis: ButtonEmphasis.secondary,
                 ),
-                const SizedBox(width: LmuSizes.mediumSmall),
+                const SizedBox(width: LmuSizes.size_8),
                 const LmuButton(
                   title: "Erinnere mich",
                   trailingIcon: LucideIcons.bell,
                   emphasis: ButtonEmphasis.secondary,
                 ),
-                const SizedBox(width: LmuSizes.mediumSmall),
+                const SizedBox(width: LmuSizes.size_8),
                 const LmuButton(
                   title: "Teilen",
                   emphasis: ButtonEmphasis.secondary,
                 ),
               ],
             ),
-            const SizedBox(height: LmuSizes.xxlarge),
+            const SizedBox(height: LmuSizes.size_32),
             LmuTileHeadline.base(title: "Inhalte"),
             LmuContentTile(
               content: menuItemModel.labels.map(
@@ -73,7 +73,7 @@ class MenuDetailsPage extends StatelessWidget {
                 },
               ).toList(),
             ),
-            const SizedBox(height: LmuSizes.xxlarge),
+            const SizedBox(height: LmuSizes.size_32),
             LmuTileHeadline.base(title: "Price"),
             ValueListenableBuilder(
                 valueListenable: _selectedPriceCategoryNotifier,
@@ -116,7 +116,7 @@ class MenuDetailsPage extends StatelessWidget {
                     ],
                   );
                 }),
-            const SizedBox(height: LmuSizes.xhuge),
+            const SizedBox(height: LmuSizes.size_96),
           ],
         ),
       ),
@@ -187,7 +187,7 @@ class _PriceCategoryActionSheetContent extends StatelessWidget {
                           );
                         },
                       ),
-                      if (priceModel != priceModels.last) const SizedBox(height: LmuSizes.mediumSmall),
+                      if (priceModel != priceModels.last) const SizedBox(height: LmuSizes.size_8),
                     ],
                   );
                 },

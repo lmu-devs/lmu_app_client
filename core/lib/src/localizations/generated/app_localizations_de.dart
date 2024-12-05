@@ -62,7 +62,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get locationPermissionDialogText => 'Diese Funktion benötigt deinen Standort. Öffne Einstellungen, um diese Berechtigung zu erteilen.';
 
   @override
-  String get cancel => 'Zurück';
+  String get cancel => 'Abbrechen';
 
   @override
   String get settings => 'Einstellungen';

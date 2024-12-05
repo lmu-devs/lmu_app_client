@@ -135,7 +135,7 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> with SingleTi
               leadingIconConstraints: _buildLeadingIconConstraints(_inputState),
               contentPadding: const EdgeInsets.symmetric(
                 vertical: 0,
-                horizontal: LmuSizes.mediumLarge,
+                horizontal: LmuSizes.size_16,
               ),
               trailingIcon: _buildTrailingIcon(
                 inputState: _inputState,
@@ -297,7 +297,7 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> with SingleTi
     if (_showCancelButton) {
       return Padding(
         key: const ValueKey('cancel_button'),
-        padding: const EdgeInsets.only(left: LmuSizes.medium),
+        padding: const EdgeInsets.only(left: LmuSizes.size_12),
         child: LmuButton(
           title: context.locals.app.cancel,
           emphasis: ButtonEmphasis.link,

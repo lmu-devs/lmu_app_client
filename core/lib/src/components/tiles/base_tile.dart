@@ -10,11 +10,11 @@ abstract class BaseTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(LmuSizes.small),
+      padding: const EdgeInsets.all(LmuSizes.size_4),
       decoration: BoxDecoration(
         color: context.colors.neutralColors.backgroundColors.tile,
         borderRadius: BorderRadius.circular(
-          LmuSizes.mediumSmall,
+          LmuSizes.size_8,
         ),
       ),
       child: buildTile(context),

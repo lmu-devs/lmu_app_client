@@ -71,8 +71,8 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
         6,
         MbxImage(
           data: imageBytes.buffer.asUint8List(),
-          width: LmuSizes.small.floor(),
-          height: LmuSizes.small.floor(),
+          width: LmuSizes.size_4.floor(),
+          height: LmuSizes.size_4.floor(),
         ),
         false,
         [],
@@ -177,17 +177,17 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
       [
         mapboxMap.logo.updateSettings(
           LogoSettings(
-            marginBottom: _sheetSizeNotifier.value + LmuSizes.medium,
-            marginLeft: LmuSizes.medium,
+            marginBottom: _sheetSizeNotifier.value + LmuSizes.size_64,
+            marginLeft: LmuSizes.size_12,
             position: OrnamentPosition.BOTTOM_LEFT,
           ),
         ),
         mapboxMap.attribution.updateSettings(
           AttributionSettings(
-            marginBottom: _sheetSizeNotifier.value + LmuSizes.medium,
-            marginRight: LmuSizes.small,
-            position: OrnamentPosition.BOTTOM_RIGHT,
-            iconColor: context.colors.neutralColors.textColors.weakColors.base.value,
+            marginBottom: _sheetSizeNotifier.value + LmuSizes.size_64,
+            marginLeft: LmuSizes.size_32,
+            position: OrnamentPosition.BOTTOM_LEFT,
+            iconColor: Colors.transparent.value,
           ),
         ),
       ],
@@ -202,8 +202,8 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
         ),
         mapboxMap.compass.updateSettings(
           CompassSettings(
-            marginTop: LmuSizes.xxxlarge + LmuSizes.mediumSmall,
-            marginRight: LmuSizes.medium,
+            marginTop: LmuSizes.size_48 + LmuSizes.size_8,
+            marginRight: LmuSizes.size_12,
           ),
         ),
       ],
@@ -338,58 +338,61 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: ValueListenableBuilder<MensaModel?>(
-        valueListenable: selectedMensaNotifier,
-        builder: (context, selectedMensa, child) {
-          if (selectedMensa == null && previouslySelectedAnnotation != null) {
-            pointAnnotationManager?.update(
-              previouslySelectedAnnotation!..iconSize = 1.0,
-            );
-            previouslySelectedAnnotation = null;
-          }
+    return ValueListenableBuilder<MensaModel?>(
+      valueListenable: selectedMensaNotifier,
+      builder: (context, selectedMensa, child) {
+        if (selectedMensa == null && previouslySelectedAnnotation != null) {
+          pointAnnotationManager?.update(
+            previouslySelectedAnnotation!..iconSize = 1.0,
+          );
+          previouslySelectedAnnotation = null;
+        }
 
-          return Consumer<ThemeProvider>(
-            builder: (context, themeProvider, child) {
-              String mapStyleUri = _getMapStyleUri(themeProvider.themeMode, context);
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                if (mapboxMap != null) {
-                  mapboxMap!.loadStyleURI(mapStyleUri);
-                  _configureAttributionElements(mapboxMap!, context);
-                  _updateMarkers(mapboxMap!);
-                }
-              });
+        return Consumer<ThemeProvider>(
+          builder: (context, themeProvider, child) {
+            String mapStyleUri = _getMapStyleUri(themeProvider.themeMode, context);
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (mapboxMap != null) {
+                mapboxMap!.loadStyleURI(mapStyleUri);
+                _configureAttributionElements(mapboxMap!, context);
+                _updateMarkers(mapboxMap!);
+              }
+            });
 
-              return Stack(
-                children: [
-                  SoftBlur(
-                    child: MapWidget(
-                      key: const ValueKey("mapWidget"),
-                      styleUri: mapStyleUri,
-                      onMapCreated: _onMapCreated,
-                      cameraOptions: spawnLocation,
-                    ),
-                  ),
-                  MapActionButton(
-                    icon: LucideIcons.map_pin,
-                    onTap: () async => mapboxMap?.easeTo(
-                      await _getUserLocation(),
-                      MapAnimationOptions(
-                        duration: animationToLocationDuration,
+            return Stack(
+              children: [
+                SingleChildScrollView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: SoftBlur(
+                        child: MapWidget(
+                        key: const ValueKey("mapWidget"),
+                        styleUri: mapStyleUri,
+                        onMapCreated: _onMapCreated,
+                        cameraOptions: spawnLocation,
                       ),
                     ),
                   ),
-                  MapBottomSheet(
-                    selectedMensaNotifier: selectedMensaNotifier,
-                    sheetController: _sheetController,
+                ),
+                MapActionButton(
+                  icon: LucideIcons.map_pin,
+                  onTap: () async => mapboxMap?.easeTo(
+                    await _getUserLocation(),
+                    MapAnimationOptions(
+                      duration: animationToLocationDuration,
+                    ),
                   ),
-                ],
-              );
-            },
-          );
-        },
-      ),
+                ),
+                MapBottomSheet(
+                  selectedMensaNotifier: selectedMensaNotifier,
+                  sheetController: _sheetController,
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }

@@ -19,7 +19,7 @@ class LmuToggleAction extends StatelessWidget {
       width: 46,
       height: 30,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(LmuSizes.xxlarge / 2),
+        borderRadius: BorderRadius.circular(LmuSizes.size_32 / 2),
         color: isActive ? enabledColor : disableColor,
       ),
       child: Stack(
@@ -30,7 +30,7 @@ class LmuToggleAction extends StatelessWidget {
             curve: Curves.easeOutQuad,
             alignment: isActive ? Alignment.centerRight : Alignment.centerLeft,
             child: Padding(
-              padding: const EdgeInsets.all(LmuSizes.xsmall),
+              padding: const EdgeInsets.all(LmuSizes.size_2),
               child: Container(
                 width: 26,
                 height: 26,

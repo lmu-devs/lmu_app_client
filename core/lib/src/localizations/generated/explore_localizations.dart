@@ -122,6 +122,18 @@ abstract class ExploreLocalizations {
   /// In en, this message translates to:
   /// **'Google Maps'**
   String get googleMaps;
+
+  /// Copy address to clipboard
+  ///
+  /// In en, this message translates to:
+  /// **'Or Copy Address'**
+  String get copyToClipboard;
+
+  /// Toast message for copied address
+  ///
+  /// In en, this message translates to:
+  /// **'Address copied to clipboard'**
+  String get copiedToClipboard;
 }
 
 class _ExploreLocalizationsDelegate extends LocalizationsDelegate<ExploreLocalizations> {

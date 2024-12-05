@@ -15,8 +15,8 @@ class MapActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: MediaQuery.of(context).padding.top + LmuSizes.mediumSmall,
-      right: LmuSizes.medium,
+      top: MediaQuery.of(context).padding.top + LmuSizes.size_8,
+      right: LmuSizes.size_12,
       child: GestureDetector(
         onTap: onTap,
         child: Container(
@@ -25,7 +25,7 @@ class MapActionButton extends StatelessWidget {
             border: Border.all(color: context.colors.neutralColors.textColors.weakColors.base, width: 0.25),
             shape: BoxShape.circle,
           ),
-          padding: const EdgeInsets.all(LmuSizes.mediumSmall),
+          padding: const EdgeInsets.all(LmuSizes.size_8),
           child: Icon(
             icon,
             size: LmuIconSizes.medium,

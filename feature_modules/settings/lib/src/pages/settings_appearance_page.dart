@@ -19,7 +19,7 @@ class SettingsApperancePage extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(LmuSizes.mediumLarge),
+            padding: const EdgeInsets.all(LmuSizes.size_16),
             child: LmuContentTile(
               content: [
                 LmuListItem.action(

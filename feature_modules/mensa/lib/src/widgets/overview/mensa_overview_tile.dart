@@ -58,7 +58,7 @@ class MensaOverviewTile extends StatelessWidget {
     final imageUrl = mensaModel.images.isNotEmpty ? mensaModel.images.first.url : null;
 
     return Padding(
-      padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.none : LmuSizes.medium),
+      padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.none : LmuSizes.size_12),
       child: GestureDetector(
         onTap: () => MensaDetailsRoute(mensaModel).go(context),
         child: Container(
@@ -73,8 +73,8 @@ class MensaOverviewTile extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: colors.neutralColors.backgroundColors.tile,
                     borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(LmuSizes.mediumSmall),
-                      topRight: Radius.circular(LmuSizes.mediumSmall),
+                      topLeft: Radius.circular(LmuSizes.size_8),
+                      topRight: Radius.circular(LmuSizes.size_8),
                     ),
                     image: imageUrl != null
                         ? DecorationImage(
@@ -83,12 +83,12 @@ class MensaOverviewTile extends StatelessWidget {
                           )
                         : null,
                   ),
-                  height: LmuSizes.mediumLarge * 10,
+                  height: LmuSizes.size_16 * 10,
                 ),
               Stack(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(LmuSizes.mediumLarge),
+                    padding: const EdgeInsets.all(LmuSizes.size_16),
                     child: Column(
                       children: [
                         Row(
@@ -104,20 +104,20 @@ class MensaOverviewTile extends StatelessWidget {
                                       weight: FontWeight.w600,
                                     ),
                                   ),
-                                  const SizedBox(width: LmuSizes.mediumSmall),
+                                  const SizedBox(width: LmuSizes.size_8),
                                   MensaTag(type: type),
                                 ],
                               ),
                             ),
                             Row(
                               children: [
-                                const SizedBox(width: LmuSizes.mediumSmall),
+                                const SizedBox(width: LmuSizes.size_8),
                                 LmuText.bodyXSmall(
                                   likeCount.formattedLikes,
                                   weight: FontWeight.w400,
                                   color: colors.neutralColors.textColors.weakColors.base,
                                 ),
-                                const SizedBox(width: LmuSizes.small),
+                                const SizedBox(width: LmuSizes.size_4),
                                 AnimatedSwitcher(
                                   duration: const Duration(milliseconds: 500),
                                   transitionBuilder: (child, animation) {
@@ -159,7 +159,7 @@ class MensaOverviewTile extends StatelessWidget {
                         ),
                         hasButton
                             ? Padding(
-                                padding: const EdgeInsets.only(top: LmuSizes.medium),
+                                padding: const EdgeInsets.only(top: LmuSizes.size_12),
                                 child: LmuButton(
                                   emphasis: ButtonEmphasis.secondary,
                                   showFullWidth: true,
@@ -174,8 +174,8 @@ class MensaOverviewTile extends StatelessWidget {
                   // touch target for favorite toggle
                   Positioned(
                     right: 0,
-                    bottom: LmuSizes.mediumLarge,
-                    top: LmuSizes.mediumSmall,
+                    bottom: LmuSizes.size_16,
+                    top: LmuSizes.size_8,
                     child: GestureDetector(
                       behavior: HitTestBehavior.opaque,
                       onTap: () {

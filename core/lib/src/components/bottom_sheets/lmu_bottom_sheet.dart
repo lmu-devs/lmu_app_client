@@ -16,18 +16,18 @@ class LmuBottomSheet {
       closeProgressThreshold: .9,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(LmuSizes.xlarge),
-          topRight: Radius.circular(LmuSizes.xlarge),
+          topLeft: Radius.circular(LmuSizes.size_24),
+          topRight: Radius.circular(LmuSizes.size_24),
         ),
       ),
       barrierColor: Colors.black.withOpacity(0.6),
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
       builder: (_) => Padding(
         padding: const EdgeInsets.only(
-          top: LmuSizes.mediumLarge,
-          left: LmuSizes.mediumLarge,
-          right: LmuSizes.mediumLarge,
-          bottom: LmuSizes.xxxlarge,
+          top: LmuSizes.size_16,
+          left: LmuSizes.size_16,
+          right: LmuSizes.size_16,
+          bottom: LmuSizes.size_48,
         ),
         child: content,
       ),
@@ -43,8 +43,8 @@ class LmuBottomSheet {
       useRootNavigator: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(LmuSizes.mediumLarge),
-          topRight: Radius.circular(LmuSizes.mediumLarge),
+          topLeft: Radius.circular(LmuSizes.size_16),
+          topRight: Radius.circular(LmuSizes.size_16),
         ),
       ),
       bounce: true,

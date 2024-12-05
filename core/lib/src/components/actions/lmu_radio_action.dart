@@ -19,14 +19,14 @@ class LmuRadioAction extends StatelessWidget {
     return AnimatedContainer(
       duration: animationDuration,
       curve: Curves.easeOut,
-      width: LmuSizes.xlarge,
-      height: LmuSizes.xlarge,
+      width: LmuSizes.size_24,
+      height: LmuSizes.size_24,
       decoration: BoxDecoration(
         border: Border.all(
           color: isActive ? enabledColor : disabledColor,
-          width: LmuSizes.xsmall,
+          width: LmuSizes.size_2,
         ),
-        borderRadius: BorderRadius.circular(LmuSizes.xlarge),
+        borderRadius: BorderRadius.circular(LmuSizes.size_24),
       ),
       child: AnimatedOpacity(
         opacity: isActive ? 1.0 : 0.0,
@@ -35,8 +35,8 @@ class LmuRadioAction extends StatelessWidget {
         child: Center(
           child: ClipOval(
             child: Container(
-              width: LmuSizes.medium,
-              height: LmuSizes.medium,
+              width: LmuSizes.size_12,
+              height: LmuSizes.size_12,
               color: enabledColor,
             ),
           ),

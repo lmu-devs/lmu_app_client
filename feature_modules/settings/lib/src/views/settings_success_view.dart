@@ -21,21 +21,21 @@ class SettingsSuccessView extends StatelessWidget {
     final localizaitons = context.locals.settings;
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: LmuSizes.mediumLarge,
+        horizontal: LmuSizes.size_16,
       ),
       child: SingleChildScrollView(
         child: Column(
           children: [
             const SizedBox(
-              height: LmuSizes.mediumLarge,
+              height: LmuSizes.size_16,
             ),
-            const SizedBox(height: LmuSizes.small),
+            const SizedBox(height: LmuSizes.size_4),
             LmuSearchInputField(
               context: context,
               controller: TextEditingController(),
               focusNode: _searchFocusNode,
             ),
-            const SizedBox(height: LmuSizes.large),
+            const SizedBox(height: LmuSizes.size_20),
             LmuContentTile(
               content: [
                 LmuListItem.action(
@@ -56,7 +56,7 @@ class SettingsSuccessView extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: LmuSizes.mediumLarge,
+              height: LmuSizes.size_16,
             ),
             LmuContentTile(
               content: [
@@ -64,7 +64,7 @@ class SettingsSuccessView extends StatelessWidget {
                   title: localizaitons.aboutLmuDevelopers,
                   trailingArea: Icon(
                     LucideIcons.external_link,
-                    size: LmuSizes.large,
+                    size: LmuSizes.size_20,
                     color: context.colors.neutralColors.textColors.weakColors.base,
                   ),
                   onTap: () {
@@ -79,7 +79,7 @@ class SettingsSuccessView extends StatelessWidget {
                   title: localizaitons.contact,
                   trailingArea: Icon(
                     LucideIcons.mail,
-                    size: LmuSizes.large,
+                    size: LmuSizes.size_20,
                     color: context.colors.neutralColors.textColors.weakColors.base,
                   ),
                   onTap: () {
@@ -99,7 +99,7 @@ class SettingsSuccessView extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: LmuSizes.mediumLarge,
+              height: LmuSizes.size_16,
             ),
             LmuContentTile(
               content: [
@@ -131,7 +131,7 @@ class SettingsSuccessView extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: LmuSizes.mediumLarge,
+              height: LmuSizes.size_16,
             ),
             LmuContentTile(
               content: [
@@ -154,14 +154,14 @@ class SettingsSuccessView extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: LmuSizes.mediumLarge,
+              height: LmuSizes.size_16,
             ),
             LmuButton(
               title: 'Feedback',
               onTap: () => GetIt.I.get<FeedbackService>().navigateToFeedback(context),
             ),
             const SizedBox(
-              height: LmuSizes.xhuge,
+              height: LmuSizes.size_96,
             ),
           ],
         ),
@@ -179,12 +179,12 @@ class _LeadingFancyIcons extends StatelessWidget {
   Widget build(BuildContext context) {
     final backgroundColor = context.colors.neutralColors.backgroundColors.mediumColors.base;
     return Container(
-      width: LmuSizes.xxxlarge,
-      height: LmuSizes.xxxlarge,
+      width: LmuSizes.size_48,
+      height: LmuSizes.size_48,
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(
-          LmuSizes.mediumSmall,
+          LmuSizes.size_8,
         ),
       ),
       child: LmuIcon(
