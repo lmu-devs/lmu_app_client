@@ -1,7 +1,7 @@
 name: lmu_app
 description: "A new Flutter project."
 publish_to: 'none'
-version: 1.0.0+2
+version: 1.0.0+3
 
 environment:
   sdk: '>=3.2.4 <4.0.0'
@@ -22,8 +22,8 @@ dependencies:
     path: ./feature_modules/explore
   settings:
     path: ./feature_modules/settings
-  wunschkonzert:
-    path: ./feature_modules/wunschkonzert
+  wishlist:
+    path: ./feature_modules/wishlist
   feedback:
     path: ./feature_modules/feedback
   shared_api:

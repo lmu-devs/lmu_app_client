@@ -1,0 +1,10 @@
+{
+  "@@locale": "en",
+  "@@context": "Wishlist",
+
+
+  "tabTitle": "Wishlist",
+  "@tabTitle": {
+    "description": "The title of the Wishlist Page"
+  }
+}

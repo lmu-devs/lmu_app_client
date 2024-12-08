@@ -3,8 +3,8 @@ import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
-class WunschkonzertSuccessView extends StatelessWidget {
-  const WunschkonzertSuccessView({super.key});
+class WishlistSuccessView extends StatelessWidget {
+  const WishlistSuccessView({super.key});
 
   @override
   Widget build(BuildContext context) {

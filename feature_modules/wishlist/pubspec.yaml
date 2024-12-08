@@ -1,7 +1,6 @@
-name: wunschkonzert
+name: wishlist
 description: "A new Flutter package project."
 version: 0.0.1
-homepage:
 publish_to: none
 
 environment:
@@ -15,10 +14,12 @@ dependencies:
     path: ../../core 
   equatable: ^2.0.5
   flutter_bloc: ^8.1.3
+  go_router: ^14.3.0
+  go_router_builder: ^2.7.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
-
-flutter:
+  build_runner: any
+  build_verify: any
