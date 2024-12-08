@@ -51,14 +51,6 @@
   "@licenses": {
     "description": "Title for list item to show licenses"
   },
-  "suggestFeature": "Suggest a feature",
-  "@suggestFeature": {
-    "description": "Suggest a feature"
-  },
-  "reportBug": "Report a bug",
-  "@reportBug": {
-    "description": "Report a bug"
-  },
   "contactSubject": "Munich Students App",
   "@contactSubject": {
     "description": "The subject of the contact form"

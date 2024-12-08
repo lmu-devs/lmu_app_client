@@ -84,5 +84,13 @@
   "settings": "Settings",
   "@settings": {
      "description": "Settings"
+  },
+  "suggestFeature": "Suggest a feature",
+  "@suggestFeature": {
+     "description": "Suggest a feature"
+  },
+  "reportBug": "Report a bug",
+  "@reportBug": {
+     "description": "Report a bug"
   }
 }

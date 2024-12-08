@@ -2,5 +2,10 @@
   "@@locale": "de",
   "@@context": "Wishlist",
   
-  "tabTitle": "Wunschkonzert"
+  "tabTitle": "Wunschkonzert",
+  "wishlistIntro": "Die App ist noch lange nicht am Ziel. Gute Dinge brauchen Zeit und durchdachte Entscheidungen. Helft uns herauszufinden, welche Funktionen euch am meisten fehlen.",
+  "roadmapTitle": "Unsere Roadmap",
+  "roadmapSubtitle": "Kill the mogul",
+  "betaTitle": "Beta Tester:in werden",
+  "betaSubtitle": "Teste die neusten App Features"
 }

@@ -6,4 +6,19 @@ class WishlistLocalizationsDe extends WishlistLocalizations {
 
   @override
   String get tabTitle => 'Wunschkonzert';
+
+  @override
+  String get wishlistIntro => 'Die App ist noch lange nicht am Ziel. Gute Dinge brauchen Zeit und durchdachte Entscheidungen. Helft uns herauszufinden, welche Funktionen euch am meisten fehlen.';
+
+  @override
+  String get roadmapTitle => 'Unsere Roadmap';
+
+  @override
+  String get roadmapSubtitle => 'Kill the mogul';
+
+  @override
+  String get betaTitle => 'Beta Tester:in werden';
+
+  @override
+  String get betaSubtitle => 'Teste die neusten App Features';
 }

@@ -165,18 +165,6 @@ abstract class SettingsLocalizations {
   /// **'Licenses'**
   String get licenses;
 
-  /// Suggest a feature
-  ///
-  /// In en, this message translates to:
-  /// **'Suggest a feature'**
-  String get suggestFeature;
-
-  /// Report a bug
-  ///
-  /// In en, this message translates to:
-  /// **'Report a bug'**
-  String get reportBug;
-
   /// The subject of the contact form
   ///
   /// In en, this message translates to:

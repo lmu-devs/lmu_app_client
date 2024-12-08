@@ -98,6 +98,36 @@ abstract class WishlistLocalizations {
   /// In en, this message translates to:
   /// **'Wishlist'**
   String get tabTitle;
+
+  /// Intro text for the wishlist page
+  ///
+  /// In en, this message translates to:
+  /// **'The app is on its way to reaching its full potential. Good things take time and thoughtful decisions. Help us figure out which features you miss the most.'**
+  String get wishlistIntro;
+
+  /// Roadmap title
+  ///
+  /// In en, this message translates to:
+  /// **'Our roadmap'**
+  String get roadmapTitle;
+
+  /// Roadmap subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Kill the mogul'**
+  String get roadmapSubtitle;
+
+  /// Beta title
+  ///
+  /// In en, this message translates to:
+  /// **'Become a beta tester'**
+  String get betaTitle;
+
+  /// Beta subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Test the newest app functions'**
+  String get betaSubtitle;
 }
 
 class _WishlistLocalizationsDelegate extends LocalizationsDelegate<WishlistLocalizations> {

@@ -66,4 +66,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settings => 'Settings';
+
+  @override
+  String get suggestFeature => 'Suggest a feature';
+
+  @override
+  String get reportBug => 'Report a bug';
 }

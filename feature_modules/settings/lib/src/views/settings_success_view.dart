@@ -18,7 +18,7 @@ class SettingsSuccessView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizaitons = context.locals.settings;
+    final settingLocalizations = context.locals.settings;
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: LmuSizes.size_16,
@@ -39,16 +39,16 @@ class SettingsSuccessView extends StatelessWidget {
             LmuContentTile(
               content: [
                 LmuListItem.action(
-                  title: localizaitons.account,
+                  title: settingLocalizations.account,
                   actionType: LmuListItemAction.chevron,
                   onTap: () {
                     const SettingsAccountRoute().go(context);
                   },
                 ),
                 LmuListItem.action(
-                  title: localizaitons.appearance,
+                  title: settingLocalizations.appearance,
                   actionType: LmuListItemAction.chevron,
-                  chevronTitle: _getThemeModeString(context, localizaitons),
+                  chevronTitle: _getThemeModeString(context, settingLocalizations),
                   onTap: () {
                     const SettingsApperanceRoute().go(context);
                   },
@@ -61,7 +61,7 @@ class SettingsSuccessView extends StatelessWidget {
             LmuContentTile(
               content: [
                 LmuListItem.base(
-                  title: localizaitons.aboutLmuDevelopers,
+                  title: settingLocalizations.aboutLmuDevelopers,
                   trailingArea: Icon(
                     LucideIcons.external_link,
                     size: LmuSizes.size_20,
@@ -76,7 +76,7 @@ class SettingsSuccessView extends StatelessWidget {
                   },
                 ),
                 LmuListItem.base(
-                  title: localizaitons.contact,
+                  title: settingLocalizations.contact,
                   trailingArea: Icon(
                     LucideIcons.mail,
                     size: LmuSizes.size_20,
@@ -86,13 +86,13 @@ class SettingsSuccessView extends StatelessWidget {
                     LmuUrlLauncher.launchEmail(
                       context: context,
                       email: "contact@lmu-dev.org",
-                      subject: localizaitons.contactSubject,
-                      body: localizaitons.contactBody,
+                      subject: settingLocalizations.contactSubject,
+                      body: settingLocalizations.contactBody,
                     );
                   },
                 ),
                 LmuListItem.action(
-                  title: localizaitons.donate,
+                  title: settingLocalizations.donate,
                   actionType: LmuListItemAction.chevron,
                   onTap: () {},
                 ),
@@ -104,7 +104,7 @@ class SettingsSuccessView extends StatelessWidget {
             LmuContentTile(
               content: [
                 LmuListItem.action(
-                  title: localizaitons.dataPrivacy,
+                  title: settingLocalizations.dataPrivacy,
                   actionType: LmuListItemAction.chevron,
                   onTap: () {
                     LmuUrlLauncher.launchWebsite(
@@ -114,7 +114,7 @@ class SettingsSuccessView extends StatelessWidget {
                   },
                 ),
                 LmuListItem.action(
-                  title: localizaitons.imprint,
+                  title: settingLocalizations.imprint,
                   actionType: LmuListItemAction.chevron,
                   onTap: () {
                     LmuUrlLauncher.launchWebsite(
@@ -122,7 +122,7 @@ class SettingsSuccessView extends StatelessWidget {
                   },
                 ),
                 LmuListItem.action(
-                  title: localizaitons.licenses,
+                  title: settingLocalizations.licenses,
                   actionType: LmuListItemAction.chevron,
                   onTap: () {
                     const SettingsLicenceRoute().go(context);
@@ -136,17 +136,17 @@ class SettingsSuccessView extends StatelessWidget {
             LmuContentTile(
               content: [
                 LmuListItem.base(
-                  title: localizaitons.suggestFeature,
+                  title: context.locals.app.suggestFeature,
                   mainContentAlignment: MainContentAlignment.center,
-                  leadingArea: const _LeadingFancyIcons(icon: LucideIcons.plus),
+                  leadingArea: const LeadingFancyIcons(icon: LucideIcons.plus),
                   onTap: () {
                     GetIt.I.get<FeedbackService>().navigateToSuggestion(context);
                   },
                 ),
                 LmuListItem.base(
-                  title: localizaitons.reportBug,
+                  title: context.locals.app.reportBug,
                   mainContentAlignment: MainContentAlignment.center,
-                  leadingArea: const _LeadingFancyIcons(icon: LucideIcons.bug),
+                  leadingArea: const LeadingFancyIcons(icon: LucideIcons.bug),
                   onTap: () {
                     GetIt.I.get<FeedbackService>().navigateToBugReport(context);
                   },
@@ -165,32 +165,6 @@ class SettingsSuccessView extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _LeadingFancyIcons extends StatelessWidget {
-  const _LeadingFancyIcons({required this.icon});
-
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    final backgroundColor = context.colors.neutralColors.backgroundColors.mediumColors.base;
-    return Container(
-      width: LmuSizes.size_48,
-      height: LmuSizes.size_48,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(
-          LmuSizes.size_8,
-        ),
-      ),
-      child: LmuIcon(
-        size: LmuIconSizes.medium,
-        icon: icon,
-        color: context.colors.neutralColors.textColors.strongColors.base,
       ),
     );
   }

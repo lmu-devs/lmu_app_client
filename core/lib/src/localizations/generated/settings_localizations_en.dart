@@ -41,12 +41,6 @@ class SettingsLocalizationsEn extends SettingsLocalizations {
   String get licenses => 'Licenses';
 
   @override
-  String get suggestFeature => 'Suggest a feature';
-
-  @override
-  String get reportBug => 'Report a bug';
-
-  @override
   String get contactSubject => 'Munich Students App';
 
   @override

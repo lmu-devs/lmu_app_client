@@ -6,5 +6,25 @@
   "tabTitle": "Wishlist",
   "@tabTitle": {
     "description": "The title of the Wishlist Page"
+  },
+  "wishlistIntro": "The app is on its way to reaching its full potential. Good things take time and thoughtful decisions. Help us figure out which features you miss the most.",
+  "@wishlistIntro": {
+    "description": "Intro text for the wishlist page"
+  },
+  "roadmapTitle": "Our roadmap",
+  "@roadmapTitle": {
+    "description": "Roadmap title"
+  },
+  "roadmapSubtitle": "Kill the mogul",
+  "@roadmapSubtitle": {
+    "description": "Roadmap subtitle"
+  },
+  "betaTitle": "Become a beta tester",
+  "@betaTitle": {
+    "description": "Beta title"
+  },
+  "betaSubtitle": "Test the newest app functions",
+  "@betaSubtitle": {
+    "description": "Beta subtitle"
   }
 }

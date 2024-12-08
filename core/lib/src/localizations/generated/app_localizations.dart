@@ -218,6 +218,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Settings'**
   String get settings;
+
+  /// Suggest a feature
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest a feature'**
+  String get suggestFeature;
+
+  /// Report a bug
+  ///
+  /// In en, this message translates to:
+  /// **'Report a bug'**
+  String get reportBug;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

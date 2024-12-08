@@ -66,4 +66,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settings => 'Einstellungen';
+
+  @override
+  String get suggestFeature => 'Feature vorschlagen';
+
+  @override
+  String get reportBug => 'Fehler melden';
 }
