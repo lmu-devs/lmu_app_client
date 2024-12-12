@@ -16,7 +16,6 @@ dependencies:
   flutter_bloc: ^8.1.3
   go_router: ^14.3.0
   provider: ^6.1.2
-  super_cupertino_navigation_bar: ^2.1.2
   get_it: ^8.0.1
   shared_api:
     path: ../../shared_api

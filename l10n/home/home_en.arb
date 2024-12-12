@@ -1,0 +1,15 @@
+{
+  "@@locale": "en",
+  "@@context": "Home",
+
+
+  "tabTitle": "Home",
+  "@homeTitle": {
+    "description": "The title of the Home Page"
+  },
+  "homeDescription": "The App's Homepage",
+  "@feedbackDescription": {
+    "description": "The description of the Home Page"
+  }
+
+}

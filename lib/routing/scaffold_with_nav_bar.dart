@@ -51,6 +51,7 @@ class ScaffoldWithNavBar extends StatelessWidget {
             selectedFontSize: 12,
             unselectedFontSize: 12,
             items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(icon: const Icon(LucideIcons.house), label: context.locals.home.tabTitle),
               BottomNavigationBarItem(icon: const Icon(LucideIcons.utensils), label: context.locals.canteen.tabTitle),
               BottomNavigationBarItem(icon: const Icon(LucideIcons.map), label: context.locals.explore.tabTitle),
               BottomNavigationBarItem(

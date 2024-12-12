@@ -20,8 +20,7 @@ StatefulShellBranch get $wishlistData => StatefulShellBranchData.$branch(
     );
 
 extension $WishlistMainRouteExtension on WishlistMainRoute {
-  static WishlistMainRoute _fromState(GoRouterState state) =>
-      const WishlistMainRoute();
+  static WishlistMainRoute _fromState(GoRouterState state) => const WishlistMainRoute();
 
   String get location => GoRouteData.$location(
         '/wishlist',
@@ -31,8 +30,7 @@ extension $WishlistMainRouteExtension on WishlistMainRoute {
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }

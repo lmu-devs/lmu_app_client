@@ -13,16 +13,25 @@ class TasteProfileService {
   final MensaRepository _mensaRepository;
 
   final _tasteProfileNotifier = ValueNotifier<TasteProfileModel?>(null);
-  final _tasteProfileStateNotifier = ValueNotifier<TasteProfileStateModel>(TasteProfileStateModel.empty());
   final _excludedLabelItemNotifier = ValueNotifier<List<TasteProfileLabelItem>>([]);
-  final _tasteProfileActiveNotifier = ValueNotifier<bool>(false);
+  final _isActiveNotifier = ValueNotifier<bool>(false);
+  final _selectedPresetsNotifier = ValueNotifier<Set<String>>({});
+  final _excludedLabelsNotifier = ValueNotifier<Set<String>>({});
 
   List<TasteProfileLabelItem>? _labelItems;
 
-  ValueNotifier<TasteProfileModel?> get tasteProfileModel => _tasteProfileNotifier;
-  ValueNotifier<TasteProfileStateModel> get tasteProfileState => _tasteProfileStateNotifier;
+  ValueNotifier<TasteProfileModel?> get tasteProfileNotifier => _tasteProfileNotifier;
   ValueNotifier<List<TasteProfileLabelItem>> get excludedLabelItemNotifier => _excludedLabelItemNotifier;
-  ValueNotifier<bool> get tasteProfileActiveNotifier => _tasteProfileActiveNotifier;
+
+  ValueNotifier<bool> get isActiveNotifier => _isActiveNotifier;
+  ValueNotifier<Set<String>> get selectedPresetsNotifier => _selectedPresetsNotifier;
+  ValueNotifier<Set<String>> get excludedLabelsNotifier => _excludedLabelsNotifier;
+
+  void reset() {
+    _selectedPresetsNotifier.value = {};
+    _excludedLabelsNotifier.value = {};
+    _isActiveNotifier.value = false;
+  }
 
   TasteProfileLabelItem? getLabelItemFromId(String id) {
     final tasteProfile = _tasteProfileNotifier.value;
@@ -38,10 +47,11 @@ class TasteProfileService {
       _tasteProfileNotifier.value = loadedTasteProfile;
 
       final tasteProfileState = await _mensaRepository.getTasteProfileState();
-      _tasteProfileStateNotifier.value = tasteProfileState;
 
       _excludedLabelItemNotifier.value = _mapExcludedLabelItems;
-      _tasteProfileActiveNotifier.value = tasteProfileState.isActive;
+      _isActiveNotifier.value = tasteProfileState.isActive;
+      _selectedPresetsNotifier.value = tasteProfileState.selectedPresets;
+      _excludedLabelsNotifier.value = tasteProfileState.excludedLabels;
 
       _labelItems = loadedTasteProfile.sortedLabels.expand((label) => label.items).toList();
     } catch (e) {
@@ -61,9 +71,10 @@ class TasteProfileService {
     );
     await _mensaRepository.saveTasteProfileState(saveModel);
 
-    _tasteProfileStateNotifier.value = saveModel;
     _excludedLabelItemNotifier.value = _mapExcludedLabelItems;
-    _tasteProfileActiveNotifier.value = isActive;
+    _isActiveNotifier.value = isActive;
+    _selectedPresetsNotifier.value = selectedPresets;
+    _excludedLabelsNotifier.value = excludedLabels;
   }
 
   List<TasteProfileLabelItem> get _mapExcludedLabelItems {
@@ -71,7 +82,7 @@ class TasteProfileService {
     if (tasteProfile != null) {
       return tasteProfile.sortedLabels
           .expand((label) => label.items)
-          .where((item) => _tasteProfileStateNotifier.value.excludedLabels.contains(item.enumName))
+          .where((item) => _excludedLabelsNotifier.value.contains(item.enumName))
           .toList();
     }
     return [];

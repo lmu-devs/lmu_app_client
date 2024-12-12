@@ -13,7 +13,7 @@ class WishlistPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LmuScaffoldWithAppBar(
+    return LmuMasterAppBar(
       largeTitle: context.locals.wishlist.tabTitle,
       body: BlocBuilder<WishlistCubit, WishlistState>(
         bloc: GetIt.I.get<WishlistCubit>(),

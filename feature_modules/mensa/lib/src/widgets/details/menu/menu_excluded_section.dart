@@ -31,7 +31,6 @@ class MenuExcludedSection extends StatelessWidget {
     final selectedLanguage = Localizations.localeOf(context).languageCode.toUpperCase();
     final canteenLocalizations = context.locals.canteen;
     return Column(
-      mainAxisSize: MainAxisSize.min,
       children: [
         LmuTileHeadline.action(
           title: context.locals.canteen.notYourTaste,
@@ -56,7 +55,6 @@ class MenuExcludedSection extends StatelessWidget {
             ],
           ),
         Column(
-          mainAxisSize: MainAxisSize.min,
           children: excludedMenuItems.mapIndexed(
             (index, dishModel) {
               final isLastItem = index == excludedMenuItems.length - 1;

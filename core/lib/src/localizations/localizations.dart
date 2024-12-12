@@ -5,3 +5,4 @@ export 'generated/canteen_localizations.dart';
 export 'generated/wishlist_localizations.dart';
 export 'generated/settings_localizations.dart';
 export 'generated/feedback_localizations.dart';
+export 'generated/home_localizations.dart';
