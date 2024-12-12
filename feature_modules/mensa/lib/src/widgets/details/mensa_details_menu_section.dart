@@ -1,8 +1,9 @@
 import 'package:core/components.dart';
-import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
+import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../bloc/menu_cubit/cubit.dart';
@@ -21,6 +22,7 @@ class MensaDetailsMenuSection extends StatefulWidget {
 class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
   late PageController _pageController;
   late ValueNotifier<int> _tabNotifier;
+  late StickyHeaderController _stickyHeaderController;
 
   String get _canteenId => widget.canteenId;
 
@@ -29,6 +31,15 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
     super.initState();
     _pageController = PageController();
     _tabNotifier = ValueNotifier<int>(0);
+    _stickyHeaderController = StickyHeaderController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    _tabNotifier.dispose();
+    _stickyHeaderController.dispose();
+    super.dispose();
   }
 
   @override
@@ -41,46 +52,44 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
         }
 
         final menuModels = state.menuModels;
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            LmuTabBar(
-              activeTabIndexNotifier: _tabNotifier,
-              items: menuModels.map(
-                (dayModel) {
-                  final dateTime = DateTime.parse(dayModel.date);
-                  return LmuTabBarItemData(
-                    title: dateTime.dayName(context.locals.app),
-                  );
-                },
-              ).toList(),
-              onTabChanged: (index, _) {
-                _pageController.animateToPage(
-                  index,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeIn,
+
+        return SliverStickyHeader(
+          sticky: true,
+          controller: _stickyHeaderController,
+          header: LmuTabBar(
+            activeTabIndexNotifier: _tabNotifier,
+            hasDivider: true,
+            items: menuModels.map(
+              (dayModel) {
+                final dateTime = DateTime.parse(dayModel.date);
+                return LmuTabBarItemData(
+                  title: dateTime.dayName(context.locals.app),
+                );
+              },
+            ).toList(),
+            onTabChanged: (index, _) {
+              _pageController.animateToPage(
+                index,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeIn,
+              );
+            },
+          ),
+          sliver: SliverToBoxAdapter(
+            child: ExpandablePageView.builder(
+              itemCount: menuModels.length,
+              controller: _pageController,
+              animationCurve: Curves.bounceIn,
+              onPageChanged: (index) {
+                _tabNotifier.value = index;
+              },
+              itemBuilder: (_, index) {
+                return MenuContentView(
+                  mensaMenuModel: menuModels[index],
                 );
               },
             ),
-            const LmuDivider(),
-            SizedBox(
-              height: 1500,
-              child: PageView.builder(
-                itemCount: menuModels.length,
-                controller: _pageController,
-                onPageChanged: (index) {
-                  _tabNotifier.value = index;
-                },
-                itemBuilder: (_, index) {
-                  return MenuContentView(
-                    mensaMenuModel: menuModels[index],
-                  );
-                },
-              ),
-            ),
-            const SizedBox(height: LmuSizes.size_12),
-          ],
+          ),
         );
       },
     );

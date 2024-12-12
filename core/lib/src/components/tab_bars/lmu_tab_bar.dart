@@ -1,7 +1,7 @@
+import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-
-import 'lmu_tab_bar_item.dart';
 
 class LmuTabBar extends StatefulWidget {
   const LmuTabBar({
@@ -9,11 +9,13 @@ class LmuTabBar extends StatefulWidget {
     required this.items,
     required this.onTabChanged,
     this.activeTabIndexNotifier,
+    this.hasDivider = false,
   });
 
   final void Function(int, LmuTabBarItemData) onTabChanged;
   final List<LmuTabBarItemData> items;
   final ValueNotifier<int>? activeTabIndexNotifier;
+  final bool hasDivider;
 
   @override
   State<LmuTabBar> createState() => _LmuTabBarState();
@@ -42,48 +44,56 @@ class _LmuTabBarState extends State<LmuTabBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: LmuSizes.size_12,
-        bottom: LmuSizes.size_12,
-      ),
-      child: SizedBox(
-        width: double.infinity,
-        height: 36,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: widget.items.length,
-          controller: _scrollController,
-          itemBuilder: (_, index) {
-            final tabItem = widget.items[index];
-            return Padding(
-              padding: EdgeInsets.only(
-                right: index == widget.items.length - 1 ? LmuSizes.size_16 : LmuSizes.size_8,
-                left: index == 0 ? LmuSizes.size_16 : 0,
-              ),
-              child: ValueListenableBuilder(
-                valueListenable: _activeTabIndexNotifier,
-                builder: (context, activeTabIndex, _) {
-                  return GestureDetector(
-                    key: _tabKeys[index],
-                    onTap: () => widget.onTabChanged.call(index, tabItem),
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 300),
-                      child: LmuTabBarItem(
-                        key: ValueKey('$index ${activeTabIndex == index}'),
-                        title: tabItem.title,
-                        isActive: activeTabIndex == index,
-                        leadingIcon: tabItem.leadingIcon,
-                        trailingIcon: tabItem.trailingIcon,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            );
-          },
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          color: context.colors.neutralColors.backgroundColors.base,
+          padding: const EdgeInsets.only(
+            top: LmuSizes.size_12,
+            bottom: LmuSizes.size_12,
+          ),
+          child: SizedBox(
+            width: double.infinity,
+            height: 36,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: widget.items.length,
+              controller: _scrollController,
+              itemBuilder: (_, index) {
+                final tabItem = widget.items[index];
+                return Padding(
+                  padding: EdgeInsets.only(
+                    right: index == widget.items.length - 1 ? LmuSizes.size_16 : LmuSizes.size_8,
+                    left: index == 0 ? LmuSizes.size_16 : 0,
+                  ),
+                  child: ValueListenableBuilder(
+                    valueListenable: _activeTabIndexNotifier,
+                    builder: (context, activeTabIndex, _) {
+                      return GestureDetector(
+                        key: _tabKeys[index],
+                        onTap: () => widget.onTabChanged.call(index, tabItem),
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
+                          child: LmuTabBarItem(
+                            key: ValueKey('$index ${activeTabIndex == index}'),
+                            title: tabItem.title,
+                            isActive: activeTabIndex == index,
+                            leadingIcon: tabItem.leadingIcon,
+                            trailingIcon: tabItem.trailingIcon,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
+          ),
         ),
-      ),
+        if (widget.hasDivider) const LmuDivider(),
+      ],
     );
   }
 

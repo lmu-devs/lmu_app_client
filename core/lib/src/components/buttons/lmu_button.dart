@@ -79,9 +79,7 @@ class LmuButton extends StatelessWidget {
 
   EdgeInsetsGeometry? get _padding {
     if (_hasTextOnly) {
-      return increaseTouchTarget
-          ? EdgeInsets.symmetric(vertical: size.verticalPadding)
-          : null;
+      return increaseTouchTarget ? EdgeInsets.symmetric(vertical: size.verticalPadding) : null;
     }
     return EdgeInsets.only(
       left: _hasLeadingIcon ? size.smallerVerticalPadding : size.defaultVerticalPadding,

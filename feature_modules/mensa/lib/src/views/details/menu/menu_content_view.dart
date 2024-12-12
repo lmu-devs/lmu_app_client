@@ -18,7 +18,7 @@ class MenuContentView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tasteProfileService = GetIt.I.get<TasteProfileService>();
-    final tasteProfileActiveNotifier = tasteProfileService.tasteProfileActiveNotifier;
+    final tasteProfileActiveNotifier = tasteProfileService.isActiveNotifier;
     final excludedLabelItemNotifier = tasteProfileService.excludedLabelItemNotifier;
 
     final menuItems = mensaMenuModel.menuItems;

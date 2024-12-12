@@ -5,6 +5,7 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../repository/api/models/menu/menu_item_model.dart';
 import '../repository/api/models/menu/price_category.dart';
@@ -28,96 +29,98 @@ class MenuDetailsPage extends StatelessWidget {
     final tasteProfileService = GetIt.I<TasteProfileService>();
     final selectedLanguage = Localizations.localeOf(context).languageCode.toUpperCase();
 
-    return LmuScaffoldWithAppBar(
+    return LmuMasterAppBar(
       largeTitle: menuItemModel.title,
-      stretch: false,
-      useModalSheetScrollController: true,
+      customScrollController: ModalScrollController.of(context),
+      collapsedTitleHeight: CollapsedTitleHeight.large,
       leadingAction: LeadingAction.close,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-        child: Column(
-          children: [
-            const SizedBox(height: LmuSizes.size_16),
-            Row(
-              children: [
-                LmuButton(
-                  leadingIcon: LucideIcons.heart,
-                  title: "${menuItemModel.ratingModel.likeCount} Likes",
-                  emphasis: ButtonEmphasis.secondary,
-                ),
-                const SizedBox(width: LmuSizes.size_8),
-                const LmuButton(
-                  title: "Erinnere mich",
-                  trailingIcon: LucideIcons.bell,
-                  emphasis: ButtonEmphasis.secondary,
-                ),
-                const SizedBox(width: LmuSizes.size_8),
-                const LmuButton(
-                  title: "Teilen",
-                  emphasis: ButtonEmphasis.secondary,
-                ),
-              ],
-            ),
-            const SizedBox(height: LmuSizes.size_32),
-            LmuTileHeadline.base(title: "Inhalte"),
-            LmuContentTile(
-              content: menuItemModel.labels.map(
-                (e) {
-                  final labelItem = tasteProfileService.getLabelItemFromId(e);
-                  if (labelItem == null) return const SizedBox.shrink();
-                  final emoji = labelItem.emojiAbbreviation?.isEmpty ?? true ? "😀" : labelItem.emojiAbbreviation;
-                  return LmuListItem.base(
-                    leadingArea: LmuText.h1(emoji),
-                    title: labelItem.text[selectedLanguage],
-                  );
-                },
-              ).toList(),
-            ),
-            const SizedBox(height: LmuSizes.size_32),
-            LmuTileHeadline.base(title: "Price"),
-            ValueListenableBuilder(
-                valueListenable: _selectedPriceCategoryNotifier,
-                builder: (context, selectedPriceCategory, _) {
-                  final price = menuItemModel.prices.firstWhere(
-                    (element) => element.category == selectedPriceCategory,
-                  );
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+          child: Column(
+            children: [
+              const SizedBox(height: LmuSizes.size_16),
+              Row(
+                children: [
+                  LmuButton(
+                    leadingIcon: LucideIcons.heart,
+                    title: "${menuItemModel.ratingModel.likeCount} Likes",
+                    emphasis: ButtonEmphasis.secondary,
+                  ),
+                  const SizedBox(width: LmuSizes.size_8),
+                  const LmuButton(
+                    title: "Erinnere mich",
+                    trailingIcon: LucideIcons.bell,
+                    emphasis: ButtonEmphasis.secondary,
+                  ),
+                  const SizedBox(width: LmuSizes.size_8),
+                  const LmuButton(
+                    title: "Teilen",
+                    emphasis: ButtonEmphasis.secondary,
+                  ),
+                ],
+              ),
+              const SizedBox(height: LmuSizes.size_32),
+              LmuTileHeadline.base(title: "Inhalte"),
+              LmuContentTile(
+                content: menuItemModel.labels.map(
+                  (e) {
+                    final labelItem = tasteProfileService.getLabelItemFromId(e);
+                    if (labelItem == null) return const SizedBox.shrink();
+                    final emoji = labelItem.emojiAbbreviation?.isEmpty ?? true ? "😀" : labelItem.emojiAbbreviation;
+                    return LmuListItem.base(
+                      leadingArea: LmuText.h1(emoji),
+                      title: labelItem.text[selectedLanguage],
+                    );
+                  },
+                ).toList(),
+              ),
+              const SizedBox(height: LmuSizes.size_32),
+              LmuTileHeadline.base(title: "Price"),
+              ValueListenableBuilder(
+                  valueListenable: _selectedPriceCategoryNotifier,
+                  builder: (context, selectedPriceCategory, _) {
+                    final price = menuItemModel.prices.firstWhere(
+                      (element) => element.category == selectedPriceCategory,
+                    );
 
-                  final priceString = "${price.pricePerUnit} € je ${price.unit}";
+                    final priceString = "${price.pricePerUnit} € je ${price.unit}";
 
-                  return LmuContentTile(
-                    content: [
-                      if (price.basePrice > 0.0)
+                    return LmuContentTile(
+                      content: [
+                        if (price.basePrice > 0.0)
+                          LmuListItem.base(
+                            title: "Base Price",
+                            trailingTitle: '${price.basePrice} €',
+                          ),
                         LmuListItem.base(
-                          title: "Base Price",
-                          trailingTitle: '${price.basePrice} €',
+                          title: selectedPriceCategory.name(context.locals.canteen),
+                          trailingTitle: priceString,
+                          trailingTitleInTextVisuals: [
+                            LmuInTextVisual.iconBox(
+                              icon: LucideIcons.chevrons_up_down,
+                            )
+                          ],
+                          onTap: () {
+                            LmuBottomSheet.show(
+                              context,
+                              content: _PriceCategoryActionSheetContent(
+                                priceModels: menuItemModel.prices,
+                                priceCategoryNotifier: _selectedPriceCategoryNotifier,
+                              ),
+                            );
+                          },
                         ),
-                      LmuListItem.base(
-                        title: selectedPriceCategory.name(context.locals.canteen),
-                        trailingTitle: priceString,
-                        trailingTitleInTextVisuals: [
-                          LmuInTextVisual.iconBox(
-                            icon: LucideIcons.chevrons_up_down,
-                          )
-                        ],
-                        onTap: () {
-                          LmuBottomSheet.show(
-                            context,
-                            content: _PriceCategoryActionSheetContent(
-                              priceModels: menuItemModel.prices,
-                              priceCategoryNotifier: _selectedPriceCategoryNotifier,
-                            ),
-                          );
-                        },
-                      ),
-                      LmuListItem.base(
-                        title: "Simple Price",
-                        trailingTitle: menuItemModel.priceSimple,
-                      ),
-                    ],
-                  );
-                }),
-            const SizedBox(height: LmuSizes.size_96),
-          ],
+                        LmuListItem.base(
+                          title: "Simple Price",
+                          trailingTitle: menuItemModel.priceSimple,
+                        ),
+                      ],
+                    );
+                  }),
+              const SizedBox(height: LmuSizes.size_96),
+            ],
+          ),
         ),
       ),
     );

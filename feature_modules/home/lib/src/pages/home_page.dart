@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LmuScaffoldWithAppBar(
+    return LmuMasterAppBar(
       largeTitle: context.locals.home.tabTitle,
       body: const HomeSuccessView(),
     );

@@ -9,7 +9,7 @@ class WishlistPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LmuScaffoldWithAppBar(
+    return LmuMasterAppBar(
       largeTitle: context.locals.wishlist.tabTitle,
       body: const WishlistSuccessView(),
     );

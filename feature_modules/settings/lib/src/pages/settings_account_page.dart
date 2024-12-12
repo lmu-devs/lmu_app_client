@@ -11,7 +11,7 @@ class SettingsAccountPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = context.locals.settings;
 
-    return LmuScaffoldWithAppBar(
+    return LmuMasterAppBar(
       largeTitle: localization.account,
       leadingAction: LeadingAction.back,
       body: Padding(

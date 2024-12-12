@@ -36,7 +36,8 @@ class MensaOverviewAllSection extends StatelessWidget {
                 if (!isFilterActive) {
                   return true;
                 }
-                return element.openingHours.mensaStatus != MensaStatus.closed;
+                final mensaStatus = element.openingHours.mensaStatus;
+                return mensaStatus != MensaStatus.closed && mensaStatus != MensaStatus.openingSoon;
               },
             ).toList();
 
