@@ -111,7 +111,7 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
               ),
             ),
             Positioned(
-              bottom: LmuSizes.small,
+              bottom: LmuSizes.size_4,
               left: 0,
               right: 0,
               height: scrolledLargeTitleHeight,
@@ -174,7 +174,7 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   }
 
   double _calculateMiddleOpacity(double scrollOffset) {
-    final min = LmuSizes.mediumLarge + imageOffset;
+    final min = LmuSizes.size_16 + imageOffset;
     final max = largeTitleHeight + imageOffset;
     final mappedValue = (scrollOffset - min) / (max - min);
     return mappedValue.clamp(0.0, 1.0);
@@ -298,11 +298,11 @@ class _LargeTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
+      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
       child: Stack(
         children: [
           Positioned(
-            bottom: LmuSizes.mediumSmall,
+            bottom: LmuSizes.size_8,
             left: 0,
             right: 0,
             child: Row(
@@ -337,7 +337,7 @@ class _LargeTitle extends StatelessWidget {
                       ),
                       if (largeTitleTrailingWidget != null)
                         Padding(
-                          padding: const EdgeInsets.only(left: LmuSizes.medium),
+                          padding: const EdgeInsets.only(left: LmuSizes.size_12),
                           child: largeTitleTrailingWidget,
                         )
                     ],
@@ -411,8 +411,8 @@ class _LeadingAction extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: _hasImage ? LmuSizes.medium : LmuSizes.mediumLarge,
-          vertical: LmuSizes.xsmall,
+          horizontal: _hasImage ? LmuSizes.size_12 : LmuSizes.size_16,
+          vertical: LmuSizes.size_2,
         ),
         child: Container(
           padding: _hasImage ? const EdgeInsets.all(6) : null,
@@ -449,14 +449,14 @@ class _TrailingActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: _hasImage ? LmuSizes.medium : LmuSizes.mediumLarge,
+        horizontal: _hasImage ? LmuSizes.size_12 : LmuSizes.size_16,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: _trailingWidgets!
             .mapIndexed(
               (index, element) => Container(
-                margin: EdgeInsets.only(left: index == 0 ? 0 : LmuSizes.mediumSmall),
+                margin: EdgeInsets.only(left: index == 0 ? 0 : LmuSizes.size_8),
                 decoration: _hasImage
                     ? BoxDecoration(
                         color: _backgroundColor,

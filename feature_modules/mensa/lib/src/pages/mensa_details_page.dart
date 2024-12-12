@@ -89,10 +89,12 @@ class _MensaDetailsPageState extends State<MensaDetailsPage> {
       largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
       trailingWidgets: [_trailingAppBarAction],
       largeTitleTrailingWidget: MensaTag(type: _mensaModel.type),
-      slivers: [
-        SliverToBoxAdapter(child: MensaDetailsInfoSection(mensaModel: _mensaModel)),
-        MensaDetailsMenuSection(canteenId: _mensaModel.canteenId),
-      ],
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(child: MensaDetailsInfoSection(mensaModel: _mensaModel)),
+          MensaDetailsMenuSection(canteenId: _mensaModel.canteenId),
+        ],
+      ),
     );
   }
 }

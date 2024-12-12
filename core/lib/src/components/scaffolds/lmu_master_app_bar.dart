@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:core/constants.dart';
 import 'package:core/src/components/scaffolds/sliver_app_bar_delegate.dart';
 import 'package:core/themes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nested_scroll_view_plus/nested_scroll_view_plus.dart';
 
@@ -17,8 +18,7 @@ class LmuMasterAppBar extends StatefulWidget {
   const LmuMasterAppBar({
     super.key,
     required this.largeTitle,
-    this.body,
-    this.slivers,
+    required this.body,
     this.largeTitleTrailingWidget,
     this.largeTitleTrailingWidgetAlignment = MainAxisAlignment.spaceBetween,
     this.collapsedTitle,
@@ -29,10 +29,9 @@ class LmuMasterAppBar extends StatefulWidget {
     this.imageUrls,
     this.customScrollController,
     this.onPopInvoked,
-  }) : assert(slivers == null || body == null);
+  });
 
-  final Widget? body;
-  final List<Widget>? slivers;
+  final Widget body;
   final String largeTitle;
   final Widget? largeTitleTrailingWidget;
   final MainAxisAlignment largeTitleTrailingWidgetAlignment;
@@ -44,6 +43,36 @@ class LmuMasterAppBar extends StatefulWidget {
   final CollapsedTitleHeight collapsedTitleHeight;
   final ScrollController? customScrollController;
   final void Function(bool)? onPopInvoked;
+
+  factory LmuMasterAppBar.bottomSheet({
+    Key? key,
+    required String largeTitle,
+    required Widget body,
+    Widget? largeTitleTrailingWidget,
+    MainAxisAlignment largeTitleTrailingWidgetAlignment = MainAxisAlignment.spaceBetween,
+    String? collapsedTitle,
+    void Function()? onLeadingActionTap,
+    List<Widget>? trailingWidgets,
+    List<String>? imageUrls,
+    ScrollController? customScrollController,
+    void Function(bool)? onPopInvoked,
+  }) {
+    return LmuMasterAppBar(
+      key: key,
+      largeTitle: largeTitle,
+      body: body,
+      largeTitleTrailingWidget: largeTitleTrailingWidget,
+      largeTitleTrailingWidgetAlignment: largeTitleTrailingWidgetAlignment,
+      collapsedTitle: collapsedTitle,
+      collapsedTitleHeight: CollapsedTitleHeight.large,
+      leadingAction: LeadingAction.close,
+      onLeadingActionTap: onLeadingActionTap,
+      trailingWidgets: trailingWidgets,
+      imageUrls: imageUrls,
+      customScrollController: customScrollController,
+      onPopInvoked: onPopInvoked,
+    );
+  }
 
   @override
   State<LmuMasterAppBar> createState() => _LmuMasterAppBarState();
@@ -61,18 +90,16 @@ class _LmuMasterAppBarState extends State<LmuMasterAppBar> {
     _scrollOffsetNotifier = ValueNotifier(0.0);
     _scrollController.addListener(() {
       final offset = _scrollController.offset;
-      print(offset);
       if (offset < 0) {
-        _scrollOffsetNotifier.value = offset;
+        //_scrollOffsetNotifier.value = offset;
       }
     });
   }
 
   @override
   void dispose() {
-    _scrollController.dispose();
-    _scrollOffsetNotifier.dispose();
     super.dispose();
+    _scrollOffsetNotifier.dispose();
   }
 
   @override
@@ -84,7 +111,7 @@ class _LmuMasterAppBarState extends State<LmuMasterAppBar> {
     final collapsedTitleTextStyle = textTheme.h3;
     final largeTitleMaxLines =
         _calculateTitleMaxLines(widget.largeTitle, largeTitleTextTheme, MediaQuery.of(context).size.width);
-    final calculatedLargeTitleHeight = largeTitleMaxLines * _largeTitleLineHeight + LmuSizes.mediumLarge;
+    final calculatedLargeTitleHeight = largeTitleMaxLines * _largeTitleLineHeight + LmuSizes.size_16;
 
     return Material(
       child: PopScope(
@@ -93,6 +120,7 @@ class _LmuMasterAppBarState extends State<LmuMasterAppBar> {
           backgroundColor: backgroundColor,
           body: NestedScrollViewPlus(
             controller: _scrollController,
+            scrollBehavior: const CupertinoScrollBehavior(),
             headerSliverBuilder: (context, innerScrolled) => [
               SliverPersistentHeader(
                 pinned: true,
@@ -117,18 +145,7 @@ class _LmuMasterAppBarState extends State<LmuMasterAppBar> {
                 ),
               ),
             ],
-            body: CustomScrollView(
-              physics: const BouncingScrollPhysics(
-                parent: AlwaysScrollableScrollPhysics(),
-              ),
-              slivers: <Widget>[
-                if (widget.slivers != null) ...widget.slivers!,
-                if (widget.body != null)
-                  SliverToBoxAdapter(
-                    child: widget.body!,
-                  ),
-              ],
-            ),
+            body: widget.body,
           ),
         ),
       ),
@@ -138,7 +155,7 @@ class _LmuMasterAppBarState extends State<LmuMasterAppBar> {
   int _calculateTitleMaxLines(String largeTitleText, TextStyle largeTitleTextStyle, double maxWidth) {
     final span = TextSpan(text: largeTitleText, style: largeTitleTextStyle);
     final tp = TextPainter(text: span, textDirection: TextDirection.ltr, maxLines: 4);
-    tp.layout(maxWidth: maxWidth - LmuSizes.xxlarge);
+    tp.layout(maxWidth: maxWidth - LmuSizes.size_32);
     return min(tp.computeLineMetrics().length, 4);
   }
 }

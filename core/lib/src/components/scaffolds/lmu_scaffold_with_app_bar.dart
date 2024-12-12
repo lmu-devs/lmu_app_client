@@ -6,6 +6,7 @@ import 'lmu_base_app_bar.dart';
 
 export 'lmu_base_app_bar.dart' show LeadingActionOld;
 
+@Deprecated("Dont use this widget anymore. Use LmuMasterAppBar instead.")
 class LmuScaffoldWithAppBar extends StatelessWidget {
   const LmuScaffoldWithAppBar({
     super.key,
