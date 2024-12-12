@@ -7,7 +7,7 @@
   "@tabTitle": {
     "description": "The title of the Wishlist Page"
   },
-  "wishlistIntro": "The app is on its way to reaching its full potential. Good things take time and thoughtful decisions. Help us figure out which features you miss the most.",
+  "wishlistIntro": "The app is still on its way to reaching its full potential. Good things take time and thoughtful decisions. Help us figure out which features you miss the most.",
   "@wishlistIntro": {
     "description": "Intro text for the wishlist page"
   },

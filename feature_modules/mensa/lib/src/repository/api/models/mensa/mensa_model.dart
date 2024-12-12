@@ -1,8 +1,6 @@
+import 'package:core/models.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import '../rating_model.dart';
-
-import 'image_model.dart';
 import 'mensa_location.dart';
 import 'mensa_opening_hours.dart';
 import 'mensa_type.dart';

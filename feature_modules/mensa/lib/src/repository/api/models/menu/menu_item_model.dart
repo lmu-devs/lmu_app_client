@@ -1,7 +1,7 @@
+import 'package:core/models.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../rating_model.dart';
 import 'dish_category.dart';
 import 'price_model.dart';
 
