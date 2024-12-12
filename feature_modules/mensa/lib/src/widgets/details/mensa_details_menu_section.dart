@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
+import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
@@ -21,6 +22,7 @@ class MensaDetailsMenuSection extends StatefulWidget {
 class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
   late PageController _pageController;
   late ValueNotifier<int> _tabNotifier;
+  late StickyHeaderController _stickyHeaderController;
 
   String get _canteenId => widget.canteenId;
 
@@ -29,12 +31,14 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
     super.initState();
     _pageController = PageController();
     _tabNotifier = ValueNotifier<int>(0);
+    _stickyHeaderController = StickyHeaderController();
   }
 
   @override
   void dispose() {
     _pageController.dispose();
     _tabNotifier.dispose();
+    _stickyHeaderController.dispose();
     super.dispose();
   }
 
@@ -44,15 +48,17 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
       bloc: GetIt.I.get<MenuService>().getMenuCubit(_canteenId),
       builder: (context, state) {
         if (state is! MenuLoadSuccess) {
-          return SliverToBoxAdapter(child: MenuLoadingView(canteendId: _canteenId));
+          return MenuLoadingView(canteendId: _canteenId);
         }
 
         final menuModels = state.menuModels;
 
         return SliverStickyHeader(
           sticky: true,
+          controller: _stickyHeaderController,
           header: LmuTabBar(
             activeTabIndexNotifier: _tabNotifier,
+            hasDivider: true,
             items: menuModels.map(
               (dayModel) {
                 final dateTime = DateTime.parse(dayModel.date);
@@ -69,10 +75,11 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
               );
             },
           ),
-          sliver: SliverFillRemaining(
-            child: PageView.builder(
+          sliver: SliverToBoxAdapter(
+            child: ExpandablePageView.builder(
               itemCount: menuModels.length,
               controller: _pageController,
+              animationCurve: Curves.bounceIn,
               onPageChanged: (index) {
                 _tabNotifier.value = index;
               },

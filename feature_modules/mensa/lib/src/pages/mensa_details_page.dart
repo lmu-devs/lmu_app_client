@@ -84,14 +84,13 @@ class _MensaDetailsPageState extends State<MensaDetailsPage> {
       largeTitle: _mensaModel.name,
       imageUrls: _mensaModel.images.map((e) => e.url).toList(),
       leadingAction: LeadingAction.back,
+      onPopInvoked: (_) => LmuToast.removeAll(context: context),
       onLeadingActionTap: () => LmuToast.removeAll(context: context),
       largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
       trailingWidgets: [_trailingAppBarAction],
       largeTitleTrailingWidget: MensaTag(type: _mensaModel.type),
       slivers: [
-        SliverToBoxAdapter(
-          child: MensaDetailsInfoSection(mensaModel: _mensaModel),
-        ),
+        SliverToBoxAdapter(child: MensaDetailsInfoSection(mensaModel: _mensaModel)),
         MensaDetailsMenuSection(canteenId: _mensaModel.canteenId),
       ],
     );

@@ -82,7 +82,8 @@ class _LmuMasterAppBarState extends State<LmuMasterAppBar> {
     final textTheme = context.textTheme;
     final largeTitleTextTheme = textTheme.h0;
     final collapsedTitleTextStyle = textTheme.h3;
-    final largeTitleMaxLines = _calculateTitleMaxLines(widget.largeTitle, largeTitleTextTheme);
+    final largeTitleMaxLines =
+        _calculateTitleMaxLines(widget.largeTitle, largeTitleTextTheme, MediaQuery.of(context).size.width);
     final calculatedLargeTitleHeight = largeTitleMaxLines * _largeTitleLineHeight + LmuSizes.mediumLarge;
 
     return Material(
@@ -134,10 +135,10 @@ class _LmuMasterAppBarState extends State<LmuMasterAppBar> {
     );
   }
 
-  int _calculateTitleMaxLines(String largeTitleText, TextStyle largeTitleTextStyle) {
+  int _calculateTitleMaxLines(String largeTitleText, TextStyle largeTitleTextStyle, double maxWidth) {
     final span = TextSpan(text: largeTitleText, style: largeTitleTextStyle);
     final tp = TextPainter(text: span, textDirection: TextDirection.ltr, maxLines: 4);
-    tp.layout(maxWidth: 393 - LmuSizes.xxlarge);
+    tp.layout(maxWidth: maxWidth - LmuSizes.xxlarge);
     return min(tp.computeLineMetrics().length, 4);
   }
 }

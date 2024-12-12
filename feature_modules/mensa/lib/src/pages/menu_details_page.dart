@@ -32,6 +32,7 @@ class MenuDetailsPage extends StatelessWidget {
     return LmuMasterAppBar(
       largeTitle: menuItemModel.title,
       customScrollController: ModalScrollController.of(context),
+      collapsedTitleHeight: CollapsedTitleHeight.large,
       leadingAction: LeadingAction.close,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),

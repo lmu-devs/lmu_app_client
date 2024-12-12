@@ -316,7 +316,9 @@ class _LargeTitle extends StatelessWidget {
                           valueListenable: scrollOffsetNotifier,
                           builder: (context, offset, _) {
                             double scale = 1.0;
-                            if (offset < 0 && !hasImage) {
+                            if (offset < 0 &&
+                                !hasImage &&
+                                largeTitleTrailingWidgetAlignment == MainAxisAlignment.spaceBetween) {
                               scale = clampDouble((1 - offset / (3000 / 2)), 1, 1.12);
                             }
                             return Transform.scale(

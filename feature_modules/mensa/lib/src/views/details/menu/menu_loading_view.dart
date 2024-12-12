@@ -3,6 +3,7 @@ import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../bloc/menu_cubit/cubit.dart';
@@ -35,23 +36,22 @@ class MenuLoadingView extends StatelessWidget {
           );
         }
       },
-      child: Column(
-        children: [
-          const LmuTabBarLoading(),
-          const LmuDivider(),
-          ListView.builder(
-            shrinkWrap: true,
-            padding: const EdgeInsets.all(LmuSizes.mediumLarge),
-            physics: const NeverScrollableScrollPhysics(),
+      child: SliverStickyHeader(
+        header: const LmuTabBarLoading(
+          hasDivider: true,
+        ),
+        sliver: SliverPadding(
+          padding: const EdgeInsets.only(top: LmuSizes.xlarge),
+          sliver: SliverList.builder(
             itemCount: 7,
             itemBuilder: (context, index) {
-              return LmuSkeleton(
-                context: context,
-                child: const MenuItemTileLoading(),
+              return const Padding(
+                padding: EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
+                child: MenuItemTileLoading(),
               );
             },
           ),
-        ],
+        ),
       ),
     );
   }
