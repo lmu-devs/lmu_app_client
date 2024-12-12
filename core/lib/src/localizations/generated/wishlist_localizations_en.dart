@@ -8,7 +8,16 @@ class WishlistLocalizationsEn extends WishlistLocalizations {
   String get tabTitle => 'Wishlist';
 
   @override
-  String get wishlistIntro => 'The app is still on its way to reaching its full potential. Good things take time and thoughtful decisions. Help us figure out which features you miss the most.';
+  String get wishlistIntro => 'The app is still on its way of reaching its full potential. Good things take time and thoughtful decisions. Help us figure out which features you miss the most.';
+
+  @override
+  String get shareApp => 'Share App';
+
+  @override
+  String get rateApp => 'Rate App';
+
+  @override
+  String get instagram => 'Instagram';
 
   @override
   String get roadmapTitle => 'Our roadmap';

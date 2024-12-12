@@ -88,7 +88,10 @@ abstract class WishlistLocalizations {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('de'), Locale('en')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('de'),
+    Locale('en')
+  ];
 
   /// The title of the Wishlist Page
   ///
@@ -99,8 +102,26 @@ abstract class WishlistLocalizations {
   /// Intro text for the wishlist page
   ///
   /// In en, this message translates to:
-  /// **'The app is still on its way to reaching its full potential. Good things take time and thoughtful decisions. Help us figure out which features you miss the most.'**
+  /// **'The app is still on its way of reaching its full potential. Good things take time and thoughtful decisions. Help us figure out which features you miss the most.'**
   String get wishlistIntro;
+
+  /// Share app
+  ///
+  /// In en, this message translates to:
+  /// **'Share App'**
+  String get shareApp;
+
+  /// Rate app
+  ///
+  /// In en, this message translates to:
+  /// **'Rate App'**
+  String get rateApp;
+
+  /// No description provided for @instagram.
+  ///
+  /// In en, this message translates to:
+  /// **'Instagram'**
+  String get instagram;
 
   /// Roadmap title
   ///
@@ -143,16 +164,18 @@ class _WishlistLocalizationsDelegate extends LocalizationsDelegate<WishlistLocal
 }
 
 WishlistLocalizations lookupWishlistLocalizations(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'de':
-      return WishlistLocalizationsDe();
-    case 'en':
-      return WishlistLocalizationsEn();
+    case 'de': return WishlistLocalizationsDe();
+    case 'en': return WishlistLocalizationsEn();
   }
 
-  throw FlutterError('WishlistLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+  throw FlutterError(
+    'WishlistLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.'
+  );
 }

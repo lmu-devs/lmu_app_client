@@ -7,17 +7,21 @@
   "@tabTitle": {
     "description": "The title of the Wishlist Page"
   },
-  "wishlistIntro": "The app is still on its way to reaching its full potential. Good things take time and thoughtful decisions. Help us figure out which features you miss the most.",
+  "wishlistIntro": "The app is still on its way of reaching its full potential. Good things take time and thoughtful decisions. Help us figure out which features you miss the most.",
   "@wishlistIntro": {
     "description": "Intro text for the wishlist page"
   },
-  "roadmapTitle": "Our roadmap",
-  "@roadmapTitle": {
-    "description": "Roadmap title"
+  "shareApp": "Share App",
+  "@shareApp": {
+    "description": "Share app"
   },
-  "roadmapSubtitle": "Kill the mogul",
-  "@roadmapSubtitle": {
-    "description": "Roadmap subtitle"
+  "rateApp": "Rate App",
+  "@rateApp": {
+    "description": "Rate app"
+  },
+  "instagram": "Instagram",
+  "@roadmapTitle": {
+    "description": "Instagram"
   },
   "betaTitle": "Become a beta tester",
   "@betaTitle": {

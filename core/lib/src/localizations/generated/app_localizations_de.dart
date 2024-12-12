@@ -8,6 +8,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get appTitle => 'LMU Students';
 
   @override
+  String get devTeam => 'LMU Developers';
+
+  @override
   String get monday => 'Montag';
 
   @override
@@ -50,8 +53,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get locationServiceDialogTitle => 'Standortdienste deaktiviert';
 
   @override
-  String get locationServiceDialogText =>
-      'Um alle Funktionen der App nutzen zu können, aktiviere bitte deine Standortdienste. So können wir dir personalisierte und genauere Informationen bieten.';
+  String get locationServiceDialogText => 'Um alle Funktionen der App nutzen zu können, aktiviere bitte deine Standortdienste. So können wir dir personalisierte und genauere Informationen bieten.';
 
   @override
   String get ok => 'OK';
@@ -60,8 +62,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get locationPermissionDialogTitle => 'Fehlende Berechtigung';
 
   @override
-  String get locationPermissionDialogText =>
-      'Diese Funktion benötigt deinen Standort. Öffne Einstellungen, um diese Berechtigung zu erteilen.';
+  String get locationPermissionDialogText => 'Diese Funktion benötigt deinen Standort. Öffne Einstellungen, um diese Berechtigung zu erteilen.';
 
   @override
   String get cancel => 'Abbrechen';

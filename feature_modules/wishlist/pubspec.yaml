@@ -20,6 +20,8 @@ dependencies:
   get_it: ^8.0.1
   http: ^0.13.3
   flutter_lucide: ^1.2.0
+  share_plus: ^10.1.2
+  in_app_review: ^2.0.10
   shared_api:
     path: ../../shared_api
 

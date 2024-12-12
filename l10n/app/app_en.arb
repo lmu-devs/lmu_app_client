@@ -5,6 +5,10 @@
   "@appTitle": {
     "description": "The title of the app"
   },
+  "devTeam": "LMU Developers",
+  "@devTeam": {
+    "description": "Name of the developer team"
+  },
   "monday": "Monday",
   "@monday": {
     "description": "Monday"

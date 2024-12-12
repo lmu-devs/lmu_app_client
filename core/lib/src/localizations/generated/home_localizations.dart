@@ -8,8 +8,6 @@ import 'package:intl/intl.dart' as intl;
 import 'home_localizations_de.dart';
 import 'home_localizations_en.dart';
 
-// ignore_for_file: type=lint
-
 /// Callers can lookup localized strings with an instance of HomeLocalizations
 /// returned by `HomeLocalizations.of(context)`.
 ///
@@ -90,7 +88,10 @@ abstract class HomeLocalizations {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('de'), Locale('en')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('de'),
+    Locale('en')
+  ];
 
   /// No description provided for @tabTitle.
   ///
@@ -121,16 +122,18 @@ class _HomeLocalizationsDelegate extends LocalizationsDelegate<HomeLocalizations
 }
 
 HomeLocalizations lookupHomeLocalizations(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'de':
-      return HomeLocalizationsDe();
-    case 'en':
-      return HomeLocalizationsEn();
+    case 'de': return HomeLocalizationsDe();
+    case 'en': return HomeLocalizationsEn();
   }
 
-  throw FlutterError('HomeLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+  throw FlutterError(
+    'HomeLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.'
+  );
 }
