@@ -2,7 +2,6 @@ import 'package:explore/explore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mensa/mensa.dart';
-import 'package:settings/settings.dart';
 import 'package:wishlist/wishlist.dart';
 import 'package:home/home.dart';
 
@@ -17,7 +16,6 @@ RouteBase get $shellRouteData => StatefulShellRouteData.$route(
         $mensaData,
         $exploreData,
         $wishlistData,
-        $settingsData,
       ],
     );
 
