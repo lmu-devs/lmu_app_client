@@ -40,23 +40,23 @@ class LmuTabBarItem extends StatelessWidget {
       child: AnimatedContainer(
         duration: Durations.short4,
         height: 36.0,
-        padding: const EdgeInsets.all(LmuSizes.mediumSmall),
+        padding: const EdgeInsets.all(LmuSizes.size_8),
         decoration: BoxDecoration(
           color: isActive ? context.colors.neutralColors.backgroundColors.mediumColors.base : Colors.transparent,
-          borderRadius: BorderRadius.circular(LmuSizes.mediumSmall),
+          borderRadius: BorderRadius.circular(LmuSizes.size_8),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             if (leadingIcon != null)
               Padding(
-                padding: const EdgeInsets.only(right: LmuSizes.mediumSmall),
+                padding: const EdgeInsets.only(right: LmuSizes.size_8),
                 child: SizedBox(
-                  width: LmuSizes.large,
-                  height: LmuSizes.large,
+                  width: LmuSizes.size_20,
+                  height: LmuSizes.size_20,
                   child: LmuIcon(
                     icon: leadingIcon!,
-                    size: LmuSizes.large,
+                    size: LmuSizes.size_20,
                     color: isActive ? activeColor : defaultColor,
                   ),
                 ),
@@ -68,13 +68,13 @@ class LmuTabBarItem extends StatelessWidget {
             ),
             if (trailingIcon != null)
               Padding(
-                padding: const EdgeInsets.only(left: LmuSizes.mediumSmall),
+                padding: const EdgeInsets.only(left: LmuSizes.size_8),
                 child: SizedBox(
-                  width: LmuSizes.large,
-                  height: LmuSizes.large,
+                  width: LmuSizes.size_20,
+                  height: LmuSizes.size_20,
                   child: LmuIcon(
                     icon: trailingIcon!,
-                    size: LmuSizes.large,
+                    size: LmuSizes.size_20,
                     color: isActive ? activeColor : defaultColor,
                   ),
                 ),

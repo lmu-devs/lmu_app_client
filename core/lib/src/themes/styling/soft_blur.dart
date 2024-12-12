@@ -18,7 +18,7 @@ class SoftBlur extends StatelessWidget {
           left: 0,
           right: 0,
           child: SizedBox(
-            height: MediaQuery.of(context).padding.top - LmuSizes.mediumSmall,
+            height: MediaQuery.of(context).padding.top - LmuSizes.size_8,
             child: ClipRect(
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 1.25, sigmaY: 1.25),

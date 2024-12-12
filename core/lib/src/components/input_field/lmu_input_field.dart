@@ -193,7 +193,7 @@ class _LmuInputFieldState extends State<LmuInputField> {
                 behavior: HitTestBehavior.opaque,
                 onTap: _handleClear,
                 child: Padding(
-                  padding: const EdgeInsets.only(right: LmuSizes.mediumSmall),
+                  padding: const EdgeInsets.only(right: LmuSizes.size_8),
                   child: widget.trailingIcon!,
                 ),
               )

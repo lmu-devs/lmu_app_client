@@ -88,7 +88,10 @@ abstract class SettingsLocalizations {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('de'), Locale('en')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('de'),
+    Locale('en')
+  ];
 
   /// The title of the Settings tab
   ///
@@ -161,18 +164,6 @@ abstract class SettingsLocalizations {
   /// In en, this message translates to:
   /// **'Licenses'**
   String get licenses;
-
-  /// Suggest a feature
-  ///
-  /// In en, this message translates to:
-  /// **'Suggest a feature'**
-  String get suggestFeature;
-
-  /// Report a bug
-  ///
-  /// In en, this message translates to:
-  /// **'Report a bug'**
-  String get reportBug;
 
   /// The subject of the contact form
   ///
@@ -293,16 +284,18 @@ class _SettingsLocalizationsDelegate extends LocalizationsDelegate<SettingsLocal
 }
 
 SettingsLocalizations lookupSettingsLocalizations(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'de':
-      return SettingsLocalizationsDe();
-    case 'en':
-      return SettingsLocalizationsEn();
+    case 'de': return SettingsLocalizationsDe();
+    case 'en': return SettingsLocalizationsEn();
   }
 
-  throw FlutterError('SettingsLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+  throw FlutterError(
+    'SettingsLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.'
+  );
 }

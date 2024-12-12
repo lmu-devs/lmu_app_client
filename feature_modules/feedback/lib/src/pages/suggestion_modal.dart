@@ -17,16 +17,16 @@ class SuggestionModal extends StatelessWidget {
           SingleChildScrollView(
             physics: const NeverScrollableScrollPhysics(),
             child: Padding(
-              padding: const EdgeInsets.all(LmuSizes.mediumLarge),
+              padding: const EdgeInsets.all(LmuSizes.size_16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: LmuSizes.small),
+                  const SizedBox(height: LmuSizes.size_4),
                   LmuText.body(
                     localizations.suggestionDescription,
                     color: context.colors.neutralColors.textColors.mediumColors.base,
                   ),
-                  const SizedBox(height: LmuSizes.xxlarge),
+                  const SizedBox(height: LmuSizes.size_32),
                   LmuInputField(
                     hintText: localizations.suggestionInputHint,
                     controller: TextEditingController(),
@@ -45,7 +45,7 @@ class SuggestionModal extends StatelessWidget {
             bottom: 0,
             child: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.all(LmuSizes.medium),
+                padding: const EdgeInsets.all(LmuSizes.size_12),
                 child: LmuButton(
                   title: localizations.suggestionButton,
                   size: ButtonSize.large,

@@ -41,12 +41,12 @@ class MenuLoadingView extends StatelessWidget {
           hasDivider: true,
         ),
         sliver: SliverPadding(
-          padding: const EdgeInsets.only(top: LmuSizes.xlarge),
+          padding: const EdgeInsets.only(top: LmuSizes.size_24),
           sliver: SliverList.builder(
             itemCount: 7,
             itemBuilder: (context, index) {
               return const Padding(
-                padding: EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
+                padding: EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
                 child: MenuItemTileLoading(),
               );
             },

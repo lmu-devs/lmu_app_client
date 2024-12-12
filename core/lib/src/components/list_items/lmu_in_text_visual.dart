@@ -48,17 +48,17 @@ class LmuInTextVisual extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasIcon = icon != null;
     return Container(
-      height: LmuSizes.large,
-      width: hasIcon ? LmuSizes.large : null,
+      height: LmuSizes.size_20,
+      width: hasIcon ? LmuSizes.size_20 : null,
       decoration: hasIconBox && hasIcon
           ? null
           : BoxDecoration(
               color: context.colors.neutralColors.backgroundColors.mediumColors.base,
-              borderRadius: BorderRadius.circular(LmuSizes.small),
+              borderRadius: BorderRadius.circular(LmuSizes.size_4),
             ),
       padding: EdgeInsets.symmetric(
-        horizontal: hasIcon ? LmuSizes.none : LmuSizes.small,
-        vertical: hasIcon ? LmuSizes.none : LmuSizes.xsmall,
+        horizontal: hasIcon ? LmuSizes.none : LmuSizes.size_4,
+        vertical: hasIcon ? LmuSizes.none : LmuSizes.size_2,
       ),
       child: _buildChild(context),
     );

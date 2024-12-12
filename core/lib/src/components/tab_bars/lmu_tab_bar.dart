@@ -51,8 +51,8 @@ class _LmuTabBarState extends State<LmuTabBar> {
         Container(
           color: context.colors.neutralColors.backgroundColors.base,
           padding: const EdgeInsets.only(
-            top: LmuSizes.medium,
-            bottom: LmuSizes.medium,
+            top: LmuSizes.size_12,
+            bottom: LmuSizes.size_12,
           ),
           child: SizedBox(
             width: double.infinity,
@@ -65,8 +65,8 @@ class _LmuTabBarState extends State<LmuTabBar> {
                 final tabItem = widget.items[index];
                 return Padding(
                   padding: EdgeInsets.only(
-                    right: index == widget.items.length - 1 ? LmuSizes.mediumLarge : LmuSizes.mediumSmall,
-                    left: index == 0 ? LmuSizes.mediumLarge : 0,
+                    right: index == widget.items.length - 1 ? LmuSizes.size_16 : LmuSizes.size_8,
+                    left: index == 0 ? LmuSizes.size_16 : 0,
                   ),
                   child: ValueListenableBuilder(
                     valueListenable: _activeTabIndexNotifier,

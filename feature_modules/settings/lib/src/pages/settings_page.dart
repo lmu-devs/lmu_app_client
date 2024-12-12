@@ -11,7 +11,7 @@ class SettingsMainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return LmuMasterAppBar(
       largeTitle: context.locals.settings.settings,
-      body: const SettingsSuccessView(),
+      body: SettingsSuccessView(),
     );
   }
 }

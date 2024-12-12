@@ -24,8 +24,8 @@ class LmuPaddedInTextVisuals extends StatelessWidget {
         final isFirst = index == 0;
         final noPadding = noPaddingOnFirstElement && isFirst;
         final padding = EdgeInsets.only(
-          left: !hasPaddingOnRight ? (noPadding ? LmuSizes.none : LmuSizes.small) : LmuSizes.none,
-          right: hasPaddingOnRight ? (noPadding ? LmuSizes.none : LmuSizes.small) : LmuSizes.none,
+          left: !hasPaddingOnRight ? (noPadding ? LmuSizes.none : LmuSizes.size_4) : LmuSizes.none,
+          right: hasPaddingOnRight ? (noPadding ? LmuSizes.none : LmuSizes.size_4) : LmuSizes.none,
         );
 
         return Padding(

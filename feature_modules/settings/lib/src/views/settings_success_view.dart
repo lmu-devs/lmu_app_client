@@ -12,40 +12,43 @@ import 'package:shared_api/feedback.dart';
 import '../routes/settings_routes.dart';
 
 class SettingsSuccessView extends StatelessWidget {
-  const SettingsSuccessView({super.key});
+  SettingsSuccessView({super.key});
+
+  final FocusNode _searchFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
-    final localizaitons = context.locals.settings;
+    final settingLocalizations = context.locals.settings;
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: LmuSizes.mediumLarge,
+        horizontal: LmuSizes.size_16,
       ),
       child: SingleChildScrollView(
         child: Column(
           children: [
             const SizedBox(
-              height: LmuSizes.mediumLarge,
+              height: LmuSizes.size_16,
             ),
-            const SizedBox(height: LmuSizes.small),
+            const SizedBox(height: LmuSizes.size_4),
             LmuSearchInputField(
               context: context,
               controller: TextEditingController(),
+              focusNode: _searchFocusNode,
             ),
-            const SizedBox(height: LmuSizes.large),
+            const SizedBox(height: LmuSizes.size_20),
             LmuContentTile(
               content: [
                 LmuListItem.action(
-                  title: localizaitons.account,
+                  title: settingLocalizations.account,
                   actionType: LmuListItemAction.chevron,
                   onTap: () {
                     const SettingsAccountRoute().go(context);
                   },
                 ),
                 LmuListItem.action(
-                  title: localizaitons.appearance,
+                  title: settingLocalizations.appearance,
                   actionType: LmuListItemAction.chevron,
-                  chevronTitle: _getThemeModeString(context, localizaitons),
+                  chevronTitle: _getThemeModeString(context, settingLocalizations),
                   onTap: () {
                     const SettingsApperanceRoute().go(context);
                   },
@@ -53,55 +56,55 @@ class SettingsSuccessView extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: LmuSizes.mediumLarge,
+              height: LmuSizes.size_16,
             ),
             LmuContentTile(
               content: [
                 LmuListItem.base(
-                  title: localizaitons.aboutLmuDevelopers,
+                  title: settingLocalizations.aboutLmuDevelopers,
                   trailingArea: Icon(
                     LucideIcons.external_link,
-                    size: LmuSizes.large,
+                    size: LmuSizes.size_20,
                     color: context.colors.neutralColors.textColors.weakColors.base,
                   ),
                   onTap: () {
                     LmuUrlLauncher.launchWebsite(
                       context: context,
                       url: "https://lmu-dev.org",
-                      mode: LmuUrlLauncherMode.externalApplication,
+                      mode: LmuUrlLauncherMode.inAppWebView,
                     );
                   },
                 ),
                 LmuListItem.base(
-                  title: localizaitons.contact,
+                  title: settingLocalizations.contact,
                   trailingArea: Icon(
                     LucideIcons.mail,
-                    size: LmuSizes.large,
+                    size: LmuSizes.size_20,
                     color: context.colors.neutralColors.textColors.weakColors.base,
                   ),
                   onTap: () {
                     LmuUrlLauncher.launchEmail(
                       context: context,
                       email: "contact@lmu-dev.org",
-                      subject: localizaitons.contactSubject,
-                      body: localizaitons.contactBody,
+                      subject: settingLocalizations.contactSubject,
+                      body: settingLocalizations.contactBody,
                     );
                   },
                 ),
                 LmuListItem.action(
-                  title: localizaitons.donate,
+                  title: settingLocalizations.donate,
                   actionType: LmuListItemAction.chevron,
                   onTap: () {},
                 ),
               ],
             ),
             const SizedBox(
-              height: LmuSizes.mediumLarge,
+              height: LmuSizes.size_16,
             ),
             LmuContentTile(
               content: [
                 LmuListItem.action(
-                  title: localizaitons.dataPrivacy,
+                  title: settingLocalizations.dataPrivacy,
                   actionType: LmuListItemAction.chevron,
                   onTap: () {
                     LmuUrlLauncher.launchWebsite(
@@ -111,7 +114,7 @@ class SettingsSuccessView extends StatelessWidget {
                   },
                 ),
                 LmuListItem.action(
-                  title: localizaitons.imprint,
+                  title: settingLocalizations.imprint,
                   actionType: LmuListItemAction.chevron,
                   onTap: () {
                     LmuUrlLauncher.launchWebsite(
@@ -119,7 +122,7 @@ class SettingsSuccessView extends StatelessWidget {
                   },
                 ),
                 LmuListItem.action(
-                  title: localizaitons.licenses,
+                  title: settingLocalizations.licenses,
                   actionType: LmuListItemAction.chevron,
                   onTap: () {
                     const SettingsLicenceRoute().go(context);
@@ -128,22 +131,22 @@ class SettingsSuccessView extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: LmuSizes.mediumLarge,
+              height: LmuSizes.size_16,
             ),
             LmuContentTile(
               content: [
                 LmuListItem.base(
-                  title: localizaitons.suggestFeature,
+                  title: context.locals.app.suggestFeature,
                   mainContentAlignment: MainContentAlignment.center,
-                  leadingArea: const _LeadingFancyIcons(icon: LucideIcons.plus),
+                  leadingArea: const LeadingFancyIcons(icon: LucideIcons.plus),
                   onTap: () {
                     GetIt.I.get<FeedbackService>().navigateToSuggestion(context);
                   },
                 ),
                 LmuListItem.base(
-                  title: localizaitons.reportBug,
+                  title: context.locals.app.reportBug,
                   mainContentAlignment: MainContentAlignment.center,
-                  leadingArea: const _LeadingFancyIcons(icon: LucideIcons.bug),
+                  leadingArea: const LeadingFancyIcons(icon: LucideIcons.bug),
                   onTap: () {
                     GetIt.I.get<FeedbackService>().navigateToBugReport(context);
                   },
@@ -151,43 +154,17 @@ class SettingsSuccessView extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: LmuSizes.mediumLarge,
+              height: LmuSizes.size_16,
             ),
             LmuButton(
               title: 'Feedback',
               onTap: () => GetIt.I.get<FeedbackService>().navigateToFeedback(context),
             ),
             const SizedBox(
-              height: LmuSizes.xhuge,
+              height: LmuSizes.size_96,
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _LeadingFancyIcons extends StatelessWidget {
-  const _LeadingFancyIcons({required this.icon});
-
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    final backgroundColor = context.colors.neutralColors.backgroundColors.mediumColors.base;
-    return Container(
-      width: LmuSizes.xxxlarge,
-      height: LmuSizes.xxxlarge,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(
-          LmuSizes.mediumSmall,
-        ),
-      ),
-      child: LmuIcon(
-        size: LmuIconSizes.medium,
-        icon: icon,
-        color: context.colors.neutralColors.textColors.strongColors.base,
       ),
     );
   }

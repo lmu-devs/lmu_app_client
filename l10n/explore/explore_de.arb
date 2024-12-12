@@ -6,5 +6,7 @@
     "navigate": "Navigieren",
     "openWith": "Öffnen mit",
     "appleMaps": "Apple Karten",
-    "googleMaps": "Google Maps"
+    "googleMaps": "Google Maps",
+    "copyToClipboard": "Oder Adresse kopieren",
+    "copiedToClipboard": "Adresse kopiert"
 }

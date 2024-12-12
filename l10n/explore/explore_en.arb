@@ -19,7 +19,15 @@
       "description": "Navigation option with Apple Maps"
    },
    "googleMaps": "Google Maps",
-    "@tabTitle": {
+   "@tabTitle": {
       "description": "Navigation option with Google Maps"
-    }
+   },
+   "copyToClipboard": "Or Copy Address",
+   "@copyToClipboard": {
+      "description": "Copy address to clipboard"
+   },
+   "copiedToClipboard": "Address copied to clipboard",
+   "@copiedToClipboard": {
+      "description": "Toast message for copied address"
+   }
 }

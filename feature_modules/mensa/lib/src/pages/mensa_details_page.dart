@@ -50,7 +50,7 @@ class _MensaDetailsPageState extends State<MensaDetailsPage> {
     final mensaUserPreferencesService = GetIt.I<MensaUserPreferencesService>();
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.small),
+      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_4),
       child: ValueListenableBuilder(
         valueListenable: mensaUserPreferencesService.favoriteMensaIdsNotifier,
         builder: (context, favoriteMensaIds, _) {
@@ -60,11 +60,11 @@ class _MensaDetailsPageState extends State<MensaDetailsPage> {
               LmuVibrations.secondary();
             },
             child: Padding(
-              padding: const EdgeInsets.all(LmuSizes.mediumSmall),
+              padding: const EdgeInsets.all(LmuSizes.size_8),
               child: Row(
                 children: [
                   LmuText.bodySmall(_mensaModel.ratingModel.likeCount.formattedLikes),
-                  const SizedBox(width: LmuSizes.small),
+                  const SizedBox(width: LmuSizes.size_4),
                   StarIcon(
                     isActive: favoriteMensaIds.contains(_mensaModel.canteenId),
                     disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,

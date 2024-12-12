@@ -41,12 +41,6 @@ class SettingsLocalizationsDe extends SettingsLocalizations {
   String get licenses => 'Lizenzen';
 
   @override
-  String get suggestFeature => 'Feature vorschlagen';
-
-  @override
-  String get reportBug => 'Fehler melden';
-
-  @override
   String get contactSubject => 'Munich Students App';
 
   @override
@@ -71,8 +65,7 @@ class SettingsLocalizationsDe extends SettingsLocalizations {
   String get connectToAccount => 'Mit LMU Account verbinden';
 
   @override
-  String get connectToAccountDescription =>
-      'Momentan ist dein Account nur über dein aktuelles Endgerät abrufbar. Wir arbeiten daran, eine Verbindung zu deinem LMU-Account herzustellen, um deine Daten zu synchronisieren.';
+  String get connectToAccountDescription => 'Momentan ist dein Account nur über dein aktuelles Endgerät abrufbar. Wir arbeiten daran, eine Verbindung zu deinem LMU-Account herzustellen, um deine Daten zu synchronisieren.';
 
   @override
   String get manageData => 'Deine Daten';
@@ -81,15 +74,13 @@ class SettingsLocalizationsDe extends SettingsLocalizations {
   String get technicalDetails => 'Technische Details';
 
   @override
-  String get deleteDataDescription =>
-      'Wir speichern deine Daten (z. B. Likes) sicher auf unseren Servern. Du hast die volle Kontrolle über deine Daten und kannst diese jederzeit löschen.';
+  String get deleteDataDescription => 'Wir speichern deine Daten (z. B. Likes) sicher auf unseren Servern. Du hast die volle Kontrolle über deine Daten und kannst diese jederzeit löschen.';
 
   @override
   String get deleteDataTitleFinal => 'Delete your account data';
 
   @override
-  String get deleteDataDescriptionFinal =>
-      'Durch diese Aktion werden sämtliche Accountdaten dauerhaft von unserem Server und Deinem Gerät gelöscht. Dazu zählen alle Gerichte-Likes, Kantinen-Likes, MyTaste.';
+  String get deleteDataDescriptionFinal => 'Durch diese Aktion werden sämtliche Accountdaten dauerhaft von unserem Server und Deinem Gerät gelöscht. Dazu zählen alle Gerichte-Likes, Kantinen-Likes, MyTaste.';
 
   @override
   String get deleteDataButton => 'Alle Daten löschen';

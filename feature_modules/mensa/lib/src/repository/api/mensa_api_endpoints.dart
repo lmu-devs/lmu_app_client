@@ -3,7 +3,7 @@ class MensaApiEndpoints {
 
   static const String _version = '/v1';
 
-  static const String _eatRoute = '/eat';
+  static const String _foodRoute = '/food';
 
   static const String _canteensRoute = '/canteens';
   static const String _menusRoute = '/menus';
@@ -12,14 +12,14 @@ class MensaApiEndpoints {
   static const String _canteenIdQuery = 'canteen_id';
 
   static String getMensaModels() {
-    return '$_baseUrl$_version$_eatRoute$_canteensRoute';
+    return '$_baseUrl$_version$_foodRoute$_canteensRoute';
   }
 
   static String getMenuDayForMensa(String canteenId) {
-    return '$_baseUrl$_version$_eatRoute$_menusRoute?$_canteenIdQuery=$canteenId';
+    return '$_baseUrl$_version$_foodRoute$_menusRoute?$_canteenIdQuery=$canteenId';
   }
 
   static String getTasteProfile() {
-    return '$_baseUrl$_version$_eatRoute$_tasteProfileRoute';
+    return '$_baseUrl$_version$_foodRoute$_tasteProfileRoute';
   }
 }

@@ -49,7 +49,7 @@ class MensaOverviewButtonSection extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: LmuSizes.mediumSmall),
+        const SizedBox(width: LmuSizes.size_8),
         ValueListenableBuilder(
           valueListenable: sortOptionNotifier,
           builder: (context, activeSortOption, _) {
@@ -61,7 +61,7 @@ class MensaOverviewButtonSection extends StatelessWidget {
             );
           },
         ),
-        const SizedBox(width: LmuSizes.mediumSmall),
+        const SizedBox(width: LmuSizes.size_8),
         ValueListenableBuilder(
           valueListenable: isOpenNowFilerNotifier,
           builder: (context, isOpenNowFilterActive, _) {
@@ -142,7 +142,7 @@ class _SortOptionActionSheetContent extends StatelessWidget {
                     ),
                     if (sortOption != SortOption.values.last)
                       const SizedBox(
-                        height: LmuSizes.mediumSmall,
+                        height: LmuSizes.size_8,
                       ),
                   ],
                 );

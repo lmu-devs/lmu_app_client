@@ -2,7 +2,7 @@ class RouteNames {
   static const home = '/';
   static const mensa = '/mensa';
   static const mensaDetails = '/mensa/details';
-  static const wunschkonzert = '/wunschkonzert';
+  static const wishlist = '/wishlist';
   static const settings = '/settings';
   static const settingsApperance = '/settings/apperance';
   static const settingsLicence = '/settings/licence';

@@ -20,7 +20,7 @@ class LmuContentMensa extends BaseTile {
   @override
   Widget buildTile(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(LmuSizes.mediumSmall),
+      padding: const EdgeInsets.all(LmuSizes.size_8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -29,8 +29,8 @@ class LmuContentMensa extends BaseTile {
             children: [
               ConstrainedBox(
                 constraints: const BoxConstraints(
-                  minWidth: LmuSizes.xlarge,
-                  maxWidth: LmuSizes.xlarge,
+                  minWidth: LmuSizes.size_24,
+                  maxWidth: LmuSizes.size_24,
                 ),
                 child: LmuText.body(symbol),
               ),
@@ -41,7 +41,7 @@ class LmuContentMensa extends BaseTile {
                     LmuText.body(
                       title,
                     ),
-                    const SizedBox(height: LmuSizes.medium),
+                    const SizedBox(height: LmuSizes.size_12),
                     LmuPaddedInTextVisuals(
                       noPaddingOnFirstElement: true,
                       inTextVisuals: inTextVisuals,
@@ -54,9 +54,9 @@ class LmuContentMensa extends BaseTile {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(
-                      top: LmuSizes.xsmall,
-                      bottom: LmuSizes.xsmall,
-                      left: LmuSizes.xsmall + LmuSizes.small,
+                      top: LmuSizes.size_2,
+                      bottom: LmuSizes.size_2,
+                      left: LmuSizes.size_2 + LmuSizes.size_4,
                     ),
                     child: Row(
                       children: [
@@ -64,7 +64,7 @@ class LmuContentMensa extends BaseTile {
                           rating,
                           color: context.colors.neutralColors.textColors.weakColors.active,
                         ),
-                        const SizedBox(width: LmuSizes.small),
+                        const SizedBox(width: LmuSizes.size_4),
                         GestureDetector(
                           onTap: onFavoriteTap,
                           child: isFavorite
@@ -82,7 +82,7 @@ class LmuContentMensa extends BaseTile {
                       ],
                     ),
                   ),
-                  const SizedBox(height: LmuSizes.small),
+                  const SizedBox(height: LmuSizes.size_4),
                   LmuText.bodyXSmall(
                     price,
                     color: context.colors.neutralColors.textColors.weakColors.active,

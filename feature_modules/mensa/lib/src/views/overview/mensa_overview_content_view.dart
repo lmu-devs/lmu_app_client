@@ -29,6 +29,7 @@ class _MensaOverviewContentViewState extends State<MensaOverviewContentView> {
   late ValueNotifier<List<MensaModel>> _sortedMensaModelsNotifier;
 
   SortOption get _initialSortOption => widget.initialSortOption;
+
   List<MensaModel> get _mensaModels => widget.mensaModels;
 
   @override
@@ -45,14 +46,14 @@ class _MensaOverviewContentViewState extends State<MensaOverviewContentView> {
 
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(LmuSizes.mediumLarge),
+        padding: const EdgeInsets.all(LmuSizes.size_16),
         child: Column(
           children: [
             LmuTileHeadline.base(
               title: localizations.favorites,
             ),
             MensaOverviewFavoriteSection(mensaModels: widget.mensaModels),
-            const SizedBox(height: LmuSizes.xxlarge),
+            const SizedBox(height: LmuSizes.size_32),
             LmuTileHeadline.base(
               title: localizations.allCanteens,
               bottomWidget: MensaOverviewButtonSection(
@@ -68,7 +69,7 @@ class _MensaOverviewContentViewState extends State<MensaOverviewContentView> {
               mensaModels: widget.mensaModels,
             ),
             MensaOverviewInfoSection(localizations: localizations),
-            const SizedBox(height: LmuSizes.xhuge),
+            const SizedBox(height: LmuSizes.size_96),
           ],
         ),
       ),

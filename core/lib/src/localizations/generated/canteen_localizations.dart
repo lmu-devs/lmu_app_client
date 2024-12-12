@@ -88,7 +88,10 @@ abstract class CanteenLocalizations {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('de'), Locale('en')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('de'),
+    Locale('en')
+  ];
 
   /// The title of the meals tab
   ///
@@ -237,7 +240,7 @@ abstract class CanteenLocalizations {
   /// The user's taste footer
   ///
   /// In en, this message translates to:
-  /// **'The allergens and other labelling may change due to short-term recipe and menu changes that cannot be shown on the online menu. Please be sure to check the information on the daily counter displays in the restaurant. Trace information for allergy sufferers: Traces of allergens due to cross-contamination during preparation and serving as well as due to technologically unavoidable contamination of individual ingredients cannot be ruled out and are not labelled.’ Translated with DeepL.com (free version)'**
+  /// **'The allergens and other labelling may change due to short-term recipe and menu changes that cannot be shown on the online menu. Please be sure to check the information on the daily counter displays in the restaurant. Trace information for allergy sufferers: Traces of allergens due to cross-contamination during preparation and serving as well as due to technologically unavoidable contamination of individual ingredients cannot be ruled out and are not labelled.'**
   String get myTasteFooter;
 
   /// No connection
@@ -377,16 +380,18 @@ class _CanteenLocalizationsDelegate extends LocalizationsDelegate<CanteenLocaliz
 }
 
 CanteenLocalizations lookupCanteenLocalizations(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'de':
-      return CanteenLocalizationsDe();
-    case 'en':
-      return CanteenLocalizationsEn();
+    case 'de': return CanteenLocalizationsDe();
+    case 'en': return CanteenLocalizationsEn();
   }
 
-  throw FlutterError('CanteenLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+  throw FlutterError(
+    'CanteenLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.'
+  );
 }

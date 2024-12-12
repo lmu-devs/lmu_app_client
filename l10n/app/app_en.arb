@@ -54,11 +54,43 @@
     "description": "Tomorrow"
   },
   "search": "Search",
-    "@search": {
-      "description": "Search"
+  "@search": {
+    "description": "Search"
+  },
+  "locationServiceDialogTitle": "Location Services Disabled",
+    "@locationServiceDialogTitle": {
+    "description": "Dialog title if location services are off"
+  },
+  "locationServiceDialogText": "To access all features of the app, please enable location services. This will allow us to provide you with more personalized and accurate information.",
+    "@locationServiceDialogText": {
+    "description": "Dialog text if location services are off"
+  },
+  "ok": "OK",
+  "@ok": {
+      "description": "OK"
+  },
+  "locationPermissionDialogTitle": "Permission Required",
+  "@locationPermissionDialogTitle": {
+    "description": "Dialog title if permissions are required"
+  },
+  "locationPermissionDialogText": "This feature needs location access. Open settings to grant the permission.",
+    "@locationPermissionDialogText": {
+    "description": "Dialog text if permissions are required"
   },
   "cancel": "Cancel",
   "@cancel": {
-    "description": "Cancel"
+     "description": "Cancel"
+  },
+  "settings": "Settings",
+  "@settings": {
+     "description": "Settings"
+  },
+  "suggestFeature": "Suggest a feature",
+  "@suggestFeature": {
+     "description": "Suggest a feature"
+  },
+  "reportBug": "Report a bug",
+  "@reportBug": {
+     "description": "Report a bug"
   }
 }

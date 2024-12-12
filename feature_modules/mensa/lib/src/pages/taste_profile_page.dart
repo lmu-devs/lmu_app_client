@@ -98,16 +98,16 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
 
   Widget _buildTitleSection(CanteenLocalizations localizations, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
+      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: LmuSizes.mediumSmall),
+          const SizedBox(height: LmuSizes.size_8),
           LmuText.body(
             localizations.myTasteDescription,
             color: context.colors.neutralColors.textColors.mediumColors.base,
           ),
-          const SizedBox(height: LmuSizes.xxlarge),
+          const SizedBox(height: LmuSizes.size_32),
         ],
       ),
     );
@@ -115,7 +115,7 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
 
   Widget _buildToggleSection(CanteenLocalizations localizations) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
+      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
       child: Column(
         children: [
           LmuContentTile(
@@ -134,7 +134,7 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
               ),
             ],
           ),
-          const SizedBox(height: LmuSizes.xxlarge),
+          const SizedBox(height: LmuSizes.size_32),
         ],
       ),
     );
@@ -146,7 +146,7 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
     List<TasteProfilePreset> presets,
   ) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
+      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -169,7 +169,7 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
               );
             },
           ),
-          const SizedBox(height: LmuSizes.xxlarge),
+          const SizedBox(height: LmuSizes.size_32),
         ],
       ),
     );
@@ -197,7 +197,7 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
+          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
           child: LmuTileHeadline.action(
             title: localizations.tastePreferences,
             actionTitle: localizations.reset,
@@ -213,17 +213,17 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
         ),
         const LmuDivider(),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
+          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
           child: ValueListenableBuilder(
             valueListenable: _excludedLabelsNotifier,
             builder: (context, excludedLabels, _) {
               return ScrollablePositionedList.separated(
-                padding: const EdgeInsets.only(top: LmuSizes.mediumLarge),
+                padding: const EdgeInsets.only(top: LmuSizes.size_16),
                 itemCount: sortedLabels.length,
                 shrinkWrap: true,
                 itemScrollController: itemScrollController,
                 itemPositionsListener: itemPositionsListener,
-                separatorBuilder: (context, index) => const SizedBox(height: LmuSizes.mediumLarge),
+                separatorBuilder: (context, index) => const SizedBox(height: LmuSizes.size_16),
                 itemBuilder: (context, index) {
                   final label = sortedLabels[index];
                   return Column(
@@ -260,15 +260,15 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
 
   Widget _buildFooter(BuildContext context, CanteenLocalizations localizations) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge),
+      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
       child: Column(
         children: [
-          const SizedBox(height: LmuSizes.xxxlarge),
+          const SizedBox(height: LmuSizes.size_48),
           LmuText.bodyXSmall(
             localizations.myTasteFooter,
             color: context.colors.neutralColors.textColors.weakColors.base,
           ),
-          const SizedBox(height: LmuSizes.huge),
+          const SizedBox(height: LmuSizes.size_64),
         ],
       ),
     );

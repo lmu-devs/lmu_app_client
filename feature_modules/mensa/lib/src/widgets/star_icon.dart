@@ -33,7 +33,7 @@ class StarIcon extends StatelessWidget {
         semanticsLabel: localization.iconStar,
         key: ValueKey(isActive),
         package: "mensa",
-        width: LmuSizes.large,
+        width: LmuSizes.size_20,
         colorFilter: ColorFilter.mode(
           isActive
               ? context.colors.warningColors.textColors.strongColors.base

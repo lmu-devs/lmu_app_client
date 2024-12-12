@@ -28,20 +28,19 @@
 	<array>
 		<string>http</string>
 		<string>https</string>
+		<string>maps</string>
+		<string>comgooglemaps</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>MBXAccessToken</key>
-	<string>pk.eyJ1IjoibHVrYXNwbGVuayIsImEiOiJjbTJ4OWRvcXkwMmJoMmxyMzNreHJnemp0In0.Y2tZBr2Ek1F-s-yP2DxnNA</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
     <string>Your location is needed to show distances to university buildings and cafeterias, and to display nearby facilities on the map.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Your location is needed to show distances to university buildings and cafeterias, and to display nearby facilities on the map.</string>
-	<key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>comgooglemaps</string>
-        <string>maps</string>
-    </array>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Your location is needed to show distances to university buildings and cafeterias, and to display nearby facilities on the map.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Your location is needed to show distances to university buildings and cafeterias, and to display nearby facilities on the map.</string>
+	<key>MBXAccessToken</key>
+	<string>pk.eyJ1IjoibHVrYXNwbGVuayIsImEiOiJjbTJ4OWRvcXkwMmJoMmxyMzNreHJnemp0In0.Y2tZBr2Ek1F-s-yP2DxnNA</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

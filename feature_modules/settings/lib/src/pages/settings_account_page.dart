@@ -15,7 +15,7 @@ class SettingsAccountPage extends StatelessWidget {
       largeTitle: localization.account,
       leadingAction: LeadingAction.back,
       body: Padding(
-        padding: const EdgeInsets.all(LmuSizes.mediumLarge),
+        padding: const EdgeInsets.all(LmuSizes.size_16),
         child: Column(
           children: [
             LmuContentTile(
@@ -31,7 +31,7 @@ class SettingsAccountPage extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: LmuSizes.mediumSmall,
+              height: LmuSizes.size_8,
             ),
             LmuButton(
               title: localization.connectToAccount,
@@ -44,7 +44,7 @@ class SettingsAccountPage extends StatelessWidget {
               },
             ),
             const SizedBox(
-              height: LmuSizes.mediumLarge,
+              height: LmuSizes.size_16,
             ),
             LmuText.bodyXSmall(
               localization.connectToAccountDescription,
@@ -52,7 +52,7 @@ class SettingsAccountPage extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(
-              height: LmuSizes.xxlarge,
+              height: LmuSizes.size_32,
             ),
             LmuTileHeadline.base(
               title: localization.manageData,
@@ -70,7 +70,7 @@ class SettingsAccountPage extends StatelessWidget {
               },
             ),
             const SizedBox(
-              height: LmuSizes.mediumLarge,
+              height: LmuSizes.size_16,
             ),
             LmuText.bodyXSmall(
               localization.deleteDataDescription,
@@ -78,7 +78,7 @@ class SettingsAccountPage extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(
-              height: LmuSizes.xxlarge,
+              height: LmuSizes.size_32,
             ),
             LmuTileHeadline.base(
               title: localization.technicalDetails,
@@ -95,7 +95,7 @@ class SettingsAccountPage extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: LmuSizes.xhuge,
+              height: LmuSizes.size_96,
             ),
           ],
         ),
@@ -108,18 +108,18 @@ class SettingsAccountPage extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const SizedBox(height: LmuSizes.mediumLarge),
+        const SizedBox(height: LmuSizes.size_16),
         LmuText.h3(
           localization.deleteDataTitleFinal,
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: LmuSizes.large),
+        const SizedBox(height: LmuSizes.size_20),
         LmuText.body(
           localization.deleteDataDescriptionFinal,
           color: context.colors.neutralColors.textColors.mediumColors.base,
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: LmuSizes.xxlarge),
+        const SizedBox(height: LmuSizes.size_32),
         LmuButton(
           title: localization.deleteDataButtonFinal,
           size: ButtonSize.large,

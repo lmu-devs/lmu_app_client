@@ -123,7 +123,7 @@ class MensaOverviewFavoriteSectionState extends State<MensaOverviewFavoriteSecti
                         StarIcon(
                           isActive: false,
                           disabledColor: context.colors.neutralColors.textColors.weakColors.base,
-                          size: LmuSizes.mediumLarge,
+                          size: LmuSizes.size_16,
                         ),
                         LmuText.bodySmall(
                           context.locals.canteen.emptyFavoritesAfter,

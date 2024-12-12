@@ -48,7 +48,7 @@ class LmuToast {
         )..forward(),
       ),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.mediumLarge, vertical: LmuSizes.mediumSmall),
+        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16, vertical: LmuSizes.size_8),
         decoration: BoxDecoration(
           color: context.colors.neutralColors.backgroundColors.base,
           borderRadius: BorderRadius.circular(50),
@@ -61,14 +61,14 @@ class LmuToast {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: LmuSizes.mediumSmall,
-              height: LmuSizes.mediumSmall,
+              width: LmuSizes.size_8,
+              height: LmuSizes.size_8,
               decoration: BoxDecoration(
                 color: type.color(context.colors),
                 shape: BoxShape.circle,
               ),
             ),
-            const SizedBox(width: LmuSizes.medium),
+            const SizedBox(width: LmuSizes.size_12),
             Flexible(
               child: LmuText.bodySmall(
                 message,
@@ -80,13 +80,13 @@ class LmuToast {
             if (actionText != null && onActionPressed != null) ...[
               Row(
                 children: [
-                  const SizedBox(width: LmuSizes.mediumSmall),
+                  const SizedBox(width: LmuSizes.size_8),
                   Container(
                     width: 1,
                     height: 20,
                     color: context.colors.neutralColors.backgroundColors.mediumColors.base,
                   ),
-                  const SizedBox(width: LmuSizes.mediumSmall),
+                  const SizedBox(width: LmuSizes.size_8),
                   LmuButton(
                     title: actionText,
                     onTap: () {

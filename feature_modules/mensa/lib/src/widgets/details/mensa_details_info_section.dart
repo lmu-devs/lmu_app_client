@@ -25,8 +25,8 @@ class MensaDetailsInfoSection extends StatelessWidget {
     final mensaStatus = openingHours.mensaStatus;
     return Padding(
       padding: const EdgeInsets.only(
-        left: LmuSizes.mediumLarge,
-        right: LmuSizes.mediumLarge,
+        left: LmuSizes.size_16,
+        right: LmuSizes.size_16,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,6 +40,7 @@ class MensaDetailsInfoSection extends StatelessWidget {
                 content: NavigationSheet(
                   latitude: mensaModel.location.latitude,
                   longitude: mensaModel.location.longitude,
+                  address: mensaModel.location.address,
                 ),
               );
             },
@@ -72,7 +73,7 @@ class MensaDetailsInfoSection extends StatelessWidget {
               },
             ).toList(),
           ),
-          const SizedBox(height: LmuSizes.mediumLarge),
+          const SizedBox(height: LmuSizes.size_16),
         ],
       ),
     );
