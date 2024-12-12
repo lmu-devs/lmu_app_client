@@ -1,5 +1,5 @@
 class RouteNames {
-  static const home = '/';
+  static const home = '/home';
   static const mensa = '/mensa';
   static const mensaDetails = '/mensa/details';
   static const wishlist = '/wishlist';

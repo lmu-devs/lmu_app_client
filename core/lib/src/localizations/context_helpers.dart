@@ -7,6 +7,7 @@ import 'generated/canteen_localizations.dart';
 import 'generated/settings_localizations.dart';
 import 'generated/feedback_localizations.dart';
 import 'generated/wishlist_localizations.dart';
+import 'generated/home_localizations.dart';
 
 extension LocalizationExtension on BuildContext {
   LmuLocalizations get locals => LmuLocalizations(this);
@@ -23,6 +24,7 @@ class LmuLocalizations {
   WishlistLocalizations get wishlist => WishlistLocalizations.of(_context)!;
   SettingsLocalizations get settings => SettingsLocalizations.of(_context)!;
   FeedbackLocalizations get feedback => FeedbackLocalizations.of(_context)!;
+  HomeLocalizations get home => HomeLocalizations.of(_context)!;
   // Add other localizations
 
   /// List of all supported localizations delegates
@@ -33,6 +35,7 @@ class LmuLocalizations {
         WishlistLocalizations.delegate,
         SettingsLocalizations.delegate,
         FeedbackLocalizations.delegate,
+        HomeLocalizations.delegate,
         // Add other localizations delegates
 
         GlobalMaterialLocalizations.delegate,

@@ -26,6 +26,8 @@ dependencies:
     path: ./feature_modules/wishlist
   feedback:
     path: ./feature_modules/feedback
+  home:
+    path: ./feature_modules/home
   shared_api:
     path: ./shared_api
   http: ^0.13.3
