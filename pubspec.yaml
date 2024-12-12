@@ -16,6 +16,8 @@ dependencies:
   provider: ^6.1.2
   core:
     path: ./core
+  home:
+    path: ./feature_modules/home
   mensa:
     path: ./feature_modules/mensa
   explore:
@@ -26,8 +28,6 @@ dependencies:
     path: ./feature_modules/wishlist
   feedback:
     path: ./feature_modules/feedback
-  home:
-    path: ./feature_modules/home
   shared_api:
     path: ./shared_api
   http: ^0.13.3
@@ -57,6 +57,7 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^4.0.0
   go_router_builder: ^2.7.1
+  json_serializable: ^6.6.2
   build_runner: any
   build_verify: any
   husky: ^0.1.7

@@ -99,7 +99,7 @@ abstract class WishlistLocalizations {
   /// Intro text for the wishlist page
   ///
   /// In en, this message translates to:
-  /// **'The app is on its way to reaching its full potential. Good things take time and thoughtful decisions. Help us figure out which features you miss the most.'**
+  /// **'The app is still on its way to reaching its full potential. Good things take time and thoughtful decisions. Help us figure out which features you miss the most.'**
   String get wishlistIntro;
 
   /// Roadmap title
