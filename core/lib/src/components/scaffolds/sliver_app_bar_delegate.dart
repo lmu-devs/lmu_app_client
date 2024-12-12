@@ -197,7 +197,6 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 
 class _PullToRefresh extends StatelessWidget {
   const _PullToRefresh({
-    super.key,
     required this.scrollOffsetNotifier,
   });
 

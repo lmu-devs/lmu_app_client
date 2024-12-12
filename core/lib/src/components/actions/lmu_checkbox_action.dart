@@ -13,13 +13,10 @@ class LmuCheckboxAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final enabledColor =
-        context.colors.brandColors.backgroundColors.nonInvertableColors.base;
-    final disabledColor =
-        context.colors.neutralColors.backgroundColors.strongColors.pressed!;
+    final enabledColor = context.colors.brandColors.backgroundColors.nonInvertableColors.base;
+    final disabledColor = context.colors.neutralColors.backgroundColors.strongColors.pressed!;
     final backgroundColor = context.colors.neutralColors.backgroundColors.base;
-    final iconColor = context
-        .colors.neutralColors.backgroundColors.nonInvertableColors.active!;
+    final iconColor = context.colors.neutralColors.backgroundColors.nonInvertableColors.active!;
     const animationDuration = Duration(milliseconds: 120);
     return AnimatedContainer(
       duration: animationDuration,

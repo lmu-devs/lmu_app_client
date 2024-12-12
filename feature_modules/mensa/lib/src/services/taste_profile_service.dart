@@ -27,6 +27,12 @@ class TasteProfileService {
   ValueNotifier<Set<String>> get selectedPresetsNotifier => _selectedPresetsNotifier;
   ValueNotifier<Set<String>> get excludedLabelsNotifier => _excludedLabelsNotifier;
 
+  void reset() {
+    _selectedPresetsNotifier.value = {};
+    _excludedLabelsNotifier.value = {};
+    _isActiveNotifier.value = false;
+  }
+
   TasteProfileLabelItem? getLabelItemFromId(String id) {
     final tasteProfile = _tasteProfileNotifier.value;
     if (tasteProfile != null) {

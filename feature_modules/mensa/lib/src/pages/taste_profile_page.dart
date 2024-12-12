@@ -22,28 +22,32 @@ class TasteProfilePage extends StatelessWidget {
       largeTitle: localizations.myTaste,
       customScrollController: ModalScrollController.of(context),
       trailingWidgets: const [_SaveButton()],
-      body: CustomScrollView(
+      body: const CustomScrollView(
         slivers: [
           SliverToBoxAdapter(child: _TitleSection()),
           SliverToBoxAdapter(child: _ToggleSection()),
           SliverToBoxAdapter(child: TasteProfilePresetsSection()),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-              child: LmuTileHeadline.action(
-                title: localizations.tastePreferences,
-                actionTitle: localizations.reset,
-                onActionTap: () {
-                  // selectedPresetNotifier.value = {};
-                  // excludedLabelsNotifier.value = {};
-                  // isActiveNotifier.value = true;
-                },
-              ),
-            ),
-          ),
+          SliverToBoxAdapter(child: _LabelsHeader()),
           TasteProfileLabelsSection(),
           SliverToBoxAdapter(child: _FooterSection()),
         ],
+      ),
+    );
+  }
+}
+
+class _LabelsHeader extends StatelessWidget {
+  const _LabelsHeader();
+
+  @override
+  Widget build(BuildContext context) {
+    final localizations = context.locals.canteen;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+      child: LmuTileHeadline.action(
+        title: localizations.tastePreferences,
+        actionTitle: localizations.reset,
+        onActionTap: GetIt.I.get<TasteProfileService>().reset,
       ),
     );
   }

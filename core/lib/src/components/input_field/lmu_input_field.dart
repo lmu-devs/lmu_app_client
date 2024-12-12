@@ -111,13 +111,9 @@ class _LmuInputFieldState extends State<LmuInputField> {
 
     setState(() {
       if (widget.controller.text.isEmpty) {
-        _inputState = _focusNode.hasFocus
-            ? InputStates.active
-            : InputStates.base;
+        _inputState = _focusNode.hasFocus ? InputStates.active : InputStates.base;
       } else {
-        _inputState = _focusNode.hasFocus
-            ? InputStates.typing
-            : InputStates.filled;
+        _inputState = _focusNode.hasFocus ? InputStates.typing : InputStates.filled;
       }
     });
   }
@@ -125,8 +121,7 @@ class _LmuInputFieldState extends State<LmuInputField> {
   @override
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.circular(LmuRadiusSizes.medium);
-    final fillColor =
-        InputFieldColorHelper.getFillColor(context, _inputState);
+    final fillColor = InputFieldColorHelper.getFillColor(context, _inputState);
     const borderColor = Colors.transparent;
 
     return TextField(
@@ -158,8 +153,7 @@ class _LmuInputFieldState extends State<LmuInputField> {
         widget.onTapOutside?.call();
       },
       cursorHeight: 20,
-      cursorErrorColor:
-          context.colors.dangerColors.textColors.strongColors.base,
+      cursorErrorColor: context.colors.dangerColors.textColors.strongColors.base,
       cursorOpacityAnimates: true,
       decoration: InputDecoration(
         contentPadding: widget.contentPadding,
@@ -177,16 +171,14 @@ class _LmuInputFieldState extends State<LmuInputField> {
           borderRadius: borderRadius,
           borderSide: const BorderSide(color: borderColor),
         ),
-        hoverColor:
-            context.colors.neutralColors.backgroundColors.mediumColors.base,
+        hoverColor: context.colors.neutralColors.backgroundColors.mediumColors.base,
         hintText: widget.hintText,
         hintStyle: TextStyle(
           color: context.colors.neutralColors.textColors.weakColors.base,
           fontWeight: FontWeight.w400,
         ),
         prefixIcon: widget.leadingIcon,
-        prefixIconColor:
-            context.colors.neutralColors.textColors.weakColors.base,
+        prefixIconColor: context.colors.neutralColors.textColors.weakColors.base,
         prefixIconConstraints: widget.leadingIconConstraints,
         suffixIcon: widget.trailingIcon != null
             ? GestureDetector(
