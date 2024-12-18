@@ -30,5 +30,17 @@
   "betaSubtitle": "Test the newest app functions",
   "@betaSubtitle": {
     "description": "Beta subtitle"
+  },
+  "wishlistEntriesTitle": "Future Features",
+  "@wishlistEntriesTitle": {
+    "description": "Title of the wishlist-entries section"
+  },
+  "testPrototype": "Test Prototype",
+  "@testPrototype": {
+    "description": "Test prototype button"
+  },
+  "prototypeError": "Launching prototype failed",
+  "@prototypeError": {
+    "description": "Prototype error toast"
   }
 }

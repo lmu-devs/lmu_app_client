@@ -20,14 +20,17 @@ class WishlistLocalizationsDe extends WishlistLocalizations {
   String get instagram => 'Instagram';
 
   @override
-  String get roadmapTitle => 'Unsere Roadmap';
-
-  @override
-  String get roadmapSubtitle => 'Kill the mogul';
-
-  @override
   String get betaTitle => 'Beta Tester:in werden';
 
   @override
   String get betaSubtitle => 'Teste die neusten App Features';
+
+  @override
+  String get wishlistEntriesTitle => 'Zukünftige Funktionen';
+
+  @override
+  String get testPrototype => 'Jetzt als Prototyp testen';
+
+  @override
+  String get prototypeError => 'Prototyp konnte nicht geöffnet werden';
 }

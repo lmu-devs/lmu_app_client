@@ -8,5 +8,8 @@
   "rateApp": "App bewerten",
   "instagram": "Instagram",
   "betaTitle": "Beta Tester:in werden",
-  "betaSubtitle": "Teste die neusten App Features"
+  "betaSubtitle": "Teste die neusten App Features",
+  "wishlistEntriesTitle": "Zukünftige Funktionen",
+  "testPrototype": "Jetzt als Prototyp testen",
+  "prototypeError": "Prototyp konnte nicht geöffnet werden"
 }

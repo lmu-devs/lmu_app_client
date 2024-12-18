@@ -13,6 +13,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:shared_api/feedback.dart';
 
 import '../repository/api/api.dart';
+import '../routes/routes.dart';
 
 class WishlistSuccessView extends StatelessWidget {
   const WishlistSuccessView({super.key, required this.wishlistModels});
@@ -118,16 +119,19 @@ class WishlistSuccessView extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: LmuSizes.size_24),
-                LmuTileHeadline.base(title: "New Features"),
+                LmuTileHeadline.base(title: context.locals.wishlist.wishlistEntriesTitle),
                 LmuContentTile(
                   content: wishlistModels
-                      .map((model) => LmuListItem.base(
-                            title: model.title,
-                            titleInTextVisuals: [LmuInTextVisual.text(title: model.status)],
-                            subtitle: model.description,
-                            trailingSubtitle: model.ratingModel.likeCount.toString(),
-                            mainContentAlignment: MainContentAlignment.center,
-                          ))
+                      .map(
+                        (wishlistModel) => LmuListItem.base(
+                          title: wishlistModel.title,
+                          titleInTextVisuals: [LmuInTextVisual.text(title: wishlistModel.status)],
+                          subtitle: wishlistModel.description,
+                          trailingSubtitle: wishlistModel.ratingModel.likeCount.toString(),
+                          mainContentAlignment: MainContentAlignment.center,
+                          onTap: () => WishlistDetailsRoute(wishlistModel).go(context),
+                        ),
+                      )
                       .toList(),
                 ),
                 const SizedBox(height: LmuSizes.size_24),

@@ -123,18 +123,6 @@ abstract class WishlistLocalizations {
   /// **'Instagram'**
   String get instagram;
 
-  /// Roadmap title
-  ///
-  /// In en, this message translates to:
-  /// **'Our roadmap'**
-  String get roadmapTitle;
-
-  /// Roadmap subtitle
-  ///
-  /// In en, this message translates to:
-  /// **'Kill the mogul'**
-  String get roadmapSubtitle;
-
   /// Beta title
   ///
   /// In en, this message translates to:
@@ -146,6 +134,24 @@ abstract class WishlistLocalizations {
   /// In en, this message translates to:
   /// **'Test the newest app functions'**
   String get betaSubtitle;
+
+  /// Title of the wishlist-entries section
+  ///
+  /// In en, this message translates to:
+  /// **'Future Features'**
+  String get wishlistEntriesTitle;
+
+  /// Test prototype button
+  ///
+  /// In en, this message translates to:
+  /// **'Test Prototype'**
+  String get testPrototype;
+
+  /// Prototype error toast
+  ///
+  /// In en, this message translates to:
+  /// **'Launching prototype failed'**
+  String get prototypeError;
 }
 
 class _WishlistLocalizationsDelegate extends LocalizationsDelegate<WishlistLocalizations> {
