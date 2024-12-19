@@ -134,13 +134,13 @@ class WishlistDetailsPage extends StatelessWidget {
         ),
         child: LmuText.bodySmall(wishlistModel.status.getValue(context)),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+              child: Row(
                 children: [
                   LmuButton(
                     leadingIcon: LucideIcons.heart,
@@ -149,37 +149,46 @@ class WishlistDetailsPage extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: LmuSizes.size_24),
-              LmuText.body(wishlistModel.description),
-              const SizedBox(height: LmuSizes.size_24),
-              SizedBox(
-                height: 360,
-                width: MediaQuery.of(context).size.width,
-                child: PageView.builder(
-                  controller: PageController(viewportFraction: (200 / MediaQuery.of(context).size.width)),
-                  physics: const ClampingScrollPhysics(),
-                  padEnds: false,
-                  itemCount: wishlistModel.imageModels.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: LmuSizes.size_8),
-                      child: GestureDetector(
-                        onTap: () => _showImageView(context, index),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(LmuRadiusSizes.mediumLarge),
-                          child: Image.network(
-                            wishlistModel.imageModels.reversed.toList()[index].url,
-                            fit: BoxFit.cover,
-                            semanticLabel: wishlistModel.imageModels[index].name,
-                          ),
+            ),
+            const SizedBox(height: LmuSizes.size_24),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+              child: LmuText.body(wishlistModel.description),
+            ),
+            const SizedBox(height: LmuSizes.size_24),
+            SizedBox(
+              height: 360,
+              width: MediaQuery.of(context).size.width,
+              child: ListView.builder(
+                physics: const PageScrollPhysics(parent: ClampingScrollPhysics()),
+                controller: PageController(viewportFraction: (175 / MediaQuery.of(context).size.width)),
+                scrollDirection: Axis.horizontal,
+                itemCount: wishlistModel.imageModels.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      left: index == 0 ? LmuSizes.size_16 : LmuSizes.none,
+                      right: index == (wishlistModel.imageModels.length - 1) ? LmuSizes.size_16 : LmuSizes.size_8,
+                    ),
+                    child: GestureDetector(
+                      onTap: () => _showImageView(context, index),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(LmuRadiusSizes.mediumLarge),
+                        child: Image.network(
+                          wishlistModel.imageModels.reversed.toList()[index].url,
+                          fit: BoxFit.cover,
+                          semanticLabel: wishlistModel.imageModels[index].name,
                         ),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
-              if (wishlistModel.prototypeUrl.isNotEmpty)
-                Column(
+            ),
+            if (wishlistModel.prototypeUrl.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+                child: Column(
                   children: [
                     const SizedBox(height: LmuSizes.size_24),
                     LmuButton(
@@ -190,9 +199,9 @@ class WishlistDetailsPage extends StatelessWidget {
                     ),
                   ],
                 ),
-              const SizedBox(height: LmuSizes.size_96),
-            ],
-          ),
+              ),
+            const SizedBox(height: LmuSizes.size_96),
+          ],
         ),
       ),
     );
