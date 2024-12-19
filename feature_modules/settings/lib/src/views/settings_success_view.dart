@@ -48,7 +48,7 @@ class SettingsSuccessView extends StatelessWidget {
                 LmuListItem.action(
                   title: settingLocalizations.appearance,
                   actionType: LmuListItemAction.chevron,
-                  chevronTitle: _getThemeModeString(context, settingLocalizations),
+                  trailingTitle: _getThemeModeString(context, settingLocalizations),
                   onTap: () {
                     const SettingsApperanceRoute().go(context);
                   },
