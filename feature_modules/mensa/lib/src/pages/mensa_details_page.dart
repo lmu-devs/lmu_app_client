@@ -7,14 +7,12 @@ import 'package:get_it/get_it.dart';
 import '../../mensa.dart';
 import '../bloc/menu_cubit/cubit.dart';
 import '../extensions/likes_formatter_extension.dart';
+import '../extensions/opening_hours_extensions.dart';
 import '../services/menu_service.dart';
 import '../widgets/widgets.dart';
 
 class MensaDetailsPage extends StatefulWidget {
-  const MensaDetailsPage({
-    super.key,
-    required this.mensaModel,
-  });
+  const MensaDetailsPage({super.key, required this.mensaModel});
 
   final MensaModel mensaModel;
 
@@ -92,7 +90,10 @@ class _MensaDetailsPageState extends State<MensaDetailsPage> {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(child: MensaDetailsInfoSection(mensaModel: _mensaModel)),
-          MensaDetailsMenuSection(canteenId: _mensaModel.canteenId),
+          MensaDetailsMenuSection(
+            canteenId: _mensaModel.canteenId,
+            mensaStatus: _mensaModel.openingHours.mensaStatus,
+          ),
         ],
       ),
     );
