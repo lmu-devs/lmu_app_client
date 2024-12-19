@@ -70,6 +70,7 @@ class MensaOverviewTile extends StatelessWidget {
             children: [
               if (hasLargeImage)
                 Container(
+                  height: LmuSizes.size_16 * 10,
                   decoration: BoxDecoration(
                     color: colors.neutralColors.backgroundColors.tile,
                     borderRadius: const BorderRadius.only(
@@ -78,12 +79,13 @@ class MensaOverviewTile extends StatelessWidget {
                     ),
                     image: imageUrl != null
                         ? DecorationImage(
-                            image: NetworkImage(imageUrl),
                             fit: BoxFit.cover,
+                            image: LmuCachedNetworkImageProvider(
+                              imageUrl,
+                            ),
                           )
                         : null,
                   ),
-                  height: LmuSizes.size_16 * 10,
                 ),
               Stack(
                 children: [
