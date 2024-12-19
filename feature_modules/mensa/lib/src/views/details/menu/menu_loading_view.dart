@@ -43,7 +43,7 @@ class MenuLoadingView extends StatelessWidget {
         sliver: SliverPadding(
           padding: const EdgeInsets.only(top: LmuSizes.size_24),
           sliver: SliverList.builder(
-            itemCount: 7,
+            itemCount: 8,
             itemBuilder: (context, index) {
               return const Padding(
                 padding: EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
