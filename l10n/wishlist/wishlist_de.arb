@@ -16,5 +16,6 @@
   "wishlistStatusBeta": "Beta",
   "wishlistStatusDone": "Fertig",
   "testPrototype": "Jetzt als Prototyp testen",
-  "prototypeError": "Prototyp konnte nicht geöffnet werden"
+  "prototypeError": "Prototyp konnte nicht geöffnet werden",
+  "previewImageCount" : "von"
 }

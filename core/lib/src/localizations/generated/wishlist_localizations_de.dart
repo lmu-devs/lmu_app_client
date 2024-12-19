@@ -48,4 +48,7 @@ class WishlistLocalizationsDe extends WishlistLocalizations {
 
   @override
   String get prototypeError => 'Prototyp konnte nicht geöffnet werden';
+
+  @override
+  String get previewImageCount => 'von';
 }

@@ -62,5 +62,9 @@
   "prototypeError": "Launching prototype failed",
   "@prototypeError": {
     "description": "Prototype error toast"
+  },
+  "previewImageCount" : "of",
+  "@previewImageCount": {
+    "description": "Text that is between the index of the current preview image and the amount of all preview images e.g [1 of 4]."
   }
 }

@@ -182,6 +182,12 @@ abstract class WishlistLocalizations {
   /// In en, this message translates to:
   /// **'Launching prototype failed'**
   String get prototypeError;
+
+  /// Text that is between the index of the current preview image and the amount of all preview images e.g [1 of 4].
+  ///
+  /// In en, this message translates to:
+  /// **'of'**
+  String get previewImageCount;
 }
 
 class _WishlistLocalizationsDelegate extends LocalizationsDelegate<WishlistLocalizations> {

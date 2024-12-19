@@ -38,6 +38,88 @@ class WishlistDetailsPage extends StatelessWidget {
     }
   }
 
+  void _showImageView(BuildContext context, int clickedIndex) {
+    ValueNotifier<int> currentIndexNotifier = ValueNotifier<int>(clickedIndex);
+
+    PageController pageController = PageController(
+      viewportFraction: 0.85,
+      initialPage: clickedIndex,
+    );
+
+    showDialog(
+      context: context,
+      useSafeArea: false,
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog.fullscreen(
+          backgroundColor: context.colors.neutralColors.backgroundColors.base,
+          child: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: LmuSizes.size_8,
+                    left: LmuSizes.size_16,
+                    right: LmuSizes.size_16,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: const Icon(
+                          LucideIcons.x,
+                          size: LmuIconSizes.medium,
+                        ),
+                      ),
+                      ValueListenableBuilder<int>(
+                        valueListenable: currentIndexNotifier,
+                        builder: (context, currentIndex, _) {
+                          return LmuText(
+                            '${currentIndex + 1} ${context.locals.wishlist.previewImageCount} ${wishlistModel.imageModels.length}',
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_32),
+                    child: PageView.builder(
+                      controller: pageController,
+                      physics: const ClampingScrollPhysics(),
+                      itemCount: wishlistModel.imageModels.length,
+                      onPageChanged: (int index) {
+                        currentIndexNotifier.value = index;
+                      },
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(right: LmuSizes.size_16),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(LmuRadiusSizes.mediumLarge),
+                            child: Image.network(
+                              wishlistModel.imageModels.reversed.toList()[index].url,
+                              fit: BoxFit.cover,
+                              semanticLabel: wishlistModel.imageModels[index].name,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return LmuMasterAppBar(
@@ -45,14 +127,10 @@ class WishlistDetailsPage extends StatelessWidget {
       leadingAction: LeadingAction.back,
       largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
       largeTitleTrailingWidget: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: LmuSizes.size_4,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_4),
         decoration: BoxDecoration(
           color: context.colors.neutralColors.backgroundColors.weakColors.active,
-          borderRadius: BorderRadius.circular(
-            LmuSizes.size_4,
-          ),
+          borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
         ),
         child: LmuText.bodySmall(wishlistModel.status.getValue(context)),
       ),
@@ -75,26 +153,24 @@ class WishlistDetailsPage extends StatelessWidget {
               LmuText.body(wishlistModel.description),
               const SizedBox(height: LmuSizes.size_24),
               SizedBox(
-                height: 320,
-                width: 160,
+                height: 360,
+                width: MediaQuery.of(context).size.width,
                 child: PageView.builder(
+                  controller: PageController(viewportFraction: (200 / MediaQuery.of(context).size.width)),
                   physics: const ClampingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
+                  padEnds: false,
                   itemCount: wishlistModel.imageModels.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
                       padding: const EdgeInsets.only(right: LmuSizes.size_8),
                       child: GestureDetector(
-                        onTap: () => {},
+                        onTap: () => _showImageView(context, index),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(LmuRadiusSizes.mediumLarge),
-                          child: Container(
-                            color: context.colors.neutralColors.backgroundColors.mediumColors.base,
-                            child: Image.network(
-                              wishlistModel.imageModels[index].url,
-                              fit: BoxFit.cover,
-                              semanticLabel: wishlistModel.imageModels[index].name,
-                            ),
+                          child: Image.network(
+                            wishlistModel.imageModels.reversed.toList()[index].url,
+                            fit: BoxFit.cover,
+                            semanticLabel: wishlistModel.imageModels[index].name,
                           ),
                         ),
                       ),

@@ -48,4 +48,7 @@ class WishlistLocalizationsEn extends WishlistLocalizations {
 
   @override
   String get prototypeError => 'Launching prototype failed';
+
+  @override
+  String get previewImageCount => 'of';
 }
