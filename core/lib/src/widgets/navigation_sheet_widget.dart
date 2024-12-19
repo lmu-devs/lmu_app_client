@@ -114,6 +114,12 @@ class NavigationSheet extends StatelessWidget {
             longitude: longitude,
           ),
         ),
+        const Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: LmuSizes.size_4,
+              horizontal: LmuSizes.size_8,
+            ),
+            child: LmuDivider()),
         LmuListItem.base(
           title: context.locals.explore.copyToClipboard,
           leadingArea: const Padding(

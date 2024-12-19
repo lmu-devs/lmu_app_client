@@ -117,6 +117,12 @@ abstract class WishlistLocalizations {
   /// **'Rate App'**
   String get rateApp;
 
+  /// Rate app error toast
+  ///
+  /// In en, this message translates to:
+  /// **'Opening store failed'**
+  String get rateAppError;
+
   /// No description provided for @instagram.
   ///
   /// In en, this message translates to:
@@ -132,7 +138,7 @@ abstract class WishlistLocalizations {
   /// Beta subtitle
   ///
   /// In en, this message translates to:
-  /// **'Test the newest app functions'**
+  /// **'Test new app functions early'**
   String get betaSubtitle;
 
   /// Title of the wishlist-entries section
@@ -140,6 +146,30 @@ abstract class WishlistLocalizations {
   /// In en, this message translates to:
   /// **'Future Features'**
   String get wishlistEntriesTitle;
+
+  /// Hidden
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden'**
+  String get wishlistStatusHidden;
+
+  /// In development
+  ///
+  /// In en, this message translates to:
+  /// **'In Development'**
+  String get wishlistStatusDevelopment;
+
+  /// Beta
+  ///
+  /// In en, this message translates to:
+  /// **'Beta'**
+  String get wishlistStatusBeta;
+
+  /// Done
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get wishlistStatusDone;
 
   /// Test prototype button
   ///

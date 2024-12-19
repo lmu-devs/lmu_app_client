@@ -70,7 +70,7 @@ class SettingsSuccessView extends StatelessWidget {
                   onTap: () {
                     LmuUrlLauncher.launchWebsite(
                       context: context,
-                      url: "https://lmu-dev.org",
+                      url: LmuDevStrings.lmuDevWebsite,
                       mode: LmuUrlLauncherMode.inAppWebView,
                     );
                   },
@@ -85,7 +85,7 @@ class SettingsSuccessView extends StatelessWidget {
                   onTap: () {
                     LmuUrlLauncher.launchEmail(
                       context: context,
-                      email: "contact@lmu-dev.org",
+                      email: LmuDevStrings.lmuDevContactMail,
                       subject: settingLocalizations.contactSubject,
                       body: settingLocalizations.contactBody,
                     );
@@ -108,9 +108,7 @@ class SettingsSuccessView extends StatelessWidget {
                   actionType: LmuListItemAction.chevron,
                   onTap: () {
                     LmuUrlLauncher.launchWebsite(
-                        context: context,
-                        url: "https://lmu-dev.org/datenschutz",
-                        mode: LmuUrlLauncherMode.inAppWebView);
+                        context: context, url: LmuDevStrings.lmuDevDataPrivacy, mode: LmuUrlLauncherMode.inAppWebView);
                   },
                 ),
                 LmuListItem.action(
@@ -118,7 +116,7 @@ class SettingsSuccessView extends StatelessWidget {
                   actionType: LmuListItemAction.chevron,
                   onTap: () {
                     LmuUrlLauncher.launchWebsite(
-                        context: context, url: "https://lmu-dev.org/impressum", mode: LmuUrlLauncherMode.inAppWebView);
+                        context: context, url: LmuDevStrings.lmuDevImprint, mode: LmuUrlLauncherMode.inAppWebView);
                   },
                 ),
                 LmuListItem.action(

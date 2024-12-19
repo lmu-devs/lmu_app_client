@@ -19,6 +19,10 @@
   "@rateApp": {
     "description": "Rate app"
   },
+  "rateAppError": "Opening store failed",
+  "@rateAppError": {
+    "description": "Rate app error toast"
+  },
   "instagram": "Instagram",
   "@roadmapTitle": {
     "description": "Instagram"
@@ -27,13 +31,29 @@
   "@betaTitle": {
     "description": "Beta title"
   },
-  "betaSubtitle": "Test the newest app functions",
+  "betaSubtitle": "Test new app functions early",
   "@betaSubtitle": {
     "description": "Beta subtitle"
   },
   "wishlistEntriesTitle": "Future Features",
   "@wishlistEntriesTitle": {
     "description": "Title of the wishlist-entries section"
+  },
+  "wishlistStatusHidden": "Hidden",
+  "@wishlistStatusHidden": {
+    "description": "Hidden"
+  },
+  "wishlistStatusDevelopment": "In Development",
+  "@wishlistStatusDevelopment": {
+    "description": "In development"
+  },
+  "wishlistStatusBeta": "Beta",
+  "@wishlistStatusBeta": {
+    "description": "Beta"
+  },
+  "wishlistStatusDone": "Done",
+  "@wishlistStatusDone": {
+    "description": "Done"
   },
   "testPrototype": "Test Prototype",
   "@testPrototype": {

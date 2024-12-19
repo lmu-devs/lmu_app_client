@@ -17,16 +17,31 @@ class WishlistLocalizationsDe extends WishlistLocalizations {
   String get rateApp => 'App bewerten';
 
   @override
+  String get rateAppError => 'Store konnte nicht geöffnet werden';
+
+  @override
   String get instagram => 'Instagram';
 
   @override
   String get betaTitle => 'Beta Tester:in werden';
 
   @override
-  String get betaSubtitle => 'Teste die neusten App Features';
+  String get betaSubtitle => 'Teste neue App Features bereits früher';
 
   @override
   String get wishlistEntriesTitle => 'Zukünftige Funktionen';
+
+  @override
+  String get wishlistStatusHidden => 'Versteckt';
+
+  @override
+  String get wishlistStatusDevelopment => 'In Entwicklung';
+
+  @override
+  String get wishlistStatusBeta => 'Beta';
+
+  @override
+  String get wishlistStatusDone => 'Fertig';
 
   @override
   String get testPrototype => 'Jetzt als Prototyp testen';

@@ -14,45 +14,52 @@ import 'package:shared_api/feedback.dart';
 
 import '../repository/api/api.dart';
 import '../routes/routes.dart';
+import '../util/wishlist_status.dart';
 
 class WishlistSuccessView extends StatelessWidget {
   const WishlistSuccessView({super.key, required this.wishlistModels});
 
   final List<WishlistModel> wishlistModels;
 
-  Future<void> _requestAppReview() async {
+  Future<void> _requestAppReview(BuildContext context) async {
     InAppReview inAppReview = InAppReview.instance;
 
     if (await inAppReview.isAvailable()) {
-      inAppReview.openStoreListing();
+      inAppReview.openStoreListing(appStoreId: LmuDevStrings.appStoreId);
+    } else {
+      if (context.mounted) {
+        LmuToast.show(
+          context: context,
+          message: context.locals.wishlist.rateAppError,
+          type: ToastType.error,
+        );
+      }
     }
   }
 
   Future<void> _openInstagram(BuildContext context) async {
-    const String instagramAppUrl = 'instagram://user?username=lmu.developers';
-    const String instagramWebUrl = 'https://www.instagram.com/lmu.developers/';
-
     final bool isInstagramInstalled = await LmuUrlLauncher.canLaunch(
-      url: instagramAppUrl,
+      url: LmuDevStrings.instagramAppUrl,
     );
-
-    final String urlToLaunch = isInstagramInstalled ? instagramAppUrl : instagramWebUrl;
 
     if (context.mounted) {
       LmuUrlLauncher.launchWebsite(
         context: context,
-        url: urlToLaunch,
-        mode: isInstagramInstalled ? LmuUrlLauncherMode.externalApplication : LmuUrlLauncherMode.platformDefault,
+        url: isInstagramInstalled ? LmuDevStrings.instagramAppUrl : LmuDevStrings.instagramWebUrl,
+        mode: LmuUrlLauncherMode.externalApplication,
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final publicWishlistModels = wishlistModels.where((model) => model.status != WishlistStatus.hidden).toList();
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: LmuSizes.size_12),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
             child: LmuText.body(
@@ -71,18 +78,18 @@ class WishlistSuccessView extends StatelessWidget {
                 children: [
                   LmuButton(
                     title: context.locals.wishlist.shareApp,
-                    onTap: () => Share.share('https://www.lmu-dev.org/'),
+                    onTap: () => Share.share(LmuDevStrings.lmuDevWebsite),
                   ),
                   LmuButton(
                     title: context.locals.wishlist.rateApp,
                     emphasis: ButtonEmphasis.secondary,
-                    onTap: () => _requestAppReview(),
+                    onTap: () => _requestAppReview(context),
                   ),
                   LmuButton(
                     title: context.locals.app.devTeam,
                     emphasis: ButtonEmphasis.secondary,
                     onTap: () => LmuUrlLauncher.launchWebsite(
-                      url: 'https://www.lmu-dev.org/',
+                      url: LmuDevStrings.lmuDevWebsite,
                       context: context,
                       mode: LmuUrlLauncherMode.inAppWebView,
                     ),
@@ -110,7 +117,7 @@ class WishlistSuccessView extends StatelessWidget {
                       actionType: LmuListItemAction.chevron,
                       onTap: () {
                         LmuUrlLauncher.launchWebsite(
-                          url: Platform.isIOS ? 'https://testflight.apple.com/join/JWEgpYxh' : '',
+                          url: Platform.isIOS ? LmuDevStrings.openBetaTestFlight : LmuDevStrings.openBetaPlayStore,
                           context: context,
                           mode: LmuUrlLauncherMode.inAppWebView,
                         );
@@ -119,22 +126,29 @@ class WishlistSuccessView extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: LmuSizes.size_24),
-                LmuTileHeadline.base(title: context.locals.wishlist.wishlistEntriesTitle),
-                LmuContentTile(
-                  content: wishlistModels
-                      .map(
-                        (wishlistModel) => LmuListItem.base(
-                          title: wishlistModel.title,
-                          titleInTextVisuals: [LmuInTextVisual.text(title: wishlistModel.status)],
-                          subtitle: wishlistModel.description,
-                          trailingSubtitle: wishlistModel.ratingModel.likeCount.toString(),
-                          mainContentAlignment: MainContentAlignment.center,
-                          onTap: () => WishlistDetailsRoute(wishlistModel).go(context),
-                        ),
-                      )
-                      .toList(),
-                ),
-                const SizedBox(height: LmuSizes.size_24),
+                if (publicWishlistModels.isNotEmpty)
+                  Column(
+                    children: [
+                      LmuTileHeadline.base(title: context.locals.wishlist.wishlistEntriesTitle),
+                      LmuContentTile(
+                        content: publicWishlistModels
+                            .map(
+                              (wishlistModel) => LmuListItem.base(
+                                title: wishlistModel.title,
+                                titleInTextVisuals: [
+                                  LmuInTextVisual.text(title: wishlistModel.status.getValue(context)),
+                                ],
+                                subtitle: wishlistModel.description,
+                                trailingSubtitle: wishlistModel.ratingModel.likeCount.toString(),
+                                mainContentAlignment: MainContentAlignment.center,
+                                onTap: () => WishlistDetailsRoute(wishlistModel).go(context),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                      const SizedBox(height: LmuSizes.size_24),
+                    ],
+                  ),
                 LmuContentTile(
                   content: [
                     LmuListItem.base(

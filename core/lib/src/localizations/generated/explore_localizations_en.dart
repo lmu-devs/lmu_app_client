@@ -20,7 +20,7 @@ class ExploreLocalizationsEn extends ExploreLocalizations {
   String get googleMaps => 'Google Maps';
 
   @override
-  String get copyToClipboard => 'Or Copy Address';
+  String get copyToClipboard => 'Copy Address';
 
   @override
   String get copiedToClipboard => 'Address copied to clipboard';

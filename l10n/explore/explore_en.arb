@@ -22,7 +22,7 @@
    "@tabTitle": {
       "description": "Navigation option with Google Maps"
    },
-   "copyToClipboard": "Or Copy Address",
+   "copyToClipboard": "Copy Address",
    "@copyToClipboard": {
       "description": "Copy address to clipboard"
    },

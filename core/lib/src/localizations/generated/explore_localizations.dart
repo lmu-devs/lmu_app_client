@@ -126,7 +126,7 @@ abstract class ExploreLocalizations {
   /// Copy address to clipboard
   ///
   /// In en, this message translates to:
-  /// **'Or Copy Address'**
+  /// **'Copy Address'**
   String get copyToClipboard;
 
   /// Toast message for copied address

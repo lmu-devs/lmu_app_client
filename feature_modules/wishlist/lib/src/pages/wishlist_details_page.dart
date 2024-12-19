@@ -5,14 +5,10 @@ import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
-import 'package:get_it/get_it.dart';
 
-import '../bloc/wishlist_cubit.dart';
-import '../bloc/wishlist_state.dart';
 import '../repository/api/api.dart';
-import '../views/wishlist_success_view.dart';
+import '../util/wishlist_status.dart';
 
 class WishlistDetailsPage extends StatelessWidget {
   const WishlistDetailsPage({
@@ -47,6 +43,7 @@ class WishlistDetailsPage extends StatelessWidget {
     return LmuMasterAppBar(
       largeTitle: wishlistModel.title,
       leadingAction: LeadingAction.back,
+      largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
       largeTitleTrailingWidget: Container(
         padding: const EdgeInsets.symmetric(
           horizontal: LmuSizes.size_4,
@@ -57,10 +54,10 @@ class WishlistDetailsPage extends StatelessWidget {
             LmuSizes.size_4,
           ),
         ),
-        child: LmuText.bodySmall(wishlistModel.status),
+        child: LmuText.bodySmall(wishlistModel.status.getValue(context)),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(LmuSizes.size_16),
+        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
