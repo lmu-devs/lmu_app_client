@@ -52,6 +52,7 @@ class ConnectedMensaRepository implements MensaRepository {
   static const String _favoriteMensaIdsKey = 'favorite_mensa_ids_key';
   static const String _favoriteDishIdsKey = 'favorite_dish_ids_key';
 
+  static const String _tasteProfileKey = 'taste_profile_key';
   static const String _pasteProfileSelectionsKey = 'taste_profile_selections_key';
 
   static const String _mensaSortOptionKey = 'mensa_sort_option';
@@ -151,12 +152,18 @@ class ConnectedMensaRepository implements MensaRepository {
 
   @override
   Future<TasteProfileModel> getTasteProfileContent() async {
-    //TODO: Implement caching
+    final prefs = await SharedPreferences.getInstance();
+
     try {
       final tasteProfile = await mensaApiClient.getTasteProfile();
-
+      await prefs.setString(_tasteProfileKey, json.encode(tasteProfile.toJson()));
       return tasteProfile;
     } catch (e) {
+      final cachedTasteProfile = prefs.getString(_tasteProfileKey);
+      if (cachedTasteProfile != null) {
+        final jsonMap = json.decode(cachedTasteProfile) as Map<String, dynamic>;
+        return TasteProfileModel.fromJson(jsonMap);
+      }
       rethrow;
     }
   }

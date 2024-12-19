@@ -1,6 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get_it/get_it.dart';
 
+import '../bloc/taste_profile/taste_profile_cubit.dart';
+import '../bloc/taste_profile/taste_profile_state.dart';
 import '../repository/api/models/taste_profile/taste_profile.dart';
 import '../repository/mensa_repository.dart';
 import '../repository/repository.dart';
@@ -12,7 +15,6 @@ class TasteProfileService {
 
   final MensaRepository _mensaRepository;
 
-  final _tasteProfileNotifier = ValueNotifier<TasteProfileModel?>(null);
   final _excludedLabelItemNotifier = ValueNotifier<List<TasteProfileLabelItem>>([]);
   final _isActiveNotifier = ValueNotifier<bool>(false);
   final _selectedPresetsNotifier = ValueNotifier<Set<String>>({});
@@ -20,7 +22,6 @@ class TasteProfileService {
 
   List<TasteProfileLabelItem>? _labelItems;
 
-  ValueNotifier<TasteProfileModel?> get tasteProfileNotifier => _tasteProfileNotifier;
   ValueNotifier<List<TasteProfileLabelItem>> get excludedLabelItemNotifier => _excludedLabelItemNotifier;
 
   ValueNotifier<bool> get isActiveNotifier => _isActiveNotifier;
@@ -34,29 +35,23 @@ class TasteProfileService {
   }
 
   TasteProfileLabelItem? getLabelItemFromId(String id) {
-    final tasteProfile = _tasteProfileNotifier.value;
-    if (tasteProfile != null) {
-      return _labelItems?.firstWhereOrNull((item) => item.enumName == id);
-    }
-    return null;
+    return _labelItems?.firstWhereOrNull((item) => item.enumName == id);
   }
 
-  Future<void> loadTasteProfile() async {
-    try {
-      final loadedTasteProfile = await _mensaRepository.getTasteProfileContent();
-      _tasteProfileNotifier.value = loadedTasteProfile;
+  void init() async {
+    GetIt.I.get<TasteProfileCubit>().stream.where((state) => state is TasteProfileLoadSuccess).listen(
+      (state) {
+        final tasteProfile = (state as TasteProfileLoadSuccess).tasteProfile;
+        _labelItems = tasteProfile.sortedLabels.expand((label) => label.items).toList();
+        _excludedLabelItemNotifier.value = _mapExcludedLabelItems;
+      },
+    );
 
-      final tasteProfileState = await _mensaRepository.getTasteProfileState();
-
-      _excludedLabelItemNotifier.value = _mapExcludedLabelItems;
-      _isActiveNotifier.value = tasteProfileState.isActive;
-      _selectedPresetsNotifier.value = tasteProfileState.selectedPresets;
-      _excludedLabelsNotifier.value = tasteProfileState.excludedLabels;
-
-      _labelItems = loadedTasteProfile.sortedLabels.expand((label) => label.items).toList();
-    } catch (e) {
-      print('Error loading taste profile: $e');
-    }
+    final tasteProfileState = await _mensaRepository.getTasteProfileState();
+    _excludedLabelItemNotifier.value = _mapExcludedLabelItems;
+    _isActiveNotifier.value = tasteProfileState.isActive;
+    _selectedPresetsNotifier.value = tasteProfileState.selectedPresets;
+    _excludedLabelsNotifier.value = tasteProfileState.excludedLabels;
   }
 
   Future<void> saveTasteProfileState({
@@ -69,6 +64,7 @@ class TasteProfileService {
       excludedLabels: excludedLabels,
       isActive: isActive,
     );
+
     await _mensaRepository.saveTasteProfileState(saveModel);
 
     _excludedLabelItemNotifier.value = _mapExcludedLabelItems;
@@ -78,9 +74,9 @@ class TasteProfileService {
   }
 
   List<TasteProfileLabelItem> get _mapExcludedLabelItems {
-    final tasteProfile = _tasteProfileNotifier.value;
-    if (tasteProfile != null) {
-      return tasteProfile.sortedLabels
+    final tasteProfileState = GetIt.I.get<TasteProfileCubit>().state;
+    if (tasteProfileState is TasteProfileLoadSuccess) {
+      return tasteProfileState.tasteProfile.sortedLabels
           .expand((label) => label.items)
           .where((item) => _excludedLabelsNotifier.value.contains(item.enumName))
           .toList();

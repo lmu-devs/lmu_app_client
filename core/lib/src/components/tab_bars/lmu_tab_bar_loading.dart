@@ -10,7 +10,6 @@ class LmuTabBarLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LmuSkeleton(
-      context: context,
       child: LmuTabBar(
         hasDivider: hasDivider,
         onTabChanged: (index, _) {},
