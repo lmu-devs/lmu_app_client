@@ -28,6 +28,8 @@ dependencies:
     path: ./feature_modules/wishlist
   feedback:
     path: ./feature_modules/feedback
+  user:
+    path: ./feature_modules/user
   shared_api:
     path: ./shared_api
   http: ^1.2.2
