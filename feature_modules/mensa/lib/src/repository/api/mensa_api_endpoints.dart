@@ -9,6 +9,8 @@ class MensaApiEndpoints {
   static const String _menusRoute = '/menus';
   static const String _tasteProfileRoute = '/taste-profile';
 
+  static const String _toggleLike = '/toggle-like';
+
   static const String _canteenIdQuery = 'canteen_id';
 
   static String getMensaModels() {
@@ -21,5 +23,9 @@ class MensaApiEndpoints {
 
   static String getTasteProfile() {
     return '$_baseUrl$_version$_foodRoute$_tasteProfileRoute';
+  }
+
+  static String toggleFavoriteMensaId(String canteenId) {
+    return '$_baseUrl$_version$_foodRoute$_canteensRoute$_toggleLike?$_canteenIdQuery=$canteenId';
   }
 }

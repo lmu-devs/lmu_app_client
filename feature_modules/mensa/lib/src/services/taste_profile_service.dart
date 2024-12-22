@@ -9,11 +9,9 @@ import '../repository/mensa_repository.dart';
 import '../repository/repository.dart';
 
 class TasteProfileService {
-  TasteProfileService({
-    required MensaRepository mensaRepository,
-  }) : _mensaRepository = mensaRepository;
+  TasteProfileService();
 
-  final MensaRepository _mensaRepository;
+  final _mensaRepository = GetIt.I.get<MensaRepository>();
 
   final _excludedLabelItemNotifier = ValueNotifier<List<TasteProfileLabelItem>>([]);
   final _isActiveNotifier = ValueNotifier<bool>(false);

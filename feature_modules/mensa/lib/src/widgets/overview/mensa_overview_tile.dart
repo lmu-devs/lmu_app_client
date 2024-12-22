@@ -5,8 +5,7 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../extensions/likes_formatter_extension.dart';
-import '../../extensions/opening_hours_extensions.dart';
+import '../../extensions/extensions.dart';
 import '../../repository/api/api.dart';
 import '../../routes/mensa_routes.dart';
 import '../../services/mensa_user_preferences_service.dart';
@@ -54,7 +53,7 @@ class MensaOverviewTile extends StatelessWidget {
     final type = mensaModel.type;
     final openingHours = mensaModel.openingHours;
     final status = openingHours.mensaStatus;
-    final likeCount = mensaModel.ratingModel.likeCount;
+
     final imageUrl = mensaModel.images.isNotEmpty ? mensaModel.images.first.url : null;
 
     return Padding(
@@ -115,7 +114,7 @@ class MensaOverviewTile extends StatelessWidget {
                               children: [
                                 const SizedBox(width: LmuSizes.size_8),
                                 LmuText.bodyXSmall(
-                                  likeCount.formattedLikes,
+                                  mensaModel.ratingModel.calculateLikeCount(isFavorite),
                                   weight: FontWeight.w400,
                                   color: colors.neutralColors.textColors.weakColors.base,
                                 ),
