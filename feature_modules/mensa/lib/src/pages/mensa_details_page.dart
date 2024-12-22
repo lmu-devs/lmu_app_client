@@ -7,14 +7,12 @@ import 'package:get_it/get_it.dart';
 import '../../mensa.dart';
 import '../bloc/menu_cubit/cubit.dart';
 import '../extensions/likes_formatter_extension.dart';
+import '../extensions/opening_hours_extensions.dart';
 import '../services/menu_service.dart';
 import '../widgets/widgets.dart';
 
 class MensaDetailsPage extends StatefulWidget {
-  const MensaDetailsPage({
-    super.key,
-    required this.mensaModel,
-  });
+  const MensaDetailsPage({super.key, required this.mensaModel});
 
   final MensaModel mensaModel;
 
@@ -54,6 +52,7 @@ class _MensaDetailsPageState extends State<MensaDetailsPage> {
       child: ValueListenableBuilder(
         valueListenable: mensaUserPreferencesService.favoriteMensaIdsNotifier,
         builder: (context, favoriteMensaIds, _) {
+          final isFavorite = favoriteMensaIds.contains(_mensaModel.canteenId);
           return GestureDetector(
             onTap: () {
               mensaUserPreferencesService.toggleFavoriteMensaId(_mensaModel.canteenId);
@@ -63,10 +62,10 @@ class _MensaDetailsPageState extends State<MensaDetailsPage> {
               padding: const EdgeInsets.all(LmuSizes.size_8),
               child: Row(
                 children: [
-                  LmuText.bodySmall(_mensaModel.ratingModel.likeCount.formattedLikes),
+                  LmuText.bodySmall(_mensaModel.ratingModel.calculateLikeCount(isFavorite)),
                   const SizedBox(width: LmuSizes.size_4),
                   StarIcon(
-                    isActive: favoriteMensaIds.contains(_mensaModel.canteenId),
+                    isActive: isFavorite,
                     disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
                   ),
                 ],
@@ -92,7 +91,10 @@ class _MensaDetailsPageState extends State<MensaDetailsPage> {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(child: MensaDetailsInfoSection(mensaModel: _mensaModel)),
-          MensaDetailsMenuSection(canteenId: _mensaModel.canteenId),
+          MensaDetailsMenuSection(
+            canteenId: _mensaModel.canteenId,
+            mensaStatus: _mensaModel.openingHours.mensaStatus,
+          ),
         ],
       ),
     );

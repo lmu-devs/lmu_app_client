@@ -1,10 +1,7 @@
+import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-
-import '../actions/lmu_list_item_action.dart';
-import '../in_text_visuals/in_text_visuals.dart';
-import '../texts/lmu_text.dart';
 
 enum MainContentAlignment { top, center }
 
@@ -14,7 +11,7 @@ class LmuListItem extends StatelessWidget {
     this.title,
     this.titleColor,
     this.titleInTextVisuals,
-    this.mainContentAlignment = MainContentAlignment.top,
+    this.mainContentAlignment = MainContentAlignment.center,
     this.subtitle,
     this.subtitleColor,
     this.subtitleInTextVisuals,
@@ -32,7 +29,7 @@ class LmuListItem extends StatelessWidget {
     this.hasVerticalPadding = true,
     this.hasHorizontalPadding = true,
     this.onTap,
-    this.chevronTitle,
+    this.hasDivider = false,
   }) : super(key: key);
 
   final String? title;
@@ -56,7 +53,7 @@ class LmuListItem extends StatelessWidget {
   final void Function()? onTap;
   final bool hasVerticalPadding;
   final bool hasHorizontalPadding;
-  final String? chevronTitle;
+  final bool hasDivider;
 
   factory LmuListItem.base({
     Key? key,
@@ -78,13 +75,14 @@ class LmuListItem extends StatelessWidget {
     void Function()? onTap,
     bool? hasVerticalPadding,
     bool? hasHorizontalPadding,
+    bool? hasDivier,
   }) =>
       LmuListItem._(
         key: key,
         title: title,
         titleColor: titleColor,
         titleInTextVisuals: titleInTextVisuals,
-        mainContentAlignment: mainContentAlignment ?? MainContentAlignment.top,
+        mainContentAlignment: mainContentAlignment ?? MainContentAlignment.center,
         subtitle: subtitle,
         subtitleColor: subtitleTextColor,
         subtitleInTextVisuals: subtitleInTextVisuals,
@@ -99,6 +97,7 @@ class LmuListItem extends StatelessWidget {
         onTap: onTap,
         hasHorizontalPadding: hasHorizontalPadding ?? true,
         hasVerticalPadding: hasVerticalPadding ?? true,
+        hasDivider: hasDivier ?? false,
       );
 
   factory LmuListItem.action({
@@ -124,14 +123,14 @@ class LmuListItem extends StatelessWidget {
     void Function()? onTap,
     bool? hasVerticalPadding,
     bool? hasHorizontalPadding,
-    String? chevronTitle,
+    bool? hasDivier,
   }) {
     return LmuListItem._(
       key: key,
       title: title,
       titleColor: titleColor,
       titleInTextVisuals: titleInTextVisuals,
-      mainContentAlignment: mainContentAlignment ?? MainContentAlignment.top,
+      mainContentAlignment: mainContentAlignment ?? MainContentAlignment.center,
       subtitle: subtitle,
       subtitleColor: subtitleTextColor,
       subtitleInTextVisuals: subtitleInTextVisuals,
@@ -149,236 +148,198 @@ class LmuListItem extends StatelessWidget {
       hasVerticalPadding: hasVerticalPadding ?? true,
       actionType: actionType,
       onTap: onTap,
-      chevronTitle: chevronTitle,
+      hasDivider: hasDivier ?? false,
     );
   }
 
   // Helpers
   bool get _hasTitle => title != null;
-
   bool get _hasTitleInTextVisuals => titleInTextVisuals != null;
-
-  bool get _hasTrailingTitle => trailingTitle != null;
-
+  bool get _hasTrailingTitle => trailingTitle != null && actionType != LmuListItemAction.chevron;
   bool get _hasTrailingTitleInTextVisuals => trailingTitleInTextVisuals != null;
-
   bool get _hasLeadingTitleArea => _hasTitle || _hasTitleInTextVisuals;
-
   bool get _hasTrailingTitleArea => _hasTrailingTitle || _hasTrailingTitleInTextVisuals;
-
   bool get _hasTitleLine => _hasLeadingTitleArea || _hasTrailingTitleArea;
 
   bool get _hasSubtitle => subtitle != null;
-
   bool get _hasSubtitleInTextVisuals => subtitleInTextVisuals != null;
-
   bool get _hasTrailingSubtitle => trailingSubtitle != null;
-
   bool get _hasTrailingSubtitleInTextVisuals => trailingSubtitleInTextVisuals != null;
-
   bool get _hasLeadingSubtitleArea => _hasSubtitle || _hasSubtitleInTextVisuals;
-
   bool get _hasTrailingSubtitleArea => _hasTrailingSubtitle || _hasTrailingSubtitleInTextVisuals;
-
   bool get _hasSubtitleLine => _hasLeadingSubtitleArea || _hasTrailingSubtitleArea;
 
   bool get _hasMainContent => _hasTitleLine || _hasSubtitleLine;
-
   bool get _hasLeadingArea => leadingArea != null;
-
   bool get _hasActionArea => actionType != null && actionValueNotifier != null;
-
   bool get _hasTrailingArea => trailingArea != null;
 
-  MainAxisAlignment get _mainContentAlignment =>
-      mainContentAlignment == MainContentAlignment.center ? MainAxisAlignment.center : MainAxisAlignment.start;
+  CrossAxisAlignment get _mainContentAlignment =>
+      mainContentAlignment == MainContentAlignment.center ? CrossAxisAlignment.center : CrossAxisAlignment.start;
 
   @override
   Widget build(BuildContext context) {
     final defaultSubtitleColor = context.colors.neutralColors.textColors.mediumColors.base;
 
-    return InkWell(
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      onTap: () {
-        onTap?.call();
-        if (actionValueNotifier != null) {
-          final currentValue = actionValueNotifier!.value;
-          actionValueNotifier?.value = !currentValue;
-          onActionValueChanged?.call(!currentValue);
-        }
-      },
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: hasVerticalPadding ? LmuSizes.size_12 : LmuSizes.size_8,
-          horizontal: hasHorizontalPadding ? LmuSizes.size_12 : LmuSizes.none,
+    return Column(
+      children: [
+        InkWell(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          onTap: () {
+            onTap?.call();
+            if (actionValueNotifier != null) {
+              final currentValue = actionValueNotifier!.value;
+              actionValueNotifier?.value = !currentValue;
+              onActionValueChanged?.call(!currentValue);
+            }
+          },
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: hasVerticalPadding ? LmuSizes.size_12 : LmuSizes.size_8,
+              horizontal: hasHorizontalPadding ? LmuSizes.size_12 : LmuSizes.none,
+            ),
+            child: Row(
+              crossAxisAlignment: _mainContentAlignment,
+              children: [
+                if (_hasLeadingArea) _LeadingArea(leadingArea: leadingArea),
+                if (_hasMainContent)
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: _mainContentAlignment,
+                      children: [
+                        if (_hasLeadingTitleArea || _hasLeadingSubtitleArea)
+                          Flexible(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (_hasLeadingTitleArea)
+                                  Flexible(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        if (_hasTitle)
+                                          Flexible(
+                                            child: LmuText.body(
+                                              title,
+                                              color: titleColor,
+                                              weight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        if (_hasTitleInTextVisuals)
+                                          LmuPaddedInTextVisuals(
+                                            inTextVisuals: titleInTextVisuals!,
+                                            noPaddingOnFirstElement: title == null,
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                if (_hasLeadingSubtitleArea)
+                                  Flexible(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        if (_hasSubtitle)
+                                          Flexible(
+                                            child: LmuText.body(
+                                              subtitle!,
+                                              color: subtitleColor ?? defaultSubtitleColor,
+                                            ),
+                                          ),
+                                        if (_hasSubtitleInTextVisuals)
+                                          LmuPaddedInTextVisuals(
+                                            inTextVisuals: subtitleInTextVisuals!,
+                                            noPaddingOnFirstElement: subtitle == null,
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        if (_hasTrailingTitleArea || _hasTrailingSubtitleArea)
+                          Flexible(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (_hasTrailingTitleArea)
+                                  Flexible(
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        if (_hasTrailingTitleInTextVisuals)
+                                          LmuPaddedInTextVisuals(
+                                            inTextVisuals: trailingTitleInTextVisuals!,
+                                            noPaddingOnFirstElement: trailingTitle == null,
+                                            hasPaddingOnRight: true,
+                                          ),
+                                        if (_hasTrailingTitle)
+                                          Flexible(
+                                            child: LmuText.body(
+                                              trailingTitle,
+                                              textAlign: TextAlign.end,
+                                              color: trailingTitleColor,
+                                              weight: FontWeight.w600,
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                if (_hasTrailingSubtitleArea)
+                                  Flexible(
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        if (_hasTrailingSubtitleInTextVisuals)
+                                          LmuPaddedInTextVisuals(
+                                            inTextVisuals: trailingSubtitleInTextVisuals!,
+                                            noPaddingOnFirstElement: trailingSubtitle == null,
+                                            hasPaddingOnRight: true,
+                                          ),
+                                        if (_hasTrailingSubtitle)
+                                          Flexible(
+                                            child: LmuText.body(
+                                              trailingSubtitle!,
+                                              textAlign: TextAlign.end,
+                                              color: trailingSubtitleColor ?? defaultSubtitleColor,
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                if (_hasActionArea)
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: (_hasSubtitleLine && _hasTitleLine && mainContentAlignment == MainContentAlignment.top)
+                          ? LmuSizes.size_12
+                          : LmuSizes.none,
+                    ),
+                    child: _ActionArea(
+                      actionArea: actionType,
+                      tappedNotifier: actionValueNotifier,
+                      chevronTitle: trailingTitle,
+                    ),
+                  ),
+                if (_hasTrailingArea) _TrailingArea(trailingArea: trailingArea),
+              ],
+            ),
+          ),
         ),
-        child: Row(
-          crossAxisAlignment: mainContentAlignment == MainContentAlignment.center
-              ? CrossAxisAlignment.center
-              : CrossAxisAlignment.center,
-          children: [
-            if (_hasLeadingArea) _LeadingArea(leadingArea: leadingArea),
-            if (_hasMainContent)
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: _mainContentAlignment,
-                  children: [
-                    if (_hasTitleLine)
-                      ConstrainedBox(
-                        constraints: const BoxConstraints(
-                          minHeight: LmuSizes.size_24,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (_hasLeadingTitleArea)
-                              Flexible(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    if (_hasTitle)
-                                      Flexible(
-                                        child: LmuText.body(
-                                          title,
-                                          color: titleColor,
-                                          weight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    if (_hasTitleInTextVisuals)
-                                      ConstrainedBox(
-                                        constraints: const BoxConstraints(
-                                          minHeight: LmuSizes.size_24,
-                                        ),
-                                        child: LmuPaddedInTextVisuals(
-                                          inTextVisuals: titleInTextVisuals!,
-                                          noPaddingOnFirstElement: title == null,
-                                        ),
-                                      ),
-                                  ],
-                                ),
-                              ),
-                            if (_hasLeadingTitleArea && _hasTrailingTitleArea)
-                              const SizedBox(
-                                width: LmuSizes.size_16,
-                              ),
-                            if (_hasTrailingTitleArea)
-                              Flexible(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    if (_hasTrailingTitleInTextVisuals)
-                                      ConstrainedBox(
-                                        constraints: const BoxConstraints(
-                                          minHeight: LmuSizes.size_24,
-                                        ),
-                                        child: LmuPaddedInTextVisuals(
-                                          inTextVisuals: trailingTitleInTextVisuals!,
-                                          noPaddingOnFirstElement: trailingTitle == null,
-                                          hasPaddingOnRight: true,
-                                        ),
-                                      ),
-                                    if (_hasTrailingTitle)
-                                      Flexible(
-                                        child: LmuText.body(
-                                          trailingTitle,
-                                          textAlign: TextAlign.end,
-                                          color: trailingTitleColor,
-                                          weight: FontWeight.w600,
-                                        ),
-                                      ),
-                                  ],
-                                ),
-                              )
-                          ],
-                        ),
-                      ),
-                    if (_hasSubtitleLine)
-                      ConstrainedBox(
-                        constraints: const BoxConstraints(
-                          minHeight: LmuSizes.size_24,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (_hasLeadingSubtitleArea)
-                              Flexible(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    if (_hasSubtitle)
-                                      Flexible(
-                                        child: LmuText.body(
-                                          subtitle!,
-                                          color: subtitleColor ?? defaultSubtitleColor,
-                                        ),
-                                      ),
-                                    if (_hasSubtitleInTextVisuals)
-                                      ConstrainedBox(
-                                        constraints: const BoxConstraints(
-                                          minHeight: LmuSizes.size_24,
-                                        ),
-                                        child: LmuPaddedInTextVisuals(
-                                          inTextVisuals: subtitleInTextVisuals!,
-                                          noPaddingOnFirstElement: subtitle == null,
-                                        ),
-                                      ),
-                                  ],
-                                ),
-                              ),
-                            if (_hasLeadingSubtitleArea && _hasTrailingSubtitleArea)
-                              const SizedBox(
-                                width: LmuSizes.size_16,
-                              ),
-                            if (_hasTrailingSubtitleArea)
-                              Flexible(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    if (_hasTrailingSubtitleInTextVisuals)
-                                      ConstrainedBox(
-                                        constraints: const BoxConstraints(
-                                          minHeight: LmuSizes.size_24,
-                                        ),
-                                        child: LmuPaddedInTextVisuals(
-                                          inTextVisuals: trailingSubtitleInTextVisuals!,
-                                          noPaddingOnFirstElement: trailingSubtitle == null,
-                                          hasPaddingOnRight: true,
-                                        ),
-                                      ),
-                                    if (_hasTrailingSubtitle)
-                                      Flexible(
-                                        child: LmuText.body(
-                                          trailingSubtitle!,
-                                          textAlign: TextAlign.end,
-                                          color: trailingSubtitleColor ?? defaultSubtitleColor,
-                                        ),
-                                      ),
-                                  ],
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-            if (_hasActionArea)
-              _ActionArea(
-                actionArea: actionType,
-                tappedNotifier: actionValueNotifier,
-                chevronTitle: chevronTitle,
-              ),
-            if (_hasTrailingArea) _TrailingArea(trailingArea: trailingArea),
-          ],
-        ),
-      ),
+        if (hasDivider) const LmuDivider(),
+      ],
     );
   }
 }
@@ -422,6 +383,7 @@ class _ActionArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(
           width: LmuSizes.size_16,

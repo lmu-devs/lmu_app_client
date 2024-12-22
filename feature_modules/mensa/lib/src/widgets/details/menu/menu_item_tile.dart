@@ -6,6 +6,7 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../extensions/extensions.dart';
 import '../../../repository/api/models/menu/menu_item_model.dart';
 import '../../../services/mensa_user_preferences_service.dart';
 import '../../../utils/get_dish_type_emoji.dart';
@@ -98,7 +99,7 @@ class MenuItemTile extends StatelessWidget {
                                 LmuText.bodyXSmall(
                                   menuItemModel.ratingModel.likeCount == -1
                                       ? ""
-                                      : menuItemModel.ratingModel.likeCount.toString(),
+                                      : (menuItemModel.ratingModel.likeCount + (isFavorite ? 1 : 0)).formattedLikes,
                                   color: context.colors.neutralColors.textColors.weakColors.base,
                                 ),
                                 const SizedBox(width: LmuSizes.size_4),

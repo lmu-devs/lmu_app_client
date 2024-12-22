@@ -52,10 +52,7 @@ class LmuBottomSheet {
       duration: const Duration(milliseconds: 500),
       closeProgressThreshold: .9,
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
-      builder: (context) => PopScope(
-        canPop: false,
-        child: content,
-      ),
+      builder: (context) => content,
     );
   }
 }

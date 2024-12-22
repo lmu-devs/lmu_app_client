@@ -1,3 +1,4 @@
+import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/src/core.dart';
 import 'package:core/themes.dart';
@@ -66,8 +67,8 @@ class _LmuImageCarouselState extends State<LmuImageCarousel> {
 
     if (imageUrls.length == 1) {
       return SoftBlur(
-        child: Image.network(
-          imageUrls.first,
+        child: LmuCachedNetworkImage(
+          imageUrl: imageUrls.first,
           height: height,
           fit: BoxFit.cover,
         ),
@@ -84,8 +85,8 @@ class _LmuImageCarouselState extends State<LmuImageCarousel> {
             controller: _pageController,
             itemCount: imageUrls.length,
             itemBuilder: (context, index) {
-              return Image.network(
-                imageUrls[index],
+              return LmuCachedNetworkImage(
+                imageUrl: imageUrls[index],
                 height: height,
                 fit: BoxFit.cover,
               );

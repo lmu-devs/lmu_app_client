@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:shared_api/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/mensa_api_client.dart';
@@ -12,11 +13,13 @@ import 'api/models/user_preferences/sort_option.dart';
 abstract class MensaRepository {
   Future<List<MensaModel>> getMensaModels();
 
+  Future<bool> toggleFavoriteMensaId(String mensaId);
+
   Future<List<String>?> getFavoriteMensaIds();
 
-  Future<List<String>?> getFavoriteDishIds();
+  Future<void> saveFavoriteMensaIds(List<String> favoriteMensaIds);
 
-  Future<void> updateFavoriteMensaIds(List<String> favoriteMensaIds);
+  Future<List<String>?> getFavoriteDishIds();
 
   Future<void> updateFavoriteDishIds(List<String> favoriteDishIds);
 
@@ -41,17 +44,18 @@ abstract class MensaRepository {
 class ConnectedMensaRepository implements MensaRepository {
   ConnectedMensaRepository({
     required this.mensaApiClient,
+    required this.userService,
   });
 
   final MensaApiClient mensaApiClient;
+  final UserService userService;
 
   static const String _mensaModelsCacheKey = 'mensa_models_cache_key';
-  static const String _mensaModelCacheDateKey = 'mensa_models_cache_date_key';
-  static const Duration _mensaModelsCacheDuration = Duration(seconds: 30);
 
   static const String _favoriteMensaIdsKey = 'favorite_mensa_ids_key';
   static const String _favoriteDishIdsKey = 'favorite_dish_ids_key';
 
+  static const String _tasteProfileKey = 'taste_profile_key';
   static const String _pasteProfileSelectionsKey = 'taste_profile_selections_key';
 
   static const String _mensaSortOptionKey = 'mensa_sort_option';
@@ -63,25 +67,17 @@ class ConnectedMensaRepository implements MensaRepository {
   Future<List<MensaModel>> getMensaModels({bool forceRefresh = false}) async {
     final prefs = await SharedPreferences.getInstance();
 
-    final cachedData = prefs.getString(_mensaModelsCacheKey);
-    final cachedTime = prefs.getString(_mensaModelCacheDateKey);
-    final cachedDateTime = cachedTime != null ? DateTime.parse(cachedTime) : null;
-    final cachedTimeExceeded =
-        cachedDateTime != null && DateTime.now().difference(cachedDateTime) > _mensaModelsCacheDuration;
-
-    if (cachedData != null && !cachedTimeExceeded && !forceRefresh) {
-      final jsonList = json.decode(cachedData) as List<dynamic>;
-      return jsonList.map((json) => MensaModel.fromJson(json as Map<String, dynamic>)).toList();
-    }
-
     try {
-      final mensaModels = await mensaApiClient.getMensaModels();
+      final userApiKey = userService.userApiKey;
+
+      final mensaModels = await mensaApiClient.getMensaModels(userApiKey: userApiKey);
       final jsonResponse = json.encode(mensaModels.map((mensa) => mensa.toJson()).toList());
+
       await prefs.setString(_mensaModelsCacheKey, jsonResponse);
-      await prefs.setString(_mensaModelCacheDateKey, DateTime.now().toIso8601String());
 
       return mensaModels;
     } catch (e) {
+      final cachedData = prefs.getString(_mensaModelsCacheKey);
       if (cachedData != null) {
         final jsonList = json.decode(cachedData) as List<dynamic>;
         return jsonList.map((json) => MensaModel.fromJson(json as Map<String, dynamic>)).toList();
@@ -90,13 +86,19 @@ class ConnectedMensaRepository implements MensaRepository {
     }
   }
 
-  /// MensaRepository implementation for fetching favorite mensa ids from the cache
   @override
   Future<List<String>?> getFavoriteMensaIds() async {
     final prefs = await SharedPreferences.getInstance();
 
     final favoriteMensaIds = prefs.getStringList(_favoriteMensaIdsKey);
     return favoriteMensaIds;
+  }
+
+  @override
+  Future<void> saveFavoriteMensaIds(List<String> favoriteMensaIds) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setStringList(_favoriteMensaIdsKey, favoriteMensaIds);
   }
 
   @override
@@ -108,10 +110,12 @@ class ConnectedMensaRepository implements MensaRepository {
   }
 
   @override
-  Future<void> updateFavoriteMensaIds(List<String> favoriteMensaIds) async {
-    final prefs = await SharedPreferences.getInstance();
+  Future<bool> toggleFavoriteMensaId(String mensaId) async {
+    final userApiKey = userService.userApiKey;
 
-    await prefs.setStringList(_favoriteMensaIdsKey, favoriteMensaIds);
+    if (userApiKey == null) throw Exception('User api key is null');
+
+    return await mensaApiClient.toggleFavoriteMensaId(mensaId, userApiKey: userApiKey);
   }
 
   @override
@@ -151,12 +155,18 @@ class ConnectedMensaRepository implements MensaRepository {
 
   @override
   Future<TasteProfileModel> getTasteProfileContent() async {
-    //TODO: Implement caching
+    final prefs = await SharedPreferences.getInstance();
+
     try {
       final tasteProfile = await mensaApiClient.getTasteProfile();
-
+      await prefs.setString(_tasteProfileKey, json.encode(tasteProfile.toJson()));
       return tasteProfile;
     } catch (e) {
+      final cachedTasteProfile = prefs.getString(_tasteProfileKey);
+      if (cachedTasteProfile != null) {
+        final jsonMap = json.decode(cachedTasteProfile) as Map<String, dynamic>;
+        return TasteProfileModel.fromJson(jsonMap);
+      }
       rethrow;
     }
   }

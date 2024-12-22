@@ -34,6 +34,7 @@ class MensaDetailsInfoSection extends StatelessWidget {
           LmuListItem.base(
             subtitle: mensaModel.location.address,
             hasHorizontalPadding: false,
+            hasDivier: true,
             onTap: () {
               LmuBottomSheet.show(
                 context,
@@ -45,7 +46,6 @@ class MensaDetailsInfoSection extends StatelessWidget {
               );
             },
           ),
-          const LmuDivider(),
           LmuListDropdown(
             title: mensaStatus.text(context.locals.canteen, openingHours: openingHours),
             titleColor: openingHours.mensaStatus.color(colors),

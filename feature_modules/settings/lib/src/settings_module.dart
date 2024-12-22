@@ -4,7 +4,7 @@ import 'package:shared_api/settings.dart';
 
 import 'services/default_settings_service.dart';
 
-class SettingsModule extends AppModule with PublicApiProvidingAppModule  {
+class SettingsModule extends AppModule with PublicApiProvidingAppModule {
   @override
   String get moduleName => 'SettingsModule';
 

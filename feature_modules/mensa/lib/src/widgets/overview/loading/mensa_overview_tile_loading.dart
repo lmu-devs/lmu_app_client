@@ -12,7 +12,6 @@ class MensaOverviewTileLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LmuSkeleton(
-      context: context,
       child: MensaOverviewTile.loading(
         name: BoneMock.fullName,
         hasLargeImage: hasLargeImage,

@@ -13,7 +13,6 @@ class MenuItemTileLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LmuSkeleton(
-      context: context,
       child: MenuItemTile(
         menuItemModel: MenuItemModel.placeholder(
           title: BoneMock.words(7),

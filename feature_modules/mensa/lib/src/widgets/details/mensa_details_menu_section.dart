@@ -7,13 +7,19 @@ import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../bloc/menu_cubit/cubit.dart';
+import '../../extensions/opening_hours_extensions.dart';
 import '../../services/menu_service.dart';
 import '../../views/views.dart';
 
 class MensaDetailsMenuSection extends StatefulWidget {
-  const MensaDetailsMenuSection({super.key, required this.canteenId});
+  const MensaDetailsMenuSection({
+    super.key,
+    required this.canteenId,
+    required this.mensaStatus,
+  });
 
   final String canteenId;
+  final MensaStatus mensaStatus;
 
   @override
   State<MensaDetailsMenuSection> createState() => _MensaDetailsMenuSectionState();
@@ -29,8 +35,9 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
-    _tabNotifier = ValueNotifier<int>(0);
+    final initialIndex = widget.mensaStatus == MensaStatus.closed ? 1 : 0;
+    _pageController = PageController(initialPage: initialIndex);
+    _tabNotifier = ValueNotifier<int>(initialIndex);
     _stickyHeaderController = StickyHeaderController();
   }
 
@@ -77,6 +84,7 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
           ),
           sliver: SliverToBoxAdapter(
             child: ExpandablePageView.builder(
+              animationDuration: const Duration(milliseconds: 200),
               itemCount: menuModels.length,
               controller: _pageController,
               animationCurve: Curves.bounceIn,

@@ -1,5 +1,6 @@
 import 'package:core/module.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/user.dart';
 
 import 'bloc/bloc.dart';
 import 'public_api/default_mensa_public_api.dart';
@@ -20,41 +21,29 @@ class MensaModule extends AppModule
 
   @override
   void provideLocalDependencies() {
-    final repository = ConnectedMensaRepository(
-      mensaApiClient: MensaApiClient(),
-    );
-
     GetIt.I.registerSingleton<MensaRepository>(
-      repository,
+      ConnectedMensaRepository(
+        mensaApiClient: MensaApiClient(),
+        userService: GetIt.I.get<UserService>(),
+      ),
     );
-    GetIt.I.registerSingleton<MensaCubit>(
-      MensaCubit(mensaRepository: repository),
-    );
-
-    GetIt.I.registerSingleton<TasteProfileService>(
-      TasteProfileService(mensaRepository: repository),
-    );
-
-    GetIt.I.registerSingleton<MensaUserPreferencesService>(
-      MensaUserPreferencesService(mensaRepository: repository),
-    );
-
-    GetIt.I.registerSingleton<MenuService>(
-      MenuService(),
-    );
+    GetIt.I.registerSingleton<MensaCubit>(MensaCubit());
+    GetIt.I.registerSingleton<TasteProfileService>(TasteProfileService());
+    GetIt.I.registerSingleton<TasteProfileCubit>(TasteProfileCubit());
+    GetIt.I.registerSingleton<MensaUserPreferencesService>(MensaUserPreferencesService());
+    GetIt.I.registerSingleton<MenuService>(MenuService());
   }
 
   @override
   void providePublicApi() {
-    GetIt.I.registerSingleton<MensaPublicApi>(
-      DefaultMensaPublicApi(),
-    );
+    GetIt.I.registerSingleton<MensaPublicApi>(DefaultMensaPublicApi());
   }
 
   @override
   void onAppStartNotice() {
     GetIt.I.get<MensaCubit>().loadMensaData();
-    GetIt.I.get<TasteProfileService>().loadTasteProfile();
+    GetIt.I.get<TasteProfileCubit>().loadTasteProfile();
+    GetIt.I.get<TasteProfileService>().init();
   }
 
   @override

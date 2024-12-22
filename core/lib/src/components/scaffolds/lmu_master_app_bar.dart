@@ -91,7 +91,7 @@ class _LmuMasterAppBarState extends State<LmuMasterAppBar> {
     _scrollController.addListener(() {
       final offset = _scrollController.offset;
       if (offset < 0) {
-        //_scrollOffsetNotifier.value = offset;
+        _scrollOffsetNotifier.value = offset;
       }
     });
   }
