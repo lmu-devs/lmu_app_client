@@ -3,6 +3,7 @@ class LmuDevStrings {
 
   /// General Strings
   static String appStoreId = '6505039729';
+  static String devTeam = 'LMU Developers';
   static String lmuDevWebsite = 'https://www.lmu-dev.org/';
   static String lmuDevImprint = 'https://www.lmu-dev.org/impressum';
   static String lmuDevDataPrivacy = 'https://www.lmu-dev.org/datenschutz';

@@ -99,12 +99,6 @@ abstract class AppLocalizations {
   /// **'LMU Students'**
   String get appTitle;
 
-  /// Name of the developer team
-  ///
-  /// In en, this message translates to:
-  /// **'LMU Developers'**
-  String get devTeam;
-
   /// Monday
   ///
   /// In en, this message translates to:

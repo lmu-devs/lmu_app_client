@@ -86,7 +86,7 @@ class WishlistSuccessView extends StatelessWidget {
                     onTap: () => _requestAppReview(context),
                   ),
                   LmuButton(
-                    title: context.locals.app.devTeam,
+                    title: LmuDevStrings.devTeam,
                     emphasis: ButtonEmphasis.secondary,
                     onTap: () => LmuUrlLauncher.launchWebsite(
                       url: LmuDevStrings.lmuDevWebsite,

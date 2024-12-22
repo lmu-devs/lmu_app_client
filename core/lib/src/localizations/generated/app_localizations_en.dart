@@ -8,9 +8,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'LMU Students';
 
   @override
-  String get devTeam => 'LMU Developers';
-
-  @override
   String get monday => 'Monday';
 
   @override
