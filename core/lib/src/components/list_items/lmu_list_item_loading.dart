@@ -44,7 +44,7 @@ class LmuListItemLoading extends StatelessWidget {
         trailingSubtitle: trailingSubtitleLength != null ? BoneMock.words(trailingSubtitleLength!) : null,
         subtitle: subtitleLength != null ? BoneMock.words(subtitleLength!) : null,
         trailingArea: action?.loadingWidget ?? trailingArea,
-        hasDivier: hasDivier,
+        hasDivider: hasDivier,
         hasHorizontalPadding: hasHorizontalPadding,
         hasVerticalPadding: hasVerticalPadding,
         mainContentAlignment: mainContentAlignment,

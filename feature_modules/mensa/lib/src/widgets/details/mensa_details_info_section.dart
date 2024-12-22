@@ -34,7 +34,7 @@ class MensaDetailsInfoSection extends StatelessWidget {
           LmuListItem.base(
             subtitle: mensaModel.location.address,
             hasHorizontalPadding: false,
-            hasDivier: true,
+            hasDivider: true,
             onTap: () {
               LmuBottomSheet.show(
                 context,

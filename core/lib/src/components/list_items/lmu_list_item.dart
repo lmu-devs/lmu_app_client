@@ -30,6 +30,7 @@ class LmuListItem extends StatelessWidget {
     this.hasHorizontalPadding = true,
     this.onTap,
     this.hasDivider = false,
+    this.maximizeLeadingTitleArea = false,
   }) : super(key: key);
 
   final String? title;
@@ -54,6 +55,7 @@ class LmuListItem extends StatelessWidget {
   final bool hasVerticalPadding;
   final bool hasHorizontalPadding;
   final bool hasDivider;
+  final bool maximizeLeadingTitleArea;
 
   factory LmuListItem.base({
     Key? key,
@@ -75,7 +77,8 @@ class LmuListItem extends StatelessWidget {
     void Function()? onTap,
     bool? hasVerticalPadding,
     bool? hasHorizontalPadding,
-    bool? hasDivier,
+    bool? hasDivider,
+    bool? maximizeLeadingTitleArea,
   }) =>
       LmuListItem._(
         key: key,
@@ -97,7 +100,8 @@ class LmuListItem extends StatelessWidget {
         onTap: onTap,
         hasHorizontalPadding: hasHorizontalPadding ?? true,
         hasVerticalPadding: hasVerticalPadding ?? true,
-        hasDivider: hasDivier ?? false,
+        hasDivider: hasDivider ?? false,
+        maximizeLeadingTitleArea: maximizeLeadingTitleArea ?? false,
       );
 
   factory LmuListItem.action({
@@ -123,7 +127,8 @@ class LmuListItem extends StatelessWidget {
     void Function()? onTap,
     bool? hasVerticalPadding,
     bool? hasHorizontalPadding,
-    bool? hasDivier,
+    bool? hasDivider,
+    bool? maximizeLeadingTitleArea,
   }) {
     return LmuListItem._(
       key: key,
@@ -148,7 +153,8 @@ class LmuListItem extends StatelessWidget {
       hasVerticalPadding: hasVerticalPadding ?? true,
       actionType: actionType,
       onTap: onTap,
-      hasDivider: hasDivier ?? false,
+      hasDivider: hasDivider ?? false,
+      maximizeLeadingTitleArea: maximizeLeadingTitleArea ?? false,
     );
   }
 
@@ -211,6 +217,7 @@ class LmuListItem extends StatelessWidget {
                       children: [
                         if (_hasLeadingTitleArea || _hasLeadingSubtitleArea)
                           Flexible(
+                            flex: maximizeLeadingTitleArea ? 4 : 1,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,

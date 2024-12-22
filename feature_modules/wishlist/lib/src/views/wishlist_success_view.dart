@@ -133,14 +133,15 @@ class WishlistSuccessView extends StatelessWidget {
                       LmuContentTile(
                         content: publicWishlistModels
                             .map(
-                              (wishlistModel) => LmuListItem.base(
+                              (wishlistModel) => LmuListItem.action(
                                 title: wishlistModel.title,
                                 titleInTextVisuals: [
                                   LmuInTextVisual.text(title: wishlistModel.status.getValue(context)),
                                 ],
                                 subtitle: wishlistModel.description,
                                 trailingSubtitle: wishlistModel.ratingModel.likeCount.toString(),
-                                mainContentAlignment: MainContentAlignment.center,
+                                maximizeLeadingTitleArea: true,
+                                actionType: LmuListItemAction.chevron,
                                 onTap: () => WishlistDetailsRoute(wishlistModel).go(context),
                               ),
                             )
