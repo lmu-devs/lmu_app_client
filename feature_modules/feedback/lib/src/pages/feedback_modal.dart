@@ -2,8 +2,11 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:feedback/src/util/feedback_types.dart';
 import 'package:feedback/src/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+
+import '../util/send_feedback.dart';
 
 class FeedbackModal extends StatelessWidget {
   const FeedbackModal({super.key});
@@ -35,7 +38,7 @@ class FeedbackModal extends StatelessWidget {
                   EmojiFeedbackSelector(
                     feedbackNotifier: feedbackNotifier,
                     onFeedbackSelected: (feedback) {
-                      print(feedback);
+                      feedbackNotifier.value = feedback;
                     },
                   ),
                   const SizedBox(height: LmuSizes.size_24),
@@ -73,16 +76,14 @@ class FeedbackModal extends StatelessWidget {
                       state: selectedFeedback == null ? ButtonState.disabled : ButtonState.enabled,
                       onTap: selectedFeedback == null
                           ? null
-                          : () {
-                              // TODO: send data to backend with selectedFeedback and textController.text
-                              Navigator.pop(context);
-                              LmuToast.show(
+                          : () => sendFeedback(
                                 context: context,
-                                message: localizations.feedbackSuccess,
-                                type: ToastType.success,
-                              );
-                              LmuVibrations.success();
-                            },
+                                type: FeedbackType.general,
+                                rating: selectedFeedback,
+                                message: textController.text,
+                                screen: '',
+                                tags: [],
+                              ),
                     );
                   },
                 ),

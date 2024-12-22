@@ -117,6 +117,12 @@ abstract class FeedbackLocalizations {
   /// **'Feedback sent'**
   String get feedbackSuccess;
 
+  /// The message shown when feedback could not be sent
+  ///
+  /// In en, this message translates to:
+  /// **'Your feedback couldn\'t be submitted'**
+  String get feedbackError;
+
   /// The hint text of the feedback input field
   ///
   /// In en, this message translates to:
@@ -153,6 +159,12 @@ abstract class FeedbackLocalizations {
   /// **'Bug reported'**
   String get bugSuccess;
 
+  /// The message shown when bug could not be sent
+  ///
+  /// In en, this message translates to:
+  /// **'Your bug couldn\'t be submitted'**
+  String get bugError;
+
   /// The title of the Suggestion Page
   ///
   /// In en, this message translates to:
@@ -182,6 +194,12 @@ abstract class FeedbackLocalizations {
   /// In en, this message translates to:
   /// **'Suggestion sent'**
   String get suggestionSuccess;
+
+  /// The message shown when suggestion could not be sent
+  ///
+  /// In en, this message translates to:
+  /// **'Your suggestion couldn\'t be submitted'**
+  String get suggestionError;
 }
 
 class _FeedbackLocalizationsDelegate extends LocalizationsDelegate<FeedbackLocalizations> {

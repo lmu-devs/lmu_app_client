@@ -2,6 +2,8 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:feedback/src/util/feedback_types.dart';
+import 'package:feedback/src/util/send_feedback.dart';
 import 'package:flutter/material.dart';
 
 class BugModal extends StatelessWidget {
@@ -10,6 +12,13 @@ class BugModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = context.locals.feedback;
+    final textController = TextEditingController();
+    final textNotifier = ValueNotifier<bool>(false);
+
+    textController.addListener(() {
+      textNotifier.value = textController.text.isNotEmpty;
+    });
+
     return LmuMasterAppBar(
       largeTitle: localizations.bugTitle,
       body: Stack(
@@ -29,7 +38,7 @@ class BugModal extends StatelessWidget {
                   const SizedBox(height: LmuSizes.size_32),
                   LmuInputField(
                     hintText: localizations.bugInputHint,
-                    controller: TextEditingController(),
+                    controller: textController,
                     isAutofocus: true,
                     isMultiline: true,
                     isAutocorrect: true,
@@ -46,19 +55,25 @@ class BugModal extends StatelessWidget {
             child: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.all(LmuSizes.size_12),
-                child: LmuButton(
-                  title: localizations.bugButton,
-                  size: ButtonSize.large,
-                  showFullWidth: true,
-                  onTap: () {
-                    // TODO: send data to backend
-                    Navigator.pop(context);
-                    LmuToast.show(
-                      context: context,
-                      message: localizations.bugSuccess,
-                      type: ToastType.success,
+                child: ValueListenableBuilder<bool>(
+                  valueListenable: textNotifier,
+                  builder: (context, isTextNotEmpty, _) {
+                    return LmuButton(
+                      title: localizations.bugButton,
+                      size: ButtonSize.large,
+                      showFullWidth: true,
+                      state: isTextNotEmpty ? ButtonState.enabled : ButtonState.disabled,
+                      onTap: isTextNotEmpty
+                          ? () => sendFeedback(
+                                context: context,
+                                type: FeedbackType.bug,
+                                rating: '',
+                                message: textController.text,
+                                screen: '',
+                                tags: [],
+                              )
+                          : null,
                     );
-                    LmuVibrations.success();
                   },
                 ),
               ),

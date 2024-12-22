@@ -19,6 +19,10 @@
   "@feedbackSuccess": {
     "description": "The message shown when feedback is sent"
   },
+  "feedbackError": "Your feedback couldn't be submitted",
+  "@feedbackError": {
+    "description": "The message shown when feedback could not be sent"
+  },
   "feedbackInputHint": "Tell us more sweetie ...",
   "@feedbackInputHint": {
     "description": "The hint text of the feedback input field"
@@ -43,7 +47,10 @@
   "@bugSuccess": {
     "description": "The message shown when a bug is reported"
   },
-
+  "bugError": "Your bug couldn't be submitted",
+  "@bugError": {
+    "description": "The message shown when bug could not be sent"
+  },
   "suggestionTitle": "Suggest a Feature",
   "@suggestionTitle": {
     "description": "The title of the Suggestion Page"
@@ -63,6 +70,9 @@
   "suggestionSuccess": "Suggestion sent",
   "@suggestionSuccess": {
     "description": "The message shown when a suggestion is sent"
+  },
+  "suggestionError": "Your suggestion couldn't be submitted",
+  "@suggestionError": {
+      "description": "The message shown when suggestion could not be sent"
   }
-
 }
