@@ -7,10 +7,15 @@ import 'models/menu/menu_day_model.dart';
 import 'models/taste_profile/taste_profile_model.dart';
 
 class MensaApiClient {
-  Future<List<MensaModel>> getMensaModels() async {
+  Future<List<MensaModel>> getMensaModels({String? userApiKey}) async {
     try {
       final response = await http.get(
         Uri.parse(MensaApiEndpoints.getMensaModels()),
+        headers: userApiKey == null
+            ? null
+            : {
+                "user-api-key": userApiKey,
+              },
       );
 
       if (response.statusCode == 200) {
@@ -55,6 +60,25 @@ class MensaApiClient {
       }
     } catch (e) {
       throw Exception('Failed to load taste profile data: $e');
+    }
+  }
+
+  Future<bool> toggleFavoriteMensaId(String mensaId, {required String userApiKey}) async {
+    try {
+      final response = await http.post(
+        Uri.parse(MensaApiEndpoints.toggleFavoriteMensaId(mensaId)),
+        headers: {
+          "user-api-key": userApiKey,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return response.body == 'true';
+      } else {
+        throw Exception('Failed to toggle favorite mensa');
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 }

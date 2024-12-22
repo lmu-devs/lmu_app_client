@@ -1,20 +1,19 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../repository/mensa_repository.dart';
+import 'package:get_it/get_it.dart';
 
+import '../../repository/mensa_repository.dart';
 import 'mensa_state.dart';
 
 class MensaCubit extends Cubit<MensaState> {
-  MensaCubit({
-    required this.mensaRepository,
-  }) : super(MensaInitial());
+  MensaCubit() : super(MensaInitial());
 
-  final MensaRepository mensaRepository;
+  final _mensaRepository = GetIt.I.get<MensaRepository>();
 
   void loadMensaData() async {
     emit(MensaLoadInProgress());
 
     try {
-      final mensaModels = await mensaRepository.getMensaModels();
+      final mensaModels = await _mensaRepository.getMensaModels();
 
       emit(MensaLoadSuccess(mensaModels: mensaModels));
     } catch (e) {

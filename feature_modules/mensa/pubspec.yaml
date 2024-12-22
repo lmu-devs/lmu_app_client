@@ -23,7 +23,7 @@ dependencies:
   shared_preferences: ^2.0.7
   permission_handler: ^11.3.1
   flutter_lucide: ^1.2.0
-  get_it: ^8.0.1
+  get_it: ^8.0.1  
   flutter_svg: ^2.0.9
   collection: ^1.18.0
   scrollable_positioned_list: ^0.3.8

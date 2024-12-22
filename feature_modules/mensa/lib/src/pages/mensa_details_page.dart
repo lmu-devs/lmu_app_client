@@ -52,6 +52,7 @@ class _MensaDetailsPageState extends State<MensaDetailsPage> {
       child: ValueListenableBuilder(
         valueListenable: mensaUserPreferencesService.favoriteMensaIdsNotifier,
         builder: (context, favoriteMensaIds, _) {
+          final isFavorite = favoriteMensaIds.contains(_mensaModel.canteenId);
           return GestureDetector(
             onTap: () {
               mensaUserPreferencesService.toggleFavoriteMensaId(_mensaModel.canteenId);
@@ -61,10 +62,10 @@ class _MensaDetailsPageState extends State<MensaDetailsPage> {
               padding: const EdgeInsets.all(LmuSizes.size_8),
               child: Row(
                 children: [
-                  LmuText.bodySmall(_mensaModel.ratingModel.likeCount.formattedLikes),
+                  LmuText.bodySmall(_mensaModel.ratingModel.calculateLikeCount(isFavorite)),
                   const SizedBox(width: LmuSizes.size_4),
                   StarIcon(
-                    isActive: favoriteMensaIds.contains(_mensaModel.canteenId),
+                    isActive: isFavorite,
                     disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
                   ),
                 ],
