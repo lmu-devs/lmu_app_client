@@ -4,8 +4,18 @@
   
   "tabTitle": "Wunschkonzert",
   "wishlistIntro": "Die App ist noch lange nicht am Ziel. Gute Dinge brauchen Zeit und durchdachte Entscheidungen. Helft uns herauszufinden, welche Funktionen euch am meisten fehlen.",
-  "roadmapTitle": "Unsere Roadmap",
-  "roadmapSubtitle": "Kill the mogul",
+  "shareApp": "App teilen",
+  "rateApp": "App bewerten",
+  "rateAppError": "Store konnte nicht geöffnet werden",
+  "instagram": "Instagram",
   "betaTitle": "Beta Tester:in werden",
-  "betaSubtitle": "Teste die neusten App Features"
+  "betaSubtitle": "Teste neue App Features bereits früher",
+  "wishlistEntriesTitle": "Zukünftige Funktionen",
+  "wishlistStatusHidden": "Versteckt",
+  "wishlistStatusDevelopment": "In Entwicklung",
+  "wishlistStatusBeta": "Beta",
+  "wishlistStatusDone": "Fertig",
+  "testPrototype": "Jetzt als Prototyp testen",
+  "prototypeError": "Prototyp konnte nicht geöffnet werden",
+  "previewImageCount" : "von"
 }

@@ -7,24 +7,64 @@
   "@tabTitle": {
     "description": "The title of the Wishlist Page"
   },
-  "wishlistIntro": "The app is still on its way to reaching its full potential. Good things take time and thoughtful decisions. Help us figure out which features you miss the most.",
+  "wishlistIntro": "The app is still on its way of reaching its full potential. Good things take time and thoughtful decisions. Help us figure out which features you miss the most.",
   "@wishlistIntro": {
     "description": "Intro text for the wishlist page"
   },
-  "roadmapTitle": "Our roadmap",
-  "@roadmapTitle": {
-    "description": "Roadmap title"
+  "shareApp": "Share App",
+  "@shareApp": {
+    "description": "Share app"
   },
-  "roadmapSubtitle": "Kill the mogul",
-  "@roadmapSubtitle": {
-    "description": "Roadmap subtitle"
+  "rateApp": "Rate App",
+  "@rateApp": {
+    "description": "Rate app"
+  },
+  "rateAppError": "Opening store failed",
+  "@rateAppError": {
+    "description": "Rate app error toast"
+  },
+  "instagram": "Instagram",
+  "@roadmapTitle": {
+    "description": "Instagram"
   },
   "betaTitle": "Become a beta tester",
   "@betaTitle": {
     "description": "Beta title"
   },
-  "betaSubtitle": "Test the newest app functions",
+  "betaSubtitle": "Test new app functions early",
   "@betaSubtitle": {
     "description": "Beta subtitle"
+  },
+  "wishlistEntriesTitle": "Future Features",
+  "@wishlistEntriesTitle": {
+    "description": "Title of the wishlist-entries section"
+  },
+  "wishlistStatusHidden": "Hidden",
+  "@wishlistStatusHidden": {
+    "description": "Hidden"
+  },
+  "wishlistStatusDevelopment": "In Development",
+  "@wishlistStatusDevelopment": {
+    "description": "In development"
+  },
+  "wishlistStatusBeta": "Beta",
+  "@wishlistStatusBeta": {
+    "description": "Beta"
+  },
+  "wishlistStatusDone": "Done",
+  "@wishlistStatusDone": {
+    "description": "Done"
+  },
+  "testPrototype": "Test Prototype",
+  "@testPrototype": {
+    "description": "Test prototype button"
+  },
+  "prototypeError": "Launching prototype failed",
+  "@prototypeError": {
+    "description": "Prototype error toast"
+  },
+  "previewImageCount" : "of",
+  "@previewImageCount": {
+    "description": "Text that is between the index of the current preview image and the amount of all preview images e.g [1 of 4]."
   }
 }

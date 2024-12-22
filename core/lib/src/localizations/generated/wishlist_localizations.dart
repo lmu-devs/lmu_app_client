@@ -88,7 +88,10 @@ abstract class WishlistLocalizations {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('de'), Locale('en')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('de'),
+    Locale('en')
+  ];
 
   /// The title of the Wishlist Page
   ///
@@ -99,20 +102,32 @@ abstract class WishlistLocalizations {
   /// Intro text for the wishlist page
   ///
   /// In en, this message translates to:
-  /// **'The app is still on its way to reaching its full potential. Good things take time and thoughtful decisions. Help us figure out which features you miss the most.'**
+  /// **'The app is still on its way of reaching its full potential. Good things take time and thoughtful decisions. Help us figure out which features you miss the most.'**
   String get wishlistIntro;
 
-  /// Roadmap title
+  /// Share app
   ///
   /// In en, this message translates to:
-  /// **'Our roadmap'**
-  String get roadmapTitle;
+  /// **'Share App'**
+  String get shareApp;
 
-  /// Roadmap subtitle
+  /// Rate app
   ///
   /// In en, this message translates to:
-  /// **'Kill the mogul'**
-  String get roadmapSubtitle;
+  /// **'Rate App'**
+  String get rateApp;
+
+  /// Rate app error toast
+  ///
+  /// In en, this message translates to:
+  /// **'Opening store failed'**
+  String get rateAppError;
+
+  /// No description provided for @instagram.
+  ///
+  /// In en, this message translates to:
+  /// **'Instagram'**
+  String get instagram;
 
   /// Beta title
   ///
@@ -123,8 +138,56 @@ abstract class WishlistLocalizations {
   /// Beta subtitle
   ///
   /// In en, this message translates to:
-  /// **'Test the newest app functions'**
+  /// **'Test new app functions early'**
   String get betaSubtitle;
+
+  /// Title of the wishlist-entries section
+  ///
+  /// In en, this message translates to:
+  /// **'Future Features'**
+  String get wishlistEntriesTitle;
+
+  /// Hidden
+  ///
+  /// In en, this message translates to:
+  /// **'Hidden'**
+  String get wishlistStatusHidden;
+
+  /// In development
+  ///
+  /// In en, this message translates to:
+  /// **'In Development'**
+  String get wishlistStatusDevelopment;
+
+  /// Beta
+  ///
+  /// In en, this message translates to:
+  /// **'Beta'**
+  String get wishlistStatusBeta;
+
+  /// Done
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get wishlistStatusDone;
+
+  /// Test prototype button
+  ///
+  /// In en, this message translates to:
+  /// **'Test Prototype'**
+  String get testPrototype;
+
+  /// Prototype error toast
+  ///
+  /// In en, this message translates to:
+  /// **'Launching prototype failed'**
+  String get prototypeError;
+
+  /// Text that is between the index of the current preview image and the amount of all preview images e.g [1 of 4].
+  ///
+  /// In en, this message translates to:
+  /// **'of'**
+  String get previewImageCount;
 }
 
 class _WishlistLocalizationsDelegate extends LocalizationsDelegate<WishlistLocalizations> {
@@ -143,16 +206,18 @@ class _WishlistLocalizationsDelegate extends LocalizationsDelegate<WishlistLocal
 }
 
 WishlistLocalizations lookupWishlistLocalizations(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'de':
-      return WishlistLocalizationsDe();
-    case 'en':
-      return WishlistLocalizationsEn();
+    case 'de': return WishlistLocalizationsDe();
+    case 'en': return WishlistLocalizationsEn();
   }
 
-  throw FlutterError('WishlistLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+  throw FlutterError(
+    'WishlistLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.'
+  );
 }

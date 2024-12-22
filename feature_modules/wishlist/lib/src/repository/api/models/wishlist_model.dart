@@ -2,6 +2,8 @@ import 'package:core/models.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import '../../../util/util.dart';
+
 part 'wishlist_model.g.dart';
 
 @JsonSerializable()
@@ -9,7 +11,8 @@ class WishlistModel extends Equatable {
   final int id;
   final String title;
   final String description;
-  final String status;
+  @JsonKey(fromJson: _statusFromJson)
+  final WishlistStatus status;
   @JsonKey(name: 'release_date')
   final String releaseDate;
   @JsonKey(name: 'prototype_url')
@@ -35,6 +38,8 @@ class WishlistModel extends Equatable {
     required this.createdAt,
     required this.updatedAt,
   });
+
+  static WishlistStatus _statusFromJson(String status) => WishlistStatusMapper.fromString(status);
 
   factory WishlistModel.fromJson(Map<String, dynamic> json) => _$WishlistModelFromJson(json);
 
