@@ -72,7 +72,7 @@ class ImagePreviewDialog extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(LmuRadiusSizes.mediumLarge),
                         child: Image.network(
-                          wishlistModel.imageModels.reversed.toList()[index].url,
+                          wishlistModel.imageModels[index].url,
                           fit: BoxFit.cover,
                           semanticLabel: wishlistModel.imageModels[index].name,
                         ),
