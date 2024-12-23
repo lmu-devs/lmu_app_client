@@ -53,7 +53,17 @@ class WishlistSuccessView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final publicWishlistModels = wishlistModels.where((model) => model.status != WishlistStatus.hidden).toList();
+    final publicWishlistModels = wishlistModels.where((model) => model.status != WishlistStatus.hidden).toList()
+      ..sort((a, b) {
+        const statusOrder = {
+          WishlistStatus.beta: 0,
+          WishlistStatus.development: 1,
+          WishlistStatus.none: 2,
+          WishlistStatus.done: 3,
+        };
+
+        return statusOrder[a.status]!.compareTo(statusOrder[b.status]!);
+      });
 
     return SingleChildScrollView(
       child: Column(
@@ -135,9 +145,9 @@ class WishlistSuccessView extends StatelessWidget {
                             .map(
                               (wishlistModel) => LmuListItem.action(
                                 title: wishlistModel.title,
-                                titleInTextVisuals: [
-                                  LmuInTextVisual.text(title: wishlistModel.status.getValue(context)),
-                                ],
+                                titleInTextVisuals: wishlistModel.status.getValue(context).isNotEmpty
+                                    ? [LmuInTextVisual.text(title: wishlistModel.status.getValue(context))]
+                                    : [],
                                 subtitle: wishlistModel.descriptionShort,
                                 trailingSubtitle: wishlistModel.ratingModel.likeCount.toString(),
                                 maximizeLeadingTitleArea: true,
