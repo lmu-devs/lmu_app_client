@@ -141,6 +141,7 @@ class MapBottomSheetState extends State<MapBottomSheet> {
                 border: Border(
                   top: BorderSide(
                     color: context.colors.neutralColors.borderColors.seperatorDark,
+                    width: 0.5,
                   ),
                 ),
                 borderRadius: const BorderRadius.only(

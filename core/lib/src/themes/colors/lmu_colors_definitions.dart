@@ -119,7 +119,7 @@ const lmuColorsDark = LmuColors(
   mensaColors: MensaColors(
     textColors: MensaTextColors(
       mensa: Color(0xFF75DB70),
-      stuBistro: Color(0xFFDD3C75),
+      stuBistro: Color(0xFFE75589),
       stuCafe: Color(0xFFF3941A),
       stuLounge: Color(0xFFF3BE79),
     ),
@@ -147,16 +147,16 @@ const lmuColorsDark = LmuColors(
     ),
     backgroundColors: BrandBackgroundColors(
       mediumColors: MediumColors(
-        base: ColorPrimitives.brand20,
-        pressed: ColorPrimitives.brand10,
-        active: ColorPrimitives.brand30,
-        disabled: ColorPrimitives.brand10,
+        base: ColorPrimitives.brand30,
+        pressed: ColorPrimitives.brand40,
+        active: ColorPrimitives.brand40,
+        disabled: ColorPrimitives.brand30,
       ),
       strongColors: StrongColors(
         base: ColorPrimitives.brand80,
         pressed: ColorPrimitives.brand70,
         active: ColorPrimitives.brand60,
-        disabled: ColorPrimitives.brand10,
+        disabled: ColorPrimitives.brand30,
       ),
       nonInvertableColors: NonInvertableColors(
         base: ColorPrimitives.brand70,
