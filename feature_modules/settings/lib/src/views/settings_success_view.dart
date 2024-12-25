@@ -138,7 +138,7 @@ class SettingsSuccessView extends StatelessWidget {
                   mainContentAlignment: MainContentAlignment.center,
                   leadingArea: const LeadingFancyIcons(icon: LucideIcons.plus),
                   onTap: () {
-                    GetIt.I.get<FeedbackService>().navigateToSuggestion(context);
+                    GetIt.I.get<FeedbackService>().navigateToSuggestion(context, 'SettingsScreen');
                   },
                 ),
                 LmuListItem.base(
@@ -146,7 +146,7 @@ class SettingsSuccessView extends StatelessWidget {
                   mainContentAlignment: MainContentAlignment.center,
                   leadingArea: const LeadingFancyIcons(icon: LucideIcons.bug),
                   onTap: () {
-                    GetIt.I.get<FeedbackService>().navigateToBugReport(context);
+                    GetIt.I.get<FeedbackService>().navigateToBugReport(context, 'SettingsScreen');
                   },
                 ),
               ],
@@ -156,7 +156,7 @@ class SettingsSuccessView extends StatelessWidget {
             ),
             LmuButton(
               title: 'Feedback',
-              onTap: () => GetIt.I.get<FeedbackService>().navigateToFeedback(context),
+              onTap: () => GetIt.I.get<FeedbackService>().navigateToFeedback(context, 'SettingsScreen'),
             ),
             const SizedBox(
               height: LmuSizes.size_96,

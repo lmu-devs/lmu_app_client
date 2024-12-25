@@ -7,7 +7,12 @@ import 'package:feedback/src/util/send_feedback.dart';
 import 'package:flutter/material.dart';
 
 class BugModal extends StatelessWidget {
-  const BugModal({super.key});
+  const BugModal({
+    super.key,
+    required this.feedbackOrigin,
+  });
+
+  final String feedbackOrigin;
 
   @override
   Widget build(BuildContext context) {
@@ -67,10 +72,10 @@ class BugModal extends StatelessWidget {
                           ? () => sendFeedback(
                                 context: context,
                                 type: FeedbackType.bug,
-                                rating: '',
+                                rating: null,
                                 message: textController.text,
-                                screen: '',
-                                tags: [],
+                                screen: feedbackOrigin,
+                                tags: null,
                               )
                           : null,
                     );

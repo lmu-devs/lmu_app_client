@@ -6,10 +6,10 @@ part 'feedback_model.g.dart';
 @JsonSerializable()
 class FeedbackModel extends Equatable {
   final String type;
-  final String rating;
-  final String message;
+  final String? rating;
+  final String? message;
   final String screen;
-  final List<String> tags;
+  final List<String>? tags;
 
 
   const FeedbackModel({

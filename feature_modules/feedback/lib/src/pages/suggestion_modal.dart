@@ -8,7 +8,12 @@ import '../util/feedback_types.dart';
 import '../util/send_feedback.dart';
 
 class SuggestionModal extends StatelessWidget {
-  const SuggestionModal({super.key});
+  const SuggestionModal({
+    super.key,
+    required this.feedbackOrigin,
+  });
+
+  final String feedbackOrigin;
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +73,10 @@ class SuggestionModal extends StatelessWidget {
                           ? () => sendFeedback(
                                 context: context,
                                 type: FeedbackType.suggestion,
-                                rating: '',
+                                rating: null,
                                 message: textController.text,
-                                screen: '',
-                                tags: [],
+                                screen: feedbackOrigin,
+                                tags: null,
                               )
                           : null,
                     );

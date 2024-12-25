@@ -9,7 +9,12 @@ import 'package:flutter/material.dart';
 import '../util/send_feedback.dart';
 
 class FeedbackModal extends StatelessWidget {
-  const FeedbackModal({super.key});
+  const FeedbackModal({
+    super.key,
+    required this.feedbackOrigin,
+  });
+
+  final String feedbackOrigin;
 
   @override
   Widget build(BuildContext context) {
@@ -80,9 +85,9 @@ class FeedbackModal extends StatelessWidget {
                                 context: context,
                                 type: FeedbackType.general,
                                 rating: selectedFeedback,
-                                message: textController.text,
-                                screen: '',
-                                tags: [],
+                                message: textController.text.isEmpty ? null : textController.text,
+                                screen: feedbackOrigin,
+                                tags: null,
                               ),
                     );
                   },

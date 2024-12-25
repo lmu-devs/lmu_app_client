@@ -11,10 +11,10 @@ import 'feedback_types.dart';
 Future<void> sendFeedback({
   required BuildContext context,
   required FeedbackType type,
-  required String rating,
-  required String message,
+  required String? rating,
+  required String? message,
   required String screen,
-  required List<String> tags,
+  required List<String>? tags,
 }) async {
   final localizations = context.locals.feedback;
 

@@ -167,7 +167,7 @@ class WishlistSuccessView extends StatelessWidget {
                       mainContentAlignment: MainContentAlignment.center,
                       leadingArea: const LeadingFancyIcons(icon: LucideIcons.plus),
                       onTap: () {
-                        GetIt.I.get<FeedbackService>().navigateToSuggestion(context);
+                        GetIt.I.get<FeedbackService>().navigateToSuggestion(context, 'WishlistScreen');
                       },
                     ),
                     LmuListItem.base(
@@ -175,7 +175,7 @@ class WishlistSuccessView extends StatelessWidget {
                       mainContentAlignment: MainContentAlignment.center,
                       leadingArea: const LeadingFancyIcons(icon: LucideIcons.bug),
                       onTap: () {
-                        GetIt.I.get<FeedbackService>().navigateToBugReport(context);
+                        GetIt.I.get<FeedbackService>().navigateToBugReport(context, 'WishlistScreen');
                       },
                     ),
                   ],

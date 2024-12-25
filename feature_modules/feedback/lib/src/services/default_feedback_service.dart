@@ -5,26 +5,26 @@ import 'package:shared_api/feedback.dart';
 
 class DefaultFeedbackService implements FeedbackService {
   @override
-  void navigateToFeedback(BuildContext context) {
+  void navigateToFeedback(BuildContext context, String feedbackOrigin) {
     LmuBottomSheet.showExtended(
       context,
-      content: const FeedbackModal(),
+      content: FeedbackModal(feedbackOrigin: feedbackOrigin),
     );
   }
 
   @override
-  void navigateToBugReport(BuildContext context) {
+  void navigateToBugReport(BuildContext context, String feedbackOrigin) {
     LmuBottomSheet.showExtended(
       context,
-      content: const BugModal(),
+      content: BugModal(feedbackOrigin: feedbackOrigin),
     );
   }
 
   @override
-  void navigateToSuggestion(BuildContext context) {
+  void navigateToSuggestion(BuildContext context, String feedbackOrigin) {
     LmuBottomSheet.showExtended(
       context,
-      content: const SuggestionModal(),
+      content: SuggestionModal(feedbackOrigin: feedbackOrigin),
     );
   }
 }
