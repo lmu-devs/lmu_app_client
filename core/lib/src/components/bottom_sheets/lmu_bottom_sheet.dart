@@ -53,6 +53,6 @@ class LmuBottomSheet {
       closeProgressThreshold: .9,
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
       builder: (context) => content,
-    );
+    ).whenComplete(LmuVibrations.secondary);
   }
 }
