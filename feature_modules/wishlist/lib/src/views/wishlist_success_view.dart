@@ -62,7 +62,13 @@ class WishlistSuccessView extends StatelessWidget {
           WishlistStatus.done: 3,
         };
 
-        return statusOrder[a.status]!.compareTo(statusOrder[b.status]!);
+        final statusComparison = statusOrder[a.status]!.compareTo(statusOrder[b.status]!);
+
+        if (statusComparison != 0) {
+          return statusComparison;
+        }
+
+        return b.ratingModel.likeCount.compareTo(a.ratingModel.likeCount);
       });
 
     return SingleChildScrollView(

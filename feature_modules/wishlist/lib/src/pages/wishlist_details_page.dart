@@ -5,8 +5,10 @@ import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:get_it/get_it.dart';
 
 import '../repository/api/api.dart';
+import '../repository/wishlist_repository.dart';
 import '../util/wishlist_status.dart';
 import '../widgets/image_preview_dialog.dart';
 
@@ -82,6 +84,7 @@ class WishlistDetailsPage extends StatelessWidget {
                     leadingIcon: LucideIcons.heart,
                     title: "${wishlistModel.ratingModel.likeCount} Likes",
                     emphasis: ButtonEmphasis.secondary,
+                    onTap: () async => await GetIt.I.get<WishlistRepository>().toggleWishlistLike(wishlistModel.id),
                   ),
                 ],
               ),

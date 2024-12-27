@@ -1,5 +1,6 @@
 import 'package:core/module.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/user.dart';
 import 'bloc/wishlist_cubit.dart';
 import 'repository/api/wishlist_api_client.dart';
 import 'repository/wishlist_repository.dart';
@@ -13,6 +14,7 @@ class WishlistModule extends AppModule
   void provideLocalDependencies() {
     final repository = ConnectedWishlistRepository(
       wishlistApiClient: WishlistApiClient(),
+      userService: GetIt.I.get<UserService>(),
     );
 
     GetIt.I.registerSingleton<WishlistRepository>(

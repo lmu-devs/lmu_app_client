@@ -1,17 +1,23 @@
+import 'package:shared_api/user.dart';
+
 import 'api/models/wishlist_model.dart';
 import 'api/wishlist_api_client.dart';
 
 abstract class WishlistRepository {
   Future<List<WishlistModel>> getWishlistEntries();
+
+  Future<bool> toggleWishlistLike(int id);
 }
 
 /// WishlistRepository implementation for fetching wishlist data from the API
 class ConnectedWishlistRepository implements WishlistRepository {
   ConnectedWishlistRepository({
     required this.wishlistApiClient,
+    required this.userService,
   });
 
   final WishlistApiClient wishlistApiClient;
+  final UserService userService;
 
   /// Function to fetch mensa models from the API
   @override
@@ -22,5 +28,17 @@ class ConnectedWishlistRepository implements WishlistRepository {
     } catch (e) {
       rethrow;
     }
+  }
+
+  @override
+  Future<bool> toggleWishlistLike(int id) async {
+    final userApiKey = userService.userApiKey;
+
+    if (userApiKey == null) throw Exception('User api key is null');
+
+    return await wishlistApiClient.toggleWishlistLike(
+      id: id,
+      userApiKey: userApiKey,
+    );
   }
 }
