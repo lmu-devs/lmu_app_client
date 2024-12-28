@@ -7,8 +7,9 @@ class WishlistApiEndpoints {
 
   static const String _toggleLike = '/toggle-like';
 
-  static String getWishlistModels() {
-    return '$_baseUrl$_version$_wishlistRoute';
+  static String getWishlistModels({int? id}) {
+    final query = id == null ? '' : '?id=$id';
+    return '$_baseUrl$_version$_wishlistRoute$query';
   }
 
   static String toggleWishlistLike(int id) {

@@ -4,7 +4,7 @@ import 'api/models/wishlist_model.dart';
 import 'api/wishlist_api_client.dart';
 
 abstract class WishlistRepository {
-  Future<List<WishlistModel>> getWishlistEntries();
+  Future<List<WishlistModel>> getWishlistEntries({int? id});
 
   Future<bool> toggleWishlistLike(int id);
 }
@@ -21,9 +21,9 @@ class ConnectedWishlistRepository implements WishlistRepository {
 
   /// Function to fetch mensa models from the API
   @override
-  Future<List<WishlistModel>> getWishlistEntries() async {
+  Future<List<WishlistModel>> getWishlistEntries({int? id}) async {
     try {
-      final wishlistEntries = await wishlistApiClient.getWishlistModels();
+      final wishlistEntries = await wishlistApiClient.getWishlistModels(id: id);
       return wishlistEntries;
     } catch (e) {
       rethrow;

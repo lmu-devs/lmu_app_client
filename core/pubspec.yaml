@@ -41,6 +41,8 @@ dev_dependencies:
 
 flutter:
   generate: true
+  assets:
+    - lib/assets/
   fonts:
     - family: Inter
       fonts:

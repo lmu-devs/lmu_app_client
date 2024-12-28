@@ -71,6 +71,7 @@ flutter:
   generate: true
   assets:
     - .env
+    - core/lib/assets/
     - feature_modules/mensa/assets/
     - feature_modules/explore/assets/
 

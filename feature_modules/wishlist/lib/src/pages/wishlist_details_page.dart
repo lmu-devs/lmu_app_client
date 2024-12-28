@@ -4,11 +4,11 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 
 import '../repository/api/api.dart';
 import '../repository/wishlist_repository.dart';
+import '../util/wishlist_notifier.dart';
 import '../util/wishlist_status.dart';
 import '../widgets/image_preview_dialog.dart';
 
@@ -19,6 +19,26 @@ class WishlistDetailsPage extends StatelessWidget {
   });
 
   final WishlistModel wishlistModel;
+
+  Future<void> _toggleLike(BuildContext context) async {
+    final wishlistNotifier = GetIt.I<WishlistNotifier>();
+    final repository = GetIt.I<WishlistRepository>();
+
+    try {
+      await repository.toggleWishlistLike(wishlistModel.id);
+      final updatedModel = await repository.getWishlistEntries(id: wishlistModel.id);
+      wishlistNotifier.updateWishlistModel(updatedModel.first);
+      LmuVibrations.secondary();
+    } catch (e) {
+      if (context.mounted) {
+        LmuToast.show(
+          context: context,
+          message: context.locals.wishlist.likeError,
+          type: ToastType.error,
+        );
+      }
+    }
+  }
 
   Future<void> _launchPrototype(BuildContext context) async {
     if (await LmuUrlLauncher.canLaunch(url: wishlistModel.prototypeUrl)) {
@@ -80,11 +100,25 @@ class WishlistDetailsPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
               child: Row(
                 children: [
-                  LmuButton(
-                    leadingIcon: LucideIcons.heart,
-                    title: "${wishlistModel.ratingModel.likeCount} Likes",
-                    emphasis: ButtonEmphasis.secondary,
-                    onTap: () async => await GetIt.I.get<WishlistRepository>().toggleWishlistLike(wishlistModel.id),
+                  ValueListenableBuilder<List<WishlistModel>>(
+                    valueListenable: GetIt.I<WishlistNotifier>(),
+                    builder: (context, wishlistModels, child) {
+                      final displayModel = wishlistModels.firstWhere(
+                        (model) => model.id == wishlistModel.id,
+                        orElse: () => wishlistModel,
+                      );
+
+                      return LmuButton(
+                        leadingWidget: StarIcon(
+                          key: ValueKey(displayModel.id),
+                          isActive: displayModel.ratingModel.isLiked,
+                          disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
+                        ),
+                        title: "${displayModel.ratingModel.likeCount} Likes",
+                        emphasis: ButtonEmphasis.secondary,
+                        onTap: () async => await _toggleLike(context),
+                      );
+                    },
                   ),
                 ],
               ),

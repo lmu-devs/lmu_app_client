@@ -15,6 +15,7 @@
   "wishlistStatusDevelopment": "In Entwicklung",
   "wishlistStatusBeta": "Beta",
   "wishlistStatusDone": "Fertig",
+  "likeError": "Dein Like konnte leider nicht gespeichert werden",
   "testPrototype": "Jetzt als Prototyp testen",
   "prototypeError": "Prototyp konnte nicht geöffnet werden",
   "previewImageCount" : "von"

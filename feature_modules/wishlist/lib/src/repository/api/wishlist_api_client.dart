@@ -6,10 +6,10 @@ import 'models/wishlist_model.dart';
 import 'wishlist_api_endpoints.dart';
 
 class WishlistApiClient {
-  Future<List<WishlistModel>> getWishlistModels() async {
+  Future<List<WishlistModel>> getWishlistModels({int? id}) async {
     try {
       final response = await http.get(
-        Uri.parse(WishlistApiEndpoints.getWishlistModels()),
+        Uri.parse(WishlistApiEndpoints.getWishlistModels(id: id)),
       );
 
       if (response.statusCode == 200) {

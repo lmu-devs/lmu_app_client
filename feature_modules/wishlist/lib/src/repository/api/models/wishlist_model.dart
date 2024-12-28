@@ -48,6 +48,31 @@ class WishlistModel extends Equatable {
 
   Map<String, dynamic> toJson() => _$WishlistModelToJson(this);
 
+  WishlistModel copyWith({
+    String? title,
+    String? description,
+    String? descriptionShort,
+    WishlistStatus? status,
+    String? releaseDate,
+    String? prototypeUrl,
+    RatingModel? ratingModel,
+    List<ImageModel>? imageModels,
+  }) {
+    return WishlistModel(
+      id: id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      descriptionShort: descriptionShort ?? this.descriptionShort,
+      status: status ?? this.status,
+      releaseDate: releaseDate ?? this.releaseDate,
+      prototypeUrl: prototypeUrl ?? this.prototypeUrl,
+      ratingModel: ratingModel ?? this.ratingModel,
+      imageModels: imageModels ?? this.imageModels,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+    );
+  }
+
   @override
   List<Object?> get props => [
         id,

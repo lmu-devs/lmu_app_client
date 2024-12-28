@@ -55,6 +55,10 @@
   "@wishlistStatusDone": {
     "description": "Done"
   },
+  "likeError": "Your like couldn't be saved",
+  "@likeError": {
+    "description": "Like error"
+  },
   "testPrototype": "Test Prototype",
   "@testPrototype": {
     "description": "Test prototype button"

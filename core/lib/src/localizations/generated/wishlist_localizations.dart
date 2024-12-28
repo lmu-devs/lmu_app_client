@@ -171,6 +171,12 @@ abstract class WishlistLocalizations {
   /// **'Done'**
   String get wishlistStatusDone;
 
+  /// Like error
+  ///
+  /// In en, this message translates to:
+  /// **'Your like couldn\'t be saved'**
+  String get likeError;
+
   /// Test prototype button
   ///
   /// In en, this message translates to:

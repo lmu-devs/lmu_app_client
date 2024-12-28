@@ -44,6 +44,9 @@ class WishlistLocalizationsEn extends WishlistLocalizations {
   String get wishlistStatusDone => 'Done';
 
   @override
+  String get likeError => 'Your like couldn\'t be saved';
+
+  @override
   String get testPrototype => 'Test Prototype';
 
   @override

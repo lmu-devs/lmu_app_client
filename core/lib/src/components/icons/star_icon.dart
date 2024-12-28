@@ -1,13 +1,20 @@
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:core/localizations.dart';
 
 class StarIcon extends StatelessWidget {
-  const StarIcon({Key? key, this.isActive = false}) : super(key: key);
+  const StarIcon({
+    Key? key,
+    this.isActive = false,
+    this.disabledColor,
+    this.size = LmuSizes.size_20,
+  }) : super(key: key);
 
   final bool isActive;
+  final Color? disabledColor;
+  final double? size;
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +36,14 @@ class StarIcon extends StatelessWidget {
         );
       },
       child: SvgPicture.asset(
-        "assets/star.svg",
+        "core/lib/assets/star.svg",
         semanticsLabel: localization.iconStar,
         key: ValueKey(isActive),
-        package: "mensa",
-        width: LmuSizes.size_20,
+        width: size,
         colorFilter: ColorFilter.mode(
           isActive
               ? context.colors.warningColors.textColors.strongColors.base
-              : context.colors.neutralColors.backgroundColors.base,
+              : disabledColor ?? context.colors.neutralColors.backgroundColors.base,
           BlendMode.srcIn,
         ),
       ),

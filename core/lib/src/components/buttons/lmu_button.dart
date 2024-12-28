@@ -39,6 +39,7 @@ class LmuButton extends StatelessWidget {
     this.emphasis = ButtonEmphasis.primary,
     this.state = ButtonState.enabled,
     this.title,
+    this.leadingWidget,
     this.leadingIcon,
     this.trailingIcon,
     this.onTap,
@@ -52,6 +53,7 @@ class LmuButton extends StatelessWidget {
   final ButtonEmphasis emphasis;
   final ButtonState state;
   final String? title;
+  final Widget? leadingWidget;
   final IconData? leadingIcon;
   final IconData? trailingIcon;
   final void Function()? onTap;
@@ -60,11 +62,19 @@ class LmuButton extends StatelessWidget {
   final bool increaseTouchTarget;
 
   bool get _hasTitle => title != null && !_isLoading;
+
+  bool get _hasLeadingWidget => leadingWidget != null && !_isLoading;
+
   bool get _hasLeadingIcon => leadingIcon != null && !_isLoading;
+
   bool get _hasTrailingIcon => trailingIcon != null && !_isLoading;
+
   bool get _hasTextOnly => emphasis == ButtonEmphasis.link || emphasis == ButtonEmphasis.tertiary;
+
   bool get _isLoading => state == ButtonState.loading;
+
   bool get _isOutline => emphasis == ButtonEmphasis.outline;
+
   bool get _isButtonEnabled => state == ButtonState.enabled;
 
   double? get _width {
@@ -82,7 +92,7 @@ class LmuButton extends StatelessWidget {
       return increaseTouchTarget ? EdgeInsets.symmetric(vertical: size.verticalPadding) : null;
     }
     return EdgeInsets.only(
-      left: _hasLeadingIcon ? size.smallerVerticalPadding : size.defaultVerticalPadding,
+      left: _hasLeadingWidget || _hasLeadingIcon ? size.smallerVerticalPadding : size.defaultVerticalPadding,
       right:
           _hasTrailingIcon || (!_hasTitle && !_isLoading) ? size.smallerVerticalPadding : size.defaultVerticalPadding,
       top: size.verticalPadding,
@@ -130,6 +140,16 @@ class LmuButton extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              if (_hasLeadingWidget)
+                Row(
+                  children: [
+                    leadingWidget!,
+                    if (_hasTitle)
+                      const SizedBox(
+                        width: LmuSizes.size_8,
+                      ),
+                  ],
+                ),
               if (_hasLeadingIcon)
                 Row(
                   children: [

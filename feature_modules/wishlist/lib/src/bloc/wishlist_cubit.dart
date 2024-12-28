@@ -9,7 +9,7 @@ class WishlistCubit extends Cubit<WishlistState> {
 
   final WishlistRepository wishlistRepository;
 
-  void loadWishlistEntries() async {
+  Future<void> loadWishlistEntries() async {
     emit(WishlistLoadInProgress());
 
     try {
