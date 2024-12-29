@@ -7,7 +7,7 @@ part of 'menu_item_model.dart';
 // **************************************************************************
 
 MenuItemModel _$MenuItemModelFromJson(Map<String, dynamic> json) => MenuItemModel(
-      id: (json['id'] as num).toInt(),
+      id: json['id'] as String,
       title: json['title'] as String,
       dishType: json['dish_type'] as String,
       dishCategory: $enumDecode(_$DishCategoryEnumMap, json['dish_category']),

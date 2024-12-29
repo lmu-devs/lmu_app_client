@@ -88,10 +88,7 @@ abstract class WishlistLocalizations {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[
-    Locale('de'),
-    Locale('en')
-  ];
+  static const List<Locale> supportedLocales = <Locale>[Locale('de'), Locale('en')];
 
   /// The title of the Wishlist Page
   ///
@@ -206,18 +203,16 @@ class _WishlistLocalizationsDelegate extends LocalizationsDelegate<WishlistLocal
 }
 
 WishlistLocalizations lookupWishlistLocalizations(Locale locale) {
-
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'de': return WishlistLocalizationsDe();
-    case 'en': return WishlistLocalizationsEn();
+    case 'de':
+      return WishlistLocalizationsDe();
+    case 'en':
+      return WishlistLocalizationsEn();
   }
 
-  throw FlutterError(
-    'WishlistLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-    'an issue with the localizations generation tool. Please file an issue '
-    'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.'
-  );
+  throw FlutterError('WishlistLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+      'an issue with the localizations generation tool. Please file an issue '
+      'on GitHub with a reproducible sample app and the gen-l10n configuration '
+      'that was used.');
 }

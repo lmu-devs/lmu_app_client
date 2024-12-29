@@ -29,10 +29,15 @@ class MensaApiClient {
     }
   }
 
-  Future<List<MenuDayModel>> getMenuDayForMensa(String canteenId) async {
+  Future<List<MenuDayModel>> getMenuDayForMensa(String canteenId, {String? userApiKey}) async {
     try {
       final response = await http.get(
         Uri.parse(MensaApiEndpoints.getMenuDayForMensa(canteenId)),
+        headers: userApiKey == null
+            ? null
+            : {
+                "user-api-key": userApiKey,
+              },
       );
 
       if (response.statusCode == 200) {

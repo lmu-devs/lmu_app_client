@@ -4,4 +4,8 @@ abstract class UserService {
   String? get userApiKey;
 
   bool get hasUserApiKey;
+
+  Future<bool> deleteUserApiKey();
+
+  Stream<void> get deletePrivateDataStream;
 }

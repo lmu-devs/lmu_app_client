@@ -21,6 +21,15 @@ class MensaUserPreferencesService {
     ]);
   }
 
+  Future reset() {
+    return Future.wait([
+      _mensaRepository.deleteAllLocalData(),
+      updateSortOption(SortOption.alphabetically),
+      updatePriceCategory(PriceCategory.students),
+      Future.value(_favoriteMensaIdsNotifier.value = []),
+    ]);
+  }
+
   SortOption _initialSortOption = SortOption.alphabetically;
   SortOption get initialSortOption => _initialSortOption;
 

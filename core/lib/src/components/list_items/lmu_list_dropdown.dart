@@ -9,7 +9,8 @@ class LmuListDropdown extends StatelessWidget {
     this.titleColor,
     required this.items,
     this.initialValue = false,
-    this.duration = const Duration(milliseconds: 300), // Add duration parameter
+    this.duration = const Duration(milliseconds: 300),
+    this.hasDivier = false,
   }) : super(key: key);
 
   final String title;
@@ -17,6 +18,7 @@ class LmuListDropdown extends StatelessWidget {
   final List<LmuListItem> items;
   final bool initialValue;
   final Duration duration;
+  final bool hasDivier;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +55,7 @@ class LmuListDropdown extends StatelessWidget {
               child: value
                   ? Column(
                       key: const ValueKey<bool>(true),
-                      children: items,
+                      children: [...items, const SizedBox(height: 12)],
                     )
                   : const SizedBox.shrink(
                       key: ValueKey<bool>(false),
@@ -61,6 +63,7 @@ class LmuListDropdown extends StatelessWidget {
             ),
           ),
         ),
+        if (hasDivier) const LmuDivider(),
       ],
     );
   }
