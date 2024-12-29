@@ -3,6 +3,8 @@ import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:shared_api/user.dart';
 
 class SettingsAccountPage extends StatelessWidget {
   const SettingsAccountPage({super.key});
@@ -128,8 +130,9 @@ class SettingsAccountPage extends StatelessWidget {
           emphasis: ButtonEmphasis.primary,
           action: ButtonAction.destructive,
           showFullWidth: true,
-          onTap: () {
-            print("delete data");
+          onTap: () async {
+            await GetIt.I.get<UserService>().deleteUserApiKey();
+            if (context.mounted) Navigator.of(context).pop();
           },
         ),
       ],

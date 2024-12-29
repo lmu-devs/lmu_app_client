@@ -1,4 +1,6 @@
 import 'package:core/module.dart';
+import 'package:get_it/get_it.dart';
+import 'package:shared_api/user.dart';
 
 class ModuleRegistry {
   ModuleRegistry({
@@ -27,5 +29,13 @@ class ModuleRegistry {
     for (final waitingAppStartModule in waitingAppStartModules) {
       await waitingAppStartModule.onAppStartWaiting();
     }
+
+    final userService = GetIt.I.get<UserService>();
+    final privateDataContainingModules = modules.whereType<PrivateDataContainingAppModule>();
+    userService.deletePrivateDataStream.listen((_) {
+      for (final privateDataContainingModule in privateDataContainingModules) {
+        privateDataContainingModule.onDeletePrivateData();
+      }
+    });
   }
 }
