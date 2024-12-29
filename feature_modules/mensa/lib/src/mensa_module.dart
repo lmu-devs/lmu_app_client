@@ -15,7 +15,8 @@ class MensaModule extends AppModule
         LocalDependenciesProvidingAppModule,
         NoticeableAppStartAppModule,
         PublicApiProvidingAppModule,
-        WaitingAppStartAppModule {
+        WaitingAppStartAppModule,
+        PrivateDataContainingAppModule {
   @override
   String get moduleName => 'MensaModule';
 
@@ -49,5 +50,10 @@ class MensaModule extends AppModule
   @override
   Future onAppStartWaiting() async {
     await GetIt.I.get<MensaUserPreferencesService>().init();
+  }
+
+  @override
+  void onDeletePrivateData() {
+    GetIt.I.get<MensaUserPreferencesService>().reset();
   }
 }

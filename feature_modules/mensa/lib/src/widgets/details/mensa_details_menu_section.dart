@@ -19,7 +19,7 @@ class MensaDetailsMenuSection extends StatefulWidget {
   });
 
   final String canteenId;
-  final MensaStatus mensaStatus;
+  final Status mensaStatus;
 
   @override
   State<MensaDetailsMenuSection> createState() => _MensaDetailsMenuSectionState();
@@ -35,7 +35,7 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
   @override
   void initState() {
     super.initState();
-    final initialIndex = widget.mensaStatus == MensaStatus.closed ? 1 : 0;
+    final initialIndex = 0; //widget.mensaStatus == MensaStatus.closed ? 1 : 0;
     _pageController = PageController(initialPage: initialIndex);
     _tabNotifier = ValueNotifier<int>(initialIndex);
     _stickyHeaderController = StickyHeaderController();

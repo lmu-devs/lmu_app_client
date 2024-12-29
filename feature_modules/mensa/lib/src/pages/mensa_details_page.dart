@@ -93,7 +93,7 @@ class _MensaDetailsPageState extends State<MensaDetailsPage> {
           SliverToBoxAdapter(child: MensaDetailsInfoSection(mensaModel: _mensaModel)),
           MensaDetailsMenuSection(
             canteenId: _mensaModel.canteenId,
-            mensaStatus: _mensaModel.openingHours.mensaStatus,
+            mensaStatus: Status.closed,
           ),
         ],
       ),

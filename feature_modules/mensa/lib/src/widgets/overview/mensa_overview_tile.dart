@@ -51,9 +51,10 @@ class MensaOverviewTile extends StatelessWidget {
 
     final name = mensaModel.name;
     final type = mensaModel.type;
-    final openingHours = mensaModel.openingHours;
-    final status = openingHours.mensaStatus;
 
+    final openingStatus = mensaModel.currentOpeningStatus;
+    final openingStatusStyling =
+        openingStatus.openingStatus(context, openingDetails: mensaModel.openingHours.openingHours);
     final imageUrl = mensaModel.images.isNotEmpty ? mensaModel.images.first.url : null;
 
     return Padding(
@@ -91,13 +92,15 @@ class MensaOverviewTile extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(LmuSizes.size_16),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Flexible(
                               child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Flexible(
                                     child: LmuText.body(
@@ -106,41 +109,47 @@ class MensaOverviewTile extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(width: LmuSizes.size_8),
-                                  MensaTag(type: type),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 2.0),
+                                    child: MensaTag(type: type),
+                                  ),
                                 ],
                               ),
                             ),
-                            Row(
-                              children: [
-                                const SizedBox(width: LmuSizes.size_8),
-                                LmuText.bodyXSmall(
-                                  mensaModel.ratingModel.calculateLikeCount(isFavorite),
-                                  weight: FontWeight.w400,
-                                  color: colors.neutralColors.textColors.weakColors.base,
-                                ),
-                                const SizedBox(width: LmuSizes.size_4),
-                                AnimatedSwitcher(
-                                  duration: const Duration(milliseconds: 500),
-                                  transitionBuilder: (child, animation) {
-                                    return FadeTransition(
-                                      opacity: animation,
-                                      child: ScaleTransition(
-                                        scale: Tween<double>(begin: 0.5, end: 1).animate(
-                                          CurvedAnimation(
-                                            parent: animation,
-                                            curve: isFavorite ? Curves.elasticOut : Curves.easeOutCirc,
-                                          ),
-                                        ),
-                                        child: child,
-                                      ),
-                                    );
-                                  },
-                                  child: StarIcon(
-                                    isActive: isFavorite,
-                                    key: ValueKey(isFavorite),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 2.0),
+                              child: Row(
+                                children: [
+                                  const SizedBox(width: LmuSizes.size_8),
+                                  LmuText.bodyXSmall(
+                                    mensaModel.ratingModel.calculateLikeCount(isFavorite),
+                                    weight: FontWeight.w400,
+                                    color: colors.neutralColors.textColors.weakColors.base,
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(width: LmuSizes.size_4),
+                                  AnimatedSwitcher(
+                                    duration: const Duration(milliseconds: 500),
+                                    transitionBuilder: (child, animation) {
+                                      return FadeTransition(
+                                        opacity: animation,
+                                        child: ScaleTransition(
+                                          scale: Tween<double>(begin: 0.5, end: 1).animate(
+                                            CurvedAnimation(
+                                              parent: animation,
+                                              curve: isFavorite ? Curves.elasticOut : Curves.easeOutCirc,
+                                            ),
+                                          ),
+                                          child: child,
+                                        ),
+                                      );
+                                    },
+                                    child: StarIcon(
+                                      isActive: isFavorite,
+                                      key: ValueKey(isFavorite),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             )
                           ],
                         ),
@@ -148,8 +157,8 @@ class MensaOverviewTile extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             LmuText.body(
-                              status.text(context.locals.canteen, openingHours: openingHours, short: true),
-                              color: status.color(context.colors),
+                              openingStatusStyling.text,
+                              color: openingStatusStyling.color,
                             ),
                             if (distance != null)
                               LmuText.body(

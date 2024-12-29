@@ -39,7 +39,10 @@ class CanteenLocalizationsDe extends CanteenLocalizations {
   String get mensaTypeStuCafe => 'StuCafé';
 
   @override
-  String get mensaTypeLounge => 'Louge';
+  String get mensaTypeLounge => 'StuLouge';
+
+  @override
+  String get mensaTypeEspressoBar => 'Espresso';
 
   @override
   String get alphabetically => 'Alphabetisch';
@@ -144,4 +147,25 @@ class CanteenLocalizationsDe extends CanteenLocalizations {
 
   @override
   String get tasteProfilePlaceholderActive => 'Dein Geschmacksprofil ist aktiv';
+
+  @override
+  String get temporaryClosed => 'Temporarily closed';
+
+  @override
+  String servingOpenDetails(String openingTime, String closingTime) {
+    return 'Essensausgabe von $openingTime-$closingTime Uhr';
+  }
+
+  @override
+  String servingOpenUntil(String time) {
+    return 'Serving open until $time';
+  }
+
+  @override
+  String servingOpeningSoon(String time) {
+    return 'Essensausgabe öffnet um $time Uhr';
+  }
+
+  @override
+  String get servingClosed => 'Essensausgabe geschlossen';
 }

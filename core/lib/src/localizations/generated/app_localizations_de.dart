@@ -23,6 +23,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get friday => 'Freitag';
 
   @override
+  String get saturady => 'Samstag';
+
+  @override
+  String get sunday => 'Sonntag';
+
+  @override
   String get undo => 'Rückgängig';
 
   @override

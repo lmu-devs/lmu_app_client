@@ -156,8 +156,14 @@ abstract class CanteenLocalizations {
   /// The type of a canteen
   ///
   /// In en, this message translates to:
-  /// **'Louge'**
+  /// **'StuLouge'**
   String get mensaTypeLounge;
+
+  /// The type of a canteen
+  ///
+  /// In en, this message translates to:
+  /// **'Espresso'**
+  String get mensaTypeEspressoBar;
 
   /// Alphabetically sorting
   ///
@@ -362,6 +368,36 @@ abstract class CanteenLocalizations {
   /// In en, this message translates to:
   /// **'Adjust your taste profile to filter dishes by preferences and allergies.'**
   String get tasteProfilePlaceholderActive;
+
+  /// Temporarily closed
+  ///
+  /// In en, this message translates to:
+  /// **'Temporarily closed'**
+  String get temporaryClosed;
+
+  /// The state of closing soon
+  ///
+  /// In en, this message translates to:
+  /// **'Serving open from {openingTime}-{closingTime}'**
+  String servingOpenDetails(String openingTime, String closingTime);
+
+  /// The state of closing soon
+  ///
+  /// In en, this message translates to:
+  /// **'Serving open until {time}'**
+  String servingOpenUntil(String time);
+
+  /// The state of opening soon
+  ///
+  /// In en, this message translates to:
+  /// **'Serving open from {time}'**
+  String servingOpeningSoon(String time);
+
+  /// The state of being closed
+  ///
+  /// In en, this message translates to:
+  /// **'Serving closed'**
+  String get servingClosed;
 }
 
 class _CanteenLocalizationsDelegate extends LocalizationsDelegate<CanteenLocalizations> {

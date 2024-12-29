@@ -129,6 +129,18 @@ abstract class AppLocalizations {
   /// **'Friday'**
   String get friday;
 
+  /// Saturday
+  ///
+  /// In en, this message translates to:
+  /// **'Saturday'**
+  String get saturady;
+
+  /// Sunday
+  ///
+  /// In en, this message translates to:
+  /// **'Sunday'**
+  String get sunday;
+
   /// Undo
   ///
   /// In en, this message translates to:
