@@ -35,7 +35,7 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
   @override
   void initState() {
     super.initState();
-    final initialIndex = 0; //widget.mensaStatus == MensaStatus.closed ? 1 : 0;
+    const initialIndex = 0; //widget.mensaStatus == MensaStatus.closed ? 1 : 0;
     _pageController = PageController(initialPage: initialIndex);
     _tabNotifier = ValueNotifier<int>(initialIndex);
     _stickyHeaderController = StickyHeaderController();
