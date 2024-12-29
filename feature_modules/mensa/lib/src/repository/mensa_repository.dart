@@ -38,6 +38,8 @@ abstract class MensaRepository {
   Future<PriceCategory?> getPriceCategory();
 
   Future<void> setPriceCategory(PriceCategory priceCategory);
+
+  Future<void> deleteAllLocalData();
 }
 
 /// MensaRepository implementation for fetching mensa data from the API
@@ -129,9 +131,10 @@ class ConnectedMensaRepository implements MensaRepository {
   Future<List<MenuDayModel>> getMenuDayForMensa(String canteenId) async {
     final prefs = await SharedPreferences.getInstance();
     final key = '$_menuBaseKey$canteenId';
+    final userApiKey = userService.userApiKey;
 
     try {
-      final mensaMenuModels = await mensaApiClient.getMenuDayForMensa(canteenId);
+      final mensaMenuModels = await mensaApiClient.getMenuDayForMensa(canteenId, userApiKey: userApiKey);
       await prefs.setString(key, json.encode(mensaMenuModels.map((e) => e.toJson()).toList()));
       return mensaMenuModels;
     } catch (e) {
@@ -238,5 +241,19 @@ class ConnectedMensaRepository implements MensaRepository {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setString(_menuPriceCategory, priceCategory.name);
+  }
+
+  @override
+  Future<void> deleteAllLocalData() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.remove(_mensaModelsCacheKey);
+    await prefs.remove(_favoriteMensaIdsKey);
+    await prefs.remove(_favoriteDishIdsKey);
+    await prefs.remove(_tasteProfileKey);
+    await prefs.remove(_pasteProfileSelectionsKey);
+    await prefs.remove(_mensaSortOptionKey);
+    await prefs.remove(_menuPriceCategory);
+    await prefs.remove(_menuBaseKey);
   }
 }

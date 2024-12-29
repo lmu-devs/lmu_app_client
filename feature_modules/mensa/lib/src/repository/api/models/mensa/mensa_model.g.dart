@@ -11,11 +11,10 @@ MensaModel _$MensaModelFromJson(Map<String, dynamic> json) => MensaModel(
       name: json['name'] as String,
       location: MensaLocation.fromJson(json['location'] as Map<String, dynamic>),
       ratingModel: RatingModel.fromJson(json['rating'] as Map<String, dynamic>),
-      openingHours: (json['opening_hours'] as List<dynamic>)
-          .map((e) => MensaOpeningHours.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      openingHours: MensaOpeningHours.fromJson(json['opening_hours'] as Map<String, dynamic>),
       images: (json['images'] as List<dynamic>).map((e) => ImageModel.fromJson(e as Map<String, dynamic>)).toList(),
       type: $enumDecode(_$MensaTypeEnumMap, json['type']),
+      status: MensaStatus.fromJson(json['status'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$MensaModelToJson(MensaModel instance) => <String, dynamic>{
@@ -26,12 +25,14 @@ Map<String, dynamic> _$MensaModelToJson(MensaModel instance) => <String, dynamic
       'opening_hours': instance.openingHours,
       'images': instance.images,
       'type': _$MensaTypeEnumMap[instance.type]!,
+      'status': instance.status,
     };
 
 const _$MensaTypeEnumMap = {
   MensaType.mensa: 'MENSA',
   MensaType.stuBistro: 'STUBISTRO',
   MensaType.stuCafe: 'STUCAFE',
-  MensaType.lounge: 'LOUNGE',
+  MensaType.lounge: 'STULOUNGE',
+  MensaType.espressoBar: 'ESPRESSOBAR',
   MensaType.none: 'NONE',
 };

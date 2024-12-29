@@ -10,8 +10,11 @@ enum MensaType {
   @JsonValue('STUCAFE')
   stuCafe,
 
-  @JsonValue('LOUNGE')
+  @JsonValue('STULOUNGE')
   lounge,
+
+  @JsonValue('ESPRESSOBAR')
+  espressoBar,
 
   @JsonValue('NONE')
   none;
