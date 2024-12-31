@@ -63,30 +63,42 @@ class _LmuTabBarState extends State<LmuTabBar> {
               controller: _scrollController,
               itemBuilder: (_, index) {
                 final tabItem = widget.items[index];
-                return Padding(
-                  padding: EdgeInsets.only(
-                    right: index == widget.items.length - 1 ? LmuSizes.size_16 : LmuSizes.size_8,
-                    left: index == 0 ? LmuSizes.size_16 : 0,
-                  ),
-                  child: ValueListenableBuilder(
-                    valueListenable: _activeTabIndexNotifier,
-                    builder: (context, activeTabIndex, _) {
-                      return GestureDetector(
-                        key: _tabKeys[index],
-                        onTap: () => widget.onTabChanged.call(index, tabItem),
-                        child: AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 300),
-                          child: LmuTabBarItem(
-                            key: ValueKey('$index ${activeTabIndex == index}'),
-                            title: tabItem.title,
-                            isActive: activeTabIndex == index,
-                            leadingIcon: tabItem.leadingIcon,
-                            trailingIcon: tabItem.trailingIcon,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                final isFirst = index == 0;
+                final isLast = index == widget.items.length - 1;
+                return Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        right: isLast ? LmuSizes.size_16 : LmuSizes.size_4,
+                        left: isFirst ? LmuSizes.size_16 : LmuSizes.size_4,
+                      ),
+                      child: ValueListenableBuilder(
+                        valueListenable: _activeTabIndexNotifier,
+                        builder: (context, activeTabIndex, _) {
+                          return GestureDetector(
+                            key: _tabKeys[index],
+                            onTap: () => widget.onTabChanged.call(index, tabItem),
+                            child: AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 300),
+                              child: LmuTabBarItem(
+                                key: ValueKey('$index ${activeTabIndex == index}'),
+                                title: tabItem.title,
+                                isActive: activeTabIndex == index,
+                                leadingIcon: tabItem.leadingIcon,
+                                trailingIcon: tabItem.trailingIcon,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    if (tabItem.hasDivider && !isLast)
+                      Container(
+                        width: 2,
+                        height: 32,
+                        color: context.colors.neutralColors.borderColors.seperatorLight,
+                      )
+                  ],
                 );
               },
             ),
