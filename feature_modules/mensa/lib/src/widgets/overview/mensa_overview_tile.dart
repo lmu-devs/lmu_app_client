@@ -10,7 +10,6 @@ import '../../repository/api/api.dart';
 import '../../routes/mensa_routes.dart';
 import '../../services/mensa_user_preferences_service.dart';
 import '../common/mensa_tag.dart';
-import '../common/star_icon.dart';
 
 class MensaOverviewTile extends StatelessWidget {
   const MensaOverviewTile({

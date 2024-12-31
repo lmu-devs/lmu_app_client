@@ -47,6 +47,7 @@ class MensaApiClient {
         throw Exception('Failed to load menu data for mensa');
       }
     } catch (e) {
+      print(e);
       throw Exception('Failed to parse menu data for mensa: $e');
     }
   }
@@ -81,6 +82,25 @@ class MensaApiClient {
         return response.body == 'true';
       } else {
         throw Exception('Failed to toggle favorite mensa');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<bool> toggleFavoriteDishId(String dishId, {required String userApiKey}) async {
+    try {
+      final response = await http.post(
+        Uri.parse(MensaApiEndpoints.toggleFavoriteDishId(dishId)),
+        headers: {
+          "user-api-key": userApiKey,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return response.body == 'true';
+      } else {
+        throw Exception('Failed to toggle favorite dish');
       }
     } catch (e) {
       rethrow;

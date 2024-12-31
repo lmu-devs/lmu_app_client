@@ -3,6 +3,7 @@ import 'package:core/localizations.dart';
 import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get_it/get_it.dart';
 
@@ -69,8 +70,11 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
             items: menuModels.map(
               (dayModel) {
                 final dateTime = DateTime.parse(dayModel.date);
+                final isLastDayOfWeek = dateTime.weekday == 5;
                 return LmuTabBarItemData(
                   title: dateTime.dayName(context.locals.app),
+                  trailingIcon: dayModel.isClosed ? LucideIcons.circle_x : null,
+                  hasDivider: isLastDayOfWeek,
                 );
               },
             ).toList(),

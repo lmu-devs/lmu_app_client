@@ -8,11 +8,13 @@ class LmuTabBarItemData {
     required this.title,
     this.leadingIcon,
     this.trailingIcon,
+    this.hasDivider = false,
   });
 
   final String title;
   final IconData? leadingIcon;
   final IconData? trailingIcon;
+  final bool hasDivider;
 }
 
 class LmuTabBarItem extends StatelessWidget {
