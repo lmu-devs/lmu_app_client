@@ -14,9 +14,9 @@ class MensaUserPreferencesService {
 
   Future init() {
     return Future.wait([
-      getSortOption(),
       initFavoriteMensaIds(),
-      getFavoriteDishIds(),
+      initFavoriteDishIds(),
+      getSortOption(),
       getSelectedPriceCategory(),
     ]);
   }
@@ -27,6 +27,7 @@ class MensaUserPreferencesService {
       updateSortOption(SortOption.alphabetically),
       updatePriceCategory(PriceCategory.students),
       Future.value(_favoriteMensaIdsNotifier.value = []),
+      Future.value(_favoriteDishIdsNotifier.value = []),
     ]);
   }
 
@@ -38,6 +39,9 @@ class MensaUserPreferencesService {
 
   final _favoriteMensaIdsNotifier = ValueNotifier<List<String>>([]);
   ValueNotifier<List<String>> get favoriteMensaIdsNotifier => _favoriteMensaIdsNotifier;
+
+  final _favoriteDishIdsNotifier = ValueNotifier<List<String>>([]);
+  ValueNotifier<List<String>> get favoriteDishIdsNotifier => _favoriteDishIdsNotifier;
 
   Future<void> initFavoriteMensaIds() async {
     final favoriteMensaIds = await _mensaRepository.getFavoriteMensaIds() ?? [];
@@ -86,44 +90,44 @@ class MensaUserPreferencesService {
     }
   }
 
-  Future<void> getSortOption() async {
-    final loadedSortOption = await _mensaRepository.getSortOption();
+  Future<void> initFavoriteDishIds() async {
+    final favoriteDishIds = await _mensaRepository.getFavoriteDishIds() ?? [];
+    _favoriteDishIdsNotifier.value = favoriteDishIds;
 
-    if (loadedSortOption != null) {
-      _initialSortOption = loadedSortOption;
-    }
-  }
+    final unsyncedFavoriteDishIds = await _mensaRepository.getUnsyncedFavoriteDishIds();
+    print("unsyncedFavoriteDishIds: $unsyncedFavoriteDishIds");
 
-  Future<void> updateSortOption(SortOption sortOption) async {
-    await _mensaRepository.setSortOption(sortOption);
-  }
-
-  final _favoriteDishIdsNotifier = ValueNotifier<List<String>>([]);
-  ValueNotifier<List<String>> get favoriteDishIdsNotifier => _favoriteDishIdsNotifier;
-
-  Future<void> getFavoriteDishIds() async {
-    final favoriteDishIds = await _mensaRepository.getFavoriteDishIds();
-
-    if (favoriteDishIds != null) {
-      _favoriteDishIdsNotifier.value = favoriteDishIds;
+    for (final unsyncedFavoriteDishId in unsyncedFavoriteDishIds) {
+      try {
+        await _mensaRepository.toggleFavoriteDishId(unsyncedFavoriteDishId);
+        await _mensaRepository.removeUnsyncedFavoriteDishId(unsyncedFavoriteDishId);
+      } catch (e) {
+        print('Failed to sync unsynced favorite dish $unsyncedFavoriteDishId: $e');
+      }
     }
   }
 
   Future<void> toggleFavoriteDishId(String dishId) async {
     final favoriteDishIds = List<String>.from(_favoriteDishIdsNotifier.value);
 
-    if (favoriteDishIds.contains(dishId)) {
+    final isLiked = favoriteDishIds.contains(dishId);
+
+    if (isLiked) {
       favoriteDishIds.remove(dishId);
     } else {
       favoriteDishIds.insert(0, dishId);
     }
 
-    await _updateFavoriteDishIds(favoriteDishIds);
-  }
-
-  Future<void> _updateFavoriteDishIds(List<String> favoriteDishIds) async {
     _favoriteDishIdsNotifier.value = favoriteDishIds;
-    await _mensaRepository.updateFavoriteDishIds(favoriteDishIds);
+    await _mensaRepository.saveFavoriteDishIds(favoriteDishIds);
+
+    try {
+      await _mensaRepository.toggleFavoriteDishId(dishId);
+    } catch (e) {
+      print('Failed to sync toggled favorite dish $dishId: $e');
+
+      await _mensaRepository.saveUnsyncedFavoriteDishId(dishId, !isLiked);
+    }
   }
 
   Future<void> getSelectedPriceCategory() async {
@@ -137,5 +141,17 @@ class MensaUserPreferencesService {
   Future<void> updatePriceCategory(PriceCategory priceCategory) async {
     _initialPriceCategory = priceCategory;
     await _mensaRepository.setPriceCategory(priceCategory);
+  }
+
+  Future<void> getSortOption() async {
+    final loadedSortOption = await _mensaRepository.getSortOption();
+
+    if (loadedSortOption != null) {
+      _initialSortOption = loadedSortOption;
+    }
+  }
+
+  Future<void> updateSortOption(SortOption sortOption) async {
+    await _mensaRepository.setSortOption(sortOption);
   }
 }

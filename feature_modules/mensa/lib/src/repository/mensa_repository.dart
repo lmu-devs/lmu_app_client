@@ -19,9 +19,17 @@ abstract class MensaRepository {
 
   Future<void> saveFavoriteMensaIds(List<String> favoriteMensaIds);
 
+  Future<bool> toggleFavoriteDishId(String mensaId);
+
   Future<List<String>?> getFavoriteDishIds();
 
-  Future<void> updateFavoriteDishIds(List<String> favoriteDishIds);
+  Future<void> saveFavoriteDishIds(List<String> favoriteDishIds);
+
+  Future<List<String>> getUnsyncedFavoriteDishIds();
+
+  Future<void> saveUnsyncedFavoriteDishId(String dishId, bool isAdded);
+
+  Future<void> removeUnsyncedFavoriteDishId(String dishId);
 
   Future<List<MenuDayModel>> getMenuDayForMensa(String canteenId);
 
@@ -56,6 +64,7 @@ class ConnectedMensaRepository implements MensaRepository {
 
   static const String _favoriteMensaIdsKey = 'favorite_mensa_ids_key';
   static const String _favoriteDishIdsKey = 'favorite_dish_ids_key';
+  static const String _unsyncedFavoriteDishIdsKey = 'unsynced_favorite_dish_ids_key';
 
   static const String _tasteProfileKey = 'taste_profile_key';
   static const String _pasteProfileSelectionsKey = 'taste_profile_selections_key';
@@ -97,6 +106,15 @@ class ConnectedMensaRepository implements MensaRepository {
   }
 
   @override
+  Future<bool> toggleFavoriteMensaId(String mensaId) async {
+    final userApiKey = userService.userApiKey;
+
+    if (userApiKey == null) throw Exception('User api key is null');
+
+    return await mensaApiClient.toggleFavoriteMensaId(mensaId, userApiKey: userApiKey);
+  }
+
+  @override
   Future<void> saveFavoriteMensaIds(List<String> favoriteMensaIds) async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -112,19 +130,60 @@ class ConnectedMensaRepository implements MensaRepository {
   }
 
   @override
-  Future<bool> toggleFavoriteMensaId(String mensaId) async {
+  Future<bool> toggleFavoriteDishId(String mensaId) async {
     final userApiKey = userService.userApiKey;
 
     if (userApiKey == null) throw Exception('User api key is null');
 
-    return await mensaApiClient.toggleFavoriteMensaId(mensaId, userApiKey: userApiKey);
+    return await mensaApiClient.toggleFavoriteDishId(mensaId, userApiKey: userApiKey);
   }
 
   @override
-  Future<void> updateFavoriteDishIds(List<String> favoriteDishIds) async {
+  Future<void> saveFavoriteDishIds(List<String> favoriteDishIds) async {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setStringList(_favoriteDishIdsKey, favoriteDishIds);
+  }
+
+  @override
+  Future<List<String>> getUnsyncedFavoriteDishIds() async {
+    final currentFavoriteDishIds = await _getCurrentUnsyncedFavoriteDishIds();
+
+    return currentFavoriteDishIds;
+  }
+
+  @override
+  Future<void> saveUnsyncedFavoriteDishId(String dishId, bool isAdded) async {
+    final currentFavoriteDishIds = await _getCurrentUnsyncedFavoriteDishIds();
+
+    if (currentFavoriteDishIds.contains(dishId)) {
+      currentFavoriteDishIds.remove(dishId);
+    } else {
+      currentFavoriteDishIds.add(dishId);
+    }
+
+    await _saveUnsyncedFavoriteDishIds(currentFavoriteDishIds);
+  }
+
+  @override
+  Future<void> removeUnsyncedFavoriteDishId(String dishId) async {
+    final currentFavoriteDishIds = await _getCurrentUnsyncedFavoriteDishIds();
+
+    if (currentFavoriteDishIds.contains(dishId)) {
+      currentFavoriteDishIds.remove(dishId);
+    }
+
+    await _saveUnsyncedFavoriteDishIds(currentFavoriteDishIds);
+  }
+
+  Future<List<String>> _getCurrentUnsyncedFavoriteDishIds() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList(_unsyncedFavoriteDishIdsKey) ?? [];
+  }
+
+  Future<void> _saveUnsyncedFavoriteDishIds(List<String> dishIds) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(_unsyncedFavoriteDishIdsKey, dishIds);
   }
 
   @override
@@ -255,5 +314,6 @@ class ConnectedMensaRepository implements MensaRepository {
     await prefs.remove(_mensaSortOptionKey);
     await prefs.remove(_menuPriceCategory);
     await prefs.remove(_menuBaseKey);
+    await prefs.remove(_unsyncedFavoriteDishIdsKey);
   }
 }

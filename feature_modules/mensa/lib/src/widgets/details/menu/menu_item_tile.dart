@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../extensions/extensions.dart';
+import '../../../pages/menu_details_page.dart';
 import '../../../repository/api/models/menu/menu_item_model.dart';
 import '../../../services/mensa_user_preferences_service.dart';
 import '../../../utils/get_dish_type_emoji.dart';
-import '../../widgets.dart';
 
 class MenuItemTile extends StatelessWidget {
   const MenuItemTile({
@@ -19,11 +19,9 @@ class MenuItemTile extends StatelessWidget {
     required this.isFavorite,
     this.hasDivider = false,
     this.excludedLabelItemsName,
-    this.onTap,
   });
 
   final MenuItemModel menuItemModel;
-  final void Function()? onTap;
   final bool hasDivider;
   final bool isFavorite;
   final List<String>? excludedLabelItemsName;
@@ -33,7 +31,12 @@ class MenuItemTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.size_12 : LmuSizes.none),
       child: GestureDetector(
-        onTap: onTap,
+        onTap: () {
+          LmuBottomSheet.showExtended(
+            context,
+            content: MenuDetailsPage(menuItemModel: menuItemModel),
+          );
+        },
         child: Container(
           decoration: BoxDecoration(
             color: context.colors.neutralColors.backgroundColors.tile,
@@ -97,9 +100,7 @@ class MenuItemTile extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 LmuText.bodyXSmall(
-                                  menuItemModel.ratingModel.likeCount == -1
-                                      ? ""
-                                      : (menuItemModel.ratingModel.likeCount + (isFavorite ? 1 : 0)).formattedLikes,
+                                  menuItemModel.ratingModel.calculateLikeCount(isFavorite),
                                   color: context.colors.neutralColors.textColors.weakColors.base,
                                 ),
                                 const SizedBox(width: LmuSizes.size_4),

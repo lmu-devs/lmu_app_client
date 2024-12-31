@@ -53,6 +53,7 @@ class _MensaDetailsPageState extends State<MensaDetailsPage> {
         valueListenable: mensaUserPreferencesService.favoriteMensaIdsNotifier,
         builder: (context, favoriteMensaIds, _) {
           final isFavorite = favoriteMensaIds.contains(_mensaModel.canteenId);
+          final calculatedLikes = _mensaModel.ratingModel.calculateLikeCount(isFavorite);
           return GestureDetector(
             onTap: () {
               mensaUserPreferencesService.toggleFavoriteMensaId(_mensaModel.canteenId);
@@ -62,7 +63,10 @@ class _MensaDetailsPageState extends State<MensaDetailsPage> {
               padding: const EdgeInsets.all(LmuSizes.size_8),
               child: Row(
                 children: [
-                  LmuText.bodySmall(_mensaModel.ratingModel.calculateLikeCount(isFavorite)),
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(minWidth: 10),
+                    child: LmuText.bodySmall(calculatedLikes),
+                  ),
                   const SizedBox(width: LmuSizes.size_4),
                   StarIcon(
                     isActive: isFavorite,
