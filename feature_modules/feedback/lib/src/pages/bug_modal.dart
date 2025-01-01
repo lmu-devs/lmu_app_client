@@ -3,6 +3,7 @@ import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class BugModal extends StatelessWidget {
   const BugModal({super.key});
@@ -10,8 +11,9 @@ class BugModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = context.locals.feedback;
-    return LmuMasterAppBar(
+    return LmuMasterAppBar.bottomSheet(
       largeTitle: localizations.bugTitle,
+      customScrollController: ModalScrollController.of(context),
       body: Stack(
         children: [
           SingleChildScrollView(

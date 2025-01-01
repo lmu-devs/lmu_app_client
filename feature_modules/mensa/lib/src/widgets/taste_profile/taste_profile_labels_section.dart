@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get_it/get_it.dart';
@@ -7,45 +8,47 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../bloc/taste_profile/taste_profile_cubit.dart';
 import '../../bloc/taste_profile/taste_profile_state.dart';
+import '../../repository/api/models/taste_profile/taste_profile.dart';
 import '../../services/taste_profile_service.dart';
 
-class TasteProfileLabelsSection extends StatelessWidget {
+class TasteProfileLabelsSection extends StatefulWidget {
   const TasteProfileLabelsSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final tasteProfileService = GetIt.I.get<TasteProfileService>();
-    final selectedPresetNotifier = tasteProfileService.selectedPresetsNotifier;
-    final excludedLabelsNotifier = tasteProfileService.excludedLabelsNotifier;
-    final selectedLanguage = Localizations.localeOf(context).languageCode.toUpperCase();
+  State<TasteProfileLabelsSection> createState() => _TasteProfileLabelsSectionState();
+}
 
-    final itemPositionsListener = ItemPositionsListener.create();
-    final itemScrollController = ItemScrollController();
-    final scrollOffsetController = ScrollOffsetController();
+class _TasteProfileLabelsSectionState extends State<TasteProfileLabelsSection> {
+  late ValueNotifier<bool> _isActiveNotifier;
+  late ValueNotifier<Set<String>> _excludedLabelsNotifier;
+  late ValueNotifier<Set<String>> _selectedPresetsNotifier;
+  late Set<String> _initialExcludedLabels;
 
-    itemPositionsListener.itemPositions.addListener(() {
-      final positions = itemPositionsListener.itemPositions.value;
-      final firstIndex = positions.isNotEmpty ? positions.first.index : 0;
-      final label = tasteProfileService.getLabelItemFromId(firstIndex.toString());
-      if (label != null) {
-        print('First visible label: ${label.text[selectedLanguage]}');
-      }
-    });
+  late List<TasteProfileLabel> _sortedLabels;
+  late List<TasteProfilePreset> _presets;
 
-    final stickyHeaderController = StickyHeaderController();
-    stickyHeaderController.addListener(() {
-      final index = stickyHeaderController.stickyHeaderScrollOffset;
-      print("LELLLL: $index");
-    });
+  final tasteProfileService = GetIt.I.get<TasteProfileService>();
+
+  @override
+  void initState() {
+    super.initState();
+    _isActiveNotifier = tasteProfileService.isActiveNotifier;
+    _excludedLabelsNotifier = tasteProfileService.excludedLabelsNotifier;
+    _selectedPresetsNotifier = tasteProfileService.selectedPresetsNotifier;
+    _initialExcludedLabels = Set<String>.from(_excludedLabelsNotifier.value);
 
     final tasteProfile = (GetIt.I.get<TasteProfileCubit>().state as TasteProfileLoadSuccess).tasteProfile;
-    final sortedLabels = tasteProfile.sortedLabels;
-    final presets = tasteProfile.presets;
+    _sortedLabels = tasteProfile.sortedLabels;
+    _presets = tasteProfile.presets;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final selectedLanguage = Localizations.localeOf(context).languageCode.toUpperCase();
 
     return SliverStickyHeader(
-      controller: stickyHeaderController,
       header: LmuTabBar(
-        items: sortedLabels.map((e) => LmuTabBarItemData(title: e.name)).toList(),
+        items: _sortedLabels.map((e) => LmuTabBarItemData(title: e.name)).toList(),
         activeTabIndexNotifier: ValueNotifier<int>(0),
         hasDivider: true,
         onTabChanged: (index, tabItem) {
@@ -56,20 +59,17 @@ class TasteProfileLabelsSection extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
           child: ValueListenableBuilder(
-            valueListenable: excludedLabelsNotifier,
+            valueListenable: _excludedLabelsNotifier,
             builder: (context, excludedLabels, _) {
               return ScrollablePositionedList.separated(
-                scrollOffsetController: scrollOffsetController,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.only(top: LmuSizes.size_16),
-                itemCount: sortedLabels.length,
-                itemPositionsListener: itemPositionsListener,
-                itemScrollController: itemScrollController,
+                itemCount: _sortedLabels.length,
                 shrinkWrap: true,
                 separatorBuilder: (context, index) =>
-                    SizedBox(height: index != sortedLabels.length - 1 ? LmuSizes.size_16 : 0),
+                    SizedBox(height: index != _sortedLabels.length - 1 ? LmuSizes.size_16 : 0),
                 itemBuilder: (context, index) {
-                  final label = sortedLabels[index];
+                  final label = _sortedLabels[index];
                   return Column(
                     children: [
                       LmuContentTile(
@@ -84,8 +84,8 @@ class TasteProfileLabelsSection extends StatelessWidget {
                               mainContentAlignment: MainContentAlignment.center,
                               initialValue: !excludedLabels.contains(item.enumName),
                               onChange: (value) {
-                                final newExcludedLabels = Set<String>.from(excludedLabelsNotifier.value);
-                                final selectedPresets = Set<String>.from(selectedPresetNotifier.value);
+                                final newExcludedLabels = Set<String>.from(_excludedLabelsNotifier.value);
+                                final selectedPresets = Set<String>.from(_selectedPresetsNotifier.value);
 
                                 if (value) {
                                   newExcludedLabels.remove(item.enumName);
@@ -93,7 +93,7 @@ class TasteProfileLabelsSection extends StatelessWidget {
                                   newExcludedLabels.add(item.enumName);
                                 }
 
-                                for (final preset in presets) {
+                                for (final preset in _presets) {
                                   final presetExclude = Set<String>.from(preset.exclude);
                                   final isPresetSelected = selectedPresets.contains(preset.enumName);
                                   final areAllPresetLabelsExcluded = newExcludedLabels.containsAll(presetExclude);
@@ -105,8 +105,12 @@ class TasteProfileLabelsSection extends StatelessWidget {
                                   }
                                 }
 
-                                selectedPresetNotifier.value = selectedPresets;
-                                excludedLabelsNotifier.value = newExcludedLabels;
+                                _selectedPresetsNotifier.value = selectedPresets;
+
+                                _excludedLabelsNotifier.value = newExcludedLabels;
+                                if (!setEquals(_initialExcludedLabels, newExcludedLabels)) {
+                                  if (!_isActiveNotifier.value) _isActiveNotifier.value = true;
+                                }
                               },
                             ),
                         ],

@@ -8,6 +8,7 @@ import 'package:get_it/get_it.dart';
 import '../../extensions/extensions.dart';
 import '../../repository/api/api.dart';
 import '../../routes/mensa_routes.dart';
+import '../../services/mensa_distance_service.dart';
 import '../../services/mensa_user_preferences_service.dart';
 import '../common/mensa_tag.dart';
 
@@ -16,7 +17,6 @@ class MensaOverviewTile extends StatelessWidget {
     super.key,
     required this.mensaModel,
     required this.isFavorite,
-    this.distance,
     this.hasDivider = false,
     this.hasLargeImage = false,
     this.hasButton = false,
@@ -26,7 +26,6 @@ class MensaOverviewTile extends StatelessWidget {
 
   final MensaModel mensaModel;
   final bool isFavorite;
-  final double? distance;
   final bool hasDivider;
   final bool hasLargeImage;
   final bool hasButton;
@@ -55,6 +54,8 @@ class MensaOverviewTile extends StatelessWidget {
     final openingStatusStyling =
         openingStatus.openingStatus(context, openingDetails: mensaModel.openingHours.openingHours);
     final imageUrl = mensaModel.images.isNotEmpty ? mensaModel.images.first.url : null;
+
+    final distanceService = GetIt.I.get<MensaDistanceService>();
 
     return Padding(
       padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.none : LmuSizes.size_12),
@@ -159,11 +160,18 @@ class MensaOverviewTile extends StatelessWidget {
                               openingStatusStyling.text,
                               color: openingStatusStyling.color,
                             ),
-                            if (distance != null)
-                              LmuText.body(
-                                " • $distance",
-                                color: colors.neutralColors.textColors.mediumColors.base,
-                              ),
+                            ListenableBuilder(
+                              listenable: distanceService,
+                              builder: (context, child) {
+                                final distance = distanceService.getDistanceToMensa(mensaModel.location);
+                                return distance != null
+                                    ? LmuText.body(
+                                        " • ${distance.formatDistance()}",
+                                        color: colors.neutralColors.textColors.mediumColors.base,
+                                      )
+                                    : const SizedBox.shrink();
+                              },
+                            ),
                           ],
                         ),
                         hasButton
