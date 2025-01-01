@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 class LmuTabBarItemData {
   const LmuTabBarItemData({
     required this.title,
-    this.leadingIcon,
-    this.trailingIcon,
+    this.leadingWidget,
+    this.trailingWidget,
     this.hasDivider = false,
   });
 
   final String title;
-  final IconData? leadingIcon;
-  final IconData? trailingIcon;
+  final Widget? leadingWidget;
+  final Widget? trailingWidget;
   final bool hasDivider;
 }
 
@@ -23,15 +23,15 @@ class LmuTabBarItem extends StatelessWidget {
     required this.title,
     this.isActive = false,
     this.onTap,
-    this.leadingIcon,
-    this.trailingIcon,
+    this.leadingWidget,
+    this.trailingWidget,
   });
 
   final String title;
   final bool isActive;
   final void Function()? onTap;
-  final IconData? leadingIcon;
-  final IconData? trailingIcon;
+  final Widget? leadingWidget;
+  final Widget? trailingWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -50,36 +50,20 @@ class LmuTabBarItem extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (leadingIcon != null)
+            if (leadingWidget != null)
               Padding(
                 padding: const EdgeInsets.only(right: LmuSizes.size_8),
-                child: SizedBox(
-                  width: LmuSizes.size_20,
-                  height: LmuSizes.size_20,
-                  child: LmuIcon(
-                    icon: leadingIcon!,
-                    size: LmuSizes.size_20,
-                    color: isActive ? activeColor : defaultColor,
-                  ),
-                ),
+                child: leadingWidget,
               ),
             LmuText.bodySmall(
               title,
               color: isActive ? activeColor : defaultColor,
               //weight: isActive ? FontWeight.bold : FontWeight.normal,
             ),
-            if (trailingIcon != null)
+            if (trailingWidget != null)
               Padding(
                 padding: const EdgeInsets.only(left: LmuSizes.size_8),
-                child: SizedBox(
-                  width: LmuSizes.size_20,
-                  height: LmuSizes.size_20,
-                  child: LmuIcon(
-                    icon: trailingIcon!,
-                    size: LmuSizes.size_20,
-                    color: isActive ? activeColor : defaultColor,
-                  ),
-                ),
+                child: trailingWidget,
               ),
           ],
         ),

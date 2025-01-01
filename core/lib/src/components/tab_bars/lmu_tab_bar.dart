@@ -84,8 +84,8 @@ class _LmuTabBarState extends State<LmuTabBar> {
                                 key: ValueKey('$index ${activeTabIndex == index}'),
                                 title: tabItem.title,
                                 isActive: activeTabIndex == index,
-                                leadingIcon: tabItem.leadingIcon,
-                                trailingIcon: tabItem.trailingIcon,
+                                leadingWidget: tabItem.leadingWidget,
+                                trailingWidget: tabItem.trailingWidget,
                               ),
                             ),
                           );
@@ -95,8 +95,14 @@ class _LmuTabBarState extends State<LmuTabBar> {
                     if (tabItem.hasDivider && !isLast)
                       Container(
                         width: 2,
-                        height: 32,
-                        color: context.colors.neutralColors.borderColors.seperatorLight,
+                        height: 16,
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(2),
+                            bottom: Radius.circular(2),
+                          ),
+                          color: context.colors.neutralColors.borderColors.seperatorLight,
+                        ),
                       )
                   ],
                 );
