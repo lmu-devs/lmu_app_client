@@ -6,9 +6,7 @@ import 'bloc/bloc.dart';
 import 'public_api/default_mensa_public_api.dart';
 import 'public_api/public_api.dart';
 import 'repository/repository.dart';
-import 'services/mensa_user_preferences_service.dart';
-import 'services/menu_service.dart';
-import 'services/taste_profile_service.dart';
+import 'services/services.dart';
 
 class MensaModule extends AppModule
     with
@@ -33,6 +31,7 @@ class MensaModule extends AppModule
     GetIt.I.registerSingleton<TasteProfileCubit>(TasteProfileCubit());
     GetIt.I.registerSingleton<MensaUserPreferencesService>(MensaUserPreferencesService());
     GetIt.I.registerSingleton<MenuService>(MenuService());
+    GetIt.I.registerSingleton<MensaDistanceService>(MensaDistanceService());
   }
 
   @override
@@ -45,6 +44,7 @@ class MensaModule extends AppModule
     GetIt.I.get<MensaCubit>().loadMensaData();
     GetIt.I.get<TasteProfileCubit>().loadTasteProfile();
     GetIt.I.get<TasteProfileService>().init();
+    GetIt.I.get<MensaDistanceService>().init();
   }
 
   @override

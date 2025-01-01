@@ -58,7 +58,7 @@ class MensaOverviewAllSection extends StatelessWidget {
                 child: child,
               ),
               child: ListView.builder(
-                key: ValueKey(filteredMensaModels),
+                key: ValueKey(filteredMensaModels.map((e) => e.canteenId).join()),
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,
                 physics: const NeverScrollableScrollPhysics(),
