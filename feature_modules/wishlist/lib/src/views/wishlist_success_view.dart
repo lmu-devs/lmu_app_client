@@ -53,7 +53,17 @@ class WishlistSuccessView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final publicWishlistModels = wishlistModels.where((model) => model.status != WishlistStatus.hidden).toList();
+    final publicWishlistModels = wishlistModels.where((model) => model.status != WishlistStatus.hidden).toList()
+      ..sort((a, b) {
+        const statusOrder = {
+          WishlistStatus.beta: 0,
+          WishlistStatus.development: 1,
+          WishlistStatus.none: 2,
+          WishlistStatus.done: 3,
+        };
+
+        return statusOrder[a.status]!.compareTo(statusOrder[b.status]!);
+      });
 
     return SingleChildScrollView(
       child: Column(
@@ -139,13 +149,12 @@ class WishlistSuccessView extends StatelessWidget {
                             .map(
                               (wishlistModel) => LmuListItem.action(
                                 title: wishlistModel.title,
-                                titleInTextVisuals: [
-                                  LmuInTextVisual.text(title: wishlistModel.status.getValue(context)),
-                                ],
-                                subtitle: wishlistModel.description,
+                                titleInTextVisuals: wishlistModel.status.getValue(context).isNotEmpty
+                                    ? [LmuInTextVisual.text(title: wishlistModel.status.getValue(context))]
+                                    : [],
+                                subtitle: wishlistModel.descriptionShort,
                                 trailingTitle: wishlistModel.ratingModel.likeCount.toString(),
                                 maximizeLeadingTitleArea: true,
-                                mainContentAlignment: MainContentAlignment.top,
                                 actionType: LmuListItemAction.chevron,
                                 onTap: () => WishlistDetailsRoute(wishlistModel).go(context),
                               ),
@@ -162,7 +171,7 @@ class WishlistSuccessView extends StatelessWidget {
                       mainContentAlignment: MainContentAlignment.center,
                       leadingArea: const LeadingFancyIcons(icon: LucideIcons.plus),
                       onTap: () {
-                        GetIt.I.get<FeedbackService>().navigateToSuggestion(context);
+                        GetIt.I.get<FeedbackService>().navigateToSuggestion(context, 'WishlistScreen');
                       },
                     ),
                     LmuListItem.base(
@@ -170,7 +179,7 @@ class WishlistSuccessView extends StatelessWidget {
                       mainContentAlignment: MainContentAlignment.center,
                       leadingArea: const LeadingFancyIcons(icon: LucideIcons.bug),
                       onTap: () {
-                        GetIt.I.get<FeedbackService>().navigateToBugReport(context);
+                        GetIt.I.get<FeedbackService>().navigateToBugReport(context, 'WishlistScreen');
                       },
                     ),
                   ],

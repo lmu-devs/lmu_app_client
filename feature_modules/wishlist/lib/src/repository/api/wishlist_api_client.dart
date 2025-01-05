@@ -15,6 +15,8 @@ class WishlistApiClient {
       if (response.statusCode == 200) {
         final jsonList = json.decode(response.body) as List<dynamic>;
         return jsonList.map((json) => WishlistModel.fromJson(json as Map<String, dynamic>)).toList();
+      } else if (response.statusCode == 404) {
+        return [];
       } else {
         throw Exception('Failed to load wishlist data');
       }
