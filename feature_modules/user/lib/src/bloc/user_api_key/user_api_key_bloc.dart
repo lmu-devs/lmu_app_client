@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
@@ -41,7 +39,6 @@ class UserApiKeyBloc extends Bloc<UserApiKeyEvent, UserApiKeyState> {
     Emitter<UserApiKeyState> emit,
   ) async {
     final currentState = state;
-    debugger();
     if (currentState is! UserApiKeyLoadSuccess) return;
     final apiKey = currentState.apiKey;
     emit(UserApiKeyDeleteInProgress(apiKey: apiKey));

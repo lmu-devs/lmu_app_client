@@ -71,5 +71,5 @@ Here's a brief overview of the main directories and files in a typical Flutter p
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+This project is licensed under the GPLv3 License. See the [LICENSE](LICENSE) file for more information.
 

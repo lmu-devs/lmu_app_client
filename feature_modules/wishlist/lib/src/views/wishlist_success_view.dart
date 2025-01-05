@@ -127,11 +127,15 @@ class WishlistSuccessView extends StatelessWidget {
                   children: [
                     LmuContentTile(
                       content: [
-                        LmuListItem.action(
+                        LmuListItem.base(
                           title: context.locals.wishlist.betaTitle,
                           subtitle: context.locals.wishlist.betaSubtitle,
                           mainContentAlignment: MainContentAlignment.center,
-                          actionType: LmuListItemAction.chevron,
+                          trailingArea: LmuIcon(
+                            icon: LucideIcons.external_link,
+                            color: context.colors.neutralColors.textColors.weakColors.base,
+                            size: LmuIconSizes.mediumSmall,
+                          ),
                           onTap: () {
                             LmuUrlLauncher.launchWebsite(
                               url: Platform.isIOS ? LmuDevStrings.openBetaTestFlight : LmuDevStrings.openBetaPlayStore,
@@ -156,7 +160,7 @@ class WishlistSuccessView extends StatelessWidget {
                                         ? [LmuInTextVisual.text(title: wishlistModel.status.getValue(context))]
                                         : [],
                                     subtitle: wishlistModel.descriptionShort,
-                                    trailingSubtitle: wishlistModel.ratingModel.likeCount.toString(),
+                                    trailingTitle: wishlistModel.ratingModel.likeCount.toString(),
                                     maximizeLeadingTitleArea: true,
                                     actionType: LmuListItemAction.chevron,
                                     onTap: () => WishlistDetailsRoute(wishlistModel).go(context),

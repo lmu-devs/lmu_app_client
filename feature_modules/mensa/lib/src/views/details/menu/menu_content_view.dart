@@ -1,3 +1,4 @@
+import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -24,9 +25,21 @@ class MenuContentView extends StatelessWidget {
     final menuItems = mensaMenuModel.menuItems;
 
     if (menuItems.isEmpty) {
-      return const Center(
-        // TODO: Add localization
-        child: Text("No menu items available"),
+      if (mensaMenuModel.isClosed) {
+        return SizedBox(
+          width: double.infinity,
+          height: 500,
+          child: Center(
+            child: LmuText.body("Mensa is closed"),
+          ),
+        );
+      }
+      return SizedBox(
+        width: double.infinity,
+        height: 500,
+        child: Center(
+          child: LmuText.body("Menu not available"),
+        ),
       );
     }
 
@@ -59,7 +72,7 @@ class MenuContentView extends StatelessWidget {
                     excludedLabelItems: excludedLabelItems,
                     isActive: isActive,
                   ),
-                  const SizedBox(height: LmuSizes.size_32),
+                  const SizedBox(height: LmuSizes.size_96),
                 ],
               );
             },

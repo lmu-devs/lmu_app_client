@@ -8,7 +8,8 @@ class WishlistLocalizationsDe extends WishlistLocalizations {
   String get tabTitle => 'Wunschkonzert';
 
   @override
-  String get wishlistIntro => 'Die App ist noch lange nicht am Ziel. Gute Dinge brauchen Zeit und durchdachte Entscheidungen. Helft uns herauszufinden, welche Funktionen euch am meisten fehlen.';
+  String get wishlistIntro =>
+      'Die App ist noch lange nicht am Ziel. Gute Dinge brauchen Zeit und durchdachte Entscheidungen. Helft uns herauszufinden, welche Funktionen euch am meisten fehlen.';
 
   @override
   String get shareApp => 'App teilen';

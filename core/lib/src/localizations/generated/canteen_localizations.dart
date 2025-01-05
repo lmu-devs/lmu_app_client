@@ -88,10 +88,7 @@ abstract class CanteenLocalizations {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[
-    Locale('de'),
-    Locale('en')
-  ];
+  static const List<Locale> supportedLocales = <Locale>[Locale('de'), Locale('en')];
 
   /// The title of the meals tab
   ///
@@ -156,8 +153,14 @@ abstract class CanteenLocalizations {
   /// The type of a canteen
   ///
   /// In en, this message translates to:
-  /// **'Louge'**
+  /// **'StuLouge'**
   String get mensaTypeLounge;
+
+  /// The type of a canteen
+  ///
+  /// In en, this message translates to:
+  /// **'Espresso'**
+  String get mensaTypeEspressoBar;
 
   /// Alphabetically sorting
   ///
@@ -362,6 +365,36 @@ abstract class CanteenLocalizations {
   /// In en, this message translates to:
   /// **'Adjust your taste profile to filter dishes by preferences and allergies.'**
   String get tasteProfilePlaceholderActive;
+
+  /// Temporarily closed
+  ///
+  /// In en, this message translates to:
+  /// **'Temporarily closed'**
+  String get temporaryClosed;
+
+  /// The state of closing soon
+  ///
+  /// In en, this message translates to:
+  /// **'Serving open from {openingTime}-{closingTime}'**
+  String servingOpenDetails(String openingTime, String closingTime);
+
+  /// The state of closing soon
+  ///
+  /// In en, this message translates to:
+  /// **'Serving open until {time}'**
+  String servingOpenUntil(String time);
+
+  /// The state of opening soon
+  ///
+  /// In en, this message translates to:
+  /// **'Serving open from {time}'**
+  String servingOpeningSoon(String time);
+
+  /// The state of being closed
+  ///
+  /// In en, this message translates to:
+  /// **'Serving closed'**
+  String get servingClosed;
 }
 
 class _CanteenLocalizationsDelegate extends LocalizationsDelegate<CanteenLocalizations> {
@@ -380,18 +413,16 @@ class _CanteenLocalizationsDelegate extends LocalizationsDelegate<CanteenLocaliz
 }
 
 CanteenLocalizations lookupCanteenLocalizations(Locale locale) {
-
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'de': return CanteenLocalizationsDe();
-    case 'en': return CanteenLocalizationsEn();
+    case 'de':
+      return CanteenLocalizationsDe();
+    case 'en':
+      return CanteenLocalizationsEn();
   }
 
-  throw FlutterError(
-    'CanteenLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-    'an issue with the localizations generation tool. Please file an issue '
-    'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.'
-  );
+  throw FlutterError('CanteenLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+      'an issue with the localizations generation tool. Please file an issue '
+      'on GitHub with a reproducible sample app and the gen-l10n configuration '
+      'that was used.');
 }

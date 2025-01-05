@@ -392,8 +392,8 @@ class _ActionArea extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(
-          width: LmuSizes.size_16,
+        SizedBox(
+          width: chevronTitle != null ? 0 : LmuSizes.size_16,
         ),
         ConstrainedBox(
           constraints: const BoxConstraints(

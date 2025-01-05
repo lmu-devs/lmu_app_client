@@ -11,7 +11,8 @@
     "mensaTypeMensa": "Mensa",
     "mensaTypeStuBistro": "StuBistro",
     "mensaTypeStuCafe": "StuCafé",
-    "mensaTypeLounge": "Louge",
+    "mensaTypeLounge": "StuLouge",
+    "mensaTypeEspressoBar": "Espresso",
     "alphabetically": "Alphabetisch",
     "price": "Preis",
     "rating": "Bewertung",
@@ -45,5 +46,10 @@
     "cafeInfo": "unter 100 Sitzplätze, fokussiert auf Getränke und kleine Snacks.",
     "notYourTaste": "Nicht nach deinem Geschmack",
     "tasteProfilePlaceholderNotActive": "Dein Geschmacksprofil ist nicht aktiv",
-    "tasteProfilePlaceholderActive": "Dein Geschmacksprofil ist aktiv"
+    "tasteProfilePlaceholderActive": "Dein Geschmacksprofil ist aktiv",
+    "temoraryClosed": "Vorübergehend geschlossen",
+    "servingOpenDetails": "Essensausgabe von {openingTime}-{closingTime} Uhr",
+    "servingClosed": "Essensausgabe geschlossen",
+    "servingOpeningSoon": "Essensausgabe öffnet um {time} Uhr",
+    "servingClosingSoon": "Essensausgabe schließt um {time} Uhr"
 }

@@ -39,9 +39,10 @@ class LmuButton extends StatelessWidget {
     this.emphasis = ButtonEmphasis.primary,
     this.state = ButtonState.enabled,
     this.title,
-    this.leadingWidget,
     this.leadingIcon,
+    this.leadingWidget,
     this.trailingIcon,
+    this.trailingWidget,
     this.onTap,
     this.customSemanticsLabel,
     this.showFullWidth = false,
@@ -53,9 +54,10 @@ class LmuButton extends StatelessWidget {
   final ButtonEmphasis emphasis;
   final ButtonState state;
   final String? title;
-  final Widget? leadingWidget;
   final IconData? leadingIcon;
+  final Widget? leadingWidget;
   final IconData? trailingIcon;
+  final Widget? trailingWidget;
   final void Function()? onTap;
   final String? customSemanticsLabel;
   final bool showFullWidth;
@@ -63,11 +65,9 @@ class LmuButton extends StatelessWidget {
 
   bool get _hasTitle => title != null && !_isLoading;
 
-  bool get _hasLeadingWidget => leadingWidget != null && !_isLoading;
+  bool get _hasLeading => (leadingIcon != null || leadingWidget != null) && !_isLoading;
 
-  bool get _hasLeadingIcon => leadingIcon != null && !_isLoading;
-
-  bool get _hasTrailingIcon => trailingIcon != null && !_isLoading;
+  bool get _hasTrailing => (trailingIcon != null || trailingWidget != null) && !_isLoading;
 
   bool get _hasTextOnly => emphasis == ButtonEmphasis.link || emphasis == ButtonEmphasis.tertiary;
 
@@ -92,9 +92,8 @@ class LmuButton extends StatelessWidget {
       return increaseTouchTarget ? EdgeInsets.symmetric(vertical: size.verticalPadding) : null;
     }
     return EdgeInsets.only(
-      left: _hasLeadingWidget || _hasLeadingIcon ? size.smallerVerticalPadding : size.defaultVerticalPadding,
-      right:
-          _hasTrailingIcon || (!_hasTitle && !_isLoading) ? size.smallerVerticalPadding : size.defaultVerticalPadding,
+      left: _hasLeading ? size.smallerVerticalPadding : size.defaultVerticalPadding,
+      right: _hasTrailing || (!_hasTitle && !_isLoading) ? size.smallerVerticalPadding : size.defaultVerticalPadding,
       top: size.verticalPadding,
       bottom: size.verticalPadding,
     );
@@ -140,24 +139,16 @@ class LmuButton extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (_hasLeadingWidget)
+              if (_hasLeading)
                 Row(
                   children: [
-                    leadingWidget!,
-                    if (_hasTitle)
-                      const SizedBox(
-                        width: LmuSizes.size_8,
+                    if (leadingWidget != null) leadingWidget!,
+                    if (leadingIcon != null)
+                      LmuIcon(
+                        icon: leadingIcon!,
+                        size: size.iconSize,
+                        color: textColor,
                       ),
-                  ],
-                ),
-              if (_hasLeadingIcon)
-                Row(
-                  children: [
-                    LmuIcon(
-                      icon: leadingIcon!,
-                      size: size.iconSize,
-                      color: textColor,
-                    ),
                     if (_hasTitle)
                       const SizedBox(
                         width: LmuSizes.size_8,
@@ -179,18 +170,20 @@ class LmuButton extends StatelessWidget {
                     strokeAlign: -1,
                   ),
                 ),
-              if (_hasTrailingIcon)
+              if (_hasTrailing)
                 Row(
                   children: [
                     if (_hasTitle)
                       const SizedBox(
                         width: LmuSizes.size_8,
                       ),
-                    LmuIcon(
-                      icon: trailingIcon!,
-                      size: size.iconSize,
-                      color: textColor,
-                    ),
+                    if (trailingWidget != null) trailingWidget!,
+                    if (trailingIcon != null)
+                      LmuIcon(
+                        icon: trailingIcon!,
+                        size: size.iconSize,
+                        color: textColor,
+                      ),
                   ],
                 ),
             ],
