@@ -25,7 +25,7 @@ class BugModal extends StatelessWidget {
       textNotifier.value = textController.text.isNotEmpty;
     });
 
-    return LmuMasterAppBar(
+    return LmuMasterAppBar.bottomSheet(
       largeTitle: localizations.bugTitle,
       body: Stack(
         children: [

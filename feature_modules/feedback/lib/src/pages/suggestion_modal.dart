@@ -26,7 +26,7 @@ class SuggestionModal extends StatelessWidget {
       textNotifier.value = textController.text.isNotEmpty;
     });
 
-    return LmuMasterAppBar(
+    return LmuMasterAppBar.bottomSheet(
       largeTitle: localizations.suggestionTitle,
       body: Stack(
         children: [

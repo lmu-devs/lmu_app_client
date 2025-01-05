@@ -23,7 +23,7 @@ class FeedbackModal extends StatelessWidget {
     final textController = TextEditingController();
     final feedbackNotifier = ValueNotifier<String?>(null);
 
-    return LmuMasterAppBar(
+    return LmuMasterAppBar.bottomSheet(
       largeTitle: localizations.feedbackTitle,
       largeTitleTrailingWidgetAlignment: MainAxisAlignment.center,
       body: Stack(
@@ -54,12 +54,6 @@ class FeedbackModal extends StatelessWidget {
                     isMultiline: true,
                     controller: textController,
                     isAutocorrect: true,
-                    onTapOutside: () {
-                      Navigator.of(context).pop();
-                    },
-                    onSubmitted: (value) {
-                      print(value);
-                    },
                   ),
                   const SizedBox(height: 400),
                 ],

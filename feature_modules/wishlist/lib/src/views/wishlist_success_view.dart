@@ -149,7 +149,7 @@ class WishlistSuccessView extends StatelessWidget {
                                     ? [LmuInTextVisual.text(title: wishlistModel.status.getValue(context))]
                                     : [],
                                 subtitle: wishlistModel.descriptionShort,
-                                trailingSubtitle: wishlistModel.ratingModel.likeCount.toString(),
+                                trailingTitle: wishlistModel.ratingModel.likeCount.toString(),
                                 maximizeLeadingTitleArea: true,
                                 actionType: LmuListItemAction.chevron,
                                 onTap: () => WishlistDetailsRoute(wishlistModel).go(context),
