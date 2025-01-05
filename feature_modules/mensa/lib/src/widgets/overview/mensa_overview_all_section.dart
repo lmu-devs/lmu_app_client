@@ -36,8 +36,8 @@ class MensaOverviewAllSection extends StatelessWidget {
                 if (!isFilterActive) {
                   return true;
                 }
-                final mensaStatus = element.openingHours.mensaStatus;
-                return mensaStatus != MensaStatus.closed && mensaStatus != MensaStatus.openingSoon;
+                final mensaStatus = element.openingHours.openingHours.status;
+                return mensaStatus != Status.closed && mensaStatus != Status.openingSoon;
               },
             ).toList();
 
@@ -58,23 +58,24 @@ class MensaOverviewAllSection extends StatelessWidget {
                 child: child,
               ),
               child: ListView.builder(
-                key: ValueKey(filteredMensaModels),
+                key: ValueKey(filteredMensaModels.map((e) => e.canteenId).join()),
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: filteredMensaModels.length,
                 itemBuilder: (context, index) {
                   return ValueListenableBuilder(
-                      valueListenable: favoriteMensaIdsNotifier,
-                      builder: (context, favoriteMensaIds, _) {
-                        final isFavorite = favoriteMensaIds.contains(filteredMensaModels[index].canteenId);
-                        return MensaOverviewTile(
-                          mensaModel: filteredMensaModels[index],
-                          isFavorite: isFavorite,
-                          hasDivider: index == mensaModels.length - 1,
-                          hasLargeImage: filteredMensaModels[index].images.isNotEmpty,
-                        );
-                      });
+                    valueListenable: favoriteMensaIdsNotifier,
+                    builder: (context, favoriteMensaIds, _) {
+                      final isFavorite = favoriteMensaIds.contains(filteredMensaModels[index].canteenId);
+                      return MensaOverviewTile(
+                        mensaModel: filteredMensaModels[index],
+                        isFavorite: isFavorite,
+                        hasDivider: index == mensaModels.length - 1,
+                        hasLargeImage: filteredMensaModels[index].images.isNotEmpty,
+                      );
+                    },
+                  );
                 },
               ),
             );

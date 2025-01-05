@@ -53,8 +53,12 @@
   "@mensaTypeStuCafe": {
     "description": "The type of a canteen"
   },
-  "mensaTypeLounge": "Louge",
+  "mensaTypeLounge": "StuLouge",
   "@mensaTypeLounge": {
+    "description": "The type of a canteen"
+  },
+  "mensaTypeEspressoBar": "Espresso",
+  "@mensaTypeEspressoBar": {
     "description": "The type of a canteen"
   },
   "alphabetically": "Alphabetically",
@@ -202,5 +206,47 @@
   "tasteProfilePlaceholderActive": "Adjust your taste profile to filter dishes by preferences and allergies.",
   "@tasteProfilePlaceholderActive": {
     "description": "Taste profile placeholder when active"
+  },
+  "temporaryClosed": "Temporarily closed",
+  "@temporaryClosed": {
+    "description": "Temporarily closed"
+  },
+  "servingOpenDetails": "Serving open from {openingTime}-{closingTime}",
+  "@servingOpenDetails": {
+    "description": "The state of closing soon",
+    "placeholders": {
+      "openingTime": {
+        "type": "String",
+        "example": "10 PM"
+      },
+      "closingTime": {
+        "type": "String",
+        "example": "12 PM"
+      }
+    }
+  },
+  "servingOpenUntil": "Serving open until {time}",
+  "@servingOpenUntil": {
+    "description": "The state of closing soon",
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "10 PM"
+      }
+    }
+  },
+  "servingOpeningSoon": "Serving open from {time}",
+  "@servingOpeningSoon": {
+    "description": "The state of opening soon",
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "10 PM"
+      }
+    }
+  },
+  "servingClosed": "Serving closed",
+  "@servingClosed": {
+    "description": "The state of being closed"
   }
 }

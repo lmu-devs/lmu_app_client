@@ -1,5 +1,7 @@
 import 'package:core/components.dart';
+import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
+import 'package:core/themes.dart';
 import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,7 +21,7 @@ class MensaDetailsMenuSection extends StatefulWidget {
   });
 
   final String canteenId;
-  final MensaStatus mensaStatus;
+  final Status mensaStatus;
 
   @override
   State<MensaDetailsMenuSection> createState() => _MensaDetailsMenuSectionState();
@@ -35,7 +37,7 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
   @override
   void initState() {
     super.initState();
-    final initialIndex = widget.mensaStatus == MensaStatus.closed ? 1 : 0;
+    const initialIndex = 0; //widget.mensaStatus == MensaStatus.closed ? 1 : 0;
     _pageController = PageController(initialPage: initialIndex);
     _tabNotifier = ValueNotifier<int>(initialIndex);
     _stickyHeaderController = StickyHeaderController();
@@ -69,8 +71,19 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
             items: menuModels.map(
               (dayModel) {
                 final dateTime = DateTime.parse(dayModel.date);
+                final isLastDayOfWeek = dateTime.weekday == 5;
                 return LmuTabBarItemData(
                   title: dateTime.dayName(context.locals.app),
+                  trailingWidget: dayModel.isClosed
+                      ? ClipOval(
+                          child: Container(
+                            width: LmuSizes.size_8,
+                            height: LmuSizes.size_8,
+                            color: context.colors.warningColors.textColors.strongColors.base,
+                          ),
+                        )
+                      : null,
+                  hasDivider: isLastDayOfWeek,
                 );
               },
             ).toList(),

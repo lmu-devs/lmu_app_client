@@ -11,10 +11,12 @@ MenuDayModel _$MenuDayModelFromJson(Map<String, dynamic> json) => MenuDayModel(
       date: json['date'] as String,
       menuItems:
           (json['dishes'] as List<dynamic>).map((e) => MenuItemModel.fromJson(e as Map<String, dynamic>)).toList(),
+      isClosed: json['is_closed'] as bool,
     );
 
 Map<String, dynamic> _$MenuDayModelToJson(MenuDayModel instance) => <String, dynamic>{
       'canteen_id': instance.canteenId,
       'date': instance.date,
       'dishes': instance.menuItems,
+      'is_closed': instance.isClosed,
     };

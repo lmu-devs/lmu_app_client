@@ -10,7 +10,7 @@ import 'package:get_it/get_it.dart';
 
 import '../../repository/api/models/mensa/mensa_model.dart';
 import '../../services/mensa_user_preferences_service.dart';
-import '../mensa_placeholder_tile.dart';
+import '../common/mensa_placeholder_tile.dart';
 import '../widgets.dart';
 
 class MensaOverviewFavoriteSection extends StatefulWidget {

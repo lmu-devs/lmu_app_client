@@ -7,30 +7,45 @@ import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import '../extensions/likes_formatter_extension.dart';
 import '../repository/api/models/menu/menu_item_model.dart';
 import '../repository/api/models/menu/price_category.dart';
 import '../repository/api/models/menu/price_model.dart';
 import '../services/mensa_user_preferences_service.dart';
 import '../services/taste_profile_service.dart';
 
-class MenuDetailsPage extends StatelessWidget {
-  MenuDetailsPage({
+class MenuDetailsPage extends StatefulWidget {
+  const MenuDetailsPage({
     super.key,
     required this.menuItemModel,
-    required PriceCategory initialPriceCategory,
-  }) : _selectedPriceCategoryNotifier = ValueNotifier(initialPriceCategory);
+  });
 
   final MenuItemModel menuItemModel;
 
-  final ValueNotifier<PriceCategory> _selectedPriceCategoryNotifier;
+  @override
+  State<MenuDetailsPage> createState() => _MenuDetailsPageState();
+}
+
+class _MenuDetailsPageState extends State<MenuDetailsPage> {
+  late ValueNotifier<PriceCategory> _selectedPriceCategoryNotifier;
+
+  final _tasteProfileService = GetIt.I<TasteProfileService>();
+  final _userPreferenceService = GetIt.I<MensaUserPreferencesService>();
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedPriceCategoryNotifier = ValueNotifier(_userPreferenceService.initialPriceCategory);
+  }
+
+  MenuItemModel get _menuItemModel => widget.menuItemModel;
 
   @override
   Widget build(BuildContext context) {
-    final tasteProfileService = GetIt.I<TasteProfileService>();
     final selectedLanguage = Localizations.localeOf(context).languageCode.toUpperCase();
 
     return LmuMasterAppBar(
-      largeTitle: menuItemModel.title,
+      largeTitle: _menuItemModel.title,
       customScrollController: ModalScrollController.of(context),
       collapsedTitleHeight: CollapsedTitleHeight.large,
       leadingAction: LeadingAction.close,
@@ -42,10 +57,17 @@ class MenuDetailsPage extends StatelessWidget {
               const SizedBox(height: LmuSizes.size_16),
               Row(
                 children: [
-                  LmuButton(
-                    leadingIcon: LucideIcons.heart,
-                    title: "${menuItemModel.ratingModel.likeCount} Likes",
-                    emphasis: ButtonEmphasis.secondary,
+                  ValueListenableBuilder(
+                    valueListenable: _userPreferenceService.favoriteDishIdsNotifier,
+                    builder: (context, favoriteDishIds, _) {
+                      final isFavorite = favoriteDishIds.contains(_menuItemModel.id);
+                      return LmuButton(
+                        leadingWidget: StarIcon(isActive: isFavorite),
+                        title: "${_menuItemModel.ratingModel.calculateLikeCount(isFavorite)} Likes",
+                        emphasis: ButtonEmphasis.secondary,
+                        onTap: () => _userPreferenceService.toggleFavoriteDishId(_menuItemModel.id),
+                      );
+                    },
                   ),
                   const SizedBox(width: LmuSizes.size_8),
                   const LmuButton(
@@ -63,9 +85,9 @@ class MenuDetailsPage extends StatelessWidget {
               const SizedBox(height: LmuSizes.size_32),
               LmuTileHeadline.base(title: "Inhalte"),
               LmuContentTile(
-                content: menuItemModel.labels.map(
+                content: _menuItemModel.labels.map(
                   (e) {
-                    final labelItem = tasteProfileService.getLabelItemFromId(e);
+                    final labelItem = _tasteProfileService.getLabelItemFromId(e);
                     if (labelItem == null) return const SizedBox.shrink();
                     final emoji = labelItem.emojiAbbreviation?.isEmpty ?? true ? "😀" : labelItem.emojiAbbreviation;
                     return LmuListItem.base(
@@ -80,7 +102,7 @@ class MenuDetailsPage extends StatelessWidget {
               ValueListenableBuilder(
                   valueListenable: _selectedPriceCategoryNotifier,
                   builder: (context, selectedPriceCategory, _) {
-                    final price = menuItemModel.prices.firstWhere(
+                    final price = _menuItemModel.prices.firstWhere(
                       (element) => element.category == selectedPriceCategory,
                     );
 
@@ -105,7 +127,7 @@ class MenuDetailsPage extends StatelessWidget {
                             LmuBottomSheet.show(
                               context,
                               content: _PriceCategoryActionSheetContent(
-                                priceModels: menuItemModel.prices,
+                                priceModels: _menuItemModel.prices,
                                 priceCategoryNotifier: _selectedPriceCategoryNotifier,
                               ),
                             );
@@ -113,7 +135,7 @@ class MenuDetailsPage extends StatelessWidget {
                         ),
                         LmuListItem.base(
                           title: "Simple Price",
-                          trailingTitle: menuItemModel.priceSimple,
+                          trailingTitle: _menuItemModel.priceSimple,
                         ),
                       ],
                     );

@@ -6,11 +6,10 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../pages/menu_details_page.dart';
 import '../../../repository/api/models/menu/dish_category.dart';
 import '../../../repository/api/models/menu/menu_item_model.dart';
 import '../../../services/mensa_user_preferences_service.dart';
-import '../../mensa_placeholder_tile.dart';
+import '../../common/mensa_placeholder_tile.dart';
 import 'menu_item_tile.dart';
 
 class MenuFilteredSection extends StatelessWidget {
@@ -49,6 +48,20 @@ class MenuFilteredSection extends StatelessWidget {
         itemBuilder: (context, index) {
           final dishCategory = DishCategory.values[index];
           final menuItemsForCategory = filteredMenuitems.where((e) => e.dishCategory == dishCategory).toList();
+
+          menuItemsForCategory.sort((a, b) {
+            // 1. Liked elements first
+            if (a.ratingModel.isLiked && !b.ratingModel.isLiked) return -1;
+            if (!a.ratingModel.isLiked && b.ratingModel.isLiked) return 1;
+
+            // 2. Sort by like count (descending)
+            final likeCountComparison = b.ratingModel.likeCount.compareTo(a.ratingModel.likeCount);
+            if (likeCountComparison != 0) return likeCountComparison;
+
+            // 3. Sort alphabetically by title
+            return a.title.compareTo(b.title);
+          });
+
           if (menuItemsForCategory.isEmpty) {
             return const SizedBox.shrink();
           }
@@ -68,17 +81,6 @@ class MenuFilteredSection extends StatelessWidget {
                           menuItemModel: dishModel,
                           isFavorite: isFavorite,
                           hasDivider: !isLastItem,
-                          onTap: () {
-                            final initialPriceCategory =
-                                GetIt.I.get<MensaUserPreferencesService>().initialPriceCategory;
-                            LmuBottomSheet.showExtended(
-                              context,
-                              content: MenuDetailsPage(
-                                menuItemModel: dishModel,
-                                initialPriceCategory: initialPriceCategory,
-                              ),
-                            );
-                          },
                         );
                       },
                     );

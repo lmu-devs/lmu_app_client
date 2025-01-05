@@ -1,6 +1,5 @@
 export 'common/mensa_tag.dart';
 export 'common/mensa_week_view.dart';
-export 'common/star_icon.dart';
 export 'details/mensa_details_info_section.dart';
 export 'details/mensa_details_menu_section.dart';
 export 'details/menu/menu_excluded_section.dart';

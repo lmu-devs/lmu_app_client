@@ -9,6 +9,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_api/feedback.dart';
 
+import '../pages/pages.dart';
 import '../routes/settings_routes.dart';
 
 class SettingsSuccessView extends StatelessWidget {
@@ -42,7 +43,7 @@ class SettingsSuccessView extends StatelessWidget {
                   title: settingLocalizations.account,
                   actionType: LmuListItemAction.chevron,
                   onTap: () {
-                    const SettingsAccountRoute().go(context);
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingsAccountPage()));
                   },
                 ),
                 LmuListItem.action(
@@ -50,7 +51,7 @@ class SettingsSuccessView extends StatelessWidget {
                   actionType: LmuListItemAction.chevron,
                   trailingTitle: _getThemeModeString(context, settingLocalizations),
                   onTap: () {
-                    const SettingsApperanceRoute().go(context);
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingsApperancePage()));
                   },
                 ),
               ],

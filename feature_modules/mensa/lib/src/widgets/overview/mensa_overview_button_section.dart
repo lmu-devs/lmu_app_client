@@ -1,6 +1,7 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
+import 'package:core/permissions.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
@@ -68,6 +69,7 @@ class MensaOverviewButtonSection extends StatelessWidget {
             return LmuButton(
               title: localizations.openNow,
               emphasis: isOpenNowFilterActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
+              action: isOpenNowFilterActive ? ButtonAction.contrast : ButtonAction.base,
               onTap: () => isOpenNowFilerNotifier.value = !isOpenNowFilerNotifier.value,
             );
           },
@@ -129,6 +131,9 @@ class _SortOptionActionSheetContent extends StatelessWidget {
                         color: textColor,
                       ),
                       onTap: () async {
+                        if (sortOption == SortOption.distance) {
+                          await askForLocationPermission(context: context, askEveryTime: true);
+                        }
                         sortOptionNotifier.value = sortOption;
                         sortedMensaModelsNotifier.value = sortOption.sort(mensaModels);
                         await GetIt.I.get<MensaUserPreferencesService>().updateSortOption(sortOption);

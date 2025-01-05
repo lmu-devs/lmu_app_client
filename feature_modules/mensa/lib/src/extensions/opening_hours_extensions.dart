@@ -1,56 +1,57 @@
-import 'dart:ui';
-
 import 'package:collection/collection.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:flutter/widgets.dart';
 
-import '../repository/api/models/mensa/mensa_opening_hours.dart';
+import '../../mensa.dart';
 
-enum MensaStatus {
+enum Status {
   openingSoon,
   open,
   closingSoon,
   closed,
+  temorarilyClosed,
 }
 
-// Add the new extension for day mapping
-extension MensaOpeningHoursExtension on MensaOpeningHours {
+extension WeekdayToString on MensaOpeningDetails {
   String mapToDay(AppLocalizations localizations) {
     switch (day) {
-      case "MONDAY":
+      case Weekday.monday:
         return localizations.monday;
-      case "TUESDAY":
+      case Weekday.tuesday:
         return localizations.tuesday;
-      case "WEDNESDAY":
+      case Weekday.wednesday:
         return localizations.wednesday;
-      case "THURSDAY":
+      case Weekday.thursday:
         return localizations.thursday;
-      case "FRIDAY":
+      case Weekday.friday:
         return localizations.friday;
-      default:
-        return day;
+      case Weekday.saturday:
+        return localizations.saturady;
+      case Weekday.sunday:
+        return localizations.sunday;
     }
   }
 }
 
-extension OpeningHoursExtension on List<MensaOpeningHours> {
-  MensaStatus get mensaStatus {
+extension StatusTimeExtension on List<MensaOpeningDetails> {
+  Status get status {
     final now = DateTime.now();
     final todaysHours = _getTodaysHours(now);
 
-    if (todaysHours == null) return MensaStatus.closed;
+    if (todaysHours == null) return Status.closed;
 
     final startTime = _parseTime(todaysHours.startTime, now);
     final endTime = _parseTime(todaysHours.endTime, now);
     final closingSoonThreshold = endTime.subtract(const Duration(minutes: 30));
     if (now.isBefore(startTime)) {
-      return MensaStatus.openingSoon;
+      return Status.openingSoon;
     } else if (now.isAfter(startTime) && now.isBefore(closingSoonThreshold)) {
-      return MensaStatus.open;
+      return Status.open;
     } else if (now.isAfter(closingSoonThreshold) && now.isBefore(endTime)) {
-      return MensaStatus.closingSoon;
+      return Status.closingSoon;
     } else {
-      return MensaStatus.closed;
+      return Status.closed;
     }
   }
 
@@ -70,7 +71,7 @@ extension OpeningHoursExtension on List<MensaOpeningHours> {
     return "${startTime.hour.toString().padLeft(2, '0')}:${startTime.minute.toString().padLeft(2, '0')}";
   }
 
-  MensaOpeningHours? _getTodaysHours(DateTime now) {
+  MensaOpeningDetails? _getTodaysHours(DateTime now) {
     const dayMap = {
       DateTime.monday: "MONDAY",
       DateTime.tuesday: "TUESDAY",
@@ -93,35 +94,127 @@ extension OpeningHoursExtension on List<MensaOpeningHours> {
   }
 }
 
-extension MensaStatusExtension on MensaStatus {
-  Color color(LmuColors colors) {
+extension CurrentStatusExtension on MensaModel {
+  Status get currentOpeningStatus => _determineCurrentStatus(openingHours.openingHours);
+
+  Status get currentServingStatus => _determineCurrentStatus(openingHours.servingHours);
+
+  Status _determineCurrentStatus(List<MensaOpeningDetails>? details) {
+    if (status.isClosed) {
+      return Status.closed;
+    } else if (status.isTemporaryClosed) {
+      return Status.temorarilyClosed;
+    }
+    return details?.status ?? Status.closed;
+  }
+}
+
+extension StatusStylingExtension on Status {
+  ({Color color, String text}) openingStatusShort(
+    BuildContext context, {
+    required List<MensaOpeningDetails> openingDetails,
+  }) {
+    final colors = context.colors;
+    final localizations = context.locals.canteen;
+
     switch (this) {
-      case MensaStatus.open:
-        return colors.successColors.textColors.strongColors.base;
-      case MensaStatus.closed:
-      case MensaStatus.openingSoon:
-        return colors.neutralColors.textColors.mediumColors.base;
-      case MensaStatus.closingSoon:
-        return colors.warningColors.textColors.strongColors.base;
+      case Status.open:
+        return (
+          color: colors.successColors.textColors.strongColors.base,
+          text: localizations.openUntil(openingDetails.closingTime)
+        );
+      case Status.closed:
+        return (
+          color: colors.neutralColors.textColors.mediumColors.base,
+          text: localizations.closed,
+        );
+      case Status.openingSoon:
+        return (
+          color: colors.neutralColors.textColors.mediumColors.base,
+          text: localizations.openingSoon(openingDetails.openingTime),
+        );
+      case Status.closingSoon:
+        return (
+          color: colors.warningColors.textColors.strongColors.base,
+          text: localizations.openUntil(openingDetails.closingTime),
+        );
+      case Status.temorarilyClosed:
+        return (
+          color: colors.dangerColors.textColors.strongColors.base,
+          text: localizations.temporaryClosed,
+        );
     }
   }
 
-  String text(
-    CanteenLocalizations localizations, {
-    required List<MensaOpeningHours> openingHours,
-    bool short = false,
+  ({Color color, String text}) openingStatus(
+    BuildContext context, {
+    required List<MensaOpeningDetails> openingDetails,
   }) {
+    final colors = context.colors;
+    final localizations = context.locals.canteen;
+
     switch (this) {
-      case MensaStatus.open:
-      case MensaStatus.closingSoon:
-        return localizations.openUntil(openingHours.closingTime);
-      case MensaStatus.closed:
-        return localizations.closed;
-      case MensaStatus.openingSoon:
-        if (short) {
-          return localizations.openingSoon(openingHours.openingTime);
-        }
-        return localizations.openDetails(openingHours.openingTime, openingHours.closingTime);
+      case Status.open:
+        return (
+          color: colors.successColors.textColors.strongColors.base,
+          text: localizations.openDetails(openingDetails.openingTime, openingDetails.closingTime),
+        );
+      case Status.closed:
+        return (
+          color: colors.neutralColors.textColors.mediumColors.base,
+          text: localizations.closed,
+        );
+      case Status.openingSoon:
+        return (
+          color: colors.neutralColors.textColors.mediumColors.base,
+          text: localizations.openingSoon(openingDetails.openingTime),
+        );
+      case Status.closingSoon:
+        return (
+          color: colors.warningColors.textColors.strongColors.base,
+          text: localizations.openUntil(openingDetails.closingTime),
+        );
+      case Status.temorarilyClosed:
+        return (
+          color: colors.dangerColors.textColors.strongColors.base,
+          text: localizations.temporaryClosed,
+        );
+    }
+  }
+
+  ({Color color, String text}) servingStatus(
+    BuildContext context, {
+    required List<MensaOpeningDetails> openingDetails,
+  }) {
+    final colors = context.colors;
+    final localizations = context.locals.canteen;
+
+    switch (this) {
+      case Status.open:
+        return (
+          color: colors.successColors.textColors.strongColors.base,
+          text: localizations.servingOpenDetails(openingDetails.openingTime, openingDetails.closingTime),
+        );
+      case Status.closed:
+        return (
+          color: colors.neutralColors.textColors.mediumColors.base,
+          text: localizations.servingClosed,
+        );
+      case Status.openingSoon:
+        return (
+          color: colors.neutralColors.textColors.mediumColors.base,
+          text: localizations.servingOpeningSoon(openingDetails.openingTime),
+        );
+      case Status.closingSoon:
+        return (
+          color: colors.warningColors.textColors.strongColors.base,
+          text: localizations.servingOpenUntil(openingDetails.closingTime),
+        );
+      case Status.temorarilyClosed:
+        return (
+          color: colors.dangerColors.textColors.strongColors.base,
+          text: localizations.temporaryClosed,
+        );
     }
   }
 }

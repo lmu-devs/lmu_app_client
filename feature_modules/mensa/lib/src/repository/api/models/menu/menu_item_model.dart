@@ -9,7 +9,7 @@ part 'menu_item_model.g.dart';
 
 @JsonSerializable()
 class MenuItemModel extends Equatable {
-  final int id;
+  final String id;
   final String title;
   @JsonKey(name: 'dish_type')
   final String dishType;
@@ -34,7 +34,7 @@ class MenuItemModel extends Equatable {
   });
 
   factory MenuItemModel.placeholder({String? title}) => MenuItemModel(
-        id: 0,
+        id: "0",
         title: title ?? 'Title',
         dishType: 'E',
         dishCategory: DishCategory.main,

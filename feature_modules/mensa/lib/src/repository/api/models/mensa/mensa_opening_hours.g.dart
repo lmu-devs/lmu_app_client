@@ -7,13 +7,15 @@ part of 'mensa_opening_hours.dart';
 // **************************************************************************
 
 MensaOpeningHours _$MensaOpeningHoursFromJson(Map<String, dynamic> json) => MensaOpeningHours(
-      day: json['day'] as String,
-      startTime: json['start_time'] as String,
-      endTime: json['end_time'] as String,
+      openingHours: (json['opening_hours'] as List<dynamic>)
+          .map((e) => MensaOpeningDetails.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      servingHours: (json['serving_hours'] as List<dynamic>?)
+          ?.map((e) => MensaOpeningDetails.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$MensaOpeningHoursToJson(MensaOpeningHours instance) => <String, dynamic>{
-      'day': instance.day,
-      'start_time': instance.startTime,
-      'end_time': instance.endTime,
+      'opening_hours': instance.openingHours,
+      'serving_hours': instance.servingHours,
     };

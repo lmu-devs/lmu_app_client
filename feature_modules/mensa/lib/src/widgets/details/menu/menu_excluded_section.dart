@@ -5,12 +5,11 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../pages/menu_details_page.dart';
 import '../../../pages/taste_profile_page.dart';
 import '../../../repository/api/models/menu/menu_item_model.dart';
 import '../../../repository/api/models/taste_profile/taste_profile_label_item.dart';
 import '../../../services/mensa_user_preferences_service.dart';
-import '../../mensa_placeholder_tile.dart';
+import '../../common/mensa_placeholder_tile.dart';
 import 'menu_item_tile.dart';
 
 class MenuExcludedSection extends StatelessWidget {
@@ -71,16 +70,6 @@ class MenuExcludedSection extends StatelessWidget {
                     isFavorite: isFavorite,
                     hasDivider: !isLastItem,
                     excludedLabelItemsName: labelText.map((e) => e.text[selectedLanguage]!).toList(),
-                    onTap: () {
-                      final initialPriceCategory = GetIt.I.get<MensaUserPreferencesService>().initialPriceCategory;
-                      LmuBottomSheet.showExtended(
-                        context,
-                        content: MenuDetailsPage(
-                          menuItemModel: dishModel,
-                          initialPriceCategory: initialPriceCategory,
-                        ),
-                      );
-                    },
                   );
                 },
               );

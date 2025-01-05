@@ -39,7 +39,10 @@ class CanteenLocalizationsEn extends CanteenLocalizations {
   String get mensaTypeStuCafe => 'StuCafé';
 
   @override
-  String get mensaTypeLounge => 'Louge';
+  String get mensaTypeLounge => 'StuLouge';
+
+  @override
+  String get mensaTypeEspressoBar => 'Espresso';
 
   @override
   String get alphabetically => 'Alphabetically';
@@ -69,7 +72,8 @@ class CanteenLocalizationsEn extends CanteenLocalizations {
   String get myTaste => 'My Taste';
 
   @override
-  String get myTasteDescription => 'Adjust and activate your taste profile to filter dishes by your preferences and allergies.';
+  String get myTasteDescription =>
+      'Adjust and activate your taste profile to filter dishes by your preferences and allergies.';
 
   @override
   String get presets => 'Presets';
@@ -81,7 +85,8 @@ class CanteenLocalizationsEn extends CanteenLocalizations {
   String get tastePreferences => 'I eat and tolerate';
 
   @override
-  String get myTasteFooter => 'The allergens and other labelling may change due to short-term recipe and menu changes that cannot be shown on the online menu. Please be sure to check the information on the daily counter displays in the restaurant. Trace information for allergy sufferers: Traces of allergens due to cross-contamination during preparation and serving as well as due to technologically unavoidable contamination of individual ingredients cannot be ruled out and are not labelled.';
+  String get myTasteFooter =>
+      'The allergens and other labelling may change due to short-term recipe and menu changes that cannot be shown on the online menu. Please be sure to check the information on the daily counter displays in the restaurant. Trace information for allergy sufferers: Traces of allergens due to cross-contamination during preparation and serving as well as due to technologically unavoidable contamination of individual ingredients cannot be ruled out and are not labelled.';
 
   @override
   String get noConnection => 'No connection';
@@ -140,8 +145,31 @@ class CanteenLocalizationsEn extends CanteenLocalizations {
   String get notYourTaste => 'Not your taste';
 
   @override
-  String get tasteProfilePlaceholderNotActive => 'Activate your taste profile to filter dishes by preferences and allergies.';
+  String get tasteProfilePlaceholderNotActive =>
+      'Activate your taste profile to filter dishes by preferences and allergies.';
 
   @override
-  String get tasteProfilePlaceholderActive => 'Adjust your taste profile to filter dishes by preferences and allergies.';
+  String get tasteProfilePlaceholderActive =>
+      'Adjust your taste profile to filter dishes by preferences and allergies.';
+
+  @override
+  String get temporaryClosed => 'Temporarily closed';
+
+  @override
+  String servingOpenDetails(String openingTime, String closingTime) {
+    return 'Serving open from $openingTime-$closingTime';
+  }
+
+  @override
+  String servingOpenUntil(String time) {
+    return 'Serving open until $time';
+  }
+
+  @override
+  String servingOpeningSoon(String time) {
+    return 'Serving open from $time';
+  }
+
+  @override
+  String get servingClosed => 'Serving closed';
 }
