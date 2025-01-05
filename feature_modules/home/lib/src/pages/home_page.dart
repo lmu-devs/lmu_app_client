@@ -3,9 +3,12 @@ import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
+import 'package:home/src/bloc/bloc.dart';
 import 'package:shared_api/settings.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../views/home_success_view.dart';
+import '../bloc/home_cubit.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -20,7 +23,15 @@ class HomePage extends StatelessWidget {
         },
         child: const LmuIcon(icon: LucideIcons.microwave, size: 28),
       ),
-      body: const HomeSuccessView(),
+      body: BlocBuilder<HomeCubit, HomeState>(
+        bloc: GetIt.I.get<HomeCubit>(),
+        builder: (context, state) {
+          if (state is HomeLoadSuccess) {
+            return HomeSuccessView(homeData: state.homeData);
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
+      ),
     );
   }
 }
