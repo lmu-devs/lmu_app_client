@@ -6,10 +6,15 @@ import 'models/wishlist_model.dart';
 import 'wishlist_api_endpoints.dart';
 
 class WishlistApiClient {
-  Future<List<WishlistModel>> getWishlistModels() async {
+  Future<List<WishlistModel>> getWishlistModels({int? id, String? userApiKey}) async {
     try {
       final response = await http.get(
-        Uri.parse(WishlistApiEndpoints.getWishlistModels()),
+        Uri.parse(WishlistApiEndpoints.getWishlistModels(id: id)),
+        headers: userApiKey == null
+            ? null
+            : {
+                "user-api-key": userApiKey,
+              },
       );
 
       if (response.statusCode == 200) {
@@ -18,10 +23,29 @@ class WishlistApiClient {
       } else if (response.statusCode == 404) {
         return [];
       } else {
-        throw Exception('Failed to load wishlist data');
+        throw Exception('Failed to load wishlist data - ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Failed to parse wishlist data: $e');
+    }
+  }
+
+  Future<bool> toggleWishlistLike({required int id, required String userApiKey}) async {
+    try {
+      final response = await http.post(
+        Uri.parse(WishlistApiEndpoints.toggleWishlistLike(id)),
+        headers: {
+          "user-api-key": userApiKey,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return response.body == 'true';
+      } else {
+        throw Exception('Failed to toggle favorite mensa - ${response.statusCode}');
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 }

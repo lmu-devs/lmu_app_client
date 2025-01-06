@@ -10,7 +10,7 @@ enum Status {
   open,
   closingSoon,
   closed,
-  temorarilyClosed,
+  temporarilyClosed,
 }
 
 extension WeekdayToString on MensaOpeningDetails {
@@ -103,7 +103,7 @@ extension CurrentStatusExtension on MensaModel {
     if (status.isClosed) {
       return Status.closed;
     } else if (status.isTemporaryClosed) {
-      return Status.temorarilyClosed;
+      return Status.temporarilyClosed;
     }
     return details?.status ?? Status.closed;
   }
@@ -138,7 +138,7 @@ extension StatusStylingExtension on Status {
           color: colors.warningColors.textColors.strongColors.base,
           text: localizations.openUntil(openingDetails.closingTime),
         );
-      case Status.temorarilyClosed:
+      case Status.temporarilyClosed:
         return (
           color: colors.dangerColors.textColors.strongColors.base,
           text: localizations.temporaryClosed,
@@ -174,7 +174,7 @@ extension StatusStylingExtension on Status {
           color: colors.warningColors.textColors.strongColors.base,
           text: localizations.openUntil(openingDetails.closingTime),
         );
-      case Status.temorarilyClosed:
+      case Status.temporarilyClosed:
         return (
           color: colors.dangerColors.textColors.strongColors.base,
           text: localizations.temporaryClosed,
@@ -210,7 +210,7 @@ extension StatusStylingExtension on Status {
           color: colors.warningColors.textColors.strongColors.base,
           text: localizations.servingOpenUntil(openingDetails.closingTime),
         );
-      case Status.temorarilyClosed:
+      case Status.temporarilyClosed:
         return (
           color: colors.dangerColors.textColors.strongColors.base,
           text: localizations.temporaryClosed,

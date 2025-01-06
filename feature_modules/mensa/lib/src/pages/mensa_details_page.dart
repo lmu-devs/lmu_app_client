@@ -1,12 +1,12 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
+import 'package:core/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../mensa.dart';
 import '../bloc/menu_cubit/cubit.dart';
-import '../extensions/likes_formatter_extension.dart';
 import '../extensions/opening_hours_extensions.dart';
 import '../services/menu_service.dart';
 import '../widgets/widgets.dart';

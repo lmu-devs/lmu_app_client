@@ -1,12 +1,12 @@
 import 'package:collection/collection.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/extensions.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../extensions/extensions.dart';
 import '../../../pages/menu_details_page.dart';
 import '../../../repository/api/models/menu/menu_item_model.dart';
 import '../../../services/mensa_user_preferences_service.dart';

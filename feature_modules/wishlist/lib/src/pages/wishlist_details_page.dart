@@ -1,12 +1,14 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/extensions.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:get_it/get_it.dart';
 
 import '../repository/api/api.dart';
+import '../services/services.dart';
 import '../util/wishlist_status.dart';
 import '../widgets/image_preview_dialog.dart';
 
@@ -65,7 +67,7 @@ class WishlistDetailsPage extends StatelessWidget {
       largeTitleTrailingWidget: Container(
         padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_4),
         decoration: BoxDecoration(
-          color: context.colors.neutralColors.backgroundColors.weakColors.active,
+          color: context.colors.neutralColors.backgroundColors.mediumColors.base,
           borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
         ),
         child: LmuText.bodySmall(wishlistModel.status.getValue(context)),
@@ -78,10 +80,27 @@ class WishlistDetailsPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
               child: Row(
                 children: [
-                  LmuButton(
-                    leadingIcon: LucideIcons.heart,
-                    title: "${wishlistModel.ratingModel.likeCount} Likes",
-                    emphasis: ButtonEmphasis.secondary,
+                  ValueListenableBuilder<List<String>>(
+                    valueListenable: GetIt.I<WishlistUserPreferenceService>().likedWishlistIdsNotifier,
+                    builder: (context, likedWishlistIds, child) {
+                      final isLiked = likedWishlistIds.contains(wishlistModel.id.toString());
+                      final calculatedLikes = wishlistModel.ratingModel.calculateLikeCount(isLiked);
+
+                      return LmuButton(
+                        leadingWidget: StarIcon(
+                          key: ValueKey(wishlistModel.id),
+                          isActive: isLiked,
+                          disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
+                        ),
+                        title: "$calculatedLikes Likes",
+                        emphasis: ButtonEmphasis.secondary,
+                        onTap: () async {
+                          await GetIt.I<WishlistUserPreferenceService>()
+                              .toggleLikedWishlistId(wishlistModel.id.toString());
+                          LmuVibrations.secondary();
+                        },
+                      );
+                    },
                   ),
                 ],
               ),

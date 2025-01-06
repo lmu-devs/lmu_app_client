@@ -44,8 +44,7 @@ class FeedbackLocalizationsEn extends FeedbackLocalizations {
   String get suggestionTitle => 'Suggest a Feature';
 
   @override
-  String get suggestionDescription =>
-      'No matter whether small, big, crazy, complicated, boring or visionary – share your ideas with us here.';
+  String get suggestionDescription => 'No matter whether small, big, crazy, complicated, boring or visionary – share your ideas with us here.';
 
   @override
   String get suggestionInputHint => 'I wish the app had ...';
