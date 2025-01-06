@@ -67,7 +67,7 @@ class WishlistDetailsPage extends StatelessWidget {
       largeTitleTrailingWidget: Container(
         padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_4),
         decoration: BoxDecoration(
-          color: context.colors.neutralColors.backgroundColors.weakColors.active,
+          color: context.colors.neutralColors.backgroundColors.mediumColors.base,
           borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
         ),
         child: LmuText.bodySmall(wishlistModel.status.getValue(context)),

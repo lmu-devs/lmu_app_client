@@ -13,7 +13,7 @@ part 'wishlist_routes.g.dart';
       path: '/wishlist',
       routes: <TypedGoRoute<GoRouteData>>[
         TypedGoRoute<WishlistDetailsRoute>(
-          path: 'details',
+          path: '/details',
         ),
       ],
     ),

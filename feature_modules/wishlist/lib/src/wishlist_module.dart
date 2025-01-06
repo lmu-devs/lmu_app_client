@@ -7,11 +7,7 @@ import 'repository/wishlist_repository.dart';
 import 'services/services.dart';
 
 class WishlistModule extends AppModule
-    with
-        LocalDependenciesProvidingAppModule,
-        NoticeableAppStartAppModule,
-        WaitingAppStartAppModule,
-        PrivateDataContainingAppModule {
+    with LocalDependenciesProvidingAppModule, WaitingAppStartAppModule, PrivateDataContainingAppModule {
   @override
   String get moduleName => 'WishlistModule';
 
@@ -29,13 +25,9 @@ class WishlistModule extends AppModule
   }
 
   @override
-  void onAppStartNotice() {
-    GetIt.I.get<WishlistCubit>().loadWishlistEntries();
-  }
-
-  @override
   Future onAppStartWaiting() async {
     await GetIt.I.get<WishlistUserPreferenceService>().init();
+    await GetIt.I.get<WishlistCubit>().loadWishlistEntries();
   }
 
   @override

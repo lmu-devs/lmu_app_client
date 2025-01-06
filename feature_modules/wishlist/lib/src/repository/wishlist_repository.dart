@@ -30,7 +30,6 @@ class ConnectedWishlistRepository implements WishlistRepository {
   @override
   Future<List<WishlistModel>> getWishlistEntries({int? id}) async {
     try {
-      await Future.delayed(const Duration(milliseconds: 200));
       final userApiKey = userService.userApiKey;
       final wishlistEntries = await wishlistApiClient.getWishlistModels(id: id, userApiKey: userApiKey);
       return wishlistEntries;
