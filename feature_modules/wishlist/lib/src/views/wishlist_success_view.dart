@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/extensions.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
@@ -14,8 +15,8 @@ import 'package:shared_api/feedback.dart';
 
 import '../repository/api/api.dart';
 import '../routes/routes.dart';
-import '../util/wishlist_notifier.dart';
-import '../util/wishlist_status.dart';
+import '../services/services.dart';
+import '../util/util.dart';
 
 class WishlistSuccessView extends StatelessWidget {
   const WishlistSuccessView({super.key, required this.wishlistModels});
@@ -54,11 +55,12 @@ class WishlistSuccessView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final wishlistNotifier = GetIt.I<WishlistNotifier>();
+    final wishlistUserPreferencesService = GetIt.I<WishlistUserPreferenceService>();
+    //final wishlistNotifier = GetIt.I<WishlistNotifier>();
 
-    return ValueListenableBuilder<List<WishlistModel>>(
-      valueListenable: wishlistNotifier,
-      builder: (context, wishlistModels, child) {
+    return ValueListenableBuilder<List<String>>(
+      valueListenable: wishlistUserPreferencesService.likedWishlistIdsNotifier,
+      builder: (context, likedWishlistIds, child) {
         final publicWishlistModels = wishlistModels.where((model) => model.status != WishlistStatus.hidden).toList()
           ..sort((a, b) {
             const statusOrder = {
@@ -160,7 +162,9 @@ class WishlistSuccessView extends StatelessWidget {
                                         ? [LmuInTextVisual.text(title: wishlistModel.status.getValue(context))]
                                         : [],
                                     subtitle: wishlistModel.descriptionShort,
-                                    trailingTitle: wishlistModel.ratingModel.likeCount.toString(),
+                                    trailingTitle: wishlistModel.ratingModel.calculateLikeCount(
+                                      likedWishlistIds.contains(wishlistModel.id.toString()),
+                                    ),
                                     maximizeLeadingTitleArea: true,
                                     actionType: LmuListItemAction.chevron,
                                     onTap: () => WishlistDetailsRoute(wishlistModel).go(context),

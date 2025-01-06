@@ -21,10 +21,10 @@ class FeedbackApiClient {
         final type = feedbackModel.type;
         print('${type[0].toUpperCase()}${type.substring(1).toLowerCase()} feedback successfully submitted');
       } else {
-        throw Exception('Failed to submit feedback');
+        throw Exception('Failed to submit feedback - ${response.statusCode}');
       }
     } catch (e) {
-      rethrow;
+      throw Exception('Failed to submit feedback - $e');
     }
   }
 }

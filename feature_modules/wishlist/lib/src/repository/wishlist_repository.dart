@@ -1,4 +1,5 @@
 import 'package:shared_api/user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/models/wishlist_model.dart';
 import 'api/wishlist_api_client.dart';
@@ -6,10 +7,15 @@ import 'api/wishlist_api_client.dart';
 abstract class WishlistRepository {
   Future<List<WishlistModel>> getWishlistEntries({int? id});
 
+  Future<List<String>?> getLikedWishlistIds();
+
   Future<bool> toggleWishlistLike(int id);
+
+  Future<void> saveLikedWishlistIds(List<String> ids);
+
+  Future<void> deleteAllLocalData();
 }
 
-/// WishlistRepository implementation for fetching wishlist data from the API
 class ConnectedWishlistRepository implements WishlistRepository {
   ConnectedWishlistRepository({
     required this.wishlistApiClient,
@@ -19,15 +25,26 @@ class ConnectedWishlistRepository implements WishlistRepository {
   final WishlistApiClient wishlistApiClient;
   final UserService userService;
 
-  /// Function to fetch mensa models from the API
+  static const String _likedWishlistIdsKey = 'liked_wishlist_ids_key';
+
   @override
   Future<List<WishlistModel>> getWishlistEntries({int? id}) async {
     try {
-      final wishlistEntries = await wishlistApiClient.getWishlistModels(id: id);
+      await Future.delayed(const Duration(milliseconds: 200));
+      final userApiKey = userService.userApiKey;
+      final wishlistEntries = await wishlistApiClient.getWishlistModels(id: id, userApiKey: userApiKey);
       return wishlistEntries;
     } catch (e) {
       rethrow;
     }
+  }
+
+  @override
+  Future<List<String>?> getLikedWishlistIds() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final favoriteMensaIds = prefs.getStringList(_likedWishlistIdsKey);
+    return favoriteMensaIds;
   }
 
   @override
@@ -40,5 +57,19 @@ class ConnectedWishlistRepository implements WishlistRepository {
       id: id,
       userApiKey: userApiKey,
     );
+  }
+
+  @override
+  Future<void> saveLikedWishlistIds(List<String> ids) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setStringList(_likedWishlistIdsKey, ids);
+  }
+
+  @override
+  Future<void> deleteAllLocalData() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.remove(_likedWishlistIdsKey);
   }
 }
