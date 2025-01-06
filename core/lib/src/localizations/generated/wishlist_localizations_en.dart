@@ -8,8 +8,7 @@ class WishlistLocalizationsEn extends WishlistLocalizations {
   String get tabTitle => 'Wishlist';
 
   @override
-  String get wishlistIntro =>
-      'The app is still on its way of reaching its full potential. Good things take time and thoughtful decisions. Help us figure out which features you miss the most.';
+  String get wishlistIntro => 'The app is still on its way of reaching its full potential. Good things take time and thoughtful decisions. Help us figure out which features you miss the most.';
 
   @override
   String get shareApp => 'Share App';
@@ -43,9 +42,6 @@ class WishlistLocalizationsEn extends WishlistLocalizations {
 
   @override
   String get wishlistStatusDone => 'Done';
-
-  @override
-  String get likeError => 'Your like couldn\'t be saved';
 
   @override
   String get testPrototype => 'Test Prototype';

@@ -56,8 +56,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get locationServiceDialogTitle => 'Location Services Disabled';
 
   @override
-  String get locationServiceDialogText =>
-      'To access all features of the app, please enable location services. This will allow us to provide you with more personalized and accurate information.';
+  String get locationServiceDialogText => 'To access all features of the app, please enable location services. This will allow us to provide you with more personalized and accurate information.';
 
   @override
   String get ok => 'OK';
@@ -66,8 +65,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get locationPermissionDialogTitle => 'Permission Required';
 
   @override
-  String get locationPermissionDialogText =>
-      'This feature needs location access. Open settings to grant the permission.';
+  String get locationPermissionDialogText => 'This feature needs location access. Open settings to grant the permission.';
 
   @override
   String get cancel => 'Cancel';

@@ -39,6 +39,7 @@ Map<String, dynamic> _$WishlistModelToJson(WishlistModel instance) =>
     };
 
 const _$WishlistStatusEnumMap = {
+  WishlistStatus.none: 'none',
   WishlistStatus.hidden: 'hidden',
   WishlistStatus.development: 'development',
   WishlistStatus.beta: 'beta',

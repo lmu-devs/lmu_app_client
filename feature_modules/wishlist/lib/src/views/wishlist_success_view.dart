@@ -56,7 +56,6 @@ class WishlistSuccessView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final wishlistUserPreferencesService = GetIt.I<WishlistUserPreferenceService>();
-    //final wishlistNotifier = GetIt.I<WishlistNotifier>();
 
     return ValueListenableBuilder<List<String>>(
       valueListenable: wishlistUserPreferencesService.likedWishlistIdsNotifier,
