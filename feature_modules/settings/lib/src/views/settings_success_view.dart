@@ -10,7 +10,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_api/feedback.dart';
 
 import '../pages/pages.dart';
-import '../routes/settings_routes.dart';
 
 class SettingsSuccessView extends StatelessWidget {
   SettingsSuccessView({super.key});
@@ -123,9 +122,9 @@ class SettingsSuccessView extends StatelessWidget {
                 LmuListItem.action(
                   title: settingLocalizations.licenses,
                   actionType: LmuListItemAction.chevron,
-                  onTap: () {
-                    const SettingsLicenceRoute().go(context);
-                  },
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const SettingsLicencePage()),
+                  ),
                 ),
               ],
             ),
