@@ -21,11 +21,13 @@ class TasteProfileLabelsSection extends StatefulWidget {
 class _TasteProfileLabelsSectionState extends State<TasteProfileLabelsSection> {
   late ValueNotifier<bool> _isActiveNotifier;
   late ValueNotifier<Set<String>> _excludedLabelsNotifier;
-  late ValueNotifier<Set<String>> _selectedPresetsNotifier;
+  late ValueNotifier<String?> _selectedPreferencePresetsNotifier;
+  late ValueNotifier<Set<String>> _selectedAllergiesPresetsNotifier;
   late Set<String> _initialExcludedLabels;
 
   late List<TasteProfileLabel> _sortedLabels;
-  late List<TasteProfilePreset> _presets;
+  late List<TasteProfilePreset> _preferencesPresets;
+  late List<TasteProfilePreset> _allergiesPresets;
 
   final tasteProfileService = GetIt.I.get<TasteProfileService>();
 
@@ -34,12 +36,14 @@ class _TasteProfileLabelsSectionState extends State<TasteProfileLabelsSection> {
     super.initState();
     _isActiveNotifier = tasteProfileService.isActiveNotifier;
     _excludedLabelsNotifier = tasteProfileService.excludedLabelsNotifier;
-    _selectedPresetsNotifier = tasteProfileService.selectedPresetsNotifier;
+    _selectedAllergiesPresetsNotifier = tasteProfileService.selectedAllergiesPresetsNotifier;
+    _selectedPreferencePresetsNotifier = tasteProfileService.selectedPreferencePresetNotifier;
     _initialExcludedLabels = Set<String>.from(_excludedLabelsNotifier.value);
 
     final tasteProfile = (GetIt.I.get<TasteProfileCubit>().state as TasteProfileLoadSuccess).tasteProfile;
     _sortedLabels = tasteProfile.sortedLabels;
-    _presets = tasteProfile.presets;
+    _preferencesPresets = tasteProfile.preferencesPresets;
+    _allergiesPresets = tasteProfile.allergiesPresets;
   }
 
   @override
@@ -58,24 +62,26 @@ class _TasteProfileLabelsSectionState extends State<TasteProfileLabelsSection> {
       sliver: SliverToBoxAdapter(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-          child: ValueListenableBuilder(
-            valueListenable: _excludedLabelsNotifier,
-            builder: (context, excludedLabels, _) {
-              return ScrollablePositionedList.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                padding: const EdgeInsets.only(top: LmuSizes.size_16),
-                itemCount: _sortedLabels.length,
-                shrinkWrap: true,
-                separatorBuilder: (context, index) =>
-                    SizedBox(height: index != _sortedLabels.length - 1 ? LmuSizes.size_16 : 0),
-                itemBuilder: (context, index) {
-                  final label = _sortedLabels[index];
-                  return Column(
-                    children: [
-                      LmuContentTile(
-                        content: [
-                          for (final item in label.items)
-                            LmuListItem.action(
+          child: ScrollablePositionedList.separated(
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.only(top: LmuSizes.size_16),
+            itemCount: _sortedLabels.length,
+            shrinkWrap: true,
+            separatorBuilder: (context, index) =>
+                SizedBox(height: index != _sortedLabels.length - 1 ? LmuSizes.size_16 : 0),
+            itemBuilder: (context, index) {
+              final label = _sortedLabels[index];
+              final sortedLabelItems = label.items.toList()
+                ..sort((a, b) => a.text[selectedLanguage]!.compareTo(b.text[selectedLanguage]!));
+              return Column(
+                children: [
+                  LmuContentTile(
+                    content: [
+                      for (final item in sortedLabelItems)
+                        ValueListenableBuilder(
+                          valueListenable: _excludedLabelsNotifier,
+                          builder: (context, excludedLabels, _) {
+                            return LmuListItem.action(
                               title: item.text[selectedLanguage],
                               leadingArea: LmuText.body(
                                 (item.emojiAbbreviation ?? "").isEmpty ? "😀" : item.emojiAbbreviation,
@@ -85,7 +91,6 @@ class _TasteProfileLabelsSectionState extends State<TasteProfileLabelsSection> {
                               initialValue: !excludedLabels.contains(item.enumName),
                               onChange: (value) {
                                 final newExcludedLabels = Set<String>.from(_excludedLabelsNotifier.value);
-                                final selectedPresets = Set<String>.from(_selectedPresetsNotifier.value);
 
                                 if (value) {
                                   newExcludedLabels.remove(item.enumName);
@@ -93,31 +98,51 @@ class _TasteProfileLabelsSectionState extends State<TasteProfileLabelsSection> {
                                   newExcludedLabels.add(item.enumName);
                                 }
 
-                                for (final preset in _presets) {
-                                  final presetExclude = Set<String>.from(preset.exclude);
-                                  final isPresetSelected = selectedPresets.contains(preset.enumName);
+                                final selectedAllergiesPresets =
+                                    Set<String>.from(_selectedAllergiesPresetsNotifier.value);
+                                for (final allergiesPreset in _allergiesPresets) {
+                                  final presetExclude = Set<String>.from(allergiesPreset.exclude);
+                                  final isPresetSelected = selectedAllergiesPresets.contains(allergiesPreset.enumName);
                                   final areAllPresetLabelsExcluded = newExcludedLabels.containsAll(presetExclude);
 
                                   if (isPresetSelected && !areAllPresetLabelsExcluded) {
-                                    selectedPresets.remove(preset.enumName);
+                                    selectedAllergiesPresets.remove(allergiesPreset.enumName);
                                   } else if (!isPresetSelected && areAllPresetLabelsExcluded) {
-                                    selectedPresets.add(preset.enumName);
+                                    selectedAllergiesPresets.add(allergiesPreset.enumName);
                                   }
                                 }
 
-                                _selectedPresetsNotifier.value = selectedPresets;
+                                _selectedAllergiesPresetsNotifier.value = selectedAllergiesPresets;
+
+                                List<TasteProfilePreset> allExcludedPreferenceLabels = [];
+                                for (final preferencesPreset in _preferencesPresets) {
+                                  final presetExclude = Set<String>.from(preferencesPreset.exclude);
+
+                                  final areAllPresetLabelsExcluded = newExcludedLabels.containsAll(presetExclude);
+
+                                  if (areAllPresetLabelsExcluded) {
+                                    allExcludedPreferenceLabels.add(preferencesPreset);
+                                  }
+                                }
+
+                                if (allExcludedPreferenceLabels.isNotEmpty) {
+                                  allExcludedPreferenceLabels
+                                      .sort((a, b) => b.exclude.length.compareTo(a.exclude.length));
+                                  final newSelectedPreferencePreset = allExcludedPreferenceLabels.first.enumName;
+                                  _selectedPreferencePresetsNotifier.value = newSelectedPreferencePreset;
+                                }
 
                                 _excludedLabelsNotifier.value = newExcludedLabels;
                                 if (!setEquals(_initialExcludedLabels, newExcludedLabels)) {
                                   if (!_isActiveNotifier.value) _isActiveNotifier.value = true;
                                 }
                               },
-                            ),
-                        ],
-                      ),
+                            );
+                          },
+                        ),
                     ],
-                  );
-                },
+                  ),
+                ],
               );
             },
           ),

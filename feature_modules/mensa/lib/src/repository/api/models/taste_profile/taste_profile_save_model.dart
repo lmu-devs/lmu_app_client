@@ -7,22 +7,25 @@ part 'taste_profile_save_model.g.dart';
 class TasteProfileStateModel extends Equatable {
   const TasteProfileStateModel({
     required this.isActive,
-    required this.selectedPresets,
+    required this.selectedAllergiesPresets,
+    required this.selectedPreferencePreset,
     required this.excludedLabels,
   });
 
   final bool isActive;
-  final Set<String> selectedPresets;
+  final Set<String> selectedAllergiesPresets;
+  final String? selectedPreferencePreset;
   final Set<String> excludedLabels;
 
   factory TasteProfileStateModel.empty() => const TasteProfileStateModel(
         isActive: false,
-        selectedPresets: {},
+        selectedAllergiesPresets: {},
+        selectedPreferencePreset: null,
         excludedLabels: {},
       );
 
   @override
-  List<Object?> get props => [isActive, selectedPresets, excludedLabels];
+  List<Object?> get props => [isActive, selectedAllergiesPresets, excludedLabels];
 
   factory TasteProfileStateModel.fromJson(Map<String, dynamic> json) => _$TasteProfileStateModelFromJson(json);
 
@@ -30,12 +33,14 @@ class TasteProfileStateModel extends Equatable {
 
   TasteProfileStateModel copyWith({
     bool? isActive,
-    Set<String>? selectedPresets,
+    Set<String>? selectedAllergiesPresets,
+    String? selectedPreferencePreset,
     Set<String>? excludedLabels,
   }) {
     return TasteProfileStateModel(
       isActive: isActive ?? this.isActive,
-      selectedPresets: selectedPresets ?? this.selectedPresets,
+      selectedAllergiesPresets: selectedAllergiesPresets ?? this.selectedAllergiesPresets,
+      selectedPreferencePreset: selectedPreferencePreset ?? this.selectedPreferencePreset,
       excludedLabels: excludedLabels ?? this.excludedLabels,
     );
   }

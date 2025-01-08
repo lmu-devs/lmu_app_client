@@ -7,8 +7,10 @@ part of 'taste_profile_model.dart';
 // **************************************************************************
 
 TasteProfileModel _$TasteProfileModelFromJson(Map<String, dynamic> json) => TasteProfileModel(
-      version: (json['version'] as num).toInt(),
-      presets: (json['presets'] as List<dynamic>)
+      allergiesPresets: (json['alergies_presets'] as List<dynamic>)
+          .map((e) => TasteProfilePreset.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      preferencesPresets: (json['preferences_presets'] as List<dynamic>)
           .map((e) => TasteProfilePreset.fromJson(e as Map<String, dynamic>))
           .toList(),
       sortedLabels: (json['sorted_labels'] as List<dynamic>)
@@ -17,7 +19,7 @@ TasteProfileModel _$TasteProfileModelFromJson(Map<String, dynamic> json) => Tast
     );
 
 Map<String, dynamic> _$TasteProfileModelToJson(TasteProfileModel instance) => <String, dynamic>{
-      'version': instance.version,
-      'presets': instance.presets,
+      'alergies_presets': instance.allergiesPresets,
+      'preferences_presets': instance.preferencesPresets,
       'sorted_labels': instance.sortedLabels,
     };

@@ -13,12 +13,15 @@ class TasteProfilePresetsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final selectedPresetNotifier = GetIt.I.get<TasteProfileService>().selectedPresetsNotifier;
+    final selectedAllergiesPresetsNotifier = GetIt.I.get<TasteProfileService>().selectedAllergiesPresetsNotifier;
+    final selectedPreferencePresetNotifier = GetIt.I.get<TasteProfileService>().selectedPreferencePresetNotifier;
+    final isActiveNotifier = GetIt.I.get<TasteProfileService>().isActiveNotifier;
     final excludedLabelsNotifier = GetIt.I.get<TasteProfileService>().excludedLabelsNotifier;
     final localizations = context.locals.canteen;
     final selectedLanguage = Localizations.localeOf(context).languageCode.toUpperCase();
     final tasteProfile = (GetIt.I.get<TasteProfileCubit>().state as TasteProfileLoadSuccess).tasteProfile;
-    final presets = tasteProfile.presets;
+    final preferencesPresets = tasteProfile.preferencesPresets;
+    final allergiesPresets = tasteProfile.allergiesPresets;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
@@ -27,42 +30,87 @@ class TasteProfilePresetsSection extends StatelessWidget {
         children: [
           LmuTileHeadline.base(title: localizations.presets),
           ValueListenableBuilder(
-            valueListenable: selectedPresetNotifier,
-            builder: (context, selectedPresets, _) {
+            valueListenable: selectedPreferencePresetNotifier,
+            builder: (context, selectedPreferencePreset, _) {
               return LmuContentTile(
                 content: [
-                  for (final preset in presets)
+                  for (final preferencesPreset in preferencesPresets)
                     LmuListItem.action(
-                      title: preset.text[selectedLanguage],
-                      leadingArea: LmuText.body(preset.emojiAbbreviation),
-                      actionType: LmuListItemAction.toggle,
+                      title: preferencesPreset.text[selectedLanguage],
+                      leadingArea: LmuText.body(preferencesPreset.emojiAbbreviation),
+                      actionType: LmuListItemAction.radio,
                       mainContentAlignment: MainContentAlignment.center,
-                      initialValue: selectedPresets.contains(preset.enumName),
+                      initialValue: selectedPreferencePreset?.contains(preferencesPreset.enumName),
                       onChange: (value) {
-                        final activeToggles = Set<String>.from(selectedPresetNotifier.value);
+                        final excludedLabels = Set<String>.from(excludedLabelsNotifier.value);
+                        final presetName = preferencesPreset.enumName;
+
+                        final otherLabels = preferencesPresets
+                            .where((element) => element.enumName != presetName)
+                            .map((e) => e.exclude)
+                            .expand((element) => element)
+                            .toSet();
+
+                        final labelsFromToggle =
+                            preferencesPresets.firstWhere((element) => element.enumName == presetName).exclude.toSet();
+
+                        excludedLabels.removeAll(otherLabels);
+
+                        excludedLabels.addAll(labelsFromToggle);
+
+                        if (excludedLabelsNotifier.value != excludedLabels) {
+                          excludedLabelsNotifier.value = excludedLabels;
+                          isActiveNotifier.value = true;
+                        }
+
+                        selectedPreferencePresetNotifier.value = preferencesPreset.enumName;
+                      },
+                    ),
+                ],
+              );
+            },
+          ),
+          const SizedBox(height: LmuSizes.size_16),
+          ValueListenableBuilder(
+            valueListenable: selectedAllergiesPresetsNotifier,
+            builder: (context, selectedAllergiesPresets, _) {
+              return LmuContentTile(
+                content: [
+                  for (final allergiesPreset in allergiesPresets)
+                    LmuListItem.action(
+                      title: allergiesPreset.text[selectedLanguage],
+                      leadingArea: LmuText.body(allergiesPreset.emojiAbbreviation),
+                      actionType: LmuListItemAction.checkbox,
+                      mainContentAlignment: MainContentAlignment.center,
+                      initialValue: selectedAllergiesPresets.contains(allergiesPreset.enumName),
+                      onChange: (value) {
+                        final activeToggles = Set<String>.from(selectedAllergiesPresets);
                         final excludedLabels = Set<String>.from(excludedLabelsNotifier.value);
 
                         final labelsFromToggles = activeToggles
-                            .map((e) => presets.firstWhere((element) => element.enumName == e).exclude)
+                            .map((e) => allergiesPresets.firstWhere((element) => element.enumName == e).exclude)
                             .expand((element) => element)
                             .toSet();
 
                         excludedLabels.removeAll(labelsFromToggles);
 
                         if (value) {
-                          activeToggles.add(preset.enumName);
+                          activeToggles.add(allergiesPreset.enumName);
                         } else {
-                          activeToggles.remove(preset.enumName);
+                          activeToggles.remove(allergiesPreset.enumName);
                         }
 
                         for (final activeToggle in activeToggles) {
                           final presetExclude =
-                              presets.firstWhere((element) => element.enumName == activeToggle).exclude;
+                              allergiesPresets.firstWhere((element) => element.enumName == activeToggle).exclude;
                           excludedLabels.addAll(presetExclude);
                         }
 
-                        excludedLabelsNotifier.value = excludedLabels;
-                        selectedPresetNotifier.value = activeToggles;
+                        if (excludedLabelsNotifier.value != excludedLabels) {
+                          excludedLabelsNotifier.value = excludedLabels;
+                          isActiveNotifier.value = true;
+                        }
+                        selectedAllergiesPresetsNotifier.value = activeToggles;
                       },
                     ),
                 ],
