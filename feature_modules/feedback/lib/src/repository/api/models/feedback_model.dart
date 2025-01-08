@@ -11,7 +11,6 @@ class FeedbackModel extends Equatable {
   final String screen;
   final List<String>? tags;
 
-
   const FeedbackModel({
     required this.type,
     required this.rating,
@@ -26,10 +25,10 @@ class FeedbackModel extends Equatable {
 
   @override
   List<Object?> get props => [
-    type,
-    rating,
-    message,
-    screen,
-    tags,
-  ];
+        type,
+        rating,
+        message,
+        screen,
+        tags,
+      ];
 }
