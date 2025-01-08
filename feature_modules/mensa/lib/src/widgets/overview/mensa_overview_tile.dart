@@ -53,7 +53,7 @@ class MensaOverviewTile extends StatelessWidget {
 
     final openingStatus = mensaModel.currentOpeningStatus;
     final openingStatusStyling =
-        openingStatus.openingStatus(context, openingDetails: mensaModel.openingHours.openingHours);
+        openingStatus.openingStatusShort(context, openingDetails: mensaModel.openingHours.openingHours);
     final imageUrl = mensaModel.images.isNotEmpty ? mensaModel.images.first.url : null;
 
     final distanceService = GetIt.I.get<MensaDistanceService>();

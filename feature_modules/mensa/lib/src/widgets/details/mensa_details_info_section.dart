@@ -79,6 +79,15 @@ class MensaDetailsInfoSection extends StatelessWidget {
     required List<MensaOpeningDetails> details,
     required AppLocalizations appLocalizations,
   }) {
+    if (details.isEmpty) {
+      return LmuListItem.base(
+        hasHorizontalPadding: false,
+        subtitle: title,
+        subtitleTextColor: titleColor,
+        mainContentAlignment: MainContentAlignment.center,
+        hasDivider: true,
+      );
+    }
     return LmuListDropdown(
       title: title,
       titleColor: titleColor,
