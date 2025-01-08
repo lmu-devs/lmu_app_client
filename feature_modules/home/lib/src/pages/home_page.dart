@@ -1,4 +1,5 @@
 import 'package:core/components.dart';
+import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
@@ -18,7 +19,7 @@ class HomePage extends StatelessWidget {
         onTap: () {
           GetIt.I.get<SettingsService>().navigateToSettings(context);
         },
-        child: const LmuIcon(icon: LucideIcons.microwave, size: 28),
+        child: const LmuIcon(icon: LucideIcons.settings, size: LmuIconSizes.medium),
       ),
       body: const HomeSuccessView(),
     );

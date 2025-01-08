@@ -16,11 +16,7 @@ pluginManagement {
         gradlePluginPortal()
 
         maven {
-            url = uri("https://api.mapbox.com/downloads/v1/")
-            credentials {
-                username = "mapbox"
-                password = providers.gradleProperty("MAPBOX_ACCESS_TOKEN").get()
-            }
+            url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
         }
     }
 
