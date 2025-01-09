@@ -9,24 +9,27 @@ class LmuInTextVisual extends StatelessWidget {
   final IconData? icon;
   final bool hasIconBox;
   final bool destructive;
-
+  final Color? color;
   const LmuInTextVisual._({
     Key? key,
     this.title,
     this.icon,
     this.hasIconBox = false,
     this.destructive = false,
+    this.color,
   }) : super(key: key);
 
   factory LmuInTextVisual.text({
     Key? key,
     required String title,
     bool destructive = false,
+    Color? color,
   }) =>
       LmuInTextVisual._(
         key: key,
         title: title,
         destructive: destructive,
+        color: color,
       );
 
   factory LmuInTextVisual.iconBox({
@@ -58,11 +61,11 @@ class LmuInTextVisual extends StatelessWidget {
 
     final backgroundColor = destructive
         ? context.colors.dangerColors.backgroundColors.weakColors.base
-        : context.colors.neutralColors.backgroundColors.mediumColors.base;
+        : color?.withOpacity(0.1) ?? context.colors.neutralColors.backgroundColors.mediumColors.base;
 
     final textColor = destructive
         ? context.colors.dangerColors.textColors.strongColors.base
-        : context.colors.neutralColors.textColors.mediumColors.base;
+        : color ?? context.colors.neutralColors.textColors.mediumColors.base;
 
     return Container(
       height: LmuSizes.size_20,
