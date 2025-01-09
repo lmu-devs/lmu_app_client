@@ -26,8 +26,9 @@ class HomeLoadingView extends StatelessWidget {
                     vertical: LmuSizes.size_16,
                   ),
                   child: LmuContentTile(
-                    content: List.generate(3, (index) => 
-                      const LmuListItemLoading(
+                    content: List.generate(
+                      3,
+                      (index) => const LmuListItemLoading(
                         titleLength: 2,
                         action: LmuListItemAction.toggle,
                       ),

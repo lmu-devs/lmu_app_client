@@ -20,9 +20,9 @@ class LmuUnderlineTabBarItem extends StatelessWidget {
       children: [
         LmuText.bodySmall(
           title,
-          color: isActive 
-            ? context.colors.brandColors.textColors.strongColors.base
-            : context.colors.neutralColors.textColors.mediumColors.base,
+          color: isActive
+              ? context.colors.brandColors.textColors.strongColors.base
+              : context.colors.neutralColors.textColors.mediumColors.base,
           weight: isActive ? FontWeight.bold : FontWeight.normal,
         ),
         const SizedBox(height: LmuSizes.size_8),
@@ -30,9 +30,7 @@ class LmuUnderlineTabBarItem extends StatelessWidget {
           duration: Durations.short4,
           height: 2,
           width: double.infinity,
-          color: isActive 
-            ? context.colors.brandColors.textColors.strongColors.base
-            : Colors.transparent,
+          color: isActive ? context.colors.brandColors.textColors.strongColors.base : Colors.transparent,
         ),
       ],
     );

@@ -29,8 +29,7 @@ class MenuItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-          bottom: hasDivider ? LmuSizes.size_12 : LmuSizes.none),
+      padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.size_12 : LmuSizes.none),
       child: GestureDetector(
         onTap: () {
           LmuBottomSheet.showExtended(
@@ -67,11 +66,9 @@ class MenuItemTile extends StatelessWidget {
                               ),
                             ],
                           ),
-                          if (excludedLabelItemsName != null &&
-                              excludedLabelItemsName!.isNotEmpty)
+                          if (excludedLabelItemsName != null && excludedLabelItemsName!.isNotEmpty)
                             Padding(
-                              padding:
-                                  const EdgeInsets.only(top: LmuSizes.size_8),
+                              padding: const EdgeInsets.only(top: LmuSizes.size_8),
                               child: Wrap(
                                 spacing: LmuSizes.size_4,
                                 runSpacing: LmuSizes.size_4,
@@ -97,17 +94,14 @@ class MenuItemTile extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: LmuSizes.size_2),
+                            padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_2),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 LmuText.bodyXSmall(
-                                  menuItemModel.ratingModel
-                                      .calculateLikeCount(isFavorite),
-                                  color: context.colors.neutralColors.textColors
-                                      .weakColors.base,
+                                  menuItemModel.ratingModel.calculateLikeCount(isFavorite),
+                                  color: context.colors.neutralColors.textColors.weakColors.base,
                                 ),
                                 const SizedBox(width: LmuSizes.size_4),
                                 StarIcon(isActive: isFavorite),
@@ -116,13 +110,11 @@ class MenuItemTile extends StatelessWidget {
                           ),
                           const SizedBox(height: LmuSizes.size_4),
                           ConstrainedBox(
-                            constraints: const BoxConstraints(
-                                minWidth: LmuSizes.size_20),
+                            constraints: const BoxConstraints(minWidth: LmuSizes.size_20),
                             child: Center(
                               child: LmuText.bodyXSmall(
                                 menuItemModel.priceSimple,
-                                color: context.colors.neutralColors.textColors
-                                    .weakColors.base,
+                                color: context.colors.neutralColors.textColors.weakColors.base,
                               ),
                             ),
                           ),

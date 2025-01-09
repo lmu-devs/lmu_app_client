@@ -14,7 +14,6 @@ class TasteProfileCubit extends Cubit<TasteProfileState> {
       final tasteProfile = await _mensaRepository.getTasteProfileContent();
       emit(TasteProfileLoadSuccess(tasteProfile));
     } catch (e) {
-      print('Error loading taste profile: $e');
       emit(TasteProfileLoadFailure());
     }
   }

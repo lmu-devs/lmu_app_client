@@ -1,3 +1,4 @@
+import 'package:core/logging.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
@@ -11,6 +12,7 @@ class MensaUserPreferencesService {
   MensaUserPreferencesService();
 
   final _mensaRepository = GetIt.I.get<MensaRepository>();
+  final _appLogger = AppLogger();
 
   Future init() {
     return Future.wait([
@@ -22,16 +24,17 @@ class MensaUserPreferencesService {
   }
 
   Future reset() {
+    _appLogger.logMessage('[MensaUserPreferencesService]: Resetting user preferences');
     return Future.wait([
       _mensaRepository.deleteAllLocalData(),
-      updateSortOption(SortOption.alphabetically),
+      updateSortOption(SortOption.rating),
       updatePriceCategory(PriceCategory.students),
       Future.value(_favoriteMensaIdsNotifier.value = []),
       Future.value(_favoriteDishIdsNotifier.value = []),
     ]);
   }
 
-  SortOption _initialSortOption = SortOption.alphabetically;
+  SortOption _initialSortOption = SortOption.rating;
   SortOption get initialSortOption => _initialSortOption;
 
   PriceCategory _initialPriceCategory = PriceCategory.students;
@@ -46,6 +49,7 @@ class MensaUserPreferencesService {
   Future<void> initFavoriteMensaIds() async {
     final favoriteMensaIds = await _mensaRepository.getFavoriteMensaIds() ?? [];
     _favoriteMensaIdsNotifier.value = favoriteMensaIds;
+    _appLogger.logMessage('[MensaUserPreferencesService]: Local favorite mensa ids: $favoriteMensaIds');
 
     final mensaCubit = GetIt.I<MensaCubit>();
     final mensaCubitState = mensaCubit.state;
@@ -53,30 +57,21 @@ class MensaUserPreferencesService {
       if (state is MensaLoadSuccess) {
         final retrievedFavoriteMensaIds =
             state.mensaModels.where((mensa) => mensa.ratingModel.isLiked).map((mensa) => mensa.canteenId).toList();
-        print("retrievedFavoriteMensaIds: $retrievedFavoriteMensaIds");
+        _appLogger
+            .logMessage('[MensaUserPreferencesService]: Retrieved favorite mensa ids: $retrievedFavoriteMensaIds');
 
         final unsyncedFavoriteMensaIds =
             favoriteMensaIds.where((id) => !retrievedFavoriteMensaIds.contains(id)).toList();
-        print("unsyncedFavoriteMensaIds: $unsyncedFavoriteMensaIds");
 
         final unsyncedUnfavoriteMensaIds =
             retrievedFavoriteMensaIds.where((id) => !favoriteMensaIds.contains(id)).toList();
-        print("unsyncedUnfavoriteMensaIds: $unsyncedUnfavoriteMensaIds");
 
         final missingSyncMensaIds = unsyncedFavoriteMensaIds + unsyncedUnfavoriteMensaIds;
         for (final missingSyncMensaId in missingSyncMensaIds) {
-          await _toggleMissingMensaIds(missingSyncMensaId);
+          await _mensaRepository.toggleFavoriteMensaId(missingSyncMensaId);
         }
       }
     });
-  }
-
-  Future<void> _toggleMissingMensaIds(String mensaId) async {
-    try {
-      await _mensaRepository.toggleFavoriteMensaId(mensaId);
-    } catch (e) {
-      print('Failed to sync missing favorite mensa $mensaId: $e');
-    }
   }
 
   Future<void> toggleFavoriteMensaId(String mensaId) async {
@@ -91,36 +86,27 @@ class MensaUserPreferencesService {
     _favoriteMensaIdsNotifier.value = favoriteMensaIds;
     await _mensaRepository.saveFavoriteMensaIds(favoriteMensaIds);
 
-    try {
-      await _mensaRepository.toggleFavoriteMensaId(mensaId);
-    } catch (e) {
-      print('Failed to sync toggled favorite mensa $mensaId: $e');
-    }
+    await _mensaRepository.toggleFavoriteMensaId(mensaId);
   }
 
   Future<void> initFavoriteDishIds() async {
     final favoriteDishIds = await _mensaRepository.getFavoriteDishIds() ?? [];
     _favoriteDishIdsNotifier.value = favoriteDishIds;
+    _appLogger.logMessage('[MensaUserPreferencesService]: Local favorite dish ids: $favoriteDishIds');
 
     final unsyncedFavoriteDishIds = await _mensaRepository.getUnsyncedFavoriteDishIds();
-    print("unsyncedFavoriteDishIds: $unsyncedFavoriteDishIds");
+    _appLogger.logMessage('[MensaUserPreferencesService]: Unsynced favorite dish ids: $unsyncedFavoriteDishIds');
 
     for (final unsyncedFavoriteDishId in unsyncedFavoriteDishIds) {
-      try {
-        await _mensaRepository.toggleFavoriteDishId(unsyncedFavoriteDishId);
-        await _mensaRepository.removeUnsyncedFavoriteDishId(unsyncedFavoriteDishId);
-      } catch (e) {
-        print('Failed to sync unsynced favorite dish $unsyncedFavoriteDishId: $e');
-      }
+      await _mensaRepository.toggleFavoriteDishId(unsyncedFavoriteDishId);
+      await _mensaRepository.removeUnsyncedFavoriteDishId(unsyncedFavoriteDishId);
     }
   }
 
   Future<void> toggleFavoriteDishId(String dishId) async {
     final favoriteDishIds = List<String>.from(_favoriteDishIdsNotifier.value);
 
-    final isLiked = favoriteDishIds.contains(dishId);
-
-    if (isLiked) {
+    if (favoriteDishIds.contains(dishId)) {
       favoriteDishIds.remove(dishId);
     } else {
       favoriteDishIds.insert(0, dishId);
@@ -132,9 +118,7 @@ class MensaUserPreferencesService {
     try {
       await _mensaRepository.toggleFavoriteDishId(dishId);
     } catch (e) {
-      print('Failed to sync toggled favorite dish $dishId: $e');
-
-      await _mensaRepository.saveUnsyncedFavoriteDishId(dishId, !isLiked);
+      await _mensaRepository.saveUnsyncedFavoriteDishId(dishId);
     }
   }
 
