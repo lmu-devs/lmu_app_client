@@ -14,8 +14,8 @@ import '../repository/api/models/menu/price_model.dart';
 import '../services/mensa_user_preferences_service.dart';
 import '../services/taste_profile_service.dart';
 
-class MenuDetailsPage extends StatefulWidget {
-  const MenuDetailsPage({
+class DishDetailsPage extends StatefulWidget {
+  const DishDetailsPage({
     super.key,
     required this.menuItemModel,
   });
@@ -23,10 +23,10 @@ class MenuDetailsPage extends StatefulWidget {
   final MenuItemModel menuItemModel;
 
   @override
-  State<MenuDetailsPage> createState() => _MenuDetailsPageState();
+  State<DishDetailsPage> createState() => _DishDetailsPageState();
 }
 
-class _MenuDetailsPageState extends State<MenuDetailsPage> {
+class _DishDetailsPageState extends State<DishDetailsPage> {
   late ValueNotifier<PriceCategory> _selectedPriceCategoryNotifier;
 
   final _tasteProfileService = GetIt.I<TasteProfileService>();
@@ -35,7 +35,8 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
   @override
   void initState() {
     super.initState();
-    _selectedPriceCategoryNotifier = ValueNotifier(_userPreferenceService.initialPriceCategory);
+    _selectedPriceCategoryNotifier =
+        ValueNotifier(_userPreferenceService.initialPriceCategory);
   }
 
   MenuItemModel get _menuItemModel => widget.menuItemModel;
@@ -56,38 +57,45 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
               Row(
                 children: [
                   ValueListenableBuilder(
-                    valueListenable: _userPreferenceService.favoriteDishIdsNotifier,
+                    valueListenable:
+                        _userPreferenceService.favoriteDishIdsNotifier,
                     builder: (context, favoriteDishIds, _) {
-                      final isFavorite = favoriteDishIds.contains(_menuItemModel.id);
+                      final isFavorite =
+                          favoriteDishIds.contains(_menuItemModel.id);
                       return LmuButton(
                         leadingWidget: StarIcon(isActive: isFavorite),
-                        title: "${_menuItemModel.ratingModel.calculateLikeCount(isFavorite)} Likes",
+                        title:
+                            "${_menuItemModel.ratingModel.calculateLikeCount(isFavorite)} Likes",
                         emphasis: ButtonEmphasis.secondary,
-                        onTap: () => _userPreferenceService.toggleFavoriteDishId(_menuItemModel.id),
+                        onTap: () => _userPreferenceService
+                            .toggleFavoriteDishId(_menuItemModel.id),
                       );
                     },
                   ),
                   const SizedBox(width: LmuSizes.size_8),
-                  const LmuButton(
-                    title: "Erinnere mich",
-                    trailingIcon: LucideIcons.bell,
-                    emphasis: ButtonEmphasis.secondary,
-                  ),
-                  const SizedBox(width: LmuSizes.size_8),
-                  const LmuButton(
-                    title: "Teilen",
-                    emphasis: ButtonEmphasis.secondary,
-                  ),
+                  // const LmuButton(
+                  //   title: "Erinnere mich",
+                  //   trailingIcon: LucideIcons.bell,
+                  //   emphasis: ButtonEmphasis.secondary,
+                  // ),
+                  // const SizedBox(width: LmuSizes.size_8),
+                  // const LmuButton(
+                  //   title: "Teilen",
+                  //   emphasis: ButtonEmphasis.secondary,
+                  // ),
                 ],
               ),
               const SizedBox(height: LmuSizes.size_32),
-              LmuTileHeadline.base(title: "Inhalte"),
+              LmuTileHeadline.base(title: context.locals.canteen.ingredients),
               LmuContentTile(
                 content: _menuItemModel.labels.map(
                   (e) {
-                    final labelItem = _tasteProfileService.getLabelItemFromId(e);
+                    final labelItem =
+                        _tasteProfileService.getLabelItemFromId(e);
                     if (labelItem == null) return const SizedBox.shrink();
-                    final emoji = labelItem.emojiAbbreviation?.isEmpty ?? true ? "😀" : labelItem.emojiAbbreviation;
+                    final emoji = labelItem.emojiAbbreviation?.isEmpty ?? true
+                        ? "😀"
+                        : labelItem.emojiAbbreviation;
                     return LmuListItem.base(
                       leadingArea: LmuText.h1(emoji),
                       title: labelItem.text,
@@ -96,7 +104,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
                 ).toList(),
               ),
               const SizedBox(height: LmuSizes.size_32),
-              LmuTileHeadline.base(title: "Price"),
+              LmuTileHeadline.base(title: context.locals.canteen.prices),
               ValueListenableBuilder(
                   valueListenable: _selectedPriceCategoryNotifier,
                   builder: (context, selectedPriceCategory, _) {
@@ -104,7 +112,8 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
                       (element) => element.category == selectedPriceCategory,
                     );
 
-                    final priceString = "${price.pricePerUnit} € je ${price.unit}";
+                    final priceString =
+                        "${price.pricePerUnit} € je ${price.unit}";
 
                     return LmuContentTile(
                       content: [
@@ -114,7 +123,8 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
                             trailingTitle: '${price.basePrice} €',
                           ),
                         LmuListItem.base(
-                          title: selectedPriceCategory.name(context.locals.canteen),
+                          title: selectedPriceCategory
+                              .name(context.locals.canteen),
                           trailingTitle: priceString,
                           trailingTitleInTextVisuals: [
                             LmuInTextVisual.iconBox(
@@ -126,7 +136,8 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
                               context,
                               content: _PriceCategoryActionSheetContent(
                                 priceModels: _menuItemModel.prices,
-                                priceCategoryNotifier: _selectedPriceCategoryNotifier,
+                                priceCategoryNotifier:
+                                    _selectedPriceCategoryNotifier,
                               ),
                             );
                           },
@@ -201,7 +212,9 @@ class _PriceCategoryActionSheetContent extends StatelessWidget {
                         mainContentAlignment: MainContentAlignment.center,
                         onTap: () async {
                           priceCategoryNotifier.value = category;
-                          await GetIt.I.get<MensaUserPreferencesService>().updatePriceCategory(category);
+                          await GetIt.I
+                              .get<MensaUserPreferencesService>()
+                              .updatePriceCategory(category);
                           Future.delayed(
                             const Duration(milliseconds: 100),
                             () {
@@ -210,7 +223,8 @@ class _PriceCategoryActionSheetContent extends StatelessWidget {
                           );
                         },
                       ),
-                      if (priceModel != priceModels.last) const SizedBox(height: LmuSizes.size_8),
+                      if (priceModel != priceModels.last)
+                        const SizedBox(height: LmuSizes.size_8),
                     ],
                   );
                 },
