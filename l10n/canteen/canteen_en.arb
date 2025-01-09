@@ -191,9 +191,13 @@
   "@bistroInfo": {
     "description": "Longer description of a bistro"
   },
-  "cafeInfo": "under 100 seats, focused on beverages and small snacks.",
+  "cafeInfo": "Under 100 seats, focused on beverages and snacks.",
   "@cafeInfo": {
     "description": "Longer description of a cafe"
+  },
+  "espressoBarInfo": "Small and cozy coffee bar, specialized in coffee and snacks.",
+  "@espressoBarInfo": {
+    "description": "Longer description of a espresso bar"
   },
   "notYourTaste": "Not your taste",
   "@notYourTaste": {
@@ -248,5 +252,35 @@
   "servingClosed": "Serving closed",
   "@servingClosed": {
     "description": "The state of being closed"
+  },
+  "ingredients": "Ingredients",
+  "@ingredients": {
+    "description": "Ingredients"
+  },
+  "prices": "Prices",
+  "@prices": {
+    "description": "Prices"
+  },
+  "basePrice": "Base Price",
+  "@basePrice": {
+    "description": "Base Price"
+  },
+  "simplePrice": "Simple Price",
+  "@simplePrice": {
+    "description": "Simple Price"
+  },
+  "pricePerUnit": "{price} € per {unit}",
+  "@pricePerUnit": {
+    "description": "Price per Unit",
+    "placeholders": {
+      "price": {
+        "type": "String",
+        "example": "1.50"
+      },
+      "unit": {
+        "type": "String",
+        "example": "100g"
+      }
+    }
   }
 }

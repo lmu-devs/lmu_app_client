@@ -14,6 +14,7 @@ class LmuRadioAction extends StatelessWidget {
   Widget build(BuildContext context) {
     final enabledColor = context.colors.brandColors.backgroundColors.nonInvertableColors.base;
     final disabledColor = context.colors.neutralColors.backgroundColors.strongColors.pressed!;
+    final backgroundColor = context.colors.neutralColors.backgroundColors.base;
     const animationDuration = Duration(milliseconds: 80);
 
     return AnimatedContainer(
@@ -22,6 +23,7 @@ class LmuRadioAction extends StatelessWidget {
       width: LmuSizes.size_24,
       height: LmuSizes.size_24,
       decoration: BoxDecoration(
+        color: backgroundColor,
         border: Border.all(
           color: isActive ? enabledColor : disabledColor,
           width: LmuSizes.size_2,
