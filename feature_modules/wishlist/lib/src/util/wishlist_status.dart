@@ -2,6 +2,7 @@ import 'package:core/localizations.dart';
 import 'package:flutter/cupertino.dart';
 
 enum WishlistStatus {
+  none,
   hidden,
   development,
   beta,
@@ -11,6 +12,8 @@ enum WishlistStatus {
 extension WishlistStatusExtension on WishlistStatus {
   String getValue(BuildContext context) {
     switch (this) {
+      case WishlistStatus.none:
+        return '';
       case WishlistStatus.hidden:
         return context.locals.wishlist.wishlistStatusHidden;
       case WishlistStatus.development:
@@ -26,6 +29,8 @@ extension WishlistStatusExtension on WishlistStatus {
 extension WishlistStatusMapper on WishlistStatus {
   static WishlistStatus fromString(String status) {
     switch (status) {
+      case "NONE":
+        return WishlistStatus.none;
       case "HIDDEN":
         return WishlistStatus.hidden;
       case "DEVELOPMENT":

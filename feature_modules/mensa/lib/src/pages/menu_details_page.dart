@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/extensions.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,6 @@ import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-import '../extensions/likes_formatter_extension.dart';
 import '../repository/api/models/menu/menu_item_model.dart';
 import '../repository/api/models/menu/price_category.dart';
 import '../repository/api/models/menu/price_model.dart';
@@ -42,8 +42,6 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final selectedLanguage = Localizations.localeOf(context).languageCode.toUpperCase();
-
     return LmuMasterAppBar(
       largeTitle: _menuItemModel.title,
       customScrollController: ModalScrollController.of(context),
@@ -92,7 +90,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
                     final emoji = labelItem.emojiAbbreviation?.isEmpty ?? true ? "😀" : labelItem.emojiAbbreviation;
                     return LmuListItem.base(
                       leadingArea: LmuText.h1(emoji),
-                      title: labelItem.text[selectedLanguage],
+                      title: labelItem.text,
                     );
                   },
                 ).toList(),

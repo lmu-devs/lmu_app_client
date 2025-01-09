@@ -95,9 +95,10 @@ class _SaveButtonState extends State<_SaveButton> {
               increaseTouchTarget: true,
               onTap: () {
                 tasteProfileService.saveTasteProfileState(
-                  selectedPresets: tasteProfileService.selectedPresetsNotifier.value,
+                  selectedAllergiesPresets: tasteProfileService.selectedAllergiesPresetsNotifier.value,
                   excludedLabels: _excludedLabelsNotifier.value,
                   isActive: _isActiveNotifier.value,
+                  selectedPreferencePreset: tasteProfileService.selectedPreferencePresetNotifier.value,
                 );
                 Navigator.of(context, rootNavigator: true).pop();
               },

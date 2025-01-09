@@ -1,6 +1,5 @@
 import 'package:core/module.dart';
 import 'package:get_it/get_it.dart';
-import 'package:shared_api/user.dart';
 
 import 'bloc/bloc.dart';
 import 'public_api/default_mensa_public_api.dart';
@@ -23,15 +22,15 @@ class MensaModule extends AppModule
     GetIt.I.registerSingleton<MensaRepository>(
       ConnectedMensaRepository(
         mensaApiClient: MensaApiClient(),
-        userService: GetIt.I.get<UserService>(),
       ),
     );
-    GetIt.I.registerSingleton<MensaCubit>(MensaCubit());
+    GetIt.I.registerSingleton<MensaCubit>(MensaCubit(), dispose: (srv) => srv.close());
     GetIt.I.registerSingleton<TasteProfileService>(TasteProfileService());
-    GetIt.I.registerSingleton<TasteProfileCubit>(TasteProfileCubit());
+    GetIt.I.registerSingleton<TasteProfileCubit>(TasteProfileCubit(), dispose: (srv) => srv.close());
     GetIt.I.registerSingleton<MensaUserPreferencesService>(MensaUserPreferencesService());
-    GetIt.I.registerSingleton<MenuService>(MenuService());
-    GetIt.I.registerSingleton<MensaDistanceService>(MensaDistanceService());
+    GetIt.I.registerSingleton<MenuService>(MenuService(), dispose: (srv) => srv.dispose());
+    GetIt.I.registerSingleton<MensaDistanceService>(MensaDistanceService(), dispose: (srv) => srv.dispose());
+    GetIt.I.registerSingleton<MensaStatusUpdateService>(MensaStatusUpdateService(), dispose: (srv) => srv.dispose());
   }
 
   @override
@@ -45,6 +44,7 @@ class MensaModule extends AppModule
     GetIt.I.get<TasteProfileCubit>().loadTasteProfile();
     GetIt.I.get<TasteProfileService>().init();
     GetIt.I.get<MensaDistanceService>().init();
+    GetIt.I.get<MensaStatusUpdateService>().init();
   }
 
   @override

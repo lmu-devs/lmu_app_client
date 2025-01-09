@@ -14,7 +14,7 @@ dependencies:
   go_router: ^14.3.0
   go_router_builder: ^2.7.1
   provider: ^6.1.2
-  mapbox_maps_flutter: ^2.4.0
+  mapbox_maps_flutter: ^2.5.0
   flutter_svg: ^2.0.9
   flutter_lucide: ^1.2.0
   shared_preferences: ^2.0.7

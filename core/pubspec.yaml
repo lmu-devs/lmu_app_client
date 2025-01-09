@@ -33,6 +33,7 @@ dependencies:
   nested_scroll_view_plus: ^2.0.0
   cached_network_image: ^3.4.1
   flutter_svg: ^2.0.16
+  http: ^1.2.2
 
 dev_dependencies:
   flutter_test:
@@ -42,6 +43,8 @@ dev_dependencies:
 
 flutter:
   generate: true
+  assets:
+    - lib/assets/
   fonts:
     - family: Inter
       fonts:

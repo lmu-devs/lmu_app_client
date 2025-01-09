@@ -54,25 +54,25 @@ class MenuContentView extends StatelessWidget {
               final excludedLabelItemsName =
                   isActive ? excludedLabelItems.map((labelItem) => labelItem.enumName).toSet() : <String>{};
 
-              final filteredMenuitems = List.of(menuItems);
-              filteredMenuitems.removeWhere(
+              final filteredMenuItems = List.of(menuItems);
+              filteredMenuItems.removeWhere(
                 (itemModel) => itemModel.labels.toSet().intersection(excludedLabelItemsName).isNotEmpty,
               );
 
               final excludedMenuItems =
-                  isActive ? menuItems.where((item) => !filteredMenuitems.contains(item)).toList() : <MenuItemModel>[];
+                  isActive ? menuItems.where((item) => !filteredMenuItems.contains(item)).toList() : <MenuItemModel>[];
 
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(height: LmuSizes.size_24),
-                  MenuFilteredSection(filteredMenuitems: filteredMenuitems),
+                  MenuFilteredSection(filteredMenuitems: filteredMenuItems),
                   MenuExcludedSection(
                     excludedMenuItems: excludedMenuItems,
                     excludedLabelItems: excludedLabelItems,
                     isActive: isActive,
                   ),
-                  const SizedBox(height: LmuSizes.size_32),
+                  const SizedBox(height: LmuSizes.size_96),
                 ],
               );
             },

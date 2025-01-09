@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:shared_api/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/mensa_api_client.dart';
@@ -54,11 +53,9 @@ abstract class MensaRepository {
 class ConnectedMensaRepository implements MensaRepository {
   ConnectedMensaRepository({
     required this.mensaApiClient,
-    required this.userService,
   });
 
   final MensaApiClient mensaApiClient;
-  final UserService userService;
 
   static const String _mensaModelsCacheKey = 'mensa_models_cache_key';
 
@@ -76,12 +73,11 @@ class ConnectedMensaRepository implements MensaRepository {
   /// Function to fetch mensa models from the API, [forceRefresh] parameter can be used to ignore the cache
   @override
   Future<List<MensaModel>> getMensaModels({bool forceRefresh = false}) async {
+    print("Menssssa");
     final prefs = await SharedPreferences.getInstance();
 
     try {
-      final userApiKey = userService.userApiKey;
-
-      final mensaModels = await mensaApiClient.getMensaModels(userApiKey: userApiKey);
+      final mensaModels = await mensaApiClient.getMensaModels();
       final jsonResponse = json.encode(mensaModels.map((mensa) => mensa.toJson()).toList());
 
       await prefs.setString(_mensaModelsCacheKey, jsonResponse);
@@ -107,11 +103,7 @@ class ConnectedMensaRepository implements MensaRepository {
 
   @override
   Future<bool> toggleFavoriteMensaId(String mensaId) async {
-    final userApiKey = userService.userApiKey;
-
-    if (userApiKey == null) throw Exception('User api key is null');
-
-    return await mensaApiClient.toggleFavoriteMensaId(mensaId, userApiKey: userApiKey);
+    return await mensaApiClient.toggleFavoriteMensaId(mensaId);
   }
 
   @override
@@ -131,11 +123,7 @@ class ConnectedMensaRepository implements MensaRepository {
 
   @override
   Future<bool> toggleFavoriteDishId(String mensaId) async {
-    final userApiKey = userService.userApiKey;
-
-    if (userApiKey == null) throw Exception('User api key is null');
-
-    return await mensaApiClient.toggleFavoriteDishId(mensaId, userApiKey: userApiKey);
+    return await mensaApiClient.toggleFavoriteDishId(mensaId);
   }
 
   @override
@@ -190,10 +178,9 @@ class ConnectedMensaRepository implements MensaRepository {
   Future<List<MenuDayModel>> getMenuDayForMensa(String canteenId) async {
     final prefs = await SharedPreferences.getInstance();
     final key = '$_menuBaseKey$canteenId';
-    final userApiKey = userService.userApiKey;
 
     try {
-      final mensaMenuModels = await mensaApiClient.getMenuDayForMensa(canteenId, userApiKey: userApiKey);
+      final mensaMenuModels = await mensaApiClient.getMenuDayForMensa(canteenId);
       await prefs.setString(key, json.encode(mensaMenuModels.map((e) => e.toJson()).toList()));
       return mensaMenuModels;
     } catch (e) {

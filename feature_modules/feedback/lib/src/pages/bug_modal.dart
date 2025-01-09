@@ -2,22 +2,36 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:feedback/src/util/feedback_types.dart';
+import 'package:feedback/src/util/send_feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class BugModal extends StatelessWidget {
-  const BugModal({super.key});
+  const BugModal({
+    super.key,
+    required this.feedbackOrigin,
+  });
+
+  final String feedbackOrigin;
 
   @override
   Widget build(BuildContext context) {
     final localizations = context.locals.feedback;
+    final textController = TextEditingController();
+    final textNotifier = ValueNotifier<bool>(false);
+
+    textController.addListener(() {
+      textNotifier.value = textController.text.isNotEmpty;
+    });
+
     return LmuMasterAppBar.bottomSheet(
       largeTitle: localizations.bugTitle,
-      customScrollController: ModalScrollController.of(context),
       body: Stack(
         children: [
           SingleChildScrollView(
             physics: const NeverScrollableScrollPhysics(),
+            controller: ModalScrollController.of(context),
             child: Padding(
               padding: const EdgeInsets.all(LmuSizes.size_16),
               child: Column(
@@ -31,7 +45,7 @@ class BugModal extends StatelessWidget {
                   const SizedBox(height: LmuSizes.size_32),
                   LmuInputField(
                     hintText: localizations.bugInputHint,
-                    controller: TextEditingController(),
+                    controller: textController,
                     isAutofocus: true,
                     isMultiline: true,
                     isAutocorrect: true,
@@ -48,19 +62,25 @@ class BugModal extends StatelessWidget {
             child: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.all(LmuSizes.size_12),
-                child: LmuButton(
-                  title: localizations.bugButton,
-                  size: ButtonSize.large,
-                  showFullWidth: true,
-                  onTap: () {
-                    // TODO: send data to backend
-                    Navigator.pop(context);
-                    LmuToast.show(
-                      context: context,
-                      message: localizations.bugSuccess,
-                      type: ToastType.success,
+                child: ValueListenableBuilder<bool>(
+                  valueListenable: textNotifier,
+                  builder: (context, isTextNotEmpty, _) {
+                    return LmuButton(
+                      title: localizations.bugButton,
+                      size: ButtonSize.large,
+                      showFullWidth: true,
+                      state: isTextNotEmpty ? ButtonState.enabled : ButtonState.disabled,
+                      onTap: isTextNotEmpty
+                          ? () => sendFeedback(
+                                context: context,
+                                type: FeedbackType.bug,
+                                rating: null,
+                                message: textController.text,
+                                screen: feedbackOrigin,
+                                tags: null,
+                              )
+                          : null,
                     );
-                    LmuVibrations.success();
                   },
                 ),
               ),

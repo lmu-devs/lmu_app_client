@@ -5,19 +5,34 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import '../util/feedback_types.dart';
+import '../util/send_feedback.dart';
+
 class SuggestionModal extends StatelessWidget {
-  const SuggestionModal({super.key});
+  const SuggestionModal({
+    super.key,
+    required this.feedbackOrigin,
+  });
+
+  final String feedbackOrigin;
 
   @override
   Widget build(BuildContext context) {
     final localizations = context.locals.feedback;
+    final textController = TextEditingController();
+    final textNotifier = ValueNotifier<bool>(false);
+
+    textController.addListener(() {
+      textNotifier.value = textController.text.isNotEmpty;
+    });
+
     return LmuMasterAppBar.bottomSheet(
       largeTitle: localizations.suggestionTitle,
-      customScrollController: ModalScrollController.of(context),
       body: Stack(
         children: [
           SingleChildScrollView(
             physics: const NeverScrollableScrollPhysics(),
+            controller: ModalScrollController.of(context),
             child: Padding(
               padding: const EdgeInsets.all(LmuSizes.size_16),
               child: Column(
@@ -31,7 +46,7 @@ class SuggestionModal extends StatelessWidget {
                   const SizedBox(height: LmuSizes.size_32),
                   LmuInputField(
                     hintText: localizations.suggestionInputHint,
-                    controller: TextEditingController(),
+                    controller: textController,
                     isAutofocus: true,
                     isMultiline: true,
                     isAutocorrect: true,
@@ -48,19 +63,25 @@ class SuggestionModal extends StatelessWidget {
             child: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.all(LmuSizes.size_12),
-                child: LmuButton(
-                  title: localizations.suggestionButton,
-                  size: ButtonSize.large,
-                  showFullWidth: true,
-                  onTap: () {
-                    // TODO: send data to backend
-                    Navigator.pop(context);
-                    LmuToast.show(
-                      context: context,
-                      message: localizations.suggestionSuccess,
-                      type: ToastType.success,
+                child: ValueListenableBuilder<bool>(
+                  valueListenable: textNotifier,
+                  builder: (context, isTextNotEmpty, _) {
+                    return LmuButton(
+                      title: localizations.suggestionButton,
+                      size: ButtonSize.large,
+                      showFullWidth: true,
+                      state: isTextNotEmpty ? ButtonState.enabled : ButtonState.disabled,
+                      onTap: isTextNotEmpty
+                          ? () => sendFeedback(
+                                context: context,
+                                type: FeedbackType.suggestion,
+                                rating: null,
+                                message: textController.text,
+                                screen: feedbackOrigin,
+                                tags: null,
+                              )
+                          : null,
                     );
-                    LmuVibrations.success();
                   },
                 ),
               ),

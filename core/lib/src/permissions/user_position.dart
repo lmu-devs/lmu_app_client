@@ -67,11 +67,11 @@ Future<void> _showLocationServicesInfoDialog(BuildContext context) async {
     await showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: LmuText(
+        title: LmuText.h3(
           context.locals.app.locationServiceDialogTitle,
           weight: FontWeight.w600,
         ),
-        content: LmuText.bodyXSmall(context.locals.app.locationServiceDialogText),
+        content: LmuText(context.locals.app.locationServiceDialogText),
         actions: [
           TextButton(
             child: LmuText.body(context.locals.app.cancel),
@@ -119,11 +119,11 @@ Future<void> _showSettingsDialog(BuildContext context) async {
     await showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: LmuText(
+        title: LmuText.h3(
           context.locals.app.locationPermissionDialogTitle,
           weight: FontWeight.w600,
         ),
-        content: LmuText.bodyXSmall(context.locals.app.locationPermissionDialogText),
+        content: LmuText(context.locals.app.locationPermissionDialogText),
         actions: [
           TextButton(
             child: LmuText.body(context.locals.app.cancel),

@@ -64,11 +64,17 @@ class LmuButton extends StatelessWidget {
   final bool increaseTouchTarget;
 
   bool get _hasTitle => title != null && !_isLoading;
+
   bool get _hasLeading => (leadingIcon != null || leadingWidget != null) && !_isLoading;
+
   bool get _hasTrailing => (trailingIcon != null || trailingWidget != null) && !_isLoading;
+
   bool get _hasTextOnly => emphasis == ButtonEmphasis.link || emphasis == ButtonEmphasis.tertiary;
+
   bool get _isLoading => state == ButtonState.loading;
+
   bool get _isOutline => emphasis == ButtonEmphasis.outline;
+
   bool get _isButtonEnabled => state == ButtonState.enabled;
 
   double? get _width {

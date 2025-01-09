@@ -1,4 +1,4 @@
-import 'package:core/models.dart';
+import 'package:core/api.dart';
 
 extension LikeFormatter on int {
   String get formattedLikes {

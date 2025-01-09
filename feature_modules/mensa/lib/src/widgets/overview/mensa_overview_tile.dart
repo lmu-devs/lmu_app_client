@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/extensions.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,7 @@ import 'package:get_it/get_it.dart';
 import '../../extensions/extensions.dart';
 import '../../repository/api/api.dart';
 import '../../routes/mensa_routes.dart';
-import '../../services/mensa_distance_service.dart';
-import '../../services/mensa_user_preferences_service.dart';
+import '../../services/services.dart';
 import '../common/mensa_tag.dart';
 
 class MensaOverviewTile extends StatelessWidget {
@@ -49,13 +49,10 @@ class MensaOverviewTile extends StatelessWidget {
 
     final name = mensaModel.name;
     final type = mensaModel.type;
-
-    final openingStatus = mensaModel.currentOpeningStatus;
-    final openingStatusStyling =
-        openingStatus.openingStatus(context, openingDetails: mensaModel.openingHours.openingHours);
     final imageUrl = mensaModel.images.isNotEmpty ? mensaModel.images.first.url : null;
 
     final distanceService = GetIt.I.get<MensaDistanceService>();
+    final stausUpdateService = GetIt.I.get<MensaStatusUpdateService>();
 
     return Padding(
       padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.none : LmuSizes.size_12),
@@ -156,9 +153,18 @@ class MensaOverviewTile extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            LmuText.body(
-                              openingStatusStyling.text,
-                              color: openingStatusStyling.color,
+                            ListenableBuilder(
+                              listenable: stausUpdateService,
+                              builder: (context, child) {
+                                final openingStatus = mensaModel.currentOpeningStatus;
+                                final openingStatusStyling = openingStatus.openingStatusShort(context,
+                                    openingDetails: mensaModel.openingHours.openingHours);
+
+                                return LmuText.body(
+                                  openingStatusStyling.text,
+                                  color: openingStatusStyling.color,
+                                );
+                              },
                             ),
                             ListenableBuilder(
                               listenable: distanceService,

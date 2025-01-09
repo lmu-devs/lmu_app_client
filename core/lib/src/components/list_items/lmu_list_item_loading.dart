@@ -78,6 +78,21 @@ extension _ActionLoading on LmuListItemAction {
       );
     }
 
+    if (this == LmuListItemAction.radio) {
+      return SizedBox(
+        width: LmuSizes.size_24,
+        height: LmuSizes.size_24,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.circular(
+              LmuSizes.size_32 / 2,
+            ),
+          ),
+        ),
+      );
+    }
+
     return SizedBox(
       width: LmuSizes.size_24,
       height: LmuSizes.size_24,

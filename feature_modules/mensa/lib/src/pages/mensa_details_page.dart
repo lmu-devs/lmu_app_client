@@ -1,12 +1,12 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/extensions.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../mensa.dart';
 import '../bloc/menu_cubit/cubit.dart';
-import '../extensions/likes_formatter_extension.dart';
 import '../extensions/opening_hours_extensions.dart';
 import '../services/menu_service.dart';
 import '../widgets/widgets.dart';
@@ -21,13 +21,16 @@ class MensaDetailsPage extends StatefulWidget {
 }
 
 class _MensaDetailsPageState extends State<MensaDetailsPage> {
+  late bool _isTemporarilyClosed;
   MensaModel get _mensaModel => widget.mensaModel;
 
   @override
   void initState() {
     super.initState();
-
-    _initMenuCubit();
+    _isTemporarilyClosed = _mensaModel.currentOpeningStatus == Status.temporarilyClosed;
+    if (!_isTemporarilyClosed) {
+      _initMenuCubit();
+    }
   }
 
   void _initMenuCubit() {
@@ -95,10 +98,7 @@ class _MensaDetailsPageState extends State<MensaDetailsPage> {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(child: MensaDetailsInfoSection(mensaModel: _mensaModel)),
-          MensaDetailsMenuSection(
-            canteenId: _mensaModel.canteenId,
-            mensaStatus: Status.closed,
-          ),
+          if (!_isTemporarilyClosed) MensaDetailsMenuSection(canteenId: _mensaModel.canteenId),
         ],
       ),
     );
