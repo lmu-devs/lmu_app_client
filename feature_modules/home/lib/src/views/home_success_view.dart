@@ -3,6 +3,7 @@ import 'package:core/constants.dart';
 import 'package:flutter/material.dart';
 import '../repository/api/models/home_model.dart';
 import 'home_overview_view.dart';
+
 class HomeSuccessView extends StatefulWidget {
   const HomeSuccessView({
     super.key,
@@ -66,7 +67,10 @@ class _HomeSuccessViewState extends State<HomeSuccessView> {
     );
   }
 
-  Widget _buildOverviewTab() { return HomeOverviewView(homeData: widget.homeData); }
+  Widget _buildOverviewTab() {
+    return HomeOverviewView(homeData: widget.homeData);
+  }
+
   Widget _buildNewsTab() => const Center(child: Text('News Content Coming Soon..'));
   Widget _buildUniKinoTab() => const Center(child: Text('Uni Kino Content Coming Soon..'));
   Widget _buildGroupsTab() => const Center(child: Text('Groups Content Coming Soon..'));

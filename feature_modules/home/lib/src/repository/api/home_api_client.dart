@@ -1,7 +1,8 @@
 import 'dart:convert';
+
 import 'package:core/api.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
+
 import 'home_api_endpoints.dart';
 import 'models/home_model.dart';
 
@@ -11,7 +12,7 @@ class HomeApiClient {
   Future<HomeModel> getHomeData() async {
     try {
       final response = await _baseApiClient.get(HomeApiEndpoints.getHomeData());
-      
+
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
         return HomeModel.fromJson(json);

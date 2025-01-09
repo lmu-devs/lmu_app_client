@@ -19,32 +19,27 @@ class HomeOverviewView extends StatelessWidget {
         const SizedBox(height: LmuSizes.size_16),
         HomeLinksView(links: homeData.links),
         Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: LmuSizes.size_16, vertical: LmuSizes.size_16),
+          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16, vertical: LmuSizes.size_16),
           child: LmuContentTile(
             content: [
               LmuListItem.base(
                 title: "Studienbeitrag",
                 trailingTitleInTextVisuals: [
-                  LmuInTextVisual.text(
-                      title: homeData.submissionFee,
-                      color: Colors.deepOrangeAccent),
+                  LmuInTextVisual.text(title: homeData.submissionFee, color: Colors.deepOrangeAccent),
                 ],
                 mainContentAlignment: MainContentAlignment.center,
               ),
               LmuListItem.base(
                 title: "Vorlesungszeit",
                 trailingTitleInTextVisuals: [
-                  LmuInTextVisual.text(
-                      title: homeData.lectureTime, color: Colors.blue),
+                  LmuInTextVisual.text(title: homeData.lectureTime, color: Colors.blue),
                 ],
                 mainContentAlignment: MainContentAlignment.center,
               ),
               LmuListItem.base(
                 title: "Vorlesungsfreiezeit",
                 trailingTitleInTextVisuals: [
-                  LmuInTextVisual.text(
-                      title: homeData.lectureFreeTime, color: Colors.blue),
+                  LmuInTextVisual.text(title: homeData.lectureFreeTime, color: Colors.blue),
                 ],
                 mainContentAlignment: MainContentAlignment.center,
               ),
