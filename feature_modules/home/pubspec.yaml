@@ -22,6 +22,7 @@ dependencies:
   shared_api:
     path: ../../shared_api
   json_annotation: ^4.8.1
+  flutter_sticky_header: ^0.7.0
 
   http: any
 dev_dependencies:
