@@ -1,18 +1,20 @@
 import 'dart:convert';
 
+import 'package:core/api.dart';
 import 'package:feedback/src/repository/api/feedback_api_endpoints.dart';
-import 'package:http/http.dart' as http;
+import 'package:get_it/get_it.dart';
 
 import 'models/feedback_model.dart';
 
 class FeedbackApiClient {
-  Future<void> saveFeedback({required String userApiKey, required FeedbackModel feedbackModel}) async {
+  final _baseApiClient = GetIt.I.get<BaseApiClient>();
+
+  Future<void> saveFeedback({required FeedbackModel feedbackModel}) async {
     try {
-      final response = await http.post(
-        Uri.parse(FeedbackApiEndpoints.saveFeedback()),
-        headers: {
+      final response = await _baseApiClient.post(
+        FeedbackApiEndpoints.saveFeedback(),
+        additionalHeaders: {
           "Content-Type": "application/json",
-          "user-api-key": userApiKey,
         },
         body: jsonEncode(feedbackModel),
       );

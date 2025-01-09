@@ -48,8 +48,6 @@ class _TasteProfileLabelsSectionState extends State<TasteProfileLabelsSection> {
 
   @override
   Widget build(BuildContext context) {
-    final selectedLanguage = Localizations.localeOf(context).languageCode.toUpperCase();
-
     return SliverStickyHeader(
       header: LmuTabBar(
         items: _sortedLabels.map((e) => LmuTabBarItemData(title: e.name)).toList(),
@@ -71,8 +69,7 @@ class _TasteProfileLabelsSectionState extends State<TasteProfileLabelsSection> {
                 SizedBox(height: index != _sortedLabels.length - 1 ? LmuSizes.size_16 : 0),
             itemBuilder: (context, index) {
               final label = _sortedLabels[index];
-              final sortedLabelItems = label.items.toList()
-                ..sort((a, b) => a.text[selectedLanguage]!.compareTo(b.text[selectedLanguage]!));
+              final sortedLabelItems = label.items.toList()..sort((a, b) => a.text.compareTo(b.text));
               return Column(
                 children: [
                   LmuContentTile(
@@ -82,7 +79,7 @@ class _TasteProfileLabelsSectionState extends State<TasteProfileLabelsSection> {
                           valueListenable: _excludedLabelsNotifier,
                           builder: (context, excludedLabels, _) {
                             return LmuListItem.action(
-                              title: item.text[selectedLanguage],
+                              title: item.text,
                               leadingArea: LmuText.body(
                                 (item.emojiAbbreviation ?? "").isEmpty ? "😀" : item.emojiAbbreviation,
                               ),

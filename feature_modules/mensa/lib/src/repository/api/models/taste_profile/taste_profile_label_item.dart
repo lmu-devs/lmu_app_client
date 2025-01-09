@@ -7,7 +7,7 @@ part 'taste_profile_label_item.g.dart';
 class TasteProfileLabelItem extends Equatable {
   @JsonKey(name: 'enum_name')
   final String enumName;
-  final Map<String, String> text;
+  final String text;
   @JsonKey(name: 'emoji_abbreviation')
   final String? emojiAbbreviation;
   @JsonKey(name: 'text_abbreviation')

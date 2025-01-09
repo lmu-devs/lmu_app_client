@@ -8,7 +8,7 @@ part of 'taste_profile_preset.dart';
 
 TasteProfilePreset _$TasteProfilePresetFromJson(Map<String, dynamic> json) => TasteProfilePreset(
       enumName: json['enum_name'] as String,
-      text: Map<String, String>.from(json['text'] as Map),
+      text: json['text'] as String,
       emojiAbbreviation: json['emoji_abbreviation'] as String?,
       exclude: (json['exclude'] as List<dynamic>).map((e) => e as String).toList(),
     );

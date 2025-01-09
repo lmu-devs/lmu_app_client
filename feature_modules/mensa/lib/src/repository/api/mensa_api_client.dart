@@ -1,22 +1,18 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
+import 'package:core/api.dart';
+import 'package:get_it/get_it.dart';
 
 import 'api.dart';
 import 'models/menu/menu_day_model.dart';
 import 'models/taste_profile/taste_profile_model.dart';
 
 class MensaApiClient {
-  Future<List<MensaModel>> getMensaModels({String? userApiKey}) async {
+  final _baseApiClient = GetIt.I.get<BaseApiClient>();
+
+  Future<List<MensaModel>> getMensaModels() async {
     try {
-      final response = await http.get(
-        Uri.parse(MensaApiEndpoints.getMensaModels()),
-        headers: userApiKey == null
-            ? null
-            : {
-                "user-api-key": userApiKey,
-              },
-      );
+      final response = await _baseApiClient.get(MensaApiEndpoints.getMensaModels());
 
       if (response.statusCode == 200) {
         final jsonList = json.decode(response.body) as List<dynamic>;
@@ -29,16 +25,9 @@ class MensaApiClient {
     }
   }
 
-  Future<List<MenuDayModel>> getMenuDayForMensa(String canteenId, {String? userApiKey}) async {
+  Future<List<MenuDayModel>> getMenuDayForMensa(String canteenId) async {
     try {
-      final response = await http.get(
-        Uri.parse(MensaApiEndpoints.getMenuDayForMensa(canteenId)),
-        headers: userApiKey == null
-            ? null
-            : {
-                "user-api-key": userApiKey,
-              },
-      );
+      final response = await _baseApiClient.get(MensaApiEndpoints.getMenuDayForMensa(canteenId));
 
       if (response.statusCode == 200) {
         final jsonList = json.decode(response.body) as List<dynamic>;
@@ -54,9 +43,7 @@ class MensaApiClient {
 
   Future<TasteProfileModel> getTasteProfile() async {
     try {
-      final response = await http.get(
-        Uri.parse(MensaApiEndpoints.getTasteProfile()),
-      );
+      final response = await _baseApiClient.get(MensaApiEndpoints.getTasteProfile());
 
       if (response.statusCode == 200) {
         final jsonMap = json.decode(response.body) as Map<String, dynamic>;
@@ -69,14 +56,9 @@ class MensaApiClient {
     }
   }
 
-  Future<bool> toggleFavoriteMensaId(String mensaId, {required String userApiKey}) async {
+  Future<bool> toggleFavoriteMensaId(String mensaId) async {
     try {
-      final response = await http.post(
-        Uri.parse(MensaApiEndpoints.toggleFavoriteMensaId(mensaId)),
-        headers: {
-          "user-api-key": userApiKey,
-        },
-      );
+      final response = await _baseApiClient.post(MensaApiEndpoints.toggleFavoriteMensaId(mensaId));
 
       if (response.statusCode == 200) {
         return response.body == 'true';
@@ -88,14 +70,9 @@ class MensaApiClient {
     }
   }
 
-  Future<bool> toggleFavoriteDishId(String dishId, {required String userApiKey}) async {
+  Future<bool> toggleFavoriteDishId(String dishId) async {
     try {
-      final response = await http.post(
-        Uri.parse(MensaApiEndpoints.toggleFavoriteDishId(dishId)),
-        headers: {
-          "user-api-key": userApiKey,
-        },
-      );
+      final response = await _baseApiClient.post(MensaApiEndpoints.toggleFavoriteDishId(dishId));
 
       if (response.statusCode == 200) {
         return response.body == 'true';
