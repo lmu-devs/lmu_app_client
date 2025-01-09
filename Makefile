@@ -18,3 +18,14 @@ setup_mapbox:
 
 update_pods:
 	cd ios && pod repo update && pod install && cd ..
+
+
+get_started:
+	flutter pub get
+	make localizations
+	make setup_mapbox
+	make update_pods
+
+setup:
+	flutter pub get
+	make localizations

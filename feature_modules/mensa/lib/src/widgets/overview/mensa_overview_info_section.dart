@@ -41,6 +41,13 @@ class MensaOverviewInfoSection extends StatelessWidget {
           localizations.cafeInfo,
           color: context.colors.neutralColors.textColors.mediumColors.base,
         ),
+        const SizedBox(height: LmuSizes.size_20),
+        const MensaTag(type: MensaType.espressoBar),
+        const SizedBox(height: LmuSizes.size_8),
+        LmuText.body(
+          localizations.espressoBarInfo,
+          color: context.colors.neutralColors.textColors.mediumColors.base,
+        ),
       ],
     );
   }
