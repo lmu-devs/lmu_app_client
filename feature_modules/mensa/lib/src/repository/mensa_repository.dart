@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:core/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/mensa_api_client.dart';
@@ -26,7 +27,7 @@ abstract class MensaRepository {
 
   Future<List<String>> getUnsyncedFavoriteDishIds();
 
-  Future<void> saveUnsyncedFavoriteDishId(String dishId, bool isAdded);
+  Future<void> saveUnsyncedFavoriteDishId(String dishId);
 
   Future<void> removeUnsyncedFavoriteDishId(String dishId);
 
@@ -56,6 +57,7 @@ class ConnectedMensaRepository implements MensaRepository {
   });
 
   final MensaApiClient mensaApiClient;
+  final _appLogger = AppLogger();
 
   static const String _mensaModelsCacheKey = 'mensa_models_cache_key';
 
@@ -73,7 +75,6 @@ class ConnectedMensaRepository implements MensaRepository {
   /// Function to fetch mensa models from the API, [forceRefresh] parameter can be used to ignore the cache
   @override
   Future<List<MensaModel>> getMensaModels({bool forceRefresh = false}) async {
-    print("Menssssa");
     final prefs = await SharedPreferences.getInstance();
 
     try {
@@ -87,7 +88,9 @@ class ConnectedMensaRepository implements MensaRepository {
       final cachedData = prefs.getString(_mensaModelsCacheKey);
       if (cachedData != null) {
         final jsonList = json.decode(cachedData) as List<dynamic>;
-        return jsonList.map((json) => MensaModel.fromJson(json as Map<String, dynamic>)).toList();
+        final mensaModels = jsonList.map((json) => MensaModel.fromJson(json as Map<String, dynamic>)).toList();
+        _appLogger.logMessage('[MensaRepository]: Using mensa models from cache');
+        return mensaModels;
       }
       rethrow;
     }
@@ -111,6 +114,7 @@ class ConnectedMensaRepository implements MensaRepository {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setStringList(_favoriteMensaIdsKey, favoriteMensaIds);
+    _appLogger.logMessage('[MensaRepository]: Saved local favorite mensa ids: $favoriteMensaIds');
   }
 
   @override
@@ -131,6 +135,7 @@ class ConnectedMensaRepository implements MensaRepository {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setStringList(_favoriteDishIdsKey, favoriteDishIds);
+    _appLogger.logMessage('[MensaRepository]: Saved local favorite dish ids: $favoriteDishIds');
   }
 
   @override
@@ -141,7 +146,7 @@ class ConnectedMensaRepository implements MensaRepository {
   }
 
   @override
-  Future<void> saveUnsyncedFavoriteDishId(String dishId, bool isAdded) async {
+  Future<void> saveUnsyncedFavoriteDishId(String dishId) async {
     final currentFavoriteDishIds = await _getCurrentUnsyncedFavoriteDishIds();
 
     if (currentFavoriteDishIds.contains(dishId)) {
@@ -172,6 +177,7 @@ class ConnectedMensaRepository implements MensaRepository {
   Future<void> _saveUnsyncedFavoriteDishIds(List<String> dishIds) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setStringList(_unsyncedFavoriteDishIdsKey, dishIds);
+    _appLogger.logMessage('[MensaRepository]: Saved unsynced favorite dish ids: $dishIds');
   }
 
   @override
@@ -196,6 +202,7 @@ class ConnectedMensaRepository implements MensaRepository {
           rethrow;
         }
         final filteredMenuModels = menuModels.sublist(todayIndex);
+        _appLogger.logMessage('[MensaRepository]: Using menu models from cache');
         return filteredMenuModels;
       }
       rethrow;
@@ -237,6 +244,7 @@ class ConnectedMensaRepository implements MensaRepository {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setString(_pasteProfileSelectionsKey, json.encode(saveModel.toJson()));
+    _appLogger.logMessage('[MensaRepository]: Saved taste profile state: $saveModel');
   }
 
   @override
@@ -262,6 +270,7 @@ class ConnectedMensaRepository implements MensaRepository {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setString(_mensaSortOptionKey, sortOption.name);
+    _appLogger.logMessage('[MensaRepository]: Saved sort option: $sortOption');
   }
 
   @override
@@ -287,6 +296,7 @@ class ConnectedMensaRepository implements MensaRepository {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setString(_menuPriceCategory, priceCategory.name);
+    _appLogger.logMessage('[MensaRepository]: Saved price category: $priceCategory');
   }
 
   @override
@@ -302,5 +312,7 @@ class ConnectedMensaRepository implements MensaRepository {
     await prefs.remove(_menuPriceCategory);
     await prefs.remove(_menuBaseKey);
     await prefs.remove(_unsyncedFavoriteDishIdsKey);
+
+    _appLogger.logMessage('[MensaRepository]: Deleted all local data');
   }
 }

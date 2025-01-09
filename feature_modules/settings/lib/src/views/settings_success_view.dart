@@ -136,6 +136,21 @@ class SettingsSuccessView extends StatelessWidget {
             ),
             LmuContentTile(
               content: [
+                LmuListItem.action(
+                  title: "Debug",
+                  mainContentAlignment: MainContentAlignment.center,
+                  actionType: LmuListItemAction.chevron,
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingsDebugPage()));
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: LmuSizes.size_16,
+            ),
+            LmuContentTile(
+              content: [
                 LmuListItem.base(
                   title: context.locals.app.suggestFeature,
                   mainContentAlignment: MainContentAlignment.center,

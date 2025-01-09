@@ -2,6 +2,8 @@ import 'package:core/components.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../constants.dart';
+
 class LmuUnderlineTabBar extends StatelessWidget {
   const LmuUnderlineTabBar({
     super.key,
@@ -23,25 +25,28 @@ class LmuUnderlineTabBar extends StatelessWidget {
       children: [
         Container(
           color: context.colors.neutralColors.backgroundColors.base,
-          height: 30,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: items.asMap().entries.map((entry) {
-              return Expanded(
-                child: ValueListenableBuilder(
-                  valueListenable: activeTabIndexNotifier,
-                  builder: (context, activeIndex, _) {
-                    return GestureDetector(
-                      onTap: () => onTabChanged(entry.key),
-                      child: LmuUnderlineTabBarItem(
-                        title: entry.value.title,
-                        isActive: activeIndex == entry.key,
-                      ),
-                    );
-                  },
-                ),
-              );
-            }).toList(),
+          height: 46,
+          child: Padding(
+            padding: const EdgeInsets.only(top: LmuSizes.size_16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: items.asMap().entries.map((entry) {
+                return Expanded(
+                  child: ValueListenableBuilder(
+                    valueListenable: activeTabIndexNotifier,
+                    builder: (context, activeIndex, _) {
+                      return GestureDetector(
+                        onTap: () => onTabChanged(entry.key),
+                        child: LmuUnderlineTabBarItem(
+                          title: entry.value.title,
+                          isActive: activeIndex == entry.key,
+                        ),
+                      );
+                    },
+                  ),
+                );
+              }).toList(),
+            ),
           ),
         ),
         if (hasDivider) const LmuDivider(),

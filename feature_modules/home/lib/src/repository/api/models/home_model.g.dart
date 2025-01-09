@@ -10,9 +10,7 @@ HomeModel _$HomeModelFromJson(Map<String, dynamic> json) => HomeModel(
       submissionFee: json['submissionFee'] as String,
       lectureFreeTime: json['lectureFreeTime'] as String,
       lectureTime: json['lectureTime'] as String,
-      links: (json['links'] as List<dynamic>)
-          .map((e) => LinkModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      links: (json['links'] as List<dynamic>).map((e) => LinkModel.fromJson(e as Map<String, dynamic>)).toList(),
     );
 
 Map<String, dynamic> _$HomeModelToJson(HomeModel instance) => <String, dynamic>{

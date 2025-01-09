@@ -35,8 +35,7 @@ class _DishDetailsPageState extends State<DishDetailsPage> {
   @override
   void initState() {
     super.initState();
-    _selectedPriceCategoryNotifier =
-        ValueNotifier(_userPreferenceService.initialPriceCategory);
+    _selectedPriceCategoryNotifier = ValueNotifier(_userPreferenceService.initialPriceCategory);
   }
 
   MenuItemModel get _menuItemModel => widget.menuItemModel;
@@ -57,18 +56,15 @@ class _DishDetailsPageState extends State<DishDetailsPage> {
               Row(
                 children: [
                   ValueListenableBuilder(
-                    valueListenable:
-                        _userPreferenceService.favoriteDishIdsNotifier,
+                    valueListenable: _userPreferenceService.favoriteDishIdsNotifier,
                     builder: (context, favoriteDishIds, _) {
-                      final isFavorite =
-                          favoriteDishIds.contains(_menuItemModel.id);
+                      final isFavorite = favoriteDishIds.contains(_menuItemModel.id);
                       return LmuButton(
                         leadingWidget: StarIcon(isActive: isFavorite),
                         title:
-                            "${_menuItemModel.ratingModel.calculateLikeCount(isFavorite)} Likes",
+                            "${_menuItemModel.ratingModel.calculateLikeCount(isFavorite)} ${context.locals.app.likes}",
                         emphasis: ButtonEmphasis.secondary,
-                        onTap: () => _userPreferenceService
-                            .toggleFavoriteDishId(_menuItemModel.id),
+                        onTap: () => _userPreferenceService.toggleFavoriteDishId(_menuItemModel.id),
                       );
                     },
                   ),
@@ -90,12 +86,9 @@ class _DishDetailsPageState extends State<DishDetailsPage> {
               LmuContentTile(
                 content: _menuItemModel.labels.map(
                   (e) {
-                    final labelItem =
-                        _tasteProfileService.getLabelItemFromId(e);
+                    final labelItem = _tasteProfileService.getLabelItemFromId(e);
                     if (labelItem == null) return const SizedBox.shrink();
-                    final emoji = labelItem.emojiAbbreviation?.isEmpty ?? true
-                        ? "😀"
-                        : labelItem.emojiAbbreviation;
+                    final emoji = labelItem.emojiAbbreviation?.isEmpty ?? true ? "😀" : labelItem.emojiAbbreviation;
                     return LmuListItem.base(
                       leadingArea: LmuText.h1(emoji),
                       title: labelItem.text,
@@ -112,19 +105,20 @@ class _DishDetailsPageState extends State<DishDetailsPage> {
                       (element) => element.category == selectedPriceCategory,
                     );
 
-                    final priceString =
-                        "${price.pricePerUnit} € je ${price.unit}";
+                    final priceString = context.locals.canteen.pricePerUnit(
+                      price.pricePerUnit.toStringAsFixed(2),
+                      price.unit,
+                    );
 
                     return LmuContentTile(
                       content: [
                         if (price.basePrice > 0.0)
                           LmuListItem.base(
-                            title: "Base Price",
+                            title: context.locals.canteen.basePrice,
                             trailingTitle: '${price.basePrice} €',
                           ),
                         LmuListItem.base(
-                          title: selectedPriceCategory
-                              .name(context.locals.canteen),
+                          title: selectedPriceCategory.name(context.locals.canteen),
                           trailingTitle: priceString,
                           trailingTitleInTextVisuals: [
                             LmuInTextVisual.iconBox(
@@ -136,14 +130,13 @@ class _DishDetailsPageState extends State<DishDetailsPage> {
                               context,
                               content: _PriceCategoryActionSheetContent(
                                 priceModels: _menuItemModel.prices,
-                                priceCategoryNotifier:
-                                    _selectedPriceCategoryNotifier,
+                                priceCategoryNotifier: _selectedPriceCategoryNotifier,
                               ),
                             );
                           },
                         ),
                         LmuListItem.base(
-                          title: "Simple Price",
+                          title: context.locals.canteen.simplePrice,
                           trailingTitle: _menuItemModel.priceSimple,
                         ),
                       ],
@@ -172,7 +165,10 @@ extension PriceCategoryName on PriceCategory {
 }
 
 extension PriceFormatter on PriceModel {
-  String get priceString => "$pricePerUnit € je $unit";
+  String priceString(CanteenLocalizations localizations) => localizations.pricePerUnit(
+        pricePerUnit.toStringAsFixed(2),
+        unit,
+      );
 }
 
 class _PriceCategoryActionSheetContent extends StatelessWidget {
@@ -206,15 +202,13 @@ class _PriceCategoryActionSheetContent extends StatelessWidget {
                     children: [
                       LmuListItem.base(
                         title: priceModel.category.name(context.locals.canteen),
-                        trailingTitle: priceModel.priceString,
+                        trailingTitle: priceModel.priceString(context.locals.canteen),
                         trailingTitleColor: textColor,
                         titleColor: textColor,
                         mainContentAlignment: MainContentAlignment.center,
                         onTap: () async {
                           priceCategoryNotifier.value = category;
-                          await GetIt.I
-                              .get<MensaUserPreferencesService>()
-                              .updatePriceCategory(category);
+                          await GetIt.I.get<MensaUserPreferencesService>().updatePriceCategory(category);
                           Future.delayed(
                             const Duration(milliseconds: 100),
                             () {
@@ -223,8 +217,7 @@ class _PriceCategoryActionSheetContent extends StatelessWidget {
                           );
                         },
                       ),
-                      if (priceModel != priceModels.last)
-                        const SizedBox(height: LmuSizes.size_8),
+                      if (priceModel != priceModels.last) const SizedBox(height: LmuSizes.size_8),
                     ],
                   );
                 },

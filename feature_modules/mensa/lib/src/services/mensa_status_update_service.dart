@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:core/logging.dart';
 import 'package:flutter/material.dart';
 
 class MensaStatusUpdateService extends ChangeNotifier {
@@ -8,6 +9,7 @@ class MensaStatusUpdateService extends ChangeNotifier {
   }
 
   Timer? _timer;
+  final _appLogger = AppLogger();
 
   void _startTimer() {
     final now = DateTime.now();
@@ -24,11 +26,16 @@ class MensaStatusUpdateService extends ChangeNotifier {
     final initialDelay = nextTriggerTime.difference(now);
 
     _timer = Timer(initialDelay, () {
-      notifyListeners(); // Trigger the first event
+      _notifyListeners();
       _timer = Timer.periodic(const Duration(minutes: 15), (timer) {
-        notifyListeners();
+        _notifyListeners();
       });
     });
+  }
+
+  void _notifyListeners() {
+    _appLogger.logMessage('[MensaStatusUpdateService]: Updating status: ${DateTime.now()}');
+    notifyListeners();
   }
 
   @override

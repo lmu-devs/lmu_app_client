@@ -10,37 +10,25 @@ class WishlistApiClient {
   final _baseApiClient = GetIt.I.get<BaseApiClient>();
 
   Future<List<WishlistModel>> getWishlistModels({int? id}) async {
-    try {
-      final response = await _baseApiClient.get(
-        WishlistApiEndpoints.getWishlistModels(id: id),
-      );
+    final response = await _baseApiClient.get(WishlistApiEndpoints.getWishlistModels(id: id));
 
-      if (response.statusCode == 200) {
-        final jsonList = json.decode(response.body) as List<dynamic>;
-        return jsonList.map((json) => WishlistModel.fromJson(json as Map<String, dynamic>)).toList();
-      } else if (response.statusCode == 404) {
-        return [];
-      } else {
-        throw Exception('Failed to load wishlist data - ${response.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Failed to parse wishlist data: $e');
+    if (response.statusCode == 200) {
+      final jsonList = json.decode(response.body) as List<dynamic>;
+      return jsonList.map((json) => WishlistModel.fromJson(json as Map<String, dynamic>)).toList();
+    } else if (response.statusCode == 404) {
+      return [];
+    } else {
+      throw Exception('Failed to load wishlist data - ${response.statusCode}');
     }
   }
 
   Future<bool> toggleWishlistLike({required int id}) async {
-    try {
-      final response = await _baseApiClient.post(
-        WishlistApiEndpoints.toggleWishlistLike(id),
-      );
+    final response = await _baseApiClient.post(WishlistApiEndpoints.toggleWishlistLike(id));
 
-      if (response.statusCode == 200) {
-        return response.body == 'true';
-      } else {
-        throw Exception('Failed to toggle favorite mensa - ${response.statusCode}');
-      }
-    } catch (e) {
-      rethrow;
+    if (response.statusCode == 200) {
+      return response.body == 'true';
+    } else {
+      throw Exception('Failed to toggle favorite mensa - ${response.statusCode}');
     }
   }
 }

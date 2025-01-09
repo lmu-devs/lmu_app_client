@@ -1,3 +1,4 @@
+import 'package:core/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/models/wishlist_model.dart';
@@ -21,6 +22,7 @@ class ConnectedWishlistRepository implements WishlistRepository {
   });
 
   final WishlistApiClient wishlistApiClient;
+  final _appLogger = AppLogger();
 
   static const String _likedWishlistIdsKey = 'liked_wishlist_ids_key';
 

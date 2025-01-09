@@ -34,6 +34,7 @@ dependencies:
   modal_bottom_sheet: ^3.0.0
   expandable_page_view: ^1.0.17
   geolocator: ^13.0.2
+  rxdart: ^0.28.0
 
 dev_dependencies:
   flutter_test:

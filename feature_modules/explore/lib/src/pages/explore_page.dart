@@ -1,15 +1,15 @@
 import 'package:core/constants.dart';
 import 'package:core/permissions.dart';
+import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart' hide Visibility;
+import 'package:flutter/services.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:geolocator/geolocator.dart' as geo;
 import 'package:get_it/get_it.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:mensa/mensa.dart';
 import 'package:provider/provider.dart';
-import 'package:core/themes.dart';
-import 'package:flutter/services.dart';
 
 import '../widgets/map_action_button.dart';
 import '../widgets/map_bottom_sheet.dart';
@@ -161,7 +161,6 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
         ),
       );
     } catch (e) {
-      debugPrint('Failed to retrieve user location: $e');
       targetLocation = Point(
         coordinates: Position(
           11.575328,
