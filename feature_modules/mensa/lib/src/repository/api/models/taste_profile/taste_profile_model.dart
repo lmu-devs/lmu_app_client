@@ -8,14 +8,16 @@ part 'taste_profile_model.g.dart';
 
 @JsonSerializable()
 class TasteProfileModel extends Equatable {
-  final int version;
-  final List<TasteProfilePreset> presets;
+  @JsonKey(name: 'alergies_presets')
+  final List<TasteProfilePreset> allergiesPresets;
+  @JsonKey(name: 'preferences_presets')
+  final List<TasteProfilePreset> preferencesPresets;
   @JsonKey(name: 'sorted_labels')
   final List<TasteProfileLabel> sortedLabels;
 
   const TasteProfileModel({
-    required this.version,
-    required this.presets,
+    required this.allergiesPresets,
+    required this.preferencesPresets,
     required this.sortedLabels,
   });
 
@@ -23,5 +25,5 @@ class TasteProfileModel extends Equatable {
   Map<String, dynamic> toJson() => _$TasteProfileModelToJson(this);
 
   @override
-  List<Object?> get props => [version, presets, sortedLabels];
+  List<Object?> get props => [allergiesPresets, preferencesPresets, sortedLabels];
 }

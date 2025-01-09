@@ -36,10 +36,9 @@ class StarIcon extends StatelessWidget {
         );
       },
       child: SvgPicture.asset(
-        "assets/star.svg",
+        "core/lib/assets/star.svg",
         semanticsLabel: localization.iconStar,
         key: ValueKey(isActive),
-        package: "mensa",
         width: size,
         colorFilter: ColorFilter.mode(
           isActive

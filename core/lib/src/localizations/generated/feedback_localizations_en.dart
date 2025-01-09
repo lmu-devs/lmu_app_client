@@ -17,6 +17,9 @@ class FeedbackLocalizationsEn extends FeedbackLocalizations {
   String get feedbackSuccess => 'Feedback sent';
 
   @override
+  String get feedbackError => 'Your feedback couldn\'t be submitted';
+
+  @override
   String get feedbackInputHint => 'Tell us more sweetie ...';
 
   @override
@@ -35,6 +38,9 @@ class FeedbackLocalizationsEn extends FeedbackLocalizations {
   String get bugSuccess => 'Bug reported';
 
   @override
+  String get bugError => 'Your bug couldn\'t be submitted';
+
+  @override
   String get suggestionTitle => 'Suggest a Feature';
 
   @override
@@ -49,4 +55,7 @@ class FeedbackLocalizationsEn extends FeedbackLocalizations {
 
   @override
   String get suggestionSuccess => 'Suggestion sent';
+
+  @override
+  String get suggestionError => 'Your suggestion couldn\'t be submitted';
 }

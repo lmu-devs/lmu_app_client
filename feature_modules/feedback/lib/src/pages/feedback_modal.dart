@@ -2,11 +2,20 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:feedback/src/util/feedback_types.dart';
 import 'package:feedback/src/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+
+import '../util/send_feedback.dart';
 
 class FeedbackModal extends StatelessWidget {
-  const FeedbackModal({super.key});
+  const FeedbackModal({
+    super.key,
+    required this.feedbackOrigin,
+  });
+
+  final String feedbackOrigin;
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +23,14 @@ class FeedbackModal extends StatelessWidget {
     final textController = TextEditingController();
     final feedbackNotifier = ValueNotifier<String?>(null);
 
-    return LmuMasterAppBar(
+    return LmuMasterAppBar.bottomSheet(
       largeTitle: localizations.feedbackTitle,
       largeTitleTrailingWidgetAlignment: MainAxisAlignment.center,
       body: Stack(
         children: [
           SingleChildScrollView(
             physics: const NeverScrollableScrollPhysics(),
+            controller: ModalScrollController.of(context),
             child: Padding(
               padding: const EdgeInsets.all(LmuSizes.size_16),
               child: Column(
@@ -35,7 +45,7 @@ class FeedbackModal extends StatelessWidget {
                   EmojiFeedbackSelector(
                     feedbackNotifier: feedbackNotifier,
                     onFeedbackSelected: (feedback) {
-                      print(feedback);
+                      feedbackNotifier.value = feedback;
                     },
                   ),
                   const SizedBox(height: LmuSizes.size_24),
@@ -44,12 +54,6 @@ class FeedbackModal extends StatelessWidget {
                     isMultiline: true,
                     controller: textController,
                     isAutocorrect: true,
-                    onTapOutside: () {
-                      print('tap outside');
-                    },
-                    onSubmitted: (value) {
-                      print(value);
-                    },
                   ),
                   const SizedBox(height: 400),
                 ],
@@ -73,16 +77,14 @@ class FeedbackModal extends StatelessWidget {
                       state: selectedFeedback == null ? ButtonState.disabled : ButtonState.enabled,
                       onTap: selectedFeedback == null
                           ? null
-                          : () {
-                              // TODO: send data to backend with selectedFeedback and textController.text
-                              Navigator.pop(context);
-                              LmuToast.show(
+                          : () => sendFeedback(
                                 context: context,
-                                message: localizations.feedbackSuccess,
-                                type: ToastType.success,
-                              );
-                              LmuVibrations.success();
-                            },
+                                type: FeedbackType.general,
+                                rating: selectedFeedback,
+                                message: textController.text.isEmpty ? null : textController.text,
+                                screen: feedbackOrigin,
+                                tags: null,
+                              ),
                     );
                   },
                 ),

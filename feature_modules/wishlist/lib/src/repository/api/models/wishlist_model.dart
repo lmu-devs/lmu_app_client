@@ -1,4 +1,4 @@
-import 'package:core/models.dart';
+import 'package:core/api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -11,6 +11,8 @@ class WishlistModel extends Equatable {
   final int id;
   final String title;
   final String description;
+  @JsonKey(name: 'description_short')
+  final String descriptionShort;
   @JsonKey(fromJson: _statusFromJson)
   final WishlistStatus status;
   @JsonKey(name: 'release_date')
@@ -30,6 +32,7 @@ class WishlistModel extends Equatable {
     required this.id,
     required this.title,
     required this.description,
+    required this.descriptionShort,
     required this.status,
     required this.releaseDate,
     required this.prototypeUrl,
@@ -50,6 +53,7 @@ class WishlistModel extends Equatable {
         id,
         title,
         description,
+        descriptionShort,
         status,
         releaseDate,
         prototypeUrl,

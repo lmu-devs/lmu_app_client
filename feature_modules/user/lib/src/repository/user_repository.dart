@@ -7,9 +7,9 @@ abstract class UserRepository {
 
   Future<String?> getUser();
 
-  Future<void> updateUser(String id);
+  Future<void> updateUser();
 
-  Future<void> deleteUser(String id);
+  Future<void> deleteUser();
 }
 
 class ConnectedUserRepository implements UserRepository {
@@ -30,15 +30,15 @@ class ConnectedUserRepository implements UserRepository {
   }
 
   @override
-  Future<void> deleteUser(String id) async {
-    await userApi.deleteUser(id);
+  Future<void> deleteUser() async {
+    await userApi.deleteUser();
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_userApiStorageKey);
   }
 
   @override
-  Future<void> updateUser(String id) async {
-    await userApi.updateUser(id);
+  Future<void> updateUser() async {
+    await userApi.updateUser();
   }
 
   @override

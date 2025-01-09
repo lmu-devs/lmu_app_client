@@ -6,13 +6,6 @@ import 'package:shared_api/user.dart';
 import '../bloc/user_api_key/cubit.dart';
 
 class DefaultUserService extends UserService {
-  DefaultUserService() {
-    userApiKeyStream.listen((event) {
-      if (event != null) {
-        print('UserApiKey: $event');
-      }
-    });
-  }
   final _userApiKeyBloc = GetIt.I.get<UserApiKeyBloc>();
 
   @override

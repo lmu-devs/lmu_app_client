@@ -1,13 +1,7 @@
-import 'dart:io';
-
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:core/themes.dart';
-import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lucide/flutter_lucide.dart';
 import '../repository/api/models/home_model.dart';
-import 'home_links_view.dart';
 import 'home_overview_view.dart';
 class HomeSuccessView extends StatefulWidget {
   const HomeSuccessView({

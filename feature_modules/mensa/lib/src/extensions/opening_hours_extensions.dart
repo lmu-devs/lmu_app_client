@@ -10,7 +10,7 @@ enum Status {
   open,
   closingSoon,
   closed,
-  temorarilyClosed,
+  temporarilyClosed,
 }
 
 extension WeekdayToString on MensaOpeningDetails {
@@ -36,11 +36,10 @@ extension WeekdayToString on MensaOpeningDetails {
 
 extension StatusTimeExtension on List<MensaOpeningDetails> {
   Status get status {
-    final now = DateTime.now();
-    final todaysHours = _getTodaysHours(now);
-
+    final todaysHours = _getTodayOpeningDetails();
     if (todaysHours == null) return Status.closed;
 
+    final now = DateTime.now();
     final startTime = _parseTime(todaysHours.startTime, now);
     final endTime = _parseTime(todaysHours.endTime, now);
     final closingSoonThreshold = endTime.subtract(const Duration(minutes: 30));
@@ -55,8 +54,14 @@ extension StatusTimeExtension on List<MensaOpeningDetails> {
     }
   }
 
+  MensaOpeningDetails? _getTodayOpeningDetails() {
+    final now = DateTime.now();
+    return firstWhereOrNull((element) => Weekday.values.indexOf(element.day) == now.weekday - 1);
+  }
+
   String get closingTime {
-    final todaysHours = _getTodaysHours(DateTime.now());
+    final todaysHours = _getTodayOpeningDetails();
+
     if (todaysHours == null) return "";
 
     final endTime = _parseTime(todaysHours.endTime, DateTime.now());
@@ -64,26 +69,11 @@ extension StatusTimeExtension on List<MensaOpeningDetails> {
   }
 
   String get openingTime {
-    final todaysHours = _getTodaysHours(DateTime.now());
+    final todaysHours = _getTodayOpeningDetails();
     if (todaysHours == null) return "";
 
     final startTime = _parseTime(todaysHours.startTime, DateTime.now());
     return "${startTime.hour.toString().padLeft(2, '0')}:${startTime.minute.toString().padLeft(2, '0')}";
-  }
-
-  MensaOpeningDetails? _getTodaysHours(DateTime now) {
-    const dayMap = {
-      DateTime.monday: "MONDAY",
-      DateTime.tuesday: "TUESDAY",
-      DateTime.wednesday: "WEDNESDAY",
-      DateTime.thursday: "THURSDAY",
-      DateTime.friday: "FRIDAY",
-    };
-
-    final today = dayMap[now.weekday];
-    if (today == null) return null;
-
-    return firstWhereOrNull((element) => element.day == today);
   }
 
   DateTime _parseTime(String time, DateTime referenceDate) {
@@ -103,7 +93,7 @@ extension CurrentStatusExtension on MensaModel {
     if (status.isClosed) {
       return Status.closed;
     } else if (status.isTemporaryClosed) {
-      return Status.temorarilyClosed;
+      return Status.temporarilyClosed;
     }
     return details?.status ?? Status.closed;
   }
@@ -138,7 +128,7 @@ extension StatusStylingExtension on Status {
           color: colors.warningColors.textColors.strongColors.base,
           text: localizations.openUntil(openingDetails.closingTime),
         );
-      case Status.temorarilyClosed:
+      case Status.temporarilyClosed:
         return (
           color: colors.dangerColors.textColors.strongColors.base,
           text: localizations.temporaryClosed,
@@ -174,7 +164,7 @@ extension StatusStylingExtension on Status {
           color: colors.warningColors.textColors.strongColors.base,
           text: localizations.openUntil(openingDetails.closingTime),
         );
-      case Status.temorarilyClosed:
+      case Status.temporarilyClosed:
         return (
           color: colors.dangerColors.textColors.strongColors.base,
           text: localizations.temporaryClosed,
@@ -210,7 +200,7 @@ extension StatusStylingExtension on Status {
           color: colors.warningColors.textColors.strongColors.base,
           text: localizations.servingOpenUntil(openingDetails.closingTime),
         );
-      case Status.temorarilyClosed:
+      case Status.temporarilyClosed:
         return (
           color: colors.dangerColors.textColors.strongColors.base,
           text: localizations.temporaryClosed,

@@ -9,7 +9,6 @@ import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../bloc/menu_cubit/cubit.dart';
-import '../../extensions/opening_hours_extensions.dart';
 import '../../services/menu_service.dart';
 import '../../views/views.dart';
 
@@ -17,11 +16,9 @@ class MensaDetailsMenuSection extends StatefulWidget {
   const MensaDetailsMenuSection({
     super.key,
     required this.canteenId,
-    required this.mensaStatus,
   });
 
   final String canteenId;
-  final Status mensaStatus;
 
   @override
   State<MensaDetailsMenuSection> createState() => _MensaDetailsMenuSectionState();
@@ -31,6 +28,7 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
   late PageController _pageController;
   late ValueNotifier<int> _tabNotifier;
   late StickyHeaderController _stickyHeaderController;
+  late bool isTemporarilyClosed;
 
   String get _canteenId => widget.canteenId;
 

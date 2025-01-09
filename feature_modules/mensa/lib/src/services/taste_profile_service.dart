@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 
@@ -15,7 +16,8 @@ class TasteProfileService {
 
   final _excludedLabelItemNotifier = ValueNotifier<List<TasteProfileLabelItem>>([]);
   final _isActiveNotifier = ValueNotifier<bool>(false);
-  final _selectedPresetsNotifier = ValueNotifier<Set<String>>({});
+  final _selectedAllergiesPresetsNotifier = ValueNotifier<Set<String>>({});
+  final _selectedPreferencePresetNotifier = ValueNotifier<String?>(null);
   final _excludedLabelsNotifier = ValueNotifier<Set<String>>({});
 
   List<TasteProfileLabelItem>? _labelItems;
@@ -23,11 +25,14 @@ class TasteProfileService {
   ValueNotifier<List<TasteProfileLabelItem>> get excludedLabelItemNotifier => _excludedLabelItemNotifier;
 
   ValueNotifier<bool> get isActiveNotifier => _isActiveNotifier;
-  ValueNotifier<Set<String>> get selectedPresetsNotifier => _selectedPresetsNotifier;
+  ValueNotifier<Set<String>> get selectedAllergiesPresetsNotifier => _selectedAllergiesPresetsNotifier;
+  ValueNotifier<String?> get selectedPreferencePresetNotifier => _selectedPreferencePresetNotifier;
   ValueNotifier<Set<String>> get excludedLabelsNotifier => _excludedLabelsNotifier;
 
   void reset() {
-    _selectedPresetsNotifier.value = {};
+    final tasteProfile = (GetIt.I.get<TasteProfileCubit>().state as TasteProfileLoadSuccess).tasteProfile;
+    _selectedAllergiesPresetsNotifier.value = {};
+    _selectedPreferencePresetNotifier.value = tasteProfile.preferencesPresets.first.enumName;
     _excludedLabelsNotifier.value = {};
     _isActiveNotifier.value = false;
   }
@@ -37,28 +42,36 @@ class TasteProfileService {
   }
 
   void init() async {
-    GetIt.I.get<TasteProfileCubit>().stream.where((state) => state is TasteProfileLoadSuccess).listen(
+    final tasteProfileState = await _mensaRepository.getTasteProfileState();
+    _isActiveNotifier.value = tasteProfileState.isActive;
+    _selectedAllergiesPresetsNotifier.value = tasteProfileState.selectedAllergiesPresets;
+    _selectedPreferencePresetNotifier.value = tasteProfileState.selectedPreferencePreset;
+    _excludedLabelsNotifier.value = tasteProfileState.excludedLabels;
+
+    final tasteProfileCubit = GetIt.I.get<TasteProfileCubit>();
+
+    tasteProfileCubit.stream
+        .withInitialValue(tasteProfileCubit.state)
+        .where((state) => state is TasteProfileLoadSuccess)
+        .listen(
       (state) {
         final tasteProfile = (state as TasteProfileLoadSuccess).tasteProfile;
         _labelItems = tasteProfile.sortedLabels.expand((label) => label.items).toList();
         _excludedLabelItemNotifier.value = _mapExcludedLabelItems;
+        _selectedPreferencePresetNotifier.value ??= tasteProfile.preferencesPresets.first.enumName;
       },
     );
-
-    final tasteProfileState = await _mensaRepository.getTasteProfileState();
-    _excludedLabelItemNotifier.value = _mapExcludedLabelItems;
-    _isActiveNotifier.value = tasteProfileState.isActive;
-    _selectedPresetsNotifier.value = tasteProfileState.selectedPresets;
-    _excludedLabelsNotifier.value = tasteProfileState.excludedLabels;
   }
 
   Future<void> saveTasteProfileState({
-    required Set<String> selectedPresets,
+    required Set<String> selectedAllergiesPresets,
+    required String? selectedPreferencePreset,
     required Set<String> excludedLabels,
     required bool isActive,
   }) async {
     final saveModel = TasteProfileStateModel(
-      selectedPresets: selectedPresets,
+      selectedAllergiesPresets: selectedAllergiesPresets,
+      selectedPreferencePreset: selectedPreferencePreset,
       excludedLabels: excludedLabels,
       isActive: isActive,
     );
@@ -67,7 +80,7 @@ class TasteProfileService {
 
     _excludedLabelItemNotifier.value = _mapExcludedLabelItems;
     _isActiveNotifier.value = isActive;
-    _selectedPresetsNotifier.value = selectedPresets;
+    _selectedAllergiesPresetsNotifier.value = selectedAllergiesPresets;
     _excludedLabelsNotifier.value = excludedLabels;
   }
 

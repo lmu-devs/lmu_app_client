@@ -1,19 +1,22 @@
 import 'dart:convert';
 
+import 'package:core/api.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart' as http;
+import 'package:get_it/get_it.dart';
 
 import '../repository.dart';
 
 class UserApiClient {
+  final _baseApiClient = GetIt.I.get<BaseApiClient>();
+
   Future<UserModel> createUser() async {
     final systemApiKey = dotenv.env['SYSTEM_API_KEY'];
     if (systemApiKey == null) throw Exception("System API Key not set");
 
     try {
-      final response = await http.post(
-        Uri.parse("${UserApiEndpoints.user}?device_id=123"),
-        headers: {
+      final response = await _baseApiClient.post(
+        UserApiEndpoints.user,
+        additionalHeaders: {
           "system-api-key": systemApiKey,
         },
       );
@@ -24,18 +27,13 @@ class UserApiClient {
     }
   }
 
-  Future<String> updateUser(String id) async {
+  Future<String> updateUser() async {
     throw Exception("Not implemented yet");
   }
 
-  Future<void> deleteUser(String apiKey) async {
+  Future<void> deleteUser() async {
     try {
-      await http.delete(
-        Uri.parse(UserApiEndpoints.user),
-        headers: {
-          "user-api-key": apiKey,
-        },
-      );
+      await _baseApiClient.delete(UserApiEndpoints.user);
     } catch (e) {
       throw Exception('Failed to delete user: $e');
     }
