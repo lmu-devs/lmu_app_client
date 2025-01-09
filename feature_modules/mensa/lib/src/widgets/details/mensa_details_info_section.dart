@@ -1,8 +1,10 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
+import 'package:core/themes.dart';
 import 'package:core/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../extensions/opening_hours_extensions.dart';
@@ -69,6 +71,11 @@ class MensaDetailsInfoSection extends StatelessWidget {
 
   Widget _buildLocationTile(BuildContext context) {
     return LmuListItem.base(
+      trailingArea: Icon(
+        LucideIcons.map,
+        size: LmuIconSizes.mediumSmall,
+        color: context.colors.neutralColors.textColors.weakColors.base,
+      ),
       subtitle: mensaModel.location.address,
       hasHorizontalPadding: false,
       hasDivider: true,

@@ -1,4 +1,5 @@
 import 'package:core/components.dart';
+import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
@@ -37,11 +38,11 @@ class _HomeSuccessViewState extends State<HomeSuccessView> {
           header: LmuUnderlineTabBar(
             activeTabIndexNotifier: _activeTabIndexNotifier,
             hasDivider: true,
-            items: const [
-              LmuUnderlineTabBarItemData(title: "Overview"),
-              LmuUnderlineTabBarItemData(title: "News"),
-              LmuUnderlineTabBarItemData(title: "Uni Kino"),
-              LmuUnderlineTabBarItemData(title: "Groups"),
+            items: [
+              LmuUnderlineTabBarItemData(title: context.locals.home.overviewTab),
+              LmuUnderlineTabBarItemData(title: context.locals.home.newsTab),
+              LmuUnderlineTabBarItemData(title: context.locals.home.moviesTab),
+              LmuUnderlineTabBarItemData(title: context.locals.home.groupTab),
             ],
             onTabChanged: (index) {
               _pageController.animateToPage(
@@ -53,7 +54,7 @@ class _HomeSuccessViewState extends State<HomeSuccessView> {
           ),
           sliver: SliverToBoxAdapter(
             child: SizedBox(
-              height: MediaQuery.of(context).size.height - 200, // Adjust height as needed
+              height: MediaQuery.of(context).size.height - 200,
               child: PageView(
                 controller: _pageController,
                 onPageChanged: (index) {
@@ -62,7 +63,7 @@ class _HomeSuccessViewState extends State<HomeSuccessView> {
                 children: [
                   _buildOverviewTab(),
                   _buildNewsTab(),
-                  _buildUniKinoTab(),
+                  _buildMoviesTab(),
                   _buildGroupsTab(),
                 ],
               ),
@@ -74,6 +75,7 @@ class _HomeSuccessViewState extends State<HomeSuccessView> {
   }
 
   Widget _buildOverviewTab() => HomeOverviewView(homeData: widget.homeData);
+
   Widget _buildNewsTab() => Center(
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -90,7 +92,8 @@ class _HomeSuccessViewState extends State<HomeSuccessView> {
           ],
         ),
       );
-  Widget _buildUniKinoTab() => Center(
+
+  Widget _buildMoviesTab() => Center(
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -106,6 +109,7 @@ class _HomeSuccessViewState extends State<HomeSuccessView> {
           ],
         ),
       );
+
   Widget _buildGroupsTab() => Center(
         child: Row(
           mainAxisSize: MainAxisSize.min,

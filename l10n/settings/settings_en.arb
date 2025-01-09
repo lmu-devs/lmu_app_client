@@ -35,7 +35,7 @@
   "@contact": {
     "description": "Get in touch"
   },
-  "donate": "OnlyFans",
+  "donate": "Donate",
   "@donate": {
     "description": "Title for list item to donate"
   },
@@ -115,9 +115,20 @@
   "@deleteDataButtonFinal": {
     "description": "Final delete data button"
   },
+  "accountDeletedTitle": "Account deleted",
+  "@accountDeletedTitle": {
+    "description": "Account deleted title"
+  },
+  "accountDeletedText": "We deleted all your data from our server. You can continue using our app with a brand new account.",
+  "@accountDeletedText": {
+    "description": "Account deleted text"
+  },
+  "accountDeletedButton": "Continue with new account",
+  "@accountDeletedButton": {
+    "description": "Account deleted button"
+  },
   "deviceId": "Device ID",
   "@deviceId": {
     "description": "Device ID"
   }
-
 }

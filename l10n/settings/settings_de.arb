@@ -10,7 +10,7 @@
   "systemMode": "Automatisch",
   "aboutLmuDevelopers": "Über LMU Developers",
   "contact": "Kontakt aufnehmen",
-  "donate": "OnlyFans",
+  "donate": "Spenden",
   "dataPrivacy": "Datenschutz",
   "imprint": "Impressum",
   "licenses": "Lizenzen",
@@ -31,6 +31,8 @@
   "deleteDataDescriptionFinal": "Durch diese Aktion werden sämtliche Accountdaten dauerhaft von unserem Server und Deinem Gerät gelöscht. Dazu zählen alle Gerichte-Likes, Kantinen-Likes, MyTaste.",
   "deleteDataButton": "Alle Daten löschen",
   "deleteDataButtonFinal": "Alle Daten löschen",
+  "accountDeletedTitle": "Account gelöscht",
+  "accountDeletedText": "Wir haben alle deine Daten von unserem Server gelöscht. Du kannst die App weiterhin mit einem neuen Konto nutzen.",
+  "accountDeletedButton": "Mit neuem Account fortfahren",
   "deviceId": "Geräte-ID"
-
 }

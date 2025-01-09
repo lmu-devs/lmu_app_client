@@ -10,4 +10,7 @@ class LmuIconSizes {
 
   /// 32px
   static const double large = 32.0;
+
+  /// 48px
+  static const double xlarge = 48.0;
 }

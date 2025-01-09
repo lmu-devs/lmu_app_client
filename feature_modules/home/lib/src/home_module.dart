@@ -1,10 +1,13 @@
 import 'package:core/module.dart';
 import 'package:get_it/get_it.dart';
+import 'service/default_home_service.dart';
+import 'package:shared_api/home.dart';
 import 'bloc/home_cubit.dart';
 import 'repository/api/home_api_client.dart';
 import 'repository/repository.dart';
 
-class HomeModule extends AppModule with LocalDependenciesProvidingAppModule, NoticeableAppStartAppModule {
+class HomeModule extends AppModule
+    with LocalDependenciesProvidingAppModule, NoticeableAppStartAppModule, PublicApiProvidingAppModule {
   @override
   String get moduleName => 'HomeModule';
 
@@ -23,5 +26,10 @@ class HomeModule extends AppModule with LocalDependenciesProvidingAppModule, Not
   @override
   void onAppStartNotice() {
     GetIt.I.get<HomeCubit>().loadHomeData();
+  }
+
+  @override
+  void providePublicApi() {
+    GetIt.I.registerSingleton<HomeService>(DefaultHomeService());
   }
 }
