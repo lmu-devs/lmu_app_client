@@ -54,5 +54,8 @@
     "servingOpeningSoon": "Essensausgabe öffnet um {time} Uhr",
     "servingClosingSoon": "Essensausgabe schließt um {time} Uhr",
     "ingredients": "Inhalte",
-    "prices": "Preise"
+    "prices": "Preise",
+    "basePrice": "Basispreis",
+    "simplePrice": "Einfacher Preis",
+    "pricePerUnit": "{price} je {unit}"
 }

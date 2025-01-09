@@ -65,7 +65,7 @@ class _DishDetailsPageState extends State<DishDetailsPage> {
                       return LmuButton(
                         leadingWidget: StarIcon(isActive: isFavorite),
                         title:
-                            "${_menuItemModel.ratingModel.calculateLikeCount(isFavorite)} Likes",
+                            "${_menuItemModel.ratingModel.calculateLikeCount(isFavorite)} ${context.locals.app.likes}",
                         emphasis: ButtonEmphasis.secondary,
                         onTap: () => _userPreferenceService
                             .toggleFavoriteDishId(_menuItemModel.id),
@@ -112,14 +112,16 @@ class _DishDetailsPageState extends State<DishDetailsPage> {
                       (element) => element.category == selectedPriceCategory,
                     );
 
-                    final priceString =
-                        "${price.pricePerUnit} € je ${price.unit}";
+                    final priceString = context.locals.canteen.pricePerUnit(
+                      price.pricePerUnit.toStringAsFixed(2),
+                      price.unit,
+                    );
 
                     return LmuContentTile(
                       content: [
                         if (price.basePrice > 0.0)
                           LmuListItem.base(
-                            title: "Base Price",
+                            title: context.locals.canteen.basePrice,
                             trailingTitle: '${price.basePrice} €',
                           ),
                         LmuListItem.base(
@@ -143,7 +145,7 @@ class _DishDetailsPageState extends State<DishDetailsPage> {
                           },
                         ),
                         LmuListItem.base(
-                          title: "Simple Price",
+                          title: context.locals.canteen.simplePrice,
                           trailingTitle: _menuItemModel.priceSimple,
                         ),
                       ],
@@ -172,7 +174,11 @@ extension PriceCategoryName on PriceCategory {
 }
 
 extension PriceFormatter on PriceModel {
-  String get priceString => "$pricePerUnit € je $unit";
+  String priceString(CanteenLocalizations localizations) =>
+      localizations.pricePerUnit(
+        pricePerUnit.toStringAsFixed(2),
+        unit,
+      );
 }
 
 class _PriceCategoryActionSheetContent extends StatelessWidget {
@@ -206,7 +212,7 @@ class _PriceCategoryActionSheetContent extends StatelessWidget {
                     children: [
                       LmuListItem.base(
                         title: priceModel.category.name(context.locals.canteen),
-                        trailingTitle: priceModel.priceString,
+                        trailingTitle: priceModel.priceString(context.locals.canteen),
                         trailingTitleColor: textColor,
                         titleColor: textColor,
                         mainContentAlignment: MainContentAlignment.center,

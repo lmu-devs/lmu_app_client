@@ -100,5 +100,9 @@
   "reportBug": "Report a bug",
   "@reportBug": {
     "description": "Report a bug"
+  },
+  "likes": "Likes",
+  "@likes": {
+    "description": "Likes"
   }
 }

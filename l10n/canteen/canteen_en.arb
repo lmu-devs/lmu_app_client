@@ -260,5 +260,27 @@
   "prices": "Prices",
   "@prices": {
     "description": "Prices"
+  },
+  "basePrice": "Base Price",
+  "@basePrice": {
+    "description": "Base Price"
+  },
+  "simplePrice": "Simple Price",
+  "@simplePrice": {
+    "description": "Simple Price"
+  },
+  "pricePerUnit": "{price} € per {unit}",
+  "@pricePerUnit": {
+    "description": "Price per Unit",
+    "placeholders": {
+      "price": {
+        "type": "String",
+        "example": "1.50"
+      },
+      "unit": {
+        "type": "String",
+        "example": "100g"
+      }
+    }
   }
 }
