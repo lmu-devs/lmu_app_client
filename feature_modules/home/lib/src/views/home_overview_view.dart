@@ -1,8 +1,11 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import '../repository/api/models/home_model.dart';
 import 'home_links_view.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 
 class HomeOverviewView extends StatelessWidget {
   const HomeOverviewView({
@@ -47,6 +50,23 @@ class HomeOverviewView extends StatelessWidget {
               ],
               mainContentAlignment: MainContentAlignment.center,
             ),
+          ],
+        ),
+      ),
+      const SizedBox(height: LmuSizes.size_72),
+      Center(
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(LucideIcons.construction, size: 16, color: Colors.grey),
+            const SizedBox(width: 8),
+            LmuText.body(
+              "This tab is work in progress",
+              color: Colors.grey,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(width: 8),
+            const Icon(LucideIcons.construction, size: 16, color: Colors.grey),
           ],
         ),
       ),
