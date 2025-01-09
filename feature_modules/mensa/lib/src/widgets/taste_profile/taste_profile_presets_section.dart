@@ -40,6 +40,7 @@ class TasteProfilePresetsSection extends StatelessWidget {
                       actionType: LmuListItemAction.radio,
                       mainContentAlignment: MainContentAlignment.center,
                       initialValue: selectedPreferencePreset?.contains(preferencesPreset.enumName),
+                      shouldChange: (value) => !value,
                       onChange: (value) {
                         final excludedLabels = Set<String>.from(excludedLabelsNotifier.value);
                         final presetName = preferencesPreset.enumName;

@@ -2,6 +2,7 @@ import 'package:core/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
+
 import '../repository/api/models/home_model.dart';
 import 'home_overview_view.dart';
 
@@ -52,8 +53,7 @@ class _HomeSuccessViewState extends State<HomeSuccessView> {
           ),
           sliver: SliverToBoxAdapter(
             child: SizedBox(
-              height: MediaQuery.of(context).size.height -
-                  200, // Adjust height as needed
+              height: MediaQuery.of(context).size.height - 200, // Adjust height as needed
               child: PageView(
                 controller: _pageController,
                 onPageChanged: (index) {

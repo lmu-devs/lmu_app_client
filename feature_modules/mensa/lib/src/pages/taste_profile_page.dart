@@ -25,6 +25,8 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
   void initState() {
     super.initState();
 
+    GetIt.I.get<TasteProfileService>().reinitState();
+
     if (_tasteProfileCubit.state is! TasteProfileLoadSuccess) {
       _tasteProfileCubit.loadTasteProfile();
     }

@@ -25,6 +25,7 @@ class LmuListItem extends StatelessWidget {
     this.trailingArea,
     this.actionType,
     this.onActionValueChanged,
+    this.shouldChangeActionValue,
     this.actionValueNotifier,
     this.hasVerticalPadding = true,
     this.hasHorizontalPadding = true,
@@ -50,6 +51,7 @@ class LmuListItem extends StatelessWidget {
   final Widget? trailingArea;
   final LmuListItemAction? actionType;
   final void Function(bool)? onActionValueChanged;
+  final bool Function(bool)? shouldChangeActionValue;
   final ValueNotifier<bool>? actionValueNotifier;
   final void Function()? onTap;
   final bool hasVerticalPadding;
@@ -107,6 +109,7 @@ class LmuListItem extends StatelessWidget {
   factory LmuListItem.action({
     required LmuListItemAction actionType,
     void Function(bool)? onChange,
+    bool Function(bool)? shouldChange,
     bool? initialValue,
     Key? key,
     String? title,
@@ -149,6 +152,7 @@ class LmuListItem extends StatelessWidget {
       trailingArea: trailingArea,
       actionValueNotifier: ValueNotifier<bool>(initialValue ?? false),
       onActionValueChanged: onChange,
+      shouldChangeActionValue: shouldChange,
       hasHorizontalPadding: hasHorizontalPadding ?? true,
       hasVerticalPadding: hasVerticalPadding ?? true,
       actionType: actionType,
@@ -196,8 +200,10 @@ class LmuListItem extends StatelessWidget {
             onTap?.call();
             if (actionValueNotifier != null) {
               final currentValue = actionValueNotifier!.value;
-              actionValueNotifier?.value = !currentValue;
-              onActionValueChanged?.call(!currentValue);
+              if (shouldChangeActionValue?.call(currentValue) ?? true) {
+                actionValueNotifier?.value = !currentValue;
+                onActionValueChanged?.call(!currentValue);
+              }
             }
           },
           child: Padding(

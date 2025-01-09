@@ -44,9 +44,8 @@ class _LmuTabBarState extends State<LmuTabBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Stack(
+      alignment: Alignment.bottomCenter,
       children: [
         Container(
           color: context.colors.neutralColors.backgroundColors.base,

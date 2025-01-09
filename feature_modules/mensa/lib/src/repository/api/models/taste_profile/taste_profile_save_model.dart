@@ -44,4 +44,9 @@ class TasteProfileStateModel extends Equatable {
       excludedLabels: excludedLabels ?? this.excludedLabels,
     );
   }
+
+  @override
+  String toString() {
+    return 'TasteProfileStateModel{isActive: $isActive, selectedAllergiesPresets: $selectedAllergiesPresets, selectedPreferencePreset: $selectedPreferencePreset, excludedLabels: $excludedLabels}';
+  }
 }
