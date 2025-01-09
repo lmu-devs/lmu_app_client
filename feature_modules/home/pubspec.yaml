@@ -1,7 +1,6 @@
 name: home
 description: "A new Flutter package project."
 version: 0.0.1
-homepage:
 publish_to: 'none'
 
 environment:
@@ -21,13 +20,16 @@ dependencies:
   flutter_lucide: ^1.2.0
   shared_api:
     path: ../../shared_api
+  json_annotation: ^4.8.1
 
+  http: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
   build_runner: any
   build_verify: any
+  json_serializable: ^6.7.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

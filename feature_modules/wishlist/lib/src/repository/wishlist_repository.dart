@@ -1,4 +1,3 @@
-import 'package:shared_api/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/models/wishlist_model.dart';
@@ -19,19 +18,16 @@ abstract class WishlistRepository {
 class ConnectedWishlistRepository implements WishlistRepository {
   ConnectedWishlistRepository({
     required this.wishlistApiClient,
-    required this.userService,
   });
 
   final WishlistApiClient wishlistApiClient;
-  final UserService userService;
 
   static const String _likedWishlistIdsKey = 'liked_wishlist_ids_key';
 
   @override
   Future<List<WishlistModel>> getWishlistEntries({int? id}) async {
     try {
-      final userApiKey = userService.userApiKey;
-      final wishlistEntries = await wishlistApiClient.getWishlistModels(id: id, userApiKey: userApiKey);
+      final wishlistEntries = await wishlistApiClient.getWishlistModels(id: id);
       return wishlistEntries;
     } catch (e) {
       rethrow;
@@ -48,14 +44,7 @@ class ConnectedWishlistRepository implements WishlistRepository {
 
   @override
   Future<bool> toggleWishlistLike(int id) async {
-    final userApiKey = userService.userApiKey;
-
-    if (userApiKey == null) throw Exception('User api key is null');
-
-    return await wishlistApiClient.toggleWishlistLike(
-      id: id,
-      userApiKey: userApiKey,
-    );
+    return await wishlistApiClient.toggleWishlistLike(id: id);
   }
 
   @override

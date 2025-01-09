@@ -27,7 +27,6 @@ class MenuExcludedSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final favoriteDishIdsNotifier = GetIt.I.get<MensaUserPreferencesService>().favoriteDishIdsNotifier;
-    final selectedLanguage = Localizations.localeOf(context).languageCode.toUpperCase();
     final canteenLocalizations = context.locals.canteen;
     return Column(
       children: [
@@ -69,7 +68,7 @@ class MenuExcludedSection extends StatelessWidget {
                     menuItemModel: dishModel,
                     isFavorite: isFavorite,
                     hasDivider: !isLastItem,
-                    excludedLabelItemsName: labelText.map((e) => e.text[selectedLanguage]!).toList(),
+                    excludedLabelItemsName: labelText.map((e) => e.text).toList(),
                   );
                 },
               );

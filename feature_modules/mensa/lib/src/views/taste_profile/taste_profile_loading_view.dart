@@ -14,7 +14,8 @@ import '../../widgets/taste_profile/taste_profile_title_section.dart';
 class TasteProfileLoadingView extends StatelessWidget {
   const TasteProfileLoadingView({super.key});
 
-  static const _presetsItems = 6;
+  static const _preferencePresetsItems = 4;
+  static const _allergiesPresetsItems = 2;
   static const _labelsItems = [4, 2, 3, 5];
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,18 @@ class TasteProfileLoadingView extends StatelessWidget {
                   LmuTileHeadline.base(title: localizations.presets),
                   LmuContentTile(
                     content: [
-                      for (var i = 0; i < _presetsItems; i++)
+                      for (var i = 0; i < _preferencePresetsItems; i++)
+                        LmuListItemLoading(
+                          titleLength: 2,
+                          leadingArea: LmuText.body('🍔'),
+                          action: LmuListItemAction.radio,
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: LmuSizes.size_16),
+                  LmuContentTile(
+                    content: [
+                      for (var i = 0; i < _allergiesPresetsItems; i++)
                         LmuListItemLoading(
                           titleLength: 2,
                           leadingArea: LmuText.body('🍔'),

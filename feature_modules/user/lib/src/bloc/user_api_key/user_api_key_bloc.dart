@@ -44,7 +44,7 @@ class UserApiKeyBloc extends Bloc<UserApiKeyEvent, UserApiKeyState> {
     emit(UserApiKeyDeleteInProgress(apiKey: apiKey));
 
     try {
-      await _repository.deleteUser(apiKey);
+      await _repository.deleteUser();
       emit(UserApiKeyDeleteSuccess());
       add(CreateUserApiKey());
     } catch (e) {

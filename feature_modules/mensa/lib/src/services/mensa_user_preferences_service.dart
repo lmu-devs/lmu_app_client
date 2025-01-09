@@ -65,10 +65,18 @@ class MensaUserPreferencesService {
 
         final missingSyncMensaIds = unsyncedFavoriteMensaIds + unsyncedUnfavoriteMensaIds;
         for (final missingSyncMensaId in missingSyncMensaIds) {
-          await toggleFavoriteMensaId(missingSyncMensaId);
+          await _toggleMissingMensaIds(missingSyncMensaId);
         }
       }
     });
+  }
+
+  Future<void> _toggleMissingMensaIds(String mensaId) async {
+    try {
+      await _mensaRepository.toggleFavoriteMensaId(mensaId);
+    } catch (e) {
+      print('Failed to sync missing favorite mensa $mensaId: $e');
+    }
   }
 
   Future<void> toggleFavoriteMensaId(String mensaId) async {

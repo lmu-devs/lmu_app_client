@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/extensions.dart';
@@ -126,28 +124,28 @@ class WishlistSuccessView extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
                 child: Column(
                   children: [
-                    LmuContentTile(
-                      content: [
+                    /**LmuContentTile(
+                        content: [
                         LmuListItem.base(
-                          title: context.locals.wishlist.betaTitle,
-                          subtitle: context.locals.wishlist.betaSubtitle,
-                          mainContentAlignment: MainContentAlignment.center,
-                          trailingArea: LmuIcon(
-                            icon: LucideIcons.external_link,
-                            color: context.colors.neutralColors.textColors.weakColors.base,
-                            size: LmuIconSizes.mediumSmall,
-                          ),
-                          onTap: () {
-                            LmuUrlLauncher.launchWebsite(
-                              url: Platform.isIOS ? LmuDevStrings.openBetaTestFlight : LmuDevStrings.openBetaPlayStore,
-                              context: context,
-                              mode: LmuUrlLauncherMode.inAppWebView,
-                            );
-                          },
+                        title: context.locals.wishlist.betaTitle,
+                        subtitle: context.locals.wishlist.betaSubtitle,
+                        mainContentAlignment: MainContentAlignment.center,
+                        trailingArea: LmuIcon(
+                        icon: LucideIcons.external_link,
+                        color: context.colors.neutralColors.textColors.weakColors.base,
+                        size: LmuIconSizes.mediumSmall,
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: LmuSizes.size_24),
+                        onTap: () {
+                        LmuUrlLauncher.launchWebsite(
+                        url: Platform.isIOS ? LmuDevStrings.openBetaTestFlight : LmuDevStrings.openBetaPlayStore,
+                        context: context,
+                        mode: LmuUrlLauncherMode.inAppWebView,
+                        );
+                        },
+                        ),
+                        ],
+                        ),
+                        const SizedBox(height: LmuSizes.size_24),**/
                     if (publicWishlistModels.isNotEmpty)
                       Column(
                         children: [

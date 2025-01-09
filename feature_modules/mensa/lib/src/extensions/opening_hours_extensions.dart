@@ -56,7 +56,7 @@ extension StatusTimeExtension on List<MensaOpeningDetails> {
 
   MensaOpeningDetails? _getTodayOpeningDetails() {
     final now = DateTime.now();
-    return firstWhereOrNull((element) => Weekday.values.indexOf(element.day) == now.weekday);
+    return firstWhereOrNull((element) => Weekday.values.indexOf(element.day) == now.weekday - 1);
   }
 
   String get closingTime {
