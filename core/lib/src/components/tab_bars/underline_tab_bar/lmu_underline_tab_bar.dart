@@ -1,7 +1,8 @@
 import 'package:core/components.dart';
-import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../constants.dart';
 
 class LmuUnderlineTabBar extends StatelessWidget {
   const LmuUnderlineTabBar({

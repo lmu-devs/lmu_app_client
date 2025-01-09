@@ -192,7 +192,7 @@ class MapBottomSheetState extends State<MapBottomSheet> {
                         )
                       else
                         const SizedBox.shrink(),
-                      LmuSearchInputField(
+                      /**LmuSearchInputField(
                         context: context,
                         controller: _searchController,
                         focusNode: _searchFocusNode,
@@ -202,7 +202,7 @@ class MapBottomSheetState extends State<MapBottomSheet> {
                           widget.selectedMensaNotifier.value = null;
                         },
                         isLoading: false,
-                      ),
+                      ),**/
                     ],
                   ),
                 ),

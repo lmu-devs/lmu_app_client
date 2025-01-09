@@ -8,8 +8,35 @@
     "description": "The title of the Home Page"
   },
   "homeDescription": "The App's Homepage",
-  "@feedbackDescription": {
+  "@homeDescription": {
     "description": "The description of the Home Page"
+  },
+  "overviewTab": "Overview",
+  "@overviewTab": {
+    "description": "Title of the overview tab"
+  },
+  "newsTab": "News",
+  "@newsTab": {
+    "description": "Title of the news tab"
+  },
+  "moviesTab": "Movies",
+  "@moviesTab": {
+    "description": "Title of the movies tab"
+  },
+  "groupTab": "Groups",
+  "@groupTab": {
+    "description": "Title of the groups tab"
+  },
+  "tuitionFee": "Tuition Fee",
+  "@tuitionFee": {
+    "description": "Tuition fee"
+  },
+  "lecturePeriod": "Lecture Period",
+  "@lecturePeriod": {
+    "description": "Lecture period"
+  },
+  "lectureFreePeriod": "Lecture-Free Period",
+  "@lectureFreePeriod": {
+    "description": "Lecture-free period"
   }
-
 }
