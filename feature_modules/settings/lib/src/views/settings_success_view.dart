@@ -134,7 +134,7 @@ class SettingsSuccessView extends StatelessWidget {
             const SizedBox(
               height: LmuSizes.size_16,
             ),
-            LmuContentTile(
+            /**LmuContentTile(
               content: [
                 LmuListItem.action(
                   title: "Debug",
@@ -148,7 +148,7 @@ class SettingsSuccessView extends StatelessWidget {
             ),
             const SizedBox(
               height: LmuSizes.size_16,
-            ),
+            ),**/
             LmuContentTile(
               content: [
                 LmuListItem.base(

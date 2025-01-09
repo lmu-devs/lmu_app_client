@@ -3,5 +3,12 @@
   "@@context": "Home",
   
   "tabTitle": "Home",
-  "homeDescription": "Startseite der App"
+  "homeDescription": "Startseite der App",
+  "overviewTab": "Überblick",
+  "newsTab": "News",
+  "moviesTab": "Filme",
+  "groupTab": "Gruppen",
+  "tuitionFee": "Semesterbeitrag",
+  "lecturePeriod": "Vorlesungszeit",
+  "lectureFreePeriod": "Vorlesungsfreie Zeit"
 }

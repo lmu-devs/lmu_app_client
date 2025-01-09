@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
@@ -24,21 +25,21 @@ class HomeOverviewView extends StatelessWidget {
         child: LmuContentTile(
           content: [
             LmuListItem.base(
-              title: "Studienbeitrag",
+              title: context.locals.home.tuitionFee,
               trailingTitleInTextVisuals: [
                 LmuInTextVisual.text(title: homeData.submissionFee, color: Colors.deepOrangeAccent),
               ],
               mainContentAlignment: MainContentAlignment.center,
             ),
             LmuListItem.base(
-              title: "Vorlesungszeit",
+              title: context.locals.home.lecturePeriod,
               trailingTitleInTextVisuals: [
                 LmuInTextVisual.text(title: homeData.lectureTime, color: Colors.blue),
               ],
               mainContentAlignment: MainContentAlignment.center,
             ),
             LmuListItem.base(
-              title: "Vorlesungsfreiezeit",
+              title: context.locals.home.lectureFreePeriod,
               trailingTitleInTextVisuals: [
                 LmuInTextVisual.text(title: homeData.lectureFreeTime, color: Colors.blue),
               ],
