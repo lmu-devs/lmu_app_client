@@ -31,7 +31,6 @@ class LmuListItem extends StatelessWidget {
     this.onTap,
     this.hasDivider = false,
     this.maximizeLeadingTitleArea = false,
-    this.condensed = false,
   }) : super(key: key);
 
   final String? title;
@@ -57,7 +56,6 @@ class LmuListItem extends StatelessWidget {
   final bool hasHorizontalPadding;
   final bool hasDivider;
   final bool maximizeLeadingTitleArea;
-  final bool condensed;
 
   factory LmuListItem.base({
     Key? key,
@@ -81,7 +79,6 @@ class LmuListItem extends StatelessWidget {
     bool? hasHorizontalPadding,
     bool? hasDivider,
     bool? maximizeLeadingTitleArea,
-    bool? condensed,
   }) =>
       LmuListItem._(
         key: key,
@@ -105,7 +102,6 @@ class LmuListItem extends StatelessWidget {
         hasVerticalPadding: hasVerticalPadding ?? true,
         hasDivider: hasDivider ?? false,
         maximizeLeadingTitleArea: maximizeLeadingTitleArea ?? false,
-        condensed: condensed ?? false,
       );
 
   factory LmuListItem.action({
@@ -133,7 +129,6 @@ class LmuListItem extends StatelessWidget {
     bool? hasHorizontalPadding,
     bool? hasDivider,
     bool? maximizeLeadingTitleArea,
-    bool? condensed,
   }) {
     return LmuListItem._(
       key: key,
@@ -160,7 +155,6 @@ class LmuListItem extends StatelessWidget {
       onTap: onTap,
       hasDivider: hasDivider ?? false,
       maximizeLeadingTitleArea: maximizeLeadingTitleArea ?? false,
-      condensed: condensed ?? false,
     );
   }
 
@@ -208,11 +202,7 @@ class LmuListItem extends StatelessWidget {
           },
           child: Padding(
             padding: EdgeInsets.symmetric(
-              vertical: hasVerticalPadding
-                  ? condensed
-                      ? LmuSizes.size_4
-                      : LmuSizes.size_12
-                  : LmuSizes.size_8,
+              vertical: hasVerticalPadding ? LmuSizes.size_12 : LmuSizes.size_8,
               horizontal: hasHorizontalPadding ? LmuSizes.size_12 : LmuSizes.none,
             ),
             child: Row(

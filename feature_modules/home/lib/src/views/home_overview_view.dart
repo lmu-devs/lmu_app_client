@@ -25,7 +25,6 @@ class HomeOverviewView extends StatelessWidget {
             content: [
               LmuListItem.base(
                 title: "Studienbeitrag",
-                condensed: true,
                 trailingTitleInTextVisuals: [
                   LmuInTextVisual.text(
                       title: homeData.submissionFee,
@@ -35,7 +34,6 @@ class HomeOverviewView extends StatelessWidget {
               ),
               LmuListItem.base(
                 title: "Vorlesungszeit",
-                condensed: true,
                 trailingTitleInTextVisuals: [
                   LmuInTextVisual.text(
                       title: homeData.lectureTime, color: Colors.blue),
@@ -44,7 +42,6 @@ class HomeOverviewView extends StatelessWidget {
               ),
               LmuListItem.base(
                 title: "Vorlesungsfreiezeit",
-                condensed: true,
                 trailingTitleInTextVisuals: [
                   LmuInTextVisual.text(
                       title: homeData.lectureFreeTime, color: Colors.blue),

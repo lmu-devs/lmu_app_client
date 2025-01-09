@@ -13,6 +13,19 @@ class HomeLinksView extends StatelessWidget {
 
   final List<LinkModel> links;
 
+  IconData getIcon(String title) {
+    return switch (title) {
+      'Moodle' => LucideIcons.book,
+      'LMU-Portal' => LucideIcons.house,
+      'LMU-Mail' => LucideIcons.mail,
+      'Beitragskonto' => LucideIcons.coins,
+      'Raumfinder' => LucideIcons.map_pin,
+      'Immatrikulation' => LucideIcons.file_check,
+      'Benutzerkonto' => LucideIcons.user,
+      _ => LucideIcons.link,
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -22,20 +35,9 @@ class HomeLinksView extends StatelessWidget {
         direction: Axis.horizontal,
         spacing: LmuSizes.size_8,
         children: links.map((link) {
-          final IconData icon = switch (link.title) {
-            'Moodle' => LucideIcons.book,
-            'LMU-Portal' => LucideIcons.house,
-            'LMU-Mail' => LucideIcons.mail,
-            'Beitragskonto' => LucideIcons.coins,
-            'Raumfinder' => LucideIcons.map_pin,
-            'Immatrikulation' => LucideIcons.file_check,
-            'Benutzerkonto' => LucideIcons.user,
-            _ => LucideIcons.link,
-          };
-
           return LmuButton(
             title: link.title,
-            leadingIcon: icon,
+            leadingIcon: getIcon(link.title),
             emphasis: ButtonEmphasis.secondary,
             onTap: () => LmuUrlLauncher.launchWebsite(
               url: link.url,
