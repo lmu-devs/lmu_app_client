@@ -29,7 +29,7 @@ class SettingsLocalizationsEn extends SettingsLocalizations {
   String get contact => 'Get in touch';
 
   @override
-  String get donate => 'OnlyFans';
+  String get donate => 'Donate';
 
   @override
   String get dataPrivacy => 'Data Privacy';
@@ -65,8 +65,7 @@ class SettingsLocalizationsEn extends SettingsLocalizations {
   String get connectToAccount => 'Connect to LMU Account';
 
   @override
-  String get connectToAccountDescription =>
-      'Currently, your account is only accessible via your current device. We are working on establishing a connection to your LMU account to synchronize your data.';
+  String get connectToAccountDescription => 'Currently, your account is only accessible via your current device. We are working on establishing a connection to your LMU account to synchronize your data.';
 
   @override
   String get manageData => 'Your Data';
@@ -75,21 +74,28 @@ class SettingsLocalizationsEn extends SettingsLocalizations {
   String get technicalDetails => 'Technical Details';
 
   @override
-  String get deleteDataDescription =>
-      'We securely store your data (e.g. likes) on our servers. You have full control over your data and can delete it at any time.';
+  String get deleteDataDescription => 'We securely store your data (e.g. likes) on our servers. You have full control over your data and can delete it at any time.';
 
   @override
   String get deleteDataTitleFinal => 'Delete your account data';
 
   @override
-  String get deleteDataDescriptionFinal =>
-      'This action will permanently delete all account data from our server and your device. This includes all dish likes, canteen likes, taste profile.';
+  String get deleteDataDescriptionFinal => 'This action will permanently delete all account data from our server and your device. This includes all dish likes, canteen likes, taste profile.';
 
   @override
   String get deleteDataButton => 'Delete all Data';
 
   @override
   String get deleteDataButtonFinal => 'Delete all Data';
+
+  @override
+  String get accountDeletedTitle => 'Account deleted';
+
+  @override
+  String get accountDeletedText => 'We deleted all your data from our server. You can continue using our app with a brand new account.';
+
+  @override
+  String get accountDeletedButton => 'Continue with new account';
 
   @override
   String get deviceId => 'Device ID';

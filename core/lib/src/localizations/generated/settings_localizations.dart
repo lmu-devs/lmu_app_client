@@ -88,7 +88,10 @@ abstract class SettingsLocalizations {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('de'), Locale('en')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('de'),
+    Locale('en')
+  ];
 
   /// The title of the Settings tab
   ///
@@ -141,7 +144,7 @@ abstract class SettingsLocalizations {
   /// Title for list item to donate
   ///
   /// In en, this message translates to:
-  /// **'OnlyFans'**
+  /// **'Donate'**
   String get donate;
 
   /// Title for list item to show data privacy
@@ -258,6 +261,24 @@ abstract class SettingsLocalizations {
   /// **'Delete all Data'**
   String get deleteDataButtonFinal;
 
+  /// Account deleted title
+  ///
+  /// In en, this message translates to:
+  /// **'Account deleted'**
+  String get accountDeletedTitle;
+
+  /// Account deleted text
+  ///
+  /// In en, this message translates to:
+  /// **'We deleted all your data from our server. You can continue using our app with a brand new account.'**
+  String get accountDeletedText;
+
+  /// Account deleted button
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with new account'**
+  String get accountDeletedButton;
+
   /// Device ID
   ///
   /// In en, this message translates to:
@@ -281,16 +302,18 @@ class _SettingsLocalizationsDelegate extends LocalizationsDelegate<SettingsLocal
 }
 
 SettingsLocalizations lookupSettingsLocalizations(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'de':
-      return SettingsLocalizationsDe();
-    case 'en':
-      return SettingsLocalizationsEn();
+    case 'de': return SettingsLocalizationsDe();
+    case 'en': return SettingsLocalizationsEn();
   }
 
-  throw FlutterError('SettingsLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+  throw FlutterError(
+    'SettingsLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.'
+  );
 }

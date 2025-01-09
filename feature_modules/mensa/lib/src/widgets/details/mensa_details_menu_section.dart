@@ -77,10 +77,9 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
                   trailingWidget: dayModel.isClosed
                       ? ClipOval(
                           child: Container(
-                            width: LmuSizes.size_8,
-                            height: LmuSizes.size_8,
-                            color: context.colors.warningColors.textColors.strongColors.base,
-                          ),
+                              width: LmuSizes.size_8,
+                              height: LmuSizes.size_8,
+                              color: context.colors.dangerColors.textColors.strongColors.base),
                         )
                       : null,
                   hasDivider: isLastDayOfWeek,

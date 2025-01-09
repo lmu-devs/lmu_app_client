@@ -6,6 +6,7 @@ import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/feedback.dart';
 
 import '../repository/api/api.dart';
 import '../services/services.dart';
@@ -27,6 +28,11 @@ class WishlistDetailsPage extends StatelessWidget {
           url: wishlistModel.prototypeUrl,
           context: context,
           mode: LmuUrlLauncherMode.inAppWebView,
+        ).whenComplete(
+          () => GetIt.I.get<FeedbackService>().navigateToFeedback(
+                context,
+                'Wishlist Entry: ${wishlistModel.title}',
+              ),
         );
       }
     } else {
@@ -76,39 +82,54 @@ class WishlistDetailsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-              child: Row(
-                children: [
-                  ValueListenableBuilder<List<String>>(
-                    valueListenable: GetIt.I<WishlistUserPreferenceService>().likedWishlistIdsNotifier,
-                    builder: (context, likedWishlistIds, child) {
-                      final isLiked = likedWishlistIds.contains(wishlistModel.id.toString());
-                      final calculatedLikes = wishlistModel.ratingModel.calculateLikeCount(isLiked);
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+                child: Wrap(
+                  direction: Axis.horizontal,
+                  spacing: LmuSizes.size_8,
+                  children: [
+                    ValueListenableBuilder<List<String>>(
+                      valueListenable: GetIt.I<WishlistUserPreferenceService>().likedWishlistIdsNotifier,
+                      builder: (context, likedWishlistIds, child) {
+                        final isLiked = likedWishlistIds.contains(wishlistModel.id.toString());
+                        final calculatedLikes = wishlistModel.ratingModel.calculateLikeCount(isLiked);
 
-                      return LmuButton(
-                        leadingWidget: StarIcon(
-                          key: ValueKey(wishlistModel.id),
-                          isActive: isLiked,
-                          disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
-                        ),
-                        title: "$calculatedLikes Likes",
-                        emphasis: ButtonEmphasis.secondary,
-                        onTap: () async {
-                          await GetIt.I<WishlistUserPreferenceService>()
-                              .toggleLikedWishlistId(wishlistModel.id.toString());
-                          LmuVibrations.secondary();
-                        },
-                      );
-                    },
-                  ),
-                ],
+                        return LmuButton(
+                          leadingWidget: StarIcon(
+                            key: ValueKey(wishlistModel.id),
+                            isActive: isLiked,
+                            disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
+                          ),
+                          title: "$calculatedLikes Likes",
+                          emphasis: ButtonEmphasis.secondary,
+                          onTap: () async {
+                            await GetIt.I<WishlistUserPreferenceService>()
+                                .toggleLikedWishlistId(wishlistModel.id.toString());
+                            LmuVibrations.secondary();
+                          },
+                        );
+                      },
+                    ),
+                    LmuButton(
+                      title: context.locals.feedback.feedbackButton,
+                      emphasis: ButtonEmphasis.secondary,
+                      onTap: () => GetIt.I
+                          .get<FeedbackService>()
+                          .navigateToFeedback(context, 'Wishlist Entry: ${wishlistModel.title}'),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: LmuSizes.size_24),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-              child: LmuText.body(wishlistModel.description),
+              child: LmuText.body(
+                wishlistModel.description,
+                color: context.colors.neutralColors.textColors.mediumColors.base,
+              ),
             ),
             const SizedBox(height: LmuSizes.size_24),
             SizedBox(
@@ -130,6 +151,14 @@ class WishlistDetailsPage extends StatelessWidget {
                           wishlistModel.imageModels[index].url,
                           fit: BoxFit.cover,
                           semanticLabel: wishlistModel.imageModels[index].name,
+                          loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child;
+                            }
+                            return LmuSkeleton(
+                              child: child,
+                            );
+                          },
                         ),
                       ),
                     ),

@@ -26,8 +26,7 @@ class FeedbackLocalizationsDe extends FeedbackLocalizations {
   String get bugTitle => 'Fehler melden';
 
   @override
-  String get bugDescription =>
-      'Du hast einen Fehler entdeckt? Lass es uns wissen! Dein Feedback hilft uns, die App zu verbessern.';
+  String get bugDescription => 'Du hast einen Fehler entdeckt? Lass es uns wissen! Dein Feedback hilft uns, die App zu verbessern.';
 
   @override
   String get bugInputHint => 'Ich hatte einen Fehler bei ...';
@@ -45,8 +44,7 @@ class FeedbackLocalizationsDe extends FeedbackLocalizations {
   String get suggestionTitle => 'Funktion vorschlagen';
 
   @override
-  String get suggestionDescription =>
-      'Egal ob klein, groß, verrückt, kompliziert, langweilig oder visionär – teile Deine Ideen hier mit uns.';
+  String get suggestionDescription => 'Egal ob klein, groß, verrückt, kompliziert, langweilig oder visionär – teile Deine Ideen hier mit uns.';
 
   @override
   String get suggestionInputHint => 'Ich wünsche mir ...';

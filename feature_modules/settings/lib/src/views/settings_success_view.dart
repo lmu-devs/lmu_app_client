@@ -26,16 +26,7 @@ class SettingsSuccessView extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(
-              height: LmuSizes.size_16,
-            ),
-            const SizedBox(height: LmuSizes.size_4),
-            LmuSearchInputField(
-              context: context,
-              controller: TextEditingController(),
-              focusNode: _searchFocusNode,
-            ),
-            const SizedBox(height: LmuSizes.size_20),
+            const SizedBox(height: LmuSizes.size_16),
             LmuContentTile(
               content: [
                 LmuListItem.action(
@@ -94,7 +85,13 @@ class SettingsSuccessView extends StatelessWidget {
                 LmuListItem.action(
                   title: settingLocalizations.donate,
                   actionType: LmuListItemAction.chevron,
-                  onTap: () {},
+                  onTap: () {
+                    LmuUrlLauncher.launchWebsite(
+                      context: context,
+                      url: LmuDevStrings.lmuDevDonate,
+                      mode: LmuUrlLauncherMode.inAppWebView,
+                    );
+                  },
                 ),
               ],
             ),
@@ -108,7 +105,10 @@ class SettingsSuccessView extends StatelessWidget {
                   actionType: LmuListItemAction.chevron,
                   onTap: () {
                     LmuUrlLauncher.launchWebsite(
-                        context: context, url: LmuDevStrings.lmuDevDataPrivacy, mode: LmuUrlLauncherMode.inAppWebView);
+                      context: context,
+                      url: LmuDevStrings.lmuDevDataPrivacy,
+                      mode: LmuUrlLauncherMode.inAppWebView,
+                    );
                   },
                 ),
                 LmuListItem.action(
@@ -116,7 +116,10 @@ class SettingsSuccessView extends StatelessWidget {
                   actionType: LmuListItemAction.chevron,
                   onTap: () {
                     LmuUrlLauncher.launchWebsite(
-                        context: context, url: LmuDevStrings.lmuDevImprint, mode: LmuUrlLauncherMode.inAppWebView);
+                      context: context,
+                      url: LmuDevStrings.lmuDevImprint,
+                      mode: LmuUrlLauncherMode.inAppWebView,
+                    );
                   },
                 ),
                 LmuListItem.action(
@@ -155,7 +158,7 @@ class SettingsSuccessView extends StatelessWidget {
               height: LmuSizes.size_16,
             ),
             LmuButton(
-              title: 'Feedback',
+              title: context.locals.feedback.feedbackButton,
               onTap: () => GetIt.I.get<FeedbackService>().navigateToFeedback(context, 'SettingsScreen'),
             ),
             const SizedBox(
