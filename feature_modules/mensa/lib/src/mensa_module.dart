@@ -26,12 +26,13 @@ class MensaModule extends AppModule
         userService: GetIt.I.get<UserService>(),
       ),
     );
-    GetIt.I.registerSingleton<MensaCubit>(MensaCubit());
+    GetIt.I.registerSingleton<MensaCubit>(MensaCubit(), dispose: (srv) => srv.close());
     GetIt.I.registerSingleton<TasteProfileService>(TasteProfileService());
-    GetIt.I.registerSingleton<TasteProfileCubit>(TasteProfileCubit());
+    GetIt.I.registerSingleton<TasteProfileCubit>(TasteProfileCubit(), dispose: (srv) => srv.close());
     GetIt.I.registerSingleton<MensaUserPreferencesService>(MensaUserPreferencesService());
-    GetIt.I.registerSingleton<MenuService>(MenuService());
-    GetIt.I.registerSingleton<MensaDistanceService>(MensaDistanceService());
+    GetIt.I.registerSingleton<MenuService>(MenuService(), dispose: (srv) => srv.dispose());
+    GetIt.I.registerSingleton<MensaDistanceService>(MensaDistanceService(), dispose: (srv) => srv.dispose());
+    GetIt.I.registerSingleton<MensaStatusUpdateService>(MensaStatusUpdateService(), dispose: (srv) => srv.dispose());
   }
 
   @override
@@ -45,6 +46,7 @@ class MensaModule extends AppModule
     GetIt.I.get<TasteProfileCubit>().loadTasteProfile();
     GetIt.I.get<TasteProfileService>().init();
     GetIt.I.get<MensaDistanceService>().init();
+    GetIt.I.get<MensaStatusUpdateService>().init();
   }
 
   @override

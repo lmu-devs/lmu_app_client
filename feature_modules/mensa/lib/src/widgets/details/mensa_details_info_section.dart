@@ -3,9 +3,11 @@ import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../extensions/opening_hours_extensions.dart';
 import '../../repository/api/api.dart';
+import '../../services/mensa_status_update_service.dart';
 
 class MensaDetailsInfoSection extends StatelessWidget {
   const MensaDetailsInfoSection({
@@ -21,35 +23,45 @@ class MensaDetailsInfoSection extends StatelessWidget {
     final openingDetails = mensaModel.openingHours.openingHours;
     final servingDetails = mensaModel.openingHours.servingHours;
 
-    final openingStatusStyling = mensaModel.currentOpeningStatus.openingStatus(
-      context,
-      openingDetails: openingDetails,
-    );
-    final servingStatusStyling = mensaModel.currentServingStatus.servingStatus(
-      context,
-      openingDetails: servingDetails ?? [],
-    );
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildLocationTile(context),
-          _buildStatusDropdown(
-            title: openingStatusStyling.text,
-            titleColor: openingStatusStyling.color,
-            details: openingDetails,
-            appLocalizations: appLocalizations,
+          ListenableBuilder(
+            listenable: GetIt.I<MensaStatusUpdateService>(),
+            builder: (context, child) {
+              final openingStatusStyling = mensaModel.currentOpeningStatus.openingStatus(
+                context,
+                openingDetails: openingDetails,
+              );
+              final servingStatusStyling = mensaModel.currentServingStatus.servingStatus(
+                context,
+                openingDetails: servingDetails ?? [],
+              );
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildStatusDropdown(
+                    title: openingStatusStyling.text,
+                    titleColor: openingStatusStyling.color,
+                    details: openingDetails,
+                    appLocalizations: appLocalizations,
+                  ),
+                  if (servingDetails?.isNotEmpty ?? false)
+                    _buildStatusDropdown(
+                      title: servingStatusStyling.text,
+                      titleColor: servingStatusStyling.color,
+                      details: servingDetails!,
+                      appLocalizations: appLocalizations,
+                    ),
+                  const SizedBox(height: LmuSizes.size_16),
+                ],
+              );
+            },
           ),
-          if (servingDetails?.isNotEmpty ?? false)
-            _buildStatusDropdown(
-              title: servingStatusStyling.text,
-              titleColor: servingStatusStyling.color,
-              details: servingDetails!,
-              appLocalizations: appLocalizations,
-            ),
-          const SizedBox(height: LmuSizes.size_16),
         ],
       ),
     );
