@@ -1,20 +1,18 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
+import 'package:core/api.dart';
+import 'package:get_it/get_it.dart';
 
 import 'models/wishlist_model.dart';
 import 'wishlist_api_endpoints.dart';
 
 class WishlistApiClient {
-  Future<List<WishlistModel>> getWishlistModels({int? id, String? userApiKey}) async {
+  final _baseApiClient = GetIt.I.get<BaseApiClient>();
+
+  Future<List<WishlistModel>> getWishlistModels({int? id}) async {
     try {
-      final response = await http.get(
-        Uri.parse(WishlistApiEndpoints.getWishlistModels(id: id)),
-        headers: userApiKey == null
-            ? null
-            : {
-                "user-api-key": userApiKey,
-              },
+      final response = await _baseApiClient.get(
+        WishlistApiEndpoints.getWishlistModels(id: id),
       );
 
       if (response.statusCode == 200) {
@@ -30,13 +28,10 @@ class WishlistApiClient {
     }
   }
 
-  Future<bool> toggleWishlistLike({required int id, required String userApiKey}) async {
+  Future<bool> toggleWishlistLike({required int id}) async {
     try {
-      final response = await http.post(
-        Uri.parse(WishlistApiEndpoints.toggleWishlistLike(id)),
-        headers: {
-          "user-api-key": userApiKey,
-        },
+      final response = await _baseApiClient.post(
+        WishlistApiEndpoints.toggleWishlistLike(id),
       );
 
       if (response.statusCode == 200) {

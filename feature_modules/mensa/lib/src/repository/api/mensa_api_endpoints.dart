@@ -1,8 +1,4 @@
 class MensaApiEndpoints {
-  static const String _baseUrl = "https://api.lmu-dev.org";
-
-  static const String _version = '/v1';
-
   static const String _foodRoute = '/food';
 
   static const String _canteensRoute = '/canteens';
@@ -16,22 +12,22 @@ class MensaApiEndpoints {
   static const String _dishIdQuery = 'dish_id';
 
   static String getMensaModels() {
-    return '$_baseUrl$_version$_foodRoute$_canteensRoute';
+    return '$_foodRoute$_canteensRoute';
   }
 
   static String getMenuDayForMensa(String canteenId) {
-    return '$_baseUrl$_version$_foodRoute$_menusRoute?$_canteenIdQuery=$canteenId';
+    return '$_foodRoute$_menusRoute?$_canteenIdQuery=$canteenId';
   }
 
   static String getTasteProfile() {
-    return '$_baseUrl$_version$_foodRoute$_tasteProfileRoute';
+    return '$_foodRoute$_tasteProfileRoute';
   }
 
   static String toggleFavoriteMensaId(String canteenId) {
-    return '$_baseUrl$_version$_foodRoute$_canteensRoute$_toggleLike?$_canteenIdQuery=$canteenId';
+    return '$_foodRoute$_canteensRoute$_toggleLike?$_canteenIdQuery=$canteenId';
   }
 
   static String toggleFavoriteDishId(String dishId) {
-    return '$_baseUrl$_version$_foodRoute$_dishesRoute$_toggleLike?$_dishIdQuery=$dishId';
+    return '$_foodRoute$_dishesRoute$_toggleLike?$_dishIdQuery=$dishId';
   }
 }

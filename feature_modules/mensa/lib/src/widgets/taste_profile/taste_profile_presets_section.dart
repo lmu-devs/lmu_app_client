@@ -18,7 +18,6 @@ class TasteProfilePresetsSection extends StatelessWidget {
     final isActiveNotifier = GetIt.I.get<TasteProfileService>().isActiveNotifier;
     final excludedLabelsNotifier = GetIt.I.get<TasteProfileService>().excludedLabelsNotifier;
     final localizations = context.locals.canteen;
-    final selectedLanguage = Localizations.localeOf(context).languageCode.toUpperCase();
     final tasteProfile = (GetIt.I.get<TasteProfileCubit>().state as TasteProfileLoadSuccess).tasteProfile;
     final preferencesPresets = tasteProfile.preferencesPresets;
     final allergiesPresets = tasteProfile.allergiesPresets;
@@ -36,7 +35,7 @@ class TasteProfilePresetsSection extends StatelessWidget {
                 content: [
                   for (final preferencesPreset in preferencesPresets)
                     LmuListItem.action(
-                      title: preferencesPreset.text[selectedLanguage],
+                      title: preferencesPreset.text,
                       leadingArea: LmuText.body(preferencesPreset.emojiAbbreviation),
                       actionType: LmuListItemAction.radio,
                       mainContentAlignment: MainContentAlignment.center,
@@ -78,7 +77,7 @@ class TasteProfilePresetsSection extends StatelessWidget {
                 content: [
                   for (final allergiesPreset in allergiesPresets)
                     LmuListItem.action(
-                      title: allergiesPreset.text[selectedLanguage],
+                      title: allergiesPreset.text,
                       leadingArea: LmuText.body(allergiesPreset.emojiAbbreviation),
                       actionType: LmuListItemAction.checkbox,
                       mainContentAlignment: MainContentAlignment.center,

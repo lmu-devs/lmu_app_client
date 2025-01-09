@@ -1,4 +1,4 @@
-import 'package:core/models.dart';
+import 'package:core/api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 

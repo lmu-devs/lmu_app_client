@@ -1,6 +1,5 @@
 import 'package:core/module.dart';
 import 'package:get_it/get_it.dart';
-import 'package:shared_api/user.dart';
 
 import 'bloc/bloc.dart';
 import 'public_api/default_mensa_public_api.dart';
@@ -23,7 +22,6 @@ class MensaModule extends AppModule
     GetIt.I.registerSingleton<MensaRepository>(
       ConnectedMensaRepository(
         mensaApiClient: MensaApiClient(),
-        userService: GetIt.I.get<UserService>(),
       ),
     );
     GetIt.I.registerSingleton<MensaCubit>(MensaCubit(), dispose: (srv) => srv.close());

@@ -42,8 +42,6 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final selectedLanguage = Localizations.localeOf(context).languageCode.toUpperCase();
-
     return LmuMasterAppBar(
       largeTitle: _menuItemModel.title,
       customScrollController: ModalScrollController.of(context),
@@ -92,7 +90,7 @@ class _MenuDetailsPageState extends State<MenuDetailsPage> {
                     final emoji = labelItem.emojiAbbreviation?.isEmpty ?? true ? "😀" : labelItem.emojiAbbreviation;
                     return LmuListItem.base(
                       leadingArea: LmuText.h1(emoji),
-                      title: labelItem.text[selectedLanguage],
+                      title: labelItem.text,
                     );
                   },
                 ).toList(),
