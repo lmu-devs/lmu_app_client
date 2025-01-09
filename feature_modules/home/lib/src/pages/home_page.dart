@@ -4,12 +4,11 @@ import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
-import 'package:home/src/bloc/bloc.dart';
+import '../bloc/bloc.dart';
 import 'package:shared_api/settings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../views/home_success_view.dart';
-import '../bloc/home_cubit.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
