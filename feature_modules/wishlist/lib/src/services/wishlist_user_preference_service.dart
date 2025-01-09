@@ -1,3 +1,4 @@
+import 'package:core/logging.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
@@ -10,6 +11,7 @@ class WishlistUserPreferenceService {
   WishlistUserPreferenceService();
 
   final _wishlistRepository = GetIt.I.get<WishlistRepository>();
+  final _appLogger = AppLogger();
 
   Future init() {
     return Future.wait([
@@ -32,6 +34,8 @@ class WishlistUserPreferenceService {
     final likedWishlistIds = await _wishlistRepository.getLikedWishlistIds() ?? [];
     _likedWishlistIdsNotifier.value = likedWishlistIds;
 
+    _appLogger.logMessage('[WishlistUserPreferenceService]: Local liked wishlist ids: $likedWishlistIds');
+
     final wishlistCubit = GetIt.I<WishlistCubit>();
     final wishlistCubitState = wishlistCubit.state;
     wishlistCubit.stream.withInitialValue(wishlistCubitState).listen((state) async {
@@ -40,19 +44,18 @@ class WishlistUserPreferenceService {
             .where((wishlistEntry) => wishlistEntry.ratingModel.isLiked)
             .map((wishlistEntry) => wishlistEntry.id.toString())
             .toList();
-        print("retrievedLikedWishlistIds: $retrievedLikedWishlistIds");
+        _appLogger
+            .logMessage('[WishlistUserPreferenceService]: Retrieved liked wishlist ids: $retrievedLikedWishlistIds');
 
         final unsyncedLikedWishlistIds =
             likedWishlistIds.where((id) => !retrievedLikedWishlistIds.contains(id.toString())).toList();
-        print("unsyncedLikedWishlistIds: $unsyncedLikedWishlistIds");
 
         final unsyncedUnlikedWishlistIds =
             retrievedLikedWishlistIds.where((id) => !likedWishlistIds.contains(id.toString())).toList();
-        print("unsyncedUnlikedWishlistIds: $unsyncedUnlikedWishlistIds");
 
         final missingSyncWishlistIds = unsyncedLikedWishlistIds + unsyncedUnlikedWishlistIds;
         for (final missingSyncWishlistId in missingSyncWishlistIds) {
-          await toggleLikedWishlistId(missingSyncWishlistId.toString());
+          await toggleLikedWishlistId(missingSyncWishlistId);
         }
       }
     });
@@ -70,10 +73,6 @@ class WishlistUserPreferenceService {
     _likedWishlistIdsNotifier.value = likedWishlistIds;
     await _wishlistRepository.saveLikedWishlistIds(likedWishlistIds);
 
-    try {
-      await _wishlistRepository.toggleWishlistLike(int.parse(id));
-    } catch (e) {
-      print('Failed to sync toggled liked wishlist entries $id: $e');
-    }
+    await _wishlistRepository.toggleWishlistLike(int.parse(id));
   }
 }

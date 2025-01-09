@@ -15,7 +15,7 @@ class AppLogger {
 
   static final AppLogger _instance = AppLogger._internal();
   final Logger _logger = Logger("AppLogger");
-  late File _logFile;
+  File? _logFile;
   final ValueNotifier<List<String>> _logsNotifier = ValueNotifier([]);
 
   ValueNotifier<List<String>> get logsNotifier => _logsNotifier;
@@ -24,8 +24,8 @@ class AppLogger {
     final directory = await getApplicationDocumentsDirectory();
     _logFile = File('${directory.path}/app_logs.txt');
 
-    if (!(await _logFile.exists())) {
-      await _logFile.create();
+    if (!(await _logFile!.exists())) {
+      await _logFile!.create();
     }
     _logsNotifier.value = await getLogs();
   }
@@ -35,9 +35,12 @@ class AppLogger {
     Logger.root.onRecord.listen((record) async {
       final logMessage = '[${record.level.name}] ${record.time.toIso8601String()}: ${record.message}';
       _logsNotifier.value = [..._logsNotifier.value, logMessage];
+      debugPrint(logMessage);
 
-      await _logFile.writeAsString('$logMessage\n', mode: FileMode.append);
+      await _logFile?.writeAsString('$logMessage\n', mode: FileMode.append);
     });
+
+    logMessage('App started');
   }
 
   void logMessage(String message, {Level level = Level.INFO}) {
@@ -49,16 +52,16 @@ class AppLogger {
   }
 
   Future<List<String>> getLogs() async {
-    if (await _logFile.exists()) {
-      return await _logFile.readAsLines();
+    if (await _logFile?.exists() ?? false) {
+      return await _logFile!.readAsLines();
     }
     return [];
   }
 
-  String get logFilePath => _logFile.path;
+  String get logFilePath => _logFile?.path ?? '';
 
   Future<void> clearLogs() async {
-    await _logFile.writeAsString('');
+    await _logFile?.writeAsString('');
     _logsNotifier.value = [];
   }
 }

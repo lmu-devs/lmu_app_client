@@ -45,7 +45,7 @@ class SettingsDebugPage extends StatelessWidget {
         ),
       ],
       body: Padding(
-        padding: const EdgeInsets.all(LmuSizes.size_16),
+        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
         child: ValueListenableBuilder(
           valueListenable: AppLogger().logsNotifier,
           builder: (context, value, _) {
@@ -53,8 +53,17 @@ class SettingsDebugPage extends StatelessWidget {
               padding: EdgeInsets.zero,
               itemCount: value.length,
               itemBuilder: (BuildContext context, int index) {
-                return LmuText.bodyXSmall(
-                  value[index],
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_2),
+                      child: LmuText.bodyXSmall(
+                        value[index],
+                      ),
+                    ),
+                    const LmuDivider(),
+                  ],
                 );
               },
             );
