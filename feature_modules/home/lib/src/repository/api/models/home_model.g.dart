@@ -16,6 +16,7 @@ HomeModel _$HomeModelFromJson(Map<String, dynamic> json) => HomeModel(
       links: (json['links'] as List<dynamic>)
           .map((e) => LinkModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+
     );
 
 Map<String, dynamic> _$HomeModelToJson(HomeModel instance) => <String, dynamic>{
