@@ -4,8 +4,8 @@
 
 
   "tabTitle": "Home",
-  "@homeTitle": {
-    "description": "The title of the Home Page"
+  "@tabTitle": {
+    "description": "Title of the home tab"
   },
   "homeDescription": "The App's Homepage",
   "@homeDescription": {
@@ -38,5 +38,43 @@
   "lectureFreePeriod": "Lecture-Free Period",
   "@lectureFreePeriod": {
     "description": "Lecture-free period"
+  },
+  "lectureFreePeriodDays": "You have {days} days to re-enroll again",
+  "@lectureFreePeriodDays": {
+    "description": "You have {days} days to re-enroll again",
+    "placeholders": {
+      "days": {
+        "type": "String",
+        "example": "10"
+      }
+    }
+  },
+  "tuitionFeeCopy": "Tuition fee copied",
+  "@tuitionFeeCopy": {
+    "description": "Tuition fee copied"
+  },
+  "receiver": "Receiver",
+  "@receiver": {
+    "description": "Receiver"
+  },
+  "receiverCopy": "Receiver copied",
+  "@receiverCopy": {
+    "description": "Receiver copied"
+  },
+  "iban": "IBAN",
+  "@iban": {
+    "description": "IBAN"
+  },
+  "ibanCopy": "IBAN copied",
+  "@ibanCopy": {
+    "description": "IBAN copied"
+  },
+  "reference": "Reference",
+  "@reference": {
+    "description": "Reference"
+  },
+  "referenceCopy": "Reference copied",
+  "@referenceCopy": {
+    "description": "Reference copied"
   }
 }

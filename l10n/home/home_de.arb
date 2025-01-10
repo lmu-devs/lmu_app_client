@@ -10,5 +10,14 @@
   "groupTab": "Gruppen",
   "tuitionFee": "Semesterbeitrag",
   "lecturePeriod": "Vorlesungszeit",
-  "lectureFreePeriod": "Vorlesungsfreie Zeit"
+  "lectureFreePeriod": "Vorlesungsfreie Zeit",
+  "lectureFreePeriodDays": "Du hast noch {days} Tage um dich zurück zu melden",
+  "tuitionFeeCopy": "Semesterbeitrag kopiert",
+  "receiver": "Empfänger",
+  "receiverCopy": "Empfänger kopiert",
+  "iban": "IBAN",
+  "ibanCopy": "IBAN kopiert",
+  "reference": "Zweck",
+  "referenceCopy": "Zweck kopiert"
 }
+
