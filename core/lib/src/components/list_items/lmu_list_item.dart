@@ -229,7 +229,7 @@ class LmuListItem extends StatelessWidget {
                       children: [
                         if (_hasLeadingTitleArea || _hasLeadingSubtitleArea)
                           Flexible(
-                            flex: maximizeLeadingTitleArea ? 3 : 1,
+                            flex: maximizeLeadingTitleArea ? 2 : 1,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
@@ -282,7 +282,7 @@ class LmuListItem extends StatelessWidget {
                           ),
                         if (_hasTrailingTitleArea || _hasTrailingSubtitleArea)
                           Flexible(
-                            flex: maximizeTrailingTitleArea ? 3 : 1,
+                            flex: maximizeTrailingTitleArea ? 2 : 1,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisSize: MainAxisSize.min,
