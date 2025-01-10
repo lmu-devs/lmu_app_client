@@ -7,15 +7,20 @@ part of 'home_model.dart';
 // **************************************************************************
 
 HomeModel _$HomeModelFromJson(Map<String, dynamic> json) => HomeModel(
-      submissionFee: json['submissionFee'] as String,
-      lectureFreeTime: json['lectureFreeTime'] as String,
-      lectureTime: json['lectureTime'] as String,
-      links: (json['links'] as List<dynamic>).map((e) => LinkModel.fromJson(e as Map<String, dynamic>)).toList(),
+      semesterFee: SemesterFeeModel.fromJson(
+          json['semester_fee'] as Map<String, dynamic>),
+      lectureFreeTime: TimePeriodModel.fromJson(
+          json['lecture_free_time'] as Map<String, dynamic>),
+      lectureTime: TimePeriodModel.fromJson(
+          json['lecture_time'] as Map<String, dynamic>),
+      links: (json['links'] as List<dynamic>)
+          .map((e) => LinkModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$HomeModelToJson(HomeModel instance) => <String, dynamic>{
-      'submissionFee': instance.submissionFee,
-      'lectureFreeTime': instance.lectureFreeTime,
-      'lectureTime': instance.lectureTime,
+      'semester_fee': instance.semesterFee,
+      'lecture_free_time': instance.lectureFreeTime,
+      'lecture_time': instance.lectureTime,
       'links': instance.links,
     };
