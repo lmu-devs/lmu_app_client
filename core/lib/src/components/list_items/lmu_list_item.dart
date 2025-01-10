@@ -32,6 +32,7 @@ class LmuListItem extends StatelessWidget {
     this.onTap,
     this.hasDivider = false,
     this.maximizeLeadingTitleArea = false,
+    this.maximizeTrailingTitleArea = false,
   }) : super(key: key);
 
   final String? title;
@@ -58,6 +59,7 @@ class LmuListItem extends StatelessWidget {
   final bool hasHorizontalPadding;
   final bool hasDivider;
   final bool maximizeLeadingTitleArea;
+  final bool maximizeTrailingTitleArea;
 
   factory LmuListItem.base({
     Key? key,
@@ -81,6 +83,7 @@ class LmuListItem extends StatelessWidget {
     bool? hasHorizontalPadding,
     bool? hasDivider,
     bool? maximizeLeadingTitleArea,
+    bool? maximizeTrailingTitleArea,
   }) =>
       LmuListItem._(
         key: key,
@@ -104,6 +107,7 @@ class LmuListItem extends StatelessWidget {
         hasVerticalPadding: hasVerticalPadding ?? true,
         hasDivider: hasDivider ?? false,
         maximizeLeadingTitleArea: maximizeLeadingTitleArea ?? false,
+        maximizeTrailingTitleArea: maximizeTrailingTitleArea ?? false,
       );
 
   factory LmuListItem.action({
@@ -132,6 +136,7 @@ class LmuListItem extends StatelessWidget {
     bool? hasHorizontalPadding,
     bool? hasDivider,
     bool? maximizeLeadingTitleArea,
+    bool? maximizeTrailingTitleArea,
   }) {
     return LmuListItem._(
       key: key,
@@ -159,6 +164,7 @@ class LmuListItem extends StatelessWidget {
       onTap: onTap,
       hasDivider: hasDivider ?? false,
       maximizeLeadingTitleArea: maximizeLeadingTitleArea ?? false,
+      maximizeTrailingTitleArea: maximizeTrailingTitleArea ?? false,
     );
   }
 
@@ -223,7 +229,7 @@ class LmuListItem extends StatelessWidget {
                       children: [
                         if (_hasLeadingTitleArea || _hasLeadingSubtitleArea)
                           Flexible(
-                            flex: maximizeLeadingTitleArea ? 4 : 1,
+                            flex: maximizeLeadingTitleArea ? 3 : 1,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
@@ -276,6 +282,7 @@ class LmuListItem extends StatelessWidget {
                           ),
                         if (_hasTrailingTitleArea || _hasTrailingSubtitleArea)
                           Flexible(
+                            flex: maximizeTrailingTitleArea ? 3 : 1,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisSize: MainAxisSize.min,
