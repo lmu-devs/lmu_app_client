@@ -1,1 +1,1 @@
-export 'wishlist_success_view.dart';
+export 'wishlist_entry_view.dart';

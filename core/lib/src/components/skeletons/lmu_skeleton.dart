@@ -14,10 +14,11 @@ class LmuSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     final gradientLoadingColors = context.colors.gradientColors.gradientLoadingColors;
     return Skeletonizer(
-        effect: ShimmerEffect(
-          baseColor: gradientLoadingColors.base,
-          highlightColor: gradientLoadingColors.highlight,
-        ),
-        child: child);
+      effect: ShimmerEffect(
+        baseColor: gradientLoadingColors.base,
+        highlightColor: gradientLoadingColors.highlight,
+      ),
+      child: child,
+    );
   }
 }
