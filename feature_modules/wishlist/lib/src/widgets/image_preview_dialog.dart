@@ -1,3 +1,4 @@
+import 'package:core/api.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
@@ -5,16 +6,14 @@ import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 
-import '../repository/api/api.dart';
-
 class ImagePreviewDialog extends StatelessWidget {
-  final WishlistModel wishlistModel;
+  final List<ImageModel> imageModels;
   final ValueNotifier<int> currentIndexNotifier;
   final PageController pageController;
 
   const ImagePreviewDialog({
     super.key,
-    required this.wishlistModel,
+    required this.imageModels,
     required this.currentIndexNotifier,
     required this.pageController,
   });
@@ -56,7 +55,7 @@ class ImagePreviewDialog extends StatelessWidget {
                       valueListenable: currentIndexNotifier,
                       builder: (context, currentIndex, _) {
                         return LmuText(
-                          '${currentIndex + 1} ${context.locals.wishlist.previewImageCount} ${wishlistModel.imageModels.length}',
+                          '${currentIndex + 1} ${context.locals.wishlist.previewImageCount} ${imageModels.length}',
                         );
                       },
                     ),
@@ -68,7 +67,7 @@ class ImagePreviewDialog extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_32),
                   child: PageView.builder(
                     controller: pageController,
-                    itemCount: wishlistModel.imageModels.length,
+                    itemCount:imageModels.length,
                     onPageChanged: (int index) {
                       currentIndexNotifier.value = index;
                     },
@@ -78,9 +77,9 @@ class ImagePreviewDialog extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(LmuRadiusSizes.mediumLarge),
                           child: Image.network(
-                            wishlistModel.imageModels[index].url,
+                            imageModels[index].url,
                             fit: BoxFit.cover,
-                            semanticLabel: wishlistModel.imageModels[index].name,
+                            semanticLabel: imageModels[index].name,
                           ),
                         ),
                       );
