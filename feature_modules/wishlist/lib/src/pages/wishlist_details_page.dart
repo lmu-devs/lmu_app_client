@@ -1,3 +1,4 @@
+import 'package:core/api.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/extensions.dart';
@@ -44,24 +45,6 @@ class WishlistDetailsPage extends StatelessWidget {
         );
       }
     }
-  }
-
-  void _showImageView(BuildContext context, int clickedIndex) {
-    ValueNotifier<int> currentIndexNotifier = ValueNotifier<int>(clickedIndex);
-    PageController pageController = PageController(viewportFraction: 0.85, initialPage: clickedIndex);
-
-    showDialog(
-      context: context,
-      useSafeArea: false,
-      barrierDismissible: false,
-      builder: (context) {
-        return ImagePreviewDialog(
-          wishlistModel: wishlistModel,
-          currentIndexNotifier: currentIndexNotifier,
-          pageController: pageController,
-        );
-      },
-    );
   }
 
   @override
@@ -132,58 +115,94 @@ class WishlistDetailsPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: LmuSizes.size_24),
-            SizedBox(
-              height: 375,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: wishlistModel.imageModels.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: EdgeInsets.only(
-                      left: index == 0 ? LmuSizes.size_16 : LmuSizes.none,
-                      right: index == (wishlistModel.imageModels.length - 1) ? LmuSizes.size_16 : LmuSizes.size_8,
-                    ),
-                    child: GestureDetector(
-                      onTap: () => _showImageView(context, index),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(LmuRadiusSizes.mediumLarge),
-                        child: Image.network(
-                          wishlistModel.imageModels[index].url,
-                          fit: BoxFit.cover,
-                          semanticLabel: wishlistModel.imageModels[index].name,
-                          loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            }
-                            return LmuSkeleton(
-                              child: child,
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+            ImageListSection(imageModels: wishlistModel.imageModels),
             if (wishlistModel.prototypeUrl.isNotEmpty)
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-                child: Column(
-                  children: [
-                    const SizedBox(height: LmuSizes.size_24),
-                    LmuButton(
-                      size: ButtonSize.large,
-                      showFullWidth: true,
-                      title: context.locals.wishlist.testPrototype,
-                      onTap: () => _launchPrototype(context),
-                    ),
-                  ],
+                padding: const EdgeInsets.only(
+                  top: LmuSizes.size_24,
+                  left: LmuSizes.size_16,
+                  right: LmuSizes.size_16,
+                ),
+                child: LmuButton(
+                  size: ButtonSize.large,
+                  showFullWidth: true,
+                  title: context.locals.wishlist.testPrototype,
+                  onTap: () => _launchPrototype(context),
                 ),
               ),
             const SizedBox(height: LmuSizes.size_96),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ImageListSection extends StatelessWidget {
+  const ImageListSection({super.key, required this.imageModels});
+
+  final List<ImageModel> imageModels;
+
+  void _showImageView(BuildContext context, int clickedIndex) {
+    ValueNotifier<int> currentIndexNotifier = ValueNotifier<int>(clickedIndex);
+    PageController pageController = PageController(viewportFraction: 0.85, initialPage: clickedIndex);
+
+    showDialog(
+      context: context,
+      useSafeArea: false,
+      barrierDismissible: false,
+      builder: (context) {
+        return ImagePreviewDialog(
+          imageModels: imageModels,
+          currentIndexNotifier: currentIndexNotifier,
+          pageController: pageController,
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 375,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: imageModels.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: EdgeInsets.only(
+              left: index == 0 ? LmuSizes.size_16 : LmuSizes.none,
+              right: index == (imageModels.length - 1) ? LmuSizes.size_16 : LmuSizes.size_8,
+            ),
+            child: GestureDetector(
+              onTap: () => _showImageView(context, index),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(LmuRadiusSizes.mediumLarge),
+                child: FutureBuilder(
+                  future: precacheImage(NetworkImage(imageModels[index].url), context),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      return Image.network(
+                        imageModels[index].url,
+                        fit: BoxFit.cover,
+                        width: 175,
+                        semanticLabel: imageModels[index].name,
+                      );
+                    } else {
+                      return LmuSkeleton(
+                        child: Container(
+                          height: 175,
+                          width: 175,
+                          color: Colors.white,
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

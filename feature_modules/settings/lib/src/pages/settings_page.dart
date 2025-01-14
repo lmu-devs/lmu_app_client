@@ -1,18 +1,205 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:core/constants.dart';
+import 'package:core/themes.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_api/feedback.dart';
 
-import '../views/settings_success_view.dart';
+import '../pages/pages.dart';
 
 class SettingsMainPage extends StatelessWidget {
   const SettingsMainPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final settingLocalizations = context.locals.settings;
+
     return LmuMasterAppBar(
-      largeTitle: context.locals.settings.settings,
+      largeTitle: settingLocalizations.settings,
       leadingAction: LeadingAction.back,
-      body: SettingsSuccessView(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: LmuSizes.size_16,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: LmuSizes.size_16),
+              LmuContentTile(
+                content: [
+                  LmuListItem.action(
+                    title: settingLocalizations.account,
+                    actionType: LmuListItemAction.chevron,
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingsAccountPage()));
+                    },
+                  ),
+                  LmuListItem.action(
+                    title: settingLocalizations.appearance,
+                    actionType: LmuListItemAction.chevron,
+                    trailingTitle: _getThemeModeString(context, settingLocalizations),
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) => const SettingsApperancePage()));
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: LmuSizes.size_16,
+              ),
+              LmuContentTile(
+                content: [
+                  LmuListItem.base(
+                    title: settingLocalizations.aboutLmuDevelopers,
+                    trailingArea: Icon(
+                      LucideIcons.external_link,
+                      size: LmuSizes.size_20,
+                      color: context.colors.neutralColors.textColors.weakColors.base,
+                    ),
+                    onTap: () {
+                      LmuUrlLauncher.launchWebsite(
+                        context: context,
+                        url: LmuDevStrings.lmuDevWebsite,
+                        mode: LmuUrlLauncherMode.inAppWebView,
+                      );
+                    },
+                  ),
+                  LmuListItem.base(
+                    title: settingLocalizations.contact,
+                    trailingArea: Icon(
+                      LucideIcons.mail,
+                      size: LmuSizes.size_20,
+                      color: context.colors.neutralColors.textColors.weakColors.base,
+                    ),
+                    onTap: () {
+                      LmuUrlLauncher.launchEmail(
+                        context: context,
+                        email: LmuDevStrings.lmuDevContactMail,
+                        subject: settingLocalizations.contactSubject,
+                        body: settingLocalizations.contactBody,
+                      );
+                    },
+                  ),
+                  LmuListItem.action(
+                    title: settingLocalizations.donate,
+                    actionType: LmuListItemAction.chevron,
+                    onTap: () {
+                      LmuUrlLauncher.launchWebsite(
+                        context: context,
+                        url: LmuDevStrings.lmuDevDonate,
+                        mode: LmuUrlLauncherMode.inAppWebView,
+                      );
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: LmuSizes.size_16,
+              ),
+              LmuContentTile(
+                content: [
+                  LmuListItem.action(
+                    title: settingLocalizations.dataPrivacy,
+                    actionType: LmuListItemAction.chevron,
+                    onTap: () {
+                      LmuUrlLauncher.launchWebsite(
+                        context: context,
+                        url: LmuDevStrings.lmuDevDataPrivacy,
+                        mode: LmuUrlLauncherMode.inAppWebView,
+                      );
+                    },
+                  ),
+                  LmuListItem.action(
+                    title: settingLocalizations.imprint,
+                    actionType: LmuListItemAction.chevron,
+                    onTap: () {
+                      LmuUrlLauncher.launchWebsite(
+                        context: context,
+                        url: LmuDevStrings.lmuDevImprint,
+                        mode: LmuUrlLauncherMode.inAppWebView,
+                      );
+                    },
+                  ),
+                  LmuListItem.action(
+                    title: settingLocalizations.licenses,
+                    actionType: LmuListItemAction.chevron,
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const SettingsLicencePage()),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: LmuSizes.size_16,
+              ),
+              LmuContentTile(
+                content: [
+                  LmuListItem.action(
+                    title: "Debug",
+                    mainContentAlignment: MainContentAlignment.center,
+                    actionType: LmuListItemAction.chevron,
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingsDebugPage()));
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: LmuSizes.size_16,
+              ),
+              LmuContentTile(
+                content: [
+                  LmuListItem.base(
+                    title: context.locals.app.suggestFeature,
+                    mainContentAlignment: MainContentAlignment.center,
+                    leadingArea: const LeadingFancyIcons(icon: LucideIcons.plus),
+                    onTap: () {
+                      GetIt.I.get<FeedbackService>().navigateToSuggestion(context, 'SettingsScreen');
+                    },
+                  ),
+                  LmuListItem.base(
+                    title: context.locals.app.reportBug,
+                    mainContentAlignment: MainContentAlignment.center,
+                    leadingArea: const LeadingFancyIcons(icon: LucideIcons.bug),
+                    onTap: () {
+                      GetIt.I.get<FeedbackService>().navigateToBugReport(context, 'SettingsScreen');
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: LmuSizes.size_16,
+              ),
+              LmuButton(
+                title: context.locals.feedback.feedbackButton,
+                onTap: () => GetIt.I.get<FeedbackService>().navigateToFeedback(context, 'SettingsScreen'),
+              ),
+              const SizedBox(
+                height: LmuSizes.size_96,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
+  }
+}
+
+String _getThemeModeString(BuildContext context, SettingsLocalizations localizaitons) {
+  final String themeName = Provider.of<ThemeProvider>(context, listen: true).themeMode.name;
+  switch (themeName.toLowerCase()) {
+    case 'system':
+      return localizaitons.systemMode;
+    case 'dark':
+      return localizaitons.darkMode;
+    case 'light':
+      return localizaitons.lightMode;
+    default:
+      return localizaitons.systemMode;
   }
 }
