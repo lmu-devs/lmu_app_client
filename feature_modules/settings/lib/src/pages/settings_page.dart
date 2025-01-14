@@ -190,16 +190,16 @@ class SettingsMainPage extends StatelessWidget {
   }
 }
 
-String _getThemeModeString(BuildContext context, SettingsLocalizations localizaitons) {
+String _getThemeModeString(BuildContext context, SettingsLocalizations localizations) {
   final String themeName = Provider.of<ThemeProvider>(context, listen: true).themeMode.name;
   switch (themeName.toLowerCase()) {
     case 'system':
-      return localizaitons.systemMode;
+      return localizations.systemMode;
     case 'dark':
-      return localizaitons.darkMode;
+      return localizations.darkMode;
     case 'light':
-      return localizaitons.lightMode;
+      return localizations.lightMode;
     default:
-      return localizaitons.systemMode;
+      return localizations.systemMode;
   }
 }
