@@ -15,6 +15,9 @@ StatefulShellBranch get $homeData => StatefulShellBranchData.$branch(
         GoRouteData.$route(
           path: '/home',
           factory: $HomeMainRouteExtension._fromState,
+          routes: [
+            GetIt.I.get<SettingsService>().settingsData,
+          ],
         ),
       ],
     );

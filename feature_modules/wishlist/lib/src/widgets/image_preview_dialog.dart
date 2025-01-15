@@ -67,7 +67,7 @@ class ImagePreviewDialog extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_32),
                   child: PageView.builder(
                     controller: pageController,
-                    itemCount:imageModels.length,
+                    itemCount: imageModels.length,
                     onPageChanged: (int index) {
                       currentIndexNotifier.value = index;
                     },

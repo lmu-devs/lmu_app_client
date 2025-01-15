@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
 import '../pages/pages.dart';
-import '../pages/wishlist_details_page.dart';
 import '../repository/api/api.dart';
 
 part 'wishlist_routes.g.dart';

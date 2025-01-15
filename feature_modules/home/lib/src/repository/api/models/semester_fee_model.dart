@@ -29,8 +29,6 @@ class SemesterFeeModel extends Equatable {
     required this.reference,
   });
 
-
-
   factory SemesterFeeModel.fromJson(Map<String, dynamic> json) => _$SemesterFeeModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$SemesterFeeModelToJson(this);
