@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:intl/intl.dart';
 
-
 import '../repository/api/models/home_model.dart';
 import 'home_links_view.dart';
 
@@ -53,10 +52,7 @@ class HomeOverviewView extends StatelessWidget {
                 ),
                 child: LmuText.body(
                   context.locals.home.lectureFreePeriodDays(
-                    homeData.semesterFee.timePeriod.endDate
-                        .difference(DateTime.now())
-                        .inDays
-                        .toString(),
+                    homeData.semesterFee.timePeriod.endDate.difference(DateTime.now()).inDays.toString(),
                   ),
                   weight: FontWeight.w600,
                 ),
@@ -72,15 +68,12 @@ class HomeOverviewView extends StatelessWidget {
             content: [
               LmuListItem.base(
                 subtitle: context.locals.home.tuitionFee,
-                trailingTitle:
-                    "${homeData.semesterFee.fee.toStringAsFixed(2)} €",
-                trailingTitleColor:
-                    context.colors.brandColors.textColors.strongColors.base,
+                trailingTitle: "${homeData.semesterFee.fee.toStringAsFixed(2)} €",
+                trailingTitleColor: context.colors.brandColors.textColors.strongColors.base,
                 trailingArea: LmuIcon(
                     icon: LucideIcons.copy,
                     size: LmuSizes.size_16,
-                    color: context
-                        .colors.brandColors.textColors.strongColors.base),
+                    color: context.colors.brandColors.textColors.strongColors.base),
                 mainContentAlignment: MainContentAlignment.center,
                 onTap: () {
                   _copyToClipboard(
@@ -92,13 +85,11 @@ class HomeOverviewView extends StatelessWidget {
               LmuListItem.base(
                 subtitle: context.locals.home.receiver,
                 trailingTitle: homeData.semesterFee.receiver,
-                trailingTitleColor:
-                    context.colors.brandColors.textColors.strongColors.base,
+                trailingTitleColor: context.colors.brandColors.textColors.strongColors.base,
                 trailingArea: LmuIcon(
                     icon: LucideIcons.copy,
                     size: LmuSizes.size_16,
-                    color: context
-                        .colors.brandColors.textColors.strongColors.base),
+                    color: context.colors.brandColors.textColors.strongColors.base),
                 mainContentAlignment: MainContentAlignment.center,
                 onTap: () {
                   _copyToClipboard(
@@ -110,33 +101,27 @@ class HomeOverviewView extends StatelessWidget {
               LmuListItem.base(
                 subtitle: context.locals.home.iban,
                 trailingTitle: homeData.semesterFee.iban,
-                trailingTitleColor:
-                    context.colors.brandColors.textColors.strongColors.base,
+                trailingTitleColor: context.colors.brandColors.textColors.strongColors.base,
                 trailingArea: LmuIcon(
                     icon: LucideIcons.copy,
                     size: LmuSizes.size_16,
-                    color: context
-                        .colors.brandColors.textColors.strongColors.base),
+                    color: context.colors.brandColors.textColors.strongColors.base),
                 maximizeTrailingTitleArea: true,
                 onTap: () {
                   _copyToClipboard(
-                      context: context,
-                      copiedText: homeData.semesterFee.iban,
-                      message: context.locals.home.ibanCopy);
+                      context: context, copiedText: homeData.semesterFee.iban, message: context.locals.home.ibanCopy);
                 },
                 mainContentAlignment: MainContentAlignment.center,
               ),
               LmuListItem.base(
                 subtitle: context.locals.home.reference,
                 trailingTitle: homeData.semesterFee.reference,
-                trailingTitleColor:
-                    context.colors.brandColors.textColors.strongColors.base,
+                trailingTitleColor: context.colors.brandColors.textColors.strongColors.base,
                 maximizeTrailingTitleArea: true,
                 trailingArea: LmuIcon(
                     icon: LucideIcons.copy,
                     size: LmuSizes.size_16,
-                    color: context
-                        .colors.brandColors.textColors.strongColors.base),
+                    color: context.colors.brandColors.textColors.strongColors.base),
                 onTap: () {
                   _copyToClipboard(
                       context: context,
@@ -149,20 +134,17 @@ class HomeOverviewView extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: LmuSizes.size_16, vertical: LmuSizes.size_16),
+          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16, vertical: LmuSizes.size_16),
           child: LmuContentTile(
             content: [
               LmuListItem.base(
                 subtitle: context.locals.home.lecturePeriod,
-                trailingTitle: DateFormat("dd.MM.yyyy")
-                    .format(homeData.lectureTime.startDate),
+                trailingTitle: DateFormat("dd.MM.yyyy").format(homeData.lectureTime.startDate),
                 mainContentAlignment: MainContentAlignment.center,
               ),
               LmuListItem.base(
                 subtitle: context.locals.home.lectureFreePeriod,
-                trailingTitle: DateFormat("dd.MM.yyyy")
-                    .format(homeData.lectureFreeTime.startDate),
+                trailingTitle: DateFormat("dd.MM.yyyy").format(homeData.lectureFreeTime.startDate),
                 mainContentAlignment: MainContentAlignment.center,
               ),
             ],

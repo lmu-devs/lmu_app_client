@@ -26,8 +26,7 @@ class LmuContentTile extends BaseTile {
   const LmuContentTile({
     required this.content,
     super.key,
-    this.borderRadius =
-        const BorderRadius.all(Radius.circular(LmuSizes.size_8)),
+    this.borderRadius = const BorderRadius.all(Radius.circular(LmuSizes.size_8)),
     this.isTop = false,
     this.isMiddle = false,
   });
