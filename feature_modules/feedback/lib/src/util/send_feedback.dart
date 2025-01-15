@@ -76,7 +76,7 @@ Future<String> _getOSVersion() async {
   final deviceInfo = DeviceInfoPlugin();
   if (Platform.isAndroid) {
     final androidInfo = await deviceInfo.androidInfo;
-    return 'Android ${androidInfo.version.release} • (SDK ${androidInfo.version.sdkInt})';
+    return 'Android ${androidInfo.version.release} (SDK ${androidInfo.version.sdkInt})';
   } else if (Platform.isIOS) {
     final iosInfo = await deviceInfo.iosInfo;
     return 'iOS ${iosInfo.systemVersion}';
