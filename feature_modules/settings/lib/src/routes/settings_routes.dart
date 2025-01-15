@@ -5,31 +5,26 @@ import '../pages/pages.dart';
 
 part 'settings_routes.g.dart';
 
-@TypedStatefulShellBranch<SettingsData>(
-  routes: <TypedRoute<RouteData>>[
-    TypedGoRoute<SettingsMainRoute>(
-      path: '/settings',
-      routes: <TypedGoRoute<GoRouteData>>[
-        TypedGoRoute<SettingsApperanceRoute>(
-          path: 'apperance',
-        ),
-        TypedGoRoute<SettingsLanguageRoute>(
-          path: 'language',
-        ),
-        TypedGoRoute<SettingsLicenceRoute>(
-          path: 'licence',
-        ),
-        TypedGoRoute<SettingsAccountRoute>(
-          path: 'account',
-        ),
-      ],
+@TypedGoRoute<SettingsMainRoute>(
+  path: '/settings',
+  routes: <TypedGoRoute<GoRouteData>>[
+    TypedGoRoute<SettingsApperanceRoute>(
+      path: 'apperance',
+    ),
+    TypedGoRoute<SettingsLanguageRoute>(
+      path: 'language',
+    ),
+    TypedGoRoute<SettingsLicenceRoute>(
+      path: 'licence',
+    ),
+    TypedGoRoute<SettingsAccountRoute>(
+      path: 'account',
+    ),
+    TypedGoRoute<SettingsDebugRoute>(
+      path: 'debug',
     ),
   ],
 )
-class SettingsData extends StatefulShellBranchData {
-  const SettingsData();
-}
-
 class SettingsMainRoute extends GoRouteData {
   const SettingsMainRoute();
 
@@ -63,4 +58,11 @@ class SettingsLicenceRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => const SettingsLicencePage();
+}
+
+class SettingsDebugRoute extends GoRouteData {
+  const SettingsDebugRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const SettingsDebugPage();
 }

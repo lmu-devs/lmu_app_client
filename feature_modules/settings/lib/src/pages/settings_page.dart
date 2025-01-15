@@ -1,15 +1,15 @@
 import 'package:core/components.dart';
+import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
+import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_api/feedback.dart';
 
-import '../pages/pages.dart';
+import '../routes/settings_routes.dart';
 
 class SettingsMainPage extends StatelessWidget {
   const SettingsMainPage({super.key});
@@ -17,6 +17,12 @@ class SettingsMainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settingLocalizations = context.locals.settings;
+
+    final linkIcon = Icon(
+      LucideIcons.external_link,
+      size: LmuSizes.size_20,
+      color: context.colors.neutralColors.textColors.weakColors.base,
+    );
 
     return LmuMasterAppBar(
       largeTitle: settingLocalizations.settings,
@@ -34,18 +40,13 @@ class SettingsMainPage extends StatelessWidget {
                   LmuListItem.action(
                     title: settingLocalizations.account,
                     actionType: LmuListItemAction.chevron,
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingsAccountPage()));
-                    },
+                    onTap: () => const SettingsAccountRoute().go(context),
                   ),
                   LmuListItem.action(
                     title: settingLocalizations.appearance,
                     actionType: LmuListItemAction.chevron,
                     trailingTitle: _getThemeModeString(context, settingLocalizations),
-                    onTap: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) => const SettingsApperancePage()));
-                    },
+                    onTap: () => const SettingsApperanceRoute().go(context),
                   ),
                 ],
               ),
@@ -56,11 +57,7 @@ class SettingsMainPage extends StatelessWidget {
                 content: [
                   LmuListItem.base(
                     title: settingLocalizations.aboutLmuDevelopers,
-                    trailingArea: Icon(
-                      LucideIcons.external_link,
-                      size: LmuSizes.size_20,
-                      color: context.colors.neutralColors.textColors.weakColors.base,
-                    ),
+                    trailingArea: linkIcon,
                     onTap: () {
                       LmuUrlLauncher.launchWebsite(
                         context: context,
@@ -85,9 +82,9 @@ class SettingsMainPage extends StatelessWidget {
                       );
                     },
                   ),
-                  LmuListItem.action(
+                  LmuListItem.base(
                     title: settingLocalizations.donate,
-                    actionType: LmuListItemAction.chevron,
+                    trailingArea: linkIcon,
                     onTap: () {
                       LmuUrlLauncher.launchWebsite(
                         context: context,
@@ -103,9 +100,9 @@ class SettingsMainPage extends StatelessWidget {
               ),
               LmuContentTile(
                 content: [
-                  LmuListItem.action(
+                  LmuListItem.base(
                     title: settingLocalizations.dataPrivacy,
-                    actionType: LmuListItemAction.chevron,
+                    trailingArea: linkIcon,
                     onTap: () {
                       LmuUrlLauncher.launchWebsite(
                         context: context,
@@ -114,9 +111,9 @@ class SettingsMainPage extends StatelessWidget {
                       );
                     },
                   ),
-                  LmuListItem.action(
+                  LmuListItem.base(
                     title: settingLocalizations.imprint,
-                    actionType: LmuListItemAction.chevron,
+                    trailingArea: linkIcon,
                     onTap: () {
                       LmuUrlLauncher.launchWebsite(
                         context: context,
@@ -128,9 +125,7 @@ class SettingsMainPage extends StatelessWidget {
                   LmuListItem.action(
                     title: settingLocalizations.licenses,
                     actionType: LmuListItemAction.chevron,
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const SettingsLicencePage()),
-                    ),
+                    onTap: () => const SettingsLicenceRoute().go(context),
                   ),
                 ],
               ),
@@ -143,9 +138,7 @@ class SettingsMainPage extends StatelessWidget {
                     title: "Debug",
                     mainContentAlignment: MainContentAlignment.center,
                     actionType: LmuListItemAction.chevron,
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingsDebugPage()));
-                    },
+                    onTap: () => const SettingsDebugRoute().go(context),
                   ),
                 ],
               ),
