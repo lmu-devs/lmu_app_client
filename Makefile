@@ -20,7 +20,7 @@ update_pods:
 	cd ios && pod repo update && pod install && cd ..
 
 
-get_started:
+love:
 	flutter pub get
 	make localizations
 	make setup_mapbox

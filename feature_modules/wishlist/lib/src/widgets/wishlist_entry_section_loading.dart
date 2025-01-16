@@ -29,7 +29,6 @@ class WishlistEntrySectionLoading extends StatelessWidget {
                           titleInTextVisuals:
                               index < (length / 2) ? [LmuInTextVisual.text(title: BoneMock.words(2))] : [],
                           subtitle: BoneMock.words(index % 2 != 0 ? 3 : 4),
-                          trailingTitle: BoneMock.chars(2),
                           maximizeLeadingTitleArea: true,
                           actionType: LmuListItemAction.chevron,
                         ),
