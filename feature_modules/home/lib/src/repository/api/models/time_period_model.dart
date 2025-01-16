@@ -15,8 +15,6 @@ class TimePeriodModel extends Equatable {
     required this.endDate,
   });
 
-
-
   factory TimePeriodModel.fromJson(Map<String, dynamic> json) => _$TimePeriodModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$TimePeriodModelToJson(this);

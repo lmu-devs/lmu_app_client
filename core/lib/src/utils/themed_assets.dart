@@ -1,13 +1,18 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get_it/get_it.dart';
+
 import '../../themes.dart';
 
-String getPngAssetTheme(BuildContext context, String asset) {
-  if (Provider.of<ThemeProvider>(context, listen: false).themeMode == ThemeMode.light) {
+String getPngAssetTheme(String asset) {
+  final themeMode = GetIt.I.get<ThemeProvider>().themeMode;
+  if (themeMode == ThemeMode.light) {
     return '${asset}_light.png';
-  } else if (Provider.of<ThemeProvider>(context, listen: false).themeMode == ThemeMode.dark) {
+  } else if (themeMode == ThemeMode.dark) {
     return '${asset}_dark.png';
-  } else {
-    return MediaQuery.of(context).platformBrightness == Brightness.light ? '${asset}_light.png' : '${asset}_dark.png';
   }
+  return PlatformDispatcher.instance.platformBrightness == Brightness.light
+      ? '${asset}_light.png'
+      : '${asset}_dark.png';
 }

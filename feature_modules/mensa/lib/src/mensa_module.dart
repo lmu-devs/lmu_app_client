@@ -13,17 +13,14 @@ class MensaModule extends AppModule
         NoticeableAppStartAppModule,
         PublicApiProvidingAppModule,
         WaitingAppStartAppModule,
-        PrivateDataContainingAppModule {
+        PrivateDataContainingAppModule,
+        LocalizedDataContainigAppModule {
   @override
   String get moduleName => 'MensaModule';
 
   @override
   void provideLocalDependencies() {
-    GetIt.I.registerSingleton<MensaRepository>(
-      ConnectedMensaRepository(
-        mensaApiClient: MensaApiClient(),
-      ),
-    );
+    GetIt.I.registerSingleton<MensaRepository>(ConnectedMensaRepository(mensaApiClient: MensaApiClient()));
     GetIt.I.registerSingleton<MensaCubit>(MensaCubit(), dispose: (srv) => srv.close());
     GetIt.I.registerSingleton<TasteProfileService>(TasteProfileService());
     GetIt.I.registerSingleton<TasteProfileCubit>(TasteProfileCubit(), dispose: (srv) => srv.close());
@@ -55,5 +52,11 @@ class MensaModule extends AppModule
   @override
   void onDeletePrivateData() {
     GetIt.I.get<MensaUserPreferencesService>().reset();
+  }
+
+  @override
+  void onLocaleChange() {
+    GetIt.I.get<MenuService>().dispose();
+    GetIt.I.get<TasteProfileCubit>().resetTasteProfile();
   }
 }

@@ -20,5 +20,6 @@ class MenuService {
     _menuCubits.forEach((key, value) async {
       await value.close();
     });
+    _menuCubits.clear();
   }
 }

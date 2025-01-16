@@ -1,8 +1,6 @@
 {
   "@@locale": "en",
   "@@context": "Settings",
-
-
   "tabTitle": "More",
   "@tabTitle": {
     "description": "The title of the Settings tab"
@@ -130,5 +128,17 @@
   "deviceId": "Device ID",
   "@deviceId": {
     "description": "Device ID"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Language"
+  },
+  "german": "German",
+  "@german": {
+    "description": "German language"
+  },
+  "english": "English",
+  "@english": {
+    "description": "English language"
   }
 }

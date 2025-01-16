@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:core/constants.dart';
 import 'package:core/permissions.dart';
 import 'package:core/themes.dart';
@@ -9,7 +11,6 @@ import 'package:geolocator/geolocator.dart' as geo;
 import 'package:get_it/get_it.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:mensa/mensa.dart';
-import 'package:provider/provider.dart';
 
 import '../widgets/map_action_button.dart';
 import '../widgets/map_bottom_sheet.dart';
@@ -56,6 +57,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   List<MensaModel> mensaData = [];
   Map<PointAnnotation, MensaModel> mensaPins = {};
   final ValueNotifier<MensaModel?> selectedMensaNotifier = ValueNotifier<MensaModel?>(null);
+  final themeProvider = GetIt.I.get<ThemeProvider>();
 
   late final DraggableScrollableController _sheetController;
   late final ValueNotifier<double> _sheetSizeNotifier;
@@ -66,7 +68,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
     for (final pinType in pinTypes) {
       if (context.mounted) {
         final ByteData imageBytes = await rootBundle.load(
-          getPngAssetTheme(context, 'feature_modules/explore/assets/$pinType'),
+          getPngAssetTheme('feature_modules/explore/assets/$pinType'),
         );
 
         await mapboxMap.style.addStyleImage(
@@ -288,7 +290,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
     );
   }
 
-  String _getMapStyleUri(ThemeMode themeMode, BuildContext context) {
+  String _getMapStyleUri(ThemeMode themeMode) {
     const String mapStyleLight = MapboxStyles.MAPBOX_STREETS;
     const String mapStyleDark = MapboxStyles.DARK;
 
@@ -298,7 +300,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
       return mapStyleDark;
     }
 
-    return MediaQuery.of(context).platformBrightness == Brightness.light ? mapStyleLight : mapStyleDark;
+    return PlatformDispatcher.instance.platformBrightness == Brightness.light ? mapStyleLight : mapStyleDark;
   }
 
   @override
@@ -356,9 +358,10 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
           previouslySelectedAnnotation = null;
         }
 
-        return Consumer<ThemeProvider>(
-          builder: (context, themeProvider, child) {
-            String mapStyleUri = _getMapStyleUri(themeProvider.themeMode, context);
+        return ListenableBuilder(
+          listenable: themeProvider,
+          builder: (context, child) {
+            String mapStyleUri = _getMapStyleUri(themeProvider.themeMode);
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (mapboxMap != null) {
                 mapboxMap!.loadStyleURI(mapStyleUri);

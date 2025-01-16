@@ -2,10 +2,9 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
-import 'registry/global_providers.dart';
 import 'routing/shell_route_data.dart';
 
 class LmuApp extends StatelessWidget {
@@ -13,21 +12,24 @@ class LmuApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GlobalProviders(
-      child: Builder(
-        builder: (context) {
-          return MaterialApp.router(
-            localizationsDelegates: LmuLocalizations.localizationsDelegates,
-            supportedLocales: LmuLocalizations.supportedLocales,
-            debugShowCheckedModeBanner: false,
-            routerConfig: _router,
-            title: "LMU Students",
-            theme: AppTheme.light,
-            darkTheme: AppTheme.dark,
-            themeMode: Provider.of<ThemeProvider>(context).themeMode,
-            builder: FToastBuilder(),
-          );
-        },
+    final languageProvider = GetIt.I.get<LanguageProvider>();
+    final themeProvider = GetIt.I.get<ThemeProvider>();
+    return ListenableBuilder(
+      listenable: languageProvider,
+      builder: (context, _) => ListenableBuilder(
+        listenable: themeProvider,
+        builder: (context, _) => MaterialApp.router(
+          localizationsDelegates: LmuLocalizations.localizationsDelegates,
+          supportedLocales: LmuLocalizations.supportedLocales,
+          locale: languageProvider.locale,
+          debugShowCheckedModeBanner: false,
+          routerConfig: _router,
+          title: "LMU Students",
+          theme: AppTheme.light,
+          darkTheme: AppTheme.dark,
+          themeMode: themeProvider.themeMode,
+          builder: FToastBuilder(),
+        ),
       ),
     );
   }

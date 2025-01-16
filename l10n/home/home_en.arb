@@ -39,13 +39,27 @@
   "@lectureFreePeriod": {
     "description": "Lecture-free period"
   },
-  "lectureFreePeriodDays": "You have {days} days to re-enroll again",
-  "@lectureFreePeriodDays": {
-    "description": "You have {days} days to re-enroll again",
+  "tuitionFeeCountdown": "You have {countdown} to re-enroll.",
+  "@tuitionFeeCountdown": {
+    "description": "You have {countdown} to re-enroll.",
     "placeholders": {
-      "days": {
+      "countdown": {
         "type": "String",
-        "example": "10"
+        "example": "10 days"
+      }
+    }
+  },
+  "tuitionFeePayed": "You are enrolled for {SummerOrWinter} {year}.",
+  "@tuitionFeePayed": {
+    "description": "You are enrolled for {SummerOrWinter} {year}.",
+    "placeholders": {
+      "SummerOrWinter": {
+        "type": "String",
+        "example": "Summer"
+      },
+      "year": {
+        "type": "int",
+        "example": "2025"
       }
     }
   },
@@ -76,5 +90,13 @@
   "referenceCopy": "Reference copied",
   "@referenceCopy": {
     "description": "Reference copied"
+  },
+  "summer": "Summer",
+  "@summer": {
+    "description": "Summer"
+  },
+  "winter": "Winter",
+  "@winter": {
+    "description": "Winter"
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
 abstract class BaseApiClient {
@@ -8,6 +9,8 @@ abstract class BaseApiClient {
   set isDevEnv(bool value);
 
   set useLocalHost(bool value);
+
+  set locale(Locale value);
 
   Future<http.Response> get(
     String endpoint, {
