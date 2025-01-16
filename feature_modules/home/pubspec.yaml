@@ -18,6 +18,7 @@ dependencies:
   go_router_builder: ^2.7.1
   get_it: ^8.0.1
   flutter_lucide: ^1.2.0
+  lucide_icons_svg: ^0.0.4
   shared_api:
     path: ../../shared_api
   json_annotation: ^4.8.1

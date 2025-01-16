@@ -26,5 +26,9 @@
   "settings": "Einstellungen",
   "suggestFeature": "Feature vorschlagen",
   "reportBug": "Fehler melden",
-  "likes": "Likes"
+  "likes": "Likes",
+  "remainingDays": "{days} Tage",
+  "remainingHours": "{hours} Stunden",
+  "remainingMinutes": "{minutes} Minuten",
+  "remainingSeconds": "{seconds} Sekunden"
 }
