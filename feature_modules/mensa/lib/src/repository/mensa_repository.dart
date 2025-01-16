@@ -48,6 +48,8 @@ abstract class MensaRepository {
   Future<void> setPriceCategory(PriceCategory priceCategory);
 
   Future<void> deleteAllLocalData();
+
+  Future<void> deleteAllLocalizedData();
 }
 
 /// MensaRepository implementation for fetching mensa data from the API
@@ -314,5 +316,14 @@ class ConnectedMensaRepository implements MensaRepository {
     await prefs.remove(_unsyncedFavoriteDishIdsKey);
 
     _appLogger.logMessage('[MensaRepository]: Deleted all local data');
+  }
+
+  @override
+  Future<void> deleteAllLocalizedData() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_mensaModelsCacheKey);
+    await prefs.remove(_tasteProfileKey);
+
+    _appLogger.logMessage('[MensaRepository]: Deleted all localized data');
   }
 }

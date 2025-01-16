@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
 import '../pages/pages.dart';
+import '../pages/settings_language_page.dart';
 
 part 'settings_routes.g.dart';
 
@@ -50,7 +51,7 @@ class SettingsLanguageRoute extends GoRouteData {
   const SettingsLanguageRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const Placeholder();
+  Widget build(BuildContext context, GoRouterState state) => const SettingsLanguagePage();
 }
 
 class SettingsLicenceRoute extends GoRouteData {

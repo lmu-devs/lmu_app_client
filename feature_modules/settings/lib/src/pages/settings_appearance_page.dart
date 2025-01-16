@@ -3,14 +3,16 @@ import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get_it/get_it.dart';
+
+import '../extensions/enum_naming_extensions.dart';
 
 class SettingsApperancePage extends StatelessWidget {
   const SettingsApperancePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context, listen: true);
+    final themeProvider = GetIt.I.get<ThemeProvider>();
     final localization = context.locals.settings;
 
     return LmuMasterAppBar(
@@ -20,33 +22,21 @@ class SettingsApperancePage extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(LmuSizes.size_16),
-            child: LmuContentTile(
-              content: [
-                LmuListItem.action(
-                  title: localization.systemMode,
-                  actionType: LmuListItemAction.radio,
-                  initialValue: themeProvider.themeMode == ThemeMode.system,
-                  onTap: () {
-                    themeProvider.setThemeMode(ThemeMode.system);
-                  },
-                ),
-                LmuListItem.action(
-                  title: localization.lightMode,
-                  actionType: LmuListItemAction.radio,
-                  initialValue: themeProvider.themeMode == ThemeMode.light,
-                  onTap: () {
-                    themeProvider.setThemeMode(ThemeMode.light);
-                  },
-                ),
-                LmuListItem.action(
-                  title: localization.darkMode,
-                  actionType: LmuListItemAction.radio,
-                  initialValue: themeProvider.themeMode == ThemeMode.dark,
-                  onTap: () {
-                    themeProvider.setThemeMode(ThemeMode.dark);
-                  },
-                )
-              ],
+            child: ListenableBuilder(
+              listenable: themeProvider,
+              builder: (context, _) => LmuContentTile(
+                content: ThemeMode.values
+                    .map(
+                      (themeMode) => LmuListItem.action(
+                        title: themeMode.localizedName(localization),
+                        actionType: LmuListItemAction.radio,
+                        initialValue: themeProvider.themeMode == themeMode,
+                        shouldChange: (_) => themeProvider.themeMode != themeMode,
+                        onTap: () => themeProvider.setThemeMode(themeMode),
+                      ),
+                    )
+                    .toList(),
+              ),
             ),
           ),
         ],

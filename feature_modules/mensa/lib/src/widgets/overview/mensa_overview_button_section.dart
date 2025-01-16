@@ -45,7 +45,7 @@ class MensaOverviewButtonSection extends StatelessWidget {
                 color: context.colors.neutralColors.borderColors.seperatorLight,
               ),
               image: DecorationImage(
-                image: AssetImage(getPngAssetTheme(context, 'assets/maps_icon'), package: "mensa"),
+                image: AssetImage(getPngAssetTheme('assets/maps_icon'), package: "mensa"),
               ),
             ),
           ),

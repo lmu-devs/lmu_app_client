@@ -203,13 +203,15 @@ class LmuListItem extends StatelessWidget {
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
           onTap: () {
-            onTap?.call();
             if (actionValueNotifier != null) {
               final currentValue = actionValueNotifier!.value;
               if (shouldChangeActionValue?.call(currentValue) ?? true) {
                 actionValueNotifier?.value = !currentValue;
                 onActionValueChanged?.call(!currentValue);
+                onTap?.call();
               }
+            } else {
+              onTap?.call();
             }
           },
           child: Padding(

@@ -17,4 +17,8 @@ class TasteProfileCubit extends Cubit<TasteProfileState> {
       emit(TasteProfileLoadFailure());
     }
   }
+
+  void resetTasteProfile() {
+    emit(TasteProfileInitial());
+  }
 }
