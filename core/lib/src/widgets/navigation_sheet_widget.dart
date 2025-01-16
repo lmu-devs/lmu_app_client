@@ -87,7 +87,7 @@ class NavigationSheet extends StatelessWidget {
           LmuListItem.base(
             title: context.locals.explore.appleMaps,
             leadingArea: Image.asset(
-              getPngAssetTheme(context, 'assets/apple_maps_icon'),
+              getPngAssetTheme('assets/apple_maps_icon'),
               package: 'explore',
               height: LmuIconSizes.large,
               width: LmuIconSizes.large,
@@ -102,7 +102,7 @@ class NavigationSheet extends StatelessWidget {
         LmuListItem.base(
           title: context.locals.explore.googleMaps,
           leadingArea: Image.asset(
-            getPngAssetTheme(context, 'assets/google_maps_icon'),
+            getPngAssetTheme('assets/google_maps_icon'),
             package: 'explore',
             height: LmuIconSizes.large,
             width: LmuIconSizes.large,

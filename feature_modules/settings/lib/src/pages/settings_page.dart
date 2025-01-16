@@ -6,9 +6,9 @@ import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_api/feedback.dart';
 
+import '../extensions/enum_naming_extensions.dart';
 import '../routes/settings_routes.dart';
 
 class SettingsMainPage extends StatelessWidget {
@@ -23,6 +23,9 @@ class SettingsMainPage extends StatelessWidget {
       size: LmuSizes.size_20,
       color: context.colors.neutralColors.textColors.weakColors.base,
     );
+
+    final themeMode = GetIt.I.get<ThemeProvider>();
+    final languageMode = GetIt.I.get<LanguageProvider>();
 
     return LmuMasterAppBar(
       largeTitle: settingLocalizations.settings,
@@ -42,17 +45,36 @@ class SettingsMainPage extends StatelessWidget {
                     actionType: LmuListItemAction.chevron,
                     onTap: () => const SettingsAccountRoute().go(context),
                   ),
-                  LmuListItem.action(
-                    title: settingLocalizations.appearance,
-                    actionType: LmuListItemAction.chevron,
-                    trailingTitle: _getThemeModeString(context, settingLocalizations),
-                    onTap: () => const SettingsApperanceRoute().go(context),
+                ],
+              ),
+              const SizedBox(height: LmuSizes.size_16),
+              LmuContentTile(
+                content: [
+                  ListenableBuilder(
+                    listenable: themeMode,
+                    builder: (context, _) => LmuListItem.action(
+                      title: settingLocalizations.appearance,
+                      actionType: LmuListItemAction.chevron,
+                      trailingTitle: _getThemeModeString(themeMode.themeMode, settingLocalizations),
+                      onTap: () => const SettingsApperanceRoute().go(context),
+                    ),
+                  ),
+                  ListenableBuilder(
+                    listenable: languageMode,
+                    builder: (context, _) {
+                      return LmuListItem.action(
+                        title: settingLocalizations.language,
+                        actionType: LmuListItemAction.chevron,
+                        trailingTitle: languageMode.isAutomatic
+                            ? settingLocalizations.systemMode
+                            : languageMode.locale.localizedName(settingLocalizations),
+                        onTap: () => const SettingsLanguageRoute().go(context),
+                      );
+                    },
                   ),
                 ],
               ),
-              const SizedBox(
-                height: LmuSizes.size_16,
-              ),
+              const SizedBox(height: LmuSizes.size_16),
               LmuContentTile(
                 content: [
                   LmuListItem.base(
@@ -66,19 +88,30 @@ class SettingsMainPage extends StatelessWidget {
                       );
                     },
                   ),
+                  // LmuListItem.base(
+                  //   title: settingLocalizations.contact,
+                  //   trailingArea: Icon(
+                  //     LucideIcons.mail,
+                  //     size: LmuSizes.size_20,
+                  //     color: context.colors.neutralColors.textColors.weakColors.base,
+                  //   ),
+                  //   onTap: () {
+                  //     LmuUrlLauncher.launchEmail(
+                  //       context: context,
+                  //       email: LmuDevStrings.lmuDevContactMail,
+                  //       subject: settingLocalizations.contactSubject,
+                  //       body: settingLocalizations.contactBody,
+                  //     );
+                  //   },
+                  // ),
                   LmuListItem.base(
-                    title: settingLocalizations.contact,
-                    trailingArea: Icon(
-                      LucideIcons.mail,
-                      size: LmuSizes.size_20,
-                      color: context.colors.neutralColors.textColors.weakColors.base,
-                    ),
+                    title: settingLocalizations.dataPrivacy,
+                    trailingArea: linkIcon,
                     onTap: () {
-                      LmuUrlLauncher.launchEmail(
+                      LmuUrlLauncher.launchWebsite(
                         context: context,
-                        email: LmuDevStrings.lmuDevContactMail,
-                        subject: settingLocalizations.contactSubject,
-                        body: settingLocalizations.contactBody,
+                        url: LmuDevStrings.lmuDevDataPrivacy,
+                        mode: LmuUrlLauncherMode.inAppWebView,
                       );
                     },
                   ),
@@ -89,24 +122,6 @@ class SettingsMainPage extends StatelessWidget {
                       LmuUrlLauncher.launchWebsite(
                         context: context,
                         url: LmuDevStrings.lmuDevDonate,
-                        mode: LmuUrlLauncherMode.inAppWebView,
-                      );
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: LmuSizes.size_16,
-              ),
-              LmuContentTile(
-                content: [
-                  LmuListItem.base(
-                    title: settingLocalizations.dataPrivacy,
-                    trailingArea: linkIcon,
-                    onTap: () {
-                      LmuUrlLauncher.launchWebsite(
-                        context: context,
-                        url: LmuDevStrings.lmuDevDataPrivacy,
                         mode: LmuUrlLauncherMode.inAppWebView,
                       );
                     },
@@ -122,16 +137,36 @@ class SettingsMainPage extends StatelessWidget {
                       );
                     },
                   ),
-                  LmuListItem.action(
-                    title: settingLocalizations.licenses,
-                    actionType: LmuListItemAction.chevron,
-                    onTap: () => const SettingsLicenceRoute().go(context),
-                  ),
                 ],
               ),
-              const SizedBox(
-                height: LmuSizes.size_16,
-              ),
+              // const SizedBox(height: LmuSizes.size_16),
+              // LmuContentTile(
+              //   content: [
+              //     LmuListItem.base(
+              //       title: settingLocalizations.dataPrivacy,
+              //       trailingArea: linkIcon,
+              //       onTap: () {
+              //         LmuUrlLauncher.launchWebsite(
+              //           context: context,
+              //           url: LmuDevStrings.lmuDevDataPrivacy,
+              //           mode: LmuUrlLauncherMode.inAppWebView,
+              //         );
+              //       },
+              //     ),
+              //     LmuListItem.base(
+              //       title: settingLocalizations.imprint,
+              //       trailingArea: linkIcon,
+              //       onTap: () {
+              //         LmuUrlLauncher.launchWebsite(
+              //           context: context,
+              //           url: LmuDevStrings.lmuDevImprint,
+              //           mode: LmuUrlLauncherMode.inAppWebView,
+              //         );
+              //       },
+              //     ),
+              //   ],
+              // ),
+              const SizedBox(height: LmuSizes.size_16),
               LmuContentTile(
                 content: [
                   LmuListItem.action(
@@ -139,6 +174,11 @@ class SettingsMainPage extends StatelessWidget {
                     mainContentAlignment: MainContentAlignment.center,
                     actionType: LmuListItemAction.chevron,
                     onTap: () => const SettingsDebugRoute().go(context),
+                  ),
+                  LmuListItem.action(
+                    title: settingLocalizations.licenses,
+                    actionType: LmuListItemAction.chevron,
+                    onTap: () => const SettingsLicenceRoute().go(context),
                   ),
                 ],
               ),
@@ -183,16 +223,10 @@ class SettingsMainPage extends StatelessWidget {
   }
 }
 
-String _getThemeModeString(BuildContext context, SettingsLocalizations localizaitons) {
-  final String themeName = Provider.of<ThemeProvider>(context, listen: true).themeMode.name;
-  switch (themeName.toLowerCase()) {
-    case 'system':
-      return localizaitons.systemMode;
-    case 'dark':
-      return localizaitons.darkMode;
-    case 'light':
-      return localizaitons.lightMode;
-    default:
-      return localizaitons.systemMode;
-  }
+String _getThemeModeString(ThemeMode themeMode, SettingsLocalizations localizaitons) {
+  return switch (themeMode) {
+    ThemeMode.system => localizaitons.systemMode,
+    ThemeMode.dark => localizaitons.darkMode,
+    ThemeMode.light => localizaitons.lightMode,
+  };
 }

@@ -9,7 +9,6 @@ class DefaultSettingsService implements SettingsService {
   @override
   void navigateToSettings(BuildContext context) {
     const SettingsMainRoute().go(context);
-    //Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SettingsMainPage()));
   }
 
   @override

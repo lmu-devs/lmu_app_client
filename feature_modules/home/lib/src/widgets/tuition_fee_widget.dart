@@ -64,8 +64,7 @@ class TuitionFeeWidget extends StatelessWidget {
                               _getSemester(DateTime.now(), context.locals.home),
                               DateTime.now().year,
                             ),
-                            titleColor: context.colors.successColors.textColors
-                                .strongColors.base,
+                            titleColor: context.colors.successColors.textColors.strongColors.base,
                             trailingArea: LmuCheckboxAction(
                               isActive: isPayed,
                             ),
@@ -123,37 +122,31 @@ class TuitionFeeWidget extends StatelessWidget {
                         content: [
                           LmuListItem.base(
                             subtitle: context.locals.home.tuitionFee,
-                            trailingTitle:
-                                "${homeData.semesterFee.fee.toStringAsFixed(2)} €",
-                            trailingTitleColor: context.colors.brandColors
-                                .textColors.strongColors.base,
+                            trailingTitle: "${homeData.semesterFee.fee.toStringAsFixed(2)} €",
+                            trailingTitleColor: context.colors.brandColors.textColors.strongColors.base,
                             trailingArea: LucideIcon(
                               LucideIcons.copy,
                               size: LmuSizes.size_16,
                               strokeWidth: 2.3,
-                              color: context.colors.brandColors.textColors
-                                  .strongColors.base,
+                              color: context.colors.brandColors.textColors.strongColors.base,
                             ),
                             mainContentAlignment: MainContentAlignment.center,
                             onTap: () {
                               _copyToClipboard(
                                   context: context,
-                                  copiedText: homeData.semesterFee.fee
-                                      .toStringAsFixed(2),
+                                  copiedText: homeData.semesterFee.fee.toStringAsFixed(2),
                                   message: context.locals.home.tuitionFeeCopy);
                             },
                           ),
                           LmuListItem.base(
                             subtitle: context.locals.home.receiver,
                             trailingTitle: homeData.semesterFee.receiver,
-                            trailingTitleColor: context.colors.brandColors
-                                .textColors.strongColors.base,
+                            trailingTitleColor: context.colors.brandColors.textColors.strongColors.base,
                             trailingArea: LucideIcon(
                               LucideIcons.copy,
                               size: LmuSizes.size_16,
                               strokeWidth: 2.3,
-                              color: context.colors.brandColors.textColors
-                                  .strongColors.base,
+                              color: context.colors.brandColors.textColors.strongColors.base,
                             ),
                             mainContentAlignment: MainContentAlignment.center,
                             onTap: () {
@@ -166,14 +159,12 @@ class TuitionFeeWidget extends StatelessWidget {
                           LmuListItem.base(
                             subtitle: context.locals.home.iban,
                             trailingTitle: homeData.semesterFee.iban,
-                            trailingTitleColor: context.colors.brandColors
-                                .textColors.strongColors.base,
+                            trailingTitleColor: context.colors.brandColors.textColors.strongColors.base,
                             trailingArea: LucideIcon(
                               LucideIcons.copy,
                               size: LmuSizes.size_16,
                               strokeWidth: 2.3,
-                              color: context.colors.brandColors.textColors
-                                  .strongColors.base,
+                              color: context.colors.brandColors.textColors.strongColors.base,
                             ),
                             maximizeTrailingTitleArea: true,
                             onTap: () {
@@ -187,15 +178,13 @@ class TuitionFeeWidget extends StatelessWidget {
                           LmuListItem.base(
                             subtitle: context.locals.home.reference,
                             trailingTitle: homeData.semesterFee.reference,
-                            trailingTitleColor: context.colors.brandColors
-                                .textColors.strongColors.base,
+                            trailingTitleColor: context.colors.brandColors.textColors.strongColors.base,
                             maximizeTrailingTitleArea: true,
                             trailingArea: LucideIcon(
                               LucideIcons.copy,
                               size: LmuSizes.size_16,
                               strokeWidth: 2.3,
-                              color: context.colors.brandColors.textColors
-                                  .strongColors.base,
+                              color: context.colors.brandColors.textColors.strongColors.base,
                             ),
                             onTap: () {
                               _copyToClipboard(
@@ -212,8 +201,7 @@ class TuitionFeeWidget extends StatelessWidget {
                             ),
                             child: LmuText.bodyXSmall(
                               "Offizielle Informationen zur Rückmeldung.",
-                              color: context.colors.neutralColors.textColors
-                                  .weakColors.base,
+                              color: context.colors.neutralColors.textColors.weakColors.base,
                             ),
                           ),
                         ],

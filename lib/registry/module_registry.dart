@@ -1,5 +1,6 @@
 import 'package:core/api.dart';
 import 'package:core/module.dart';
+import 'package:core/themes.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/user.dart';
 
@@ -9,7 +10,11 @@ class ModuleRegistry {
   final List<AppModule> modules;
 
   Future init() async {
-    GetIt.I.registerSingleton<BaseApiClient>(DefaultBaseApiClient());
+    GetIt.I.registerSingleton<ThemeProvider>(ThemeProvider());
+    final baseApiClient = GetIt.I.registerSingleton<BaseApiClient>(DefaultBaseApiClient());
+    final languageProvider = GetIt.I.registerSingleton<LanguageProvider>(LanguageProvider());
+    await languageProvider.init();
+    baseApiClient.locale = languageProvider.locale;
 
     final priorityDependenciesModule = modules.whereType<PriorityDependenciesProvidingAppModule>();
     for (final priorityDependencyModule in priorityDependenciesModule) {
@@ -41,6 +46,13 @@ class ModuleRegistry {
     userService.deletePrivateDataStream.listen((_) {
       for (final privateDataContainingModule in privateDataContainingModules) {
         privateDataContainingModule.onDeletePrivateData();
+      }
+    });
+
+    languageProvider.addListener(() {
+      for (final localizedDataContainingModule in modules.whereType<LocalizedDataContainigAppModule>()) {
+        localizedDataContainingModule.onLocaleChange();
+        baseApiClient.locale = languageProvider.locale;
       }
     });
   }

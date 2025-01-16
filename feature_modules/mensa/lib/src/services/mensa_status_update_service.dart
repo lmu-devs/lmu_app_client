@@ -33,8 +33,9 @@ class MensaStatusUpdateService extends ChangeNotifier {
     });
   }
 
-  void _notifyListeners() {
+  void _notifyListeners() async {
     _appLogger.logMessage('[MensaStatusUpdateService]: Updating status: ${DateTime.now()}');
+    await Future.delayed(const Duration(seconds: 1));
     notifyListeners();
   }
 

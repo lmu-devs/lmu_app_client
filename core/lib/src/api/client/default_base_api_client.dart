@@ -11,7 +11,7 @@ class DefaultBaseApiClient extends BaseApiClient {
   final String _prodBaseUrl = 'https://api.lmu-dev.org';
   final String _devBaseUrl = 'https://dev-api.lmu-dev.org';
 
-  final _locale = PlatformDispatcher.instance.locale;
+  Locale _locale = PlatformDispatcher.instance.locale;
   final _appLogger = AppLogger();
 
   bool _isDevEnv = false;
@@ -24,6 +24,12 @@ class DefaultBaseApiClient extends BaseApiClient {
   @override
   set useLocalHost(bool value) {
     _useLocalHost = value;
+  }
+
+  @override
+  set locale(Locale value) {
+    _appLogger.logMessage("[BaseApiClient]: Locale set: $value");
+    _locale = value;
   }
 
   String? _userApiKey;

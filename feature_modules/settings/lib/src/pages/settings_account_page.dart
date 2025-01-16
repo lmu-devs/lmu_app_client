@@ -47,17 +47,13 @@ class SettingsAccountPage extends StatelessWidget {
                   print("connect to dominik avatar style");
                 },
               ),**/
-              const SizedBox(
-                height: LmuSizes.size_16,
-              ),
+              const SizedBox(height: LmuSizes.size_16),
               LmuText.bodyXSmall(
                 localization.connectToAccountDescription,
                 color: context.colors.neutralColors.textColors.weakColors.base,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(
-                height: LmuSizes.size_32,
-              ),
+              const SizedBox(height: LmuSizes.size_32),
               LmuTileHeadline.base(
                 title: localization.manageData,
               ),
@@ -73,17 +69,13 @@ class SettingsAccountPage extends StatelessWidget {
                   );
                 },
               ),
-              const SizedBox(
-                height: LmuSizes.size_16,
-              ),
+              const SizedBox(height: LmuSizes.size_16),
               LmuText.bodyXSmall(
                 localization.deleteDataDescription,
                 color: context.colors.neutralColors.textColors.weakColors.base,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(
-                height: LmuSizes.size_32,
-              ),
+              const SizedBox(height: LmuSizes.size_32),
               /**LmuTileHeadline.base(
                   title: localization.technicalDetails,
                   ),
@@ -98,9 +90,7 @@ class SettingsAccountPage extends StatelessWidget {
                   ),
                   ],
                   ),**/
-              const SizedBox(
-                height: LmuSizes.size_96,
-              ),
+              const SizedBox(height: LmuSizes.size_96),
             ],
           ),
         ),
