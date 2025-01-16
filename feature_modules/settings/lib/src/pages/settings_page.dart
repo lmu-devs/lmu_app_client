@@ -88,22 +88,42 @@ class SettingsMainPage extends StatelessWidget {
                       );
                     },
                   ),
-                  // LmuListItem.base(
-                  //   title: settingLocalizations.contact,
-                  //   trailingArea: Icon(
-                  //     LucideIcons.mail,
-                  //     size: LmuSizes.size_20,
-                  //     color: context.colors.neutralColors.textColors.weakColors.base,
-                  //   ),
-                  //   onTap: () {
-                  //     LmuUrlLauncher.launchEmail(
-                  //       context: context,
-                  //       email: LmuDevStrings.lmuDevContactMail,
-                  //       subject: settingLocalizations.contactSubject,
-                  //       body: settingLocalizations.contactBody,
-                  //     );
-                  //   },
-                  // ),
+                  LmuListItem.base(
+                    title: settingLocalizations.contact,
+                    trailingArea: Icon(
+                      LucideIcons.mail,
+                      size: LmuIconSizes.mediumSmall,
+                      color: context.colors.neutralColors.textColors.weakColors.base,
+                    ),
+                    onTap: () {
+                      LmuUrlLauncher.launchEmail(
+                        context: context,
+                        email: LmuDevStrings.lmuDevContactMail,
+                        subject: settingLocalizations.contactSubject,
+                        body: settingLocalizations.contactBody,
+                      );
+                    },
+                  ),
+                  LmuListItem.base(
+                    title: settingLocalizations.donate,
+                    trailingArea: Icon(
+                      LucideIcons.heart,
+                      size: LmuIconSizes.mediumSmall,
+                      color: context.colors.neutralColors.textColors.weakColors.base,
+                    ),
+                    onTap: () {
+                      LmuUrlLauncher.launchWebsite(
+                        context: context,
+                        url: LmuDevStrings.lmuDevDonate,
+                        mode: LmuUrlLauncherMode.inAppWebView,
+                      );
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: LmuSizes.size_16),
+              LmuContentTile(
+                content: [
                   LmuListItem.base(
                     title: settingLocalizations.dataPrivacy,
                     trailingArea: linkIcon,
@@ -111,17 +131,6 @@ class SettingsMainPage extends StatelessWidget {
                       LmuUrlLauncher.launchWebsite(
                         context: context,
                         url: LmuDevStrings.lmuDevDataPrivacy,
-                        mode: LmuUrlLauncherMode.inAppWebView,
-                      );
-                    },
-                  ),
-                  LmuListItem.base(
-                    title: settingLocalizations.donate,
-                    trailingArea: linkIcon,
-                    onTap: () {
-                      LmuUrlLauncher.launchWebsite(
-                        context: context,
-                        url: LmuDevStrings.lmuDevDonate,
                         mode: LmuUrlLauncherMode.inAppWebView,
                       );
                     },
@@ -137,35 +146,13 @@ class SettingsMainPage extends StatelessWidget {
                       );
                     },
                   ),
+                  LmuListItem.action(
+                    title: settingLocalizations.licenses,
+                    actionType: LmuListItemAction.chevron,
+                    onTap: () => const SettingsLicenceRoute().go(context),
+                  ),
                 ],
               ),
-              // const SizedBox(height: LmuSizes.size_16),
-              // LmuContentTile(
-              //   content: [
-              //     LmuListItem.base(
-              //       title: settingLocalizations.dataPrivacy,
-              //       trailingArea: linkIcon,
-              //       onTap: () {
-              //         LmuUrlLauncher.launchWebsite(
-              //           context: context,
-              //           url: LmuDevStrings.lmuDevDataPrivacy,
-              //           mode: LmuUrlLauncherMode.inAppWebView,
-              //         );
-              //       },
-              //     ),
-              //     LmuListItem.base(
-              //       title: settingLocalizations.imprint,
-              //       trailingArea: linkIcon,
-              //       onTap: () {
-              //         LmuUrlLauncher.launchWebsite(
-              //           context: context,
-              //           url: LmuDevStrings.lmuDevImprint,
-              //           mode: LmuUrlLauncherMode.inAppWebView,
-              //         );
-              //       },
-              //     ),
-              //   ],
-              // ),
               const SizedBox(height: LmuSizes.size_16),
               LmuContentTile(
                 content: [
@@ -174,11 +161,6 @@ class SettingsMainPage extends StatelessWidget {
                     mainContentAlignment: MainContentAlignment.center,
                     actionType: LmuListItemAction.chevron,
                     onTap: () => const SettingsDebugRoute().go(context),
-                  ),
-                  LmuListItem.action(
-                    title: settingLocalizations.licenses,
-                    actionType: LmuListItemAction.chevron,
-                    onTap: () => const SettingsLicenceRoute().go(context),
                   ),
                 ],
               ),
