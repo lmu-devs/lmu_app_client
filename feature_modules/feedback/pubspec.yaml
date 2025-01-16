@@ -1,10 +1,10 @@
 name: feedback
 description: "A new Flutter package project."
 version: 0.0.1
-publish_to: 'none'
+publish_to: "none"
 
 environment:
-  sdk: '>=3.4.3 <4.0.0'
+  sdk: ">=3.4.3 <4.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
@@ -12,17 +12,24 @@ dependencies:
     sdk: flutter
   core:
     path: ../../core
+  equatable: ^2.0.5
+  flutter_bloc: ^8.1.3
+  go_router: ^14.3.0
+  go_router_builder: ^2.7.1
+  get_it: ^8.0.1
+  flutter_lucide: ^1.2.0
   shared_api:
     path: ../../shared_api
-  get_it: ^8.0.1
-  http: ^1.2.2
-  json_annotation: ^4.0.1
-  modal_bottom_sheet: ^3.0.0
+  json_annotation: ^4.8.1
+  flutter_sticky_header: ^0.7.0
+  skeletonizer: ^1.4.2
+  intl: any
 
+  http: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
-  json_serializable: ^6.6.2
-  build_runner: ^2.4.9
-  build_verify: ^3.1.0
+  build_runner: any
+  build_verify: any
+  json_serializable: ^6.7.1

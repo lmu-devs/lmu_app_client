@@ -1,10 +1,10 @@
 name: lmu_app
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 1.0.0+3
 
 environment:
-  sdk: '>=3.2.4 <4.0.0'
+  sdk: ">=3.2.4 <4.0.0"
 
 dependencies:
   flutter:
@@ -28,6 +28,8 @@ dependencies:
     path: ./feature_modules/wishlist
   feedback:
     path: ./feature_modules/feedback
+  cinema:
+    path: ./feature_modules/cinema
   user:
     path: ./feature_modules/user
   shared_api:
@@ -65,7 +67,6 @@ dev_dependencies:
   build_verify: any
   husky: ^0.1.7
 
-
 flutter:
   uses-material-design: true
   generate: true
@@ -74,4 +75,3 @@ flutter:
     - core/lib/assets/
     - feature_modules/mensa/assets/
     - feature_modules/explore/assets/
-
