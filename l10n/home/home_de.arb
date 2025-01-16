@@ -11,13 +11,16 @@
   "tuitionFee": "Semesterbeitrag",
   "lecturePeriod": "Vorlesungszeit",
   "lectureFreePeriod": "Vorlesungsfreie Zeit",
-  "lectureFreePeriodDays": "Du hast noch {days} Tage um dich zurück zu melden",
+  "tuitionFeeCountdown": "Du hast noch {countdown} um dich zurück zu melden.",
+  "tuitionFeePayed": "Du bist für {SummerOrWinter} {year} zurückgemeldet.",
   "tuitionFeeCopy": "Semesterbeitrag kopiert",
   "receiver": "Empfänger",
   "receiverCopy": "Empfänger kopiert",
   "iban": "IBAN",
   "ibanCopy": "IBAN kopiert",
   "reference": "Zweck",
-  "referenceCopy": "Zweck kopiert"
+  "referenceCopy": "Zweck kopiert",
+  "summer": "Sommer",
+  "winter": "Winter"
 }
 

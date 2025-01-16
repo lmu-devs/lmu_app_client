@@ -3,8 +3,12 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
 abstract class BaseTile extends StatelessWidget {
-  const BaseTile({super.key});
+  const BaseTile({
+    super.key,
+    this.crossAxisAlignment = CrossAxisAlignment.start,
+  });
 
+  final CrossAxisAlignment crossAxisAlignment;
   Widget buildTile(BuildContext context);
 
   @override
@@ -29,11 +33,13 @@ class LmuContentTile extends BaseTile {
     this.borderRadius = const BorderRadius.all(Radius.circular(LmuSizes.size_8)),
     this.isTop = false,
     this.isMiddle = false,
+    super.crossAxisAlignment = CrossAxisAlignment.start,
   });
 
   factory LmuContentTile.top({
     required List<Widget> content,
     Key? key,
+    CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.start,
   }) =>
       LmuContentTile(
         content: content,
@@ -42,22 +48,26 @@ class LmuContentTile extends BaseTile {
         ),
         isTop: true,
         key: key,
+        crossAxisAlignment: crossAxisAlignment,
       );
 
   factory LmuContentTile.middle({
     required List<Widget> content,
     Key? key,
+    CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.start,
   }) =>
       LmuContentTile(
         content: content,
         borderRadius: BorderRadius.zero,
         isMiddle: true,
         key: key,
+        crossAxisAlignment: crossAxisAlignment,
       );
 
   factory LmuContentTile.bottom({
     required List<Widget> content,
     Key? key,
+    CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.start,
   }) =>
       LmuContentTile(
         content: content,
@@ -65,6 +75,7 @@ class LmuContentTile extends BaseTile {
           bottom: Radius.circular(LmuSizes.size_8),
         ),
         key: key,
+        crossAxisAlignment: crossAxisAlignment,
       );
 
   final List<Widget> content;
@@ -72,14 +83,12 @@ class LmuContentTile extends BaseTile {
   final bool isTop;
   final bool isMiddle;
 
-  Border? _getBorder(BuildContext context) {
-    if (!isTop && !isMiddle) return null;
-
-    return Border(
-      bottom: BorderSide(
-        color: context.colors.neutralColors.borderColors.seperatorLight,
-        width: .5,
-      ),
+  @override
+  Widget buildTile(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: crossAxisAlignment,
+      children: content,
     );
   }
 
@@ -97,12 +106,14 @@ class LmuContentTile extends BaseTile {
     );
   }
 
-  @override
-  Widget buildTile(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: content,
+  Border? _getBorder(BuildContext context) {
+    if (!isTop && !isMiddle) return null;
+
+    return Border(
+      bottom: BorderSide(
+        color: context.colors.neutralColors.borderColors.seperatorLight,
+        width: .5,
+      ),
     );
   }
 }

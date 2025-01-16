@@ -104,5 +104,45 @@
   "likes": "Likes",
   "@likes": {
     "description": "Likes"
+  },
+  "remainingDays": "{days} days",
+  "@remainingDays": {
+    "description": "Remaining days",
+    "placeholders": {
+      "days": {
+        "type": "String",
+        "example": "12"
+      }
+    }
+  },
+  "remainingHours": "{hours} hours",
+  "@remainingHours": {
+    "description": "Remaining hours",
+    "placeholders": {
+      "hours": {
+        "type": "String",
+        "example": "18"
+      }
+    }
+  },
+  "remainingMinutes": "{minutes} minutes",
+  "@remainingMinutes": {
+    "description": "Remaining minutes",
+    "placeholders": {
+      "minutes": {
+        "type": "String",
+        "example": "12"
+      }
+    }
+  },
+  "remainingSeconds": "{seconds} seconds",
+  "@remainingSeconds": {
+    "description": "Remaining seconds",
+    "placeholders": {
+      "seconds": {
+        "type": "String",
+        "example": "59"
+      }
+    }
   }
 }
