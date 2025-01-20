@@ -34,6 +34,7 @@ dependencies:
   expandable_page_view: ^1.0.17
   geolocator: ^13.0.2
   rxdart: ^0.28.0
+  animated_reorderable_list: ^1.1.5
 
 dev_dependencies:
   flutter_test:

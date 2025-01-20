@@ -74,13 +74,18 @@ class MensaUserPreferencesService {
     });
   }
 
+  Future<void> updateFavoriteMensaOrder(List<String> favoriteMensaIds) async {
+    _favoriteMensaIdsNotifier.value = favoriteMensaIds;
+    await _mensaRepository.saveFavoriteMensaIds(favoriteMensaIds);
+  }
+
   Future<void> toggleFavoriteMensaId(String mensaId) async {
     final favoriteMensaIds = List<String>.from(_favoriteMensaIdsNotifier.value);
 
     if (favoriteMensaIds.contains(mensaId)) {
       favoriteMensaIds.remove(mensaId);
     } else {
-      favoriteMensaIds.insert(0, mensaId);
+      favoriteMensaIds.insert(favoriteMensaIds.length, mensaId);
     }
 
     _favoriteMensaIdsNotifier.value = favoriteMensaIds;
