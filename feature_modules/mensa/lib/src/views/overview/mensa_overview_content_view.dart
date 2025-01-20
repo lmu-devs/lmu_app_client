@@ -9,6 +9,7 @@ import '../../repository/api/models/mensa/mensa_model.dart';
 import '../../repository/api/models/user_preferences/sort_option.dart';
 import '../../repository/repository.dart';
 import '../../services/mensa_distance_service.dart';
+import '../../widgets/overview/mensa_overview_reordable_favorite_section.dart';
 import '../../widgets/widgets.dart';
 
 class MensaOverviewContentView extends StatefulWidget {
@@ -69,10 +70,8 @@ class _MensaOverviewContentViewState extends State<MensaOverviewContentView> {
         padding: const EdgeInsets.all(LmuSizes.size_16),
         child: Column(
           children: [
-            LmuTileHeadline.base(
-              title: localizations.favorites,
-            ),
-            MensaOverviewFavoriteSection(mensaModels: widget.mensaModels),
+            LmuTileHeadline.base(title: localizations.favorites),
+            MensaOverviewReordableFavoriteSection(mensaModels: widget.mensaModels),
             const SizedBox(height: LmuSizes.size_24),
             LmuTileHeadline.base(
               title: localizations.allCanteens,
