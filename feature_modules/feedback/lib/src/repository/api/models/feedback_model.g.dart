@@ -6,8 +6,7 @@ part of 'feedback_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-FeedbackModel _$FeedbackModelFromJson(Map<String, dynamic> json) =>
-    FeedbackModel(
+FeedbackModel _$FeedbackModelFromJson(Map<String, dynamic> json) => FeedbackModel(
       type: json['type'] as String,
       rating: json['rating'] as String?,
       message: json['message'] as String?,
@@ -17,8 +16,7 @@ FeedbackModel _$FeedbackModelFromJson(Map<String, dynamic> json) =>
       systemVersion: json['system_version'] as String?,
     );
 
-Map<String, dynamic> _$FeedbackModelToJson(FeedbackModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$FeedbackModelToJson(FeedbackModel instance) => <String, dynamic>{
       'type': instance.type,
       'rating': instance.rating,
       'message': instance.message,
