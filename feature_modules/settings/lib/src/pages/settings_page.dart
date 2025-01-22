@@ -136,7 +136,7 @@ class SettingsMainPage extends StatelessWidget {
                     },
                   ),
                   LmuListItem.base(
-                    title: settingLocalizations.imprint,
+                    title: settingLocalizations.legalNotice,
                     trailingArea: linkIcon,
                     onTap: () {
                       LmuUrlLauncher.launchWebsite(

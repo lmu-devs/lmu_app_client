@@ -41,9 +41,9 @@
   "@dataPrivacy": {
     "description": "Title for list item to show data privacy"
   },
-  "imprint": "Imprint",
-  "@imprint": {
-    "description": "Title for list item to show imprint"
+  "legalNotice": "Legal Notice",
+  "@legalNotice": {
+    "description": "Title for list item to show legal notice"
   },
   "licenses": "Licenses",
   "@licenses": {
