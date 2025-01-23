@@ -71,14 +71,14 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
           getPngAssetTheme('feature_modules/explore/assets/$pinType'),
         );
 
+        Uint8List image = imageBytes.buffer.asUint8List();
+        final parsedImage = await decodeImageFromList(image);
+        final mbxImage = MbxImage(data: image, height: parsedImage.height, width: parsedImage.width);
+
         await mapboxMap.style.addStyleImage(
           pinType,
           6,
-          MbxImage(
-            data: imageBytes.buffer.asUint8List(),
-            width: LmuSizes.size_4.floor(),
-            height: LmuSizes.size_4.floor(),
-          ),
+          mbxImage,
           false,
           [],
           [],
