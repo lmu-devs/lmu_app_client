@@ -1,0 +1,10 @@
+{
+  "@@locale": "en",
+  "@@context": "Cinema",
+
+
+  "tabTitle": "Movies",
+  "@tabTitle": {
+    "description": "The title of the Movies Page"
+  }
+}

@@ -6,6 +6,7 @@ localizations:
 	flutter gen-l10n --arb-dir ./l10n/settings --output-dir ./core/lib/src/localizations/generated --template-arb-file settings_en.arb --output-localization-file settings_localizations.dart --output-class SettingsLocalizations --no-synthetic-package
 	flutter gen-l10n --arb-dir ./l10n/feedback --output-dir ./core/lib/src/localizations/generated --template-arb-file feedback_en.arb --output-localization-file feedback_localizations.dart --output-class FeedbackLocalizations --no-synthetic-package
 	flutter gen-l10n --arb-dir ./l10n/home --output-dir ./core/lib/src/localizations/generated --template-arb-file home_en.arb --output-localization-file home_localizations.dart --output-class HomeLocalizations --no-synthetic-package
+	flutter gen-l10n --arb-dir ./l10n/cinema --output-dir ./core/lib/src/localizations/generated --template-arb-file cinema_en.arb --output-localization-file cinema_localizations.dart --output-class CinemaLocalizations --no-synthetic-package
 
 run_generator: 
 	dart run build_runner build --delete-conflicting-outputs

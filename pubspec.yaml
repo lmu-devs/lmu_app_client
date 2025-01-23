@@ -17,6 +17,8 @@ dependencies:
     path: ./core
   home:
     path: ./feature_modules/home
+  cinema:
+    path: ./feature_modules/cinema
   mensa:
     path: ./feature_modules/mensa
   explore:
