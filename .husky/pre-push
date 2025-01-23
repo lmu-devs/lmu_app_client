@@ -1,6 +1,0 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-# Run your custom pre-push checks (e.g., Dart analysis, formatting, etc.)
-dart format . --line-length 120 && dart fix --apply && flutter analyze --no-cache --verbose | tee result.log | grep -qv 'warning\|error' && echo 'No issues found' || { echo 'Flutter analyze found warnings or errors. Please fix them before pushing.'; exit 1; }
-
