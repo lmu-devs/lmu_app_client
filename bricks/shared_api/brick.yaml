@@ -1,0 +1,13 @@
+name: shared_api
+description: A template for the shared_api of a feature.
+version: 1.0.0
+
+environment:
+  mason: ">=0.1.0-dev.53 <0.1.0"
+
+vars:
+  feature_name:
+    type: string
+    description: feature_name
+    default: feature
+    prompt: What is the name of the shared_api feature?

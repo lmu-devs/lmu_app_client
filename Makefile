@@ -29,3 +29,9 @@ love:
 setup:
 	flutter pub get
 	make localizations
+
+activate_mason: 
+	dart pub global activate mason_cli
+	mason --version
+	mason add feature_module --path bricks/feature_module
+	mason add shared_api --path bricks/shared_api
