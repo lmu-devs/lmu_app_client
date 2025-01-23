@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/extensions.dart';
@@ -6,11 +7,11 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../repository/api/models/menu/menu_item_model.dart';
 import '../repository/api/models/menu/price_category.dart';
 import '../repository/api/models/menu/price_model.dart';
+import '../repository/api/models/taste_profile/taste_profile_label_item.dart';
 import '../services/mensa_user_preferences_service.dart';
 import '../services/taste_profile_service.dart';
 
@@ -40,13 +41,17 @@ class _DishDetailsPageState extends State<DishDetailsPage> {
 
   MenuItemModel get _menuItemModel => widget.menuItemModel;
 
+  List<TasteProfileLabelItem> get labelItems => _menuItemModel.labels
+      .map((e) => _tasteProfileService.getLabelItemFromId(e))
+      .where((element) => element != null)
+      .cast<TasteProfileLabelItem>()
+      .toList()
+      .sortedBy((element) => element.enumName);
+
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
+    return LmuMasterAppBar.bottomSheet(
       largeTitle: _menuItemModel.title,
-      customScrollController: ModalScrollController.of(context),
-      collapsedTitleHeight: CollapsedTitleHeight.large,
-      leadingAction: LeadingAction.close,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
@@ -82,21 +87,24 @@ class _DishDetailsPageState extends State<DishDetailsPage> {
                 ],
               ),
               const SizedBox(height: LmuSizes.size_32),
-              LmuTileHeadline.base(title: context.locals.canteen.ingredients),
-              LmuContentTile(
-                content: _menuItemModel.labels.map(
-                  (e) {
-                    final labelItem = _tasteProfileService.getLabelItemFromId(e);
-                    if (labelItem == null) return const SizedBox.shrink();
-                    final emoji = labelItem.emojiAbbreviation?.isEmpty ?? true ? "😀" : labelItem.emojiAbbreviation;
-                    return LmuListItem.base(
-                      leadingArea: LmuText.h1(emoji),
-                      title: labelItem.text,
-                    );
-                  },
-                ).toList(),
-              ),
-              const SizedBox(height: LmuSizes.size_32),
+              if (labelItems.isNotEmpty)
+                Column(
+                  children: [
+                    LmuTileHeadline.base(title: context.locals.canteen.ingredients),
+                    LmuContentTile(
+                      content: labelItems.map(
+                        (labelItem) {
+                          return LmuListItem.base(
+                            leadingArea: LmuText.h1(
+                                labelItem.emojiAbbreviation?.isEmpty ?? false ? "🫙" : labelItem.emojiAbbreviation),
+                            title: labelItem.text,
+                          );
+                        },
+                      ).toList(),
+                    ),
+                    const SizedBox(height: LmuSizes.size_32),
+                  ],
+                ),
               LmuTileHeadline.base(title: context.locals.canteen.prices),
               ValueListenableBuilder(
                   valueListenable: _selectedPriceCategoryNotifier,

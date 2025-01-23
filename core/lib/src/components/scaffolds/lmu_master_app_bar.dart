@@ -5,6 +5,7 @@ import 'package:core/src/components/scaffolds/sliver_app_bar_delegate.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:nested_scroll_view_plus/nested_scroll_view_plus.dart';
 
 import 'leading_action.dart';
@@ -29,6 +30,7 @@ class LmuMasterAppBar extends StatefulWidget {
     this.imageUrls,
     this.customScrollController,
     this.onPopInvoked,
+    this.isBottomSheet = false,
   });
 
   final Widget body;
@@ -43,6 +45,7 @@ class LmuMasterAppBar extends StatefulWidget {
   final CollapsedTitleHeight collapsedTitleHeight;
   final ScrollController? customScrollController;
   final void Function(bool)? onPopInvoked;
+  final bool isBottomSheet;
 
   factory LmuMasterAppBar.bottomSheet({
     Key? key,
@@ -71,6 +74,7 @@ class LmuMasterAppBar extends StatefulWidget {
       imageUrls: imageUrls,
       customScrollController: customScrollController,
       onPopInvoked: onPopInvoked,
+      isBottomSheet: true,
     );
   }
 
@@ -112,6 +116,7 @@ class _LmuMasterAppBarState extends State<LmuMasterAppBar> {
     final largeTitleMaxLines =
         _calculateTitleMaxLines(widget.largeTitle, largeTitleTextTheme, MediaQuery.of(context).size.width);
     final calculatedLargeTitleHeight = largeTitleMaxLines * _largeTitleLineHeight + LmuSizes.size_16;
+    if (widget.isBottomSheet) _scrollController = ModalScrollController.of(context)!;
 
     return Material(
       child: PopScope(

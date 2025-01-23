@@ -10,7 +10,6 @@ import 'package:get_it/get_it.dart';
 import '../../../pages/dish_details_page.dart';
 import '../../../repository/api/models/menu/menu_item_model.dart';
 import '../../../services/mensa_user_preferences_service.dart';
-import '../../../utils/get_dish_type_emoji.dart';
 
 class MenuItemTile extends StatelessWidget {
   const MenuItemTile({
@@ -50,7 +49,18 @@ class MenuItemTile extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    LmuText.h3(getDishTypeEmoji(menuItemModel.dishType)),
+                    Container(
+                      width: 48,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            getAssetPathForDishType(menuItemModel.dishType),
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
                     const SizedBox(width: LmuSizes.size_12),
                     Expanded(
                       child: Column(
@@ -129,6 +139,37 @@ class MenuItemTile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String getAssetPathForDishType(String dishType) {
+    switch (dishType) {
+      case 'Pizza':
+        return 'feature_modules/mensa/assets/category_pizza.png';
+      case 'Pasta':
+        return 'feature_modules/mensa/assets/category_pasta.png';
+      case 'Wok':
+        return 'feature_modules/mensa/assets/category_wok.png';
+      case 'Dessert (Glas)':
+        return 'feature_modules/mensa/assets/category_dessert.png';
+      case 'Tagessupe, Brot, Obst':
+        return 'feature_modules/mensa/assets/category_soup.png';
+      case 'Fleisch':
+        return 'feature_modules/mensa/assets/category_meat.png';
+      case 'Fisch':
+        return 'feature_modules/mensa/assets/category_fish.png';
+      case 'Vegan':
+        return 'feature_modules/mensa/assets/category_vegan.png';
+      case 'Süßspeise':
+        return 'feature_modules/mensa/assets/category_sweets.png';
+      case 'Vegetarisch/fleischlos':
+        return 'feature_modules/mensa/assets/category_vegetarian.png';
+      case 'Studitopf':
+        return 'feature_modules/mensa/assets/category_studitopf.png';
+      case 'Grill':
+        return 'feature_modules/mensa/assets/category_bbq.png';
+      default:
+        return 'feature_modules/mensa/assets/category_default.png';
+    }
   }
 
   void _toggleDishFavorite(BuildContext context) {

@@ -1,6 +1,7 @@
 export 'actions/actions.dart';
 export 'bottom_sheets/bottom_sheets.dart';
 export 'buttons/lmu_button.dart';
+export 'dialogs/dialogs.dart';
 export 'dividers/dividers.dart';
 export 'header/header.dart';
 export 'icons/icons.dart';

@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../bloc/taste_profile/taste_profile_cubit.dart';
 import '../bloc/taste_profile/taste_profile_state.dart';
@@ -20,12 +19,13 @@ class TasteProfilePage extends StatefulWidget {
 
 class _TasteProfilePageState extends State<TasteProfilePage> {
   final _tasteProfileCubit = GetIt.I.get<TasteProfileCubit>();
+  final _tasteProfileService = GetIt.I.get<TasteProfileService>();
 
   @override
   void initState() {
     super.initState();
 
-    GetIt.I.get<TasteProfileService>().reinitState();
+    _tasteProfileService.onOpen();
 
     if (_tasteProfileCubit.state is! TasteProfileLoadSuccess) {
       _tasteProfileCubit.loadTasteProfile();
@@ -38,8 +38,9 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
 
     return LmuMasterAppBar.bottomSheet(
       largeTitle: localizations.myTaste,
-      customScrollController: ModalScrollController.of(context),
       trailingWidgets: const [_SaveButton()],
+      onPopInvoked: (value) => _tasteProfileService.onClose(),
+      onLeadingActionTap: () => _tasteProfileService.onClose(),
       body: BlocBuilder<TasteProfileCubit, TasteProfileState>(
         bloc: _tasteProfileCubit,
         builder: (context, state) {

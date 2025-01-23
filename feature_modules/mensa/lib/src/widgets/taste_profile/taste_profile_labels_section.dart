@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get_it/get_it.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../bloc/taste_profile/taste_profile_cubit.dart';
 import '../../bloc/taste_profile/taste_profile_state.dart';
@@ -30,7 +29,6 @@ class _TasteProfileLabelsSectionState extends State<TasteProfileLabelsSection> {
   late List<TasteProfilePreset> _allergiesPresets;
 
   final tasteProfileService = GetIt.I.get<TasteProfileService>();
-
   @override
   void initState() {
     super.initState();
@@ -54,13 +52,13 @@ class _TasteProfileLabelsSectionState extends State<TasteProfileLabelsSection> {
         activeTabIndexNotifier: ValueNotifier<int>(0),
         hasDivider: true,
         onTabChanged: (index, tabItem) {
-          //itemScrollController.jumpTo(index: index);
+          //.of(context).position.
         },
       ),
       sliver: SliverToBoxAdapter(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-          child: ScrollablePositionedList.separated(
+          child: ListView.separated(
             physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.only(top: LmuSizes.size_16),
             itemCount: _sortedLabels.length,
@@ -73,6 +71,7 @@ class _TasteProfileLabelsSectionState extends State<TasteProfileLabelsSection> {
               return Column(
                 children: [
                   LmuContentTile(
+                    key: GlobalObjectKey(label.name),
                     content: [
                       for (final item in sortedLabelItems)
                         ValueListenableBuilder(
@@ -81,7 +80,7 @@ class _TasteProfileLabelsSectionState extends State<TasteProfileLabelsSection> {
                             return LmuListItem.action(
                               title: item.text,
                               leadingArea: LmuText.body(
-                                (item.emojiAbbreviation ?? "").isEmpty ? "😀" : item.emojiAbbreviation,
+                                (item.emojiAbbreviation ?? "").isEmpty ? "🫙" : item.emojiAbbreviation,
                               ),
                               actionType: LmuListItemAction.checkbox,
                               mainContentAlignment: MainContentAlignment.center,

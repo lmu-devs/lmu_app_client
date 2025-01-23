@@ -30,19 +30,41 @@ class TasteProfileService {
   ValueNotifier<String?> get selectedPreferencePresetNotifier => _selectedPreferencePresetNotifier;
   ValueNotifier<Set<String>> get excludedLabelsNotifier => _excludedLabelsNotifier;
 
-  void reset() {
-    final tasteProfile = (GetIt.I.get<TasteProfileCubit>().state as TasteProfileLoadSuccess).tasteProfile;
-    _selectedAllergiesPresetsNotifier.value = {};
-    _selectedPreferencePresetNotifier.value = tasteProfile.preferencesPresets.first.enumName;
-    _excludedLabelsNotifier.value = {};
-    _isActiveNotifier.value = false;
+  bool _initialIsActive = false;
+  Set<String> _initialSelectedAllergiesPresets = {};
+  String? _initialSelectedPreferencePreset = '';
+  Set<String> _initialExcludedLabels = {};
+
+  void onOpen() {
+    _initialIsActive = _isActiveNotifier.value;
+    _initialSelectedAllergiesPresets = _selectedAllergiesPresetsNotifier.value;
+    _initialSelectedPreferencePreset = _selectedPreferencePresetNotifier.value;
+    _initialExcludedLabels = _excludedLabelsNotifier.value;
   }
 
-  void reinitState() {
-    _selectedAllergiesPresetsNotifier.value = currentTasteProfileState.selectedAllergiesPresets;
-    _selectedPreferencePresetNotifier.value = currentTasteProfileState.selectedPreferencePreset;
-    _excludedLabelsNotifier.value = currentTasteProfileState.excludedLabels;
-    _isActiveNotifier.value = currentTasteProfileState.isActive;
+  void onClose() {
+    _isActiveNotifier.value = _initialIsActive;
+    _selectedAllergiesPresetsNotifier.value = _initialSelectedAllergiesPresets;
+    _selectedPreferencePresetNotifier.value = _initialSelectedPreferencePreset;
+    _excludedLabelsNotifier.value = _initialExcludedLabels;
+  }
+
+  void reset() async {
+    final tasteProfile = (GetIt.I.get<TasteProfileCubit>().state as TasteProfileLoadSuccess).tasteProfile;
+    final initialPreferencePreset = tasteProfile.preferencesPresets.first.enumName;
+    _selectedAllergiesPresetsNotifier.value = {};
+    _selectedPreferencePresetNotifier.value = initialPreferencePreset;
+    _excludedLabelsNotifier.value = {};
+    _isActiveNotifier.value = false;
+
+    currentTasteProfileState = TasteProfileStateModel(
+      selectedAllergiesPresets: const {},
+      selectedPreferencePreset: initialPreferencePreset,
+      excludedLabels: const {},
+      isActive: false,
+    );
+
+    await _mensaRepository.saveTasteProfileState(currentTasteProfileState);
   }
 
   TasteProfileLabelItem? getLabelItemFromId(String id) {
@@ -86,10 +108,11 @@ class TasteProfileService {
 
     await _mensaRepository.saveTasteProfileState(currentTasteProfileState);
 
-    _excludedLabelItemNotifier.value = _mapExcludedLabelItems;
     _isActiveNotifier.value = isActive;
     _selectedAllergiesPresetsNotifier.value = selectedAllergiesPresets;
+    _selectedPreferencePresetNotifier.value = selectedPreferencePreset;
     _excludedLabelsNotifier.value = excludedLabels;
+    _excludedLabelItemNotifier.value = _mapExcludedLabelItems;
   }
 
   List<TasteProfileLabelItem> get _mapExcludedLabelItems {
