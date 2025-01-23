@@ -9,7 +9,6 @@ class LmuSearchInputField extends StatefulWidget {
   const LmuSearchInputField({
     super.key,
     required this.controller,
-    required this.context,
     required this.focusNode,
     this.hintText,
     this.onChanged,
@@ -22,7 +21,6 @@ class LmuSearchInputField extends StatefulWidget {
   });
 
   final TextEditingController controller;
-  final BuildContext context;
   final FocusNode focusNode;
   final String? hintText;
   final bool focusAfterClear;
@@ -130,7 +128,7 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> with SingleTi
               isAutocorrect: widget.isAutocorrect,
               leadingIcon: _buildLeadingIcon(
                 inputState: _inputState,
-                context: widget.context,
+                context: context,
               ),
               leadingIconConstraints: _buildLeadingIconConstraints(_inputState),
               contentPadding: const EdgeInsets.symmetric(
@@ -139,7 +137,7 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> with SingleTi
               ),
               trailingIcon: _buildTrailingIcon(
                 inputState: _inputState,
-                context: widget.context,
+                context: context,
               ),
               onSubmitted: widget.onSubmitted,
               onChanged: (value) {
@@ -157,7 +155,7 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> with SingleTi
         ),
         _buildSuffix(
           inputState: _inputState,
-          context: widget.context,
+          context: context,
         ),
       ],
     );

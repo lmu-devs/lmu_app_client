@@ -2,11 +2,11 @@ import 'package:core/api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'mensa_opening_details.g.dart';
+part 'sports_time_slot.g.dart';
 
 @JsonSerializable()
-class MensaOpeningDetails extends Equatable {
-  const MensaOpeningDetails({
+class SportsTimeSlot extends Equatable {
+  const SportsTimeSlot({
     required this.day,
     required this.startTime,
     required this.endTime,
@@ -18,14 +18,10 @@ class MensaOpeningDetails extends Equatable {
   @JsonKey(name: 'end_time')
   final String endTime;
 
-  factory MensaOpeningDetails.fromJson(Map<String, dynamic> json) => _$MensaOpeningDetailsFromJson(json);
+  factory SportsTimeSlot.fromJson(Map<String, dynamic> json) => _$SportsTimeSlotFromJson(json);
 
-  Map<String, dynamic> toJson() => _$MensaOpeningDetailsToJson(this);
+  Map<String, dynamic> toJson() => _$SportsTimeSlotToJson(this);
 
   @override
-  List<Object?> get props => [
-        day,
-        startTime,
-        endTime,
-      ];
+  List<Object?> get props => [day, startTime, endTime];
 }

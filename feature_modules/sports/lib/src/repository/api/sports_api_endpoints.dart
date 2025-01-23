@@ -1,3 +1,3 @@
-class SportsApiEndpoints{
+class SportsApiEndpoints {
   static const sports = '/sports';
 }

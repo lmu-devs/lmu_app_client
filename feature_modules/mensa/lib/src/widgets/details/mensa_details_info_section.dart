@@ -1,3 +1,4 @@
+import 'package:core/api.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
@@ -124,8 +125,8 @@ class MensaDetailsInfoSection extends StatelessWidget {
     final isToday = DateTime.now().weekday - 1 == index;
 
     return LmuListItem.base(
-      title: isToday ? detail.mapToDay(appLocalizations) : null,
-      subtitle: !isToday ? detail.mapToDay(appLocalizations) : null,
+      title: isToday ? detail.day.localizedWeekday(appLocalizations) : null,
+      subtitle: !isToday ? detail.day.localizedWeekday(appLocalizations) : null,
       hasVerticalPadding: false,
       hasHorizontalPadding: false,
       trailingTitle: isToday ? '${detail.startTime.substring(0, 5)} - ${detail.endTime.substring(0, 5)}' : null,

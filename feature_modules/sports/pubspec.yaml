@@ -22,6 +22,7 @@ dependencies:
   flutter_lucide: ^1.2.0
   get_it: ^8.0.1
   go_router: ^14.3.0
+  flutter_sticky_header: ^0.7.0
 
 dev_dependencies:
   flutter_test:
@@ -31,8 +32,3 @@ dev_dependencies:
   go_router_builder: ^2.7.1
   build_runner: any
   build_verify: any
-
-flutter:
-  uses-material-design: true
-  assets:
-    - assets/

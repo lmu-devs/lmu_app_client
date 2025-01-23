@@ -6,10 +6,12 @@ part of 'sports_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SportsModel _$SportsModelFromJson(Map<String, dynamic> json) =>SportsModel(
-      name: json['name'] as String,
+SportsModel _$SportsModelFromJson(Map<String, dynamic> json) => SportsModel(
+      title: json['title'] as String,
+      courses: (json['courses'] as List<dynamic>).map((e) => SportsCourse.fromJson(e as Map<String, dynamic>)).toList(),
     );
 
 Map<String, dynamic> _$SportsModelToJson(SportsModel instance) => <String, dynamic>{
-      'name': instance.name,
+      'title': instance.title,
+      'courses': instance.courses,
     };
