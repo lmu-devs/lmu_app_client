@@ -29,3 +29,7 @@ love:
 setup:
 	flutter pub get
 	make localizations
+
+activate_mason: 
+	dart pub global activate mason_cli
+	mason --version
