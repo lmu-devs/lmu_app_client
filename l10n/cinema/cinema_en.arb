@@ -3,8 +3,12 @@
   "@@context": "Cinema",
 
 
-  "tabTitle": "Movies",
-  "@tabTitle": {
-    "description": "The title of the Movies Page"
+  "cinemasTitle": "Cinemas",
+  "@cinemasTitle": {
+    "description": "Cinemas section title"
+  },
+  "moviesTitle": "All Movies",
+  "@moviesTitle": {
+    "description": "Movies section title"
   }
 }
