@@ -2,10 +2,10 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
+import '../pages/cinema_details_page.dart';
 import '../repository/api/api.dart';
 import '../repository/api/models/screening_model.dart';
 
@@ -34,6 +34,7 @@ class CinemaContentView extends StatelessWidget {
                 margin: EdgeInsets.only(
                   bottom: index == cinemas.length - 1 ? LmuSizes.none : LmuSizes.size_12,
                 ),
+                padding: const EdgeInsets.all(LmuSizes.size_4),
                 decoration: BoxDecoration(
                   color: context.colors.neutralColors.backgroundColors.tile,
                   borderRadius: const BorderRadius.all(
@@ -46,7 +47,10 @@ class CinemaContentView extends StatelessWidget {
                   subtitle: 'Nächster Film • Morgen',
                   hasHorizontalPadding: true,
                   hasVerticalPadding: true,
-                  onTap: () => print(cinema.id),
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    //CinemaDetailsRoute(cinema).go(context),
+                    builder: (context) => CinemaDetailsPage(cinema: cinema),
+                  )),
                 ),
               );
             }),
@@ -69,41 +73,44 @@ class CinemaContentView extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      screening.movie.poster != null
-                          ? ClipRRect(
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
-                                bottomLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
-                              ),
-                              child: FutureBuilder(
-                                future: precacheImage(NetworkImage(screening.movie.poster!.url), context),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState == ConnectionState.done) {
-                                    return Image.network(
-                                      screening.movie.poster!.url,
-                                      height: 165,
-                                      width: 116,
-                                      fit: BoxFit.cover,
-                                      semanticLabel: screening.movie.poster!.name,
-                                    );
-                                  } else {
-                                    return LmuSkeleton(
-                                      child: Container(
+                      SizedBox(
+                        height: 165,
+                        width: 116,
+                        child: screening.movie.poster != null
+                            ? ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
+                                  bottomLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
+                                ),
+                                child: FutureBuilder(
+                                  future: precacheImage(NetworkImage(screening.movie.poster!.url), context),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState == ConnectionState.done) {
+                                      return Image.network(
+                                        screening.movie.poster!.url,
                                         height: 165,
                                         width: 116,
-                                        color: Colors.white,
-                                      ),
-                                    );
-                                  }
-                                },
-                              ),
-                            )
-                          : Center(child: Text(screening.movie.title)),
+                                        fit: BoxFit.cover,
+                                        semanticLabel: screening.movie.poster!.name,
+                                      );
+                                    } else {
+                                      return LmuSkeleton(
+                                        child: Container(
+                                          height: 165,
+                                          width: 116,
+                                          color: Colors.white,
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                              )
+                            : Center(child: LmuText.caption(screening.movie.title)),
+                      ),
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.all(LmuSizes.size_16),
                           child: Column(
-                            mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -120,7 +127,7 @@ class CinemaContentView extends StatelessWidget {
                                   ),
                                   const SizedBox(height: LmuSizes.size_4),
                                   LmuText.bodySmall(
-                                    screening.entryTime,
+                                    DateFormat("hh:mm • dd.MM.yyyy").format(DateTime.parse(screening.entryTime)),
                                     color: context.colors.neutralColors.textColors.mediumColors.base,
                                   ),
                                   const SizedBox(height: LmuSizes.size_4),
