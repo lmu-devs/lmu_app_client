@@ -1,16 +1,36 @@
-import 'package:get_it/get_it.dart';
-
 import 'api/api.dart';
+import 'api/models/screening_model.dart';
 
 abstract class CinemaRepository{
-  Future<CinemaModel> getCinema();
+  Future<List<CinemaModel>> getCinemas();
+
+  Future<List<ScreeningModel>> getScreenings();
 }
 
 class ConnectedCinemaRepository implements CinemaRepository{
-  final _apiClient = GetIt.I.get<CinemaApiClient>();
+  ConnectedCinemaRepository({
+    required this.cinemaApiClient,
+  });
+
+  final CinemaApiClient cinemaApiClient;
 
   @override
-  Future<CinemaModel> getCinema() async {
-    return _apiClient.getCinemas();
+  Future<List<CinemaModel>> getCinemas({int? id}) async {
+    try {
+      final cinemas = await cinemaApiClient.getCinemas(id: id);
+      return cinemas;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<ScreeningModel>> getScreenings() async {
+    try {
+      final screenings = await cinemaApiClient.getScreenings();
+      return screenings;
+    } catch (e) {
+      rethrow;
+    }
   }
 }

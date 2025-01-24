@@ -9,12 +9,12 @@ part of 'cinema_model.dart';
 CinemaModel _$CinemaModelFromJson(Map<String, dynamic> json) => CinemaModel(
       id: json['id'] as String,
       title: json['title'] as String,
-      descriptionModels: (json['descriptions'] as List<dynamic>)
+      descriptions: (json['descriptions'] as List<dynamic>)
           .map((e) => DescriptionModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       externalLink: json['external_link'] as String,
       instagramLink: json['instagram_link'] as String,
-      cinemaLocationModel: CinemaLocationModel.fromJson(
+      cinemaLocation: CinemaLocationModel.fromJson(
           json['location'] as Map<String, dynamic>),
     );
 
@@ -22,8 +22,8 @@ Map<String, dynamic> _$CinemaModelToJson(CinemaModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
-      'descriptions': instance.descriptionModels,
+      'descriptions': instance.descriptions,
       'external_link': instance.externalLink,
       'instagram_link': instance.instagramLink,
-      'location': instance.cinemaLocationModel,
+      'location': instance.cinemaLocation,
     };

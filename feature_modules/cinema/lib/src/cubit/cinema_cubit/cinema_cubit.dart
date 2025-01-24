@@ -9,12 +9,13 @@ class CinemaCubit extends Cubit<CinemaState> {
 
   final _repository = GetIt.I.get<CinemaRepository>();
 
-  Future<void> loadCinema() async {
+  Future<void> loadCinemas() async {
     emit(const CinemaLoadInProgress());
-    
+
     try {
-      final data = await _repository.getCinema();
-      emit(CinemaLoadSuccess(data: data));
+      final cinemas = await _repository.getCinemas();
+      final screenings = await _repository.getScreenings();
+      emit(CinemaLoadSuccess(cinemas: cinemas, screenings: screenings));
     } catch (e) {
       emit(const CinemaLoadFailure());
     }

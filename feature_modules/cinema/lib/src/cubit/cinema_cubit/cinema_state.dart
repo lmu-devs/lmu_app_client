@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
 
 import '../../repository/api/models/cinema_model.dart';
+import '../../repository/api/models/screening_model.dart';
 
-abstract class CinemaState extends Equatable{
+abstract class CinemaState extends Equatable {
   const CinemaState();
 
   @override
@@ -18,12 +19,19 @@ class CinemaLoadInProgress extends CinemaState {
 }
 
 class CinemaLoadSuccess extends CinemaState {
-  const CinemaLoadSuccess({required this.data});
+  const CinemaLoadSuccess({
+    required this.cinemas,
+    required this.screenings,
+  });
 
-  final CinemaModel data;
+  final List<CinemaModel> cinemas;
+  final List<ScreeningModel> screenings;
 
   @override
-  List<Object> get props => [data];
+  List<Object> get props => [
+        cinemas,
+        screenings,
+      ];
 }
 
 class CinemaLoadFailure extends CinemaState {
