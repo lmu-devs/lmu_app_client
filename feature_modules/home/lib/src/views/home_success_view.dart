@@ -3,6 +3,8 @@ import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
+import 'package:get_it/get_it.dart';
+import 'package:shared_api/cinema.dart';
 
 import '../repository/api/models/home_model.dart';
 import 'home_overview_view.dart';
@@ -93,22 +95,7 @@ class _HomeSuccessViewState extends State<HomeSuccessView> {
         ),
       );
 
-  Widget _buildMoviesTab() => Center(
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(LucideIcons.construction, size: 16, color: Colors.grey),
-            const SizedBox(width: 8),
-            LmuText.body(
-              "This tab is work in progress",
-              color: Colors.grey,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(width: 8),
-            const Icon(LucideIcons.construction, size: 16, color: Colors.grey),
-          ],
-        ),
-      );
+  Widget _buildMoviesTab() => GetIt.I.get<CinemaService>().cinemaPage;
 
   Widget _buildGroupsTab() => Center(
         child: Row(
