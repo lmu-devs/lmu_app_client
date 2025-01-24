@@ -75,13 +75,7 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
                 );
               },
             ).toList(),
-            onTabChanged: (index, _) {
-              _pageController.animateToPage(
-                index,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeIn,
-              );
-            },
+            onTabChanged: (index, _) => _pageController.jumpToPage(index),
           ),
           sliver: SliverToBoxAdapter(
             child: ExpandablePageView.builder(

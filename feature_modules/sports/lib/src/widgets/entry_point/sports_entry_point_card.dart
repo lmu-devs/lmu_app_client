@@ -22,7 +22,11 @@ class SportsEntryPointCard extends StatelessWidget {
               height: 180,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(LmuSizes.size_12),
-                color: context.colors.neutralColors.backgroundColors.tile,
+                image: const DecorationImage(
+                  image: NetworkImage(
+                      'https://www.adh.de/fileadmin/user_upload/adh.de/bilder/Newsbilder_2020/3_Adventskalender_neu_ZHS_Muenchen.jpg'),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Container(
@@ -31,7 +35,7 @@ class SportsEntryPointCard extends StatelessWidget {
                   bottomLeft: Radius.circular(LmuSizes.size_12),
                   bottomRight: Radius.circular(LmuSizes.size_12),
                 ),
-                color: context.colors.neutralColors.backgroundColors.mediumColors.base,
+                color: context.colors.neutralColors.backgroundColors.pure.withOpacity(0.8),
               ),
               child: LmuListItem.base(
                 title: 'Sport',
