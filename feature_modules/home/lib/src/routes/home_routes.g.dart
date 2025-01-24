@@ -17,6 +17,7 @@ StatefulShellBranch get $homeData => StatefulShellBranchData.$branch(
           factory: $HomeMainRouteExtension._fromState,
           routes: [
             GetIt.I.get<SettingsService>().settingsData,
+            GetIt.I.get<SportsService>().sportsData,
           ],
         ),
       ],

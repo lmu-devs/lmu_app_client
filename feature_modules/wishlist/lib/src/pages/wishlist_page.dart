@@ -64,40 +64,32 @@ class WishlistPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: LmuSizes.size_24),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-                child: Wrap(
-                  direction: Axis.horizontal,
-                  spacing: LmuSizes.size_8,
-                  children: [
-                    LmuButton(
-                      title: context.locals.wishlist.shareApp,
-                      onTap: () => Share.share(LmuDevStrings.lmuDevWebsite),
-                    ),
-                    LmuButton(
-                      title: context.locals.wishlist.rateApp,
-                      emphasis: ButtonEmphasis.secondary,
-                      onTap: () => _requestAppReview(context),
-                    ),
-                    LmuButton(
-                      title: LmuDevStrings.devTeam,
-                      emphasis: ButtonEmphasis.secondary,
-                      onTap: () => LmuUrlLauncher.launchWebsite(
-                        url: LmuDevStrings.lmuDevWebsite,
-                        context: context,
-                        mode: LmuUrlLauncherMode.inAppWebView,
-                      ),
-                    ),
-                    LmuButton(
-                      title: context.locals.wishlist.instagram,
-                      emphasis: ButtonEmphasis.secondary,
-                      onTap: () => _openInstagram(context),
-                    ),
-                  ],
+            LmuButtonRow(
+              buttons: [
+                LmuButton(
+                  title: context.locals.wishlist.shareApp,
+                  onTap: () => Share.share(LmuDevStrings.lmuDevWebsite),
                 ),
-              ),
+                LmuButton(
+                  title: context.locals.wishlist.rateApp,
+                  emphasis: ButtonEmphasis.secondary,
+                  onTap: () => _requestAppReview(context),
+                ),
+                LmuButton(
+                  title: LmuDevStrings.devTeam,
+                  emphasis: ButtonEmphasis.secondary,
+                  onTap: () => LmuUrlLauncher.launchWebsite(
+                    url: LmuDevStrings.lmuDevWebsite,
+                    context: context,
+                    mode: LmuUrlLauncherMode.inAppWebView,
+                  ),
+                ),
+                LmuButton(
+                  title: context.locals.wishlist.instagram,
+                  emphasis: ButtonEmphasis.secondary,
+                  onTap: () => _openInstagram(context),
+                ),
+              ],
             ),
             const SizedBox(height: LmuSizes.size_24),
             Padding(
