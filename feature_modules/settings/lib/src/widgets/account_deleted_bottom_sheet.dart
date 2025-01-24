@@ -30,10 +30,10 @@ class AccountDeletedBottomSheet extends StatelessWidget {
           ),
           const Spacer(),
           LmuButton(
-            title: context.locals.settings.accountDeletedButton,
+            title: context.locals.app.ok,
             size: ButtonSize.large,
             showFullWidth: true,
-            onTap: () => Navigator.of(context, rootNavigator: true).pop(),
+            onTap: () => Navigator.of(context).popUntil((route) => route.isFirst),
           ),
           const SizedBox(height: LmuSizes.size_48),
         ],
