@@ -9,12 +9,14 @@ class LmuTabBar extends StatefulWidget {
     required this.items,
     required this.onTabChanged,
     this.activeTabIndexNotifier,
+    this.hasDefaultPaddings = true,
     this.hasDivider = false,
   });
 
   final void Function(int, LmuTabBarItemData) onTabChanged;
   final List<LmuTabBarItemData> items;
   final ValueNotifier<int>? activeTabIndexNotifier;
+  final bool hasDefaultPaddings;
   final bool hasDivider;
 
   @override
@@ -49,16 +51,16 @@ class _LmuTabBarState extends State<LmuTabBar> {
       children: [
         Container(
           color: context.colors.neutralColors.backgroundColors.base,
-          padding: const EdgeInsets.only(
-            top: LmuSizes.size_12,
-            bottom: LmuSizes.size_12,
+          padding: EdgeInsets.only(
+            top: widget.hasDefaultPaddings ? LmuSizes.size_12 : 0,
+            bottom: widget.hasDefaultPaddings ? LmuSizes.size_12 : 0,
           ),
           child: SizedBox(
-            width: double.infinity,
             height: 36,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: widget.items.length,
+              shrinkWrap: true,
               controller: _scrollController,
               itemBuilder: (_, index) {
                 final tabItem = widget.items[index];
@@ -68,8 +70,16 @@ class _LmuTabBarState extends State<LmuTabBar> {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        right: isLast ? LmuSizes.size_16 : LmuSizes.size_4,
-                        left: isFirst ? LmuSizes.size_16 : LmuSizes.size_4,
+                        right: isLast
+                            ? widget.hasDefaultPaddings
+                                ? LmuSizes.size_16
+                                : 0
+                            : LmuSizes.size_4,
+                        left: isFirst
+                            ? widget.hasDefaultPaddings
+                                ? LmuSizes.size_16
+                                : 0
+                            : LmuSizes.size_4,
                       ),
                       child: ValueListenableBuilder(
                         valueListenable: _activeTabIndexNotifier,
