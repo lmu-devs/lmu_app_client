@@ -26,6 +26,7 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
     this.onLeadingActionTap,
     this.trailingWidgets,
     this.imageUrls,
+    this.customLargeTitleWidget,
     required this.topPadding,
     required this.backgroundColor,
     required this.scrollController,
@@ -38,6 +39,7 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   final double largeTitleHeight;
   final Widget? largeTitleTrailingWidget;
   final MainAxisAlignment largeTitleTrailingWidgetAlignment;
+  final Widget? customLargeTitleWidget;
   final String collapsedTitle;
   final TextStyle collapsedTitleTextStyle;
   final double collapsedTitleHeight;
@@ -123,6 +125,7 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
                 largeTitleTrailingWidget: largeTitleTrailingWidget,
                 scrollOffsetNotifier: scrollOffsetNotifier,
                 hasImage: _hasImage,
+                customLargeTitleWidget: customLargeTitleWidget,
               ),
             ),
           ],
@@ -191,7 +194,25 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return true;
+    return oldDelegate is SliverAppBarDelegate &&
+        (oldDelegate.largeTitle != largeTitle ||
+            oldDelegate.largeTitleTextStyle != largeTitleTextStyle ||
+            oldDelegate.largeTitleMaxLines != largeTitleMaxLines ||
+            oldDelegate.largeTitleHeight != largeTitleHeight ||
+            oldDelegate.largeTitleTrailingWidget != largeTitleTrailingWidget ||
+            oldDelegate.largeTitleTrailingWidgetAlignment != largeTitleTrailingWidgetAlignment ||
+            oldDelegate.customLargeTitleWidget != customLargeTitleWidget ||
+            oldDelegate.collapsedTitle != collapsedTitle ||
+            oldDelegate.collapsedTitleTextStyle != collapsedTitleTextStyle ||
+            oldDelegate.collapsedTitleHeight != collapsedTitleHeight ||
+            oldDelegate.leadingAction != leadingAction ||
+            oldDelegate.onLeadingActionTap != onLeadingActionTap ||
+            !const IterableEquality().equals(oldDelegate.trailingWidgets, trailingWidgets) ||
+            !const IterableEquality().equals(oldDelegate.imageUrls, imageUrls) ||
+            oldDelegate.topPadding != topPadding ||
+            oldDelegate.backgroundColor != backgroundColor ||
+            oldDelegate.scrollController != scrollController ||
+            oldDelegate.scrollOffsetNotifier != scrollOffsetNotifier);
   }
 }
 
@@ -284,12 +305,14 @@ class _LargeTitle extends StatelessWidget {
     required this.largeTitleTrailingWidget,
     required this.scrollOffsetNotifier,
     required this.hasImage,
+    this.customLargeTitleWidget,
   });
 
   final String largeTitle;
   final TextStyle largeTitleTextStyle;
   final int largeTitleMaxLines;
   final MainAxisAlignment largeTitleTrailingWidgetAlignment;
+  final Widget? customLargeTitleWidget;
   final Widget? largeTitleTrailingWidget;
   final ValueNotifier<double> scrollOffsetNotifier;
   final bool hasImage;
@@ -311,28 +334,29 @@ class _LargeTitle extends StatelessWidget {
                     mainAxisAlignment: largeTitleTrailingWidgetAlignment,
                     children: [
                       Flexible(
-                        child: ValueListenableBuilder<double>(
-                          valueListenable: scrollOffsetNotifier,
-                          builder: (context, offset, _) {
-                            double scale = 1.0;
-                            if (offset < 0 &&
-                                !hasImage &&
-                                largeTitleTrailingWidgetAlignment == MainAxisAlignment.spaceBetween) {
-                              scale = clampDouble((1 - offset / 3000), 1, 1.12);
-                            }
-                            return Transform.scale(
-                              scale: scale,
-                              filterQuality: FilterQuality.high,
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                largeTitle,
-                                style: largeTitleTextStyle,
-                                maxLines: largeTitleMaxLines,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            );
-                          },
-                        ),
+                        child: customLargeTitleWidget ??
+                            ValueListenableBuilder<double>(
+                              valueListenable: scrollOffsetNotifier,
+                              builder: (context, offset, _) {
+                                double scale = 1.0;
+                                if (offset < 0 &&
+                                    !hasImage &&
+                                    largeTitleTrailingWidgetAlignment == MainAxisAlignment.spaceBetween) {
+                                  scale = clampDouble((1 - offset / 3000), 1, 1.12);
+                                }
+                                return Transform.scale(
+                                  scale: scale,
+                                  filterQuality: FilterQuality.high,
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    largeTitle,
+                                    style: largeTitleTextStyle,
+                                    maxLines: largeTitleMaxLines,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                );
+                              },
+                            ),
                       ),
                       if (largeTitleTrailingWidget != null)
                         Padding(
