@@ -31,6 +31,7 @@ class CinemaContentView extends StatelessWidget {
               final cinema = cinemas[index];
               return CinemaCard(
                 cinema: cinema,
+                screenings: _getScreeningsForCinema(cinema.id),
                 isLastItem: index == cinemas.length - 1,
               );
             }),
@@ -48,5 +49,9 @@ class CinemaContentView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  List<ScreeningModel> _getScreeningsForCinema(String cinemaId) {
+    return screenings.where((screening) => screening.cinema.id == cinemaId).toList();
   }
 }

@@ -5,15 +5,19 @@ import 'package:flutter/material.dart';
 
 import '../pages/cinema_details_page.dart';
 import '../repository/api/api.dart';
+import '../repository/api/models/screening_model.dart';
+import '../routes/cinema_details_data.dart';
 
 class CinemaCard extends StatelessWidget {
   const CinemaCard({
     Key? key,
     required this.cinema,
+    required this.screenings,
     required this.isLastItem,
   }) : super(key: key);
 
   final CinemaModel cinema;
+  final List<ScreeningModel> screenings;
   final bool isLastItem;
 
   @override
@@ -36,7 +40,12 @@ class CinemaCard extends StatelessWidget {
         hasHorizontalPadding: true,
         hasVerticalPadding: true,
         onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => CinemaDetailsPage(cinema: cinema),
+          builder: (context) => CinemaDetailsPage(
+            cinemaDetailsData: CinemaDetailsData(
+              cinema: cinema,
+              screenings: screenings,
+            ),
+          ),
         )),
       ),
     );

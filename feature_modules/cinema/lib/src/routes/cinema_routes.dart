@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../pages/cinema_details_page.dart';
 import '../pages/pages.dart';
-import '../repository/api/api.dart';
+import 'cinema_details_data.dart';
 
 part 'cinema_routes.g.dart';
 
@@ -23,10 +23,14 @@ class CinemaMainRoute extends GoRouteData {
 }
 
 class CinemaDetailsRoute extends GoRouteData {
-  const CinemaDetailsRoute(this.$extra);
+  const CinemaDetailsRoute(
+    this.$extra,
+  );
 
-  final CinemaModel $extra;
+  final CinemaDetailsData $extra;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => CinemaDetailsPage(cinema: $extra);
+  Widget build(BuildContext context, GoRouterState state) => CinemaDetailsPage(
+        cinemaDetailsData: $extra,
+      );
 }
