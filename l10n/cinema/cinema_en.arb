@@ -18,5 +18,17 @@
   "pastMoviesTitle": "Past Movies",
   "@pastMoviesTitle": {
     "description": "Past movies section title"
+  },
+  "screeningsSortingAlphabetical": "Alphabetically",
+  "@screeningsSortingAlphabetical": {
+    "description": "Sorting alphabetically"
+  },
+  "screeningsSortingMostRecent": "Most recent first",
+  "@screeningsSortingMostRecent": {
+    "description": "Sorting most recent first"
+  },
+  "screeningsSortingLeastRecent": "Least recent first",
+  "@screeningsSortingLeastRecent": {
+    "description": "Sorting least recent first"
   }
 }

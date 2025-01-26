@@ -5,5 +5,8 @@
   "cinemasTitle": "Kinos",
   "moviesTitle": "Alle Filme",
   "historyAction": "Vergangene anzeigen",
-  "pastMoviesTitle": "Vergangene Filme"
+  "pastMoviesTitle": "Vergangene Filme",
+  "screeningsSortingAlphabetical": "Alphabetisch",
+  "screeningsSortingMostRecent": "Neueste zuerst",
+  "screeningsSortingLeastRecent": "Älteste zuerst"
 }
