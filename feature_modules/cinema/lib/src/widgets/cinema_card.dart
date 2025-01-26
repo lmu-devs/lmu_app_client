@@ -39,14 +39,16 @@ class CinemaCard extends StatelessWidget {
         subtitle: 'Nächster Film • Morgen',
         hasHorizontalPadding: true,
         hasVerticalPadding: true,
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => CinemaDetailsPage(
-            cinemaDetailsData: CinemaDetailsData(
-              cinema: cinema,
-              screenings: screenings,
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => CinemaDetailsPage(
+              cinemaDetailsData: CinemaDetailsData(
+                cinema: cinema,
+                screenings: screenings,
+              ),
             ),
           ),
-        )),
+        ),
       ),
     );
   }

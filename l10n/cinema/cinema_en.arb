@@ -10,5 +10,13 @@
   "moviesTitle": "All Movies",
   "@moviesTitle": {
     "description": "Movies section title"
+  },
+  "historyAction": "Show History",
+  "@historyAction": {
+    "description": "Action to show history"
+  },
+  "pastMoviesTitle": "Past Movies",
+  "@pastMoviesTitle": {
+    "description": "Past movies section title"
   }
 }

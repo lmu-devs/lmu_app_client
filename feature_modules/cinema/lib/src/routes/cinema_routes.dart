@@ -3,6 +3,9 @@ import 'package:go_router/go_router.dart';
 
 import '../pages/cinema_details_page.dart';
 import '../pages/pages.dart';
+import '../pages/screening_details_page.dart';
+import '../pages/screenings_history_page.dart';
+import '../repository/api/models/screening_model.dart';
 import 'cinema_details_data.dart';
 
 part 'cinema_routes.g.dart';
@@ -11,7 +14,13 @@ part 'cinema_routes.g.dart';
   path: '/cinema',
   routes: <TypedGoRoute<GoRouteData>>[
     TypedGoRoute<CinemaDetailsRoute>(
-      path: 'details',
+      path: 'cinema_details',
+    ),
+    TypedGoRoute<ScreeningDetailsRoute>(
+      path: 'screening_details',
+    ),
+    TypedGoRoute<ScreeningsHistoryRoute>(
+      path: 'screenings_history',
     ),
   ],
 )
@@ -33,4 +42,31 @@ class CinemaDetailsRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) => CinemaDetailsPage(
         cinemaDetailsData: $extra,
       );
+}
+
+class ScreeningDetailsRoute extends GoRouteData {
+  const ScreeningDetailsRoute(
+      this.$extra,
+      );
+
+  final ScreeningModel $extra;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => ScreeningDetailsPage(
+    screening: $extra,
+  );
+}
+
+
+class ScreeningsHistoryRoute extends GoRouteData {
+  const ScreeningsHistoryRoute(
+      this.$extra,
+      );
+
+  final List<ScreeningModel> $extra;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => ScreeningsHistoryPage(
+    screenings: $extra,
+  );
 }

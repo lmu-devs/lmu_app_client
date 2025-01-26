@@ -3,5 +3,7 @@
   "@@context": "Cinema",
   
   "cinemasTitle": "Kinos",
-  "moviesTitle": "Alle Filme"
+  "moviesTitle": "Alle Filme",
+  "historyAction": "Vergangene anzeigen",
+  "pastMoviesTitle": "Vergangene Filme"
 }

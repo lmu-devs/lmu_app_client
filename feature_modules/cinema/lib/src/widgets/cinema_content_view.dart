@@ -3,6 +3,7 @@ import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 
+import '../pages/screenings_history_page.dart';
 import '../repository/api/api.dart';
 import '../repository/api/models/screening_model.dart';
 import 'cinema_card.dart';
@@ -20,6 +21,8 @@ class CinemaContentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final futureScreenings = _getFutureScreenings();
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
       child: SingleChildScrollView(
@@ -36,12 +39,22 @@ class CinemaContentView extends StatelessWidget {
               );
             }),
             const SizedBox(height: LmuSizes.size_32),
-            LmuTileHeadline.base(title: context.locals.cinema.moviesTitle),
-            ...List.generate(screenings.length, (index) {
-              final screening = screenings[index];
+            LmuTileHeadline.action(
+              title: context.locals.cinema.moviesTitle,
+              actionTitle: context.locals.cinema.historyAction,
+              onActionTap: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ScreeningsHistoryPage(
+                    screenings: _getPastScreenings(),
+                  ),
+                ),
+              ),
+            ),
+            ...List.generate(futureScreenings.length, (index) {
+              final screening = futureScreenings[index];
               return ScreeningCard(
                 screening: screening,
-                isLastItem: index == screenings.length - 1,
+                isLastItem: index == futureScreenings.length - 1,
               );
             }),
             const SizedBox(height: LmuSizes.size_96),
@@ -53,5 +66,19 @@ class CinemaContentView extends StatelessWidget {
 
   List<ScreeningModel> _getScreeningsForCinema(String cinemaId) {
     return screenings.where((screening) => screening.cinema.id == cinemaId).toList();
+  }
+
+  List<ScreeningModel> _getFutureScreenings() {
+    DateTime present = DateTime.now();
+    return screenings.where((screening) => DateTime.parse(screening.entryTime).isAfter(present)).toList();
+  }
+
+  List<ScreeningModel> _getPastScreenings() {
+    DateTime present = DateTime.now();
+    return screenings
+        .where((screening) => DateTime.parse(screening.entryTime).isBefore(present))
+        .toList()
+        .reversed
+        .toList();
   }
 }
