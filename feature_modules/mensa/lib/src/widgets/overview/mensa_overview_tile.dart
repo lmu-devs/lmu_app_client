@@ -107,14 +107,14 @@ class MensaOverviewTile extends StatelessWidget {
                                   ),
                                   const SizedBox(width: LmuSizes.size_8),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 2.0),
+                                    padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_2),
                                     child: MensaTag(type: type),
                                   ),
                                 ],
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(top: 2.0),
+                              padding: const EdgeInsets.only(top: LmuSizes.size_2),
                               child: Row(
                                 children: [
                                   const SizedBox(width: LmuSizes.size_8),

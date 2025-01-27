@@ -3,9 +3,10 @@ import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import '../pages/screening_details_page.dart';
 import '../repository/api/models/screening_model.dart';
+import '../util/screening_time.dart';
 
 class ScreeningCard extends StatelessWidget {
   const ScreeningCard({
@@ -22,7 +23,13 @@ class ScreeningCard extends StatelessWidget {
     const double cardHeight = 165;
 
     return GestureDetector(
-      onTap: () => print(screening.movie.title),
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => ScreeningDetailsPage(
+            screening: screening,
+          ),
+        ),
+      ),
       child: Container(
         height: cardHeight,
         margin: EdgeInsets.only(
@@ -63,7 +70,7 @@ class ScreeningCard extends StatelessWidget {
                           } else {
                             return LmuSkeleton(
                               child: Container(
-                                height: 165,
+                                height: cardHeight,
                                 width: 116,
                                 color: Colors.white,
                               ),
@@ -96,7 +103,7 @@ class ScreeningCard extends StatelessWidget {
                         ),
                         const SizedBox(height: LmuSizes.size_4),
                         LmuText.bodySmall(
-                          DateFormat("HH:mm • dd.MM.yyyy").format(DateTime.parse(screening.entryTime)),
+                          getScreeningTime(context: context, time: screening.entryTime),
                           color: context.colors.neutralColors.textColors.mediumColors.base,
                         ),
                         const SizedBox(height: LmuSizes.size_4),

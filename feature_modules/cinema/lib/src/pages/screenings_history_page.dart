@@ -47,60 +47,67 @@ class _ScreeningsHistoryPageState extends State<ScreeningsHistoryPage> {
     return LmuMasterAppBar(
       largeTitle: localizations.pastMoviesTitle,
       leadingAction: LeadingAction.back,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ValueListenableBuilder<SortOption>(
-                valueListenable: _sortOptionNotifier,
-                builder: (context, activeSortOption, _) {
-                  return LmuButton(
-                    title: activeSortOption.title(localizations),
-                    emphasis: ButtonEmphasis.secondary,
-                    trailingIcon: LucideIcons.chevron_down,
-                    onTap: () => _showSortOptionActionSheet(context),
-                  );
-                },
-              ),
-              const SizedBox(height: LmuSizes.size_16),
-              ValueListenableBuilder<List<ScreeningModel>>(
-                valueListenable: _sortedScreeningsNotifier,
-                builder: (context, sortedScreenings, _) {
-                  return AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 500),
-                    switchInCurve: Curves.easeInOut,
-                    switchOutCurve: Curves.easeInOut,
-                    reverseDuration: const Duration(milliseconds: 50),
-                    transitionBuilder: (child, animation) {
-                      return SlideTransition(
-                        position: Tween<Offset>(begin: const Offset(0, .7), end: Offset.zero).animate(animation),
-                        child: FadeTransition(opacity: animation, child: child),
-                      );
-                    },
-                    child: ListView.builder(
-                      key: ValueKey(sortedScreenings.map((screening) => screening.id).join()),
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding: EdgeInsets.zero,
-                      itemCount: sortedScreenings.length,
-                      itemBuilder: (context, index) {
-                        final screening = sortedScreenings[index];
-                        return ScreeningCard(
-                          screening: screening,
-                          isLastItem: index == sortedScreenings.length - 1,
+      body: widget.screenings.isNotEmpty
+          ? Padding(
+              padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ValueListenableBuilder<SortOption>(
+                      valueListenable: _sortOptionNotifier,
+                      builder: (context, activeSortOption, _) {
+                        return LmuButton(
+                          title: activeSortOption.title(localizations),
+                          emphasis: ButtonEmphasis.secondary,
+                          trailingIcon: LucideIcons.chevron_down,
+                          onTap: () => _showSortOptionActionSheet(context),
                         );
                       },
                     ),
-                  );
-                },
+                    const SizedBox(height: LmuSizes.size_16),
+                    ValueListenableBuilder<List<ScreeningModel>>(
+                      valueListenable: _sortedScreeningsNotifier,
+                      builder: (context, sortedScreenings, _) {
+                        return AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 500),
+                          switchInCurve: Curves.easeInOut,
+                          switchOutCurve: Curves.easeInOut,
+                          reverseDuration: const Duration(milliseconds: 50),
+                          transitionBuilder: (child, animation) {
+                            return SlideTransition(
+                              position: Tween<Offset>(begin: const Offset(0, .7), end: Offset.zero).animate(animation),
+                              child: FadeTransition(opacity: animation, child: child),
+                            );
+                          },
+                          child: ListView.builder(
+                            key: ValueKey(sortedScreenings.map((screening) => screening.id).join()),
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.zero,
+                            itemCount: sortedScreenings.length,
+                            itemBuilder: (context, index) {
+                              final screening = sortedScreenings[index];
+                              return ScreeningCard(
+                                screening: screening,
+                                isLastItem: index == sortedScreenings.length - 1,
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: LmuSizes.size_96),
+                  ],
+                ),
               ),
-              const SizedBox(height: LmuSizes.size_96),
-            ],
-          ),
-        ),
-      ),
+            )
+          : Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_32),
+                child: LmuText.body(context.locals.cinema.pastMoviesEmpty, textAlign: TextAlign.center),
+              ),
+            ),
     );
   }
 

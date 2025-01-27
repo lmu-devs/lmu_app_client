@@ -11,6 +11,14 @@
   "@moviesTitle": {
     "description": "Movies section title"
   },
+  "nextMovie": "Next movie",
+  "@nextMovie": {
+    "description": "Next movie"
+  },
+  "nextMovieEmpty": "No more movies this semester",
+  "@nextMovieEmpty": {
+    "description": "No more movies this semester"
+  },
   "historyAction": "Show History",
   "@historyAction": {
     "description": "Action to show history"
@@ -18,6 +26,10 @@
   "pastMoviesTitle": "Past Movies",
   "@pastMoviesTitle": {
     "description": "Past movies section title"
+  },
+  "pastMoviesEmpty": "No past movies available",
+  "@pastMoviesEmpty": {
+    "description": "Empty state for screenings history"
   },
   "screeningsSortingAlphabetical": "Alphabetically",
   "@screeningsSortingAlphabetical": {
@@ -38,5 +50,13 @@
   "germanTranslation": "German",
   "@germanTranslation": {
     "description": "German translation"
+  },
+  "todayScreening": "Today",
+  "@todayScreening": {
+    "description": "If screening is today"
+  },
+  "tomorrowScreening": "Tomorrow",
+  "@tomorrowScreening": {
+    "description": "If screening is tomorrow"
   }
 }

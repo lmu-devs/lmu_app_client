@@ -4,11 +4,16 @@
   
   "cinemasTitle": "Kinos",
   "moviesTitle": "Alle Filme",
+  "nextMovie": "Nächster Film",
+  "nextMovieEmpty": "Kein Film mehr für dieses Semester",
   "historyAction": "Vergangene anzeigen",
   "pastMoviesTitle": "Vergangene Filme",
+  "pastMoviesEmpty": "Keine vergangenen Filme vorhanden",
   "screeningsSortingAlphabetical": "Alphabetisch",
   "screeningsSortingMostRecent": "Neueste zuerst",
   "screeningsSortingLeastRecent": "Älteste zuerst",
   "ov": "Originalvertonung (OV)",
-  "germanTranslation": "Deutsch"
+  "germanTranslation": "Deutsch",
+  "todayScreening": "Heute",
+  "tomorrowScreening": "Morgen"
 }
