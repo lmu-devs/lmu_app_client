@@ -1,0 +1,7 @@
+{
+  "@@locale": "de",
+  "@@context": "Cinema",
+  
+  "cinemasTitle": "Kinos",
+  "moviesTitle": "Alle Filme"
+}

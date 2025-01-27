@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'generated/canteen_localizations.dart';
+import 'generated/cinema_localizations.dart';
 import 'generated/settings_localizations.dart';
 import 'generated/feedback_localizations.dart';
 import 'generated/wishlist_localizations.dart';
@@ -25,6 +26,7 @@ class LmuLocalizations {
   SettingsLocalizations get settings => SettingsLocalizations.of(_context)!;
   FeedbackLocalizations get feedback => FeedbackLocalizations.of(_context)!;
   HomeLocalizations get home => HomeLocalizations.of(_context)!;
+  CinemaLocalizations get cinema => CinemaLocalizations.of(_context)!;
   // Add other localizations
 
   /// List of all supported localizations delegates
@@ -36,6 +38,7 @@ class LmuLocalizations {
         SettingsLocalizations.delegate,
         FeedbackLocalizations.delegate,
         HomeLocalizations.delegate,
+        CinemaLocalizations.delegate,
         // Add other localizations delegates
 
         GlobalMaterialLocalizations.delegate,

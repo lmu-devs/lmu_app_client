@@ -1,24 +1,8 @@
+import 'package:core/api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'mensa_opening_details.g.dart';
-
-enum Weekday {
-  @JsonValue('MONDAY')
-  monday,
-  @JsonValue('TUESDAY')
-  tuesday,
-  @JsonValue('WEDNESDAY')
-  wednesday,
-  @JsonValue('THURSDAY')
-  thursday,
-  @JsonValue('FRIDAY')
-  friday,
-  @JsonValue('SATURDAY')
-  saturday,
-  @JsonValue('SUNDAY')
-  sunday,
-}
 
 @JsonSerializable()
 class MensaOpeningDetails extends Equatable {

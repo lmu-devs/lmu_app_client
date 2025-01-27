@@ -22,6 +22,7 @@ class LmuMasterAppBar extends StatefulWidget {
     required this.body,
     this.largeTitleTrailingWidget,
     this.largeTitleTrailingWidgetAlignment = MainAxisAlignment.spaceBetween,
+    this.customLargeTitleWidget,
     this.collapsedTitle,
     this.collapsedTitleHeight = CollapsedTitleHeight.small,
     this.leadingAction,
@@ -36,6 +37,7 @@ class LmuMasterAppBar extends StatefulWidget {
   final Widget body;
   final String largeTitle;
   final Widget? largeTitleTrailingWidget;
+  final Widget? customLargeTitleWidget;
   final MainAxisAlignment largeTitleTrailingWidgetAlignment;
   final String? collapsedTitle;
   final LeadingAction? leadingAction;
@@ -75,6 +77,36 @@ class LmuMasterAppBar extends StatefulWidget {
       customScrollController: customScrollController,
       onPopInvoked: onPopInvoked,
       isBottomSheet: true,
+    );
+  }
+
+  factory LmuMasterAppBar.custom({
+    Key? key,
+    String? largeTitle,
+    required Widget body,
+    Widget? customLargeTitleWidget,
+    Widget? largeTitleTrailingWidget,
+    String? collapsedTitle,
+    LeadingAction? leadingAction,
+    void Function()? onLeadingActionTap,
+    List<String>? imageUrls,
+    ScrollController? customScrollController,
+    void Function(bool)? onPopInvoked,
+  }) {
+    return LmuMasterAppBar(
+      key: key,
+      largeTitle: largeTitle ?? ' ',
+      customLargeTitleWidget: customLargeTitleWidget,
+      body: body,
+      largeTitleTrailingWidget: largeTitleTrailingWidget,
+      collapsedTitle: collapsedTitle,
+      collapsedTitleHeight: CollapsedTitleHeight.small,
+      leadingAction: leadingAction,
+      onLeadingActionTap: onLeadingActionTap,
+      trailingWidgets: null,
+      imageUrls: imageUrls,
+      customScrollController: customScrollController,
+      onPopInvoked: onPopInvoked,
     );
   }
 
@@ -134,6 +166,7 @@ class _LmuMasterAppBarState extends State<LmuMasterAppBar> {
                   largeTitleTextStyle: largeTitleTextTheme,
                   largeTitleMaxLines: largeTitleMaxLines,
                   largeTitleHeight: calculatedLargeTitleHeight,
+                  customLargeTitleWidget: widget.customLargeTitleWidget,
                   collapsedTitle: widget.collapsedTitle ?? widget.largeTitle,
                   collapsedTitleTextStyle: collapsedTitleTextStyle,
                   collapsedTitleHeight: widget.collapsedTitleHeight == CollapsedTitleHeight.small ? 44 : 54,

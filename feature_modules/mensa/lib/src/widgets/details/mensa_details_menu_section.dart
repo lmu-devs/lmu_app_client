@@ -1,7 +1,5 @@
 import 'package:core/components.dart';
-import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
-import 'package:core/themes.dart';
 import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -72,25 +70,12 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
                 final isLastDayOfWeek = dateTime.weekday == 5;
                 return LmuTabBarItemData(
                   title: dateTime.dayName(context.locals.app),
-                  trailingWidget: dayModel.isClosed
-                      ? ClipOval(
-                          child: Container(
-                              width: LmuSizes.size_8,
-                              height: LmuSizes.size_8,
-                              color: context.colors.dangerColors.textColors.strongColors.base),
-                        )
-                      : null,
+                  trailingWidget: dayModel.isClosed ? const LmuStatusDot(statusColor: StatusColor.red) : null,
                   hasDivider: isLastDayOfWeek,
                 );
               },
             ).toList(),
-            onTabChanged: (index, _) {
-              _pageController.animateToPage(
-                index,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeIn,
-              );
-            },
+            onTabChanged: (index, _) => _pageController.jumpToPage(index),
           ),
           sliver: SliverToBoxAdapter(
             child: ExpandablePageView.builder(

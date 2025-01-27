@@ -1,0 +1,14 @@
+{
+  "@@locale": "en",
+  "@@context": "Cinema",
+
+
+  "cinemasTitle": "Cinemas",
+  "@cinemasTitle": {
+    "description": "Cinemas section title"
+  },
+  "moviesTitle": "All Movies",
+  "@moviesTitle": {
+    "description": "Movies section title"
+  }
+}

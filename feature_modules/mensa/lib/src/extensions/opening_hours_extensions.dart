@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:core/api.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/widgets.dart';
@@ -11,27 +12,6 @@ enum Status {
   closingSoon,
   closed,
   temporarilyClosed,
-}
-
-extension WeekdayToString on MensaOpeningDetails {
-  String mapToDay(AppLocalizations localizations) {
-    switch (day) {
-      case Weekday.monday:
-        return localizations.monday;
-      case Weekday.tuesday:
-        return localizations.tuesday;
-      case Weekday.wednesday:
-        return localizations.wednesday;
-      case Weekday.thursday:
-        return localizations.thursday;
-      case Weekday.friday:
-        return localizations.friday;
-      case Weekday.saturday:
-        return localizations.saturady;
-      case Weekday.sunday:
-        return localizations.sunday;
-    }
-  }
 }
 
 extension StatusTimeExtension on List<MensaOpeningDetails> {

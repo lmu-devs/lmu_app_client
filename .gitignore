@@ -34,6 +34,7 @@ core/lib/src/localizations/generated
 .pub-cache/
 .pub/
 /build/
+.mason/
 
 # Symbolication related
 app.*.symbols
