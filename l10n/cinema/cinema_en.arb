@@ -23,12 +23,20 @@
   "@screeningsSortingAlphabetical": {
     "description": "Sorting alphabetically"
   },
-  "screeningsSortingMostRecent": "Most recent first",
+  "screeningsSortingMostRecent": "Most Recent",
   "@screeningsSortingMostRecent": {
-    "description": "Sorting most recent first"
+    "description": "Sorting most recent"
   },
-  "screeningsSortingLeastRecent": "Least recent first",
+  "screeningsSortingLeastRecent": "Least Recent",
   "@screeningsSortingLeastRecent": {
-    "description": "Sorting least recent first"
+    "description": "Sorting least recent"
+  },
+  "ov": "Original Version (OV)",
+  "@ov": {
+    "description": "Language and sound translation"
+  },
+  "germanTranslation": "German",
+  "@germanTranslation": {
+    "description": "German translation"
   }
 }

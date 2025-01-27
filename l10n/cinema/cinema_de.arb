@@ -8,5 +8,7 @@
   "pastMoviesTitle": "Vergangene Filme",
   "screeningsSortingAlphabetical": "Alphabetisch",
   "screeningsSortingMostRecent": "Neueste zuerst",
-  "screeningsSortingLeastRecent": "Älteste zuerst"
+  "screeningsSortingLeastRecent": "Älteste zuerst",
+  "ov": "Originalvertonung (OV)",
+  "germanTranslation": "Deutsch"
 }
