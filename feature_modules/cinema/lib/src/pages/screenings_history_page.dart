@@ -70,7 +70,7 @@ class _ScreeningsHistoryPageState extends State<ScreeningsHistoryPage> {
                       valueListenable: _sortedScreeningsNotifier,
                       builder: (context, sortedScreenings, _) {
                         return AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 500),
+                          duration: const Duration(milliseconds: 350),
                           switchInCurve: Curves.easeInOut,
                           switchOutCurve: Curves.easeInOut,
                           reverseDuration: const Duration(milliseconds: 50),

@@ -3,8 +3,8 @@ import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/widgets.dart';
 
-class MensaPlaceholderTile extends StatelessWidget {
-  const MensaPlaceholderTile({
+class PlaceholderTile extends StatelessWidget {
+  const PlaceholderTile({
     super.key,
     required this.content,
     this.minHeight = 40,

@@ -79,8 +79,19 @@ class ScreeningCard extends StatelessWidget {
                         },
                       ),
                     )
-                  : Center(
-                      child: LmuText.caption(screening.movie.title),
+                  : Container(
+                      height: double.infinity,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: context.colors.neutralColors.backgroundColors.mediumColors.base,
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
+                          bottomLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
+                        ),
+                      ),
+                      child: Center(
+                        child: LmuText.caption(screening.movie.title),
+                      ),
                     ),
             ),
             Expanded(
