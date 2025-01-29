@@ -876,7 +876,7 @@ packages:
     source: hosted
     version: "1.0.4"
   skeletonizer:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: skeletonizer
       sha256: "0dcacc51c144af4edaf37672072156f49e47036becbc394d7c51850c5c1e884b"
