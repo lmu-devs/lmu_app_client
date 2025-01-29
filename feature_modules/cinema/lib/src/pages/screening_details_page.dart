@@ -140,7 +140,12 @@ class ScreeningDetailsPage extends StatelessWidget {
                   LmuListItem.action(
                     subtitle: screening.cinema.title,
                     subtitleTextColor: context.colors.neutralColors.textColors.mediumColors.base,
-                    subtitleInTextVisuals: [LmuInTextVisual.text(title: screening.cinema.type.getValue())],
+                    subtitleInTextVisuals: [
+                      LmuInTextVisual.text(
+                        title: screening.cinema.type.getValue(),
+                        color: screening.cinema.type.getColor(),
+                      )
+                    ],
                     actionType: LmuListItemAction.chevron,
                     hasHorizontalPadding: false,
                     hasDivider: true,

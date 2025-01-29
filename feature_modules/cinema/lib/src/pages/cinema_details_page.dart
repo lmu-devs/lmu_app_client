@@ -33,10 +33,13 @@ class CinemaDetailsPage extends StatelessWidget {
       largeTitleTrailingWidget: Container(
         padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_4),
         decoration: BoxDecoration(
-          color: context.colors.neutralColors.backgroundColors.mediumColors.base,
+          color: cinema.type.getColor().withOpacity(0.1),
           borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
         ),
-        child: LmuText.bodySmall(cinema.type.getValue()),
+        child: LmuText.bodySmall(
+          cinema.type.getValue(),
+          color: cinema.type.getColor(),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(

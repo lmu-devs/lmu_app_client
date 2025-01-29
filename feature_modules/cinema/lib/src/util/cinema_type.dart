@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 enum CinemaType {
   lmu,
   tum,
@@ -5,7 +7,7 @@ enum CinemaType {
   hm,
 }
 
-extension CinemaTypeExtension on CinemaType {
+extension CinemaTypeTextExtension on CinemaType {
   String getValue() {
     switch (this) {
       case CinemaType.lmu:
@@ -16,6 +18,20 @@ extension CinemaTypeExtension on CinemaType {
         return 'TUM Garching';
       case CinemaType.hm:
         return 'HM';
+    }
+  }
+}
+
+extension CinemaTypeColorExtension on CinemaType {
+  Color getColor() {
+    switch (this) {
+      case CinemaType.lmu:
+        return const Color(0xFF00883A);
+      case CinemaType.tum:
+      case CinemaType.tumGarching:
+        return const Color(0xFF14519A);
+      case CinemaType.hm:
+        return const Color(0xFFFA3839);
     }
   }
 }

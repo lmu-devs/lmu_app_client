@@ -38,7 +38,12 @@ class CinemaCard extends StatelessWidget {
       ),
       child: LmuListItem.base(
         title: cinema.title,
-        titleInTextVisuals: [LmuInTextVisual.text(title: cinema.type.getValue())],
+        titleInTextVisuals: [
+          LmuInTextVisual.text(
+            title: cinema.type.getValue(),
+            color: cinema.type.getColor(),
+          )
+        ],
         subtitle: _getDateForNextMovie(context),
         hasHorizontalPadding: true,
         hasVerticalPadding: true,
