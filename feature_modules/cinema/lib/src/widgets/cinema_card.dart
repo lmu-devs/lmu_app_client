@@ -41,7 +41,7 @@ class CinemaCard extends StatelessWidget {
         titleInTextVisuals: [
           LmuInTextVisual.text(
             title: cinema.type.getValue(),
-            color: cinema.type.getColor(),
+            color: cinema.type.getColor(context),
           )
         ],
         subtitle: _getDateForNextMovie(context),

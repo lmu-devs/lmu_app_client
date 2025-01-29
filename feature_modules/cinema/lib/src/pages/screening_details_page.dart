@@ -143,7 +143,7 @@ class ScreeningDetailsPage extends StatelessWidget {
                     subtitleInTextVisuals: [
                       LmuInTextVisual.text(
                         title: screening.cinema.type.getValue(),
-                        color: screening.cinema.type.getColor(),
+                        color: screening.cinema.type.getColor(context),
                       )
                     ],
                     actionType: LmuListItemAction.chevron,

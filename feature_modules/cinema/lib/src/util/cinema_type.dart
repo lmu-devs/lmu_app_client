@@ -1,4 +1,5 @@
-import 'dart:ui';
+import 'package:core/themes.dart';
+import 'package:flutter/cupertino.dart';
 
 enum CinemaType {
   lmu,
@@ -23,15 +24,15 @@ extension CinemaTypeTextExtension on CinemaType {
 }
 
 extension CinemaTypeColorExtension on CinemaType {
-  Color getColor() {
+  Color getColor(BuildContext context) {
     switch (this) {
       case CinemaType.lmu:
-        return const Color(0xFF00883A);
+        return context.colors.universityColors.textColors.lmuColor;
       case CinemaType.tum:
       case CinemaType.tumGarching:
-        return const Color(0xFF14519A);
+        return context.colors.universityColors.textColors.tumColor;
       case CinemaType.hm:
-        return const Color(0xFFFA3839);
+        return context.colors.universityColors.textColors.hmColor;
     }
   }
 }
