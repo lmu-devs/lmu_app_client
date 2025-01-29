@@ -171,7 +171,10 @@ class ScreeningDetailsPage extends StatelessWidget {
                   ),
                   const SizedBox(height: LmuSizes.size_24),
                   if (screening.movie.overview != null) ...[
-                    LmuText.body(screening.movie.overview),
+                    ExpandableText(
+                      text: screening.movie.overview!,
+                      maxLines: 8,
+                    ),
                     const SizedBox(height: LmuSizes.size_24),
                   ],
                 ],

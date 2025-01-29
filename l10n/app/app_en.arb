@@ -144,5 +144,9 @@
         "example": "59"
       }
     }
+  },
+  "readMore": "Read more",
+  "@readMore": {
+    "description": "Read more"
   }
 }

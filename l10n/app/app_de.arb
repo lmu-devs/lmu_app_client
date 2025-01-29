@@ -30,5 +30,6 @@
   "remainingDays": "{days} Tage",
   "remainingHours": "{hours} Stunden",
   "remainingMinutes": "{minutes} Minuten",
-  "remainingSeconds": "{seconds} Sekunden"
+  "remainingSeconds": "{seconds} Sekunden",
+  "readMore": "Weiterlesen"
 }
