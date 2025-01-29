@@ -62,5 +62,17 @@
   "share": "Share",
   "@share": {
     "description": "Share button"
+  },
+  "entry": "Entry Time",
+  "@entry": {
+    "description": "Entry time of screening"
+  },
+  "start": "Start Time",
+  "@start": {
+    "description": "Start time of screening"
+  },
+  "movie": "Movie",
+  "@movie": {
+    "description": "Movie"
   }
 }

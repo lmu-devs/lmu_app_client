@@ -16,5 +16,8 @@
   "germanTranslation": "Deutsch",
   "todayScreening": "Heute",
   "tomorrowScreening": "Morgen",
-  "share": "Teilen"
+  "share": "Teilen",
+  "entry": "Einlass",
+  "start": "Start",
+  "movie": "Film"
 }
