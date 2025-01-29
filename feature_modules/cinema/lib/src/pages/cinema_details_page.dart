@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
 import '../repository/api/api.dart';
-import '../repository/api/models/screening_model.dart';
 import '../routes/cinema_details_data.dart';
+import '../util/cinema_type.dart';
 import '../widgets/screening_card.dart';
 
 class CinemaDetailsPage extends StatelessWidget {
@@ -36,7 +36,7 @@ class CinemaDetailsPage extends StatelessWidget {
           color: context.colors.neutralColors.backgroundColors.mediumColors.base,
           borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
         ),
-        child: LmuText.bodySmall(cinema.id),
+        child: LmuText.bodySmall(cinema.type.getValue()),
       ),
       body: SingleChildScrollView(
         child: Column(

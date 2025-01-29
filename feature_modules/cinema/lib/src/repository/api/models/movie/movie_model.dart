@@ -1,4 +1,4 @@
-import 'package:cinema/src/repository/api/models/trailer_model.dart';
+import 'package:cinema/src/repository/api/models/movie/trailer_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 

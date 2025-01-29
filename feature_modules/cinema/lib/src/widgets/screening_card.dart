@@ -5,7 +5,8 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/screening_details_page.dart';
-import '../repository/api/models/screening_model.dart';
+import '../repository/api/api.dart';
+import '../util/cinema_type.dart';
 import '../util/screening_time.dart';
 
 class ScreeningCard extends StatelessWidget {
@@ -130,7 +131,7 @@ class ScreeningCard extends StatelessWidget {
                       spacing: LmuSizes.size_2,
                       runSpacing: LmuSizes.size_2,
                       children: [
-                        LmuInTextVisual.text(title: screening.cinema.id),
+                        LmuInTextVisual.text(title: screening.cinema.type.getValue()),
                         if (screening.movie.budget != null)
                           LmuInTextVisual.text(title: '${screening.price.toStringAsFixed(2)} €'),
                         if (screening.movie.ratings.isNotEmpty)

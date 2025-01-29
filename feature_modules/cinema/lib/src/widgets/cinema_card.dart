@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 
 import '../pages/cinema_details_page.dart';
 import '../repository/api/api.dart';
-import '../repository/api/models/screening_model.dart';
+import '../repository/api/models/cinema/cinema.dart';
 import '../routes/cinema_details_data.dart';
+import '../util/cinema_type.dart';
 import '../util/screening_time.dart';
 
 class CinemaCard extends StatelessWidget {
@@ -37,7 +38,7 @@ class CinemaCard extends StatelessWidget {
       ),
       child: LmuListItem.base(
         title: cinema.title,
-        titleInTextVisuals: [LmuInTextVisual.text(title: cinema.id)],
+        titleInTextVisuals: [LmuInTextVisual.text(title: cinema.type.getValue())],
         subtitle: _getDateForNextMovie(context),
         hasHorizontalPadding: true,
         hasVerticalPadding: true,

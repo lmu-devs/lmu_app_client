@@ -1,10 +1,10 @@
-import 'university_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'cinema_model.dart';
-import 'cinema_location_model.dart';
-import 'movie_model.dart';
+import 'university_model.dart';
+import '../cinema/cinema_location_model.dart';
+import '../cinema/cinema_model.dart';
+import '../movie/movie_model.dart';
 
 part 'screening_model.g.dart';
 
@@ -47,20 +47,20 @@ class ScreeningModel extends Equatable {
 
   @override
   List<Object?> get props => [
-    id,
-    entryTime,
-    startTime,
-    endTime,
-    price,
-    isOv,
-    subtitles,
-    externalLink,
-    note,
-    movie,
-    location,
-    university,
-    cinema,
-  ];
+        id,
+        entryTime,
+        startTime,
+        endTime,
+        price,
+        isOv,
+        subtitles,
+        externalLink,
+        note,
+        movie,
+        location,
+        university,
+        cinema,
+      ];
 
   factory ScreeningModel.fromJson(Map<String, dynamic> json) => _$ScreeningModelFromJson(json);
 

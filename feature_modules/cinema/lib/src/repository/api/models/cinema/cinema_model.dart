@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import '../../../../util/cinema_type.dart';
 import 'cinema_location_model.dart';
 import 'description_model.dart';
 
@@ -27,9 +28,13 @@ class CinemaModel extends Equatable {
   @JsonKey(name: 'location')
   final CinemaLocationModel cinemaLocation;
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  CinemaType get type => CinemaTypeMapper.fromString(id);
+
   @override
   List<Object> get props => [
     id,
+    type,
     title,
     descriptions,
     externalLink,

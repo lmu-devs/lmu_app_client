@@ -5,7 +5,7 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
-import '../repository/api/models/screening_model.dart';
+import '../repository/api/api.dart';
 import '../util/screening_sorting.dart';
 import '../widgets/screening_card.dart';
 

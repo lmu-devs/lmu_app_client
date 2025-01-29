@@ -4,7 +4,7 @@ import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 
-import '../repository/api/models/trailer_model.dart';
+import '../repository/api/api.dart';
 
 class TrailerCard extends StatelessWidget {
   const TrailerCard({

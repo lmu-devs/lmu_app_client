@@ -5,7 +5,7 @@ import '../pages/cinema_details_page.dart';
 import '../pages/pages.dart';
 import '../pages/screening_details_page.dart';
 import '../pages/screenings_history_page.dart';
-import '../repository/api/models/screening_model.dart';
+import '../repository/api/api.dart';
 import 'cinema_details_data.dart';
 
 part 'cinema_routes.g.dart';

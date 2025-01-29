@@ -4,13 +4,13 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:core/widgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../repository/api/models/screening_model.dart';
+import '../repository/api/api.dart';
+import '../util/cinema_type.dart';
 import '../util/screening_time.dart';
 import '../widgets/trailer_card.dart';
 
@@ -140,7 +140,7 @@ class ScreeningDetailsPage extends StatelessWidget {
                   LmuListItem.action(
                     subtitle: screening.cinema.title,
                     subtitleTextColor: context.colors.neutralColors.textColors.mediumColors.base,
-                    subtitleInTextVisuals: [LmuInTextVisual.text(title: screening.cinema.id)],
+                    subtitleInTextVisuals: [LmuInTextVisual.text(title: screening.cinema.type.getValue())],
                     actionType: LmuListItemAction.chevron,
                     hasHorizontalPadding: false,
                     hasDivider: true,

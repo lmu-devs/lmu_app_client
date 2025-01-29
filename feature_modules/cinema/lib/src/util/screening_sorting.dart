@@ -2,7 +2,7 @@ import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
-import '../repository/api/models/screening_model.dart';
+import '../repository/api/api.dart';
 
 enum SortOption {
   alphabetically,

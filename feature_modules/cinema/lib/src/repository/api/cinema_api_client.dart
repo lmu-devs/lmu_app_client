@@ -4,8 +4,8 @@ import 'package:core/api.dart';
 import 'package:get_it/get_it.dart';
 
 import 'cinema_api_endpoints.dart';
-import 'models/cinema_model.dart';
-import 'models/screening_model.dart';
+import 'models/cinema/cinema_model.dart';
+import 'models/screening/screening_model.dart';
 
 class CinemaApiClient {
   final _baseApiClient = GetIt.I.get<BaseApiClient>(); 

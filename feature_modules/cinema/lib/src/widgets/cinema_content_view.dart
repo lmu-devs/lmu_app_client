@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../pages/screenings_history_page.dart';
 import '../repository/api/api.dart';
-import '../repository/api/models/screening_model.dart';
+import '../repository/api/models/cinema/cinema.dart';
 import 'cinema_card.dart';
 import 'cinema_filter_row.dart';
 import 'screening_card.dart';
