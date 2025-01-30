@@ -11,6 +11,10 @@
   "@upcomingTitle": {
     "description": "Upcoming"
   },
+  "cityCenter": "City Center",
+  "@cityCenter": {
+    "description": "City center filter option"
+  },
   "nextMovie": "Next movie",
   "@nextMovie": {
     "description": "Next movie"

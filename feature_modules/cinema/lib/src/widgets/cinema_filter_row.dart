@@ -1,15 +1,18 @@
 import 'package:core/components.dart';
+import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
+
+import '../util/screening_filter_keys.dart';
 
 class CinemaFilterButtonRow extends StatelessWidget {
   const CinemaFilterButtonRow({
     Key? key,
-    required this.activeCinemaId,
-    required this.onCinemaSelected,
+    required this.activeFilter,
+    required this.onFilterSelected,
   }) : super(key: key);
 
-  final String? activeCinemaId;
-  final ValueChanged<String?> onCinemaSelected;
+  final String? activeFilter;
+  final ValueChanged<String?> onFilterSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -19,39 +22,27 @@ class CinemaFilterButtonRow extends StatelessWidget {
         hasHorizontalPadding: false,
         buttons: [
           LmuButton(
-            title: 'LMU',
-            emphasis: activeCinemaId == 'LMU' ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
-            action: activeCinemaId == 'LMU' ? ButtonAction.contrast : ButtonAction.base,
-            onTap: () => _onButtonTap('LMU'),
+            title: context.locals.cinema.cityCenter,
+            emphasis: activeFilter == ScreeningFilterKeys.cityCenter ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
+            action: activeFilter == ScreeningFilterKeys.cityCenter ? ButtonAction.contrast : ButtonAction.base,
+            onTap: () => _onButtonTap(ScreeningFilterKeys.cityCenter),
           ),
           LmuButton(
-            title: 'TUM',
-            emphasis: activeCinemaId == 'TUM' ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
-            action: activeCinemaId == 'TUM' ? ButtonAction.contrast : ButtonAction.base,
-            onTap: () => _onButtonTap('TUM'),
-          ),
-          LmuButton(
-            title: 'HM',
-            emphasis: activeCinemaId == 'HM' ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
-            action: activeCinemaId == 'HM' ? ButtonAction.contrast : ButtonAction.base,
-            onTap: () => _onButtonTap('HM'),
-          ),
-          LmuButton(
-            title: 'TUM Garching',
-            emphasis: activeCinemaId == 'TUM_GARCHING' ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
-            action: activeCinemaId == 'TUM_GARCHING' ? ButtonAction.contrast : ButtonAction.base,
-            onTap: () => _onButtonTap('TUM_GARCHING'),
+            title: 'Garching',
+            emphasis: activeFilter == ScreeningFilterKeys.garching ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
+            action: activeFilter == ScreeningFilterKeys.garching ? ButtonAction.contrast : ButtonAction.base,
+            onTap: () => _onButtonTap(ScreeningFilterKeys.garching),
           ),
         ],
       ),
     );
   }
 
-  void _onButtonTap(String cinemaId) {
-    if (activeCinemaId == cinemaId) {
-      onCinemaSelected(null);
+  void _onButtonTap(String filter) {
+    if (activeFilter == filter) {
+      onFilterSelected(null);
     } else {
-      onCinemaSelected(cinemaId);
+      onFilterSelected(filter);
     }
   }
 }
