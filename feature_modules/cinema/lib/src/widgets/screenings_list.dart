@@ -74,7 +74,6 @@ class ScreeningsList extends StatelessWidget {
                           screening: screening,
                           cinemaScreenings: getScreeningsForCinema(screenings, screening.cinema.id),
                           isLastItem: index == futureScreenings.length - 1,
-                          hasHero: type == null ? true : false,
                         );
                       },
                     ),

@@ -41,19 +41,16 @@ class ScreeningDetailsPage extends StatelessWidget {
               child: Column(
                 children: [
                   screening.movie.poster != null
-                      ? Hero(
-                          tag: 'poster_${screening.id}',
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(LmuRadiusSizes.mediumLarge),
-                            ),
-                            child: Image.network(
-                              screening.movie.poster!.url,
-                              height: 320,
-                              width: 220,
-                              fit: BoxFit.cover,
-                              semanticLabel: screening.movie.poster!.name,
-                            ),
+                      ? ClipRRect(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(LmuRadiusSizes.mediumLarge),
+                          ),
+                          child: Image.network(
+                            screening.movie.poster!.url,
+                            height: 320,
+                            width: 220,
+                            fit: BoxFit.cover,
+                            semanticLabel: screening.movie.poster!.name,
                           ),
                         )
                       : const SizedBox.shrink(),

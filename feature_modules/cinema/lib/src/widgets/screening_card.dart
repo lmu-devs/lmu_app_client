@@ -16,13 +16,11 @@ class ScreeningCard extends StatelessWidget {
     required this.screening,
     required this.cinemaScreenings,
     required this.isLastItem,
-    this.hasHero = false,
   }) : super(key: key);
 
   final ScreeningModel screening;
   final List<ScreeningModel> cinemaScreenings;
   final bool isLastItem;
-  final bool hasHero;
 
   @override
   Widget build(BuildContext context) {
@@ -53,58 +51,55 @@ class ScreeningCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Hero(
-              tag: hasHero ? 'poster_${screening.id}' : screening.id,
-              child: SizedBox(
-                height: cardHeight,
-                width: 116,
-                child: screening.movie.poster != null
-                    ? ClipRRect(
+            SizedBox(
+              height: cardHeight,
+              width: 116,
+              child: screening.movie.poster != null
+                  ? ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
+                        bottomLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
+                      ),
+                      child: FutureBuilder(
+                        future: precacheImage(
+                          NetworkImage(screening.movie.poster!.url),
+                          context,
+                        ),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.done) {
+                            return Image.network(
+                              screening.movie.poster!.url,
+                              height: cardHeight,
+                              width: 116,
+                              fit: BoxFit.cover,
+                              semanticLabel: screening.movie.poster!.name,
+                            );
+                          } else {
+                            return LmuSkeleton(
+                              child: Container(
+                                height: cardHeight,
+                                width: 116,
+                                color: Colors.white,
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    )
+                  : Container(
+                      height: double.infinity,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: context.colors.neutralColors.backgroundColors.mediumColors.base,
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
                           bottomLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
                         ),
-                        child: FutureBuilder(
-                          future: precacheImage(
-                            NetworkImage(screening.movie.poster!.url),
-                            context,
-                          ),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState == ConnectionState.done) {
-                              return Image.network(
-                                screening.movie.poster!.url,
-                                height: cardHeight,
-                                width: 116,
-                                fit: BoxFit.cover,
-                                semanticLabel: screening.movie.poster!.name,
-                              );
-                            } else {
-                              return LmuSkeleton(
-                                child: Container(
-                                  height: cardHeight,
-                                  width: 116,
-                                  color: Colors.white,
-                                ),
-                              );
-                            }
-                          },
-                        ),
-                      )
-                    : Container(
-                        height: double.infinity,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: context.colors.neutralColors.backgroundColors.mediumColors.base,
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
-                            bottomLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
-                          ),
-                        ),
-                        child: Center(
-                          child: LmuText.caption(screening.movie.title),
-                        ),
                       ),
-              ),
+                      child: Center(
+                        child: LmuText.caption(screening.movie.title),
+                      ),
+                    ),
             ),
             Expanded(
               child: Padding(
