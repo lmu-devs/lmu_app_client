@@ -106,6 +106,7 @@ class _ScreeningsHistoryPageState extends State<ScreeningsHistoryPage> {
                               final screening = sortedScreenings[index];
                               return ScreeningCard(
                                 screening: screening,
+                                cinemaScreenings: const [],
                                 isLastItem: index == sortedScreenings.length - 1,
                               );
                             },

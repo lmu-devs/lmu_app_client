@@ -76,7 +76,7 @@ extension $CinemaDetailsRouteExtension on CinemaDetailsRoute {
 extension $ScreeningDetailsRouteExtension on ScreeningDetailsRoute {
   static ScreeningDetailsRoute _fromState(GoRouterState state) =>
       ScreeningDetailsRoute(
-        state.extra as ScreeningModel,
+        state.extra as ScreeningDetailsData,
       );
 
   String get location => GoRouteData.$location(

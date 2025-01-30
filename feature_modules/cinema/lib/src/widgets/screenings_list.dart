@@ -1,3 +1,4 @@
+import '../util/cinema_screenings.dart';
 import '../util/cinema_type.dart';
 import 'screening_card.dart';
 import 'package:core/components.dart';
@@ -71,7 +72,9 @@ class ScreeningsList extends StatelessWidget {
                         final screening = futureScreenings[index];
                         return ScreeningCard(
                           screening: screening,
+                          cinemaScreenings: getScreeningsForCinema(screenings, screening.cinema.id),
                           isLastItem: index == futureScreenings.length - 1,
+                          hasHero: type == null ? true : false,
                         );
                       },
                     ),

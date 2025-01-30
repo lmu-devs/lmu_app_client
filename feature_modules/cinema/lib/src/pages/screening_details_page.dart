@@ -10,20 +10,26 @@ import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../repository/api/api.dart';
+import '../routes/cinema_details_data.dart';
+import '../routes/screening_details_data.dart';
 import '../util/cinema_type.dart';
 import '../util/screening_time.dart';
 import '../widgets/trailer_card.dart';
+import 'cinema_details_page.dart';
 
 class ScreeningDetailsPage extends StatelessWidget {
   const ScreeningDetailsPage({
     super.key,
-    required this.screening,
+    required this.screeningDetailsData,
   });
 
-  final ScreeningModel screening;
+  final ScreeningDetailsData screeningDetailsData;
 
   @override
   Widget build(BuildContext context) {
+    ScreeningModel screening = screeningDetailsData.screening;
+    List<ScreeningModel> cinemaScreenings = screeningDetailsData.cinemaScreenings;
+
     return LmuMasterAppBar.custom(
       collapsedTitle: screening.movie.title,
       leadingAction: LeadingAction.back,
@@ -35,37 +41,18 @@ class ScreeningDetailsPage extends StatelessWidget {
               child: Column(
                 children: [
                   screening.movie.poster != null
-                      ? SizedBox(
-                          height: 320,
-                          width: 220,
+                      ? Hero(
+                          tag: 'poster_${screening.id}',
                           child: ClipRRect(
                             borderRadius: const BorderRadius.all(
                               Radius.circular(LmuRadiusSizes.mediumLarge),
                             ),
-                            child: FutureBuilder(
-                              future: precacheImage(
-                                NetworkImage(screening.movie.poster!.url),
-                                context,
-                              ),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState == ConnectionState.done) {
-                                  return Image.network(
-                                    screening.movie.poster!.url,
-                                    height: 320,
-                                    width: 220,
-                                    fit: BoxFit.cover,
-                                    semanticLabel: screening.movie.poster!.name,
-                                  );
-                                } else {
-                                  return LmuSkeleton(
-                                    child: Container(
-                                      height: 320,
-                                      width: 220,
-                                      color: Colors.white,
-                                    ),
-                                  );
-                                }
-                              },
+                            child: Image.network(
+                              screening.movie.poster!.url,
+                              height: 320,
+                              width: 220,
+                              fit: BoxFit.cover,
+                              semanticLabel: screening.movie.poster!.name,
                             ),
                           ),
                         )
@@ -149,7 +136,16 @@ class ScreeningDetailsPage extends StatelessWidget {
                     actionType: LmuListItemAction.chevron,
                     hasHorizontalPadding: false,
                     hasDivider: true,
-                    onTap: () => print("Tapped"),
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => CinemaDetailsPage(
+                          cinemaDetailsData: CinemaDetailsData(
+                            cinema: screening.cinema,
+                            screenings: cinemaScreenings,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                   LmuListItem.base(
                     subtitle: screening.cinema.cinemaLocation.address,

@@ -7,6 +7,7 @@ import '../pages/screening_details_page.dart';
 import '../pages/screenings_history_page.dart';
 import '../repository/api/api.dart';
 import 'cinema_details_data.dart';
+import 'screening_details_data.dart';
 
 part 'cinema_routes.g.dart';
 
@@ -49,11 +50,11 @@ class ScreeningDetailsRoute extends GoRouteData {
       this.$extra,
       );
 
-  final ScreeningModel $extra;
+  final ScreeningDetailsData $extra;
 
   @override
   Widget build(BuildContext context, GoRouterState state) => ScreeningDetailsPage(
-    screening: $extra,
+    screeningDetailsData: $extra,
   );
 }
 

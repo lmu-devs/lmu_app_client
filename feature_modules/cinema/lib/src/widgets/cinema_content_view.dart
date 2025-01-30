@@ -4,6 +4,7 @@ import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 
 import '../repository/api/api.dart';
+import '../util/cinema_screenings.dart';
 import 'cinema_card.dart';
 import 'screenings_list.dart';
 
@@ -30,7 +31,7 @@ class CinemaContentView extends StatelessWidget {
               final cinema = cinemas[index];
               return CinemaCard(
                 cinema: cinema,
-                screenings: _getScreeningsForCinema(cinema.id),
+                screenings: getScreeningsForCinema(screenings, cinema.id),
                 isLastItem: index == cinemas.length - 1,
               );
             }),
@@ -44,9 +45,5 @@ class CinemaContentView extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  List<ScreeningModel> _getScreeningsForCinema(String cinemaId) {
-    return screenings.where((screening) => screening.cinema.id == cinemaId).toList();
   }
 }
