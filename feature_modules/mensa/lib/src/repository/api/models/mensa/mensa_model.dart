@@ -40,7 +40,13 @@ class MensaModel extends Equatable {
         location: MensaLocation.placeholder(),
         ratingModel: RatingModel.placeholder(),
         openingHours: MensaOpeningHours.empty(),
-        images: const [ImageModel(url: "https://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png", name: "name")],
+        images: const [
+          ImageModel(
+            url: "https://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png",
+            name: "name",
+            blurHash: "",
+          )
+        ],
         type: MensaType.none,
         status: const MensaStatus(isLectureFree: false, isClosed: false, isTemporaryClosed: false),
       );

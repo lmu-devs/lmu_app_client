@@ -9,7 +9,6 @@ import '../../../pages/taste_profile_page.dart';
 import '../../../repository/api/models/menu/menu_item_model.dart';
 import '../../../repository/api/models/taste_profile/taste_profile_label_item.dart';
 import '../../../services/mensa_user_preferences_service.dart';
-import '../../common/mensa_placeholder_tile.dart';
 import 'menu_item_tile.dart';
 
 class MenuExcludedSection extends StatelessWidget {
@@ -41,7 +40,7 @@ class MenuExcludedSection extends StatelessWidget {
           },
         ),
         if (excludedMenuItems.isEmpty)
-          MensaPlaceholderTile(
+          PlaceholderTile(
             content: [
               LmuText.body(
                 isActive

@@ -1,5 +1,4 @@
 import 'api/api.dart';
-import 'api/models/screening_model.dart';
 
 abstract class CinemaRepository{
   Future<List<CinemaModel>> getCinemas();

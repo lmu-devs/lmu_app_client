@@ -1,1 +1,3 @@
-export 'cinema_model.dart';
+export 'cinema/cinema.dart';
+export 'movie/movie.dart';
+export 'screening/screening.dart';

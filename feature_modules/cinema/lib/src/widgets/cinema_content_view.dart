@@ -4,9 +4,9 @@ import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 
 import '../repository/api/api.dart';
-import '../repository/api/models/screening_model.dart';
+import '../util/cinema_screenings.dart';
 import 'cinema_card.dart';
-import 'screening_card.dart';
+import 'screenings_list.dart';
 
 class CinemaContentView extends StatelessWidget {
   const CinemaContentView({
@@ -31,27 +31,19 @@ class CinemaContentView extends StatelessWidget {
               final cinema = cinemas[index];
               return CinemaCard(
                 cinema: cinema,
-                screenings: _getScreeningsForCinema(cinema.id),
+                screenings: getScreeningsForCinema(screenings, cinema.id),
                 isLastItem: index == cinemas.length - 1,
               );
             }),
             const SizedBox(height: LmuSizes.size_32),
-            LmuTileHeadline.base(title: context.locals.cinema.moviesTitle),
-            ...List.generate(screenings.length, (index) {
-              final screening = screenings[index];
-              return ScreeningCard(
-                screening: screening,
-                isLastItem: index == screenings.length - 1,
-              );
-            }),
+            ScreeningsList(
+              screenings: screenings,
+              hasFilterRow: true,
+            ),
             const SizedBox(height: LmuSizes.size_96),
           ],
         ),
       ),
     );
-  }
-
-  List<ScreeningModel> _getScreeningsForCinema(String cinemaId) {
-    return screenings.where((screening) => screening.cinema.id == cinemaId).toList();
   }
 }

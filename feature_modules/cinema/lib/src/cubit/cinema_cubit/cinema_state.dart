@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-import '../../repository/api/models/cinema_model.dart';
-import '../../repository/api/models/screening_model.dart';
+import '../../repository/api/api.dart';
+
 
 abstract class CinemaState extends Equatable {
   const CinemaState();

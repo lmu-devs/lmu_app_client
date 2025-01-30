@@ -1,3 +1,4 @@
+import 'package:core/src/themes/colors/university_colors.dart';
 import 'package:flutter/material.dart';
 
 import 'neutral_colors.dart';
@@ -17,6 +18,7 @@ class LmuColors extends ThemeExtension<LmuColors> {
     required this.dangerColors,
     required this.warningColors,
     required this.gradientColors,
+    required this.universityColors,
   });
 
   final NeutralColors neutralColors;
@@ -26,6 +28,7 @@ class LmuColors extends ThemeExtension<LmuColors> {
   final DangerColors dangerColors;
   final WarningColors warningColors;
   final GradientColors gradientColors;
+  final UniversityColors universityColors;
 
   @override
   LmuColors copyWith({
@@ -38,6 +41,7 @@ class LmuColors extends ThemeExtension<LmuColors> {
     DangerColors? dangerColors,
     WarningColors? warningColors,
     GradientColors? gradientColors,
+    UniversityColors? universityColors,
   }) {
     return LmuColors(
       neutralColors: neutralColors ?? this.neutralColors,
@@ -47,6 +51,7 @@ class LmuColors extends ThemeExtension<LmuColors> {
       dangerColors: dangerColors ?? this.dangerColors,
       warningColors: warningColors ?? this.warningColors,
       gradientColors: gradientColors ?? this.gradientColors,
+      universityColors:  universityColors ?? this.universityColors,
     );
   }
 
@@ -63,6 +68,7 @@ class LmuColors extends ThemeExtension<LmuColors> {
       dangerColors: dangerColors,
       warningColors: warningColors,
       gradientColors: gradientColors,
+      universityColors: universityColors,
     );
   }
 }

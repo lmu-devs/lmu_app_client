@@ -1,10 +1,9 @@
-import 'university_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'cinema_model.dart';
-import 'cinema_location_model.dart';
-import 'movie_model.dart';
+import 'university_model.dart';
+import '../cinema/cinema_model.dart';
+import '../movie/movie_model.dart';
 
 part 'screening_model.g.dart';
 
@@ -21,7 +20,6 @@ class ScreeningModel extends Equatable {
     this.externalLink,
     required this.note,
     required this.movie,
-    required this.location,
     required this.university,
     required this.cinema,
   });
@@ -41,26 +39,24 @@ class ScreeningModel extends Equatable {
   final String? externalLink;
   final String? note;
   final MovieModel movie;
-  final CinemaLocationModel location;
   final UniversityModel university;
   final CinemaModel cinema;
 
   @override
   List<Object?> get props => [
-    id,
-    entryTime,
-    startTime,
-    endTime,
-    price,
-    isOv,
-    subtitles,
-    externalLink,
-    note,
-    movie,
-    location,
-    university,
-    cinema,
-  ];
+        id,
+        entryTime,
+        startTime,
+        endTime,
+        price,
+        isOv,
+        subtitles,
+        externalLink,
+        note,
+        movie,
+        university,
+        cinema,
+      ];
 
   factory ScreeningModel.fromJson(Map<String, dynamic> json) => _$ScreeningModelFromJson(json);
 

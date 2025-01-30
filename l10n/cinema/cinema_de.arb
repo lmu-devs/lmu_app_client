@@ -3,5 +3,22 @@
   "@@context": "Cinema",
   
   "cinemasTitle": "Kinos",
-  "moviesTitle": "Alle Filme"
+  "upcomingTitle": "Demnächst",
+  "nextMovie": "Nächster Film",
+  "nextMovieEmpty": "Kein Film mehr für dieses Semester",
+  "historyAction": "Vergangene anzeigen",
+  "pastMoviesTitle": "Vergangene Filme",
+  "pastMoviesEmpty": "Keine vergangenen Filme vorhanden",
+  "screeningsSortingAlphabetical": "Alphabetisch",
+  "screeningsSortingMostRecent": "Neueste zuerst",
+  "screeningsSortingLeastRecent": "Älteste zuerst",
+  "ov": "Originalvertonung (OV)",
+  "germanTranslation": "Deutsch",
+  "todayScreening": "Heute",
+  "tomorrowScreening": "Morgen",
+  "yesterdayScreening": "Gestern",
+  "share": "Teilen",
+  "entry": "Einlass",
+  "start": "Start",
+  "movie": "Film"
 }

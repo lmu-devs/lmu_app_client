@@ -3,16 +3,23 @@ import 'package:core/constants.dart';
 import 'package:flutter/widgets.dart';
 
 class LmuButtonRow extends StatelessWidget {
-  const LmuButtonRow({super.key, required this.buttons});
+  const LmuButtonRow({
+    super.key,
+    required this.buttons,
+    this.hasHorizontalPadding = true,
+  });
 
   final List<LmuButton> buttons;
+  final bool hasHorizontalPadding;
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+        padding: EdgeInsets.symmetric(
+          horizontal: hasHorizontalPadding ? LmuSizes.size_16 : LmuSizes.none,
+        ),
         child: Wrap(
           direction: Axis.horizontal,
           spacing: LmuSizes.size_8,

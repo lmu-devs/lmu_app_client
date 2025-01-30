@@ -1,5 +1,4 @@
 import '../repository/api/api.dart';
-import '../repository/api/models/screening_model.dart';
 
 class CinemaDetailsData {
   final CinemaModel cinema;

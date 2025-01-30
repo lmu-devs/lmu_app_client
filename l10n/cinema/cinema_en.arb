@@ -7,8 +7,76 @@
   "@cinemasTitle": {
     "description": "Cinemas section title"
   },
-  "moviesTitle": "All Movies",
-  "@moviesTitle": {
-    "description": "Movies section title"
+  "upcomingTitle": "Upcoming",
+  "@upcomingTitle": {
+    "description": "Upcoming"
+  },
+  "nextMovie": "Next movie",
+  "@nextMovie": {
+    "description": "Next movie"
+  },
+  "nextMovieEmpty": "No more movies this semester",
+  "@nextMovieEmpty": {
+    "description": "No more movies this semester"
+  },
+  "historyAction": "Show History",
+  "@historyAction": {
+    "description": "Action to show history"
+  },
+  "pastMoviesTitle": "Past Movies",
+  "@pastMoviesTitle": {
+    "description": "Past movies section title"
+  },
+  "pastMoviesEmpty": "No past movies available",
+  "@pastMoviesEmpty": {
+    "description": "Empty state for screenings history"
+  },
+  "screeningsSortingAlphabetical": "Alphabetically",
+  "@screeningsSortingAlphabetical": {
+    "description": "Sorting alphabetically"
+  },
+  "screeningsSortingMostRecent": "Most Recent",
+  "@screeningsSortingMostRecent": {
+    "description": "Sorting most recent"
+  },
+  "screeningsSortingLeastRecent": "Least Recent",
+  "@screeningsSortingLeastRecent": {
+    "description": "Sorting least recent"
+  },
+  "ov": "Original Version (OV)",
+  "@ov": {
+    "description": "Language and sound translation"
+  },
+  "germanTranslation": "German",
+  "@germanTranslation": {
+    "description": "German translation"
+  },
+  "todayScreening": "Today",
+  "@todayScreening": {
+    "description": "If screening is today"
+  },
+  "tomorrowScreening": "Tomorrow",
+  "@tomorrowScreening": {
+    "description": "If screening is tomorrow"
+  },
+  "yesterdayScreening": "Yesterday",
+  "@yesterdayScreening": {
+    "description": "If screening was yesterday"
+  },
+  "share": "Share",
+  "@share": {
+    "description": "Share button"
+  },
+  "entry": "Entry Time",
+  "@entry": {
+    "description": "Entry time of screening"
+  },
+  "start": "Start Time",
+  "@start": {
+    "description": "Start time of screening"
+  },
+  "movie": "Movie",
+  "@movie": {
+    "description": "Movie"
   }
 }

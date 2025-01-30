@@ -8,7 +8,6 @@ import 'package:get_it/get_it.dart';
 
 import '../../repository/api/models/mensa/mensa_model.dart';
 import '../../services/mensa_user_preferences_service.dart';
-import '../common/mensa_placeholder_tile.dart';
 import '../widgets.dart';
 
 class MensaOverviewReordableFavoriteSection extends StatelessWidget {
@@ -63,7 +62,7 @@ class MensaOverviewReordableFavoriteSection extends StatelessWidget {
                 child: child,
               ),
               child: value.isEmpty
-                  ? MensaPlaceholderTile(
+                  ? PlaceholderTile(
                       key: const ValueKey('placeholderTile'),
                       minHeight: 80,
                       content: [

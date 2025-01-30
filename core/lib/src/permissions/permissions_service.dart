@@ -12,8 +12,8 @@ class PermissionsService {
     final appLocals = context.locals.app;
     await LmuDialog.show(
       context: context,
-      title: appLocals.locationPermissionDeniedTitle,
-      description: appLocals.locationPermissionDeniedDescription,
+      title: appLocals.locationPermissionDialogTitle,
+      description: appLocals.locationPermissionDialogText,
       buttonActions: [
         LmuDialogAction(
           title: appLocals.cancel,
@@ -37,8 +37,8 @@ class PermissionsService {
 
     await LmuDialog.show(
       context: context,
-      title: appLocals.locationServiceDisabledTitle,
-      description: appLocals.locationServiceDisabledDescription,
+      title: appLocals.locationServiceDialogTitle,
+      description: appLocals.locationServiceDialogText,
       buttonActions: [
         LmuDialogAction(
           title: appLocals.cancel,

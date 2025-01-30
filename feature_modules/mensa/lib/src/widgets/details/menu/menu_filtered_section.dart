@@ -9,7 +9,6 @@ import 'package:get_it/get_it.dart';
 import '../../../repository/api/models/menu/dish_category.dart';
 import '../../../repository/api/models/menu/menu_item_model.dart';
 import '../../../services/mensa_user_preferences_service.dart';
-import '../../common/mensa_placeholder_tile.dart';
 import 'menu_item_tile.dart';
 
 class MenuFilteredSection extends StatelessWidget {
@@ -27,7 +26,7 @@ class MenuFilteredSection extends StatelessWidget {
     if (filteredMenuitems.isEmpty) {
       return Padding(
         padding: const EdgeInsets.only(bottom: LmuSizes.size_32),
-        child: MensaPlaceholderTile(
+        child: PlaceholderTile(
           content: [
             LmuText.body(
               context.locals.canteen.yourTasteFiltersAll,

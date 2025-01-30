@@ -2,6 +2,7 @@ import 'package:core/src/themes/colors/brand_colors.dart';
 import 'package:core/src/themes/colors/danger_colors.dart';
 import 'package:core/src/themes/colors/gradient_colors.dart';
 import 'package:core/src/themes/colors/success_colors.dart';
+import 'package:core/src/themes/colors/university_colors.dart';
 import 'package:flutter/material.dart';
 
 import 'color_construct.dart';
@@ -172,6 +173,13 @@ const lmuColorsDark = LmuColors(
       highlight: ColorPrimitives.trspWhite07,
     ),
   ),
+  universityColors: UniversityColors(
+    textColors: UniversityTextColors(
+      ColorPrimitives.universityGreenDark,
+      ColorPrimitives.universityBlueDark,
+      ColorPrimitives.universityRedDark,
+    ),
+  ),
 );
 
 const lmuColorsLight = LmuColors(
@@ -334,6 +342,13 @@ const lmuColorsLight = LmuColors(
     gradientLoadingColors: GradientLoadingColors(
       base: ColorPrimitives.trspBlack10,
       highlight: ColorPrimitives.trspBlack05,
+    ),
+  ),
+  universityColors: UniversityColors(
+    textColors: UniversityTextColors(
+      ColorPrimitives.universityGreenLight,
+      ColorPrimitives.universityBlueLight,
+      ColorPrimitives.universityRedLight,
     ),
   ),
 );

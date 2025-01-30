@@ -1,6 +1,5 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:core/widgets.dart';
@@ -9,9 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
 import '../repository/api/api.dart';
-import '../repository/api/models/screening_model.dart';
 import '../routes/cinema_details_data.dart';
-import '../widgets/screening_card.dart';
+import '../util/cinema_type.dart';
+import '../widgets/screenings_list.dart';
 
 class CinemaDetailsPage extends StatelessWidget {
   const CinemaDetailsPage({
@@ -29,14 +28,18 @@ class CinemaDetailsPage extends StatelessWidget {
     return LmuMasterAppBar(
       largeTitle: cinema.title,
       leadingAction: LeadingAction.back,
+      imageUrls: cinema.images != null ? cinema.images!.map((image) => image.url).toList() : [],
       largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
       largeTitleTrailingWidget: Container(
         padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_4),
         decoration: BoxDecoration(
-          color: context.colors.neutralColors.backgroundColors.mediumColors.base,
+          color: cinema.type.getColor(context).withOpacity(0.1),
           borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
         ),
-        child: LmuText.bodySmall(cinema.id),
+        child: LmuText.bodySmall(
+          cinema.type.getValue(),
+          color: cinema.type.getColor(context),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -78,21 +81,14 @@ class CinemaDetailsPage extends StatelessWidget {
                     subtitle: cinema.cinemaLocation.address,
                     hasHorizontalPadding: false,
                     hasDivider: true,
-                    onTap: () {
-                      cinema.cinemaLocation.latitude != null && cinema.cinemaLocation.longitude != null
-                          ? LmuBottomSheet.show(
-                              context,
-                              content: NavigationSheet(
-                                latitude: cinema.cinemaLocation.latitude!,
-                                longitude: cinema.cinemaLocation.longitude!,
-                                address: cinema.cinemaLocation.address,
-                              ),
-                            )
-                          : LmuToast.show(
-                              context: context,
-                              message: 'No Location for ${cinema.title} Available',
-                            );
-                    },
+                    onTap: () => LmuBottomSheet.show(
+                      context,
+                      content: NavigationSheet(
+                        latitude: cinema.cinemaLocation.latitude,
+                        longitude: cinema.cinemaLocation.longitude,
+                        address: cinema.cinemaLocation.address,
+                      ),
+                    ),
                   ),
                   ...List.generate(
                     cinema.descriptions.length,
@@ -107,14 +103,11 @@ class CinemaDetailsPage extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: LmuSizes.size_32),
-                  LmuTileHeadline.base(title: context.locals.cinema.moviesTitle),
-                  ...List.generate(screenings.length, (index) {
-                    final screening = screenings[index];
-                    return ScreeningCard(
-                      screening: screening,
-                      isLastItem: index == screenings.length - 1,
-                    );
-                  }),
+                  ScreeningsList(
+                    screenings: screenings,
+                    hasFilterRow: false,
+                    type: cinema.type,
+                  ),
                   const SizedBox(height: LmuSizes.size_96),
                 ],
               ),
