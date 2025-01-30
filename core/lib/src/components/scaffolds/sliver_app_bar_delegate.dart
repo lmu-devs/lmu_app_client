@@ -428,7 +428,10 @@ class _LeadingAction extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        onLeadingActionTap?.call();
+        if (onLeadingActionTap != null) {
+          onLeadingActionTap!.call();
+          return;
+        }
         Navigator.of(context).pop();
       },
       behavior: HitTestBehavior.opaque,

@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:core/api.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/extensions.dart';
@@ -25,6 +26,8 @@ class MenuItemTile extends StatelessWidget {
   final bool isFavorite;
   final List<String>? excludedLabelItemsName;
 
+  RatingModel get _ratingModel => menuItemModel.ratingModel;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -49,15 +52,19 @@ class MenuItemTile extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: 48,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(
-                            getAssetPathForDishType(menuItemModel.dishType),
+                    Padding(
+                      padding: const EdgeInsets.only(top: LmuSizes.size_6),
+                      child: Container(
+                        width: 36,
+                        height: 36,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(LmuSizes.size_6),
+                          image: DecorationImage(
+                            image: AssetImage(
+                              getAssetPathForDishType(menuItemModel.dishType),
+                            ),
+                            fit: BoxFit.cover,
                           ),
-                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
@@ -67,9 +74,8 @@ class MenuItemTile extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Flexible(
+                              Expanded(
                                 child: LmuText.body(
                                   menuItemModel.title,
                                 ),
@@ -109,11 +115,12 @@ class MenuItemTile extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                LmuText.bodyXSmall(
-                                  menuItemModel.ratingModel.calculateLikeCount(isFavorite),
-                                  color: context.colors.neutralColors.textColors.weakColors.base,
-                                ),
-                                const SizedBox(width: LmuSizes.size_4),
+                                if (_ratingModel.likeCount > 0)
+                                  LmuText.bodyXSmall(
+                                    _ratingModel.calculateLikeCount(isFavorite),
+                                    color: context.colors.neutralColors.textColors.weakColors.base,
+                                  ),
+                                if (_ratingModel.likeCount > 0) const SizedBox(width: LmuSizes.size_4),
                                 StarIcon(isActive: isFavorite),
                               ],
                             ),

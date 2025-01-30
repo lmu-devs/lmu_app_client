@@ -1,6 +1,7 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../repository/api/models/menu/menu_day_model.dart';
@@ -26,21 +27,9 @@ class MenuContentView extends StatelessWidget {
 
     if (menuItems.isEmpty) {
       if (mensaMenuModel.isClosed) {
-        return SizedBox(
-          width: double.infinity,
-          height: 500,
-          child: Center(
-            child: LmuText.body("Mensa is closed"),
-          ),
-        );
+        const LmuIssueType(title: "Mensa closed", icon: LucideIcons.bone);
       }
-      return SizedBox(
-        width: double.infinity,
-        height: 500,
-        child: Center(
-          child: LmuText.body("Menu not available"),
-        ),
-      );
+      return const LmuIssueType(title: "Menu not available", icon: LucideIcons.git_pull_request_closed);
     }
 
     return Padding(

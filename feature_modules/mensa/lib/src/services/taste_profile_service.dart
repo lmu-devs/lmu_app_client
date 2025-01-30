@@ -49,6 +49,13 @@ class TasteProfileService {
     _excludedLabelsNotifier.value = _initialExcludedLabels;
   }
 
+  bool get hasNoChanges {
+    return _isActiveNotifier.value == _initialIsActive &&
+        setEquals(_selectedAllergiesPresetsNotifier.value, _initialSelectedAllergiesPresets) &&
+        _selectedPreferencePresetNotifier.value == _initialSelectedPreferencePreset &&
+        setEquals(_excludedLabelsNotifier.value, _initialExcludedLabels);
+  }
+
   void reset() async {
     final tasteProfile = (GetIt.I.get<TasteProfileCubit>().state as TasteProfileLoadSuccess).tasteProfile;
     final initialPreferencePreset = tasteProfile.preferencesPresets.first.enumName;

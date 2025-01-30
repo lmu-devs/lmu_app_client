@@ -1,7 +1,7 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
@@ -39,8 +39,8 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
     return LmuMasterAppBar.bottomSheet(
       largeTitle: localizations.myTaste,
       trailingWidgets: const [_SaveButton()],
-      onPopInvoked: (value) => _tasteProfileService.onClose(),
-      onLeadingActionTap: () => _tasteProfileService.onClose(),
+      onPopInvoked: () async => await _onPopInvoked(context),
+      onLeadingActionTap: () => _onLeadingClose(context),
       body: BlocBuilder<TasteProfileCubit, TasteProfileState>(
         bloc: _tasteProfileCubit,
         builder: (context, state) {
@@ -52,6 +52,59 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
         },
       ),
     );
+  }
+
+  Future<void> _showUnsavedChangesDialog({
+    required void Function() onDiscardPressed,
+    void Function()? onContinuePressed,
+  }) async {
+    await LmuDialog.show(
+      context: context,
+      title: "You Have Unsaved Changes",
+      description: "Do you want to save your changes before leaving?",
+      buttonActions: [
+        LmuDialogAction(
+          title: "discard",
+          isSecondary: true,
+          onPressed: (context) {
+            onDiscardPressed();
+            _tasteProfileService.onClose();
+            Navigator.of(context).pop();
+          },
+        ),
+        LmuDialogAction(
+          title: "continue",
+          onPressed: (context) {
+            Navigator.of(context).pop();
+            onContinuePressed?.call();
+          },
+        ),
+      ],
+    );
+  }
+
+  Future<bool> _onPopInvoked(BuildContext context) async {
+    bool shouldClose = true;
+    if (_tasteProfileService.hasNoChanges) return shouldClose;
+
+    await _showUnsavedChangesDialog(
+      onDiscardPressed: () => shouldClose = true,
+      onContinuePressed: () => shouldClose = false,
+    );
+
+    return shouldClose;
+  }
+
+  void _onLeadingClose(BuildContext context) async {
+    final sheetNavigator = Navigator.of(context);
+
+    if (_tasteProfileService.hasNoChanges) {
+      _tasteProfileService.onClose();
+      sheetNavigator.pop();
+      return;
+    }
+
+    _showUnsavedChangesDialog(onDiscardPressed: () => sheetNavigator.pop());
   }
 }
 

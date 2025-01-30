@@ -12,7 +12,7 @@ enum ToastType {
 }
 
 class LmuToast {
-  static removeAll({
+  static void removeAll({
     required BuildContext context,
   }) {
     final fToast = FToast();

@@ -63,7 +63,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   late final ValueNotifier<double> _sheetSizeNotifier;
 
   Future<void> _loadMarkerImages(MapboxMap mapboxMap, BuildContext context) async {
-    final List<String> pinTypes = ['mensa_pin', 'bistro_pin', 'cafe_pin'];
+    final List<String> pinTypes = ['mensa_pin', 'bistro_pin', 'cafe_pin', 'espresso_pin'];
 
     for (final pinType in pinTypes) {
       if (context.mounted) {
@@ -89,14 +89,14 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   }
 
   String _getMarkerByType(MensaType mensaType) {
-    switch (mensaType) {
-      case MensaType.mensa:
-        return 'mensa_pin';
-      case MensaType.stuBistro:
-        return 'bistro_pin';
-      default:
-        return 'cafe_pin';
-    }
+    return switch (mensaType) {
+      MensaType.mensa => 'mensa_pin',
+      MensaType.stuBistro => 'bistro_pin',
+      MensaType.stuCafe => 'cafe_pin',
+      MensaType.cafeBar => 'espresso_pin',
+      MensaType.lounge => 'mensa_pin',
+      MensaType.none => 'mensa_pin',
+    };
   }
 
   Future<void> _addMarkers(MapboxMap mapboxMap) async {
@@ -307,7 +307,6 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await askForLocationPermission(context: context, askEveryTime: false);
       spawnLocation = await _getUserLocation();
       await mapboxMap?.setCamera(spawnLocation!);
     });
@@ -392,12 +391,32 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
                       return MapActionButton(
                         icon: LucideIcons.map_pin,
                         sheetHeight: sheetSize,
-                        onTap: () async => mapboxMap?.easeTo(
-                          await _getUserLocation(),
-                          MapAnimationOptions(
-                            duration: animationToLocationDuration,
-                          ),
-                        ),
+                        onTap: () async {
+                          bool dontCenter = false;
+                          await PermissionsService.isLocationPermissionGranted().then(
+                            (isPermissionGranted) async {
+                              if (!isPermissionGranted) {
+                                dontCenter = true;
+                                await PermissionsService.showLocationPermissionDeniedDialog(context);
+                              }
+                              await PermissionsService.isLocationServicesEnabled().then(
+                                (isLocationServicesEnabled) async {
+                                  if (!isLocationServicesEnabled) {
+                                    dontCenter = true;
+                                    await PermissionsService.showLocationServiceDisabledDialog(context);
+                                  }
+                                },
+                              );
+                            },
+                          );
+                          if (dontCenter) return;
+                          return mapboxMap?.easeTo(
+                            await _getUserLocation(),
+                            MapAnimationOptions(
+                              duration: animationToLocationDuration,
+                            ),
+                          );
+                        },
                       );
                     }),
                 MapBottomSheet(

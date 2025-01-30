@@ -7,11 +7,13 @@ class LmuDialogAction {
   const LmuDialogAction({
     required this.title,
     required this.onPressed,
+    this.icon,
     this.isSecondary = false,
   });
 
   final String title;
   final void Function(BuildContext dialogContext) onPressed;
+  final IconData? icon;
   final bool isSecondary;
 }
 
@@ -42,7 +44,7 @@ class LmuDialog {
                   color: neutralColors.textColors.strongColors.base,
                   weight: FontWeight.bold,
                 ),
-                const SizedBox(height: LmuSizes.size_12),
+                const SizedBox(height: LmuSizes.size_4),
                 LmuText.body(
                   description,
                   color: neutralColors.textColors.mediumColors.base,
@@ -62,6 +64,7 @@ class LmuDialog {
                                 child: LmuButton(
                                   title: e.title,
                                   emphasis: e.isSecondary ? ButtonEmphasis.secondary : ButtonEmphasis.primary,
+                                  trailingIcon: e.icon,
                                   onTap: () => e.onPressed(dialogContext),
                                 ),
                               ),

@@ -30,5 +30,9 @@
   "remainingDays": "{days} Tage",
   "remainingHours": "{hours} Stunden",
   "remainingMinutes": "{minutes} Minuten",
-  "remainingSeconds": "{seconds} Sekunden"
+  "remainingSeconds": "{seconds} Sekunden",
+  "locationPermissionDeniedTitle": "Standort Genehmigung Verweigert",
+  "locationPermissionDeniedDescription": "Zur Ortsbestimmung ist die Standortgenehmigung erforderlich.",
+  "locationServiceDisabledTitle": "Standort Service Deaktiviert",
+  "locationServiceDisabledDescription": "Der Ortungsdienst ist erforderlich, um Ihren Standort zu bestimmen."
 }

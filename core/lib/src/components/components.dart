@@ -4,6 +4,7 @@ export 'buttons/buttons.dart';
 export 'buttons/lmu_button.dart';
 export 'dialogs/dialogs.dart';
 export 'dividers/dividers.dart';
+export 'errors/errors.dart';
 export 'header/header.dart';
 export 'icons/icons.dart';
 export 'images/images.dart';

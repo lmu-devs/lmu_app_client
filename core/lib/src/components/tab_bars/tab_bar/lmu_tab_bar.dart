@@ -90,7 +90,7 @@ class _LmuTabBarState extends State<LmuTabBar> {
                             child: AnimatedSwitcher(
                               duration: const Duration(milliseconds: 300),
                               child: LmuTabBarItem(
-                                key: ValueKey('$index ${activeTabIndex == index}'),
+                                key: ValueKey('item_$index ${activeTabIndex == index}'),
                                 title: tabItem.title,
                                 isActive: activeTabIndex == index,
                                 leadingWidget: tabItem.leadingWidget,
@@ -127,25 +127,20 @@ class _LmuTabBarState extends State<LmuTabBar> {
   void _centerSelectedItem(int index) {
     final context = _tabKeys[index].currentContext;
     if (context != null) {
-      // Get the position and size of the selected tab
       final renderBox = context.findRenderObject() as RenderBox;
       final tabPosition = renderBox.localToGlobal(Offset.zero);
       final tabWidth = renderBox.size.width;
 
-      // Get screen width and current scroll position
       final screenWidth = MediaQuery.of(context).size.width;
       final listViewPosition = _scrollController.position.pixels;
 
-      // Calculate the target offset to center the item
       double targetOffset = listViewPosition + tabPosition.dx + (tabWidth / 2) - (screenWidth / 2);
 
-      // Clamp the target offset to avoid overscrolling
       targetOffset = targetOffset.clamp(
         _scrollController.position.minScrollExtent,
         _scrollController.position.maxScrollExtent,
       );
 
-      // Animate the scroll to the target offset
       _scrollController.animateTo(
         targetOffset,
         duration: const Duration(milliseconds: 300),
