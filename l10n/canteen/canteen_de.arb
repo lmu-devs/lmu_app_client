@@ -57,5 +57,6 @@
     "prices": "Preise",
     "basePrice": "Basispreis",
     "simplePrice": "Einfacher Preis",
-    "pricePerUnit": "{price} je {unit}"
+    "pricePerUnit": "{price} je {unit}",
+    "yourTasteFiltersAll": "Deine Food-Preferences sind literally so main character energy rn..."
 }
