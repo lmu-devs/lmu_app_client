@@ -9,6 +9,7 @@ import '../../mensa.dart';
 import '../bloc/menu_cubit/cubit.dart';
 import '../extensions/opening_hours_extensions.dart';
 import '../services/menu_service.dart';
+import '../views/details/menu/menu_cafe_bar_view.dart';
 import '../widgets/widgets.dart';
 
 class MensaDetailsPage extends StatefulWidget {
@@ -22,13 +23,15 @@ class MensaDetailsPage extends StatefulWidget {
 
 class _MensaDetailsPageState extends State<MensaDetailsPage> {
   late bool _isTemporarilyClosed;
+  late bool _isCafeBar;
   MensaModel get _mensaModel => widget.mensaModel;
 
   @override
   void initState() {
     super.initState();
     _isTemporarilyClosed = _mensaModel.currentOpeningStatus == Status.temporarilyClosed;
-    if (!_isTemporarilyClosed) {
+    _isCafeBar = _mensaModel.type == MensaType.cafeBar;
+    if (!_isTemporarilyClosed && !_isCafeBar) {
       _initMenuCubit();
     }
   }
@@ -90,15 +93,14 @@ class _MensaDetailsPageState extends State<MensaDetailsPage> {
       largeTitle: _mensaModel.name,
       imageUrls: _mensaModel.images.map((e) => e.url).toList(),
       leadingAction: LeadingAction.back,
-      onPopInvoked: (_) => LmuToast.removeAll(context: context),
-      onLeadingActionTap: () => LmuToast.removeAll(context: context),
       largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
       trailingWidgets: [_trailingAppBarAction],
       largeTitleTrailingWidget: MensaTag(type: _mensaModel.type),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(child: MensaDetailsInfoSection(mensaModel: _mensaModel)),
-          if (!_isTemporarilyClosed) MensaDetailsMenuSection(canteenId: _mensaModel.canteenId),
+          if (!(_isTemporarilyClosed || _isCafeBar)) MensaDetailsMenuSection(canteenId: _mensaModel.canteenId),
+          if (_isCafeBar) const SliverToBoxAdapter(child: MenuCafeBarView()),
         ],
       ),
     );

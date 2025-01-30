@@ -36,7 +36,7 @@ class MenuItemModel extends Equatable {
   factory MenuItemModel.placeholder({String? title}) => MenuItemModel(
         id: "0",
         title: title ?? 'Title',
-        dishType: 'E',
+        dishType: '',
         dishCategory: DishCategory.main,
         ratingModel: RatingModel.placeholder(),
         priceSimple: '',

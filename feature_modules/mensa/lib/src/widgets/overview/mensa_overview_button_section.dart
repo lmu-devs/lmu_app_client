@@ -132,8 +132,26 @@ class _SortOptionActionSheetContent extends StatelessWidget {
                       ),
                       onTap: () async {
                         if (sortOption == SortOption.distance) {
-                          await askForLocationPermission(context: context, askEveryTime: true);
+                          bool dontSort = false;
+                          await PermissionsService.isLocationPermissionGranted().then(
+                            (isPermissionGranted) async {
+                              if (!isPermissionGranted) {
+                                dontSort = true;
+                                await PermissionsService.showLocationPermissionDeniedDialog(context);
+                              }
+                              await PermissionsService.isLocationServicesEnabled().then(
+                                (isLocationServicesEnabled) async {
+                                  if (!isLocationServicesEnabled) {
+                                    dontSort = true;
+                                    await PermissionsService.showLocationServiceDisabledDialog(context);
+                                  }
+                                },
+                              );
+                            },
+                          );
+                          if (dontSort) return;
                         }
+
                         sortOptionNotifier.value = sortOption;
                         sortedMensaModelsNotifier.value = sortOption.sort(mensaModels);
                         await GetIt.I.get<MensaUserPreferencesService>().updateSortOption(sortOption);

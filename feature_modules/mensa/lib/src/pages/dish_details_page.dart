@@ -1,20 +1,21 @@
+import 'package:collection/collection.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/extensions.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../repository/api/models/menu/menu_item_model.dart';
 import '../repository/api/models/menu/price_category.dart';
 import '../repository/api/models/menu/price_model.dart';
+import '../repository/api/models/taste_profile/taste_profile_label_item.dart';
 import '../services/mensa_user_preferences_service.dart';
 import '../services/taste_profile_service.dart';
 
-class DishDetailsPage extends StatefulWidget {
+class DishDetailsPage extends StatelessWidget {
   const DishDetailsPage({
     super.key,
     required this.menuItemModel,
@@ -22,31 +23,24 @@ class DishDetailsPage extends StatefulWidget {
 
   final MenuItemModel menuItemModel;
 
-  @override
-  State<DishDetailsPage> createState() => _DishDetailsPageState();
-}
+  MenuItemModel get _menuItemModel => menuItemModel;
 
-class _DishDetailsPageState extends State<DishDetailsPage> {
-  late ValueNotifier<PriceCategory> _selectedPriceCategoryNotifier;
-
-  final _tasteProfileService = GetIt.I<TasteProfileService>();
-  final _userPreferenceService = GetIt.I<MensaUserPreferencesService>();
-
-  @override
-  void initState() {
-    super.initState();
-    _selectedPriceCategoryNotifier = ValueNotifier(_userPreferenceService.initialPriceCategory);
-  }
-
-  MenuItemModel get _menuItemModel => widget.menuItemModel;
+  List<PriceModel> get _prices => _menuItemModel.prices;
 
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
+    final tasteProfileService = GetIt.I<TasteProfileService>();
+    final userPreferenceService = GetIt.I<MensaUserPreferencesService>();
+
+    final labelItems = _menuItemModel.labels
+        .map((e) => tasteProfileService.getLabelItemFromId(e))
+        .where((element) => element != null)
+        .cast<TasteProfileLabelItem>()
+        .toList()
+        .sortedBy((element) => element.enumName);
+
+    return LmuMasterAppBar.bottomSheet(
       largeTitle: _menuItemModel.title,
-      customScrollController: ModalScrollController.of(context),
-      collapsedTitleHeight: CollapsedTitleHeight.large,
-      leadingAction: LeadingAction.close,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
@@ -56,15 +50,18 @@ class _DishDetailsPageState extends State<DishDetailsPage> {
               Row(
                 children: [
                   ValueListenableBuilder(
-                    valueListenable: _userPreferenceService.favoriteDishIdsNotifier,
+                    valueListenable: userPreferenceService.favoriteDishIdsNotifier,
                     builder: (context, favoriteDishIds, _) {
                       final isFavorite = favoriteDishIds.contains(_menuItemModel.id);
                       return LmuButton(
-                        leadingWidget: StarIcon(isActive: isFavorite),
+                        leadingWidget: StarIcon(
+                          isActive: isFavorite,
+                          disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
+                        ),
                         title:
                             "${_menuItemModel.ratingModel.calculateLikeCount(isFavorite)} ${context.locals.app.likes}",
                         emphasis: ButtonEmphasis.secondary,
-                        onTap: () => _userPreferenceService.toggleFavoriteDishId(_menuItemModel.id),
+                        onTap: () => userPreferenceService.toggleFavoriteDishId(_menuItemModel.id),
                       );
                     },
                   ),
@@ -82,66 +79,49 @@ class _DishDetailsPageState extends State<DishDetailsPage> {
                 ],
               ),
               const SizedBox(height: LmuSizes.size_32),
-              LmuTileHeadline.base(title: context.locals.canteen.ingredients),
-              LmuContentTile(
-                content: _menuItemModel.labels.map(
-                  (e) {
-                    final labelItem = _tasteProfileService.getLabelItemFromId(e);
-                    if (labelItem == null) return const SizedBox.shrink();
-                    final emoji = labelItem.emojiAbbreviation?.isEmpty ?? true ? "😀" : labelItem.emojiAbbreviation;
-                    return LmuListItem.base(
-                      leadingArea: LmuText.h1(emoji),
-                      title: labelItem.text,
-                    );
-                  },
-                ).toList(),
-              ),
-              const SizedBox(height: LmuSizes.size_32),
+              if (labelItems.isNotEmpty)
+                Column(
+                  children: [
+                    LmuTileHeadline.base(title: context.locals.canteen.ingredients),
+                    LmuContentTile(
+                      content: labelItems.map(
+                        (labelItem) {
+                          return LmuListItem.base(
+                            leadingArea: LmuText.h1(
+                                labelItem.emojiAbbreviation?.isEmpty ?? false ? "🫙" : labelItem.emojiAbbreviation),
+                            title: labelItem.text,
+                          );
+                        },
+                      ).toList(),
+                    ),
+                    const SizedBox(height: LmuSizes.size_32),
+                  ],
+                ),
               LmuTileHeadline.base(title: context.locals.canteen.prices),
-              ValueListenableBuilder(
-                  valueListenable: _selectedPriceCategoryNotifier,
-                  builder: (context, selectedPriceCategory, _) {
-                    final price = _menuItemModel.prices.firstWhere(
-                      (element) => element.category == selectedPriceCategory,
-                    );
-
-                    final priceString = context.locals.canteen.pricePerUnit(
-                      price.pricePerUnit.toStringAsFixed(2),
-                      price.unit,
-                    );
-
-                    return LmuContentTile(
-                      content: [
-                        if (price.basePrice > 0.0)
-                          LmuListItem.base(
-                            title: context.locals.canteen.basePrice,
-                            trailingTitle: '${price.basePrice} €',
-                          ),
-                        LmuListItem.base(
-                          title: selectedPriceCategory.name(context.locals.canteen),
-                          trailingTitle: priceString,
-                          trailingTitleInTextVisuals: [
-                            LmuInTextVisual.iconBox(
-                              icon: LucideIcons.chevrons_up_down,
-                            )
-                          ],
-                          onTap: () {
-                            LmuBottomSheet.show(
-                              context,
-                              content: _PriceCategoryActionSheetContent(
-                                priceModels: _menuItemModel.prices,
-                                priceCategoryNotifier: _selectedPriceCategoryNotifier,
-                              ),
-                            );
-                          },
+              LmuContentTile(
+                content: [
+                  LmuListItem.base(
+                    title: context.locals.canteen.simplePrice,
+                    trailingTitle: _menuItemModel.priceSimple,
+                  ),
+                  if (_prices.first.basePrice > 0.0)
+                    LmuListItem.base(
+                      title: context.locals.canteen.basePrice,
+                      trailingTitle: '${_prices.first.basePrice.toStringAsFixed(2)} €',
+                    ),
+                  ..._prices.map(
+                    (e) {
+                      return LmuListItem.base(
+                        title: e.category.name(context.locals.canteen),
+                        trailingTitle: context.locals.canteen.pricePerUnit(
+                          e.pricePerUnit.toStringAsFixed(2),
+                          e.unit,
                         ),
-                        LmuListItem.base(
-                          title: context.locals.canteen.simplePrice,
-                          trailingTitle: _menuItemModel.priceSimple,
-                        ),
-                      ],
-                    );
-                  }),
+                      );
+                    },
+                  ),
+                ],
+              ),
               const SizedBox(height: LmuSizes.size_96),
             ],
           ),
@@ -169,63 +149,6 @@ extension PriceFormatter on PriceModel {
         pricePerUnit.toStringAsFixed(2),
         unit,
       );
-}
-
-class _PriceCategoryActionSheetContent extends StatelessWidget {
-  const _PriceCategoryActionSheetContent({
-    required this.priceModels,
-    required this.priceCategoryNotifier,
-  });
-
-  final List<PriceModel> priceModels;
-  final ValueNotifier<PriceCategory> priceCategoryNotifier;
-
-  @override
-  Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-        valueListenable: priceCategoryNotifier,
-        builder: (context, selectedPriceCategory, _) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ...priceModels.map(
-                (priceModel) {
-                  final category = priceModel.category;
-                  final isActive = category == selectedPriceCategory;
-
-                  final textColor = category.textColor(
-                    context.colors,
-                    isActive: isActive,
-                  );
-
-                  return Column(
-                    children: [
-                      LmuListItem.base(
-                        title: priceModel.category.name(context.locals.canteen),
-                        trailingTitle: priceModel.priceString(context.locals.canteen),
-                        trailingTitleColor: textColor,
-                        titleColor: textColor,
-                        mainContentAlignment: MainContentAlignment.center,
-                        onTap: () async {
-                          priceCategoryNotifier.value = category;
-                          await GetIt.I.get<MensaUserPreferencesService>().updatePriceCategory(category);
-                          Future.delayed(
-                            const Duration(milliseconds: 100),
-                            () {
-                              Navigator.of(context, rootNavigator: true).pop();
-                            },
-                          );
-                        },
-                      ),
-                      if (priceModel != priceModels.last) const SizedBox(height: LmuSizes.size_8),
-                    ],
-                  );
-                },
-              ),
-            ],
-          );
-        });
-  }
 }
 
 extension PriceCategoryVisualizerExtension on PriceCategory {

@@ -2,6 +2,7 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../services/taste_profile_service.dart';
@@ -16,8 +17,9 @@ class TasteProfileContentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CustomScrollView(
-      slivers: [
+    return CustomScrollView(
+      controller: PrimaryScrollController.of(context),
+      slivers: const [
         SliverToBoxAdapter(child: TasteProfileTitleSection()),
         SliverToBoxAdapter(child: TasteProfileToggleSection()),
         SliverToBoxAdapter(child: TasteProfilePresetsSection()),

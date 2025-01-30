@@ -144,5 +144,21 @@
         "example": "59"
       }
     }
+  },
+  "locationPermissionDeniedTitle": "Location Permission Denied",
+  "@locationPermissionDeniedTitle": {
+    "description": "Location Permission Denied"
+  },
+  "locationPermissionDeniedDescription": "Location Permission is required to determine your location.",
+  "@locationPermissionDeniedDescription": {
+    "description": "Location Permission Denied"
+  },
+  "locationServiceDisabledTitle": "Location Service Disabled",
+  "@locationServiceDisabledTitle": {
+    "description": "Location Service Disabled"
+  },
+  "locationServiceDisabledDescription": "Location Service is required to determine your location.",
+  "@locationServiceDisabledDescription": {
+    "description": "Location Service Disabled"
   }
 }

@@ -34,7 +34,6 @@ class TasteProfileLoadingView extends StatelessWidget {
             actionText: localizations.retry,
             type: ToastType.error,
             onActionPressed: () => tasteProfileCubit.loadTasteProfile(),
-            duration: const Duration(minutes: 66),
           );
         }
       },

@@ -884,6 +884,14 @@ packages:
       url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "0.28.0"
+  scroll_to_index:
+    dependency: "direct main"
+    description:
+      name: scroll_to_index
+      sha256: b707546e7500d9f070d63e5acf74fd437ec7eeeb68d3412ef7b0afada0b4f176
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
+    source: hosted
+    version: "3.0.1"
   scrollable_positioned_list:
     dependency: "direct main"
     description:
@@ -892,6 +900,14 @@ packages:
       url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "0.3.8"
+  scrollview_observer:
+    dependency: "direct main"
+    description:
+      name: scrollview_observer
+      sha256: "3d42d83c4eb43093d665fb7710395c86ee18c4f0e0a0d3904ae3840766722bfb"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
+    source: hosted
+    version: "1.25.0"
   share_plus:
     dependency: "direct main"
     description:
