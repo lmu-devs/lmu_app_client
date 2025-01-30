@@ -51,21 +51,6 @@ class NavigationSheet extends StatelessWidget {
     }
   }
 
-  void _copyToClipboard({
-    required BuildContext context,
-    required String copiedText,
-  }) {
-    Clipboard.setData(ClipboardData(text: copiedText));
-    if (Navigator.of(context).canPop()) {
-      Navigator.of(context).pop();
-    }
-    LmuToast.show(
-      context: context,
-      message: context.locals.explore.copiedToClipboard,
-      type: ToastType.success,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -126,7 +111,11 @@ class NavigationSheet extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: LmuSizes.size_6),
             child: Icon(LucideIcons.copy, size: LmuIconSizes.mediumSmall),
           ),
-          onTap: () => _copyToClipboard(context: context, copiedText: address),
+          onTap: () => CopyToClipboardUtil.copyToClipboard(
+            context: context,
+            copiedText: address,
+            message: context.locals.explore.copiedToClipboard,
+          ),
         ),
       ],
     );

@@ -42,7 +42,7 @@ class HomeLinksView extends StatelessWidget {
             onTap: () => LmuUrlLauncher.launchWebsite(
               url: link.url,
               context: context,
-              mode: LmuUrlLauncherMode.inAppWebView,
+              mode: LmuUrlLauncherMode.externalApplication,
             ),
           );
         }).toList(),
