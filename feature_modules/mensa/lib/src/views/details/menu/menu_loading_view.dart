@@ -32,7 +32,6 @@ class MenuLoadingView extends StatelessWidget {
             actionText: localizations.retry,
             type: ToastType.error,
             onActionPressed: () => mensaCubit.loadMensaMenuData(),
-            duration: const Duration(minutes: 5),
           );
         }
       },
@@ -41,14 +40,17 @@ class MenuLoadingView extends StatelessWidget {
           hasDivider: true,
         ),
         sliver: SliverPadding(
-          padding: const EdgeInsets.only(top: LmuSizes.size_24),
+          padding: const EdgeInsets.only(
+            top: LmuSizes.size_24,
+            left: LmuSizes.size_16,
+            right: LmuSizes.size_16,
+          ),
           sliver: SliverList.builder(
-            itemCount: 8,
+            itemCount: 9,
             itemBuilder: (context, index) {
-              return const Padding(
-                padding: EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-                child: MenuItemTileLoading(),
-              );
+              if (index == 0) return const LmuTileHeadlineLoading();
+
+              return const MenuItemTileLoading();
             },
           ),
         ),

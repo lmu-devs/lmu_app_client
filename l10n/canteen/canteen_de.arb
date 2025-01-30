@@ -12,7 +12,7 @@
     "mensaTypeStuBistro": "StuBistro",
     "mensaTypeStuCafe": "StuCafé",
     "mensaTypeLounge": "StuLouge",
-    "mensaTypeEspressoBar": "Espresso",
+    "mensaTypeCafeBar": "CaféBar",
     "alphabetically": "Alphabetisch",
     "price": "Preis",
     "rating": "Bewertung",
@@ -44,7 +44,7 @@
     "canteenInfo": "300+ Sitzplätze, täglich wechselnde Hauptmahlzeiten, inklusive vegetarischer und veganer Optionen.",
     "bistroInfo": "100-300 Sitzplätze, spezialisiert auf Snacks und kleinere Gerichte.",
     "cafeInfo": "Unter 100 Sitzplätze, fokussiert auf Getränke und Snacks.",
-    "espressoBarInfo": "Kleine gemütliche Kaffeebar, spezialisiert auf Kaffee und Snacks.",
+    "cafeBarInfo": "Kleine gemütliche Kaffeebar, spezialisiert auf Kaffee und Snacks.",
     "notYourTaste": "Nicht nach deinem Geschmack",
     "tasteProfilePlaceholderNotActive": "Dein Geschmacksprofil ist nicht aktiv",
     "tasteProfilePlaceholderActive": "Dein Geschmacksprofil ist aktiv",
@@ -57,5 +57,6 @@
     "prices": "Preise",
     "basePrice": "Basispreis",
     "simplePrice": "Einfacher Preis",
-    "pricePerUnit": "{price} je {unit}"
+    "pricePerUnit": "{price} je {unit}",
+    "yourTasteFiltersAll": "Deine Food-Preferences sind literally so main character energy rn..."
 }

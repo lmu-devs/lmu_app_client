@@ -5,7 +5,6 @@ import 'package:core/themes.dart';
 import 'package:feedback/src/util/feedback_types.dart';
 import 'package:feedback/src/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../util/send_feedback.dart';
 
@@ -30,7 +29,6 @@ class FeedbackModal extends StatelessWidget {
         children: [
           SingleChildScrollView(
             physics: const NeverScrollableScrollPhysics(),
-            controller: ModalScrollController.of(context),
             child: Padding(
               padding: const EdgeInsets.all(LmuSizes.size_16),
               child: Column(

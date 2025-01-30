@@ -21,7 +21,7 @@
   "locationServiceDialogText": "Um alle Funktionen der App nutzen zu können, aktiviere bitte deine Standortdienste. So können wir dir personalisierte und genauere Informationen bieten.",
   "ok": "OK",
   "locationPermissionDialogTitle": "Fehlende Berechtigung",
-  "locationPermissionDialogText": "Diese Funktion benötigt deinen Standort. Öffne Einstellungen, um diese Berechtigung zu erteilen.",
+  "locationPermissionDialogText": "Diese Funktion benötigt deinen Standort. Öffne Einstellungen, um die Berechtigung zu erteilen.",
   "cancel": "Abbrechen",
   "settings": "Einstellungen",
   "suggestFeature": "Feature vorschlagen",

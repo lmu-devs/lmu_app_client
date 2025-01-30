@@ -53,8 +53,7 @@ class SportsDetailsPage extends StatelessWidget {
                             course.price.studentPrice > 0 ? '${course.price.studentPrice.toInt()} €' : 'Basis Ticket',
                         mainContentAlignment: MainContentAlignment.center,
                         leadingArea: LmuStatusDot(
-                          statusColor:
-                              sport.courses.any((course) => course.isAvailable) ? StatusColor.green : StatusColor.red,
+                          statusColor: course.isAvailable ? StatusColor.green : StatusColor.red,
                         ),
                         trailingTitle: course.timeSlots.isNotEmpty
                             ? course.timeSlots.map(

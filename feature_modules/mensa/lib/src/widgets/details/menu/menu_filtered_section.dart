@@ -29,7 +29,7 @@ class MenuFilteredSection extends StatelessWidget {
         child: PlaceholderTile(
           content: [
             LmuText.body(
-              "Deine Food-Preferences sind literally so main character energy rn...",
+              context.locals.canteen.yourTasteFiltersAll,
               color: context.colors.neutralColors.textColors.mediumColors.base,
               textAlign: TextAlign.center,
             ),

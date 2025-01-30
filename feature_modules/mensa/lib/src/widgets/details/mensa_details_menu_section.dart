@@ -107,6 +107,8 @@ extension _DateTimeName on DateTime {
       localizations.wednesday,
       localizations.thursday,
       localizations.friday,
+      localizations.saturady,
+      localizations.sunday,
     ];
 
     final today = DateTime.now();

@@ -31,7 +31,6 @@ class MensaOverviewLoadingView extends StatelessWidget {
             actionText: localizations.retry,
             type: ToastType.error,
             onActionPressed: () => mensaCubit.loadMensaData(),
-            duration: const Duration(minutes: 66),
           );
         }
       },

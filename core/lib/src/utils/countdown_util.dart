@@ -1,6 +1,6 @@
 import 'package:core/localizations.dart';
 
-class CountdownUtils {
+class CountdownUtil {
   static String getRemainingTime(
     AppLocalizations appLocals,
     DateTime startDate,

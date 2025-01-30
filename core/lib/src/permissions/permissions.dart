@@ -1,1 +1,1 @@
-export 'user_position.dart';
+export 'permissions_service.dart';

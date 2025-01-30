@@ -33,6 +33,6 @@ const _$MensaTypeEnumMap = {
   MensaType.stuBistro: 'STUBISTRO',
   MensaType.stuCafe: 'STUCAFE',
   MensaType.lounge: 'STULOUNGE',
-  MensaType.espressoBar: 'ESPRESSOBAR',
+  MensaType.cafeBar: 'ESPRESSOBAR',
   MensaType.none: 'NONE',
 };

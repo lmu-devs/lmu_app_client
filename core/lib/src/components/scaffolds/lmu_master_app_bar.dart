@@ -5,6 +5,7 @@ import 'package:core/src/components/scaffolds/sliver_app_bar_delegate.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:nested_scroll_view_plus/nested_scroll_view_plus.dart';
 
 import 'leading_action.dart';
@@ -30,6 +31,7 @@ class LmuMasterAppBar extends StatefulWidget {
     this.imageUrls,
     this.customScrollController,
     this.onPopInvoked,
+    this.isBottomSheet = false,
   });
 
   final Widget body;
@@ -44,7 +46,8 @@ class LmuMasterAppBar extends StatefulWidget {
   final List<String>? imageUrls;
   final CollapsedTitleHeight collapsedTitleHeight;
   final ScrollController? customScrollController;
-  final void Function(bool)? onPopInvoked;
+  final Future<bool> Function()? onPopInvoked;
+  final bool isBottomSheet;
 
   factory LmuMasterAppBar.bottomSheet({
     Key? key,
@@ -57,7 +60,7 @@ class LmuMasterAppBar extends StatefulWidget {
     List<Widget>? trailingWidgets,
     List<String>? imageUrls,
     ScrollController? customScrollController,
-    void Function(bool)? onPopInvoked,
+    Future<bool> Function()? onPopInvoked,
   }) {
     return LmuMasterAppBar(
       key: key,
@@ -73,6 +76,7 @@ class LmuMasterAppBar extends StatefulWidget {
       imageUrls: imageUrls,
       customScrollController: customScrollController,
       onPopInvoked: onPopInvoked,
+      isBottomSheet: true,
     );
   }
 
@@ -87,7 +91,7 @@ class LmuMasterAppBar extends StatefulWidget {
     void Function()? onLeadingActionTap,
     List<String>? imageUrls,
     ScrollController? customScrollController,
-    void Function(bool)? onPopInvoked,
+    Future<bool> Function()? onPopInvoked,
   }) {
     return LmuMasterAppBar(
       key: key,
@@ -144,41 +148,45 @@ class _LmuMasterAppBarState extends State<LmuMasterAppBar> {
     final largeTitleMaxLines =
         _calculateTitleMaxLines(widget.largeTitle, largeTitleTextTheme, MediaQuery.of(context).size.width);
     final calculatedLargeTitleHeight = largeTitleMaxLines * _largeTitleLineHeight + LmuSizes.size_16;
+    if (widget.isBottomSheet) _scrollController = ModalScrollController.of(context)!;
 
-    return Material(
-      child: PopScope(
-        onPopInvoked: widget.onPopInvoked,
-        child: Scaffold(
-          backgroundColor: backgroundColor,
-          body: NestedScrollViewPlus(
-            controller: _scrollController,
-            scrollBehavior: const CupertinoScrollBehavior(),
-            headerSliverBuilder: (context, innerScrolled) => [
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: SliverAppBarDelegate(
-                  largeTitle: widget.largeTitle,
-                  largeTitleTextStyle: largeTitleTextTheme,
-                  largeTitleMaxLines: largeTitleMaxLines,
-                  largeTitleHeight: calculatedLargeTitleHeight,
-                  customLargeTitleWidget: widget.customLargeTitleWidget,
-                  collapsedTitle: widget.collapsedTitle ?? widget.largeTitle,
-                  collapsedTitleTextStyle: collapsedTitleTextStyle,
-                  collapsedTitleHeight: widget.collapsedTitleHeight == CollapsedTitleHeight.small ? 44 : 54,
-                  topPadding: topPadding,
-                  backgroundColor: backgroundColor,
-                  largeTitleTrailingWidget: widget.largeTitleTrailingWidget,
-                  largeTitleTrailingWidgetAlignment: widget.largeTitleTrailingWidgetAlignment,
-                  leadingAction: widget.leadingAction,
-                  onLeadingActionTap: widget.onLeadingActionTap,
-                  trailingWidgets: widget.trailingWidgets,
-                  imageUrls: widget.imageUrls,
-                  scrollController: _scrollController,
-                  scrollOffsetNotifier: _scrollOffsetNotifier,
+    return PrimaryScrollController(
+      controller: _scrollController,
+      child: Material(
+        child: WillPopScope(
+          onWillPop: widget.onPopInvoked,
+          child: Scaffold(
+            backgroundColor: backgroundColor,
+            body: NestedScrollViewPlus(
+              controller: _scrollController,
+              scrollBehavior: const CupertinoScrollBehavior(),
+              headerSliverBuilder: (context, innerScrolled) => [
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: SliverAppBarDelegate(
+                    largeTitle: widget.largeTitle,
+                    largeTitleTextStyle: largeTitleTextTheme,
+                    largeTitleMaxLines: largeTitleMaxLines,
+                    largeTitleHeight: calculatedLargeTitleHeight,
+                    customLargeTitleWidget: widget.customLargeTitleWidget,
+                    collapsedTitle: widget.collapsedTitle ?? widget.largeTitle,
+                    collapsedTitleTextStyle: collapsedTitleTextStyle,
+                    collapsedTitleHeight: widget.collapsedTitleHeight == CollapsedTitleHeight.small ? 44 : 54,
+                    topPadding: topPadding,
+                    backgroundColor: backgroundColor,
+                    largeTitleTrailingWidget: widget.largeTitleTrailingWidget,
+                    largeTitleTrailingWidgetAlignment: widget.largeTitleTrailingWidgetAlignment,
+                    leadingAction: widget.leadingAction,
+                    onLeadingActionTap: widget.onLeadingActionTap,
+                    trailingWidgets: widget.trailingWidgets,
+                    imageUrls: widget.imageUrls,
+                    scrollController: _scrollController,
+                    scrollOffsetNotifier: _scrollOffsetNotifier,
+                  ),
                 ),
-              ),
-            ],
-            body: widget.body,
+              ],
+              body: widget.body,
+            ),
           ),
         ),
       ),

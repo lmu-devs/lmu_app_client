@@ -37,10 +37,17 @@ class LmuTabBarItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final defaultColor = context.colors.neutralColors.textColors.mediumColors.base;
     final activeColor = context.colors.neutralColors.textColors.strongColors.base;
+
+    final textTheme = context.textTheme;
+
+    final titleWidth = calculateTextWidth(title, textTheme.bodySmall.copyWith(fontWeight: FontWeight.w600));
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
         duration: Durations.short4,
+        constraints: BoxConstraints(
+          minWidth: titleWidth + LmuSizes.size_16,
+        ),
         height: 36.0,
         padding: const EdgeInsets.all(LmuSizes.size_8),
         decoration: BoxDecoration(
@@ -49,6 +56,7 @@ class LmuTabBarItem extends StatelessWidget {
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (leadingWidget != null)
               Padding(
@@ -58,7 +66,7 @@ class LmuTabBarItem extends StatelessWidget {
             LmuText.bodySmall(
               title,
               color: isActive ? activeColor : defaultColor,
-              //weight: isActive ? FontWeight.bold : FontWeight.normal,
+              weight: isActive ? FontWeight.w600 : FontWeight.normal,
             ),
             if (trailingWidget != null)
               Padding(
@@ -69,5 +77,15 @@ class LmuTabBarItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  double calculateTextWidth(String text, TextStyle textStyle) {
+    final TextPainter textPainter = TextPainter(
+      text: TextSpan(text: text, style: textStyle),
+      maxLines: 1, // Optional: Limit the text to one line
+      textDirection: TextDirection.ltr, // Required
+    )..layout(); // Layout the text to calculate its dimensions
+
+    return textPainter.size.width; // The calculated width of the text
   }
 }

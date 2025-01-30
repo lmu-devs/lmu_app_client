@@ -47,7 +47,6 @@ class LmuBottomSheet {
           topRight: Radius.circular(LmuSizes.size_16),
         ),
       ),
-      bounce: true,
       animationCurve: LmuAnimations.slowSmooth,
       duration: const Duration(milliseconds: 500),
       closeProgressThreshold: .9,
