@@ -187,7 +187,7 @@
   "@canteenInfo": {
     "description": "Longer description of a canteen"
   },
-  "bistroInfo": "100-300 seats, specialized in snacks and smaller dishes.",
+  "bistroInfo": "100-300 seats, with a smaller selection of meals.",
   "@bistroInfo": {
     "description": "Longer description of a bistro"
   },
@@ -283,5 +283,12 @@
       }
     }
   },
-  "yourTasteFiltersAll": "Your taste is giving 'hard to get' - weird flex but okay 💅"
+  "yourTasteFiltersAll": "Your taste is giving 'hard to get' - weird flex but okay 💅",
+  "@yourTasteFiltersAll": {
+    "description": "Option if no menu is available with current taste profile"
+  },
+  "cafeBarNotice": "Selection of coffee specialties, pastries, and snacks. See menu at location.",
+  "@cafeBarNotice": {
+    "description": "Notice for the cafe bar menu"
+  }
 }

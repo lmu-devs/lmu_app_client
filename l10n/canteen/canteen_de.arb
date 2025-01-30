@@ -42,7 +42,7 @@
     "sideDish": "Beilagen",
     "dessertDish": "Nachspeisen",
     "canteenInfo": "300+ Sitzplätze, täglich wechselnde Hauptmahlzeiten, inklusive vegetarischer und veganer Optionen.",
-    "bistroInfo": "100-300 Sitzplätze, spezialisiert auf Snacks und kleinere Gerichte.",
+    "bistroInfo": "100-300 Sitzplätze, mit einer kleineren Auswahl an Gerichten.",
     "cafeInfo": "Unter 100 Sitzplätze, fokussiert auf Getränke und Snacks.",
     "cafeBarInfo": "Kleine gemütliche Kaffeebar, spezialisiert auf Kaffee und Snacks.",
     "notYourTaste": "Nicht nach deinem Geschmack",
@@ -58,5 +58,6 @@
     "basePrice": "Basispreis",
     "simplePrice": "Einfacher Preis",
     "pricePerUnit": "{price} je {unit}",
-    "yourTasteFiltersAll": "Deine Food-Preferences sind literally so main character energy rn..."
+    "yourTasteFiltersAll": "Deine Food-Preferences sind literally so main character energy rn...",
+    "cafeBarNotice": "Auswahl an Kaffeespezialitäten, Gebäck und Schmankerl für zwischendurch. Siehe Aushang vor Ort."
 }
