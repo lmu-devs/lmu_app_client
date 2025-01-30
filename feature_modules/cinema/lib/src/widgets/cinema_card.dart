@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 import '../pages/cinema_details_page.dart';
 import '../repository/api/api.dart';
-import '../repository/api/models/cinema/cinema.dart';
 import '../routes/cinema_details_data.dart';
 import '../util/cinema_type.dart';
 import '../util/screening_time.dart';
@@ -82,6 +81,6 @@ class CinemaCard extends StatelessWidget {
       return currentTime.isBefore(nextTime) ? current : next;
     });
 
-    return '${context.locals.cinema.nextMovie} • ${getScreeningTime(context: context, time: nextScreening.entryTime)}';
+    return '${context.locals.cinema.nextMovie} ${getScreeningTime(context: context, time: nextScreening.entryTime)}';
   }
 }

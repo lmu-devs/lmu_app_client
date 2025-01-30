@@ -3,7 +3,7 @@
   "@@context": "Cinema",
   
   "cinemasTitle": "Kinos",
-  "moviesTitle": "Alle Filme",
+  "upcomingTitle": "Demnächst",
   "nextMovie": "Nächster Film",
   "nextMovieEmpty": "Kein Film mehr für dieses Semester",
   "historyAction": "Vergangene anzeigen",
@@ -16,6 +16,7 @@
   "germanTranslation": "Deutsch",
   "todayScreening": "Heute",
   "tomorrowScreening": "Morgen",
+  "yesterdayScreening": "Gestern",
   "share": "Teilen",
   "entry": "Einlass",
   "start": "Start",

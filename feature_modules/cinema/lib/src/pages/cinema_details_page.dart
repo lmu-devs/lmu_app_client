@@ -1,6 +1,5 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:core/widgets.dart';
@@ -11,7 +10,7 @@ import 'package:flutter_lucide/flutter_lucide.dart';
 import '../repository/api/api.dart';
 import '../routes/cinema_details_data.dart';
 import '../util/cinema_type.dart';
-import '../widgets/screening_card.dart';
+import '../widgets/screenings_list.dart';
 
 class CinemaDetailsPage extends StatelessWidget {
   const CinemaDetailsPage({
@@ -110,14 +109,11 @@ class CinemaDetailsPage extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: LmuSizes.size_32),
-                  LmuTileHeadline.base(title: context.locals.cinema.moviesTitle),
-                  ...List.generate(screenings.length, (index) {
-                    final screening = screenings[index];
-                    return ScreeningCard(
-                      screening: screening,
-                      isLastItem: index == screenings.length - 1,
-                    );
-                  }),
+                  ScreeningsList(
+                    screenings: screenings,
+                    hasFilterRow: false,
+                    type: cinema.type,
+                  ),
                   const SizedBox(height: LmuSizes.size_96),
                 ],
               ),

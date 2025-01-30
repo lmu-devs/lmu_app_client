@@ -22,7 +22,11 @@ class TrailerCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GestureDetector(
-            onTap: () => LmuUrlLauncher.launchWebsite(url: trailer.url, context: context),
+            onTap: () => LmuUrlLauncher.launchWebsite(
+              url: trailer.url,
+              context: context,
+              mode: LmuUrlLauncherMode.externalApplication,
+            ),
             child: Container(
               margin: const EdgeInsets.only(right: LmuSizes.size_8),
               decoration: const BoxDecoration(
@@ -31,7 +35,7 @@ class TrailerCard extends StatelessWidget {
                 ),
               ),
               child: SizedBox(
-                height: 125,
+                height: 120,
                 width: 222,
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(LmuRadiusSizes.medium)),
@@ -44,7 +48,7 @@ class TrailerCard extends StatelessWidget {
                       if (snapshot.connectionState == ConnectionState.done) {
                         return Image.network(
                           trailer.thumbnail.url,
-                          height: 125,
+                          height: 120,
                           width: 222,
                           fit: BoxFit.cover,
                           semanticLabel: trailer.thumbnail.name,
@@ -52,7 +56,7 @@ class TrailerCard extends StatelessWidget {
                       } else {
                         return LmuSkeleton(
                           child: Container(
-                            height: 125,
+                            height: 120,
                             width: 222,
                             color: Colors.white,
                           ),

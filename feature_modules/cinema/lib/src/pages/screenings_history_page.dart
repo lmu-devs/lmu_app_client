@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
 import '../repository/api/api.dart';
+import '../util/cinema_type.dart';
 import '../util/screening_sorting.dart';
 import '../widgets/screening_card.dart';
 
@@ -13,9 +14,11 @@ class ScreeningsHistoryPage extends StatefulWidget {
   const ScreeningsHistoryPage({
     super.key,
     required this.screenings,
+    this.type,
   });
 
   final List<ScreeningModel> screenings;
+  final CinemaType? type;
 
   @override
   State<ScreeningsHistoryPage> createState() => _ScreeningsHistoryPageState();
@@ -48,6 +51,18 @@ class _ScreeningsHistoryPageState extends State<ScreeningsHistoryPage> {
     return LmuMasterAppBar(
       largeTitle: localizations.pastMoviesTitle,
       leadingAction: LeadingAction.back,
+      largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
+      largeTitleTrailingWidget: widget.type != null ? Container(
+        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_4),
+        decoration: BoxDecoration(
+          color: widget.type!.getColor(context).withOpacity(0.1),
+          borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
+        ),
+        child: LmuText.bodySmall(
+          widget.type!.getValue(),
+          color: widget.type!.getColor(context),
+        ),
+      ) : null,
       body: widget.screenings.isNotEmpty
           ? Padding(
               padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),

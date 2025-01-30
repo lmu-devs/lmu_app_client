@@ -24,7 +24,7 @@ class CinemaLoadingView extends StatelessWidget {
             }),
             const SizedBox(height: LmuSizes.size_32),
             LmuTileHeadline.base(
-              title: context.locals.cinema.moviesTitle,
+              title: context.locals.cinema.upcomingTitle,
               bottomWidget: Align(
                 alignment: Alignment.centerLeft,
                 child: Wrap(

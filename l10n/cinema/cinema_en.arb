@@ -7,9 +7,9 @@
   "@cinemasTitle": {
     "description": "Cinemas section title"
   },
-  "moviesTitle": "All Movies",
-  "@moviesTitle": {
-    "description": "Movies section title"
+  "upcomingTitle": "Upcoming",
+  "@upcomingTitle": {
+    "description": "Upcoming"
   },
   "nextMovie": "Next movie",
   "@nextMovie": {
@@ -58,6 +58,10 @@
   "tomorrowScreening": "Tomorrow",
   "@tomorrowScreening": {
     "description": "If screening is tomorrow"
+  },
+  "yesterdayScreening": "Yesterday",
+  "@yesterdayScreening": {
+    "description": "If screening was yesterday"
   },
   "share": "Share",
   "@share": {
