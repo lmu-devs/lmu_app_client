@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
+import 'nav_bar_color_setter.dart';
 import 'routing/shell_route_data.dart';
 
 class LmuApp extends StatelessWidget {
@@ -28,7 +29,17 @@ class LmuApp extends StatelessWidget {
           theme: AppTheme.light,
           darkTheme: AppTheme.dark,
           themeMode: themeProvider.themeMode,
-          builder: FToastBuilder(),
+          builder: (context, child) {
+            return FToastBuilder()(
+              context,
+              Stack(
+                children: [
+                  child ?? const SizedBox.shrink(),
+                  const NavigationBarColorSetter(),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

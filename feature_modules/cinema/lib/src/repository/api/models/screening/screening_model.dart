@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'university_model.dart';
-import '../cinema/cinema_location_model.dart';
 import '../cinema/cinema_model.dart';
 import '../movie/movie_model.dart';
 
@@ -21,7 +20,6 @@ class ScreeningModel extends Equatable {
     this.externalLink,
     required this.note,
     required this.movie,
-    required this.location,
     required this.university,
     required this.cinema,
   });
@@ -41,7 +39,6 @@ class ScreeningModel extends Equatable {
   final String? externalLink;
   final String? note;
   final MovieModel movie;
-  final CinemaLocationModel location;
   final UniversityModel university;
   final CinemaModel cinema;
 
@@ -57,7 +54,6 @@ class ScreeningModel extends Equatable {
         externalLink,
         note,
         movie,
-        location,
         university,
         cinema,
       ];

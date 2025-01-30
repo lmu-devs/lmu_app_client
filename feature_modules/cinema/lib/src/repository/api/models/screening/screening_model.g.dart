@@ -18,8 +18,6 @@ ScreeningModel _$ScreeningModelFromJson(Map<String, dynamic> json) =>
       externalLink: json['external_link'] as String?,
       note: json['note'] as String?,
       movie: MovieModel.fromJson(json['movie'] as Map<String, dynamic>),
-      location: CinemaLocationModel.fromJson(
-          json['location'] as Map<String, dynamic>),
       university:
           UniversityModel.fromJson(json['university'] as Map<String, dynamic>),
       cinema: CinemaModel.fromJson(json['cinema'] as Map<String, dynamic>),
@@ -37,7 +35,6 @@ Map<String, dynamic> _$ScreeningModelToJson(ScreeningModel instance) =>
       'external_link': instance.externalLink,
       'note': instance.note,
       'movie': instance.movie,
-      'location': instance.location,
       'university': instance.university,
       'cinema': instance.cinema,
     };

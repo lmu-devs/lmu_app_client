@@ -152,7 +152,7 @@ class ScreeningDetailsPage extends StatelessWidget {
                     onTap: () => print("Tapped"),
                   ),
                   LmuListItem.base(
-                    subtitle: screening.location.address,
+                    subtitle: screening.cinema.cinemaLocation.address,
                     subtitleTextColor: context.colors.neutralColors.textColors.mediumColors.base,
                     hasHorizontalPadding: false,
                     trailingArea: Icon(
@@ -160,19 +160,14 @@ class ScreeningDetailsPage extends StatelessWidget {
                       size: LmuIconSizes.mediumSmall,
                       color: context.colors.neutralColors.textColors.weakColors.base,
                     ),
-                    onTap: () => screening.location.latitude != null && screening.location.longitude != null
-                        ? LmuBottomSheet.show(
-                            context,
-                            content: NavigationSheet(
-                              latitude: screening.location.latitude!,
-                              longitude: screening.location.longitude!,
-                              address: screening.location.address,
-                            ),
-                          )
-                        : LmuToast.show(
-                            context: context,
-                            message: 'No Location for ${screening.cinema.title} Available',
-                          ),
+                    onTap: () => LmuBottomSheet.show(
+                      context,
+                      content: NavigationSheet(
+                        latitude: screening.cinema.cinemaLocation.latitude,
+                        longitude: screening.cinema.cinemaLocation.longitude,
+                        address: screening.cinema.cinemaLocation.address,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: LmuSizes.size_24),
                   if (screening.movie.overview != null) ...[

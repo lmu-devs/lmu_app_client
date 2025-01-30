@@ -28,6 +28,7 @@ class CinemaDetailsPage extends StatelessWidget {
     return LmuMasterAppBar(
       largeTitle: cinema.title,
       leadingAction: LeadingAction.back,
+      imageUrls: cinema.images != null ? cinema.images!.map((image) => image.url).toList() : [],
       largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
       largeTitleTrailingWidget: Container(
         padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_4),
@@ -80,21 +81,14 @@ class CinemaDetailsPage extends StatelessWidget {
                     subtitle: cinema.cinemaLocation.address,
                     hasHorizontalPadding: false,
                     hasDivider: true,
-                    onTap: () {
-                      cinema.cinemaLocation.latitude != null && cinema.cinemaLocation.longitude != null
-                          ? LmuBottomSheet.show(
-                              context,
-                              content: NavigationSheet(
-                                latitude: cinema.cinemaLocation.latitude!,
-                                longitude: cinema.cinemaLocation.longitude!,
-                                address: cinema.cinemaLocation.address,
-                              ),
-                            )
-                          : LmuToast.show(
-                              context: context,
-                              message: 'No Location for ${cinema.title} Available',
-                            );
-                    },
+                    onTap: () => LmuBottomSheet.show(
+                      context,
+                      content: NavigationSheet(
+                        latitude: cinema.cinemaLocation.latitude,
+                        longitude: cinema.cinemaLocation.longitude,
+                        address: cinema.cinemaLocation.address,
+                      ),
+                    ),
                   ),
                   ...List.generate(
                     cinema.descriptions.length,

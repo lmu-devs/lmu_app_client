@@ -9,8 +9,8 @@ part of 'cinema_location_model.dart';
 CinemaLocationModel _$CinemaLocationModelFromJson(Map<String, dynamic> json) =>
     CinemaLocationModel(
       address: json['address'] as String,
-      latitude: (json['latitude'] as num?)?.toDouble(),
-      longitude: (json['longitude'] as num?)?.toDouble(),
+      latitude: (json['latitude'] as num).toDouble(),
+      longitude: (json['longitude'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$CinemaLocationModelToJson(

@@ -1,3 +1,4 @@
+import 'package:core/api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -12,6 +13,7 @@ class CinemaModel extends Equatable {
   const CinemaModel({
     required this.id,
     required this.title,
+    required this.images,
     required this.descriptions,
     required this.externalLink,
     required this.instagramLink,
@@ -20,6 +22,7 @@ class CinemaModel extends Equatable {
 
   final String id;
   final String title;
+  final List<ImageModel>? images;
   final List<DescriptionModel> descriptions;
   @JsonKey(name: 'external_link')
   final String externalLink;
@@ -36,6 +39,7 @@ class CinemaModel extends Equatable {
     id,
     type,
     title,
+    images ?? [],
     descriptions,
     externalLink,
     instagramLink,
