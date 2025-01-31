@@ -4,68 +4,89 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+enum ActionType {
+  base,
+  destructive,
+  success,
+}
+
 class LmuInTextVisual extends StatelessWidget {
   final String? title;
   final IconData? icon;
   final bool hasIconBox;
   final bool destructive;
-  final Color? color;
+  final ActionType actionType;
+  final Color? textColor;
+  final Color? backgroundColor;
+
   const LmuInTextVisual._({
     Key? key,
     this.title,
     this.icon,
     this.hasIconBox = false,
     this.destructive = false,
-    this.color,
+    this.textColor,
+    this.backgroundColor,
+    required this.actionType,
   }) : super(key: key);
 
   factory LmuInTextVisual.text({
     Key? key,
     required String title,
     bool destructive = false,
-    Color? color,
+    ActionType actionType = ActionType.base,
+    Color? textColor,
+    Color? backgroundColor,
   }) =>
       LmuInTextVisual._(
         key: key,
         title: title,
         destructive: destructive,
-        color: color,
+        actionType: actionType,
+        textColor: textColor,
+        backgroundColor: backgroundColor,
       );
 
   factory LmuInTextVisual.iconBox({
     Key? key,
     required IconData icon,
     bool destructive = false,
+    ActionType actionType = ActionType.base,
+    Color? textColor,
+    Color? backgroundColor,
   }) =>
       LmuInTextVisual._(
         key: key,
         icon: icon,
         hasIconBox: true,
+        actionType: actionType,
         destructive: destructive,
+        textColor: textColor,
+        backgroundColor: backgroundColor,
       );
 
   factory LmuInTextVisual.icon({
     Key? key,
     required IconData icon,
     bool destructive = false,
+    ActionType actionType = ActionType.base,
+    Color? textColor,
+    Color? backgroundColor,
   }) =>
       LmuInTextVisual._(
         key: key,
         icon: icon,
         destructive: destructive,
+        actionType: actionType,
+        textColor: textColor,
+        backgroundColor: backgroundColor,
       );
 
   @override
   Widget build(BuildContext context) {
     final hasIcon = icon != null;
 
-    final backgroundColor = destructive
-        ? context.colors.dangerColors.backgroundColors.weakColors.base
-        : color?.withOpacity(0.1) ?? context.colors.neutralColors.backgroundColors.mediumColors.base;
-
-    final textColor = destructive
-        ? context.colors.dangerColors.textColors.strongColors.base
-        : color ?? context.colors.neutralColors.textColors.mediumColors.base;
+    final colors = context.colors;
 
     return Container(
       height: LmuSizes.size_20,
@@ -73,14 +94,14 @@ class LmuInTextVisual extends StatelessWidget {
       decoration: hasIconBox && hasIcon
           ? null
           : BoxDecoration(
-              color: backgroundColor,
+              color: backgroundColor ?? actionType.backgroundColor(colors),
               borderRadius: BorderRadius.circular(LmuSizes.size_4),
             ),
       padding: EdgeInsets.symmetric(
         horizontal: hasIcon ? LmuSizes.none : LmuSizes.size_4,
         vertical: hasIcon ? LmuSizes.none : LmuSizes.size_2,
       ),
-      child: _buildChild(textColor),
+      child: _buildChild(textColor ?? actionType.textColor(colors)),
     );
   }
 
@@ -101,5 +122,23 @@ class LmuInTextVisual extends StatelessWidget {
     } else {
       return const SizedBox.shrink();
     }
+  }
+}
+
+extension _ActionTypeColorExtension on ActionType {
+  Color backgroundColor(LmuColors colors) {
+    return switch (this) {
+      ActionType.base => colors.neutralColors.backgroundColors.mediumColors.base,
+      ActionType.destructive => colors.dangerColors.backgroundColors.weakColors.base,
+      ActionType.success => colors.brandColors.backgroundColors.mediumColors.base,
+    };
+  }
+
+  Color textColor(LmuColors colors) {
+    return switch (this) {
+      ActionType.base => colors.neutralColors.textColors.mediumColors.base,
+      ActionType.destructive => colors.dangerColors.textColors.strongColors.base,
+      ActionType.success => colors.successColors.textColors.strongColors.base,
+    };
   }
 }

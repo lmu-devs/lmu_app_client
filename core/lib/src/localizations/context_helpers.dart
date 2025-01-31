@@ -1,14 +1,15 @@
 import 'package:core/src/localizations/generated/app_localizations.dart';
 import 'package:core/src/localizations/generated/explore_localizations.dart';
+import 'package:core/src/localizations/generated/sports_localizations.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'generated/canteen_localizations.dart';
 import 'generated/cinema_localizations.dart';
-import 'generated/settings_localizations.dart';
 import 'generated/feedback_localizations.dart';
-import 'generated/wishlist_localizations.dart';
 import 'generated/home_localizations.dart';
+import 'generated/settings_localizations.dart';
+import 'generated/wishlist_localizations.dart';
 
 extension LocalizationExtension on BuildContext {
   LmuLocalizations get locals => LmuLocalizations(this);
@@ -27,6 +28,7 @@ class LmuLocalizations {
   FeedbackLocalizations get feedback => FeedbackLocalizations.of(_context)!;
   HomeLocalizations get home => HomeLocalizations.of(_context)!;
   CinemaLocalizations get cinema => CinemaLocalizations.of(_context)!;
+  SportsLocatizations get sports => SportsLocatizations.of(_context)!;
   // Add other localizations
 
   /// List of all supported localizations delegates
@@ -39,6 +41,7 @@ class LmuLocalizations {
         FeedbackLocalizations.delegate,
         HomeLocalizations.delegate,
         CinemaLocalizations.delegate,
+        SportsLocatizations.delegate,
         // Add other localizations delegates
 
         GlobalMaterialLocalizations.delegate,

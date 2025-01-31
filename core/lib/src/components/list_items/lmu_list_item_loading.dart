@@ -55,6 +55,21 @@ class LmuListItemLoading extends StatelessWidget {
 
 extension _ActionLoading on LmuListItemAction {
   Widget get loadingWidget {
+    if (LmuListItemAction.chevron == this) {
+      return SizedBox(
+        width: LmuSizes.size_16,
+        height: LmuSizes.size_16,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.circular(
+              LmuSizes.size_32 / 2,
+            ),
+          ),
+        ),
+      );
+    }
+
     if (LmuListItemAction.chevron == this || LmuListItemAction.dropdown == this) {
       return Container(
         width: LmuSizes.size_16,

@@ -33,6 +33,22 @@ packages:
       url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.11.0"
+  barcode:
+    dependency: "direct main"
+    description:
+      name: barcode
+      sha256: "7b6729c37e3b7f34233e2318d866e8c48ddb46c1f7ad01ff7bb2a8de1da2b9f4"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
+    source: hosted
+    version: "2.2.9"
+  barcode_widget:
+    dependency: "direct main"
+    description:
+      name: barcode_widget
+      sha256: "6f2c5b08659b1a5f4d88d183e6007133ea2f96e50e7b8bb628f03266c3931427"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
+    source: hosted
+    version: "2.0.4"
   bloc:
     dependency: transitive
     description:
@@ -178,7 +194,7 @@ packages:
     source: hosted
     version: "4.10.0"
   collection:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: collection
       sha256: ee67cb0715911d28db6bf4af1026078bd6f0128b07a5f66fb2ed94ec6783c09a
@@ -224,6 +240,14 @@ packages:
       url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "2.3.6"
+  diacritic:
+    dependency: "direct main"
+    description:
+      name: diacritic
+      sha256: "12981945ec38931748836cd76f2b38773118d0baef3c68404bdfde9566147876"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
+    source: hosted
+    version: "0.1.6"
   equatable:
     dependency: "direct main"
     description:
@@ -413,7 +437,7 @@ packages:
     source: hosted
     version: "4.0.2"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf
@@ -748,6 +772,14 @@ packages:
       url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
     source: hosted
     version: "1.4.0"
+  qr:
+    dependency: transitive
+    description:
+      name: qr
+      sha256: "5a1d2586170e172b8a8c8470bbbffd5eb0cd38a66c0d77155ea138d3af3a4445"
+      url: "https://packages.orbit.bmwgroup.net/artifactory/api/pub/mobile20-pub-virtual/"
+    source: hosted
+    version: "3.0.2"
   rxdart:
     dependency: transitive
     description:

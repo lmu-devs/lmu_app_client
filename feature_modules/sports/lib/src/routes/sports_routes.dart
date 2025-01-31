@@ -12,6 +12,12 @@ part 'sports_routes.g.dart';
     TypedGoRoute<SportsDetailsRoute>(
       path: 'details',
     ),
+    TypedGoRoute<SportsInfoRoute>(
+      path: 'info',
+    ),
+    TypedGoRoute<SportsTicketRoute>(
+      path: 'tickets',
+    ),
   ],
 )
 class SportsMainRoute extends GoRouteData {
@@ -28,4 +34,18 @@ class SportsDetailsRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => SportsDetailsPage(sport: $extra);
+}
+
+class SportsInfoRoute extends GoRouteData {
+  const SportsInfoRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const SportsInfoPage();
+}
+
+class SportsTicketRoute extends GoRouteData {
+  const SportsTicketRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const SportsTicketsPage();
 }
