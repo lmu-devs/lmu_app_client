@@ -6,6 +6,7 @@ import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/cinema.dart';
 import 'package:shared_api/settings.dart';
+import 'package:shared_api/sports.dart';
 
 import 'for_you_page.dart';
 
@@ -19,7 +20,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late final ValueNotifier<int> _activeTabIndexNotifier;
   late final PageController _pageController;
-  final _tabs = ["For You", "News", "Movies"];
+  final _tabs = ["For You", "Sport", "Movies"];
 
   @override
   void initState() {
@@ -57,7 +58,7 @@ class _HomePageState extends State<HomePage> {
             onPageChanged: (index) => _activeTabIndexNotifier.value = index,
             children: [
               const ForYouPage(),
-              const _PlaceholderPage(),
+              GetIt.I.get<SportsService>().sportsPage,
               GetIt.I.get<CinemaService>().cinemaPage,
             ],
           ),

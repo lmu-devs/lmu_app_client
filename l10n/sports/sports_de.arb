@@ -1,0 +1,18 @@
+{
+  "@@locale": "de",
+  "@@context": "Sports",
+  "sportsTitle": "Sport",
+  "sportOffers": "Sportangebote",
+  "sportsInfoEntry": "Wie funktioniert ZHS",
+  "sportTypes": "Sportarten",
+  "course": "Kurs",
+  "courses": "Kurse",
+  "bookCourse": "Kurs buchen",
+  "ongoing": "Laufend",
+  "upcoming": "Demnächst",
+  "past": "Abgelaufen",
+  "available": "Verfügbar",
+  "fullyBooked": "Ausgebucht",
+  "withTrainer": "bei",
+  "yourTickets": "Deine Tickets"
+}

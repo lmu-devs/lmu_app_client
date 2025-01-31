@@ -18,6 +18,14 @@ RouteBase get $sportsMainRoute => GoRouteData.$route(
           path: 'details',
           factory: $SportsDetailsRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: 'info',
+          factory: $SportsInfoRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'tickets',
+          factory: $SportsTicketRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -53,4 +61,36 @@ extension $SportsDetailsRouteExtension on SportsDetailsRoute {
   void pushReplacement(BuildContext context) => context.pushReplacement(location, extra: $extra);
 
   void replace(BuildContext context) => context.replace(location, extra: $extra);
+}
+
+extension $SportsInfoRouteExtension on SportsInfoRoute {
+  static SportsInfoRoute _fromState(GoRouterState state) => const SportsInfoRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/sports/info',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $SportsTicketRouteExtension on SportsTicketRoute {
+  static SportsTicketRoute _fromState(GoRouterState state) => const SportsTicketRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/sports/tickets',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
 }

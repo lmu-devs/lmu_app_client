@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +11,11 @@ class SportsEntryPointCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sportsLocals = context.locals.sports;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
       child: GestureDetector(
+        behavior: HitTestBehavior.translucent,
         onTap: () => const SportsMainRoute().go(context),
         child: Stack(
           alignment: Alignment.bottomCenter,
@@ -29,17 +32,19 @@ class SportsEntryPointCard extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(LmuSizes.size_12),
-                  bottomRight: Radius.circular(LmuSizes.size_12),
+            IgnorePointer(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(LmuSizes.size_12),
+                    bottomRight: Radius.circular(LmuSizes.size_12),
+                  ),
+                  color: context.colors.neutralColors.backgroundColors.pure.withOpacity(0.8),
                 ),
-                color: context.colors.neutralColors.backgroundColors.pure.withOpacity(0.8),
-              ),
-              child: LmuListItem.base(
-                title: 'Sport',
-                subtitle: '123 Sportangebote',
+                child: LmuListItem.base(
+                  title: sportsLocals.sportsTitle,
+                  subtitle: '523 ${sportsLocals.sportOffers}',
+                ),
               ),
             ),
           ],
