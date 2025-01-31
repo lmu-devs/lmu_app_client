@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class LmuTileHeadline extends StatelessWidget {
   final String title;
+  final String? trailingInfo;
   final String? actionTitle;
   final void Function()? onActionTap;
   final Widget? bottomWidget;
@@ -12,6 +13,7 @@ class LmuTileHeadline extends StatelessWidget {
   const LmuTileHeadline._internal({
     super.key,
     required this.title,
+    this.trailingInfo,
     this.actionTitle,
     this.onActionTap,
     this.bottomWidget,
@@ -20,11 +22,13 @@ class LmuTileHeadline extends StatelessWidget {
   factory LmuTileHeadline.base({
     Key? key,
     required String title,
+    String? trailingInfo,
     Widget? bottomWidget,
   }) =>
       LmuTileHeadline._internal(
         key: key,
         title: title,
+        trailingInfo: trailingInfo,
         bottomWidget: bottomWidget,
       );
 
@@ -55,6 +59,11 @@ class LmuTileHeadline extends StatelessWidget {
               weight: FontWeight.w600,
               color: context.colors.neutralColors.textColors.mediumColors.base,
             ),
+            if (trailingInfo != null)
+              LmuText.bodySmall(
+                trailingInfo,
+                color: context.colors.neutralColors.textColors.mediumColors.base,
+              ),
             if (actionTitle != null)
               LmuButton(
                 title: actionTitle!,

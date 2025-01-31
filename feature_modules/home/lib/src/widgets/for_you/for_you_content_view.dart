@@ -51,7 +51,7 @@ class ForYouContentView extends StatelessWidget {
           ),
         ),
         const SizedBox(height: LmuSizes.size_32),
-        Padding(
+        /**Padding(
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -63,7 +63,7 @@ class ForYouContentView extends StatelessWidget {
                   print("Alle anzeigen");
                 },
               ),
-              SizedBox(
+             SizedBox(
                 height: 220,
                 child: ListView.separated(
                   separatorBuilder: (context, index) => const SizedBox(width: LmuSizes.size_8),
@@ -78,7 +78,7 @@ class ForYouContentView extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: LmuSizes.size_32),
+        const SizedBox(height: LmuSizes.size_32),**/
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
           child: LmuTileHeadline.base(title: "Vorteile und Angebote"),
@@ -86,48 +86,6 @@ class ForYouContentView extends StatelessWidget {
         GetIt.I.get<SportsService>().entryPoint,
         const SizedBox(height: LmuSizes.size_96),
       ],
-    );
-  }
-}
-
-class _MoveTeaserCard extends StatelessWidget {
-  const _MoveTeaserCard({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 220,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 115,
-            height: 164,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(LmuSizes.size_8),
-              image: const DecorationImage(
-                image: NetworkImage(
-                    "https://images-cdn.ubuy.co.in/63ef0a397f1d781bea0a2464-star-wars-rogue-one-movie-poster.jpg"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          const SizedBox(height: LmuSizes.size_8),
-          Row(
-            children: [
-              LmuInTextVisual.text(title: "LMU"),
-              const SizedBox(width: LmuSizes.size_4),
-              LmuInTextVisual.text(title: "3,50 €"),
-              const SizedBox(width: LmuSizes.size_4),
-              LmuInTextVisual.text(title: "7,7"),
-            ],
-          ),
-          const SizedBox(height: LmuSizes.size_8),
-          LmuText.bodySmall("Heute"),
-        ],
-      ),
     );
   }
 }

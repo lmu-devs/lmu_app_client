@@ -163,10 +163,18 @@ class ScreeningDetailsPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: LmuSizes.size_24),
+                  if (screening.movie.tagline != null && screening.movie.tagline!.isNotEmpty) ...[
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: LmuText(screening.movie.tagline!, weight: FontWeight.w600),
+                    ),
+                    SizedBox(height: screening.movie.overview != null ? LmuSizes.size_12 : LmuSizes.size_24),
+                  ],
                   if (screening.movie.overview != null) ...[
                     ExpandableText(
                       text: screening.movie.overview!,
                       maxLines: 8,
+                      amountOfHorizontalPadding: LmuSizes.size_32,
                     ),
                     const SizedBox(height: LmuSizes.size_24),
                   ],
@@ -206,23 +214,20 @@ class ScreeningDetailsPage extends StatelessWidget {
                   LmuContentTile(
                     content: [
                       LmuListItem.base(
-                        title: context.locals.cinema.entry,
-                        titleColor: context.colors.neutralColors.textColors.mediumColors.base,
+                        subtitle: context.locals.cinema.entry,
                         trailingTitle: DateFormat('HH:mm').format(DateTime.parse(screening.entryTime)),
                       ),
                       screening.endTime != null
                           ? LmuListItem.base(
-                              title:
+                              subtitle:
                                   '${context.locals.cinema.movie} (${DateTime.parse(screening.endTime!).difference(DateTime.parse(screening.startTime)).inHours}:${(DateTime.parse(screening.endTime!).difference(DateTime.parse(screening.startTime)).inMinutes % 60).toString().padLeft(2, '0')}h)',
-                              titleColor: context.colors.neutralColors.textColors.mediumColors.base,
                               trailingTitle:
                                   '${DateFormat('HH:mm').format(DateTime.parse(screening.startTime))} - ${DateFormat('HH:mm').format(
                                 DateTime.parse(screening.endTime!),
                               )}',
                             )
                           : LmuListItem.base(
-                              title: context.locals.cinema.start,
-                              titleColor: context.colors.neutralColors.textColors.mediumColors.base,
+                              subtitle: context.locals.cinema.start,
                               trailingTitle: DateFormat('HH:mm').format(DateTime.parse(screening.startTime)),
                             ),
                     ],

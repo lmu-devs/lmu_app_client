@@ -22,6 +22,7 @@ class HomeLinksView extends StatelessWidget {
       'Raumfinder' => LucideIcons.map_pin,
       'Immatrikulation' => LucideIcons.file_check,
       'Benutzerkonto' => LucideIcons.user,
+      'LSF' => LucideIcons.graduation_cap,
       _ => LucideIcons.link,
     };
   }
