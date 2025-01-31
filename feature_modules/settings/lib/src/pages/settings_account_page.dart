@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/user.dart';
 
-import '../widgets/account_deleted_bottom_sheet.dart';
-
 class SettingsAccountPage extends StatelessWidget {
   const SettingsAccountPage({super.key});
 
@@ -111,50 +109,87 @@ class _DeleteDataBottomSheetState extends State<DeleteDataBottomSheet> {
   bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
-    final localization = context.locals.settings;
+    final settingsLocals = context.locals.settings;
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const SizedBox(height: LmuSizes.size_16),
         LmuText.h3(
-          localization.deleteDataTitleFinal,
+          settingsLocals.deleteDataTitleFinal,
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: LmuSizes.size_20),
         LmuText.body(
-          localization.deleteDataDescriptionFinal,
+          settingsLocals.deleteDataDescriptionFinal,
           color: context.colors.neutralColors.textColors.mediumColors.base,
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: LmuSizes.size_32),
         LmuButton(
-          title: localization.deleteDataButtonFinal,
+          title: settingsLocals.deleteDataButtonFinal,
           size: ButtonSize.large,
           emphasis: ButtonEmphasis.primary,
           action: ButtonAction.destructive,
           state: _isLoading ? ButtonState.loading : ButtonState.enabled,
           showFullWidth: true,
           onTap: () async {
-            setState(() {
-              _isLoading = true;
-            });
-            await GetIt.I.get<UserService>().deleteUserApiKey().then((success) {
-              setState(() {
-                _isLoading = false;
-              });
-              if (success) {
-                LmuBottomSheet.showExtended(
-                  context,
-                  content: const AccountDeletedBottomSheet(),
-                );
-              } else {
-                //TODO: define error handling
-              }
-            });
+            await _onDeleteTap(context);
           },
         ),
       ],
+    );
+  }
+
+  Future<void> _onDeleteTap(BuildContext context) async {
+    final appLocals = context.locals.app;
+    final settingsLocals = context.locals.settings;
+    setState(() {
+      _isLoading = true;
+    });
+    await GetIt.I.get<UserService>().deleteUserApiKey().then(
+      (success) {
+        setState(() {
+          _isLoading = false;
+        });
+        if (success) {
+          Navigator.of(context).pop();
+          LmuDialog.show(
+            context: context,
+            title: settingsLocals.accountDeletedTitle,
+            description: settingsLocals.accountDeletionSuccess,
+            buttonActions: [
+              LmuDialogAction(
+                title: appLocals.ok,
+                onPressed: (dialogContext) => Navigator.of(dialogContext).pop(),
+              ),
+            ],
+          );
+        } else {
+          LmuDialog.show(
+            context: context,
+            title: appLocals.somethingWentWrong,
+            description: settingsLocals.accountDeletionFailed,
+            buttonActions: [
+              LmuDialogAction(
+                title: appLocals.cancel,
+                isSecondary: true,
+                onPressed: (dialogContext) {
+                  Navigator.of(dialogContext).pop();
+                  Navigator.of(context).pop();
+                },
+              ),
+              LmuDialogAction(
+                title: appLocals.tryAgain,
+                onPressed: (dialogContext) {
+                  Navigator.of(dialogContext).pop();
+                  _onDeleteTap(context);
+                },
+              ),
+            ],
+          );
+        }
+      },
     );
   }
 }
