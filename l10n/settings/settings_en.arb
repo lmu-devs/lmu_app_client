@@ -140,5 +140,13 @@
   "english": "English",
   "@english": {
     "description": "English language"
+  },
+  "accountDeletionSuccess": "Your account and all associated data has been deleted.",
+  "@accountDeletionSuccess": {
+    "description": "Account deletion success message"
+  },
+  "accountDeletionFailed": "An error occurred while deleting your account. Please try again.",
+  "@accountDeletionFailed": {
+    "description": "Account deletion failure message"
   }
 }

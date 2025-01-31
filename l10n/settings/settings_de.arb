@@ -35,5 +35,7 @@
   "deviceId": "Geräte-ID",
   "language": "Sprache",
   "german": "Deutsch",
-  "english": "Englisch"
+  "english": "Englisch",
+  "accountDeletionSuccess": "Dein Account und alle zugehörigen Daten wurden erfolgreich gelöscht.",
+  "accountDeletionFailed": "Beim Löschen deines Accounts ist ein Fehler aufgetreten. Bitte versuche es erneut."
 }
