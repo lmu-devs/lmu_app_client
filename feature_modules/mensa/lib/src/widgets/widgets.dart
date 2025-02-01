@@ -8,5 +8,4 @@ export 'overview/loading/mensa_overview_tile_loading.dart';
 export 'overview/mensa_overview_all_section.dart';
 export 'overview/mensa_overview_button_section.dart';
 export 'overview/mensa_overview_info_section.dart';
-export 'overview/mensa_overview_placeholder_tile.dart';
 export 'overview/mensa_overview_tile.dart';

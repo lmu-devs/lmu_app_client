@@ -14,9 +14,11 @@ class MensaDetailsMenuSection extends StatefulWidget {
   const MensaDetailsMenuSection({
     super.key,
     required this.canteenId,
+    required this.mensaType,
   });
 
   final String canteenId;
+  final mensaType;
 
   @override
   State<MensaDetailsMenuSection> createState() => _MensaDetailsMenuSectionState();
@@ -89,6 +91,7 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
               itemBuilder: (_, index) {
                 return MenuContentView(
                   mensaMenuModel: menuModels[index],
+                  mensaType: widget.mensaType,
                 );
               },
             ),
