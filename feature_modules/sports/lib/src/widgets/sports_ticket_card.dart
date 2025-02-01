@@ -163,6 +163,7 @@ class SportsTicketCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(LmuSizes.size_16),
             child: BarcodeWidget(
+              color: colors.neutralColors.textColors.strongColors.base,
               height: LmuSizes.size_72,
               barcode: Barcode.code128(),
               data: data,

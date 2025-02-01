@@ -8,6 +8,7 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../extensions/dish_asset_mapper_extension.dart';
 import '../../../pages/dish_details_page.dart';
 import '../../../repository/api/models/menu/menu_item_model.dart';
 import '../../../services/mensa_user_preferences_service.dart';
@@ -53,15 +54,15 @@ class MenuItemTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: LmuSizes.size_6),
+                      padding: const EdgeInsets.only(top: LmuSizes.size_4),
                       child: Container(
-                        width: 36,
-                        height: 36,
+                        width: LmuSizes.size_20,
+                        height: LmuSizes.size_20,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(LmuSizes.size_6),
                           image: DecorationImage(
                             image: AssetImage(
-                              getAssetPathForDishType(menuItemModel.dishType),
+                              menuItemModel.getCategoryIcon(),
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -92,7 +93,7 @@ class MenuItemTile extends StatelessWidget {
                                   (index, name) {
                                     return LmuInTextVisual.text(
                                       title: name,
-                                      destructive: true,
+                                      actionType: ActionType.destructive,
                                     );
                                   },
                                 ).toList(),
@@ -115,12 +116,12 @@ class MenuItemTile extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                if (_ratingModel.likeCount > 0)
+                                if (_ratingModel.likeCount >= 0)
                                   LmuText.bodyXSmall(
                                     _ratingModel.calculateLikeCount(isFavorite),
                                     color: context.colors.neutralColors.textColors.weakColors.base,
                                   ),
-                                if (_ratingModel.likeCount > 0) const SizedBox(width: LmuSizes.size_4),
+                                if (_ratingModel.likeCount >= 0) const SizedBox(width: LmuSizes.size_4),
                                 StarIcon(isActive: isFavorite),
                               ],
                             ),
@@ -146,37 +147,6 @@ class MenuItemTile extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String getAssetPathForDishType(String dishType) {
-    switch (dishType) {
-      case 'Pizza':
-        return 'feature_modules/mensa/assets/category_pizza.png';
-      case 'Pasta':
-        return 'feature_modules/mensa/assets/category_pasta.png';
-      case 'Wok':
-        return 'feature_modules/mensa/assets/category_wok.png';
-      case 'Dessert (Glas)':
-        return 'feature_modules/mensa/assets/category_dessert.png';
-      case 'Tagessupe, Brot, Obst':
-        return 'feature_modules/mensa/assets/category_soup.png';
-      case 'Fleisch':
-        return 'feature_modules/mensa/assets/category_meat.png';
-      case 'Fisch':
-        return 'feature_modules/mensa/assets/category_fish.png';
-      case 'Vegan':
-        return 'feature_modules/mensa/assets/category_vegan.png';
-      case 'Süßspeise':
-        return 'feature_modules/mensa/assets/category_sweets.png';
-      case 'Vegetarisch/fleischlos':
-        return 'feature_modules/mensa/assets/category_vegetarian.png';
-      case 'Studitopf':
-        return 'feature_modules/mensa/assets/category_studitopf.png';
-      case 'Grill':
-        return 'feature_modules/mensa/assets/category_bbq.png';
-      default:
-        return 'feature_modules/mensa/assets/category_default.png';
-    }
   }
 
   void _toggleDishFavorite(BuildContext context) {

@@ -99,7 +99,11 @@ class _MensaDetailsPageState extends State<MensaDetailsPage> {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(child: MensaDetailsInfoSection(mensaModel: _mensaModel)),
-          if (!(_isTemporarilyClosed || _isCafeBar)) MensaDetailsMenuSection(canteenId: _mensaModel.canteenId),
+          if (!(_isTemporarilyClosed || _isCafeBar))
+            MensaDetailsMenuSection(
+              canteenId: _mensaModel.canteenId,
+              mensaType: _mensaModel.type,
+            ),
           if (_isCafeBar) const SliverToBoxAdapter(child: MenuCafeBarView()),
         ],
       ),

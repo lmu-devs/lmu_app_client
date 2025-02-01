@@ -19,6 +19,7 @@ class SportsCourseTile extends StatelessWidget {
     final colors = context.colors;
     final sportsLocals = context.locals.sports;
     final subtitleColor = colors.neutralColors.textColors.mediumColors.base;
+    final isCourseInPast = DateTime.parse(course.endDate).isBefore(DateTime.now());
 
     final instructor = course.instructor;
     final timeSlots = course.timeSlots;
@@ -40,8 +41,16 @@ class SportsCourseTile extends StatelessWidget {
               Row(
                 children: [
                   LmuInTextVisual.text(
-                    title: course.isAvailable ? sportsLocals.available : sportsLocals.fullyBooked,
-                    actionType: course.isAvailable ? ActionType.success : ActionType.destructive,
+                    title: isCourseInPast
+                        ? sportsLocals.past
+                        : course.isAvailable
+                            ? sportsLocals.available
+                            : sportsLocals.fullyBooked,
+                    actionType: isCourseInPast
+                        ? ActionType.base
+                        : course.isAvailable
+                            ? ActionType.success
+                            : ActionType.destructive,
                   ),
                   const SizedBox(width: LmuSizes.size_8),
                   LmuText.body("${course.price.studentPrice.toInt()} €", color: subtitleColor),

@@ -1,3 +1,4 @@
+import 'package:core/components.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
@@ -47,9 +48,10 @@ class MensaOverviewAllSection extends StatelessWidget {
                 ).toList();
 
                 if (filteredMensaModels.isEmpty) {
-                  return MensaOverviewPlaceholderTile(
+                  return LmuIssueType(
                     title: context.locals.canteen.allClosed,
                     icon: LucideIcons.bone,
+                    hasSpacing: false,
                   );
                 }
 

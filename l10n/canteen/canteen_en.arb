@@ -290,5 +290,9 @@
   "cafeBarNotice": "Selection of coffee specialties, pastries, and snacks. See menu at location.",
   "@cafeBarNotice": {
     "description": "Notice for the cafe bar menu"
+  },
+  "menuNotAvailable": "Menu not available",
+  "@menuNotAvailable": {
+    "description": "Menu not available"
   }
 }

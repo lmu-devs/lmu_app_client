@@ -1,9 +1,9 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
-import '../routes/sports_routes.dart';
+import '../pages/pages.dart';
 
 class SportsLoadingView extends StatelessWidget {
   const SportsLoadingView({super.key});
@@ -28,7 +28,13 @@ class SportsLoadingView extends StatelessWidget {
                   subtitle: sportsLocals.sportsInfoEntry,
                   hasHorizontalPadding: false,
                   hasDivider: true,
-                  onTap: () => const SportsInfoRoute().go(context),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const SportsInfoPage(),
+                      ),
+                    );
+                  },
                 ),
                 LmuListItem.action(
                   leadingArea: Center(child: LmuText.body("🎟️")),
@@ -36,7 +42,14 @@ class SportsLoadingView extends StatelessWidget {
                   hasDivider: true,
                   hasHorizontalPadding: false,
                   actionType: LmuListItemAction.chevron,
-                  onTap: () => const SportsTicketRoute().go(context),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const SportsTicketsPage(),
+                      ),
+                    );
+                    //const SportsTicketRoute().go(context);
+                  },
                 ),
                 LmuListItemLoading(
                   leadingArea: Center(child: LmuText.body("🥇")),
