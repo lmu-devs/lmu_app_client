@@ -148,5 +148,13 @@
   "readMore": "Read more",
   "@readMore": {
     "description": "Read more"
+  },
+  "somethingWentWrong": "Something went wrong",
+  "@somethingWentWrong": {
+    "description": "Something went wrong"
+  },
+  "tryAgain": "Try again",
+  "@tryAgain": {
+    "description": "Try again"
   }
 }

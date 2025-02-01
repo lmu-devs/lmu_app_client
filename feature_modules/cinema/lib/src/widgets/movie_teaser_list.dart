@@ -21,7 +21,7 @@ class MovieTeaserList extends StatelessWidget {
       children: [
         LmuTileHeadline.base(
           title: context.locals.cinema.upcomingMoviesTitle,
-          trailingInfo: '${screenings.length} ${context.locals.cinema.screeningsTitle}',
+          trailingTitle: '${screenings.length} ${context.locals.cinema.screeningsTitle}',
         ),
         SizedBox(
           height: 230,

@@ -1,0 +1,18 @@
+{
+  "@@locale": "en",
+  "@@context": "Sports",
+  "sportsTitle": "Sports",
+  "sportOffers": "Sport Offers",
+  "sportsInfoEntry": "How To ZHS",
+  "sportTypes": "Sport Types",
+  "course": "Course",
+  "courses": "Courses",
+  "bookCourse": "Book Course",
+  "ongoing": "Ongoing",
+  "upcoming": "Upcoming",
+  "past": "Past",
+  "available": "Available",
+  "fullyBooked": "Fully Booked",
+  "withTrainer": "with",
+  "yourTickets": "Your Tickets"
+}

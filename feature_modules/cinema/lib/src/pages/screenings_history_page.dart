@@ -55,12 +55,12 @@ class _ScreeningsHistoryPageState extends State<ScreeningsHistoryPage> {
       largeTitleTrailingWidget: widget.type != null ? Container(
         padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_4),
         decoration: BoxDecoration(
-          color: widget.type!.getColor(context).withOpacity(0.1),
+          color: widget.type!.getTextColor(context).withOpacity(0.1),
           borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
         ),
         child: LmuText.bodySmall(
           widget.type!.getValue(),
-          color: widget.type!.getColor(context),
+          color: widget.type!.getTextColor(context),
         ),
       ) : null,
       body: widget.screenings.isNotEmpty

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class LmuTileHeadline extends StatelessWidget {
   final String title;
-  final String? trailingInfo;
+  final String? trailingTitle;
   final String? actionTitle;
   final void Function()? onActionTap;
   final Widget? bottomWidget;
@@ -13,7 +13,7 @@ class LmuTileHeadline extends StatelessWidget {
   const LmuTileHeadline._internal({
     super.key,
     required this.title,
-    this.trailingInfo,
+    this.trailingTitle,
     this.actionTitle,
     this.onActionTap,
     this.bottomWidget,
@@ -22,13 +22,13 @@ class LmuTileHeadline extends StatelessWidget {
   factory LmuTileHeadline.base({
     Key? key,
     required String title,
-    String? trailingInfo,
+    String? trailingTitle,
     Widget? bottomWidget,
   }) =>
       LmuTileHeadline._internal(
         key: key,
         title: title,
-        trailingInfo: trailingInfo,
+        trailingTitle: trailingTitle,
         bottomWidget: bottomWidget,
       );
 
@@ -49,6 +49,7 @@ class LmuTileHeadline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textColors = context.colors.neutralColors.textColors;
     return Column(
       children: [
         Row(
@@ -57,12 +58,13 @@ class LmuTileHeadline extends StatelessWidget {
             LmuText.body(
               title,
               weight: FontWeight.w600,
-              color: context.colors.neutralColors.textColors.mediumColors.base,
+              color: textColors.mediumColors.base,
             ),
-            if (trailingInfo != null)
-              LmuText.bodySmall(
-                trailingInfo,
-                color: context.colors.neutralColors.textColors.mediumColors.base,
+            if (trailingTitle != null)
+              LmuText.body(
+                trailingTitle,
+                weight: FontWeight.w600,
+                color: textColors.weakColors.base,
               ),
             if (actionTitle != null)
               LmuButton(

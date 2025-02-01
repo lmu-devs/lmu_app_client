@@ -72,7 +72,8 @@ class MovieTeaserCard extends StatelessWidget {
             children: [
               LmuInTextVisual.text(
                 title: screening.cinema.type.getValue(),
-                color: screening.cinema.type.getColor(context),
+                textColor: screening.cinema.type.getTextColor(context),
+                backgroundColor: screening.cinema.type.getBackgroundColor(context),
               ),
               LmuInTextVisual.text(title: '${screening.price.toString()} €'),
               if (screening.movie.ratings.isNotEmpty)

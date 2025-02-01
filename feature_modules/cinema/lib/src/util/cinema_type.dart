@@ -20,8 +20,8 @@ extension CinemaTypeTextExtension on CinemaType {
   }
 }
 
-extension CinemaTypeColorExtension on CinemaType {
-  Color getColor(BuildContext context) {
+extension CinemaTypeTextColorExtension on CinemaType {
+  Color getTextColor(BuildContext context) {
     switch (this) {
       case CinemaType.lmu:
         return context.colors.universityColors.textColors.lmuColor;
@@ -29,6 +29,19 @@ extension CinemaTypeColorExtension on CinemaType {
         return context.colors.universityColors.textColors.tumColor;
       case CinemaType.hm:
         return context.colors.universityColors.textColors.hmColor;
+    }
+  }
+}
+
+extension CinemaBackgroundColorExtension on CinemaType {
+  Color getBackgroundColor(BuildContext context) {
+    switch (this) {
+      case CinemaType.lmu:
+        return context.colors.universityColors.backgroundColors.lmuColor;
+      case CinemaType.tum:
+        return context.colors.universityColors.backgroundColors.tumColor;
+      case CinemaType.hm:
+        return context.colors.universityColors.backgroundColors.hmColor;
     }
   }
 }

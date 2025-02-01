@@ -31,5 +31,7 @@
   "remainingHours": "{hours} Stunden",
   "remainingMinutes": "{minutes} Minuten",
   "remainingSeconds": "{seconds} Sekunden",
-  "readMore": "Weiterlesen"
+  "readMore": "Weiterlesen",
+  "somethingWentWrong": "Etwas ist schiefgelaufen",
+  "tryAgain": "Wiederholen"
 }
