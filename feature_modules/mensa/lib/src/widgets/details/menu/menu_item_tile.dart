@@ -54,10 +54,10 @@ class MenuItemTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: LmuSizes.size_6),
+                      padding: const EdgeInsets.only(top: LmuSizes.size_4),
                       child: Container(
-                        width: 18,
-                        height: 18,
+                        width: LmuSizes.size_20,
+                        height: LmuSizes.size_20,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(LmuSizes.size_6),
                           image: DecorationImage(
