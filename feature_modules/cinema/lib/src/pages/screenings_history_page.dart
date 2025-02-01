@@ -52,17 +52,22 @@ class _ScreeningsHistoryPageState extends State<ScreeningsHistoryPage> {
       largeTitle: localizations.pastMoviesTitle,
       leadingAction: LeadingAction.back,
       largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
-      largeTitleTrailingWidget: widget.type != null ? Container(
-        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_4),
-        decoration: BoxDecoration(
-          color: widget.type!.getTextColor(context).withOpacity(0.1),
-          borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
-        ),
-        child: LmuText.bodySmall(
-          widget.type!.getValue(),
-          color: widget.type!.getTextColor(context),
-        ),
-      ) : null,
+      largeTitleTrailingWidget: widget.type != null
+          ? Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: LmuSizes.size_4,
+                vertical: LmuSizes.size_2,
+              ),
+              decoration: BoxDecoration(
+                color: widget.type!.getTextColor(context).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
+              ),
+              child: LmuText.bodySmall(
+                widget.type!.getValue(),
+                color: widget.type!.getTextColor(context),
+              ),
+            )
+          : null,
       body: widget.screenings.isNotEmpty
           ? Padding(
               padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),

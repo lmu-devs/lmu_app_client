@@ -67,21 +67,27 @@ class ScreeningDetailsPage extends StatelessWidget {
                       screening.movie.releaseYear != null &&
                       screening.movie.ratings.isNotEmpty) ...[
                     Wrap(
-                      spacing: LmuSizes.size_2,
-                      runSpacing: LmuSizes.size_2,
+                      spacing: LmuSizes.size_4,
+                      runSpacing: LmuSizes.size_6,
                       children: [
                         if (screening.movie.budget != null)
-                          LmuInTextVisual.text(title: '${screening.price.toStringAsFixed(2)} €'),
+                          LmuInTextVisual.text(
+                              title: '${screening.price.toStringAsFixed(2)} €', size: InTextVisualSize.large),
                         if (screening.isOv != null)
                           LmuInTextVisual.text(
                             title: screening.isOv! ? context.locals.cinema.ov : context.locals.cinema.germanTranslation,
+                            size: InTextVisualSize.large,
                           ),
                         if (screening.movie.releaseYear != null)
-                          LmuInTextVisual.text(title: DateTime.parse(screening.movie.releaseYear!).year.toString()),
+                          LmuInTextVisual.text(
+                            title: DateTime.parse(screening.movie.releaseYear!).year.toString(),
+                            size: InTextVisualSize.large,
+                          ),
                         if (screening.movie.ratings.isNotEmpty)
                           LmuInTextVisual.text(
                             title:
                                 '${screening.movie.ratings.first.source} ${screening.movie.ratings.first.rawRating.toString()}',
+                            size: InTextVisualSize.large,
                           ),
                       ],
                     ),

@@ -31,7 +31,10 @@ class CinemaDetailsPage extends StatelessWidget {
       imageUrls: cinema.images != null ? cinema.images!.map((image) => image.url).toList() : [],
       largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
       largeTitleTrailingWidget: Container(
-        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_4),
+        padding: const EdgeInsets.symmetric(
+          horizontal: LmuSizes.size_4,
+          vertical: LmuSizes.size_2,
+        ),
         decoration: BoxDecoration(
           color: cinema.type.getTextColor(context).withOpacity(0.1),
           borderRadius: BorderRadius.circular(LmuRadiusSizes.small),

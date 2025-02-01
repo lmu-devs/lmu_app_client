@@ -10,6 +10,11 @@ enum ActionType {
   success,
 }
 
+enum InTextVisualSize {
+  medium,
+  large,
+}
+
 class LmuInTextVisual extends StatelessWidget {
   final String? title;
   final IconData? icon;
@@ -18,6 +23,7 @@ class LmuInTextVisual extends StatelessWidget {
   final ActionType actionType;
   final Color? textColor;
   final Color? backgroundColor;
+  final InTextVisualSize size;
 
   const LmuInTextVisual._({
     Key? key,
@@ -28,6 +34,7 @@ class LmuInTextVisual extends StatelessWidget {
     this.textColor,
     this.backgroundColor,
     required this.actionType,
+    this.size = InTextVisualSize.medium,
   }) : super(key: key);
 
   factory LmuInTextVisual.text({
@@ -37,6 +44,7 @@ class LmuInTextVisual extends StatelessWidget {
     ActionType actionType = ActionType.base,
     Color? textColor,
     Color? backgroundColor,
+    InTextVisualSize size = InTextVisualSize.medium,
   }) =>
       LmuInTextVisual._(
         key: key,
@@ -45,6 +53,7 @@ class LmuInTextVisual extends StatelessWidget {
         actionType: actionType,
         textColor: textColor,
         backgroundColor: backgroundColor,
+        size: size,
       );
 
   factory LmuInTextVisual.iconBox({
@@ -54,6 +63,7 @@ class LmuInTextVisual extends StatelessWidget {
     ActionType actionType = ActionType.base,
     Color? textColor,
     Color? backgroundColor,
+    InTextVisualSize size = InTextVisualSize.medium,
   }) =>
       LmuInTextVisual._(
         key: key,
@@ -63,6 +73,7 @@ class LmuInTextVisual extends StatelessWidget {
         destructive: destructive,
         textColor: textColor,
         backgroundColor: backgroundColor,
+        size: size,
       );
 
   factory LmuInTextVisual.icon({
@@ -72,6 +83,7 @@ class LmuInTextVisual extends StatelessWidget {
     ActionType actionType = ActionType.base,
     Color? textColor,
     Color? backgroundColor,
+    InTextVisualSize size = InTextVisualSize.medium,
   }) =>
       LmuInTextVisual._(
         key: key,
@@ -80,17 +92,21 @@ class LmuInTextVisual extends StatelessWidget {
         actionType: actionType,
         textColor: textColor,
         backgroundColor: backgroundColor,
+        size: size,
       );
 
   @override
   Widget build(BuildContext context) {
     final hasIcon = icon != null;
-
     final colors = context.colors;
 
+    final double height = size == InTextVisualSize.large ? (LmuSizes.size_4 * 7) : LmuSizes.size_20;
+    final double iconSize = size == InTextVisualSize.large ? LmuIconSizes.medium : LmuIconSizes.small;
+    final double padding = size == InTextVisualSize.large ? LmuSizes.size_4 : LmuSizes.size_2;
+
     return Container(
-      height: LmuSizes.size_20,
-      width: hasIcon ? LmuSizes.size_20 : null,
+      height: height,
+      width: hasIcon ? height : null,
       decoration: hasIconBox && hasIcon
           ? null
           : BoxDecoration(
@@ -99,23 +115,30 @@ class LmuInTextVisual extends StatelessWidget {
             ),
       padding: EdgeInsets.symmetric(
         horizontal: hasIcon ? LmuSizes.none : LmuSizes.size_4,
-        vertical: hasIcon ? LmuSizes.none : LmuSizes.size_2,
+        vertical: padding,
       ),
-      child: _buildChild(textColor ?? actionType.textColor(colors)),
+      child: _buildChild(textColor ?? actionType.textColor(colors), iconSize),
     );
   }
 
-  Widget _buildChild(Color textColor) {
+  Widget _buildChild(Color textColor, double iconSize) {
     if (title != null) {
-      return LmuText.caption(
-        title!,
-        color: textColor,
-      );
+      if (size == InTextVisualSize.medium) {
+        return LmuText.caption(
+          title!,
+          color: textColor,
+        );
+      } else {
+        return LmuText.bodyXSmall(
+          title!,
+          color: textColor,
+        );
+      }
     } else if (icon != null) {
       return Center(
         child: LmuIcon(
           icon: icon!,
-          size: LmuIconSizes.small,
+          size: iconSize,
           color: textColor,
         ),
       );
