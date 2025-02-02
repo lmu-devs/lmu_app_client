@@ -55,20 +55,24 @@ class ScreeningDetailsPage extends StatelessWidget {
                         )
                       : const SizedBox.shrink(),
                   const SizedBox(height: LmuSizes.size_24),
-                  LmuText.h1(screening.movie.title),
+                  LmuText.h1(
+                    screening.movie.title,
+                    textAlign: TextAlign.center,
+                  ),
                   const SizedBox(height: LmuSizes.size_24),
                   LmuText.body(
                     getScreeningTime(context: context, time: screening.entryTime),
                     color: context.colors.neutralColors.textColors.mediumColors.base,
                   ),
                   const SizedBox(height: LmuSizes.size_24),
-                  if (screening.movie.budget != null &&
-                      screening.isOv != null &&
-                      screening.movie.releaseYear != null &&
+                  if (screening.movie.budget != null ||
+                      screening.isOv != null ||
+                      screening.movie.releaseYear != null ||
                       screening.movie.ratings.isNotEmpty) ...[
                     Wrap(
                       spacing: LmuSizes.size_4,
                       runSpacing: LmuSizes.size_6,
+                      alignment: WrapAlignment.center,
                       children: [
                         if (screening.movie.budget != null)
                           LmuInTextVisual.text(
@@ -86,7 +90,7 @@ class ScreeningDetailsPage extends StatelessWidget {
                         if (screening.movie.ratings.isNotEmpty)
                           LmuInTextVisual.text(
                             title:
-                                '${screening.movie.ratings.first.source} ${screening.movie.ratings.first.rawRating.toString()}',
+                                '${_normalizeRatingSource(screening.movie.ratings.first.source)} ${screening.movie.ratings.first.rawRating.toString()}',
                             size: InTextVisualSize.large,
                           ),
                       ],
@@ -247,5 +251,15 @@ class ScreeningDetailsPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _normalizeRatingSource(String ratingSource) {
+    if (ratingSource == 'ROTTEN_TOMATOES') {
+      return 'Rotten Tomatoes';
+    } else if (ratingSource == 'METACRITIC') {
+      return 'Metacritic';
+    } else {
+      return ratingSource;
+    }
   }
 }

@@ -4,12 +4,12 @@ import '../util/screening_filter_keys.dart';
 import 'screening_card.dart';
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/screenings_history_page.dart';
 import '../repository/api/api.dart';
 import 'cinema_filter_row.dart';
+import 'screening_placeholder.dart';
 
 class ScreeningsList extends StatelessWidget {
   ScreeningsList({
@@ -37,9 +37,9 @@ class ScreeningsList extends StatelessWidget {
               title: context.locals.cinema.upcomingTitle,
               bottomWidget: hasFilterRow
                   ? CinemaFilterButtonRow(
-                activeFilter: _activeFilterNotifier.value,
-                onFilterSelected: (filter) => _activeFilterNotifier.value = filter,
-              )
+                      activeFilter: _activeFilterNotifier.value,
+                      onFilterSelected: (filter) => _activeFilterNotifier.value = filter,
+                    )
                   : null,
               actionTitle: context.locals.cinema.historyAction,
               onActionTap: () => Navigator.of(context).push(
@@ -53,42 +53,33 @@ class ScreeningsList extends StatelessWidget {
             ),
             futureScreenings.isNotEmpty
                 ? AnimatedSwitcher(
-              duration: const Duration(milliseconds: 350),
-              switchInCurve: Curves.easeInOut,
-              switchOutCurve: Curves.easeInOut,
-              reverseDuration: const Duration(milliseconds: 50),
-              transitionBuilder: (child, animation) {
-                return SlideTransition(
-                  position: Tween<Offset>(begin: const Offset(0, .7), end: Offset.zero).animate(animation),
-                  child: FadeTransition(opacity: animation, child: child),
-                );
-              },
-              child: ListView.builder(
-                key: ValueKey(futureScreenings.map((screening) => screening.id).join()),
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.zero,
-                itemCount: futureScreenings.length,
-                itemBuilder: (context, index) {
-                  final screening = futureScreenings[index];
-                  return ScreeningCard(
-                    screening: screening,
-                    cinemaScreenings: getScreeningsForCinema(screenings, screening.cinema.id),
-                    isLastItem: index == futureScreenings.length - 1,
-                  );
-                },
-              ),
-            )
-                : PlaceholderTile(
-              minHeight: 165,
-              content: [
-                LmuText.body(
-                  context.locals.cinema.nextMovieEmpty,
-                  color: context.colors.neutralColors.textColors.mediumColors.base,
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
+                    duration: const Duration(milliseconds: 350),
+                    switchInCurve: Curves.easeInOut,
+                    switchOutCurve: Curves.easeInOut,
+                    reverseDuration: const Duration(milliseconds: 50),
+                    transitionBuilder: (child, animation) {
+                      return SlideTransition(
+                        position: Tween<Offset>(begin: const Offset(0, .7), end: Offset.zero).animate(animation),
+                        child: FadeTransition(opacity: animation, child: child),
+                      );
+                    },
+                    child: ListView.builder(
+                      key: ValueKey(futureScreenings.map((screening) => screening.id).join()),
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.zero,
+                      itemCount: futureScreenings.length,
+                      itemBuilder: (context, index) {
+                        final screening = futureScreenings[index];
+                        return ScreeningCard(
+                          screening: screening,
+                          cinemaScreenings: getScreeningsForCinema(screenings, screening.cinema.id),
+                          isLastItem: index == futureScreenings.length - 1,
+                        );
+                      },
+                    ),
+                  )
+                : const ScreeningPlaceholder(minHeight: 165),
           ],
         );
       },
@@ -97,7 +88,8 @@ class ScreeningsList extends StatelessWidget {
 
   List<ScreeningModel> _getFutureScreenings(String? activeFilter) {
     DateTime present = DateTime.now();
-    final futureScreenings = screenings.where((screening) => DateTime.parse(screening.entryTime).isAfter(present)).toList();
+    final futureScreenings =
+        screenings.where((screening) => DateTime.parse(screening.entryTime).isAfter(present)).toList();
 
     if (activeFilter == ScreeningFilterKeys.cityCenter) {
       return futureScreenings.where((screening) => screening.cinema.id != 'TUM_GARCHING').toList();

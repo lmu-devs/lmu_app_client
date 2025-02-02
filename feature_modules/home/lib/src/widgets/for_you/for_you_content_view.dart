@@ -4,15 +4,21 @@ import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_api/cinema.dart';
 import 'package:shared_api/sports.dart';
 
 import '../../repository/api/models/home_model.dart';
 import '../widgets.dart';
 
 class ForYouContentView extends StatelessWidget {
-  const ForYouContentView({super.key, required this.homeData});
+  const ForYouContentView({
+    super.key,
+    required this.homeData,
+    required this.pageController,
+  });
 
   final HomeModel homeData;
+  final PageController pageController;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +34,7 @@ class ForYouContentView extends StatelessWidget {
             children: [
               LmuTileHeadline.action(
                 title: "Termine",
-                actionTitle: "Alle anzeigen",
+                actionTitle: context.locals.app.showAll,
                 onActionTap: () {
                   print("Alle anzeigen");
                 },
@@ -51,34 +57,8 @@ class ForYouContentView extends StatelessWidget {
           ),
         ),
         const SizedBox(height: LmuSizes.size_32),
-        /**Padding(
-          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              LmuTileHeadline.action(
-                title: "Movies",
-                actionTitle: "Alle anzeigen",
-                onActionTap: () {
-                  print("Alle anzeigen");
-                },
-              ),
-             SizedBox(
-                height: 220,
-                child: ListView.separated(
-                  separatorBuilder: (context, index) => const SizedBox(width: LmuSizes.size_8),
-                  itemCount: 5,
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return _MoveTeaserCard(key: Key("move_$index"));
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: LmuSizes.size_32),**/
+        GetIt.I.get<CinemaService>().movieTeaserList(
+            headlineActionText: context.locals.app.showAll, headlineActionFunction: () => pageController.jumpToPage(2)),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
           child: LmuTileHeadline.base(title: "Vorteile und Angebote"),

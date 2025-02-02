@@ -17,7 +17,7 @@ class TrailerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 222,
+      width: 220,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -34,9 +34,8 @@ class TrailerCard extends StatelessWidget {
                   Radius.circular(LmuRadiusSizes.medium),
                 ),
               ),
-              child: SizedBox(
-                height: 120,
-                width: 222,
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(LmuRadiusSizes.medium)),
                   child: FutureBuilder(
@@ -48,16 +47,14 @@ class TrailerCard extends StatelessWidget {
                       if (snapshot.connectionState == ConnectionState.done) {
                         return Image.network(
                           trailer.thumbnail.url,
-                          height: 120,
-                          width: 222,
                           fit: BoxFit.cover,
                           semanticLabel: trailer.thumbnail.name,
                         );
                       } else {
                         return LmuSkeleton(
                           child: Container(
-                            height: 120,
-                            width: 222,
+                            width: 220,
+                            height: 125,
                             color: Colors.white,
                           ),
                         );

@@ -156,5 +156,9 @@
   "tryAgain": "Try again",
   "@tryAgain": {
     "description": "Try again"
+  },
+  "showAll": "Show all",
+  "@showAll": {
+    "description": "Show all"
   }
 }

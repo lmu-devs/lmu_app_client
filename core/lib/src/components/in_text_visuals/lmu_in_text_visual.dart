@@ -114,7 +114,11 @@ class LmuInTextVisual extends StatelessWidget {
               borderRadius: BorderRadius.circular(LmuSizes.size_4),
             ),
       padding: EdgeInsets.symmetric(
-        horizontal: hasIcon ? LmuSizes.none : LmuSizes.size_4,
+        horizontal: hasIcon
+            ? LmuSizes.none
+            : size == InTextVisualSize.medium
+                ? LmuSizes.size_4
+                : LmuSizes.size_6,
         vertical: padding,
       ),
       child: _buildChild(textColor ?? actionType.textColor(colors), iconSize),

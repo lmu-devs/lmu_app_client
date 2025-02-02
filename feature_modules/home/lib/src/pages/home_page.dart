@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
             controller: _pageController,
             onPageChanged: (index) => _activeTabIndexNotifier.value = index,
             children: [
-              const ForYouPage(),
+              ForYouPage(pageController: _pageController),
               GetIt.I.get<SportsService>().sportsPage,
               GetIt.I.get<CinemaService>().cinemaPage,
             ],
