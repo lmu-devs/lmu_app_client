@@ -1,10 +1,10 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
+import '../pages/pages.dart';
 import '../repository/api/models/sports_course.dart';
-import '../routes/sports_routes.dart';
 import '../services/sports_state_service.dart';
 
 class SportsGroupedCourseSection extends StatelessWidget {
@@ -43,7 +43,13 @@ class SportsGroupedCourseSection extends StatelessWidget {
                           actionType: LmuListItemAction.chevron,
                           trailingTitle: '${sport.courses.length} ${sport.courses.length == 1 ? "Kurs" : "Kurse"}',
                           mainContentAlignment: MainContentAlignment.center,
-                          onTap: () => SportsDetailsRoute(sport).go(context),
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => SportsDetailsPage(sport: sport),
+                              ),
+                            );
+                          },
                         ),
                     ],
                   ),

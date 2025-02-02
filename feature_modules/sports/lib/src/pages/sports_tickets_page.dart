@@ -65,9 +65,9 @@ class SportsTicketsPage extends StatelessWidget {
               ),
               const SizedBox(height: LmuSizes.size_16),
               const SportsTicketCard(
-                data: "Handball L",
+                data: "Handball L Ticket",
                 name: "Max Mustermann",
-                courseName: "Handball L Ticket",
+                courseName: "Handball L",
                 timeSlot: "Mo 20:00 - 21:30",
                 validTimeFrame: "14.10.24 - 08.02.25",
                 uniId: "S-LMU",

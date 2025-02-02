@@ -4,6 +4,7 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
+import '../../extensions/mensa_type_extension.dart';
 import '../../repository/api/models/mensa/mensa_type.dart';
 
 class MensaTag extends StatelessWidget {
@@ -40,7 +41,7 @@ extension TagColors on MensaType {
     return (
       backgroundColor: _backgroundColor(colors),
       textColor: _textColor(colors),
-      text: _text(localizations),
+      text: text(localizations),
     );
   }
 
@@ -78,23 +79,6 @@ extension TagColors on MensaType {
         return mensaTextColors.stuLounge;
       default:
         return Colors.transparent;
-    }
-  }
-
-  String _text(CanteenLocalizations localizations) {
-    switch (this) {
-      case MensaType.mensa:
-        return localizations.mensaTypeMensa;
-      case MensaType.stuBistro:
-        return localizations.mensaTypeStuBistro;
-      case MensaType.stuCafe:
-        return localizations.mensaTypeStuCafe;
-      case MensaType.lounge:
-        return localizations.mensaTypeLounge;
-      case MensaType.cafeBar:
-        return localizations.mensaTypeCafeBar;
-      default:
-        return '';
     }
   }
 }

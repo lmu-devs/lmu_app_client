@@ -8,10 +8,12 @@ class LmuIssueType extends StatelessWidget {
     super.key,
     required this.title,
     required this.icon,
+    this.hasSpacing = true,
   });
 
   final String title;
   final IconData icon;
+  final bool hasSpacing;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class LmuIssueType extends StatelessWidget {
 
     return Column(
       children: [
-        const SizedBox(height: LmuSizes.size_16),
+        if (hasSpacing) const SizedBox(height: LmuSizes.size_24),
         Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -32,6 +34,12 @@ class LmuIssueType extends StatelessWidget {
             LmuIcon(icon: icon, size: LmuIconSizes.small, color: textColor),
           ],
         ),
+        const SizedBox(height: LmuSizes.size_12),
+        Image.asset(
+          "core/lib/assets/sad.gif",
+          width: 200,
+        ),
+        if (hasSpacing) const SizedBox(height: LmuSizes.size_112),
       ],
     );
   }

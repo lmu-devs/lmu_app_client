@@ -1,11 +1,14 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../extensions/mensa_type_extension.dart';
 import '../../../repository/api/models/menu/menu_day_model.dart';
 import '../../../repository/api/models/menu/menu_item_model.dart';
+import '../../../repository/api/models/models.dart';
 import '../../../services/taste_profile_service.dart';
 import '../../../widgets/widgets.dart';
 
@@ -13,9 +16,11 @@ class MenuContentView extends StatelessWidget {
   const MenuContentView({
     Key? key,
     required this.mensaMenuModel,
+    required this.mensaType,
   }) : super(key: key);
 
   final MenuDayModel mensaMenuModel;
+  final MensaType mensaType;
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +31,15 @@ class MenuContentView extends StatelessWidget {
     final menuItems = mensaMenuModel.menuItems;
 
     if (menuItems.isEmpty) {
+      final mensaLocals = context.locals.canteen;
+
       if (mensaMenuModel.isClosed) {
-        const LmuIssueType(title: "Mensa closed", icon: LucideIcons.bone);
+        return LmuIssueType(
+          title: "${mensaType.text(mensaLocals)} ${mensaLocals.closed.toLowerCase()}",
+          icon: LucideIcons.circle_x,
+        );
       }
-      return const LmuIssueType(title: "Menu not available", icon: LucideIcons.git_pull_request_closed);
+      return LmuIssueType(title: mensaLocals.menuNotAvailable, icon: LucideIcons.ban);
     }
 
     return Padding(
