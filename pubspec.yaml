@@ -32,6 +32,8 @@ dependencies:
     path: ./feature_modules/user
   sports:
     path: ./feature_modules/sports
+  timeline:
+    path: ./feature_modules/timeline
   shared_api:
     path: ./shared_api
   http: ^1.2.2

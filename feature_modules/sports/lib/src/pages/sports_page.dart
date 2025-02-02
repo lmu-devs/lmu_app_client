@@ -1,5 +1,4 @@
 import 'package:core/components.dart';
-import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,10 +29,7 @@ class _SportsPageState extends State<SportsPage> {
   @override
   Widget build(BuildContext context) {
     if (!widget.showWithAppBar) {
-      return Padding(
-        padding: const EdgeInsets.only(top: LmuSizes.size_16),
-        child: _body,
-      );
+      return _body;
     }
 
     return LmuMasterAppBar(

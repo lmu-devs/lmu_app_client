@@ -18,6 +18,7 @@ StatefulShellBranch get $homeData => StatefulShellBranchData.$branch(
           routes: [
             GetIt.I.get<SettingsService>().settingsData,
             GetIt.I.get<SportsService>().sportsData,
+            GetIt.I.get<TimelineService>().timelineData,
           ],
         ),
       ],

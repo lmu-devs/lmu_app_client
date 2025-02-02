@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_api/sports.dart';
+import 'package:shared_api/timeline.dart';
 
 import '../../repository/api/models/home_model.dart';
 import '../widgets.dart';
@@ -30,7 +31,7 @@ class ForYouContentView extends StatelessWidget {
                 title: "Termine",
                 actionTitle: "Alle anzeigen",
                 onActionTap: () {
-                  print("Alle anzeigen");
+                  GetIt.I.get<TimelineService>().navigateToTimelinePage(context);
                 },
               ),
               LmuContentTile(
