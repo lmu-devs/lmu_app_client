@@ -48,6 +48,7 @@ class MovieTeaserList extends StatelessWidget {
                   if (state is CinemaLoadSuccess) {
                     final upcomingScreenings = state.screenings
                         .where((screening) => DateTime.parse(screening.entryTime).isAfter(DateTime.now()))
+                        .take(6)
                         .toList();
 
                     return _TeaserList(screenings: upcomingScreenings);
@@ -108,7 +109,7 @@ class _TeaserLoading extends StatelessWidget {
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.zero,
-        itemCount: 5,
+        itemCount: 6,
         itemBuilder: (context, index) => Padding(
           padding: _TeaserListPadding.getPadding(index, 5),
           child: const MovieTeaserCardLoading(),
