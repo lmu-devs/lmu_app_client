@@ -85,9 +85,18 @@ class WishlistPage extends StatelessWidget {
                   ),
                 ),
                 LmuButton(
-                  title: context.locals.wishlist.instagram,
+                  title: 'Instagram',
                   emphasis: ButtonEmphasis.secondary,
                   onTap: () => _openInstagram(context),
+                ),
+                LmuButton(
+                  title: 'LinkedIn',
+                  emphasis: ButtonEmphasis.secondary,
+                  onTap: () => LmuUrlLauncher.launchWebsite(
+                    url: LmuDevStrings.linkedinWebUrl,
+                    context: context,
+                    mode: LmuUrlLauncherMode.externalApplication,
+                  ),
                 ),
               ],
             ),

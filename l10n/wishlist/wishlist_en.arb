@@ -23,10 +23,6 @@
   "@rateAppError": {
     "description": "Rate app error toast"
   },
-  "instagram": "Instagram",
-  "@roadmapTitle": {
-    "description": "Instagram"
-  },
   "betaTitle": "Become a beta tester",
   "@betaTitle": {
     "description": "Beta title"

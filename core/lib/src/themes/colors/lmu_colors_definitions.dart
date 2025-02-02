@@ -175,9 +175,14 @@ const lmuColorsDark = LmuColors(
   ),
   universityColors: UniversityColors(
     textColors: UniversityTextColors(
-      ColorPrimitives.universityGreenDark,
-      ColorPrimitives.universityBlueDark,
-      ColorPrimitives.universityRedDark,
+      lmuColor: Color(0xFF26D16F),
+      tumColor: Color(0xFF5E9CE5),
+      hmColor: Color(0xFFFC696A),
+    ),
+    backgroundColors: UniversityBackgroundColors(
+      lmuColor: Color(0x2426D16F),
+      tumColor: Color(0x295E9CE5),
+      hmColor: Color(0x24FC696A),
     ),
   ),
 );
@@ -346,9 +351,14 @@ const lmuColorsLight = LmuColors(
   ),
   universityColors: UniversityColors(
     textColors: UniversityTextColors(
-      ColorPrimitives.universityGreenLight,
-      ColorPrimitives.universityBlueLight,
-      ColorPrimitives.universityRedLight,
+      lmuColor: Color(0xFF00883A),
+      tumColor: Color(0xFF14519A),
+      hmColor: Color(0xFFFA3839),
+    ),
+    backgroundColors: UniversityBackgroundColors(
+      lmuColor: Color(0x2400883A),
+      tumColor: Color(0x2614519A),
+      hmColor: Color(0x2BFA3839),
     ),
   ),
 );

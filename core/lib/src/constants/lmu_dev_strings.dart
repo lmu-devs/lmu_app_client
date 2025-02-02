@@ -17,4 +17,5 @@ class LmuDevStrings {
   /// Social Media
   static String instagramAppUrl = 'instagram://user?username=lmu.developers';
   static String instagramWebUrl = 'https://www.instagram.com/lmu.developers/';
+  static String linkedinWebUrl = 'https://www.linkedin.com/company/lmu-dev/';
 }

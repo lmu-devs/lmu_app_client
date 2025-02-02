@@ -6,7 +6,12 @@ import '../bloc/bloc.dart';
 import '../widgets/widgets.dart';
 
 class ForYouPage extends StatelessWidget {
-  const ForYouPage({super.key});
+  const ForYouPage({
+    super.key,
+    required this.pageController,
+  });
+
+  final PageController pageController;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +21,10 @@ class ForYouPage extends StatelessWidget {
         builder: (context, state) {
           if (state is HomeLoadSuccess) {
             final homeData = state.homeData;
-            return ForYouContentView(homeData: homeData);
+            return ForYouContentView(
+              homeData: homeData,
+              pageController: pageController,
+            );
           }
           return const ForYouLoadingView();
         },

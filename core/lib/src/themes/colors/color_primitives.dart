@@ -81,12 +81,4 @@ class ColorPrimitives {
   static const Color amber80 = Color(0xFFF9C772);
   static const Color amber90 = Color(0xFFFBDAA1);
   static const Color amber100 = Color(0xFFFDECD0);
-
-  // University Colors
-  static const Color universityGreenLight = Color(0xFF00883A);
-  static const Color universityGreenDark = Color(0xFF26D16F);
-  static const Color universityBlueLight = Color(0xFF14519A);
-  static const Color universityBlueDark = Color(0xFF5E9CE5);
-  static const Color universityRedLight = Color(0xFFFA3839);
-  static const Color universityRedDark = Color(0xFFFC696A);
 }

@@ -10,23 +10,25 @@ class ExpandableText extends StatelessWidget {
     super.key,
     required this.text,
     required this.maxLines,
+    required this.amountOfHorizontalPadding,
   });
 
   final String text;
   final int maxLines;
+  final double amountOfHorizontalPadding;
   final ValueNotifier<bool> _isExpanded = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
     final textSpan = TextSpan(
       text: text,
-      style: LmuText.body('').textStyle,
+      style: LmuText.body('').getTextStyle(context),
     );
     final textPainter = TextPainter(
       text: textSpan,
       maxLines: maxLines,
       textDirection: TextDirection.ltr,
-    )..layout(maxWidth: MediaQuery.of(context).size.width);
+    )..layout(maxWidth: MediaQuery.of(context).size.width - amountOfHorizontalPadding);
 
     final textExceedsMaxLines = textPainter.didExceedMaxLines;
 
@@ -49,7 +51,13 @@ class ExpandableText extends StatelessWidget {
                     const SizedBox(height: LmuSizes.size_8),
                     LmuText.bodyXSmall(
                       context.locals.app.readMore,
-                      color: context.colors.neutralColors.textColors.mediumColors.base,
+                      textStyle: LmuText.bodySmall('').getTextStyle(context).copyWith(
+                            color: context.colors.neutralColors.textColors.weakColors.base,
+                            fontWeight: FontWeight.w600,
+                            decoration: TextDecoration.underline,
+                            decorationThickness: 1,
+                            decorationColor: context.colors.neutralColors.textColors.weakColors.base,
+                          ),
                     ),
                   ],
                 ),

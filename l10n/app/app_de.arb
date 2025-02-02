@@ -33,5 +33,6 @@
   "remainingSeconds": "{seconds} Sekunden",
   "readMore": "Weiterlesen",
   "somethingWentWrong": "Etwas ist schiefgelaufen",
-  "tryAgain": "Wiederholen"
+  "tryAgain": "Wiederholen",
+  "showAll": "Alle anzeigen"
 }
