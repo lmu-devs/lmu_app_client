@@ -15,7 +15,7 @@ class LmuDevStrings {
   static String openBetaPlayStore = '';
 
   /// Sharing
-  static String shareAppUrl = 'https://share-app.lmu-dev.org/';
+  static String shareAppUrl = 'http://share-app.lmu-dev.org/';
 
   /// Social Media
   static String instagramAppUrl = 'instagram://user?username=lmu.developers';
