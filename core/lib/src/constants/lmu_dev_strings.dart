@@ -14,6 +14,9 @@ class LmuDevStrings {
   static String openBetaTestFlight = 'https://testflight.apple.com/join/JWEgpYxh';
   static String openBetaPlayStore = '';
 
+  /// Sharing
+  static String shareAppUrl = 'http://share-app.lmu-dev.org/';
+
   /// Social Media
   static String instagramAppUrl = 'instagram://user?username=lmu.developers';
   static String instagramWebUrl = 'https://www.instagram.com/lmu.developers/';
