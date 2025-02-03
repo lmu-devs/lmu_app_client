@@ -141,7 +141,7 @@ class ScreeningCard extends StatelessWidget {
                         if (screening.movie.budget != null)
                           LmuInTextVisual.text(title: '${screening.price.toStringAsFixed(2)} €'),
                         if (screening.movie.ratings.isNotEmpty)
-                          LmuInTextVisual.text(title: screening.movie.ratings.first.rawRating.toString()),
+                          LmuInTextVisual.text(title: screening.movie.ratings.first.rawRating),
                       ],
                     ),
                   ],

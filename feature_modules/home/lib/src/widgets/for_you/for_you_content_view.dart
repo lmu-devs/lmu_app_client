@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_api/cinema.dart';
 import 'package:shared_api/sports.dart';
 import 'package:shared_api/timeline.dart';
 
@@ -16,9 +17,14 @@ import '../widgets.dart';
 import 'temporary_benefits_data.dart';
 
 class ForYouContentView extends StatelessWidget {
-  const ForYouContentView({super.key, required this.homeData});
+  const ForYouContentView({
+    super.key,
+    required this.homeData,
+    required this.pageController,
+  });
 
   final HomeModel homeData;
+  final PageController pageController;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +42,7 @@ class ForYouContentView extends StatelessWidget {
             children: [
               LmuTileHeadline.action(
                 title: "Termine",
-                actionTitle: "Alle anzeigen",
+                actionTitle: context.locals.app.showAll,
                 onActionTap: () {
                   GetIt.I.get<TimelineService>().navigateToTimelinePage(context);
                 },
@@ -59,34 +65,8 @@ class ForYouContentView extends StatelessWidget {
           ),
         ),
         const SizedBox(height: LmuSizes.size_32),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              LmuTileHeadline.action(
-                title: "Movies",
-                actionTitle: "Alle anzeigen",
-                onActionTap: () {
-                  print("Alle anzeigen");
-                },
-              ),
-              SizedBox(
-                height: 220,
-                child: ListView.separated(
-                  separatorBuilder: (context, index) => const SizedBox(width: LmuSizes.size_8),
-                  itemCount: 5,
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return _MoveTeaserCard(key: Key("move_$index"));
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: LmuSizes.size_32),
+        GetIt.I.get<CinemaService>().movieTeaserList(
+            headlineActionText: context.locals.app.showAll, headlineActionFunction: () => pageController.jumpToPage(2)),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
           child: LmuTileHeadline.base(title: "Vorteile und Angebote"),
@@ -139,48 +119,6 @@ class _BenefitsCard extends StatelessWidget {
             );
           },
         ).toList(),
-      ),
-    );
-  }
-}
-
-class _MoveTeaserCard extends StatelessWidget {
-  const _MoveTeaserCard({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 220,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 115,
-            height: 164,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(LmuSizes.size_8),
-              image: const DecorationImage(
-                image: NetworkImage(
-                    "https://images-cdn.ubuy.co.in/63ef0a397f1d781bea0a2464-star-wars-rogue-one-movie-poster.jpg"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          const SizedBox(height: LmuSizes.size_8),
-          Row(
-            children: [
-              LmuInTextVisual.text(title: "LMU"),
-              const SizedBox(width: LmuSizes.size_4),
-              LmuInTextVisual.text(title: "3,50 €"),
-              const SizedBox(width: LmuSizes.size_4),
-              LmuInTextVisual.text(title: "7,7"),
-            ],
-          ),
-          const SizedBox(height: LmuSizes.size_8),
-          LmuText.bodySmall("Heute"),
-        ],
       ),
     );
   }

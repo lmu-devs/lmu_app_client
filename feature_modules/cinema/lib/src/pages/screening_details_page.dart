@@ -55,33 +55,43 @@ class ScreeningDetailsPage extends StatelessWidget {
                         )
                       : const SizedBox.shrink(),
                   const SizedBox(height: LmuSizes.size_24),
-                  LmuText.h1(screening.movie.title),
+                  LmuText.h1(
+                    screening.movie.title,
+                    textAlign: TextAlign.center,
+                  ),
                   const SizedBox(height: LmuSizes.size_24),
                   LmuText.body(
                     getScreeningTime(context: context, time: screening.entryTime),
                     color: context.colors.neutralColors.textColors.mediumColors.base,
                   ),
                   const SizedBox(height: LmuSizes.size_24),
-                  if (screening.movie.budget != null &&
-                      screening.isOv != null &&
-                      screening.movie.releaseYear != null &&
+                  if (screening.movie.budget != null ||
+                      screening.isOv != null ||
+                      screening.movie.releaseYear != null ||
                       screening.movie.ratings.isNotEmpty) ...[
                     Wrap(
-                      spacing: LmuSizes.size_2,
-                      runSpacing: LmuSizes.size_2,
+                      spacing: LmuSizes.size_4,
+                      runSpacing: LmuSizes.size_6,
+                      alignment: WrapAlignment.center,
                       children: [
                         if (screening.movie.budget != null)
-                          LmuInTextVisual.text(title: '${screening.price.toStringAsFixed(2)} €'),
+                          LmuInTextVisual.text(
+                              title: '${screening.price.toStringAsFixed(2)} €', size: InTextVisualSize.large),
                         if (screening.isOv != null)
                           LmuInTextVisual.text(
                             title: screening.isOv! ? context.locals.cinema.ov : context.locals.cinema.germanTranslation,
+                            size: InTextVisualSize.large,
                           ),
                         if (screening.movie.releaseYear != null)
-                          LmuInTextVisual.text(title: DateTime.parse(screening.movie.releaseYear!).year.toString()),
+                          LmuInTextVisual.text(
+                            title: DateTime.parse(screening.movie.releaseYear!).year.toString(),
+                            size: InTextVisualSize.large,
+                          ),
                         if (screening.movie.ratings.isNotEmpty)
                           LmuInTextVisual.text(
                             title:
-                                '${screening.movie.ratings.first.source} ${screening.movie.ratings.first.rawRating.toString()}',
+                                '${_normalizeRatingSource(screening.movie.ratings.first.source)} ${screening.movie.ratings.first.rawRating.toString()}',
+                            size: InTextVisualSize.large,
                           ),
                       ],
                     ),
@@ -127,7 +137,8 @@ class ScreeningDetailsPage extends StatelessWidget {
                     subtitleInTextVisuals: [
                       LmuInTextVisual.text(
                         title: screening.cinema.type.getValue(),
-                        textColor: screening.cinema.type.getColor(context),
+                        textColor: screening.cinema.type.getTextColor(context),
+                        backgroundColor: screening.cinema.type.getBackgroundColor(context),
                       )
                     ],
                     actionType: LmuListItemAction.chevron,
@@ -163,10 +174,18 @@ class ScreeningDetailsPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: LmuSizes.size_24),
+                  if (screening.movie.tagline != null && screening.movie.tagline!.isNotEmpty) ...[
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: LmuText(screening.movie.tagline!, weight: FontWeight.w600),
+                    ),
+                    SizedBox(height: screening.movie.overview != null ? LmuSizes.size_12 : LmuSizes.size_24),
+                  ],
                   if (screening.movie.overview != null) ...[
                     ExpandableText(
                       text: screening.movie.overview!,
                       maxLines: 8,
+                      amountOfHorizontalPadding: LmuSizes.size_32,
                     ),
                     const SizedBox(height: LmuSizes.size_24),
                   ],
@@ -206,23 +225,20 @@ class ScreeningDetailsPage extends StatelessWidget {
                   LmuContentTile(
                     content: [
                       LmuListItem.base(
-                        title: context.locals.cinema.entry,
-                        titleColor: context.colors.neutralColors.textColors.mediumColors.base,
+                        subtitle: context.locals.cinema.entry,
                         trailingTitle: DateFormat('HH:mm').format(DateTime.parse(screening.entryTime)),
                       ),
                       screening.endTime != null
                           ? LmuListItem.base(
-                              title:
+                              subtitle:
                                   '${context.locals.cinema.movie} (${DateTime.parse(screening.endTime!).difference(DateTime.parse(screening.startTime)).inHours}:${(DateTime.parse(screening.endTime!).difference(DateTime.parse(screening.startTime)).inMinutes % 60).toString().padLeft(2, '0')}h)',
-                              titleColor: context.colors.neutralColors.textColors.mediumColors.base,
                               trailingTitle:
                                   '${DateFormat('HH:mm').format(DateTime.parse(screening.startTime))} - ${DateFormat('HH:mm').format(
                                 DateTime.parse(screening.endTime!),
                               )}',
                             )
                           : LmuListItem.base(
-                              title: context.locals.cinema.start,
-                              titleColor: context.colors.neutralColors.textColors.mediumColors.base,
+                              subtitle: context.locals.cinema.start,
                               trailingTitle: DateFormat('HH:mm').format(DateTime.parse(screening.startTime)),
                             ),
                     ],
@@ -235,5 +251,15 @@ class ScreeningDetailsPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _normalizeRatingSource(String ratingSource) {
+    if (ratingSource == 'ROTTEN_TOMATOES') {
+      return 'Rotten Tomatoes';
+    } else if (ratingSource == 'METACRITIC') {
+      return 'Metacritic';
+    } else {
+      return ratingSource;
+    }
   }
 }

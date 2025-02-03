@@ -4,6 +4,8 @@
   
   "cinemasTitle": "Kinos",
   "upcomingTitle": "Demnächst",
+  "upcomingMoviesTitle": "Demnächst im Uni-Kino",
+  "screeningsTitle": "Vorstellungen",
   "cityCenter": "Innenstadt",
   "nextMovie": "Nächster Film",
   "nextMovieEmpty": "Kein Film mehr für dieses Semester",
