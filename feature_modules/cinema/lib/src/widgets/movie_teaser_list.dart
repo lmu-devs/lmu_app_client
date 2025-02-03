@@ -1,6 +1,4 @@
-import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:core/localizations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,16 +28,6 @@ class MovieTeaserList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-          child: (headlineActionText == null && headlineActionFunction == null)
-              ? LmuTileHeadline.base(title: context.locals.cinema.upcomingMoviesTitle)
-              : LmuTileHeadline.action(
-                  title: context.locals.cinema.upcomingMoviesTitle,
-                  actionTitle: headlineActionText!,
-                  onActionTap: headlineActionFunction!,
-                ),
-        ),
         screenings != null
             ? _TeaserList(screenings: screenings!)
             : BlocBuilder<CinemaCubit, CinemaState>(

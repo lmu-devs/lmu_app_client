@@ -1,7 +1,6 @@
 {
   "@@locale": "de",
   "@@context": "Home",
-  
   "tabTitle": "Home",
   "homeDescription": "Startseite der App",
   "overviewTab": "Überblick",
@@ -21,6 +20,16 @@
   "reference": "Zweck",
   "referenceCopy": "Zweck kopiert",
   "summer": "Sommer",
-  "winter": "Winter"
+  "winter": "Winter",
+  "dates": "Termine",
+  "benefits": "Vorteile",
+  "mvgTitle": "MVG Ermäßigungsticket",
+  "mvgDescription": "Vergünstigtes Deutschlandticket für 38€ pro Monat",
+  "newsTitle": "Zeitung und Zeitschriften",
+  "newsDescription": "Kostenlos und tagesaktuell",
+  "philarmonikerTitle": "Münchner Philharmoniker",
+  "philarmonikerDescription": "Ermäßigte Tickets für Studenten",
+  "operaTitle": "Staatsoper",
+  "operaDescription": "Günstigere Tickets und zahlreiche Aktivitäten",
+  "forYou": "Für Dich"
 }
-

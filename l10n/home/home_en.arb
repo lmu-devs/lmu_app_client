@@ -1,8 +1,6 @@
 {
   "@@locale": "en",
   "@@context": "Home",
-
-
   "tabTitle": "Home",
   "@tabTitle": {
     "description": "Title of the home tab"
@@ -98,5 +96,22 @@
   "winter": "Winter",
   "@winter": {
     "description": "Winter"
-  }
+  },
+  "dates": "Dates",
+  "@dates": {
+    "description": "Dates"
+  },
+  "benefits": "Benefits",
+  "@benefits": {
+    "description": "Benefits"
+  },
+  "mvgTitle": "MVG Ermäßigungsticket",
+  "mvgDescription": "Discounted Deutschlandticket for €38 per month",
+  "newsTitle": "Newspapers & Magazines",
+  "newsDescription": "Read newspapers and magazines for free",
+  "philarmonikerTitle": "Münchner Philharmoniker",
+  "philarmonikerDescription": "Cheaper student tickets for classical concerts",
+  "operaTitle": "State Opera",
+  "operaDescription": "Range of special activities and cheaper tickets",
+  "forYou": "For You"
 }

@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
@@ -7,6 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_api/cinema.dart';
 import 'package:shared_api/settings.dart';
 import 'package:shared_api/sports.dart';
+import 'package:shared_api/timeline.dart';
 
 import 'for_you_page.dart';
 
@@ -20,7 +22,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late final ValueNotifier<int> _activeTabIndexNotifier;
   late final PageController _pageController;
-  final _tabs = ["For You", "Sport", "Movies"];
 
   @override
   void initState() {
@@ -31,11 +32,18 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final tabs = [
+      context.locals.home.forYou,
+      context.locals.sports.sportsTitle,
+      context.locals.cinema.movie,
+      context.locals.home.dates,
+    ];
+
     return ValueListenableBuilder(
       valueListenable: _activeTabIndexNotifier,
       builder: (context, value, child) {
         return LmuMasterAppBar.custom(
-          collapsedTitle: _tabs[value],
+          collapsedTitle: tabs[value],
           largeTitleTrailingWidget: GestureDetector(
             onTap: () => GetIt.I.get<SettingsService>().navigateToSettings(context),
             child: const LmuIcon(icon: LucideIcons.settings, size: LmuIconSizes.medium),
@@ -43,7 +51,7 @@ class _HomePageState extends State<HomePage> {
           customLargeTitleWidget: LmuTabBar(
             activeTabIndexNotifier: _activeTabIndexNotifier,
             hasDefaultPaddings: false,
-            items: _tabs.map((e) => LmuTabBarItemData(title: e)).toList(),
+            items: tabs.map((e) => LmuTabBarItemData(title: e)).toList(),
             onTabChanged: (index, _) => _pageController.jumpToPage(index),
           ),
           body: child!,
@@ -60,6 +68,7 @@ class _HomePageState extends State<HomePage> {
               ForYouPage(pageController: _pageController),
               GetIt.I.get<SportsService>().sportsPage,
               GetIt.I.get<CinemaService>().cinemaPage,
+              GetIt.I.get<TimelineService>().timelinePage,
             ],
           ),
         ],

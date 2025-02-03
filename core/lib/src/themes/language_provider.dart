@@ -35,7 +35,7 @@ class LanguageProvider with ChangeNotifier {
 
   Future<void> _loadAppLocale() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final localeString = prefs.getString('appLocale') ?? LmuLocalizations.supportedLocales.first.languageCode;
+    final localeString = prefs.getString('appLocale') ?? "auto";
     if (localeString == 'auto') {
       _isAutomatic = true;
       _locale = PlatformDispatcher.instance.locale;

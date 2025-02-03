@@ -26,6 +26,7 @@ class SportsInfoSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: LmuSizes.size_16),
           LmuListItem.action(
             leadingArea: Center(child: LmuText.body("⁉️")),
             actionType: LmuListItemAction.chevron,
