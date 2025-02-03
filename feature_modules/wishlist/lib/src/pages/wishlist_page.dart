@@ -68,7 +68,7 @@ class WishlistPage extends StatelessWidget {
               buttons: [
                 LmuButton(
                   title: context.locals.wishlist.shareApp,
-                  onTap: () => Share.share(LmuDevStrings.lmuDevWebsite),
+                  onTap: () => Share.share(LmuDevStrings.shareAppUrl),
                 ),
                 LmuButton(
                   title: context.locals.wishlist.rateApp,
