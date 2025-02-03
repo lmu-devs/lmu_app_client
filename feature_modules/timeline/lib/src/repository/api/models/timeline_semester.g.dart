@@ -8,10 +8,15 @@ part of 'timeline_semester.dart';
 
 TimelineSemester _$TimelineSemesterFromJson(Map<String, dynamic> json) => TimelineSemester(
       timeframe: TimelineTimeframe.fromJson(json['timeframe'] as Map<String, dynamic>),
-      type: json['type'] as String,
+      type: $enumDecode(_$SemesterTypeEnumMap, json['type']),
     );
 
 Map<String, dynamic> _$TimelineSemesterToJson(TimelineSemester instance) => <String, dynamic>{
       'timeframe': instance.timeframe,
-      'type': instance.type,
+      'type': _$SemesterTypeEnumMap[instance.type]!,
     };
+
+const _$SemesterTypeEnumMap = {
+  SemesterType.winter: 'WINTER',
+  SemesterType.summer: 'SUMMER',
+};

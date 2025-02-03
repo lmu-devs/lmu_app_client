@@ -1,4 +1,3 @@
-import 'package:core/components.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -11,19 +10,15 @@ class TimelinePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
-      largeTitle: "Timeline",
-      leadingAction: LeadingAction.back,
-      body: BlocBuilder<TimelineCubit, TimelineState>(
-        bloc: GetIt.I.get<TimelineCubit>(),
-        builder: (context, state) {
-          if (state is TimelineLoadSuccess) {
-            return TimelineContentView(timelineData: state.data);
-          }
+    return BlocBuilder<TimelineCubit, TimelineState>(
+      bloc: GetIt.I.get<TimelineCubit>(),
+      builder: (context, state) {
+        if (state is TimelineLoadSuccess) {
+          return TimelineContentView(timelineData: state.data);
+        }
 
-          return const TimelineLoadingView();
-        },
-      ),
+        return const TimelineLoadingView();
+      },
     );
   }
 }

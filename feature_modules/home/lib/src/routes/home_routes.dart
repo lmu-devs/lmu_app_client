@@ -24,9 +24,7 @@ class HomeData extends StatefulShellBranchData {
 }
 
 class HomeMainRoute extends GoRouteData {
-  const HomeMainRoute({this.hasDeletedUserApiKey = false});
-
-  final bool? hasDeletedUserApiKey;
+  const HomeMainRoute();
 
   @override
   Widget build(BuildContext context, GoRouterState state) {

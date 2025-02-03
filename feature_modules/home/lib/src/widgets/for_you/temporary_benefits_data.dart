@@ -1,3 +1,4 @@
+import 'package:core/localizations.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
@@ -15,29 +16,32 @@ class TemporaryBenefitsData {
   final String url;
 }
 
-final benefits = [
-  const TemporaryBenefitsData(
-    title: 'MVG Ermäßigungsticket',
-    subtitle: 'Vergünstigtes Deutschlandticket für 38€ pro Monat',
-    icon: LucideIcons.bus_front,
-    url: 'https://www.mvg.de/abos-tickets/abos/ermaessigungsticket.html',
-  ),
-  const TemporaryBenefitsData(
-    title: 'Zeitung und Zeitschriften',
-    subtitle: 'Kostenfreier Zugriff auf verschiedene Zeitungen und Zeitschriften',
-    icon: LucideIcons.newspaper,
-    url: 'https://emedien.ub.uni-muenchen.de/login?url=https://www.pressreader.com/',
-  ),
-  const TemporaryBenefitsData(
-    title: 'Münchner Philharmoniker',
-    subtitle: 'Günstige Abos oder Einzeltickets',
-    icon: LucideIcons.piano,
-    url: 'https://www.mphil.de/',
-  ),
-  const TemporaryBenefitsData(
-    title: 'Stattsoper',
-    subtitle: 'Großes Angebot für günstige Tickets',
-    icon: LucideIcons.theater,
-    url: 'https://www.staatsoper.de/kleiner30',
-  ),
-];
+List<TemporaryBenefitsData> getBenefits(BuildContext context) {
+  final locals = context.locals.home;
+  return [
+    TemporaryBenefitsData(
+      title: locals.mvgTitle,
+      subtitle: locals.mvgDescription,
+      icon: LucideIcons.bus_front,
+      url: 'https://www.mvg.de/abos-tickets/abos/ermaessigungsticket.html',
+    ),
+    TemporaryBenefitsData(
+      title: locals.newsTitle,
+      subtitle: locals.newsDescription,
+      icon: LucideIcons.newspaper,
+      url: 'https://emedien.ub.uni-muenchen.de/login?url=https://www.pressreader.com/',
+    ),
+    TemporaryBenefitsData(
+      title: locals.philarmonikerTitle,
+      subtitle: locals.philarmonikerDescription,
+      icon: LucideIcons.piano,
+      url: 'https://www.mphil.de/',
+    ),
+    TemporaryBenefitsData(
+      title: locals.operaTitle,
+      subtitle: locals.operaDescription,
+      icon: LucideIcons.theater,
+      url: 'https://www.staatsoper.de/kleiner30',
+    ),
+  ];
+}

@@ -4,10 +4,10 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
-import '../../../sports.dart';
-
 class SportsEntryPointCard extends StatelessWidget {
-  const SportsEntryPointCard({super.key});
+  const SportsEntryPointCard({super.key, required this.onTap});
+
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class SportsEntryPointCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
-        onTap: () => const SportsMainRoute().go(context),
+        onTap: () => onTap(),
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [

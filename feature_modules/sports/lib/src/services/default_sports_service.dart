@@ -8,13 +8,11 @@ import '../widgets/entry_point/sports_entry_point_card.dart';
 
 class DefaultSportsService extends SportsService {
   @override
-  Widget get entryPoint => const SportsEntryPointCard();
+  Widget showEntryPoint({required VoidCallback onTap}) => SportsEntryPointCard(onTap: onTap);
 
   @override
   RouteBase get sportsData => $sportsMainRoute;
 
   @override
-  Widget get sportsPage => const SportsPage(
-        showWithAppBar: false,
-      );
+  Widget get sportsPage => const SportsPage();
 }

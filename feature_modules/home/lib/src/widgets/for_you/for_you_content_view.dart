@@ -10,7 +10,6 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_api/cinema.dart';
 import 'package:shared_api/sports.dart';
-import 'package:shared_api/timeline.dart';
 
 import '../../repository/api/models/home_model.dart';
 import '../widgets.dart';
@@ -32,8 +31,7 @@ class ForYouContentView extends StatelessWidget {
       children: [
         const SizedBox(height: LmuSizes.size_16),
         HomeLinksView(links: homeData.links),
-        const SizedBox(height: LmuSizes.size_24),
-        //GetIt.I.get<MensaService>().featuredMensaContent,
+        const SizedBox(height: LmuSizes.size_32),
         TuitionFeeWidget(homeData: homeData),
         const SizedBox(height: LmuSizes.size_32),
         Padding(
@@ -41,10 +39,10 @@ class ForYouContentView extends StatelessWidget {
           child: Column(
             children: [
               LmuTileHeadline.action(
-                title: "Termine",
+                title: context.locals.home.dates,
                 actionTitle: context.locals.app.showAll,
                 onActionTap: () {
-                  GetIt.I.get<TimelineService>().navigateToTimelinePage(context);
+                  pageController.jumpToPage(3);
                 },
               ),
               LmuContentTile(
@@ -65,13 +63,26 @@ class ForYouContentView extends StatelessWidget {
           ),
         ),
         const SizedBox(height: LmuSizes.size_32),
-        GetIt.I.get<CinemaService>().movieTeaserList(
-            headlineActionText: context.locals.app.showAll, headlineActionFunction: () => pageController.jumpToPage(2)),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-          child: LmuTileHeadline.base(title: "Vorteile und Angebote"),
+          child: LmuTileHeadline.action(
+            title: context.locals.cinema.upcomingMoviesTitle,
+            actionTitle: context.locals.app.showAll,
+            onActionTap: () {
+              pageController.jumpToPage(2);
+            },
+          ),
         ),
-        GetIt.I.get<SportsService>().entryPoint,
+        GetIt.I.get<CinemaService>().movieTeaserList,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+          child: LmuTileHeadline.base(title: context.locals.home.benefits),
+        ),
+        GetIt.I.get<SportsService>().showEntryPoint(
+          onTap: () {
+            pageController.jumpToPage(1);
+          },
+        ),
         const SizedBox(height: LmuSizes.size_32),
         const _BenefitsCard(),
         const SizedBox(height: LmuSizes.size_96),
@@ -85,6 +96,7 @@ class _BenefitsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final benefits = getBenefits(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
       child: LmuContentTile(
