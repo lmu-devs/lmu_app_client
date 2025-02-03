@@ -34,6 +34,9 @@ class TimelineContentView extends StatelessWidget {
           for (final semester in semesters)
             LmuTileHeadline.base(
               title: semester.type,
+              trailingTitle: semester.timeframe.start.toString().split(' ')[0] +
+                  " - " +
+                  semester.timeframe.end.toString().split(' ')[0],
             ),
           for (final event in events)
             LmuContentTile(

@@ -8,13 +8,13 @@ class ForYouLoadingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const SizedBox(height: LmuSizes.size_24),
-        LmuSkeleton(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: LmuSizes.size_16),
+          LmuSkeleton(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(
@@ -27,23 +27,31 @@ class ForYouLoadingView extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: LmuSizes.size_16,
-            vertical: LmuSizes.size_16,
-          ),
-          child: LmuContentTile(
+          const SizedBox(height: LmuSizes.size_24),
+          LmuContentTile(
             content: List.generate(
-              3,
+              1,
               (index) => const LmuListItemLoading(
-                titleLength: 2,
-                action: LmuListItemAction.toggle,
+                titleLength: 3,
+                action: LmuListItemAction.checkbox,
               ),
             ),
           ),
-        ),
-      ],
+          const SizedBox(height: LmuSizes.size_32),
+          const LmuTileHeadlineLoading(),
+          LmuContentTile(
+            content: List.generate(
+              2,
+              (index) => const LmuListItemLoading(
+                titleLength: 3,
+                trailingSubtitleLength: 2,
+              ),
+            ),
+          ),
+          const SizedBox(height: LmuSizes.size_32),
+          const LmuTileHeadlineLoading(),
+        ],
+      ),
     );
   }
 }

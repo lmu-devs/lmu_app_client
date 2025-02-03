@@ -55,7 +55,7 @@ class WishlistUserPreferenceService {
 
         final missingSyncWishlistIds = unsyncedLikedWishlistIds + unsyncedUnlikedWishlistIds;
         for (final missingSyncWishlistId in missingSyncWishlistIds) {
-          await toggleLikedWishlistId(missingSyncWishlistId);
+          await _wishlistRepository.toggleWishlistLike(int.parse(missingSyncWishlistId));
         }
       }
     });
