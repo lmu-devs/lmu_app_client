@@ -66,20 +66,19 @@ class MovieTeaserCard extends StatelessWidget {
           SizedBox(
             width: 115,
             child: Wrap(
-            spacing: LmuSizes.size_4,
-            runSpacing: LmuSizes.size_2,
-            alignment: WrapAlignment.center,
-            children: [
-              LmuInTextVisual.text(
-                title: screening.cinema.type.getValue(),
-                textColor: screening.cinema.type.getTextColor(context),
-                backgroundColor: screening.cinema.type.getBackgroundColor(context),
-              ),
-              LmuInTextVisual.text(title: '${screening.price.toString()} €'),
-              if (screening.movie.ratings.isNotEmpty)
-                LmuInTextVisual.text(title: screening.movie.ratings.first.rawRating),
-            ],
-          ),),
+              spacing: LmuSizes.size_4,
+              runSpacing: LmuSizes.size_2,
+              alignment: WrapAlignment.center,
+              children: [
+                LmuInTextVisual.text(
+                  title: screening.cinema.type.getValue(),
+                  textColor: screening.cinema.type.getTextColor(context),
+                  backgroundColor: screening.cinema.type.getBackgroundColor(context),
+                ),
+                LmuInTextVisual.text(title: '${screening.price.toStringAsFixed(2)} €'),
+              ],
+            ),
+          ),
           const SizedBox(height: LmuSizes.size_8),
           LmuText.bodySmall(
             getScreeningTime(context: context, time: screening.startTime).split('•').first,
