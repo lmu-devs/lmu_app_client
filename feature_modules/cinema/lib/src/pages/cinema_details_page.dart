@@ -56,7 +56,7 @@ class CinemaDetailsPage extends StatelessWidget {
                   onTap: () => LmuUrlLauncher.launchWebsite(
                     url: cinema.instagramLink,
                     context: context,
-                    mode: LmuUrlLauncherMode.inAppWebView,
+                    mode: LmuUrlLauncherMode.externalApplication,
                   ),
                 ),
                 LmuButton(
