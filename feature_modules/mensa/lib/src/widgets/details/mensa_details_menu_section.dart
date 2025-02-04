@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/mensa.dart';
 
 import '../../bloc/menu_cubit/cubit.dart';
 import '../../services/menu_service.dart';
-import '../../views/views.dart';
+import 'menu/loading/menu_loading_view.dart';
+import 'menu/menu_content_view.dart';
 
 class MensaDetailsMenuSection extends StatefulWidget {
   const MensaDetailsMenuSection({
@@ -18,7 +20,7 @@ class MensaDetailsMenuSection extends StatefulWidget {
   });
 
   final String canteenId;
-  final mensaType;
+  final MensaType mensaType;
 
   @override
   State<MensaDetailsMenuSection> createState() => _MensaDetailsMenuSectionState();
@@ -27,7 +29,6 @@ class MensaDetailsMenuSection extends StatefulWidget {
 class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
   late PageController _pageController;
   late ValueNotifier<int> _tabNotifier;
-  late StickyHeaderController _stickyHeaderController;
   late bool isTemporarilyClosed;
 
   String get _canteenId => widget.canteenId;
@@ -35,17 +36,15 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
   @override
   void initState() {
     super.initState();
-    const initialIndex = 0; //widget.mensaStatus == MensaStatus.closed ? 1 : 0;
+    const initialIndex = 0;
     _pageController = PageController(initialPage: initialIndex);
     _tabNotifier = ValueNotifier<int>(initialIndex);
-    _stickyHeaderController = StickyHeaderController();
   }
 
   @override
   void dispose() {
     _pageController.dispose();
     _tabNotifier.dispose();
-    _stickyHeaderController.dispose();
     super.dispose();
   }
 
@@ -59,10 +58,7 @@ class _MensaDetailsMenuSectionState extends State<MensaDetailsMenuSection> {
         }
 
         final menuModels = state.menuModels;
-
         return SliverStickyHeader(
-          sticky: true,
-          controller: _stickyHeaderController,
           header: LmuTabBar(
             activeTabIndexNotifier: _tabNotifier,
             hasDivider: true,

@@ -1,11 +1,11 @@
 import 'package:core/api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:shared_api/mensa.dart';
 
 import 'mensa_location.dart';
 import 'mensa_opening_hours.dart';
 import 'mensa_status.dart';
-import 'mensa_type.dart';
 
 part 'mensa_model.g.dart';
 

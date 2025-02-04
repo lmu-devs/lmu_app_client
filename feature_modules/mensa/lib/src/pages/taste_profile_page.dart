@@ -8,7 +8,8 @@ import 'package:get_it/get_it.dart';
 import '../bloc/taste_profile/taste_profile_cubit.dart';
 import '../bloc/taste_profile/taste_profile_state.dart';
 import '../services/taste_profile_service.dart';
-import '../views/views.dart';
+import '../widgets/taste_profile/loading/taste_profile_loading_view.dart';
+import '../widgets/taste_profile/taste_profile_content_view.dart';
 
 class TasteProfilePage extends StatefulWidget {
   const TasteProfilePage({super.key});
@@ -54,17 +55,20 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
     );
   }
 
-  Future<void> _showUnsavedChangesDialog({
+  Future<void> _showUnsavedChangesDialog(
+    BuildContext context, {
     required void Function() onDiscardPressed,
     void Function()? onContinuePressed,
   }) async {
+    final appLocals = context.locals.app;
+    final canteenLocals = context.locals.canteen;
     await LmuDialog.show(
       context: context,
-      title: "You Have Unsaved Changes",
-      description: "Do you want to save your changes before leaving?",
+      title: canteenLocals.unsavedChanges,
+      description: canteenLocals.unsavedChangesDescription,
       buttonActions: [
         LmuDialogAction(
-          title: "discard",
+          title: appLocals.discard,
           isSecondary: true,
           onPressed: (context) {
             onDiscardPressed();
@@ -73,7 +77,7 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
           },
         ),
         LmuDialogAction(
-          title: "continue",
+          title: appLocals.continueAction,
           onPressed: (context) {
             Navigator.of(context).pop();
             onContinuePressed?.call();
@@ -88,6 +92,7 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
     if (_tasteProfileService.hasNoChanges) return shouldClose;
 
     await _showUnsavedChangesDialog(
+      context,
       onDiscardPressed: () => shouldClose = true,
       onContinuePressed: () => shouldClose = false,
     );
@@ -104,7 +109,7 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
       return;
     }
 
-    _showUnsavedChangesDialog(onDiscardPressed: () => sheetNavigator.pop());
+    _showUnsavedChangesDialog(context, onDiscardPressed: () => sheetNavigator.pop());
   }
 }
 

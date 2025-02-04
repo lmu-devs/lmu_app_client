@@ -4,13 +4,13 @@ import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/mensa.dart';
 
 import '../../../extensions/mensa_type_extension.dart';
 import '../../../repository/api/models/menu/menu_day_model.dart';
 import '../../../repository/api/models/menu/menu_item_model.dart';
-import '../../../repository/api/models/models.dart';
 import '../../../services/taste_profile_service.dart';
-import '../../../widgets/widgets.dart';
+import '../../widgets.dart';
 
 class MenuContentView extends StatelessWidget {
   const MenuContentView({

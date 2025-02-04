@@ -6,9 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../bloc/menu_cubit/cubit.dart';
-import '../../../services/menu_service.dart';
-import '../../../widgets/details/menu/loading/menu_item_tile_loading.dart';
+import '../../../../bloc/menu_cubit/cubit.dart';
+import '../../../../services/menu_service.dart';
+import 'menu_item_tile_loading.dart';
 
 class MenuLoadingView extends StatelessWidget {
   const MenuLoadingView({super.key, required this.canteendId});

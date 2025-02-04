@@ -3,15 +3,12 @@ import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_api/mensa.dart';
 
 import '../../extensions/mensa_type_extension.dart';
-import '../../repository/api/models/mensa/mensa_type.dart';
 
 class MensaTag extends StatelessWidget {
-  const MensaTag({
-    super.key,
-    required this.type,
-  });
+  const MensaTag({super.key, required this.type});
 
   final MensaType type;
 
@@ -47,38 +44,25 @@ extension TagColors on MensaType {
 
   Color _backgroundColor(LmuColors colors) {
     final mensaBackgroundColors = colors.mensaColors.backgroundColors;
-
-    switch (this) {
-      case MensaType.mensa:
-        return mensaBackgroundColors.mensa;
-      case MensaType.stuBistro:
-        return mensaBackgroundColors.stuBistro;
-      case MensaType.stuCafe:
-        return mensaBackgroundColors.stuCafe;
-      case MensaType.lounge:
-        return mensaBackgroundColors.stuLounge;
-      case MensaType.cafeBar:
-        return mensaBackgroundColors.stuLounge;
-      default:
-        return Colors.transparent;
-    }
+    return switch (this) {
+      MensaType.mensa => mensaBackgroundColors.mensa,
+      MensaType.stuBistro => mensaBackgroundColors.stuBistro,
+      MensaType.stuCafe => mensaBackgroundColors.stuCafe,
+      MensaType.lounge => mensaBackgroundColors.stuLounge,
+      MensaType.cafeBar => mensaBackgroundColors.stuLounge,
+      MensaType.none => mensaBackgroundColors.stuLounge,
+    };
   }
 
   Color _textColor(LmuColors colors) {
     final mensaTextColors = colors.mensaColors.textColors;
-    switch (this) {
-      case MensaType.mensa:
-        return mensaTextColors.mensa;
-      case MensaType.stuBistro:
-        return mensaTextColors.stuBistro;
-      case MensaType.stuCafe:
-        return mensaTextColors.stuCafe;
-      case MensaType.lounge:
-        return mensaTextColors.stuLounge;
-      case MensaType.cafeBar:
-        return mensaTextColors.stuLounge;
-      default:
-        return Colors.transparent;
-    }
+    return switch (this) {
+      MensaType.mensa => mensaTextColors.mensa,
+      MensaType.stuBistro => mensaTextColors.stuBistro,
+      MensaType.stuCafe => mensaTextColors.stuCafe,
+      MensaType.lounge => mensaTextColors.stuLounge,
+      MensaType.cafeBar => mensaTextColors.stuLounge,
+      MensaType.none => mensaTextColors.stuLounge,
+    };
   }
 }

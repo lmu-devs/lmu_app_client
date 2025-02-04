@@ -4,7 +4,7 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../mensa.dart';
+import '../repository/api/models/models.dart';
 
 enum Status {
   openingSoon,

@@ -1,10 +1,10 @@
 name: explore
 description: "The explore package containing everything which can be explored on a map."
 version: 0.0.1
-publish_to: 'none' 
+publish_to: "none"
 
 environment:
-  sdk: '>=3.3.4 <4.0.0'
+  sdk: ">=3.3.4 <4.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
@@ -20,8 +20,6 @@ dependencies:
   geolocator: ^13.0.2
   core:
     path: ../../core
-  mensa:
-    path: ../../feature_modules/mensa
   shared_api:
     path: ../../shared_api
 

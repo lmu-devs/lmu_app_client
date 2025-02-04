@@ -19,7 +19,3 @@ enum MensaType {
   @JsonValue('NONE')
   none;
 }
-
-extension TypeExtension on MensaType {
-  int compareTo(MensaType other) => index.compareTo(other.index);
-}

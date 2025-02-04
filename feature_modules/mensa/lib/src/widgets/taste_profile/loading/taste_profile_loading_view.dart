@@ -6,10 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../bloc/taste_profile/taste_profile_cubit.dart';
-import '../../bloc/taste_profile/taste_profile_state.dart';
-import '../../widgets/taste_profile/taste_profile_footer_section.dart';
-import '../../widgets/taste_profile/taste_profile_title_section.dart';
+import '../../../bloc/taste_profile/taste_profile_cubit.dart';
+import '../../../bloc/taste_profile/taste_profile_state.dart';
+import '../taste_profile_footer_section.dart';
+import '../taste_profile_title_section.dart';
 
 class TasteProfileLoadingView extends StatelessWidget {
   const TasteProfileLoadingView({super.key});

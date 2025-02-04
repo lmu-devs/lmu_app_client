@@ -10,28 +10,21 @@ import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/explore.dart';
 
-import '../../extensions/sort_option_sort_extension.dart';
 import '../../repository/api/models/mensa/mensa_model.dart';
 import '../../repository/api/models/user_preferences/sort_option.dart';
-import '../../services/mensa_user_preferences_service.dart';
+import '../../services/services.dart';
 
 class MensaOverviewButtonSection extends StatelessWidget {
-  const MensaOverviewButtonSection({
-    super.key,
-    required this.sortOptionNotifier,
-    required this.isOpenNowFilerNotifier,
-    required this.sortedMensaModelsNotifier,
-    required this.mensaModels,
-  });
+  const MensaOverviewButtonSection({super.key, required this.mensaModels});
 
-  final ValueNotifier<SortOption> sortOptionNotifier;
-  final ValueNotifier<bool> isOpenNowFilerNotifier;
-  final ValueNotifier<List<MensaModel>> sortedMensaModelsNotifier;
   final List<MensaModel> mensaModels;
 
   @override
   Widget build(BuildContext context) {
     final localizations = context.locals.canteen;
+    final userPreferencesService = GetIt.I.get<MensaUserPreferencesService>();
+    final isOpenNowFilterNotifier = userPreferencesService.isOpenNowFilterNotifier;
+
     return Row(
       children: [
         GestureDetector(
@@ -52,7 +45,7 @@ class MensaOverviewButtonSection extends StatelessWidget {
         ),
         const SizedBox(width: LmuSizes.size_8),
         ValueListenableBuilder(
-          valueListenable: sortOptionNotifier,
+          valueListenable: userPreferencesService.sortOptionNotifier,
           builder: (context, activeSortOption, _) {
             return LmuButton(
               title: SortOption.values.firstWhere((option) => option == activeSortOption).title(localizations),
@@ -64,13 +57,13 @@ class MensaOverviewButtonSection extends StatelessWidget {
         ),
         const SizedBox(width: LmuSizes.size_8),
         ValueListenableBuilder(
-          valueListenable: isOpenNowFilerNotifier,
+          valueListenable: isOpenNowFilterNotifier,
           builder: (context, isOpenNowFilterActive, _) {
             return LmuButton(
               title: localizations.openNow,
               emphasis: isOpenNowFilterActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
               action: isOpenNowFilterActive ? ButtonAction.contrast : ButtonAction.base,
-              onTap: () => isOpenNowFilerNotifier.value = !isOpenNowFilerNotifier.value,
+              onTap: () => isOpenNowFilterNotifier.value = !isOpenNowFilterNotifier.value,
             );
           },
         )
@@ -81,28 +74,21 @@ class MensaOverviewButtonSection extends StatelessWidget {
   void _showSortOptionActionSheet(BuildContext context) {
     LmuBottomSheet.show(
       context,
-      content: _SortOptionActionSheetContent(
-        sortOptionNotifier: sortOptionNotifier,
-        sortedMensaModelsNotifier: sortedMensaModelsNotifier,
-        mensaModels: mensaModels,
-      ),
+      content: _SortOptionActionSheetContent(mensaModels: mensaModels),
     );
   }
 }
 
 class _SortOptionActionSheetContent extends StatelessWidget {
-  const _SortOptionActionSheetContent({
-    required this.sortOptionNotifier,
-    required this.sortedMensaModelsNotifier,
-    required this.mensaModels,
-  });
+  const _SortOptionActionSheetContent({required this.mensaModels});
 
-  final ValueNotifier<SortOption> sortOptionNotifier;
-  final ValueNotifier<List<MensaModel>> sortedMensaModelsNotifier;
   final List<MensaModel> mensaModels;
 
   @override
   Widget build(BuildContext context) {
+    final userPreferencesService = GetIt.I.get<MensaUserPreferencesService>();
+    final sortOptionNotifier = userPreferencesService.sortOptionNotifier;
+
     return ValueListenableBuilder(
       valueListenable: sortOptionNotifier,
       builder: (context, activeValue, _) {
@@ -112,11 +98,7 @@ class _SortOptionActionSheetContent extends StatelessWidget {
             ...SortOption.values.map(
               (sortOption) {
                 final isActive = sortOption == activeValue;
-
-                final textColor = activeValue.textColor(
-                  context.colors,
-                  isActive: isActive,
-                );
+                final textColor = activeValue.textColor(context.colors, isActive: isActive);
 
                 return Column(
                   children: [
@@ -132,6 +114,7 @@ class _SortOptionActionSheetContent extends StatelessWidget {
                       ),
                       onTap: () async {
                         if (sortOption == SortOption.distance) {
+                          GetIt.I.get<MensaDistanceService>().updatePosition();
                           bool dontSort = false;
                           await PermissionsService.isLocationPermissionGranted().then(
                             (isPermissionGranted) async {
@@ -153,8 +136,8 @@ class _SortOptionActionSheetContent extends StatelessWidget {
                         }
 
                         sortOptionNotifier.value = sortOption;
-                        sortedMensaModelsNotifier.value = sortOption.sort(mensaModels);
-                        await GetIt.I.get<MensaUserPreferencesService>().updateSortOption(sortOption);
+                        userPreferencesService.sortMensaModels(mensaModels);
+                        GetIt.I.get<MensaUserPreferencesService>().updateSortOption(sortOption);
                         Future.delayed(
                           const Duration(milliseconds: 100),
                           () {
@@ -163,10 +146,7 @@ class _SortOptionActionSheetContent extends StatelessWidget {
                         );
                       },
                     ),
-                    if (sortOption != SortOption.values.last)
-                      const SizedBox(
-                        height: LmuSizes.size_8,
-                      ),
+                    if (sortOption != SortOption.values.last) const SizedBox(height: LmuSizes.size_8),
                   ],
                 );
               },
@@ -178,37 +158,26 @@ class _SortOptionActionSheetContent extends StatelessWidget {
   }
 }
 
-extension SortOptionExtension on SortOption {
+extension on SortOption {
   IconData get icon {
-    switch (this) {
-      case SortOption.alphabetically:
-        return LucideIcons.a_large_small;
-      case SortOption.distance:
-        return LucideIcons.arrow_right_from_line;
-      case SortOption.rating:
-        return LucideIcons.star;
-      case SortOption.type:
-        return LucideIcons.stretch_horizontal;
-    }
+    return switch (this) {
+      SortOption.alphabetically => LucideIcons.a_large_small,
+      SortOption.distance => LucideIcons.arrow_right_from_line,
+      SortOption.rating => LucideIcons.star,
+      SortOption.type => LucideIcons.stretch_horizontal,
+    };
   }
 
   String title(CanteenLocalizations localizations) {
-    switch (this) {
-      case SortOption.alphabetically:
-        return localizations.alphabetically;
-      case SortOption.distance:
-        return localizations.distance;
-      case SortOption.rating:
-        return localizations.rating;
-      case SortOption.type:
-        return localizations.type;
-    }
+    return switch (this) {
+      SortOption.alphabetically => localizations.alphabetically,
+      SortOption.distance => localizations.distance,
+      SortOption.rating => localizations.rating,
+      SortOption.type => localizations.type,
+    };
   }
 
-  Color textColor(
-    LmuColors colors, {
-    required bool isActive,
-  }) {
+  Color textColor(LmuColors colors, {required bool isActive}) {
     if (isActive) {
       return colors.brandColors.textColors.strongColors.base;
     }

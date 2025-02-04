@@ -31,7 +31,26 @@ class MensaDetailsInfoSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildLocationTile(context),
+          LmuListItem.base(
+            subtitle: mensaModel.location.address,
+            trailingArea: Icon(
+              LucideIcons.map,
+              size: LmuIconSizes.mediumSmall,
+              color: context.colors.neutralColors.textColors.weakColors.base,
+            ),
+            hasHorizontalPadding: false,
+            hasDivider: true,
+            onTap: () {
+              LmuBottomSheet.show(
+                context,
+                content: NavigationSheet(
+                  latitude: mensaModel.location.latitude,
+                  longitude: mensaModel.location.longitude,
+                  address: mensaModel.location.address,
+                ),
+              );
+            },
+          ),
           ListenableBuilder(
             listenable: GetIt.I<MensaStatusUpdateService>(),
             builder: (context, child) {
@@ -67,29 +86,6 @@ class MensaDetailsInfoSection extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildLocationTile(BuildContext context) {
-    return LmuListItem.base(
-      trailingArea: Icon(
-        LucideIcons.map,
-        size: LmuIconSizes.mediumSmall,
-        color: context.colors.neutralColors.textColors.weakColors.base,
-      ),
-      subtitle: mensaModel.location.address,
-      hasHorizontalPadding: false,
-      hasDivider: true,
-      onTap: () {
-        LmuBottomSheet.show(
-          context,
-          content: NavigationSheet(
-            latitude: mensaModel.location.latitude,
-            longitude: mensaModel.location.longitude,
-            address: mensaModel.location.address,
-          ),
-        );
-      },
     );
   }
 

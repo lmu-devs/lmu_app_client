@@ -105,7 +105,7 @@ class MensaOverviewReordableFavoriteSection extends StatelessWidget {
                   key: ValueKey(mensaModel.canteenId),
                   mensaModel: mensaModel,
                   isFavorite: true,
-                  hasDivider: index == value.length - 1,
+                  hasDivider: index != value.length - 1,
                 );
               },
             ),

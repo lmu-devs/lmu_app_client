@@ -294,5 +294,13 @@
   "menuNotAvailable": "Menu not available",
   "@menuNotAvailable": {
     "description": "Menu not available"
+  },
+  "unsavedChanges": "You Have Unsaved Changes",
+  "@unsavedChanges": {
+    "description": "Unsaved changes"
+  },
+  "unsavedChangesDescription": "Do you want to continue editing?",
+  "@unsavedChangesDescription": {
+    "description": "Unsaved changes description"
   }
 }

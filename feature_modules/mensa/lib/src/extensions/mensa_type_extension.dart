@@ -1,22 +1,17 @@
 import 'package:core/localizations.dart';
-
-import '../repository/api/models/mensa/mensa_type.dart';
+import 'package:shared_api/mensa.dart';
 
 extension MensaTypeNameMapper on MensaType {
   String text(CanteenLocalizations localizations) {
-    switch (this) {
-      case MensaType.mensa:
-        return localizations.mensaTypeMensa;
-      case MensaType.stuBistro:
-        return localizations.mensaTypeStuBistro;
-      case MensaType.stuCafe:
-        return localizations.mensaTypeStuCafe;
-      case MensaType.lounge:
-        return localizations.mensaTypeLounge;
-      case MensaType.cafeBar:
-        return localizations.mensaTypeCafeBar;
-      default:
-        return '';
-    }
+    return switch (this) {
+      MensaType.mensa => localizations.mensaTypeMensa,
+      MensaType.stuBistro => localizations.mensaTypeStuBistro,
+      MensaType.stuCafe => localizations.mensaTypeStuCafe,
+      MensaType.lounge => localizations.mensaTypeLounge,
+      MensaType.cafeBar => localizations.mensaTypeCafeBar,
+      MensaType.none => localizations.mensaTypeMensa,
+    };
   }
+
+  int compareTo(MensaType other) => index.compareTo(other.index);
 }

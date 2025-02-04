@@ -4,24 +4,42 @@ import 'package:core/localizations.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../bloc/taste_profile/taste_profile_cubit.dart';
-import '../../bloc/taste_profile/taste_profile_state.dart';
+import '../../bloc/taste_profile/cubit.dart';
+import '../../repository/api/models/taste_profile/taste_profile_preset.dart';
 import '../../services/taste_profile_service.dart';
 
-class TasteProfilePresetsSection extends StatelessWidget {
+class TasteProfilePresetsSection extends StatefulWidget {
   const TasteProfilePresetsSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final selectedAllergiesPresetsNotifier = GetIt.I.get<TasteProfileService>().selectedAllergiesPresetsNotifier;
-    final selectedPreferencePresetNotifier = GetIt.I.get<TasteProfileService>().selectedPreferencePresetNotifier;
-    final isActiveNotifier = GetIt.I.get<TasteProfileService>().isActiveNotifier;
-    final excludedLabelsNotifier = GetIt.I.get<TasteProfileService>().excludedLabelsNotifier;
-    final localizations = context.locals.canteen;
-    final tasteProfile = (GetIt.I.get<TasteProfileCubit>().state as TasteProfileLoadSuccess).tasteProfile;
-    final preferencesPresets = tasteProfile.preferencesPresets;
-    final allergiesPresets = tasteProfile.allergiesPresets;
+  State<TasteProfilePresetsSection> createState() => _TasteProfilePresetsSectionState();
+}
 
+class _TasteProfilePresetsSectionState extends State<TasteProfilePresetsSection> {
+  late final ValueNotifier<Set<String>> _selectedAllergiesPresetsNotifier;
+  late final ValueNotifier<String?> _selectedPreferencePresetNotifier;
+  late final ValueNotifier<bool> _isActiveNotifier;
+  late final ValueNotifier<Set<String>> _excludedLabelsNotifier;
+  late final List<TasteProfilePreset> _preferencesPresets;
+  late final List<TasteProfilePreset> _allergiesPresets;
+
+  @override
+  void initState() {
+    final tasteProfleService = GetIt.I.get<TasteProfileService>();
+    final tasteProfileCubit = GetIt.I.get<TasteProfileCubit>();
+    _selectedAllergiesPresetsNotifier = tasteProfleService.selectedAllergiesPresetsNotifier;
+    _selectedPreferencePresetNotifier = tasteProfleService.selectedPreferencePresetNotifier;
+    _isActiveNotifier = tasteProfleService.isActiveNotifier;
+    _excludedLabelsNotifier = tasteProfleService.excludedLabelsNotifier;
+    final tasteProfile = (tasteProfileCubit.state as TasteProfileLoadSuccess).tasteProfile;
+    _preferencesPresets = tasteProfile.preferencesPresets;
+    _allergiesPresets = tasteProfile.allergiesPresets;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localizations = context.locals.canteen;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
       child: Column(
@@ -29,91 +47,43 @@ class TasteProfilePresetsSection extends StatelessWidget {
         children: [
           LmuTileHeadline.base(title: localizations.presets),
           ValueListenableBuilder(
-            valueListenable: selectedPreferencePresetNotifier,
+            valueListenable: _selectedPreferencePresetNotifier,
             builder: (context, selectedPreferencePreset, _) {
               return LmuContentTile(
-                content: [
-                  for (final preferencesPreset in preferencesPresets)
-                    LmuListItem.action(
+                content: _preferencesPresets.map(
+                  (preferencesPreset) {
+                    return LmuListItem.action(
                       title: preferencesPreset.text,
                       leadingArea: LmuText.body(preferencesPreset.emojiAbbreviation),
                       actionType: LmuListItemAction.radio,
                       mainContentAlignment: MainContentAlignment.center,
                       initialValue: selectedPreferencePreset?.contains(preferencesPreset.enumName),
                       shouldChange: (value) => !value,
-                      onChange: (value) {
-                        final excludedLabels = Set<String>.from(excludedLabelsNotifier.value);
-                        final presetName = preferencesPreset.enumName;
-
-                        final otherLabels = preferencesPresets
-                            .where((element) => element.enumName != presetName)
-                            .map((e) => e.exclude)
-                            .expand((element) => element)
-                            .toSet();
-
-                        final labelsFromToggle =
-                            preferencesPresets.firstWhere((element) => element.enumName == presetName).exclude.toSet();
-
-                        excludedLabels.removeAll(otherLabels);
-
-                        excludedLabels.addAll(labelsFromToggle);
-
-                        if (excludedLabelsNotifier.value != excludedLabels) {
-                          excludedLabelsNotifier.value = excludedLabels;
-                          isActiveNotifier.value = true;
-                        }
-
-                        selectedPreferencePresetNotifier.value = preferencesPreset.enumName;
-                      },
-                    ),
-                ],
+                      onChange: (_) => _onPreferencesPresetChange(preferencesPreset),
+                    );
+                  },
+                ).toList(),
               );
             },
           ),
           const SizedBox(height: LmuSizes.size_16),
           ValueListenableBuilder(
-            valueListenable: selectedAllergiesPresetsNotifier,
+            valueListenable: _selectedAllergiesPresetsNotifier,
             builder: (context, selectedAllergiesPresets, _) {
               return LmuContentTile(
-                content: [
-                  for (final allergiesPreset in allergiesPresets)
-                    LmuListItem.action(
+                content: _allergiesPresets.map(
+                  (allergiesPreset) {
+                    return LmuListItem.action(
                       title: allergiesPreset.text,
                       leadingArea: LmuText.body(allergiesPreset.emojiAbbreviation),
                       actionType: LmuListItemAction.checkbox,
                       mainContentAlignment: MainContentAlignment.center,
                       initialValue: selectedAllergiesPresets.contains(allergiesPreset.enumName),
-                      onChange: (value) {
-                        final activeToggles = Set<String>.from(selectedAllergiesPresets);
-                        final excludedLabels = Set<String>.from(excludedLabelsNotifier.value);
-
-                        final labelsFromToggles = activeToggles
-                            .map((e) => allergiesPresets.firstWhere((element) => element.enumName == e).exclude)
-                            .expand((element) => element)
-                            .toSet();
-
-                        excludedLabels.removeAll(labelsFromToggles);
-
-                        if (value) {
-                          activeToggles.add(allergiesPreset.enumName);
-                        } else {
-                          activeToggles.remove(allergiesPreset.enumName);
-                        }
-
-                        for (final activeToggle in activeToggles) {
-                          final presetExclude =
-                              allergiesPresets.firstWhere((element) => element.enumName == activeToggle).exclude;
-                          excludedLabels.addAll(presetExclude);
-                        }
-
-                        if (excludedLabelsNotifier.value != excludedLabels) {
-                          excludedLabelsNotifier.value = excludedLabels;
-                          isActiveNotifier.value = true;
-                        }
-                        selectedAllergiesPresetsNotifier.value = activeToggles;
-                      },
-                    ),
-                ],
+                      onChange: (isActive) =>
+                          _onAllergiesPresetChange(selectedAllergiesPresets, isActive, allergiesPreset),
+                    );
+                  },
+                ).toList(),
               );
             },
           ),
@@ -121,5 +91,56 @@ class TasteProfilePresetsSection extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _onPreferencesPresetChange(TasteProfilePreset preferencesPreset) {
+    final presetName = preferencesPreset.enumName;
+    final excludedLabels = Set<String>.from(_excludedLabelsNotifier.value);
+
+    final otherLabels = _preferencesPresets
+        .where((preset) => preset.enumName != presetName)
+        .map((e) => e.exclude)
+        .expand((element) => element)
+        .toSet();
+
+    final labelsFromToggle = _preferencesPresets.firstWhere((preset) => preset.enumName == presetName).exclude.toSet();
+
+    excludedLabels.removeAll(otherLabels);
+    excludedLabels.addAll(labelsFromToggle);
+    if (_excludedLabelsNotifier.value != excludedLabels) {
+      _excludedLabelsNotifier.value = excludedLabels;
+      _isActiveNotifier.value = true;
+    }
+    _selectedPreferencePresetNotifier.value = preferencesPreset.enumName;
+  }
+
+  void _onAllergiesPresetChange(
+      Set<String> selectedAllergiesPresets, bool isActive, TasteProfilePreset allergiesPreset) {
+    final activeToggles = Set<String>.from(selectedAllergiesPresets);
+    final excludedLabels = Set<String>.from(_excludedLabelsNotifier.value);
+
+    final labelsFromToggles = activeToggles
+        .map((e) => _allergiesPresets.firstWhere((element) => element.enumName == e).exclude)
+        .expand((element) => element)
+        .toSet();
+
+    excludedLabels.removeAll(labelsFromToggles);
+
+    if (isActive) {
+      activeToggles.add(allergiesPreset.enumName);
+    } else {
+      activeToggles.remove(allergiesPreset.enumName);
+    }
+
+    for (final activeToggle in activeToggles) {
+      final presetExclude = _allergiesPresets.firstWhere((element) => element.enumName == activeToggle).exclude;
+      excludedLabels.addAll(presetExclude);
+    }
+
+    if (_excludedLabelsNotifier.value != excludedLabels) {
+      _excludedLabelsNotifier.value = excludedLabels;
+      _isActiveNotifier.value = true;
+    }
+    _selectedAllergiesPresetsNotifier.value = activeToggles;
   }
 }

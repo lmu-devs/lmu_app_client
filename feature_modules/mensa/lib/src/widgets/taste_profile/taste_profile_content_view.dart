@@ -6,11 +6,11 @@ import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../services/taste_profile_service.dart';
-import '../../widgets/taste_profile/taste_profile_footer_section.dart';
-import '../../widgets/taste_profile/taste_profile_labels_section.dart';
-import '../../widgets/taste_profile/taste_profile_presets_section.dart';
-import '../../widgets/taste_profile/taste_profile_title_section.dart';
-import '../../widgets/taste_profile/taste_profile_toggle_section.dart';
+import 'taste_profile_footer_section.dart';
+import 'taste_profile_labels_section.dart';
+import 'taste_profile_presets_section.dart';
+import 'taste_profile_title_section.dart';
+import 'taste_profile_toggle_section.dart';
 
 class TasteProfileContentView extends StatelessWidget {
   const TasteProfileContentView({super.key});

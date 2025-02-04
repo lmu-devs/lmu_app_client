@@ -10,7 +10,9 @@ import '../repository/mensa_repository.dart';
 import '../repository/repository.dart';
 
 class TasteProfileService {
-  TasteProfileService();
+  TasteProfileService() {
+    _init();
+  }
 
   final _mensaRepository = GetIt.I.get<MensaRepository>();
 
@@ -34,6 +36,14 @@ class TasteProfileService {
   Set<String> _initialSelectedAllergiesPresets = {};
   String? _initialSelectedPreferencePreset = '';
   Set<String> _initialExcludedLabels = {};
+
+  void dispose() {
+    _isActiveNotifier.dispose();
+    _selectedAllergiesPresetsNotifier.dispose();
+    _selectedPreferencePresetNotifier.dispose();
+    _excludedLabelsNotifier.dispose();
+    _excludedLabelItemNotifier.dispose();
+  }
 
   void onOpen() {
     _initialIsActive = _isActiveNotifier.value;
@@ -78,7 +88,7 @@ class TasteProfileService {
     return _labelItems?.firstWhereOrNull((item) => item.enumName == id);
   }
 
-  void init() async {
+  void _init() async {
     currentTasteProfileState = await _mensaRepository.getTasteProfileState();
     _isActiveNotifier.value = currentTasteProfileState.isActive;
     _selectedAllergiesPresetsNotifier.value = currentTasteProfileState.selectedAllergiesPresets;

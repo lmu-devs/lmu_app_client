@@ -23,16 +23,14 @@ class DishDetailsPage extends StatelessWidget {
 
   final MenuItemModel menuItemModel;
 
-  MenuItemModel get _menuItemModel => menuItemModel;
-
-  List<PriceModel> get _prices => _menuItemModel.prices;
+  List<PriceModel> get _prices => menuItemModel.prices;
 
   @override
   Widget build(BuildContext context) {
     final tasteProfileService = GetIt.I<TasteProfileService>();
     final userPreferenceService = GetIt.I<MensaUserPreferencesService>();
 
-    final labelItems = _menuItemModel.labels
+    final labelItems = menuItemModel.labels
         .map((e) => tasteProfileService.getLabelItemFromId(e))
         .where((element) => element != null)
         .cast<TasteProfileLabelItem>()
@@ -40,7 +38,7 @@ class DishDetailsPage extends StatelessWidget {
         .sortedBy((element) => element.enumName);
 
     return LmuMasterAppBar.bottomSheet(
-      largeTitle: _menuItemModel.title,
+      largeTitle: menuItemModel.title,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
@@ -52,30 +50,19 @@ class DishDetailsPage extends StatelessWidget {
                   ValueListenableBuilder(
                     valueListenable: userPreferenceService.favoriteDishIdsNotifier,
                     builder: (context, favoriteDishIds, _) {
-                      final isFavorite = favoriteDishIds.contains(_menuItemModel.id);
+                      final isFavorite = favoriteDishIds.contains(menuItemModel.id);
                       return LmuButton(
                         leadingWidget: StarIcon(
                           isActive: isFavorite,
                           disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
                         ),
                         title:
-                            "${_menuItemModel.ratingModel.calculateLikeCount(isFavorite)} ${context.locals.app.likes}",
+                            "${menuItemModel.ratingModel.calculateLikeCount(isFavorite)} ${context.locals.app.likes}",
                         emphasis: ButtonEmphasis.secondary,
-                        onTap: () => userPreferenceService.toggleFavoriteDishId(_menuItemModel.id),
+                        onTap: () => userPreferenceService.toggleFavoriteDishId(menuItemModel.id),
                       );
                     },
                   ),
-                  const SizedBox(width: LmuSizes.size_8),
-                  // const LmuButton(
-                  //   title: "Erinnere mich",
-                  //   trailingIcon: LucideIcons.bell,
-                  //   emphasis: ButtonEmphasis.secondary,
-                  // ),
-                  // const SizedBox(width: LmuSizes.size_8),
-                  // const LmuButton(
-                  //   title: "Teilen",
-                  //   emphasis: ButtonEmphasis.secondary,
-                  // ),
                 ],
               ),
               const SizedBox(height: LmuSizes.size_32),
@@ -102,7 +89,7 @@ class DishDetailsPage extends StatelessWidget {
                 content: [
                   LmuListItem.base(
                     title: context.locals.canteen.simplePrice,
-                    trailingTitle: _menuItemModel.priceSimple,
+                    trailingTitle: menuItemModel.priceSimple,
                   ),
                   if (_prices.first.basePrice > 0.0)
                     LmuListItem.base(
@@ -131,31 +118,12 @@ class DishDetailsPage extends StatelessWidget {
   }
 }
 
-extension PriceCategoryName on PriceCategory {
+extension on PriceCategory {
   String name(CanteenLocalizations localizations) {
-    switch (this) {
-      case PriceCategory.students:
-        return localizations.students;
-      case PriceCategory.staff:
-        return localizations.staff;
-      case PriceCategory.guests:
-        return localizations.guests;
-    }
-  }
-}
-
-extension PriceFormatter on PriceModel {
-  String priceString(CanteenLocalizations localizations) => localizations.pricePerUnit(
-        pricePerUnit.toStringAsFixed(2),
-        unit,
-      );
-}
-
-extension PriceCategoryVisualizerExtension on PriceCategory {
-  Color textColor(LmuColors colors, {required bool isActive}) {
-    if (isActive) {
-      return colors.brandColors.textColors.strongColors.base;
-    }
-    return colors.neutralColors.textColors.mediumColors.base;
+    return switch (this) {
+      PriceCategory.students => localizations.students,
+      PriceCategory.staff => localizations.staff,
+      PriceCategory.guests => localizations.guests,
+    };
   }
 }
