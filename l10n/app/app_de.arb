@@ -34,5 +34,7 @@
   "readMore": "Weiterlesen",
   "somethingWentWrong": "Etwas ist schiefgelaufen",
   "tryAgain": "Wiederholen",
-  "showAll": "Alle anzeigen"
+  "showAll": "Alle anzeigen",
+  "discard": "Verwerfen",
+  "continueAction": "Weiter"
 }

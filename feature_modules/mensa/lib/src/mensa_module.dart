@@ -1,10 +1,10 @@
 import 'package:core/module.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/mensa.dart';
 
 import 'bloc/bloc.dart';
-import 'public_api/default_mensa_public_api.dart';
-import 'public_api/public_api.dart';
 import 'repository/repository.dart';
+import 'services/default_mensa_public_api.dart';
 import 'services/services.dart';
 
 class MensaModule extends AppModule
@@ -12,7 +12,6 @@ class MensaModule extends AppModule
         LocalDependenciesProvidingAppModule,
         NoticeableAppStartAppModule,
         PublicApiProvidingAppModule,
-        WaitingAppStartAppModule,
         PrivateDataContainingAppModule,
         LocalizedDataContainigAppModule {
   @override
@@ -22,9 +21,10 @@ class MensaModule extends AppModule
   void provideLocalDependencies() {
     GetIt.I.registerSingleton<MensaRepository>(ConnectedMensaRepository(mensaApiClient: MensaApiClient()));
     GetIt.I.registerSingleton<MensaCubit>(MensaCubit(), dispose: (srv) => srv.close());
-    GetIt.I.registerSingleton<TasteProfileService>(TasteProfileService());
+    GetIt.I.registerSingleton<TasteProfileService>(TasteProfileService(), dispose: (srv) => srv.dispose());
     GetIt.I.registerSingleton<TasteProfileCubit>(TasteProfileCubit(), dispose: (srv) => srv.close());
-    GetIt.I.registerSingleton<MensaUserPreferencesService>(MensaUserPreferencesService());
+    GetIt.I
+        .registerSingleton<MensaUserPreferencesService>(MensaUserPreferencesService(), dispose: (srv) => srv.dispose());
     GetIt.I.registerSingleton<MenuService>(MenuService(), dispose: (srv) => srv.dispose());
     GetIt.I.registerSingleton<MensaDistanceService>(MensaDistanceService(), dispose: (srv) => srv.dispose());
     GetIt.I.registerSingleton<MensaStatusUpdateService>(MensaStatusUpdateService(), dispose: (srv) => srv.dispose());
@@ -32,21 +32,13 @@ class MensaModule extends AppModule
 
   @override
   void providePublicApi() {
-    GetIt.I.registerSingleton<MensaPublicApi>(DefaultMensaPublicApi());
+    GetIt.I.registerSingleton<MensaService>(DefaultMensaService());
   }
 
   @override
   void onAppStartNotice() {
     GetIt.I.get<MensaCubit>().loadMensaData();
     GetIt.I.get<TasteProfileCubit>().loadTasteProfile();
-    GetIt.I.get<TasteProfileService>().init();
-    GetIt.I.get<MensaDistanceService>().init();
-    GetIt.I.get<MensaStatusUpdateService>().init();
-  }
-
-  @override
-  Future onAppStartWaiting() async {
-    await GetIt.I.get<MensaUserPreferencesService>().init();
   }
 
   @override

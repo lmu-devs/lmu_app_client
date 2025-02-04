@@ -1,20 +1,18 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../../public_api/models/mensa_location_data.dart';
-
 part 'mensa_location.g.dart';
 
 @JsonSerializable()
-class MensaLocation extends MensaLocationData {
+class MensaLocation {
   const MensaLocation({
-    required String address,
-    required double latitude,
-    required double longitude,
-  }) : super(
-          address: address,
-          latitude: latitude,
-          longitude: longitude,
-        );
+    required this.address,
+    required this.latitude,
+    required this.longitude,
+  });
+
+  final String address;
+  final double latitude;
+  final double longitude;
 
   factory MensaLocation.placeholder() => const MensaLocation(
         address: '',

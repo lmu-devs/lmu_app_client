@@ -12,30 +12,22 @@ import '../../services/mensa_user_preferences_service.dart';
 import '../widgets.dart';
 
 class MensaOverviewAllSection extends StatelessWidget {
-  const MensaOverviewAllSection({
-    super.key,
-    required this.sortedMensaModelsNotifier,
-    required this.isOpenNowFilerNotifier,
-    required this.mensaModels,
-  });
+  const MensaOverviewAllSection({super.key, required this.mensaModels});
 
-  final ValueNotifier<List<MensaModel>> sortedMensaModelsNotifier;
-  final ValueNotifier<bool> isOpenNowFilerNotifier;
   final List<MensaModel> mensaModels;
 
   @override
   Widget build(BuildContext context) {
-    final favoriteMensaIdsNotifier = GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier;
-    final mensaStatusService = GetIt.I.get<MensaStatusUpdateService>();
+    final userPreferencesService = GetIt.I.get<MensaUserPreferencesService>();
 
     return ValueListenableBuilder(
-      valueListenable: sortedMensaModelsNotifier,
+      valueListenable: userPreferencesService.sortedMensaModelsNotifier,
       builder: (context, sortedMensaModels, _) {
         return ListenableBuilder(
-          listenable: mensaStatusService,
+          listenable: GetIt.I.get<MensaStatusUpdateService>(),
           builder: (context, child) {
             return ValueListenableBuilder(
-              valueListenable: isOpenNowFilerNotifier,
+              valueListenable: userPreferencesService.isOpenNowFilterNotifier,
               builder: (context, isFilterActive, _) {
                 final filteredMensaModels = sortedMensaModels.where(
                   (element) {
@@ -72,13 +64,13 @@ class MensaOverviewAllSection extends StatelessWidget {
                     itemCount: filteredMensaModels.length,
                     itemBuilder: (context, index) {
                       return ValueListenableBuilder(
-                        valueListenable: favoriteMensaIdsNotifier,
+                        valueListenable: userPreferencesService.favoriteMensaIdsNotifier,
                         builder: (context, favoriteMensaIds, _) {
                           final isFavorite = favoriteMensaIds.contains(filteredMensaModels[index].canteenId);
                           return MensaOverviewTile(
                             mensaModel: filteredMensaModels[index],
                             isFavorite: isFavorite,
-                            hasDivider: index == mensaModels.length - 1,
+                            hasDivider: index != mensaModels.length - 1,
                             hasLargeImage: filteredMensaModels[index].images.isNotEmpty,
                           );
                         },

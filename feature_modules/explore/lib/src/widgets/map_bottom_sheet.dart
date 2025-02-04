@@ -1,16 +1,12 @@
-import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
-import 'package:core/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:mensa/mensa.dart';
+import 'package:shared_api/mensa.dart';
 
 import 'map_bottom_sheet_sizes.dart';
 
 class MapBottomSheet extends StatefulWidget {
-  final ValueNotifier<MensaModel?> selectedMensaNotifier;
+  final ValueNotifier<MensaLocationData?> selectedMensaNotifier;
   final DraggableScrollableController sheetController;
 
   const MapBottomSheet({
@@ -24,7 +20,6 @@ class MapBottomSheet extends StatefulWidget {
 }
 
 class MapBottomSheetState extends State<MapBottomSheet> {
-  late ValueNotifier<List<String>> _favoriteMensasNotifier;
   late DraggableScrollableController _sheetController;
   double _previousSize = SheetSizes.small.size;
 
@@ -37,7 +32,6 @@ class MapBottomSheetState extends State<MapBottomSheet> {
   @override
   void initState() {
     super.initState();
-    _favoriteMensasNotifier = GetIt.I.get<MensaUserPreferencesService>().favoriteMensaIdsNotifier;
 
     _sheetController = widget.sheetController;
     _sheetController.addListener(_onSheetScroll);
@@ -87,7 +81,7 @@ class MapBottomSheetState extends State<MapBottomSheet> {
     }
   }
 
-  void _animateSheet(MensaModel? selectedMensa) {
+  void _animateSheet(MensaLocationData? selectedMensa) {
     if (selectedMensa != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _sheetController.animateTo(
@@ -111,7 +105,7 @@ class MapBottomSheetState extends State<MapBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<MensaModel?>(
+    return ValueListenableBuilder<MensaLocationData?>(
       valueListenable: widget.selectedMensaNotifier,
       builder: (context, selectedMensa, child) {
         List<double> snapSizes = selectedMensa != null
@@ -121,7 +115,7 @@ class MapBottomSheetState extends State<MapBottomSheet> {
         _animateSheet(selectedMensa);
 
         if (selectedMensa != null) {
-          _searchController.text = selectedMensa.name;
+          _searchController.text = selectedMensa.id;
         } else {
           _searchController.text = '';
         }
@@ -167,30 +161,30 @@ class MapBottomSheetState extends State<MapBottomSheet> {
                   child: Column(
                     children: [
                       if (selectedMensa != null)
-                        FadeTransition(
-                          opacity: _fadeAnimation,
-                          child: ValueListenableBuilder<List<String>>(
-                            valueListenable: _favoriteMensasNotifier,
-                            builder: (context, favoriteMensas, _) {
-                              return MensaOverviewTile(
-                                mensaModel: selectedMensa,
-                                isFavorite: favoriteMensas.contains(selectedMensa.canteenId),
-                                hasLargeImage: false,
-                                hasButton: true,
-                                buttonText: context.locals.explore.navigate,
-                                buttonAction: () => LmuBottomSheet.show(
-                                  context,
-                                  content: NavigationSheet(
-                                    latitude: selectedMensa.location.latitude,
-                                    longitude: selectedMensa.location.longitude,
-                                    address: selectedMensa.location.address,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        )
-                      else
+                        // FadeTransition(
+                        //   opacity: _fadeAnimation,
+                        //   child: ValueListenableBuilder<List<String>>(
+                        //     valueListenable: _favoriteMensasNotifier,
+                        //     builder: (context, favoriteMensas, _) {
+                        //       return MensaOverviewTile(
+                        //         mensaModel: selectedMensa,
+                        //         isFavorite: favoriteMensas.contains(selectedMensa.canteenId),
+                        //         hasLargeImage: false,
+                        //         hasButton: true,
+                        //         buttonText: context.locals.explore.navigate,
+                        //         buttonAction: () => LmuBottomSheet.show(
+                        //           context,
+                        //           content: NavigationSheet(
+                        //             latitude: selectedMensa.location.latitude,
+                        //             longitude: selectedMensa.location.longitude,
+                        //             address: selectedMensa.location.address,
+                        //           ),
+                        //         ),
+                        //       );
+                        //     },
+                        //   ),
+                        // )
+
                         const SizedBox.shrink(),
                       /**LmuSearchInputField(
                         context: context,

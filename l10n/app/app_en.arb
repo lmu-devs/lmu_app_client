@@ -160,5 +160,13 @@
   "showAll": "Show all",
   "@showAll": {
     "description": "Show all"
+  },
+  "discard": "Discard",
+  "@discard": {
+    "description": "Discard"
+  },
+  "continueAction": "Continue",
+  "@continueAction": {
+    "description": "Continue"
   }
 }

@@ -35,7 +35,6 @@ class _TasteProfileLabelsSectionState extends State<TasteProfileLabelsSection> {
   late StickyHeaderController _stickyHeaderController;
 
   final _itemOffsets = <double>[];
-  final _stickyHeaderKey = const GlobalObjectKey("Test");
 
   ScrollController? _primaryScrollController;
   double _stickyHeaderScrollOffset = 606;
@@ -53,7 +52,6 @@ class _TasteProfileLabelsSectionState extends State<TasteProfileLabelsSection> {
     _stickyHeaderController = StickyHeaderController();
 
     _stickyHeaderController.addListener(() {
-      print(_stickyHeaderController.stickyHeaderScrollOffset);
       _stickyHeaderScrollOffset = _stickyHeaderController.stickyHeaderScrollOffset;
       _calculteCategoryOffsets();
     });
@@ -101,7 +99,6 @@ class _TasteProfileLabelsSectionState extends State<TasteProfileLabelsSection> {
 
     return SliverStickyHeader(
       controller: _stickyHeaderController,
-      key: _stickyHeaderKey,
       header: LmuTabBar(
         items: _sortedLabels.map((e) => LmuTabBarItemData(title: e.name)).toList(),
         activeTabIndexNotifier: _activeIndexNotifier,
@@ -118,8 +115,7 @@ class _TasteProfileLabelsSectionState extends State<TasteProfileLabelsSection> {
         padding: const EdgeInsets.all(LmuSizes.size_16),
         sliver: SliverList.separated(
           itemCount: _sortedLabels.length,
-          separatorBuilder: (context, index) =>
-              SizedBox(height: index != _sortedLabels.length - 1 ? LmuSizes.size_16 : 0),
+          separatorBuilder: (_, index) => SizedBox(height: index != _sortedLabels.length - 1 ? LmuSizes.size_16 : 0),
           itemBuilder: (context, index) {
             final label = _sortedLabels[index];
             final sortedLabelItems = label.items.toList()..sort((a, b) => a.text.compareTo(b.text));

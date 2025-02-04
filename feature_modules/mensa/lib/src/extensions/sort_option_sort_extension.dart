@@ -5,9 +5,7 @@ import '../repository/api/models/user_preferences/sort_option.dart';
 import '../services/services.dart';
 
 extension SortOptionSortExtension on SortOption {
-  List<MensaModel> sort(
-    List<MensaModel> mensaModels,
-  ) {
+  List<MensaModel> sort(List<MensaModel> mensaModels) {
     switch (this) {
       case SortOption.alphabetically:
         return List.from(mensaModels)

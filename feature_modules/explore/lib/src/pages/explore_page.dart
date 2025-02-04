@@ -10,7 +10,7 @@ import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:geolocator/geolocator.dart' as geo;
 import 'package:get_it/get_it.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
-import 'package:mensa/mensa.dart';
+import 'package:shared_api/mensa.dart';
 
 import '../widgets/map_action_button.dart';
 import '../widgets/map_bottom_sheet.dart';
@@ -54,9 +54,9 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
   PointAnnotation? previouslySelectedAnnotation;
   final int animationToLocationDuration = 240;
 
-  List<MensaModel> mensaData = [];
-  Map<PointAnnotation, MensaModel> mensaPins = {};
-  final ValueNotifier<MensaModel?> selectedMensaNotifier = ValueNotifier<MensaModel?>(null);
+  List<MensaLocationData> mensaData = [];
+  Map<PointAnnotation, MensaLocationData> mensaPins = {};
+  final ValueNotifier<MensaLocationData?> selectedMensaNotifier = ValueNotifier<MensaLocationData?>(null);
   final themeProvider = GetIt.I.get<ThemeProvider>();
 
   late final DraggableScrollableController _sheetController;
@@ -109,12 +109,12 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
       var annotationOptions = PointAnnotationOptions(
         geometry: Point(
           coordinates: Position(
-            mensa.location.longitude,
-            mensa.location.latitude,
+            mensa.longitude,
+            mensa.latitude,
           ),
         ),
         iconImage: _getMarkerByType(mensa.type),
-        iconSize: selectedMensaNotifier.value?.canteenId == mensa.canteenId ? 1.5 : 1.0,
+        iconSize: selectedMensaNotifier.value?.id == mensa.id ? 1.5 : 1.0,
       );
 
       options.add(annotationOptions);
@@ -231,12 +231,12 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
       var annotationOptions = PointAnnotationOptions(
         geometry: Point(
           coordinates: Position(
-            mensa.location.longitude,
-            mensa.location.latitude,
+            mensa.longitude,
+            mensa.latitude,
           ),
         ),
         iconImage: _getMarkerByType(mensa.type),
-        iconSize: selectedMensaNotifier.value?.canteenId == mensa.canteenId ? 1.5 : 1.0,
+        iconSize: selectedMensaNotifier.value?.id == mensa.id ? 1.5 : 1.0,
       );
 
       options.add(annotationOptions);
@@ -253,13 +253,13 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
     pointAnnotationManager?.addOnPointAnnotationClickListener(
       AnnotationClickListener(
         onAnnotationClick: (annotation) async {
-          MapEntry<PointAnnotation, MensaModel>? mapEntry =
-              mensaPins.entries.cast<MapEntry<PointAnnotation, MensaModel>?>().firstWhere(
+          MapEntry<PointAnnotation, MensaLocationData>? mapEntry =
+              mensaPins.entries.cast<MapEntry<PointAnnotation, MensaLocationData>?>().firstWhere(
                     (entry) => entry?.key.id == annotation.id,
                     orElse: () => null,
                   );
 
-          MensaModel? selectedMensa = mapEntry?.value;
+          MensaLocationData? selectedMensa = mapEntry?.value;
 
           if (selectedMensa != null) {
             selectedMensaNotifier.value = selectedMensa;
@@ -311,7 +311,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
       await mapboxMap?.setCamera(spawnLocation!);
     });
 
-    mensaData = GetIt.I.get<MensaPublicApi>().mensaData;
+    mensaData = GetIt.I.get<MensaService>().mensaData;
     _sheetController = DraggableScrollableController();
     _sheetSizeNotifier = ValueNotifier<double>(0.0);
 
@@ -347,7 +347,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<MensaModel?>(
+    return ValueListenableBuilder<MensaLocationData?>(
       valueListenable: selectedMensaNotifier,
       builder: (context, selectedMensa, child) {
         if (selectedMensa == null && previouslySelectedAnnotation != null) {

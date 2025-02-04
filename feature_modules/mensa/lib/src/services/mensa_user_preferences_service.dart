@@ -4,20 +4,43 @@ import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 
 import '../bloc/bloc.dart';
-import '../repository/api/models/user_preferences/user_preferences.dart';
+import '../extensions/sort_option_sort_extension.dart';
+import '../repository/api/models/mensa/mensa_model.dart';
+import '../repository/api/models/user_preferences/sort_option.dart';
 import '../repository/mensa_repository.dart';
 
 class MensaUserPreferencesService {
-  MensaUserPreferencesService();
+  MensaUserPreferencesService() {
+    _init();
+  }
+
+  ValueNotifier<bool> get isOpenNowFilterNotifier => _isOpenNowFilterNotifier;
+  ValueNotifier<SortOption> get sortOptionNotifier => _sortOptionNotifier;
+  ValueNotifier<List<MensaModel>> get sortedMensaModelsNotifier => _sortedMensaModelsNotifier;
+  ValueNotifier<List<String>> get favoriteMensaIdsNotifier => _favoriteMensaIdsNotifier;
+  ValueNotifier<List<String>> get favoriteDishIdsNotifier => _favoriteDishIdsNotifier;
 
   final _mensaRepository = GetIt.I.get<MensaRepository>();
   final _appLogger = AppLogger();
+  final _isOpenNowFilterNotifier = ValueNotifier<bool>(false);
+  final _sortOptionNotifier = ValueNotifier<SortOption>(SortOption.rating);
+  final _sortedMensaModelsNotifier = ValueNotifier<List<MensaModel>>([]);
+  final _favoriteMensaIdsNotifier = ValueNotifier<List<String>>([]);
+  final _favoriteDishIdsNotifier = ValueNotifier<List<String>>([]);
 
-  Future init() {
+  void dispose() {
+    _isOpenNowFilterNotifier.dispose();
+    _sortOptionNotifier.dispose();
+    _sortedMensaModelsNotifier.dispose();
+    _favoriteMensaIdsNotifier.dispose();
+    _favoriteDishIdsNotifier.dispose();
+  }
+
+  Future _init() {
     return Future.wait([
-      initFavoriteMensaIds(),
-      initFavoriteDishIds(),
-      getSortOption(),
+      _initFavoriteMensaIds(),
+      _initFavoriteDishIds(),
+      _initSortOption(),
     ]);
   }
 
@@ -31,16 +54,9 @@ class MensaUserPreferencesService {
     ]);
   }
 
-  SortOption _initialSortOption = SortOption.rating;
-  SortOption get initialSortOption => _initialSortOption;
+  // Mensa Favorites
 
-  final _favoriteMensaIdsNotifier = ValueNotifier<List<String>>([]);
-  ValueNotifier<List<String>> get favoriteMensaIdsNotifier => _favoriteMensaIdsNotifier;
-
-  final _favoriteDishIdsNotifier = ValueNotifier<List<String>>([]);
-  ValueNotifier<List<String>> get favoriteDishIdsNotifier => _favoriteDishIdsNotifier;
-
-  Future<void> initFavoriteMensaIds() async {
+  Future<void> _initFavoriteMensaIds() async {
     final favoriteMensaIds = await _mensaRepository.getFavoriteMensaIds() ?? [];
     _favoriteMensaIdsNotifier.value = favoriteMensaIds;
     _appLogger.logMessage('[MensaUserPreferencesService]: Local favorite mensa ids: $favoriteMensaIds');
@@ -84,11 +100,12 @@ class MensaUserPreferencesService {
 
     _favoriteMensaIdsNotifier.value = favoriteMensaIds;
     await _mensaRepository.saveFavoriteMensaIds(favoriteMensaIds);
-
     await _mensaRepository.toggleFavoriteMensaId(mensaId);
   }
 
-  Future<void> initFavoriteDishIds() async {
+  // Dish Favorites
+
+  Future<void> _initFavoriteDishIds() async {
     final favoriteDishIds = await _mensaRepository.getFavoriteDishIds() ?? [];
     _favoriteDishIdsNotifier.value = favoriteDishIds;
     _appLogger.logMessage('[MensaUserPreferencesService]: Local favorite dish ids: $favoriteDishIds');
@@ -121,11 +138,18 @@ class MensaUserPreferencesService {
     }
   }
 
-  Future<void> getSortOption() async {
+  // Mensa Sorting and Filtering
+
+  void sortMensaModels(List<MensaModel> mensaModels) {
+    final sortedMensaModels = _sortOptionNotifier.value.sort(mensaModels);
+    _sortedMensaModelsNotifier.value = sortedMensaModels;
+  }
+
+  Future<void> _initSortOption() async {
     final loadedSortOption = await _mensaRepository.getSortOption();
 
     if (loadedSortOption != null) {
-      _initialSortOption = loadedSortOption;
+      _sortOptionNotifier.value = loadedSortOption;
     }
   }
 

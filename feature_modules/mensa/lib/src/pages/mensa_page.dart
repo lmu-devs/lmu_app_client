@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../bloc/bloc.dart';
-import '../services/services.dart';
-import '../views/views.dart';
+import '../widgets/overview/loading/mensa_overview_loading_view.dart';
+import '../widgets/overview/mensa_overview_content_view.dart';
 import 'taste_profile_page.dart';
 
 class MensaPage extends StatelessWidget {
@@ -31,11 +31,7 @@ class MensaPage extends StatelessWidget {
         bloc: GetIt.I.get<MensaCubit>(),
         builder: (context, state) {
           if (state is MensaLoadSuccess) {
-            final initialSortOption = GetIt.I.get<MensaUserPreferencesService>().initialSortOption;
-            return MensaOverviewContentView(
-              mensaModels: state.mensaModels,
-              initialSortOption: initialSortOption,
-            );
+            return MensaOverviewContentView(mensaModels: state.mensaModels);
           }
 
           return const MensaOverviewLoadingView();

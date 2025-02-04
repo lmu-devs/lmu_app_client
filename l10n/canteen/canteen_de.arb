@@ -60,5 +60,7 @@
     "pricePerUnit": "{price} je {unit}",
     "yourTasteFiltersAll": "Deine Food-Preferences sind literally so main character energy rn...",
     "cafeBarNotice": "Auswahl an Kaffeespezialitäten, Gebäck und Schmankerl für zwischendurch. Siehe Aushang vor Ort.",
-    "menuNotAvailable": "Menu nicht verfügbar"
+    "menuNotAvailable": "Menu nicht verfügbar",
+    "unsavedChanges": "Nicht gespeicherte Änderungen",
+    "unsavedChangesDescription": "Möchtest du die Änderungen weiter bearbeiten"
 }

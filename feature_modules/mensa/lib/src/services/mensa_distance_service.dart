@@ -8,13 +8,17 @@ import 'package:rxdart/rxdart.dart';
 import '../repository/api/models/mensa/mensa_location.dart';
 
 class MensaDistanceService with ChangeNotifier {
+  MensaDistanceService() {
+    _init();
+  }
+
   final _appLogger = AppLogger();
   final _locationSettings = const LocationSettings(accuracy: LocationAccuracy.best, distanceFilter: 50);
 
   Position? _currentLocation;
   StreamSubscription<List<Position>>? positionStream;
 
-  Future<void> init() async {
+  Future<void> _init() async {
     _currentLocation = await Geolocator.getCurrentPosition(locationSettings: _locationSettings);
     _appLogger.logMessage('[MensaDistanceService]: Initial location: $_currentLocation');
     notifyListeners();
@@ -31,6 +35,12 @@ class MensaDistanceService with ChangeNotifier {
         }
       },
     );
+  }
+
+  Future<void> updatePosition() async {
+    _currentLocation = await Geolocator.getCurrentPosition(locationSettings: _locationSettings);
+    _appLogger.logMessage('[MensaDistanceService]: Updated location: $_currentLocation');
+    notifyListeners();
   }
 
   @override

@@ -35,10 +35,7 @@ class LmuIssueType extends StatelessWidget {
           ],
         ),
         const SizedBox(height: LmuSizes.size_12),
-        Image.asset(
-          "core/lib/assets/sad.gif",
-          width: 200,
-        ),
+        Image.asset("core/lib/assets/sad.gif", width: 200),
         if (hasSpacing) const SizedBox(height: LmuSizes.size_112),
       ],
     );

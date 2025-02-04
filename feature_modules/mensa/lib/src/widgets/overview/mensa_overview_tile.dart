@@ -39,6 +39,7 @@ class MensaOverviewTile extends StatelessWidget {
       ),
       isFavorite: false,
       hasLargeImage: hasLargeImage,
+      hasDivider: true,
     );
   }
 
@@ -52,10 +53,10 @@ class MensaOverviewTile extends StatelessWidget {
     final imageUrl = mensaModel.images.isNotEmpty ? mensaModel.images.first.url : null;
 
     final distanceService = GetIt.I.get<MensaDistanceService>();
-    final stausUpdateService = GetIt.I.get<MensaStatusUpdateService>();
+    final statusUpdateService = GetIt.I.get<MensaStatusUpdateService>();
 
     return Padding(
-      padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.none : LmuSizes.size_12),
+      padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.size_12 : LmuSizes.none),
       child: GestureDetector(
         onTap: () => MensaDetailsRoute(mensaModel).go(context),
         child: Container(
@@ -124,27 +125,7 @@ class MensaOverviewTile extends StatelessWidget {
                                     color: colors.neutralColors.textColors.weakColors.base,
                                   ),
                                   const SizedBox(width: LmuSizes.size_4),
-                                  AnimatedSwitcher(
-                                    duration: const Duration(milliseconds: 500),
-                                    transitionBuilder: (child, animation) {
-                                      return FadeTransition(
-                                        opacity: animation,
-                                        child: ScaleTransition(
-                                          scale: Tween<double>(begin: 0.5, end: 1).animate(
-                                            CurvedAnimation(
-                                              parent: animation,
-                                              curve: isFavorite ? Curves.elasticOut : Curves.easeOutCirc,
-                                            ),
-                                          ),
-                                          child: child,
-                                        ),
-                                      );
-                                    },
-                                    child: StarIcon(
-                                      isActive: isFavorite,
-                                      key: ValueKey(isFavorite),
-                                    ),
-                                  ),
+                                  StarIcon(isActive: isFavorite),
                                 ],
                               ),
                             )
@@ -154,7 +135,7 @@ class MensaOverviewTile extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             ListenableBuilder(
-                              listenable: stausUpdateService,
+                              listenable: statusUpdateService,
                               builder: (context, child) {
                                 final openingStatus = mensaModel.currentOpeningStatus;
                                 final openingStatusStyling = openingStatus.openingStatusShort(context,
@@ -168,7 +149,7 @@ class MensaOverviewTile extends StatelessWidget {
                             ),
                             ListenableBuilder(
                               listenable: distanceService,
-                              builder: (context, child) {
+                              builder: (context, _) {
                                 final distance = distanceService.getDistanceToMensa(mensaModel.location);
                                 return distance != null
                                     ? LmuText.body(
@@ -227,7 +208,7 @@ class MensaOverviewTile extends StatelessWidget {
 
                         userPreferencesService.toggleFavoriteMensaId(id);
                       },
-                      child: const SizedBox(width: 64),
+                      child: const SizedBox(width: LmuSizes.size_64),
                     ),
                   ),
                 ],

@@ -8,9 +8,11 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
+  equatable: ^2.0.7
   flutter:
     sdk: flutter
   go_router: ^14.3.0
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:

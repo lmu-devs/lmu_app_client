@@ -4,12 +4,12 @@ import 'package:core/extensions.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/mensa.dart';
 
-import '../../mensa.dart';
 import '../bloc/menu_cubit/cubit.dart';
 import '../extensions/opening_hours_extensions.dart';
-import '../services/menu_service.dart';
-import '../views/details/menu/menu_cafe_bar_view.dart';
+import '../repository/api/models/mensa/mensa_model.dart';
+import '../services/services.dart';
 import '../widgets/widgets.dart';
 
 class MensaDetailsPage extends StatefulWidget {
@@ -24,6 +24,7 @@ class MensaDetailsPage extends StatefulWidget {
 class _MensaDetailsPageState extends State<MensaDetailsPage> {
   late bool _isTemporarilyClosed;
   late bool _isCafeBar;
+
   MensaModel get _mensaModel => widget.mensaModel;
 
   @override

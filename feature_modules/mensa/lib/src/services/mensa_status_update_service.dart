@@ -4,14 +4,14 @@ import 'package:core/logging.dart';
 import 'package:flutter/material.dart';
 
 class MensaStatusUpdateService extends ChangeNotifier {
-  void init() {
-    _startTimer();
+  MensaStatusUpdateService() {
+    _init();
   }
 
   Timer? _timer;
   final _appLogger = AppLogger();
 
-  void _startTimer() {
+  void _init() {
     final now = DateTime.now();
     final minutes = now.minute;
 
