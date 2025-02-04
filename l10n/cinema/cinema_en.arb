@@ -87,8 +87,8 @@
   "@start": {
     "description": "Start time of screening"
   },
-  "movie": "Movie",
+  "movie": "Movies",
   "@movie": {
-    "description": "Movie"
+    "description": "Movies"
   }
 }

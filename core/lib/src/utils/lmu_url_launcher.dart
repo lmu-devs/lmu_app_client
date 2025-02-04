@@ -1,5 +1,7 @@
 // url_launcher_service.dart
 
+import 'dart:io';
+
 import 'package:core/components.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,7 +22,7 @@ class LmuUrlLauncher {
       case LmuUrlLauncherMode.platformDefault:
         return LaunchMode.platformDefault;
       case LmuUrlLauncherMode.inAppWebView:
-        return LaunchMode.inAppWebView;
+        return Platform.isIOS ? LaunchMode.inAppWebView : LaunchMode.inAppBrowserView;
       case LmuUrlLauncherMode.externalApplication:
         return LaunchMode.externalApplication;
       case LmuUrlLauncherMode.externalNonBrowserApplication:
