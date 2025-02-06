@@ -2,7 +2,7 @@ import 'package:core/module.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/explore.dart';
 
-import 'services/default_explore_service.dart';
+import 'services/services.dart';
 
 class ExploreModule extends AppModule with LocalDependenciesProvidingAppModule, PublicApiProvidingAppModule {
   @override
@@ -15,6 +15,6 @@ class ExploreModule extends AppModule with LocalDependenciesProvidingAppModule, 
 
   @override
   void provideLocalDependencies() {
-    // TODO: implement provideLocalDependencies
+    GetIt.I.registerSingleton<ExploreMapService>(ExploreMapService());
   }
 }
