@@ -152,9 +152,12 @@ class MensaOverviewTile extends StatelessWidget {
                               builder: (context, _) {
                                 final distance = distanceService.getDistanceToMensa(mensaModel.location);
                                 return distance != null
-                                    ? LmuText.body(
-                                        " • ${distance.formatDistance()}",
-                                        color: colors.neutralColors.textColors.mediumColors.base,
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(left: LmuSizes.size_8),
+                                        child: LmuText.body(
+                                          "• ${distance.formatDistance()}",
+                                          color: colors.neutralColors.textColors.mediumColors.base,
+                                        ),
                                       )
                                     : const SizedBox.shrink();
                               },

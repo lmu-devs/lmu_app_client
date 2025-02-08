@@ -11,6 +11,7 @@ export 'images/images.dart';
 export 'in_text_visuals/in_text_visuals.dart';
 export 'input_field/input_fields.dart';
 export 'list_items/list_items.dart';
+export 'marquee/marquee.dart';
 export 'progress_indicators/progress_indicators.dart';
 export 'scaffolds/scaffolds.dart';
 export 'skeletons/skeletons.dart';

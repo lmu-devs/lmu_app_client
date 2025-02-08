@@ -34,10 +34,11 @@ const lmuColorsDark = LmuColors(
         disabled: ColorPrimitives.trspWhite30,
       ),
       nonInvertableColors: NonInvertableColors(
-          base: ColorPrimitives.white,
-          pressed: ColorPrimitives.trspWhite95,
-          disabled: Colors.white30,
-          active: ColorPrimitives.trspWhite95),
+        base: ColorPrimitives.white,
+        pressed: ColorPrimitives.trspWhite95,
+        disabled: Colors.white30,
+        active: ColorPrimitives.trspWhite95,
+      ),
       flippedColors: FlippedColors(
         base: ColorPrimitives.trspBlack90,
         pressed: ColorPrimitives.trspBlack67,
@@ -86,37 +87,48 @@ const lmuColorsDark = LmuColors(
     ),
   ),
   successColors: SuccessColors(
-      textColors: SuccessTextColors(
-          strongColors: StrongColors(
-              base: ColorPrimitives.brand100,
-              pressed: ColorPrimitives.brand120,
-              active: ColorPrimitives.brand100,
-              disabled: ColorPrimitives.brand30))),
+    textColors: SuccessTextColors(
+      strongColors: StrongColors(
+        base: ColorPrimitives.brand100,
+        pressed: ColorPrimitives.brand120,
+        active: ColorPrimitives.brand100,
+        disabled: ColorPrimitives.brand30,
+      ),
+    ),
+  ),
   dangerColors: DangerColors(
-      textColors: DangerTextColors(
-          strongColors: StrongColors(
-              base: ColorPrimitives.red70,
-              pressed: ColorPrimitives.red50,
-              active: ColorPrimitives.red70,
-              disabled: ColorPrimitives.red30)),
-      backgroundColors: DangerBackgroundColors(
-          weakColors: WeakColors(
-              base: ColorPrimitives.red20,
-              pressed: ColorPrimitives.red30,
-              active: ColorPrimitives.red20,
-              disabled: ColorPrimitives.red10),
-          strongColors: StrongColors(
-              base: ColorPrimitives.red50,
-              pressed: ColorPrimitives.red40,
-              active: ColorPrimitives.red50,
-              disabled: ColorPrimitives.red20))),
+    textColors: DangerTextColors(
+      strongColors: StrongColors(
+        base: ColorPrimitives.red70,
+        pressed: ColorPrimitives.red50,
+        active: ColorPrimitives.red70,
+        disabled: ColorPrimitives.red30,
+      ),
+    ),
+    backgroundColors: DangerBackgroundColors(
+      weakColors: WeakColors(
+        base: ColorPrimitives.red20,
+        pressed: ColorPrimitives.red30,
+        active: ColorPrimitives.red20,
+        disabled: ColorPrimitives.red10,
+      ),
+      strongColors: StrongColors(
+        base: ColorPrimitives.red50,
+        pressed: ColorPrimitives.red40,
+        active: ColorPrimitives.red50,
+        disabled: ColorPrimitives.red20,
+      ),
+    ),
+  ),
   warningColors: WarningColors(
-      textColors: WarningTextColors(
-          strongColors: StrongColors(
-              base: ColorPrimitives.amber70,
-              pressed: ColorPrimitives.amber50,
-              active: ColorPrimitives.amber70,
-              disabled: ColorPrimitives.amber30))),
+    textColors: WarningTextColors(
+      strongColors: StrongColors(
+          base: ColorPrimitives.amber70,
+          pressed: ColorPrimitives.amber50,
+          active: ColorPrimitives.amber70,
+          disabled: ColorPrimitives.amber30),
+    ),
+  ),
   mensaColors: MensaColors(
     textColors: MensaTextColors(
       mensa: Color(0xFF75DB70),
@@ -171,6 +183,10 @@ const lmuColorsDark = LmuColors(
     gradientLoadingColors: GradientLoadingColors(
       base: ColorPrimitives.trspWhite10,
       highlight: ColorPrimitives.trspWhite07,
+    ),
+    gradientFadeColors: GradientFadeColors(
+      start: Color(0x001f1f21),
+      end: ColorPrimitives.grey20,
     ),
   ),
   universityColors: UniversityColors(
@@ -347,6 +363,10 @@ const lmuColorsLight = LmuColors(
     gradientLoadingColors: GradientLoadingColors(
       base: ColorPrimitives.trspBlack10,
       highlight: ColorPrimitives.trspBlack05,
+    ),
+    gradientFadeColors: GradientFadeColors(
+      start: ColorPrimitives.trspWhite00,
+      end: ColorPrimitives.white,
     ),
   ),
   universityColors: UniversityColors(
