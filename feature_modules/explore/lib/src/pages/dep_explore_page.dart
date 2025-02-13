@@ -311,7 +311,7 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
       await mapboxMap?.setCamera(spawnLocation!);
     });
 
-    mensaData = GetIt.I.get<MensaService>().mensaData;
+    mensaData = [];
     _sheetController = DraggableScrollableController();
     _sheetSizeNotifier = ValueNotifier<double>(0.0);
 

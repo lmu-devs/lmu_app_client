@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'color_construct.dart';
 
 class NeutralColors {
@@ -58,10 +59,12 @@ class BorderColors {
     required this.inputStroke,
     required this.cutout,
     required this.seperatorDark,
+    required this.iconOutline,
   });
 
   final Color seperatorLight;
   final Color inputStroke;
   final Color cutout;
   final Color seperatorDark;
+  final Color iconOutline;
 }
