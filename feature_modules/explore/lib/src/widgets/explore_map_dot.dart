@@ -3,18 +3,19 @@ import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
+import '../services/explore_map_service.dart';
+
 class ExploreMapDot extends StatelessWidget {
   const ExploreMapDot({
     super.key,
     required this.dotColor,
     required this.icon,
-    this.isExpanded = false,
+    required this.markerSize,
   });
 
   final Color dotColor;
   final IconData icon;
-
-  final bool isExpanded;
+  final ExploreMarkerSize markerSize;
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +23,19 @@ class ExploreMapDot extends StatelessWidget {
       width: LmuSizes.size_20,
       height: LmuSizes.size_20,
       child: Center(
-        child: Container(
-          width: isExpanded ? LmuSizes.size_20 : 10,
-          height: isExpanded ? LmuSizes.size_20 : 10,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 150),
+          width: markerSize.size,
+          height: markerSize.size,
           decoration: BoxDecoration(
             color: dotColor,
             shape: BoxShape.circle,
             border: Border.all(
               color: context.colors.neutralColors.borderColors.iconOutline,
-              width: LmuSizes.size_2,
+              width: markerSize == ExploreMarkerSize.small ? 1 : 2,
             ),
           ),
-          child: isExpanded
+          child: markerSize == ExploreMarkerSize.large
               ? LmuIcon(
                   icon: icon,
                   size: 10,
@@ -43,5 +45,15 @@ class ExploreMapDot extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+extension on ExploreMarkerSize {
+  double get size {
+    return switch (this) {
+      ExploreMarkerSize.small => 5,
+      ExploreMarkerSize.medium => 10,
+      ExploreMarkerSize.large => LmuSizes.size_20,
+    };
   }
 }

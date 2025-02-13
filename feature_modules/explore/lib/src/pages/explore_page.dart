@@ -1,3 +1,4 @@
+import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -19,9 +20,16 @@ class ExplorePage extends StatelessWidget {
       children: [
         FlutterMap(
           mapController: mapService.mapController,
-          options: mapService.mapOptions,
+          options: MapOptions(
+            backgroundColor: context.colors.neutralColors.backgroundColors.tile,
+            initialCenter: const latlong.LatLng(48.150578, 11.580767),
+            initialZoom: 15,
+            onPositionChanged: (camera, _) => mapService.updateZoomLevel(camera.zoom),
+            onTap: (_, __) => mapService.deselectMarker(),
+          ),
           children: [
             TileLayer(
+              retinaMode: RetinaMode.isHighDensity(context),
               urlTemplate: 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
               additionalOptions: {
                 'accessToken': dotenv.env['MAPBOX_ACCESS_TOKEN'] ?? '',
@@ -34,6 +42,7 @@ class ExplorePage extends StatelessWidget {
               valueListenable: mapService.exploreLocationsNotifier,
               builder: (context, locations, child) {
                 return MarkerLayer(
+                  rotate: true,
                   markers: locations
                       .map(
                         (location) => Marker(
