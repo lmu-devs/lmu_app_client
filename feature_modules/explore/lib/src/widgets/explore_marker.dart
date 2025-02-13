@@ -23,6 +23,7 @@ class _ExploreMarkerState extends State<ExploreMarker> with TickerProviderStateM
   late final Animation<double> _scaleAnimation;
   late final Animation<double> _opacityAnimation;
   late final ValueNotifier<String?> _selectedMarkerNotifier;
+  late final ValueNotifier<ExploreMarkerSize> _markerSizeNotifier;
 
   final exploreMapService = GetIt.I<ExploreMapService>();
 
@@ -34,6 +35,7 @@ class _ExploreMarkerState extends State<ExploreMarker> with TickerProviderStateM
     super.initState();
 
     _selectedMarkerNotifier = exploreMapService.selectedMarkerNotifier;
+    _markerSizeNotifier = exploreMapService.exploreMarkerSizeNotifier;
 
     _scaleController = AnimationController(
       vsync: this,
@@ -92,16 +94,24 @@ class _ExploreMarkerState extends State<ExploreMarker> with TickerProviderStateM
   Widget build(BuildContext context) {
     final color = _type.markerColor(context.colors);
     return GestureDetector(
-      onTap: () => exploreMapService.updateMarker(_id),
+      onTap: () {
+        print(widget.exploreLocation.name);
+        exploreMapService.updateMarker(_id);
+      },
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
           FadeTransition(
             opacity: _opacityAnimation,
-            child: ExploreMapDot(
-              dotColor: color,
-              icon: _type.icon,
-              isExpanded: true,
+            child: ValueListenableBuilder(
+              valueListenable: _markerSizeNotifier,
+              builder: (_, markerSize, __) {
+                return ExploreMapDot(
+                  dotColor: color,
+                  icon: _type.icon,
+                  markerSize: markerSize,
+                );
+              },
             ),
           ),
           ScaleTransition(
@@ -123,6 +133,7 @@ extension on ExploreMarkerType {
       ExploreMarkerType.mensaStuCafe => colors.mensaColors.textColors.stuCafe,
       ExploreMarkerType.mensaStuLounge => colors.mensaColors.textColors.stuLounge,
       ExploreMarkerType.cinema => const Color(0xFFD64444),
+      ExploreMarkerType.roomfinderRoom => const Color(0xFF1A95F3),
     };
   }
 
@@ -133,6 +144,7 @@ extension on ExploreMarkerType {
       ExploreMarkerType.mensaStuCafe => LucideIcons.utensils,
       ExploreMarkerType.mensaStuLounge => LucideIcons.coffee,
       ExploreMarkerType.cinema => LucideIcons.clapperboard,
+      ExploreMarkerType.roomfinderRoom => LucideIcons.school,
     };
   }
 }
