@@ -1,0 +1,41 @@
+import 'package:core/utils.dart';
+import 'package:get_it/get_it.dart';
+import 'package:shared_api/explore.dart';
+import 'package:shared_api/mensa.dart';
+
+import '../bloc/mensa_cubit/cubit.dart';
+
+class DefaultMensaService implements MensaService {
+  @override
+  Stream<List<ExploreLocation>> get mensaExploreLocationsStream {
+    final mensaCubit = GetIt.I.get<MensaCubit>();
+
+    return mensaCubit.stream.withInitialValue(mensaCubit.state).map((state) {
+      if (state is MensaLoadSuccess) {
+        return state.mensaModels.map((mensaModel) {
+          return ExploreLocation(
+            id: mensaModel.canteenId,
+            latitude: mensaModel.location.latitude,
+            longitude: mensaModel.location.longitude,
+            name: mensaModel.name,
+            type: mensaModel.type.exploreMarkerType,
+          );
+        }).toList();
+      }
+      return [];
+    });
+  }
+}
+
+extension on MensaType {
+  ExploreMarkerType get exploreMarkerType {
+    return switch (this) {
+      MensaType.mensa => ExploreMarkerType.mensaMensa,
+      MensaType.stuBistro => ExploreMarkerType.mensaStuBistro,
+      MensaType.stuCafe => ExploreMarkerType.mensaStuCafe,
+      MensaType.lounge => ExploreMarkerType.mensaStuLounge,
+      MensaType.cafeBar => ExploreMarkerType.mensaStuLounge,
+      MensaType.none => ExploreMarkerType.mensaStuLounge,
+    };
+  }
+}

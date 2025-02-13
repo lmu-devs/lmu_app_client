@@ -36,22 +36,10 @@ extension TagColors on MensaType {
   ({Color backgroundColor, Color textColor, String text}) getTagData(
       LmuColors colors, CanteenLocalizations localizations) {
     return (
-      backgroundColor: _backgroundColor(colors),
+      backgroundColor: backgroundColor(colors),
       textColor: _textColor(colors),
       text: text(localizations),
     );
-  }
-
-  Color _backgroundColor(LmuColors colors) {
-    final mensaBackgroundColors = colors.mensaColors.backgroundColors;
-    return switch (this) {
-      MensaType.mensa => mensaBackgroundColors.mensa,
-      MensaType.stuBistro => mensaBackgroundColors.stuBistro,
-      MensaType.stuCafe => mensaBackgroundColors.stuCafe,
-      MensaType.lounge => mensaBackgroundColors.stuLounge,
-      MensaType.cafeBar => mensaBackgroundColors.stuLounge,
-      MensaType.none => mensaBackgroundColors.stuLounge,
-    };
   }
 
   Color _textColor(LmuColors colors) {

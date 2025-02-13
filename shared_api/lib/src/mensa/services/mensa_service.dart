@@ -1,5 +1,5 @@
-import '../../../mensa.dart';
+import '../../../explore.dart';
 
 abstract class MensaService {
-  List<MensaLocationData> get mensaData;
+  Stream<List<ExploreLocation>> get mensaExploreLocationsStream;
 }
