@@ -19,9 +19,9 @@
   "@screeningsTitle": {
     "description": "Screenings"
   },
-  "cityCenter": "City Center",
-  "@cityCenter": {
-    "description": "City center filter option"
+  "munich": "Munich",
+  "@munich": {
+    "description": "Munich filter option"
   },
   "nextMovie": "Next movie",
   "@nextMovie": {
@@ -30,6 +30,14 @@
   "nextMovieEmpty": "No more movies this semester",
   "@nextMovieEmpty": {
     "description": "No more movies this semester"
+  },
+  "watchlistEmptyBefore": "Tap the ",
+  "@watchlistEmpty": {
+    "description": "Empty watchlist text before the star icon"
+  },
+  "watchlistEmptyAfter": " icon to add movies here",
+  "@watchlistEmpty": {
+    "description": "Empty watchlist text after the star icon"
   },
   "historyAction": "Show History",
   "@historyAction": {

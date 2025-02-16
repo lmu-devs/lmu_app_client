@@ -1,3 +1,6 @@
+import 'package:get_it/get_it.dart';
+
+import '../services/cinema_user_preference_service.dart';
 import '../util/cinema_screenings.dart';
 import '../util/cinema_type.dart';
 import '../util/screening_filter_keys.dart';
@@ -72,6 +75,7 @@ class ScreeningsList extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final screening = futureScreenings[index];
                         return ScreeningCard(
+                          key: ValueKey(screening.id),
                           screening: screening,
                           cinemaScreenings: getScreeningsForCinema(screenings, screening.cinema.id),
                           isLastItem: index == futureScreenings.length - 1,
@@ -79,7 +83,7 @@ class ScreeningsList extends StatelessWidget {
                       },
                     ),
                   )
-                : const ScreeningPlaceholder(minHeight: 165),
+                : ScreeningPlaceholder(activeFilter: _activeFilterNotifier.value),
           ],
         );
       },
@@ -88,10 +92,18 @@ class ScreeningsList extends StatelessWidget {
 
   List<ScreeningModel> _getFutureScreenings(String? activeFilter) {
     DateTime present = DateTime.now();
-    final futureScreenings =
-        screenings.where((screening) => DateTime.parse(screening.entryTime).isAfter(present)).toList();
 
-    if (activeFilter == ScreeningFilterKeys.cityCenter) {
+    final futureScreenings = screenings.where((screening) {
+      DateTime entryTime = DateTime.parse(screening.entryTime);
+      DateTime expiryTime = DateTime(entryTime.year, entryTime.month, entryTime.day + 1, 0, 0);
+
+      return expiryTime.isAfter(present);
+    }).toList();
+
+    if (activeFilter == ScreeningFilterKeys.watchlist) {
+      final likedScreeningIds = GetIt.I<CinemaUserPreferenceService>().likedScreeningsIdsNotifier.value;
+      return futureScreenings.where((screening) => likedScreeningIds.contains(screening.id)).toList();
+    } else if (activeFilter == ScreeningFilterKeys.munich) {
       return futureScreenings.where((screening) => screening.cinema.id != 'TUM_GARCHING').toList();
     } else if (activeFilter == ScreeningFilterKeys.garching) {
       return futureScreenings.where((screening) => screening.cinema.id == 'TUM_GARCHING').toList();
@@ -102,8 +114,14 @@ class ScreeningsList extends StatelessWidget {
 
   List<ScreeningModel> _getPastScreenings() {
     DateTime present = DateTime.now();
+
     return screenings
-        .where((screening) => DateTime.parse(screening.entryTime).isBefore(present))
+        .where((screening) {
+          DateTime entryTime = DateTime.parse(screening.entryTime);
+          DateTime expiryTime = DateTime(entryTime.year, entryTime.month, entryTime.day + 1, 0, 0);
+
+          return expiryTime.isBefore(present);
+        })
         .toList()
         .reversed
         .toList();

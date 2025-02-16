@@ -1,4 +1,7 @@
+import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
+import 'package:core/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +13,6 @@ import '../repository/api/api.dart';
 import '../util/cinema_screenings.dart';
 import 'movie_teaser_card.dart';
 import 'movie_teaser_card_loading.dart';
-import 'screening_placeholder.dart';
 
 class MovieTeaserList extends StatelessWidget {
   const MovieTeaserList({
@@ -36,7 +38,11 @@ class MovieTeaserList extends StatelessWidget {
                 builder: (context, state) {
                   if (state is CinemaLoadSuccess) {
                     final upcomingScreenings = state.screenings
-                        .where((screening) => DateTime.parse(screening.entryTime).isAfter(DateTime.now()))
+                        .where((screening) {
+                          DateTime entryTime = DateTime.parse(screening.entryTime);
+                          DateTime expiryTime = DateTime(entryTime.year, entryTime.month, entryTime.day + 1, 0, 0);
+                          return expiryTime.isAfter(DateTime.now());
+                        })
                         .take(6)
                         .toList();
 
@@ -61,6 +67,7 @@ class _TeaserList extends StatelessWidget {
     return screenings.isNotEmpty
         ? SizedBox(
             height: 230,
+            width: double.infinity,
             child: ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
@@ -78,11 +85,20 @@ class _TeaserList extends StatelessWidget {
               ),
             ),
           )
-        : const Padding(
-            padding: EdgeInsets.symmetric(
+        : Padding(
+            padding: const EdgeInsets.symmetric(
               horizontal: LmuSizes.size_16,
             ),
-            child: ScreeningPlaceholder(minHeight: 165),
+            child: PlaceholderTile(
+              minHeight: 165,
+              content: [
+                LmuText.body(
+                  context.locals.cinema.nextMovieEmpty,
+                  color: context.colors.neutralColors.textColors.mediumColors.base,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
           );
   }
 }

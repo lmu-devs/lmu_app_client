@@ -50,7 +50,7 @@ class _MensaOverviewContentViewState extends State<MensaOverviewContentView> {
           children: [
             LmuTileHeadline.base(title: localizations.favorites),
             MensaOverviewReordableFavoriteSection(mensaModels: _mensaModels),
-            const SizedBox(height: LmuSizes.size_24),
+            const SizedBox(height: LmuSizes.size_32),
             LmuTileHeadline.base(
               title: localizations.allCanteens,
               bottomWidget: MensaOverviewButtonSection(mensaModels: widget.mensaModels),

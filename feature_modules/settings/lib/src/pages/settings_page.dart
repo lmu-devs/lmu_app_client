@@ -32,9 +32,7 @@ class SettingsMainPage extends StatelessWidget {
       largeTitle: settingLocalizations.settings,
       leadingAction: LeadingAction.back,
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: LmuSizes.size_16,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -188,16 +186,12 @@ class SettingsMainPage extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: LmuSizes.size_16,
-              ),
+              const SizedBox(height: LmuSizes.size_16),
               LmuButton(
                 title: context.locals.feedback.feedbackButton,
                 onTap: () => GetIt.I.get<FeedbackService>().navigateToFeedback(context, 'SettingsScreen'),
               ),
-              const SizedBox(
-                height: LmuSizes.size_96,
-              ),
+              const SizedBox(height: LmuSizes.size_96),
             ],
           ),
         ),
