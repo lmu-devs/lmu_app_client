@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
-import '../pages/pages.dart';
+import '../pages/explore_page.dart';
 
 part 'explore_routes.g.dart';
 

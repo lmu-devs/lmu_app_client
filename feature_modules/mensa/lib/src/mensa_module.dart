@@ -4,7 +4,7 @@ import 'package:shared_api/mensa.dart';
 
 import 'bloc/bloc.dart';
 import 'repository/repository.dart';
-import 'services/default_mensa_public_api.dart';
+import 'services/default_mensa_service.dart';
 import 'services/services.dart';
 
 class MensaModule extends AppModule
