@@ -88,8 +88,13 @@ class ScreeningsList extends StatelessWidget {
 
   List<ScreeningModel> _getFutureScreenings(String? activeFilter) {
     DateTime present = DateTime.now();
-    final futureScreenings =
-        screenings.where((screening) => DateTime.parse(screening.entryTime).isAfter(present)).toList();
+
+    final futureScreenings = screenings.where((screening) {
+      DateTime entryTime = DateTime.parse(screening.entryTime);
+      DateTime expiryTime = DateTime(entryTime.year, entryTime.month, entryTime.day + 1, 0, 0);
+
+      return expiryTime.isAfter(present);
+    }).toList();
 
     if (activeFilter == ScreeningFilterKeys.cityCenter) {
       return futureScreenings.where((screening) => screening.cinema.id != 'TUM_GARCHING').toList();
@@ -102,10 +107,12 @@ class ScreeningsList extends StatelessWidget {
 
   List<ScreeningModel> _getPastScreenings() {
     DateTime present = DateTime.now();
-    return screenings
-        .where((screening) => DateTime.parse(screening.entryTime).isBefore(present))
-        .toList()
-        .reversed
-        .toList();
+
+    return screenings.where((screening) {
+      DateTime entryTime = DateTime.parse(screening.entryTime);
+      DateTime expiryTime = DateTime(entryTime.year, entryTime.month, entryTime.day + 1, 0, 0);
+
+      return expiryTime.isBefore(present);
+    }).toList().reversed.toList();
   }
 }

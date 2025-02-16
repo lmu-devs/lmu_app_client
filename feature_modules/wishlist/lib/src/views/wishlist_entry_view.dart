@@ -24,19 +24,19 @@ class WishlistEntryView extends StatelessWidget {
           return ValueListenableBuilder<List<String>>(
             valueListenable: wishlistUserPreferencesService.likedWishlistIdsNotifier,
             builder: (context, likedWishlistIds, child) {
-              final publicWishlistModels =
-                  wishlistModels.where((model) => model.status != WishlistStatus.hidden).toList()
-                    ..sort((a, b) {
-                      const statusOrder = {
-                        WishlistStatus.beta: 0,
-                        WishlistStatus.development: 1,
-                        WishlistStatus.none: 2,
-                        WishlistStatus.done: 3,
-                      };
-                      final statusComparison = statusOrder[a.status]!.compareTo(statusOrder[b.status]!);
-                      if (statusComparison != 0) return statusComparison;
-                      return b.ratingModel.likeCount.compareTo(a.ratingModel.likeCount);
-                    });
+              final publicWishlistModels = wishlistModels
+                  .where((model) => model.status != WishlistStatus.hidden && model.status != WishlistStatus.done)
+                  .toList()
+                ..sort((a, b) {
+                  const statusOrder = {
+                    WishlistStatus.beta: 0,
+                    WishlistStatus.development: 1,
+                    WishlistStatus.none: 2,
+                  };
+                  final statusComparison = statusOrder[a.status]!.compareTo(statusOrder[b.status]!);
+                  if (statusComparison != 0) return statusComparison;
+                  return b.ratingModel.likeCount.compareTo(a.ratingModel.likeCount);
+                });
               return WishlistEntrySection(
                 wishlistModels: publicWishlistModels,
                 likedWishlistIds: likedWishlistIds,

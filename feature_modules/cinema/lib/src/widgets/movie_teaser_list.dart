@@ -36,7 +36,11 @@ class MovieTeaserList extends StatelessWidget {
                 builder: (context, state) {
                   if (state is CinemaLoadSuccess) {
                     final upcomingScreenings = state.screenings
-                        .where((screening) => DateTime.parse(screening.entryTime).isAfter(DateTime.now()))
+                        .where((screening) {
+                          DateTime entryTime = DateTime.parse(screening.entryTime);
+                          DateTime expiryTime = DateTime(entryTime.year, entryTime.month, entryTime.day + 1, 0, 0);
+                          return expiryTime.isAfter(DateTime.now());
+                        })
                         .take(6)
                         .toList();
 
@@ -61,6 +65,7 @@ class _TeaserList extends StatelessWidget {
     return screenings.isNotEmpty
         ? SizedBox(
             height: 230,
+            width: double.infinity,
             child: ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
