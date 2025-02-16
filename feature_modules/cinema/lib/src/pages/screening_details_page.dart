@@ -6,12 +6,14 @@ import 'package:core/utils.dart';
 import 'package:core/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../repository/api/api.dart';
 import '../routes/cinema_details_data.dart';
 import '../routes/screening_details_data.dart';
+import '../services/cinema_user_preference_service.dart';
 import '../util/cinema_type.dart';
 import '../util/screening_time.dart';
 import '../widgets/screening_quick_fact_section.dart';
@@ -34,6 +36,26 @@ class ScreeningDetailsPage extends StatelessWidget {
     return LmuMasterAppBar.custom(
       collapsedTitle: screening.movie.title,
       leadingAction: LeadingAction.back,
+      trailingWidgets: [
+        ValueListenableBuilder<List<String>>(
+          valueListenable: GetIt.I<CinemaUserPreferenceService>().likedScreeningsIdsNotifier,
+          builder: (context, likedScreeningIds, child) {
+            return GestureDetector(
+              onTap: () async {
+                await GetIt.I<CinemaUserPreferenceService>().toggleLikedScreeningId(screening.id);
+                LmuVibrations.secondary();
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top: LmuSizes.size_4),
+                child: StarIcon(
+                  disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
+                  isActive: likedScreeningIds.contains(screening.id),
+                ),
+              ),
+            );
+          },
+        ),
+      ],
       body: SingleChildScrollView(
         child: Column(
           children: [

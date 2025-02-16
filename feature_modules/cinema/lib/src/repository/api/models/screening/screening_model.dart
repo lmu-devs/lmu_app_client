@@ -1,4 +1,3 @@
-import 'package:core/api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -23,7 +22,6 @@ class ScreeningModel extends Equatable {
     required this.movie,
     required this.university,
     required this.cinema,
-    this.rating = const RatingModel(likeCount: 0, isLiked: false),
   });
 
   final String id;
@@ -43,8 +41,6 @@ class ScreeningModel extends Equatable {
   final MovieModel movie;
   final UniversityModel university;
   final CinemaModel cinema;
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  final RatingModel rating;
 
   @override
   List<Object?> get props => [
@@ -60,7 +56,6 @@ class ScreeningModel extends Equatable {
         movie,
         university,
         cinema,
-        rating,
       ];
 
   factory ScreeningModel.fromJson(Map<String, dynamic> json) => _$ScreeningModelFromJson(json);

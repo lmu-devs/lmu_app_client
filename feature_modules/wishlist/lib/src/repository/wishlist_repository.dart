@@ -38,8 +38,8 @@ class ConnectedWishlistRepository implements WishlistRepository {
   Future<List<String>?> getLikedWishlistIds() async {
     final prefs = await SharedPreferences.getInstance();
 
-    final favoriteMensaIds = prefs.getStringList(_likedWishlistIdsKey);
-    return favoriteMensaIds;
+    final favoriteWishlistIds = prefs.getStringList(_likedWishlistIdsKey);
+    return favoriteWishlistIds;
   }
 
   @override
