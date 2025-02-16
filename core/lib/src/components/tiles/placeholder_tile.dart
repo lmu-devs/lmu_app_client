@@ -29,6 +29,7 @@ class PlaceholderTile extends StatelessWidget {
             child: Wrap(
               alignment: WrapAlignment.center,
               crossAxisAlignment: WrapCrossAlignment.center,
+              runAlignment: WrapAlignment.center,
               spacing: LmuSizes.size_2,
               runSpacing: LmuSizes.size_2,
               children: content,

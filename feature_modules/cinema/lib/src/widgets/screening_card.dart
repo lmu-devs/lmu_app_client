@@ -97,7 +97,10 @@ class ScreeningCard extends StatelessWidget {
                         ),
                       ),
                       child: Center(
-                        child: LmuText.caption(screening.movie.title),
+                        child: LmuText.caption(
+                          screening.movie.title,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
             ),

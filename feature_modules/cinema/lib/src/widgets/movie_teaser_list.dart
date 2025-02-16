@@ -1,4 +1,7 @@
+import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
+import 'package:core/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +13,6 @@ import '../repository/api/api.dart';
 import '../util/cinema_screenings.dart';
 import 'movie_teaser_card.dart';
 import 'movie_teaser_card_loading.dart';
-import 'screening_placeholder.dart';
 
 class MovieTeaserList extends StatelessWidget {
   const MovieTeaserList({
@@ -83,11 +85,20 @@ class _TeaserList extends StatelessWidget {
               ),
             ),
           )
-        : const Padding(
-            padding: EdgeInsets.symmetric(
+        : Padding(
+            padding: const EdgeInsets.symmetric(
               horizontal: LmuSizes.size_16,
             ),
-            child: ScreeningPlaceholder(minHeight: 165),
+            child: PlaceholderTile(
+              minHeight: 165,
+              content: [
+                LmuText.body(
+                  context.locals.cinema.nextMovieEmpty,
+                  color: context.colors.neutralColors.textColors.mediumColors.base,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
           );
   }
 }

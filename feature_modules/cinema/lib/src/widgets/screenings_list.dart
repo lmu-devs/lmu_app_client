@@ -79,7 +79,7 @@ class ScreeningsList extends StatelessWidget {
                       },
                     ),
                   )
-                : const ScreeningPlaceholder(minHeight: 165),
+                : ScreeningPlaceholder(activeFilter: _activeFilterNotifier.value),
           ],
         );
       },
@@ -89,14 +89,18 @@ class ScreeningsList extends StatelessWidget {
   List<ScreeningModel> _getFutureScreenings(String? activeFilter) {
     DateTime present = DateTime.now();
 
-    final futureScreenings = screenings.where((screening) {
-      DateTime entryTime = DateTime.parse(screening.entryTime);
-      DateTime expiryTime = DateTime(entryTime.year, entryTime.month, entryTime.day + 1, 0, 0);
+    /**final futureScreenings = screenings.where((screening) {
+        DateTime entryTime = DateTime.parse(screening.entryTime);
+        DateTime expiryTime = DateTime(entryTime.year, entryTime.month, entryTime.day + 1, 0, 0);
 
-      return expiryTime.isAfter(present);
-    }).toList();
+        return expiryTime.isAfter(present);
+        }).toList();**/
 
-    if (activeFilter == ScreeningFilterKeys.cityCenter) {
+    final futureScreenings = screenings;
+
+    if (activeFilter == ScreeningFilterKeys.watchlist) {
+      return futureScreenings.where((screening) => screening.rating.isLiked).toList();
+    } else if (activeFilter == ScreeningFilterKeys.munich) {
       return futureScreenings.where((screening) => screening.cinema.id != 'TUM_GARCHING').toList();
     } else if (activeFilter == ScreeningFilterKeys.garching) {
       return futureScreenings.where((screening) => screening.cinema.id == 'TUM_GARCHING').toList();
@@ -108,11 +112,15 @@ class ScreeningsList extends StatelessWidget {
   List<ScreeningModel> _getPastScreenings() {
     DateTime present = DateTime.now();
 
-    return screenings.where((screening) {
-      DateTime entryTime = DateTime.parse(screening.entryTime);
-      DateTime expiryTime = DateTime(entryTime.year, entryTime.month, entryTime.day + 1, 0, 0);
+    return screenings
+        .where((screening) {
+          DateTime entryTime = DateTime.parse(screening.entryTime);
+          DateTime expiryTime = DateTime(entryTime.year, entryTime.month, entryTime.day + 1, 0, 0);
 
-      return expiryTime.isBefore(present);
-    }).toList().reversed.toList();
+          return expiryTime.isBefore(present);
+        })
+        .toList()
+        .reversed
+        .toList();
   }
 }
