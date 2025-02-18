@@ -35,6 +35,7 @@ core/lib/src/localizations/generated
 .pub/
 /build/
 .mason/
+pubspec.lock
 
 # Symbolication related
 app.*.symbols
