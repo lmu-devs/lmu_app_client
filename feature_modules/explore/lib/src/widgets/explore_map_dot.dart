@@ -32,7 +32,7 @@ class ExploreMapDot extends StatelessWidget {
             shape: BoxShape.circle,
             border: Border.all(
               color: context.colors.neutralColors.borderColors.iconOutline,
-              width: markerSize == ExploreMarkerSize.small ? 1 : 2,
+              width: markerSize == ExploreMarkerSize.small ? .5 : 1,
             ),
           ),
           child: markerSize == ExploreMarkerSize.large

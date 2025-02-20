@@ -83,7 +83,7 @@ const lmuColorsDark = LmuColors(
       inputStroke: ColorPrimitives.trspWhite07,
       cutout: ColorPrimitives.black,
       seperatorDark: ColorPrimitives.black,
-      iconOutline: ColorPrimitives.trspWhite30,
+      iconOutline: ColorPrimitives.trspBlack80,
     ),
   ),
   successColors: SuccessColors(
@@ -260,7 +260,7 @@ const lmuColorsLight = LmuColors(
       inputStroke: ColorPrimitives.trspBlack05,
       cutout: ColorPrimitives.white,
       seperatorDark: ColorPrimitives.white,
-      iconOutline: ColorPrimitives.trspBlack10,
+      iconOutline: ColorPrimitives.trspWhite95,
     ),
   ),
   successColors: SuccessColors(
