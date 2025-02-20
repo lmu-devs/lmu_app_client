@@ -186,10 +186,15 @@ class SettingsMainPage extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: LmuSizes.size_16),
-              LmuButton(
-                title: context.locals.feedback.feedbackButton,
-                onTap: () => GetIt.I.get<FeedbackService>().navigateToFeedback(context, 'SettingsScreen'),
+              const SizedBox(height: LmuSizes.size_32),
+              LmuText.bodySmall(
+                '${GetIt.I<String>(instanceName: 'appName')} • ${GetIt.I<String>(instanceName: 'appVersion')}',
+                color: context.colors.neutralColors.textColors.mediumColors.base,
+              ),
+              const SizedBox(height: LmuSizes.size_6),
+              LmuText.bodySmall(
+                'Created by ${LmuDevStrings.devTeam}, ${DateTime.now().year} ©',
+                color: context.colors.neutralColors.textColors.mediumColors.base,
               ),
               const SizedBox(height: LmuSizes.size_96),
             ],
@@ -200,10 +205,10 @@ class SettingsMainPage extends StatelessWidget {
   }
 }
 
-String _getThemeModeString(ThemeMode themeMode, SettingsLocalizations localizaitons) {
+String _getThemeModeString(ThemeMode themeMode, SettingsLocalizations localizations) {
   return switch (themeMode) {
-    ThemeMode.system => localizaitons.systemMode,
-    ThemeMode.dark => localizaitons.darkMode,
-    ThemeMode.light => localizaitons.lightMode,
+    ThemeMode.system => localizations.systemMode,
+    ThemeMode.dark => localizations.darkMode,
+    ThemeMode.light => localizations.lightMode,
   };
 }

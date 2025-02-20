@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:core/logging.dart';
+import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../pages.dart';
@@ -50,6 +51,7 @@ class DefaultBaseApiClient extends BaseApiClient {
           : _prodBaseUrl;
 
   Map<String, String> get _defaultHeaders => {
+        "app-version": GetIt.I.get<String>(instanceName: 'appVersion'),
         "accept-language": _locale.languageCode,
         if (_userApiKey != null) "user-api-key": _userApiKey!,
       };
