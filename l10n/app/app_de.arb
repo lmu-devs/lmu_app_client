@@ -36,5 +36,9 @@
   "tryAgain": "Wiederholen",
   "showAll": "Alle anzeigen",
   "discard": "Verwerfen",
-  "continueAction": "Weiter"
+  "continueAction": "Weiter",
+  "appUpdateTitle": "Zeit für ein Update",
+  "appUpdateIntro": "Updates sind wie Klausuren, man kann sie nicht ewig aufschieben.",
+  "appUpdateDescription": "Deine aktuelle App Version ist veraltet und wird nicht länger unterstützt. Bitte update die App auf die neueste Version.",
+  "appUpdateButton": "App updaten"
 }

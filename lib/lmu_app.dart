@@ -1,4 +1,5 @@
 import 'package:core/localizations.dart';
+import 'package:core/pages.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -46,7 +47,13 @@ class LmuApp extends StatelessWidget {
   }
 
   final GoRouter _router = GoRouter(
-    routes: [$shellRouteData],
+    routes: [
+      $shellRouteData,
+      GoRoute(
+        path: '/app-update',
+        builder: (context, state) => const AppUpdatePage(),
+      ),
+    ],
     initialLocation: '/home',
   );
 }
