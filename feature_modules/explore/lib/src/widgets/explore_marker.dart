@@ -9,9 +9,10 @@ import 'explore_map_dot.dart';
 import 'explore_map_pin.dart';
 
 class ExploreMarker extends StatefulWidget {
-  const ExploreMarker({super.key, required this.exploreLocation});
+  const ExploreMarker({super.key, required this.exploreLocation, required this.onActive});
 
   final ExploreLocation exploreLocation;
+  final void Function(bool) onActive;
 
   @override
   State<ExploreMarker> createState() => _ExploreMarkerState();
@@ -29,6 +30,7 @@ class _ExploreMarkerState extends State<ExploreMarker> with TickerProviderStateM
 
   String get _id => widget.exploreLocation.id;
   ExploreMarkerType get _type => widget.exploreLocation.type;
+  void Function(bool) get _onActive => widget.onActive;
 
   @override
   void initState() {
@@ -96,6 +98,9 @@ class _ExploreMarkerState extends State<ExploreMarker> with TickerProviderStateM
     return GestureDetector(
       onTap: () {
         print(widget.exploreLocation.name);
+        if (_selectedMarkerNotifier.value != _id) {
+          _onActive(false);
+        }
         exploreMapService.updateMarker(_id);
       },
       child: Stack(
