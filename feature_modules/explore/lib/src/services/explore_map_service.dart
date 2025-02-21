@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get_it/get_it.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:shared_api/cinema.dart';
 import 'package:shared_api/explore.dart';
 import 'package:shared_api/mensa.dart';
@@ -83,6 +84,17 @@ class ExploreMapService {
 
     _exploreLocationsNotifier.value = currentMarkers;
     _selectedMarkerNotifier.value = id;
+  }
+
+  void focusMarker(String id) {
+    final location = _exploreLocationsNotifier.value.firstWhere((element) => element.id == id);
+    final pos = LatLng(location.latitude, location.longitude);
+    mapController.move(
+      pos,
+      17,
+      offset: Offset(0, -100),
+    );
+    updateMarker(id);
   }
 }
 

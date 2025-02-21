@@ -13,7 +13,6 @@ import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:shared_api/mensa.dart';
 
 import '../widgets/map_action_button.dart';
-import '../widgets/map_bottom_sheet.dart';
 import '../widgets/map_bottom_sheet_sizes.dart';
 
 class DepExplorePage extends StatelessWidget {
@@ -419,10 +418,6 @@ class MapWithAnnotationsState extends State<MapWithAnnotations> {
                         },
                       );
                     }),
-                MapBottomSheet(
-                  selectedMensaNotifier: selectedMensaNotifier,
-                  sheetController: _sheetController,
-                ),
               ],
             );
           },
