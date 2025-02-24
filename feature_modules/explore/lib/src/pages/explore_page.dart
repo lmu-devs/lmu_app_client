@@ -1,3 +1,4 @@
+import 'package:core/components.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -5,12 +6,29 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:get_it/get_it.dart';
 import 'package:latlong2/latlong.dart' as latlong;
 
+import '../extensions/explore_marker_type_extension.dart';
 import '../services/explore_map_service.dart';
-import '../widgets/explore_map_bottom_sheet.dart';
+import '../widgets/explore_map_content_sheet.dart';
+import '../widgets/explore_map_search_sheet_content.dart';
 import '../widgets/explore_marker.dart';
 
-class ExplorePage extends StatelessWidget {
+class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
+
+  @override
+  State<ExplorePage> createState() => _ExplorePageState();
+}
+
+class _ExplorePageState extends State<ExplorePage> {
+  late final ExploreMapContentSheetController mapContentSheetController;
+  late final LmuSearchSheetController searchSheetController;
+
+  @override
+  void initState() {
+    super.initState();
+    mapContentSheetController = ExploreMapContentSheetController();
+    searchSheetController = LmuSearchSheetController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +43,10 @@ class ExplorePage extends StatelessWidget {
             initialCenter: const latlong.LatLng(48.150578, 11.580767),
             initialZoom: 15,
             onPositionChanged: (camera, _) => mapService.updateZoomLevel(camera.zoom),
-            onTap: (_, __) => mapService.deselectMarker(),
+            onTap: (_, __) {
+              mapContentSheetController.close();
+              mapService.deselectMarker();
+            },
           ),
           children: [
             TileLayer(
@@ -40,7 +61,7 @@ class ExplorePage extends StatelessWidget {
             ),
             ValueListenableBuilder(
               valueListenable: mapService.exploreLocationsNotifier,
-              builder: (context, locations, child) {
+              builder: (context, locations, _) {
                 return MarkerLayer(
                   rotate: true,
                   markers: locations
@@ -51,7 +72,12 @@ class ExplorePage extends StatelessWidget {
                           height: 64,
                           alignment: Alignment.topCenter,
                           point: latlong.LatLng(location.latitude, location.longitude),
-                          child: ExploreMarker(exploreLocation: location),
+                          child: ExploreMarker(
+                            exploreLocation: location,
+                            onActive: (fromSearch) {
+                              mapContentSheetController.open(location, fromSearch: fromSearch);
+                            },
+                          ),
                         ),
                       )
                       .toList(),
@@ -60,7 +86,36 @@ class ExplorePage extends StatelessWidget {
             ),
           ],
         ),
-        const ExploreMapBottomSheet(),
+        ValueListenableBuilder(
+          valueListenable: mapService.exploreLocationsNotifier,
+          builder: (context, locations, _) {
+            final searchEntrys = locations.map(
+              (location) {
+                return LmuSearchEntry(
+                  title: location.name,
+                  subtitle: location.type.localizedName,
+                  onTap: () {
+                    mapService.focusMarker(location.id);
+                    mapContentSheetController.open(location, fromSearch: true);
+                  },
+                  icon: location.type.icon,
+                  iconColor: location.type.markerColor(context.colors),
+                );
+              },
+            ).toList();
+            return LmuSearchSheet(
+              searchEntries: searchEntrys,
+              belowSearchContent: const ExploreMapSearchSheetContent(),
+              controller: searchSheetController,
+            );
+          },
+        ),
+        ExploreMapContentSheet(
+          controller: mapContentSheetController,
+          onClose: (fromSearch) {
+            if (fromSearch) searchSheetController.openExtended(true);
+          },
+        )
       ],
     );
   }

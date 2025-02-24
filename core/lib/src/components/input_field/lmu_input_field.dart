@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'helper/input_field_color_helper.dart';
 
-enum InputStates {
+enum InputState {
   base,
   active,
   typing,
@@ -23,7 +23,7 @@ class LmuInputField extends StatefulWidget {
   final bool isAutocorrect;
   final bool isAutofocus;
   final TextInputType? keyboardType;
-  final InputStates inputState;
+  final InputState inputState;
   final int? maxLength;
   final int? minLines;
   final int? maxLines;
@@ -54,7 +54,7 @@ class LmuInputField extends StatefulWidget {
     this.isAutocorrect = true,
     this.isAutofocus = false,
     this.keyboardType,
-    this.inputState = InputStates.base,
+    this.inputState = InputState.base,
     this.maxLength,
     this.minLines,
     this.maxLines,
@@ -80,7 +80,7 @@ class LmuInputField extends StatefulWidget {
 
 class _LmuInputFieldState extends State<LmuInputField> {
   late final FocusNode _focusNode;
-  InputStates _inputState = InputStates.base;
+  InputState _inputState = InputState.base;
 
   @override
   void initState() {
@@ -111,9 +111,9 @@ class _LmuInputFieldState extends State<LmuInputField> {
 
     setState(() {
       if (widget.controller.text.isEmpty) {
-        _inputState = _focusNode.hasFocus ? InputStates.active : InputStates.base;
+        _inputState = _focusNode.hasFocus ? InputState.active : InputState.base;
       } else {
-        _inputState = _focusNode.hasFocus ? InputStates.typing : InputStates.filled;
+        _inputState = _focusNode.hasFocus ? InputState.typing : InputState.filled;
       }
     });
   }

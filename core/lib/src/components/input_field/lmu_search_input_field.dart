@@ -14,6 +14,9 @@ class LmuSearchInputField extends StatefulWidget {
     this.onChanged,
     this.onSubmitted,
     this.onClearPressed,
+    this.onCancelPressed,
+    this.onTap,
+    this.onOutsideTap,
     this.focusAfterClear = true,
     this.isAutofocus = false,
     this.isAutocorrect = true,
@@ -26,7 +29,10 @@ class LmuSearchInputField extends StatefulWidget {
   final bool focusAfterClear;
   final void Function(String)? onChanged;
   final void Function(String)? onSubmitted;
+  final void Function(InputState)? onTap;
   final VoidCallback? onClearPressed;
+  final VoidCallback? onCancelPressed;
+  final VoidCallback? onOutsideTap;
   final bool isAutofocus;
   final bool isAutocorrect;
   final bool isLoading;
@@ -54,27 +60,21 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> with SingleTi
   late final AnimationController _constraintsController;
   late Animation<double> _constraintsAnimation;
 
-  InputStates _inputState = InputStates.base;
+  InputState _inputState = InputState.base;
 
-  bool get _showCancelButton => _inputState == InputStates.active || _inputState == InputStates.typing;
+  bool get _showCancelButton => _inputState == InputState.active || _inputState == InputState.typing;
+
+  TextEditingController get _controller => widget.controller;
+
+  FocusNode get _focusNode => widget.focusNode;
 
   @override
   void initState() {
     super.initState();
-    widget.controller.addListener(_updateInputState);
-    widget.focusNode.addListener(_updateInputState);
+    _focusNode.addListener(_updateInputState);
 
-    _constraintsController = AnimationController(
-      duration: _animationDuration,
-      vsync: this,
-    );
-
-    _constraintsAnimation = _constraintsController.drive(
-      CurveTween(
-        curve: LmuAnimations.fastSmooth,
-      ),
-    );
-
+    _constraintsController = AnimationController(duration: _animationDuration, vsync: this);
+    _constraintsAnimation = _constraintsController.drive(CurveTween(curve: LmuAnimations.fastSmooth));
     _constraintsController.value = 1.0;
 
     _updateInputState();
@@ -82,32 +82,29 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> with SingleTi
 
   @override
   void dispose() {
-    widget.controller.removeListener(_updateInputState);
-    widget.focusNode.removeListener(_updateInputState);
-    widget.focusNode.dispose();
+    _focusNode.removeListener(_updateInputState);
     _constraintsController.dispose();
     super.dispose();
   }
 
   void _updateInputState() {
-    if (!mounted) return;
+    final oldState = _inputState;
 
     setState(() {
-      final oldState = _inputState;
       if (widget.isLoading) {
-        _inputState = InputStates.loading;
-      } else if (widget.controller.text.isEmpty) {
-        _inputState = widget.focusNode.hasFocus ? InputStates.active : InputStates.base;
+        _inputState = InputState.loading;
+      } else if (_controller.text.isEmpty) {
+        _inputState = _focusNode.hasFocus ? InputState.active : InputState.base;
       } else {
-        _inputState = widget.focusNode.hasFocus ? InputStates.typing : InputStates.filled;
-      }
-
-      final wasBase = oldState == InputStates.base;
-      final isBase = _inputState == InputStates.base;
-      if (wasBase != isBase) {
-        _constraintsController.forward(from: 0);
+        _inputState = _focusNode.hasFocus ? InputState.typing : InputState.filled;
       }
     });
+
+    final wasBase = oldState == InputState.base;
+    final isBase = _inputState == InputState.base;
+    if (wasBase != isBase) {
+      _constraintsController.forward(from: 0);
+    }
   }
 
   @override
@@ -121,15 +118,12 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> with SingleTi
             animation: _constraintsAnimation,
             builder: (context, child) => LmuInputField(
               hintText: localizations.search,
-              controller: widget.controller,
+              controller: _controller,
               keyboardType: TextInputType.text,
-              focusNode: widget.focusNode,
+              focusNode: _focusNode,
               inputState: _inputState,
               isAutocorrect: widget.isAutocorrect,
-              leadingIcon: _buildLeadingIcon(
-                inputState: _inputState,
-                context: context,
-              ),
+              leadingIcon: _buildLeadingIcon(inputState: _inputState),
               leadingIconConstraints: _buildLeadingIconConstraints(_inputState),
               contentPadding: const EdgeInsets.symmetric(
                 vertical: 0,
@@ -139,6 +133,8 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> with SingleTi
                 inputState: _inputState,
                 context: context,
               ),
+              onTap: () => widget.onTap?.call(_inputState),
+              onTapOutside: widget.onOutsideTap,
               onSubmitted: widget.onSubmitted,
               onChanged: (value) {
                 _updateInputState();
@@ -161,18 +157,15 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> with SingleTi
     );
   }
 
-  BoxConstraints? _buildLeadingIconConstraints(InputStates state) {
-    final isBaseState = state == InputStates.base;
+  BoxConstraints? _buildLeadingIconConstraints(InputState state) {
+    final isBaseState = state == InputState.base;
     final startConstraints = isBaseState ? _focusedIconConstraints : _baseIconConstraints;
     final endConstraints = isBaseState ? _baseIconConstraints : _focusedIconConstraints;
 
     return BoxConstraints.lerp(startConstraints, endConstraints, _constraintsAnimation.value);
   }
 
-  Widget? _buildLeadingIcon({
-    required InputStates inputState,
-    required BuildContext context,
-  }) {
+  Widget? _buildLeadingIcon({required InputState inputState}) {
     return AnimatedSwitcher(
       duration: _animationDuration,
       switchInCurve: _animationCurve,
@@ -186,30 +179,12 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> with SingleTi
           ),
         );
       },
-      child: _getLeadingIconByState(inputState, context),
+      child: inputState == InputState.base ? const Icon(LucideIcons.search) : null,
     );
   }
 
-  static Widget? _getLeadingIconByState(
-    InputStates inputState,
-    BuildContext context,
-  ) {
-    switch (inputState) {
-      case InputStates.base:
-        return const Icon(LucideIcons.search);
-      case InputStates.active:
-        return null;
-      case InputStates.typing:
-        return null;
-      case InputStates.filled:
-        return null;
-      case InputStates.loading:
-        return null;
-    }
-  }
-
   Widget _buildTrailingIcon({
-    required InputStates inputState,
+    required InputState inputState,
     required BuildContext context,
   }) {
     return AnimatedSwitcher(
@@ -227,28 +202,28 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> with SingleTi
   }
 
   static Widget _getTrailingIconByState(
-    InputStates inputState,
+    InputState inputState,
     BuildContext context,
   ) {
     switch (inputState) {
-      case InputStates.base:
-      case InputStates.active:
+      case InputState.base:
+      case InputState.active:
         return const SizedBox.shrink();
-      case InputStates.typing:
+      case InputState.typing:
         return Icon(
           key: const ValueKey('typing'),
           LucideIcons.x,
           color: context.colors.neutralColors.textColors.weakColors.base,
           size: LmuIconSizes.medium,
         );
-      case InputStates.filled:
+      case InputState.filled:
         return Icon(
           key: const ValueKey('filled'),
           LucideIcons.x,
           color: context.colors.neutralColors.textColors.strongColors.base,
           size: LmuIconSizes.medium,
         );
-      case InputStates.loading:
+      case InputState.loading:
         return const LmuProgressIndicator(
           color: ProgressIndicatorColor.weak,
           size: ProgressIndicatorSize.small,
@@ -257,7 +232,7 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> with SingleTi
   }
 
   Widget _buildSuffix({
-    required InputStates inputState,
+    required InputState inputState,
     required BuildContext context,
   }) {
     return AnimatedSwitcher(
@@ -289,7 +264,7 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> with SingleTi
   }
 
   Widget _getSuffixByState(
-    InputStates inputState,
+    InputState inputState,
     BuildContext context,
   ) {
     if (_showCancelButton) {
@@ -310,8 +285,8 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> with SingleTi
   }
 
   void _handleCancelTap() {
-    widget.controller.clear();
-    widget.onClearPressed?.call();
+    _controller.clear();
     _updateInputState();
+    widget.onCancelPressed?.call();
   }
 }
