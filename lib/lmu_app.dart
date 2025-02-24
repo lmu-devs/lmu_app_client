@@ -20,28 +20,31 @@ class LmuApp extends StatelessWidget {
       listenable: languageProvider,
       builder: (context, _) => ListenableBuilder(
         listenable: themeProvider,
-        builder: (context, _) => MaterialApp.router(
-          localizationsDelegates: LmuLocalizations.localizationsDelegates,
-          supportedLocales: LmuLocalizations.supportedLocales,
-          locale: languageProvider.locale,
-          debugShowCheckedModeBanner: false,
-          routerConfig: _router,
-          title: "LMU Students",
-          theme: AppTheme.light,
-          darkTheme: AppTheme.dark,
-          themeMode: themeProvider.themeMode,
-          builder: (context, child) {
-            return FToastBuilder()(
-              context,
-              Stack(
-                children: [
-                  child ?? const SizedBox.shrink(),
-                  const NavigationBarColorSetter(),
-                ],
-              ),
-            );
-          },
-        ),
+        builder: (context, _) {
+          AppUpdateNavigation.router = _router;
+          return MaterialApp.router(
+            localizationsDelegates: LmuLocalizations.localizationsDelegates,
+            supportedLocales: LmuLocalizations.supportedLocales,
+            locale: languageProvider.locale,
+            debugShowCheckedModeBanner: false,
+            routerConfig: _router,
+            title: "LMU Students",
+            theme: AppTheme.light,
+            darkTheme: AppTheme.dark,
+            themeMode: themeProvider.themeMode,
+            builder: (context, child) {
+              return FToastBuilder()(
+                context,
+                Stack(
+                  children: [
+                    child ?? const SizedBox.shrink(),
+                    const NavigationBarColorSetter(),
+                  ],
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }
