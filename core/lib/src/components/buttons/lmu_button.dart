@@ -47,7 +47,7 @@ class LmuButton extends StatelessWidget {
     this.customSemanticsLabel,
     this.showFullWidth = false,
     this.increaseTouchTarget = false,
-  }) : assert(title != null || leadingIcon != null || trailingIcon != null);
+  }) : assert(title != null || leadingWidget != null || leadingIcon != null || trailingIcon != null);
 
   final ButtonSize size;
   final ButtonAction action;

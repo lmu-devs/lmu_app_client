@@ -136,6 +136,7 @@ class ScreeningCard extends StatelessWidget {
                                     customOverFlow: TextOverflow.ellipsis,
                                   ),
                                 ),
+                                const SizedBox(width: LmuSizes.size_8),
                                 GestureDetector(
                                   onTap: () async {
                                     await GetIt.I<CinemaUserPreferenceService>().toggleLikedScreeningId(screening.id);

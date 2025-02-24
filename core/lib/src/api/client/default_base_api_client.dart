@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:core/logging.dart';
+import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../pages.dart';
 import 'base_api_client.dart';
 
 class DefaultBaseApiClient extends BaseApiClient {
@@ -15,12 +17,14 @@ class DefaultBaseApiClient extends BaseApiClient {
   final _appLogger = AppLogger();
 
   bool _isDevEnv = false;
+
   @override
   set isDevEnv(bool value) {
     _isDevEnv = value;
   }
 
   bool _useLocalHost = false;
+
   @override
   set useLocalHost(bool value) {
     _useLocalHost = value;
@@ -33,6 +37,7 @@ class DefaultBaseApiClient extends BaseApiClient {
   }
 
   String? _userApiKey;
+
   @override
   set userApiKey(String? value) {
     _userApiKey = value;
@@ -46,6 +51,7 @@ class DefaultBaseApiClient extends BaseApiClient {
           : _prodBaseUrl;
 
   Map<String, String> get _defaultHeaders => {
+        "app-version": GetIt.I.get<String>(instanceName: 'appVersion'),
         "accept-language": _locale.languageCode,
         if (_userApiKey != null) "user-api-key": _userApiKey!,
       };
@@ -105,6 +111,9 @@ class DefaultBaseApiClient extends BaseApiClient {
         _appLogger.logMessage(
             "[BaseApiClient][$method]: SUCCESS Response from $constructedUrl in ${stopwatch.elapsedMilliseconds}ms, "
             "StatusCode: ${response.statusCode}, Body: $truncatedBody");
+      } else if (response.statusCode == 426) {
+        _appLogger.logMessage("[BaseApiClient][$method]: Update Required - StatusCode: ${response.statusCode}");
+        AppUpdateNavigation.popAllAndNavigate();
       } else {
         _logError(method, constructedUrl, headers, response, stopwatch.elapsedMilliseconds);
       }

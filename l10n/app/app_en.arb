@@ -168,5 +168,21 @@
   "continueAction": "Continue",
   "@continueAction": {
     "description": "Continue"
+  },
+  "appUpdateTitle": "Time to Update",
+  "@appUpdateTitle": {
+    "description": "Time to Update"
+  },
+  "appUpdateIntro": "Updates are like exams – you can't postpone them forever.",
+  "@appUpdateIntro": {
+    "description": "Intro text for the app update screen"
+  },
+  "appUpdateDescription": "Your current app version is outdated and no longer supported. Please update to the latest version.",
+  "@appUpdateDescription": {
+    "description": "Description text for the app update screen"
+  },
+  "appUpdateButton": "Update App",
+  "@appUpdateButton": {
+    "description": "Button text for the app update screen"
   }
 }

@@ -1,4 +1,5 @@
 import 'package:core/localizations.dart';
+import 'package:core/pages.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -19,34 +20,43 @@ class LmuApp extends StatelessWidget {
       listenable: languageProvider,
       builder: (context, _) => ListenableBuilder(
         listenable: themeProvider,
-        builder: (context, _) => MaterialApp.router(
-          localizationsDelegates: LmuLocalizations.localizationsDelegates,
-          supportedLocales: LmuLocalizations.supportedLocales,
-          locale: languageProvider.locale,
-          debugShowCheckedModeBanner: false,
-          routerConfig: _router,
-          title: "LMU Students",
-          theme: AppTheme.light,
-          darkTheme: AppTheme.dark,
-          themeMode: themeProvider.themeMode,
-          builder: (context, child) {
-            return FToastBuilder()(
-              context,
-              Stack(
-                children: [
-                  child ?? const SizedBox.shrink(),
-                  const NavigationBarColorSetter(),
-                ],
-              ),
-            );
-          },
-        ),
+        builder: (context, _) {
+          AppUpdateNavigation.router = _router;
+          return MaterialApp.router(
+            localizationsDelegates: LmuLocalizations.localizationsDelegates,
+            supportedLocales: LmuLocalizations.supportedLocales,
+            locale: languageProvider.locale,
+            debugShowCheckedModeBanner: false,
+            routerConfig: _router,
+            title: "LMU Students",
+            theme: AppTheme.light,
+            darkTheme: AppTheme.dark,
+            themeMode: themeProvider.themeMode,
+            builder: (context, child) {
+              return FToastBuilder()(
+                context,
+                Stack(
+                  children: [
+                    child ?? const SizedBox.shrink(),
+                    const NavigationBarColorSetter(),
+                  ],
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }
 
   final GoRouter _router = GoRouter(
-    routes: [$shellRouteData],
+    routes: [
+      $shellRouteData,
+      GoRoute(
+        path: '/app-update',
+        builder: (context, state) => const AppUpdatePage(),
+      ),
+    ],
     initialLocation: '/home',
   );
 }
