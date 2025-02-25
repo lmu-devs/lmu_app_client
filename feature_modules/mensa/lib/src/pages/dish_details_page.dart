@@ -23,7 +23,7 @@ class DishDetailsPage extends StatelessWidget {
 
   final MenuItemModel menuItemModel;
 
-  List<PriceModel> get _prices => menuItemModel.prices;
+  List<PriceModel> get _prices => menuItemModel.prices.sorted((a, b) => a.category.index.compareTo(b.category.index));
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +88,7 @@ class DishDetailsPage extends StatelessWidget {
               LmuContentTile(
                 content: [
                   LmuListItem.base(
-                    title: context.locals.canteen.simplePrice,
+                    subtitle: context.locals.canteen.simplePrice,
                     trailingTitle: menuItemModel.priceSimple,
                   ),
                   if (_prices.first.basePrice > 0.0)
@@ -96,10 +96,10 @@ class DishDetailsPage extends StatelessWidget {
                       title: context.locals.canteen.basePrice,
                       trailingTitle: '${_prices.first.basePrice.toStringAsFixed(2)} €',
                     ),
-                  ..._prices.map(
+                  ..._prices.where((e) => e.pricePerUnit > 0.0).map(
                     (e) {
                       return LmuListItem.base(
-                        title: e.category.name(context.locals.canteen),
+                        subtitle: e.category.name(context.locals.canteen),
                         trailingTitle: context.locals.canteen.pricePerUnit(
                           e.pricePerUnit.toStringAsFixed(2),
                           e.unit,

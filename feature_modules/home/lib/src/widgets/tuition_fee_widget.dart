@@ -65,8 +65,9 @@ class TuitionFeeWidget extends StatelessWidget {
                           ),
                         ],
                       )
-                    : LmuContentTile.top(
+                    : LmuContentTile(
                         key: const ValueKey('not_payed'),
+                        contentTileType: ContentTileType.top,
                         content: [
                           LmuListItem.base(
                             title: context.locals.home.tuitionFeeCountdown(
@@ -107,8 +108,8 @@ class TuitionFeeWidget extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                         horizontal: LmuSizes.size_16,
                       ),
-                      child: LmuContentTile.bottom(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                      child: LmuContentTile(
+                        contentTileType: ContentTileType.bottom,
                         content: [
                           LmuListItem.base(
                             title: context.locals.home.tuitionFee,
