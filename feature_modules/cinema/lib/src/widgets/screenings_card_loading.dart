@@ -2,6 +2,7 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ScreeningCardLoading extends StatelessWidget {
@@ -45,7 +46,13 @@ class ScreeningCardLoading extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        LmuText.body(BoneMock.words(3)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            LmuText.body(BoneMock.words(3)),
+                            LmuText.body(BoneMock.chars(2)),
+                          ],
+                        ),
                         const SizedBox(height: LmuSizes.size_4),
                         LmuText.bodySmall(BoneMock.words(2)),
                         const SizedBox(height: LmuSizes.size_4),

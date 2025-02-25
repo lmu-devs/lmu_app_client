@@ -33,6 +33,35 @@ class SportsStateService {
     );
   }
 
+  void searchValues(List<String> values, bool nothingFound) {
+    if (nothingFound) {
+      _filteredGroupedSportsNotifier.value = {};
+      return;
+    }
+    if (values.isEmpty) {
+      _filteredGroupedSportsNotifier.value = _initialValue;
+      return;
+    }
+    _filteredGroupedSportsNotifier.value = _initialValue.entries.fold<Map<String, List<SportsModel>>>(
+      {},
+      (acc, entry) {
+        final key = entry.key;
+        final value = entry.value;
+
+        final filteredValue = value.where((sport) {
+          final title = sport.title.toLowerCase();
+          return values.any((value) => title.contains(value.toLowerCase()));
+        }).toList();
+
+        if (filteredValue.isNotEmpty) {
+          acc[key] = filteredValue;
+        }
+
+        return acc;
+      },
+    );
+  }
+
   void _updateFilteredSports() {
     final currentFilterOptions = _filterOptionsNotifier.value;
     final currentAllValue = currentFilterOptions[SportsFilterOption.all]!;

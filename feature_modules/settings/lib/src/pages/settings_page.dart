@@ -32,9 +32,7 @@ class SettingsMainPage extends StatelessWidget {
       largeTitle: settingLocalizations.settings,
       leadingAction: LeadingAction.back,
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: LmuSizes.size_16,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -188,16 +186,17 @@ class SettingsMainPage extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: LmuSizes.size_16,
+              const SizedBox(height: LmuSizes.size_32),
+              LmuText.bodySmall(
+                '${GetIt.I<String>(instanceName: 'appName')} • ${GetIt.I<String>(instanceName: 'appVersion')}',
+                color: context.colors.neutralColors.textColors.mediumColors.base,
               ),
-              LmuButton(
-                title: context.locals.feedback.feedbackButton,
-                onTap: () => GetIt.I.get<FeedbackService>().navigateToFeedback(context, 'SettingsScreen'),
+              const SizedBox(height: LmuSizes.size_6),
+              LmuText.bodySmall(
+                'Created by ${LmuDevStrings.devTeam}, ${DateTime.now().year} ©',
+                color: context.colors.neutralColors.textColors.mediumColors.base,
               ),
-              const SizedBox(
-                height: LmuSizes.size_96,
-              ),
+              const SizedBox(height: LmuSizes.size_96),
             ],
           ),
         ),
@@ -206,10 +205,10 @@ class SettingsMainPage extends StatelessWidget {
   }
 }
 
-String _getThemeModeString(ThemeMode themeMode, SettingsLocalizations localizaitons) {
+String _getThemeModeString(ThemeMode themeMode, SettingsLocalizations localizations) {
   return switch (themeMode) {
-    ThemeMode.system => localizaitons.systemMode,
-    ThemeMode.dark => localizaitons.darkMode,
-    ThemeMode.light => localizaitons.lightMode,
+    ThemeMode.system => localizations.systemMode,
+    ThemeMode.dark => localizations.darkMode,
+    ThemeMode.light => localizations.lightMode,
   };
 }

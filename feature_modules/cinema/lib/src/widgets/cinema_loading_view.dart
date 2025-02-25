@@ -1,6 +1,7 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
+import 'package:core/themes.dart';
 import 'package:flutter/widgets.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -27,12 +28,18 @@ class CinemaLoadingView extends StatelessWidget {
               title: context.locals.cinema.upcomingTitle,
               bottomWidget: Align(
                 alignment: Alignment.centerLeft,
-                child: Wrap(
-                  spacing: LmuSizes.size_8,
-                  runSpacing: LmuSizes.size_4,
-                  children: List.generate(
-                    4, (index) => LmuSkeleton(
-                      child: LmuButton(
+                child: LmuSkeleton(
+                  child: Wrap(
+                    spacing: LmuSizes.size_8,
+                    runSpacing: LmuSizes.size_4,
+                    children: List.generate(
+                      3,
+                      (index) => LmuButton(
+                        leadingWidget: index == 0
+                            ? StarIcon(
+                                disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
+                              )
+                            : null,
                         title: BoneMock.words(1),
                         emphasis: ButtonEmphasis.secondary,
                         state: ButtonState.disabled,

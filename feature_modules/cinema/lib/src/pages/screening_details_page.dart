@@ -3,17 +3,19 @@ import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
-import 'package:core/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../repository/api/api.dart';
 import '../routes/cinema_details_data.dart';
 import '../routes/screening_details_data.dart';
+import '../services/cinema_user_preference_service.dart';
 import '../util/cinema_type.dart';
 import '../util/screening_time.dart';
+import '../widgets/screening_quick_fact_section.dart';
 import '../widgets/trailer_card.dart';
 import 'cinema_details_page.dart';
 
@@ -33,6 +35,26 @@ class ScreeningDetailsPage extends StatelessWidget {
     return LmuMasterAppBar.custom(
       collapsedTitle: screening.movie.title,
       leadingAction: LeadingAction.back,
+      trailingWidgets: [
+        ValueListenableBuilder<List<String>>(
+          valueListenable: GetIt.I<CinemaUserPreferenceService>().likedScreeningsIdsNotifier,
+          builder: (context, likedScreeningIds, child) {
+            return GestureDetector(
+              onTap: () async {
+                await GetIt.I<CinemaUserPreferenceService>().toggleLikedScreeningId(screening.id);
+                LmuVibrations.secondary();
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top: LmuSizes.size_4),
+                child: StarIcon(
+                  disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
+                  isActive: likedScreeningIds.contains(screening.id),
+                ),
+              ),
+            );
+          },
+        ),
+      ],
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -67,34 +89,10 @@ class ScreeningDetailsPage extends StatelessWidget {
                   const SizedBox(height: LmuSizes.size_24),
                   if (screening.movie.budget != null ||
                       screening.isOv != null ||
+                      screening.movie.genres.isNotEmpty ||
                       screening.movie.releaseYear != null ||
                       screening.movie.ratings.isNotEmpty) ...[
-                    Wrap(
-                      spacing: LmuSizes.size_4,
-                      runSpacing: LmuSizes.size_6,
-                      alignment: WrapAlignment.center,
-                      children: [
-                        if (screening.movie.budget != null)
-                          LmuInTextVisual.text(
-                              title: '${screening.price.toStringAsFixed(2)} €', size: InTextVisualSize.large),
-                        if (screening.isOv != null)
-                          LmuInTextVisual.text(
-                            title: screening.isOv! ? context.locals.cinema.ov : context.locals.cinema.germanTranslation,
-                            size: InTextVisualSize.large,
-                          ),
-                        if (screening.movie.releaseYear != null)
-                          LmuInTextVisual.text(
-                            title: DateTime.parse(screening.movie.releaseYear!).year.toString(),
-                            size: InTextVisualSize.large,
-                          ),
-                        if (screening.movie.ratings.isNotEmpty)
-                          LmuInTextVisual.text(
-                            title:
-                                '${_normalizeRatingSource(screening.movie.ratings.first.source)} ${screening.movie.ratings.first.rawRating.toString()}',
-                            size: InTextVisualSize.large,
-                          ),
-                      ],
-                    ),
+                    ScreeningQuickFactsSection(screening: screening),
                     const SizedBox(height: LmuSizes.size_24),
                   ],
                   if (screening.externalLink != null) ...[
@@ -251,15 +249,5 @@ class ScreeningDetailsPage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String _normalizeRatingSource(String ratingSource) {
-    if (ratingSource == 'ROTTEN_TOMATOES') {
-      return 'Rotten Tomatoes';
-    } else if (ratingSource == 'METACRITIC') {
-      return 'Metacritic';
-    } else {
-      return ratingSource;
-    }
   }
 }

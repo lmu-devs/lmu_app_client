@@ -14,7 +14,7 @@ dependencies:
   go_router: ^14.3.0
   go_router_builder: ^2.7.1
   mapbox_maps_flutter: ^2.5.0
-  flutter_svg: ^2.0.9
+  flutter_svg: ^2.0.17
   flutter_lucide: ^1.2.0
   shared_preferences: ^2.0.7
   geolocator: ^13.0.2
@@ -22,6 +22,13 @@ dependencies:
     path: ../../core
   shared_api:
     path: ../../shared_api
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
+  flutter_dotenv: ^5.2.1
+  json_annotation: ^4.9.0
+  equatable: ^2.0.7
+  flutter_bloc: ^8.1.6
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:
@@ -29,6 +36,7 @@ dev_dependencies:
   flutter_lints: ^3.0.0
   build_runner: ^2.4.9
   build_verify: ^3.1.0
+  json_serializable: ^6.6.2
 
 flutter:
   assets:

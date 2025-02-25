@@ -14,6 +14,7 @@ export 'list_items/list_items.dart';
 export 'marquee/marquee.dart';
 export 'progress_indicators/progress_indicators.dart';
 export 'scaffolds/scaffolds.dart';
+export 'search/search.dart';
 export 'skeletons/skeletons.dart';
 export 'status/status.dart';
 export 'tab_bars/tab_bars.dart';
