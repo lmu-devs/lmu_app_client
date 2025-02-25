@@ -16,9 +16,10 @@ StatefulShellBranch get $homeData => StatefulShellBranchData.$branch(
           path: '/home',
           factory: $HomeMainRouteExtension._fromState,
           routes: [
-            GetIt.I.get<SettingsService>().settingsData,
-            GetIt.I.get<SportsService>().sportsData,
-            GetIt.I.get<TimelineService>().timelineData,
+            GoRouteData.$route(
+              path: '/links',
+              factory: $LinksRouteExtension._fromState,
+            ),
           ],
         ),
       ],
@@ -35,7 +36,25 @@ extension $HomeMainRouteExtension on HomeMainRoute {
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LinksRouteExtension on LinksRoute {
+  static LinksRoute _fromState(GoRouterState state) => const LinksRoute();
+
+  String get location => GoRouteData.$location(
+        '/links',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }

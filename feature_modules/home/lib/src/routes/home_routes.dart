@@ -1,10 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_api/settings.dart';
-import 'package:shared_api/sports.dart';
-import 'package:shared_api/timeline.dart';
 
+import '../pages/links_page.dart';
 import '../pages/pages.dart';
 
 part 'home_routes.g.dart';
@@ -13,8 +10,10 @@ part 'home_routes.g.dart';
   routes: <TypedRoute<RouteData>>[
     TypedGoRoute<HomeMainRoute>(
       path: '/home',
-      routes: [
-        //setingsRoutes, need to be added in the generated file from the settings service
+      routes: <TypedGoRoute<GoRouteData>>[
+        TypedGoRoute<LinksRoute>(
+          path: '/links',
+        ),
       ],
     ),
   ],
@@ -30,4 +29,11 @@ class HomeMainRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) {
     return const HomePage();
   }
+}
+
+class LinksRoute extends GoRouteData {
+  const LinksRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const LinksPage();
 }

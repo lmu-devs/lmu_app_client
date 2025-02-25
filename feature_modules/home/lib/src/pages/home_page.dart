@@ -1,7 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
@@ -69,38 +68,6 @@ class _HomePageState extends State<HomePage> {
               GetIt.I.get<SportsService>().sportsPage,
               GetIt.I.get<CinemaService>().cinemaPage,
               GetIt.I.get<TimelineService>().timelinePage,
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _PlaceholderPage extends StatelessWidget {
-  const _PlaceholderPage();
-
-  @override
-  Widget build(BuildContext context) {
-    final textColor = context.colors.neutralColors.textColors.mediumColors.base;
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const SizedBox(height: LmuSizes.size_16),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(width: LmuSizes.size_8),
-              Icon(LucideIcons.construction, size: LmuIconSizes.small, color: textColor),
-              const SizedBox(width: LmuSizes.size_8),
-              LmuText.body(
-                "This tab is work in progress",
-                color: textColor,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(width: LmuSizes.size_8),
-              Icon(LucideIcons.construction, size: LmuIconSizes.small, color: textColor),
             ],
           ),
         ],

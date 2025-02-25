@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
-import '../cubit/cinema_cubit/cinema_cubit.dart';
-import '../cubit/cinema_cubit/cinema_state.dart';
+import '../cubit/cinema_cubit.dart';
+import '../cubit/cinema_state.dart';
 import '../repository/api/api.dart';
 import '../util/cinema_screenings.dart';
 import 'movie_teaser_card.dart';

@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_api/cinema.dart';
 import 'package:shared_api/sports.dart';
 
+import '../../pages/links_page.dart';
 import '../../repository/api/models/home_model.dart';
 import '../widgets.dart';
 import 'temporary_benefits_data.dart';
@@ -30,8 +31,17 @@ class ForYouContentView extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(height: LmuSizes.size_16),
-        HomeLinksView(links: homeData.links),
-        const SizedBox(height: LmuSizes.size_32),
+        //HomeLinksView(links: homeData.links),
+        //const SizedBox(height: LmuSizes.size_32),
+        LmuButton(
+          title: 'Links',
+          size: ButtonSize.large,
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const LinksPage(),
+            ),
+          ),
+        ),
         TuitionFeeWidget(homeData: homeData),
         const SizedBox(height: LmuSizes.size_32),
         Padding(
