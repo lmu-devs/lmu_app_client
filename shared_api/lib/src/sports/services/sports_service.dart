@@ -7,4 +7,6 @@ abstract class SportsService {
   Widget get sportsPage;
 
   RouteBase get sportsData;
+
+  void navigateToSportsPage(BuildContext context);
 }

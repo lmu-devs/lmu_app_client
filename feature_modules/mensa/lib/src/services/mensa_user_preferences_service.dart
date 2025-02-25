@@ -89,13 +89,13 @@ class MensaUserPreferencesService {
     await _mensaRepository.saveFavoriteMensaIds(favoriteMensaIds);
   }
 
-  Future<void> toggleFavoriteMensaId(String mensaId) async {
+  Future<void> toggleFavoriteMensaId(String mensaId, {int? insertIndex}) async {
     final favoriteMensaIds = List<String>.from(_favoriteMensaIdsNotifier.value);
 
     if (favoriteMensaIds.contains(mensaId)) {
       favoriteMensaIds.remove(mensaId);
     } else {
-      favoriteMensaIds.insert(favoriteMensaIds.length, mensaId);
+      favoriteMensaIds.insert(insertIndex ?? favoriteMensaIds.length, mensaId);
     }
 
     _favoriteMensaIdsNotifier.value = favoriteMensaIds;

@@ -6,35 +6,53 @@ import 'package:flutter/material.dart';
 class LmuFeatureTile extends StatelessWidget {
   const LmuFeatureTile({
     super.key,
-    required this.content,
     required this.title,
+    this.content,
     this.subtitle,
     this.padding,
     this.width,
     this.height,
     this.onTap,
+    this.hasBorder = false,
   });
-
-  final List<Widget> content;
 
   final String title;
   final String? subtitle;
+  final Widget? content;
   final EdgeInsets? padding;
   final double? width;
   final double? height;
   final void Function()? onTap;
+  final bool hasBorder;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     return GestureDetector(
       onTap: onTap,
-      child: SizedBox(
-        width: width,
-        height: height,
+      child: Container(
+        width: width ?? double.infinity,
+        height: height ?? 170,
+        decoration: hasBorder
+            ? BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(LmuRadiusSizes.mediumLarge)),
+                border: Border.all(
+                  strokeAlign: BorderSide.strokeAlignOutside,
+                  color: colors.neutralColors.borderColors.seperatorLight,
+                  width: 1,
+                ),
+              )
+            : null,
         child: Stack(
           children: [
-            LmuContentTile(content: content, padding: padding),
+            if (content != null)
+              LayoutBuilder(builder: (context, constraints) {
+                return SizedBox(
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                  child: content!,
+                );
+              }),
             Positioned.fill(
               child: Container(
                 decoration: BoxDecoration(
@@ -44,7 +62,7 @@ class LmuFeatureTile extends StatelessWidget {
                     end: Alignment.bottomCenter,
                     stops: const [0, 1],
                     colors: [
-                      colors.gradientColors.gradientFadeColors.start,
+                      colors.gradientColors.gradientFadeColors.end.withOpacity(0.5),
                       colors.gradientColors.gradientFadeColors.end,
                     ],
                   ),

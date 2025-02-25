@@ -19,6 +19,7 @@ class LmuContentTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors.neutralColors;
+    if (content.isEmpty) return const SizedBox.shrink();
     return Container(
       padding: padding ?? const EdgeInsets.all(LmuSizes.size_4),
       decoration: BoxDecoration(

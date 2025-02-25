@@ -1,5 +1,6 @@
 import 'package:core/module.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/wishlist.dart';
 
 import 'bloc/wishlist_cubit.dart';
 import 'repository/api/wishlist_api_client.dart';
@@ -11,16 +12,15 @@ class WishlistModule extends AppModule
         LocalDependenciesProvidingAppModule,
         WaitingAppStartAppModule,
         NoticeableAppStartAppModule,
-        PrivateDataContainingAppModule {
+        PrivateDataContainingAppModule,
+        PublicApiProvidingAppModule {
   @override
   String get moduleName => 'WishlistModule';
 
   @override
   void provideLocalDependencies() {
     GetIt.I.registerSingleton<WishlistRepository>(
-      ConnectedWishlistRepository(
-        wishlistApiClient: WishlistApiClient(),
-      ),
+      ConnectedWishlistRepository(wishlistApiClient: WishlistApiClient()),
     );
 
     GetIt.I.registerSingleton<WishlistCubit>(WishlistCubit());
@@ -40,5 +40,10 @@ class WishlistModule extends AppModule
   @override
   void onDeletePrivateData() {
     GetIt.I.get<WishlistUserPreferenceService>().reset();
+  }
+
+  @override
+  void providePublicApi() {
+    GetIt.I.registerSingleton<WishlistService>(DefaultWishlistService());
   }
 }

@@ -188,6 +188,7 @@ class MensaOverviewTile extends StatelessWidget {
                       onTap: () {
                         final userPreferencesService = GetIt.I.get<MensaUserPreferencesService>();
                         final id = mensaModel.canteenId;
+                        final favoriteIndex = userPreferencesService.favoriteMensaIdsNotifier.value.indexOf(id);
 
                         LmuVibrations.secondary();
 
@@ -198,7 +199,7 @@ class MensaOverviewTile extends StatelessWidget {
                             message: localizations.favoriteRemoved,
                             actionText: localizations.undo,
                             onActionPressed: () {
-                              userPreferencesService.toggleFavoriteMensaId(id);
+                              userPreferencesService.toggleFavoriteMensaId(id, insertIndex: favoriteIndex);
                             },
                           );
                         } else {
