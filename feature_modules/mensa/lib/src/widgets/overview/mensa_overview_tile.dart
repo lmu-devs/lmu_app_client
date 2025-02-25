@@ -152,9 +152,12 @@ class MensaOverviewTile extends StatelessWidget {
                               builder: (context, _) {
                                 final distance = distanceService.getDistanceToMensa(mensaModel.location);
                                 return distance != null
-                                    ? LmuText.body(
-                                        " • ${distance.formatDistance()}",
-                                        color: colors.neutralColors.textColors.mediumColors.base,
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(left: LmuSizes.size_8),
+                                        child: LmuText.body(
+                                          "• ${distance.formatDistance()}",
+                                          color: colors.neutralColors.textColors.mediumColors.base,
+                                        ),
                                       )
                                     : const SizedBox.shrink();
                               },
@@ -185,6 +188,7 @@ class MensaOverviewTile extends StatelessWidget {
                       onTap: () {
                         final userPreferencesService = GetIt.I.get<MensaUserPreferencesService>();
                         final id = mensaModel.canteenId;
+                        final favoriteIndex = userPreferencesService.favoriteMensaIdsNotifier.value.indexOf(id);
 
                         LmuVibrations.secondary();
 
@@ -195,7 +199,7 @@ class MensaOverviewTile extends StatelessWidget {
                             message: localizations.favoriteRemoved,
                             actionText: localizations.undo,
                             onActionPressed: () {
-                              userPreferencesService.toggleFavoriteMensaId(id);
+                              userPreferencesService.toggleFavoriteMensaId(id, insertIndex: favoriteIndex);
                             },
                           );
                         } else {

@@ -7,7 +7,7 @@ import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' show DateFormat;
 import 'package:shared_api/cinema.dart';
 import 'package:shared_api/sports.dart';
 
@@ -27,8 +27,155 @@ class ForYouContentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final customTextStyle = context.colors.neutralColors.textColors.strongColors.disabled;
     return Column(
       children: [
+        const SizedBox(height: LmuSizes.size_16),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+          child: LayoutBuilder(builder: (context, constraints) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                LmuFeatureTile(
+                  onTap: () {
+                    pageController.jumpToPage(1);
+                  },
+                  width: (constraints.maxWidth / 2) - 8,
+                  title: "Sports",
+                  padding: EdgeInsets.zero,
+                  // content: [
+                  //   const SizedBox(height: 12),
+                  //   SizedBox(
+                  //     height: 24,
+                  //     child: Marquee(
+                  //       velocity: 5,
+                  //       secondaryColor: customTextStyle,
+                  //       style: context.textTheme.h3
+                  //           .copyWith(color: context.colors.brandColors.textColors.strongColors.active),
+                  //       blankSpace: 8,
+                  //       textList: ["hockey", "fußball", "yoga", "zumba"],
+                  //     ),
+                  //   ),
+                  //   const SizedBox(height: 10),
+                  //   SizedBox(
+                  //     height: 24,
+                  //     child: Marquee(
+                  //       velocity: 5,
+                  //       textDirection: TextDirection.rtl,
+                  //       secondaryColor: customTextStyle,
+                  //       style: context.textTheme.h3,
+                  //       blankSpace: 8,
+                  //       textList: ["tischtennis", "bachata", "karate", "pilates"],
+                  //     ),
+                  //   ),
+                  //   const SizedBox(height: 10),
+                  //   SizedBox(
+                  //     height: 24,
+                  //     child: Marquee(
+                  //       velocity: 5,
+                  //       secondaryColor: customTextStyle,
+                  //       style: context.textTheme.h3,
+                  //       blankSpace: 8,
+                  //       textList: ["hockey", "fußball", "yoga", "zumba"],
+                  //     ),
+                  //   ),
+                  //   const SizedBox(height: 10),
+                  //   SizedBox(
+                  //     height: 24,
+                  //     child: Marquee(
+                  //       velocity: 5,
+                  //       textDirection: TextDirection.rtl,
+                  //       secondaryColor: customTextStyle,
+                  //       style: context.textTheme.h3,
+                  //       blankSpace: 8,
+                  //       textList: ["tischtennis", "bachata", "karate", "pilates"],
+                  //     ),
+                  //   ),
+                  //   const SizedBox(height: 10),
+                  //   SizedBox(
+                  //     height: 24,
+                  //     child: Marquee(
+                  //       velocity: 5,
+                  //       textDirection: TextDirection.ltr,
+                  //       secondaryColor: customTextStyle,
+                  //       style: context.textTheme.h3,
+                  //       blankSpace: 8,
+                  //       textList: ["tischtennis", "bachata", "karate", "pilates"],
+                  //     ),
+                  //   ),
+                  //   const SizedBox(height: 12),
+                  // ],
+                ),
+                LmuFeatureTile(
+                  width: (constraints.maxWidth / 2) - 8,
+                  title: "Benefits",
+                  padding: EdgeInsets.zero,
+                  // content: [
+                  //   const SizedBox(height: 12),
+                  //   SizedBox(
+                  //     height: 24,
+                  //     child: Marquee(
+                  //       velocity: 40,
+                  //       secondaryColor: customTextStyle,
+                  //       style: context.textTheme.h3,
+                  //       blankSpace: 8,
+                  //       textList: ["munchnerphilharmoniker", "testse", "apple", "zumba"],
+                  //     ),
+                  //   ),
+                  //   const SizedBox(height: 10),
+                  //   SizedBox(
+                  //     height: 24,
+                  //     child: Marquee(
+                  //       velocity: 5,
+                  //       textDirection: TextDirection.rtl,
+                  //       secondaryColor: customTextStyle,
+                  //       style: context.textTheme.h3,
+                  //       blankSpace: 8,
+                  //       textList: ["tischtennis", "bachata", "karate", "pilates"],
+                  //     ),
+                  //   ),
+                  //   const SizedBox(height: 10),
+                  //   SizedBox(
+                  //     height: 24,
+                  //     child: Marquee(
+                  //       velocity: 5,
+                  //       secondaryColor: customTextStyle,
+                  //       style: context.textTheme.h3,
+                  //       blankSpace: 8,
+                  //       textList: ["hockey", "fußball", "yoga", "zumba"],
+                  //     ),
+                  //   ),
+                  //   const SizedBox(height: 10),
+                  //   SizedBox(
+                  //     height: 24,
+                  //     child: Marquee(
+                  //       velocity: 5,
+                  //       textDirection: TextDirection.rtl,
+                  //       secondaryColor: customTextStyle,
+                  //       style: context.textTheme.h3,
+                  //       blankSpace: 8,
+                  //       textList: ["tischtennis", "bachata", "karate", "pilates"],
+                  //     ),
+                  //   ),
+                  //   const SizedBox(height: 10),
+                  //   SizedBox(
+                  //     height: 24,
+                  //     child: Marquee(
+                  //       velocity: 5,
+                  //       secondaryColor: customTextStyle,
+                  //       style: context.textTheme.h3,
+                  //       blankSpace: 8,
+                  //       textList: ["hockey", "fußball", "yoga", "zumba"],
+                  //     ),
+                  //   ),
+                  //   const SizedBox(height: 12),
+                  // ],
+                ),
+              ],
+            );
+          }),
+        ),
         const SizedBox(height: LmuSizes.size_16),
         HomeLinksView(links: homeData.links),
         const SizedBox(height: LmuSizes.size_32),

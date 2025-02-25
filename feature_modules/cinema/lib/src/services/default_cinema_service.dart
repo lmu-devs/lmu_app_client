@@ -42,4 +42,9 @@ class DefaultCinemaService implements CinemaService {
       return [];
     });
   }
+
+  @override
+  void navigateToCinemaPage(BuildContext context) {
+    const CinemaMainRoute().go(context);
+  }
 }

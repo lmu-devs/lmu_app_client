@@ -1,3 +1,5 @@
+import 'package:core/components.dart';
+import 'package:core/localizations.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -24,15 +26,19 @@ class _SportsPageState extends State<SportsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SportsCubit, SportsState>(
-      bloc: GetIt.I.get<SportsCubit>(),
-      builder: (context, state) {
-        if (state is SportsLoadSuccess) {
-          return SportsContentView(sports: state.sports);
-        }
+    return LmuMasterAppBar(
+      largeTitle: context.locals.sports.sportsTitle,
+      leadingAction: LeadingAction.back,
+      body: BlocBuilder<SportsCubit, SportsState>(
+        bloc: GetIt.I.get<SportsCubit>(),
+        builder: (context, state) {
+          if (state is SportsLoadSuccess) {
+            return SportsContentView(sports: state.sports);
+          }
 
-        return const SportsLoadingView();
-      },
+          return const SportsLoadingView();
+        },
+      ),
     );
   }
 }

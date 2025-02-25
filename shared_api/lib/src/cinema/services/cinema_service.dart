@@ -8,4 +8,6 @@ abstract class CinemaService {
   StatefulShellBranch get cinemaData;
   Widget get movieTeaserList;
   Stream<List<ExploreLocation>> get cinemaExploreLocationsStream;
+
+  void navigateToCinemaPage(BuildContext context);
 }

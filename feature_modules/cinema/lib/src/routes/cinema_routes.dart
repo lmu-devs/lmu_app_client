@@ -47,27 +47,26 @@ class CinemaDetailsRoute extends GoRouteData {
 
 class ScreeningDetailsRoute extends GoRouteData {
   const ScreeningDetailsRoute(
-      this.$extra,
-      );
+    this.$extra,
+  );
 
   final ScreeningDetailsData $extra;
 
   @override
   Widget build(BuildContext context, GoRouterState state) => ScreeningDetailsPage(
-    screeningDetailsData: $extra,
-  );
+        screeningDetailsData: $extra,
+      );
 }
-
 
 class ScreeningsHistoryRoute extends GoRouteData {
   const ScreeningsHistoryRoute(
-      this.$extra,
-      );
+    this.$extra,
+  );
 
   final List<ScreeningModel> $extra;
 
   @override
   Widget build(BuildContext context, GoRouterState state) => ScreeningsHistoryPage(
-    screenings: $extra,
-  );
+        screenings: $extra,
+      );
 }
