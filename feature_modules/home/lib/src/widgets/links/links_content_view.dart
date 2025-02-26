@@ -1,11 +1,8 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:core/localizations.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import '../../repository/api/models/links/link_model.dart';
-import '../../service/home_preferences_service.dart';
+import 'favorite_link_section.dart';
 import 'link_card.dart';
 
 class LinksContentView extends StatefulWidget {
@@ -20,15 +17,13 @@ class LinksContentView extends StatefulWidget {
 class _LinksContentViewState extends State<LinksContentView> {
   late final LmuSearchController _searchController;
   late List<LmuSearchInput> _searchInputs;
-  Map<String, List<LinkModel>> _groupedLinks = {};
+  late ValueNotifier<List<LinkModel>> _filteredLinks;
+  final ValueNotifier<bool> _isSearchActive = ValueNotifier(false);
 
   @override
   void initState() {
     super.initState();
-
     _searchController = LmuSearchController();
-    _searchController.addListener(_filterLinks);
-
     _searchInputs = widget.links
         .map((link) => LmuSearchInput(
               title: link.title,
@@ -37,27 +32,29 @@ class _LinksContentViewState extends State<LinksContentView> {
             ))
         .toList();
 
-    _groupLinks(widget.links);
-  }
+    _filteredLinks = ValueNotifier(widget.links);
 
-  void _groupLinks(List<LinkModel> links) {
-    final sortedLinks = List.from(links)..sort((a, b) => a.title.compareTo(b.title));
-    _groupedLinks = {};
-    for (var link in sortedLinks) {
-      final firstLetter = link.title[0].toUpperCase();
-      _groupedLinks.putIfAbsent(firstLetter, () => []).add(link);
-    }
-    setState(() {});
+    _searchController.addListener(_filterLinks);
   }
 
   void _filterLinks() {
     final query = _searchController.value.map((input) => input.title.toLowerCase()).toList();
+
     if (query.isEmpty) {
-      _groupLinks(widget.links);
+      _filteredLinks.value = widget.links;
     } else {
-      final filtered = widget.links.where((link) => query.any((q) => link.title.toLowerCase().contains(q))).toList();
-      _groupLinks(filtered);
+      _filteredLinks.value =
+          widget.links.where((link) => query.any((q) => link.title.toLowerCase().contains(q))).toList();
     }
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_filterLinks);
+    _searchController.dispose();
+    _filteredLinks.dispose();
+    _isSearchActive.dispose();
+    super.dispose();
   }
 
   @override
@@ -74,64 +71,34 @@ class _LinksContentViewState extends State<LinksContentView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: LmuSizes.size_16),
-                  ValueListenableBuilder<List<String>>(
-                    valueListenable: GetIt.I<HomePreferencesService>().likedLinksNotifier,
-                    builder: (context, likedLinkTitles, child) {
-                      return likedLinkTitles.isNotEmpty
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                StarIcon(
-                                  disabledColor: context.colors.neutralColors.backgroundColors.strongColors.active,
-                                ),
-                                const SizedBox(height: LmuSizes.size_12),
-                                LmuContentTile(
-                                  content: widget.links
-                                      .where((link) => likedLinkTitles.contains(link.title))
-                                      .map((link) => LinkCard(link: link))
-                                      .toList(),
-                                ),
-                                const SizedBox(height: LmuSizes.size_16),
-                              ],
-                            )
-                          : Padding(
-                              padding: const EdgeInsets.only(bottom: LmuSizes.size_32),
-                              child: PlaceholderTile(
-                                //key: const ValueKey("favorite_link_placeholder"),
-                                minHeight: LmuSizes.size_72,
-                                content: [
-                                  LmuText.body(
-                                    context.locals.home.favoriteLinksEmptyBefore,
-                                    color: context.colors.neutralColors.textColors.mediumColors.base,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  StarIcon(
-                                    isActive: false,
-                                    disabledColor: context.colors.neutralColors.textColors.weakColors.base,
-                                    size: LmuSizes.size_16,
-                                  ),
-                                  LmuText.body(
-                                    context.locals.home.favoriteLinksEmptyAfter,
-                                    color: context.colors.neutralColors.textColors.mediumColors.base,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              ),
-                            );
+                  ValueListenableBuilder<bool>(
+                    valueListenable: _isSearchActive,
+                    builder: (context, isActive, child) {
+                      return FavoriteLinkSection(
+                        links: widget.links,
+                        isSearchActive: isActive,
+                      );
                     },
                   ),
-                  Column(
-                      children: _groupedLinks.entries.map((entry) {
-                    return Column(
-                      children: [
-                        LmuTileHeadline.base(title: entry.key),
-                        LmuContentTile(
-                          content: entry.value.map((link) => LinkCard(link: link)).toList(),
-                        ),
-                        const SizedBox(height: LmuSizes.size_16),
-                      ],
-                    );
-                  }).toList()),
+                  ValueListenableBuilder<List<LinkModel>>(
+                    valueListenable: _filteredLinks,
+                    builder: (context, filteredLinks, child) {
+                      final groupedLinks = _groupLinks(filteredLinks);
+                      return Column(
+                        children: groupedLinks.entries.map((entry) {
+                          return Column(
+                            children: [
+                              LmuTileHeadline.base(title: entry.key),
+                              LmuContentTile(
+                                content: entry.value.map((link) => LinkCard(link: link)).toList(),
+                              ),
+                              const SizedBox(height: LmuSizes.size_16),
+                            ],
+                          );
+                        }).toList(),
+                      );
+                    },
+                  ),
                   const SizedBox(height: LmuSizes.size_96),
                 ],
               ),
@@ -142,12 +109,25 @@ class _LinksContentViewState extends State<LinksContentView> {
           left: 0,
           right: 0,
           bottom: 0,
-          child: LmuSearchOverlay(
-            searchController: _searchController,
-            searchInputs: _searchInputs,
+          child: Focus(
+            onFocusChange: (hasFocus) => _isSearchActive.value = hasFocus,
+            child: LmuSearchOverlay(
+              searchController: _searchController,
+              searchInputs: _searchInputs,
+            ),
           ),
         ),
       ],
     );
+  }
+
+  Map<String, List<LinkModel>> _groupLinks(List<LinkModel> links) {
+    final sortedLinks = List.from(links)..sort((a, b) => a.title.compareTo(b.title));
+    final Map<String, List<LinkModel>> groupedLinks = {};
+    for (var link in sortedLinks) {
+      final firstLetter = link.title[0].toUpperCase();
+      groupedLinks.putIfAbsent(firstLetter, () => []).add(link);
+    }
+    return groupedLinks;
   }
 }

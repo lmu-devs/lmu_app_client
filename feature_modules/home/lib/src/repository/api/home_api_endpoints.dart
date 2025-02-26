@@ -12,4 +12,8 @@ class HomeApiEndpoints {
   static String getLinks() {
     return '$_linkRoute$_resourcesRoute';
   }
+
+  static String getBenefits() {
+    return '$_linkRoute$_benefitsRoute';
+  }
 }

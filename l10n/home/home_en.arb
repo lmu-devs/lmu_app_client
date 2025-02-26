@@ -119,7 +119,7 @@
   "@favoriteLinksEmptyBefore": {
     "description": "Empty favorite link text before the star icon"
   },
-  "favoriteLinksEmptyAfter": " to add links here and on home",
+  "favoriteLinksEmptyAfter": " to add links here and to home",
   "@favoriteLinksEmptyAfter": {
     "description": "Empty favorite link text after the star icon"
   },

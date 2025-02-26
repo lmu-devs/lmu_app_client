@@ -1,14 +1,13 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 import '../../bloc/links/links.dart';
 import '../../repository/api/models/links/link_model.dart';
 import '../../service/home_preferences_service.dart';
+import 'favorite_link_row_loading.dart';
 
 class FavoriteLinkRow extends StatelessWidget {
   const FavoriteLinkRow({super.key});
@@ -50,39 +49,7 @@ class FavoriteLinkRow extends StatelessWidget {
           );
         }
 
-        return Padding(
-          padding: const EdgeInsets.only(top: LmuSizes.size_4, bottom: LmuSizes.size_8),
-          child: LmuSkeleton(
-            child: LmuButtonRow(
-              buttons: [
-                LmuButton(
-                  emphasis: ButtonEmphasis.secondary,
-                  title: BoneMock.words(1),
-                  leadingWidget: Container(
-                    decoration: BoxDecoration(
-                      color: context.colors.neutralColors.backgroundColors.mediumColors.base,
-                      borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
-                    ),
-                    height: LmuIconSizes.small,
-                    width: LmuIconSizes.small,
-                  ),
-                ),
-                LmuButton(
-                  emphasis: ButtonEmphasis.secondary,
-                  title: BoneMock.words(1),
-                  leadingWidget: Container(
-                    decoration: BoxDecoration(
-                      color: context.colors.neutralColors.backgroundColors.mediumColors.base,
-                      borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
-                    ),
-                    height: LmuIconSizes.small,
-                    width: LmuIconSizes.small,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
+        return const FavoriteLinkRowLoading();
       },
     );
   }
