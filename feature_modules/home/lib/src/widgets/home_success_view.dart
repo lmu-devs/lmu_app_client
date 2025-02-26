@@ -15,6 +15,7 @@ import 'package:shared_api/timeline.dart';
 import 'package:shared_api/wishlist.dart';
 
 import '../pages/links_page.dart';
+import 'links/favorite_link_row.dart';
 
 class HomeSuccessView extends StatelessWidget {
   const HomeSuccessView({super.key});
@@ -22,113 +23,119 @@ class HomeSuccessView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final locals = context.locals;
-    return Padding(
-      padding: const EdgeInsets.all(LmuSizes.size_16),
-      child: Column(
-        children: [
-          LmuFeatureTile(
-            title: "Featured",
-            subtitle: "Something special",
-            content: const Align(
-              alignment: Alignment.topRight,
-              child: Padding(
-                padding: EdgeInsets.all(LmuSizes.size_8),
-                child: LmuIcon(
-                  icon: LucideIcons.x,
-                  size: LmuIconSizes.medium,
-                ),
-              ),
-            ),
-            hasBorder: true,
-            onTap: () {},
-          ),
-          const SizedBox(height: LmuSizes.size_16),
-          LmuFeatureTile(
-            title: locals.home.dates,
-            onTap: () => GetIt.I.get<TimelineService>().navigateToTimelinePage(context),
-          ),
-          const SizedBox(height: LmuSizes.size_16),
-          Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const FavoriteLinkRow(),
+        Padding(
+          padding: const EdgeInsets.all(LmuSizes.size_16),
+          child: Column(
             children: [
-              Expanded(
-                child: LmuFeatureTile(
-                  title: "News",
-                  onTap: () {},
-                ),
-              ),
-              const SizedBox(width: LmuSizes.size_16),
-              Expanded(
-                child: LmuFeatureTile(
-                  title: "Events",
-                  onTap: () {},
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: LmuSizes.size_16),
-          LmuFeatureTile(
-            title: "Mensa",
-            onTap: () => GetIt.I.get<MensaService>().navigateToMensaPage(context),
-          ),
-          const SizedBox(height: LmuSizes.size_16),
-          Row(
-            children: [
-              Expanded(
-                child: LmuFeatureTile(
-                  title: "Roomfinder",
-                  onTap: () => GetIt.I.get<ExploreService>().navigateToExplore(context),
-                ),
-              ),
-              const SizedBox(width: LmuSizes.size_16),
-              Expanded(
-                child: LmuFeatureTile(
-                  title: "Links",
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const LinksPage(),
+              LmuFeatureTile(
+                title: "Featured",
+                subtitle: "Something special",
+                content: const Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: EdgeInsets.all(LmuSizes.size_8),
+                    child: LmuIcon(
+                      icon: LucideIcons.x,
+                      size: LmuIconSizes.medium,
                     ),
                   ),
                 ),
+                hasBorder: true,
+                onTap: () {},
               ),
+              const SizedBox(height: LmuSizes.size_16),
+              LmuFeatureTile(
+                title: locals.home.dates,
+                onTap: () => GetIt.I.get<TimelineService>().navigateToTimelinePage(context),
+              ),
+              const SizedBox(height: LmuSizes.size_16),
+              Row(
+                children: [
+                  Expanded(
+                    child: LmuFeatureTile(
+                      title: "News",
+                      onTap: () {},
+                    ),
+                  ),
+                  const SizedBox(width: LmuSizes.size_16),
+                  Expanded(
+                    child: LmuFeatureTile(
+                      title: "Events",
+                      onTap: () {},
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: LmuSizes.size_16),
+              LmuFeatureTile(
+                title: "Mensa",
+                onTap: () => GetIt.I.get<MensaService>().navigateToMensaPage(context),
+              ),
+              const SizedBox(height: LmuSizes.size_16),
+              Row(
+                children: [
+                  Expanded(
+                    child: LmuFeatureTile(
+                      title: "Roomfinder",
+                      onTap: () => GetIt.I.get<ExploreService>().navigateToExplore(context),
+                    ),
+                  ),
+                  const SizedBox(width: LmuSizes.size_16),
+                  Expanded(
+                    child: LmuFeatureTile(
+                      title: "Links",
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const LinksPage(),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: LmuSizes.size_16),
+              LmuFeatureTile(
+                onTap: () => GetIt.I.get<SportsService>().navigateToSportsPage(context),
+                title: context.locals.sports.sportsTitle,
+                padding: EdgeInsets.zero,
+                //MarqueeTileContent(texts: sportTypes)],
+              ),
+              const SizedBox(height: LmuSizes.size_16),
+              LmuFeatureTile(
+                title: context.locals.cinema.cinemasTitle,
+                onTap: () => GetIt.I.get<CinemaService>().navigateToCinemaPage(context),
+              ),
+              const SizedBox(height: LmuSizes.size_16),
+              const LmuFeatureTile(
+                title: "Benefits",
+              ),
+              const SizedBox(height: LmuSizes.size_16),
+              Row(
+                children: [
+                  Expanded(
+                    child: LmuFeatureTile(
+                      title: "Wishlist",
+                      onTap: () => GetIt.I.get<WishlistService>().navigateToWishlistPage(context),
+                    ),
+                  ),
+                  const SizedBox(width: LmuSizes.size_16),
+                  Expanded(
+                    child: LmuFeatureTile(
+                      title: "Feedback",
+                      onTap: () {},
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: LmuSizes.size_96),
             ],
           ),
-          const SizedBox(height: LmuSizes.size_16),
-          LmuFeatureTile(
-            onTap: () => GetIt.I.get<SportsService>().navigateToSportsPage(context),
-            title: context.locals.sports.sportsTitle,
-            padding: EdgeInsets.zero,
-            //MarqueeTileContent(texts: sportTypes)],
-          ),
-          const SizedBox(height: LmuSizes.size_16),
-          LmuFeatureTile(
-            title: context.locals.cinema.cinemasTitle,
-            onTap: () => GetIt.I.get<CinemaService>().navigateToCinemaPage(context),
-          ),
-          const SizedBox(height: LmuSizes.size_16),
-          const LmuFeatureTile(
-            title: "Benefits",
-          ),
-          const SizedBox(height: LmuSizes.size_16),
-          Row(
-            children: [
-              Expanded(
-                child: LmuFeatureTile(
-                  title: "Wishlist",
-                  onTap: () => GetIt.I.get<WishlistService>().navigateToWishlistPage(context),
-                ),
-              ),
-              const SizedBox(width: LmuSizes.size_16),
-              Expanded(
-                child: LmuFeatureTile(
-                  title: "Feedback",
-                  onTap: () {},
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: LmuSizes.size_96),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

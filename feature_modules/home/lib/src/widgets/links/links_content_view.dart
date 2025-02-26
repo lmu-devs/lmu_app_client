@@ -1,7 +1,10 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import '../../repository/api/models/links/link_model.dart';
+import '../../service/home_preferences_service.dart';
 import 'link_card.dart';
 
 class LinksContentView extends StatefulWidget {
@@ -67,18 +70,57 @@ class _LinksContentViewState extends State<LinksContentView> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
               child: Column(
-                children: _groupedLinks.entries.map((entry) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      LmuTileHeadline.base(title: entry.key),
-                      LmuContentTile(
-                        content: entry.value.map((link) => LinkCard(link: link)).toList(),
-                      ),
-                      const SizedBox(height: LmuSizes.size_32),
-                    ],
-                  );
-                }).toList()
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: LmuSizes.size_16),
+                  ValueListenableBuilder<List<String>>(
+                    valueListenable: GetIt.I<HomePreferencesService>().likedLinksNotifier,
+                    builder: (context, likedLinkTitles, child) {
+                      return likedLinkTitles.isNotEmpty
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                StarIcon(
+                                    disabledColor: context.colors.neutralColors.backgroundColors.strongColors.active),
+                                const SizedBox(height: LmuSizes.size_12),
+                                LmuContentTile(
+                                  content: widget.links
+                                      .where((link) => likedLinkTitles.contains(link.title))
+                                      .map((link) => LinkCard(link: link))
+                                      .toList(),
+                                ),
+                                const SizedBox(height: LmuSizes.size_16),
+                              ],
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.only(bottom: LmuSizes.size_32),
+                              child: PlaceholderTile(
+                                minHeight: LmuSizes.size_72,
+                                content: [
+                                  LmuText.body(
+                                    "Favorited links will appear here and on the home screen",
+                                    color: context.colors.neutralColors.textColors.mediumColors.base,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            );
+                    },
+                  ),
+                  Column(
+                      children: _groupedLinks.entries.map((entry) {
+                    return Column(
+                      children: [
+                        LmuTileHeadline.base(title: entry.key),
+                        LmuContentTile(
+                          content: entry.value.map((link) => LinkCard(link: link)).toList(),
+                        ),
+                        const SizedBox(height: LmuSizes.size_16),
+                      ],
+                    );
+                  }).toList()),
+                  const SizedBox(height: LmuSizes.size_96),
+                ],
               ),
             ),
           ),

@@ -24,6 +24,7 @@ class HomeModule extends AppModule
   @override
   void onAppStartNotice() {
     GetIt.I.get<HomeCubit>().loadHomeData();
+    GetIt.I.get<LinksCubit>().getLinks();
   }
 
   @override
