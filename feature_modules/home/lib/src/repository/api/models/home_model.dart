@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'link_model.dart';
 import 'semester_fee_model.dart';
 import 'time_period_model.dart';
 
@@ -15,13 +14,11 @@ class HomeModel extends Equatable {
   final TimePeriodModel lectureFreeTime;
   @JsonKey(name: 'lecture_time')
   final TimePeriodModel lectureTime;
-  final List<LinkModel> links;
 
   const HomeModel({
     required this.semesterFee,
     required this.lectureFreeTime,
     required this.lectureTime,
-    required this.links,
   });
 
   factory HomeModel.fromJson(Map<String, dynamic> json) => _$HomeModelFromJson(json);
@@ -33,6 +30,5 @@ class HomeModel extends Equatable {
         semesterFee,
         lectureFreeTime,
         lectureTime,
-        links,
       ];
 }

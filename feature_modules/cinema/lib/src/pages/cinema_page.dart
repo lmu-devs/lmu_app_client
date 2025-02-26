@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../widgets/widgets.dart';
-import '../cubit/cinema_cubit/cubit.dart';
+import '../cubit/cubit.dart';
 
 class CinemaPage extends StatelessWidget {
   const CinemaPage({super.key});

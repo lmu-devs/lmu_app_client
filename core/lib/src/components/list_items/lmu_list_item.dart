@@ -30,6 +30,7 @@ class LmuListItem extends StatelessWidget {
     this.hasVerticalPadding = true,
     this.hasHorizontalPadding = true,
     this.onTap,
+    this.onLongPress,
     this.hasDivider = false,
     this.maximizeLeadingTitleArea = false,
     this.maximizeTrailingTitleArea = false,
@@ -55,6 +56,7 @@ class LmuListItem extends StatelessWidget {
   final bool Function(bool)? shouldChangeActionValue;
   final ValueNotifier<bool>? actionValueNotifier;
   final void Function()? onTap;
+  final void Function()? onLongPress;
   final bool hasVerticalPadding;
   final bool hasHorizontalPadding;
   final bool hasDivider;
@@ -79,6 +81,7 @@ class LmuListItem extends StatelessWidget {
     Widget? leadingArea,
     Widget? trailingArea,
     void Function()? onTap,
+    void Function()? onLongPress,
     bool? hasVerticalPadding,
     bool? hasHorizontalPadding,
     bool? hasDivider,
@@ -103,6 +106,7 @@ class LmuListItem extends StatelessWidget {
         leadingArea: leadingArea,
         trailingArea: trailingArea,
         onTap: onTap,
+        onLongPress: onLongPress,
         hasHorizontalPadding: hasHorizontalPadding ?? true,
         hasVerticalPadding: hasVerticalPadding ?? true,
         hasDivider: hasDivider ?? false,
@@ -132,6 +136,7 @@ class LmuListItem extends StatelessWidget {
     Widget? leadingArea,
     Widget? trailingArea,
     void Function()? onTap,
+    void Function()? onLongPress,
     bool? hasVerticalPadding,
     bool? hasHorizontalPadding,
     bool? hasDivider,
@@ -162,6 +167,7 @@ class LmuListItem extends StatelessWidget {
       hasVerticalPadding: hasVerticalPadding ?? true,
       actionType: actionType,
       onTap: onTap,
+      onLongPress: onLongPress,
       hasDivider: hasDivider ?? false,
       maximizeLeadingTitleArea: maximizeLeadingTitleArea ?? false,
       maximizeTrailingTitleArea: maximizeTrailingTitleArea ?? false,
@@ -214,6 +220,7 @@ class LmuListItem extends StatelessWidget {
               onTap?.call();
             }
           },
+          onLongPress: () => onLongPress?.call(),
           child: Padding(
             padding: EdgeInsets.symmetric(
               vertical: hasVerticalPadding ? LmuSizes.size_12 : LmuSizes.size_8,

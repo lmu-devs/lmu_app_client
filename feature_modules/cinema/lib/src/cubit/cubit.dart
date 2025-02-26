@@ -1,1 +1,2 @@
-export 'cinema_cubit/cubit.dart';
+export 'cinema_cubit.dart';
+export 'cinema_state.dart';

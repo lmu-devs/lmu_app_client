@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import 'cinema_state.dart';
-import '../../repository/cinema_repository.dart';
+import '../repository/cinema_repository.dart';
 
 class CinemaCubit extends Cubit<CinemaState> {
   CinemaCubit() : super(const CinemaInitial());

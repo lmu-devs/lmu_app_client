@@ -177,7 +177,7 @@ class ForYouContentView extends StatelessWidget {
           }),
         ),
         const SizedBox(height: LmuSizes.size_16),
-        HomeLinksView(links: homeData.links),
+        //HomeLinksView(links: homeData.links),
         const SizedBox(height: LmuSizes.size_32),
         TuitionFeeWidget(homeData: homeData),
         const SizedBox(height: LmuSizes.size_32),

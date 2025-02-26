@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../repository/api/api.dart';
+import '../repository/api/api.dart';
 
 
 abstract class CinemaState extends Equatable {

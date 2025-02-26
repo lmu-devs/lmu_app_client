@@ -113,5 +113,17 @@
   "philarmonikerDescription": "Cheaper student tickets for classical concerts",
   "operaTitle": "State Opera",
   "operaDescription": "Range of special activities and cheaper tickets",
-  "forYou": "For You"
+  "forYou": "For You",
+  "linkCopiedToClipboard": "Link copied to clipboard",
+  "favoriteLinksEmptyBefore": "Tap the ",
+  "@favoriteLinksEmptyBefore": {
+    "description": "Empty favorite link text before the star icon"
+  },
+  "favoriteLinksEmptyAfter": " to add links here and to home",
+  "@favoriteLinksEmptyAfter": {
+    "description": "Empty favorite link text after the star icon"
+  },
+  "@linkCopiedToClipboard": {
+    "description": "Toast message for copying a link to clipboard"
+  }
 }

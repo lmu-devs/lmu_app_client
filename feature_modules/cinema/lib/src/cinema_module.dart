@@ -6,7 +6,7 @@ import 'repository/api/api.dart';
 import 'repository/cinema_repository.dart';
 import 'services/cinema_user_preference_service.dart';
 import 'services/default_cinema_service.dart';
-import 'cubit/cinema_cubit/cubit.dart';
+import 'cubit/cubit.dart';
 
 class CinemaModule extends AppModule
     with

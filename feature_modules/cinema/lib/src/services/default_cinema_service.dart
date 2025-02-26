@@ -6,7 +6,7 @@ import 'package:shared_api/cinema.dart';
 import 'package:shared_api/explore.dart';
 
 import '../../cinema.dart';
-import '../cubit/cinema_cubit/cubit.dart';
+import '../cubit/cubit.dart';
 import '../pages/cinema_page.dart';
 import '../routes/cinema_routes.dart';
 import '../widgets/widgets.dart';

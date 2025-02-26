@@ -28,7 +28,7 @@ class WishlistApiClient {
     if (response.statusCode == 200) {
       return response.body == 'true';
     } else {
-      throw Exception('Failed to toggle favorite mensa - ${response.statusCode}');
+      throw Exception('Failed to toggle favorite wishlist entry - ${response.statusCode}');
     }
   }
 }
