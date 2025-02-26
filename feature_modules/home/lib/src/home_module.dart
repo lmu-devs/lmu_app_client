@@ -9,7 +9,11 @@ import 'repository/repository.dart';
 import 'service/services.dart';
 
 class HomeModule extends AppModule
-    with LocalDependenciesProvidingAppModule, NoticeableAppStartAppModule, PublicApiProvidingAppModule {
+    with
+        LocalDependenciesProvidingAppModule,
+        NoticeableAppStartAppModule,
+        PublicApiProvidingAppModule,
+        PrivateDataContainingAppModule {
   @override
   String get moduleName => 'HomeModule';
 
@@ -23,6 +27,7 @@ class HomeModule extends AppModule
 
   @override
   void onAppStartNotice() {
+    GetIt.I.get<HomePreferencesService>().init();
     GetIt.I.get<HomeCubit>().loadHomeData();
     GetIt.I.get<LinksCubit>().getLinks();
   }
@@ -30,5 +35,10 @@ class HomeModule extends AppModule
   @override
   void providePublicApi() {
     GetIt.I.registerSingleton<HomeService>(DefaultHomeService());
+  }
+
+  @override
+  void onDeletePrivateData() {
+    GetIt.I.get<HomePreferencesService>().reset();
   }
 }

@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -81,7 +82,8 @@ class _LinksContentViewState extends State<LinksContentView> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 StarIcon(
-                                    disabledColor: context.colors.neutralColors.backgroundColors.strongColors.active),
+                                  disabledColor: context.colors.neutralColors.backgroundColors.strongColors.active,
+                                ),
                                 const SizedBox(height: LmuSizes.size_12),
                                 LmuContentTile(
                                   content: widget.links
@@ -95,10 +97,21 @@ class _LinksContentViewState extends State<LinksContentView> {
                           : Padding(
                               padding: const EdgeInsets.only(bottom: LmuSizes.size_32),
                               child: PlaceholderTile(
+                                //key: const ValueKey("favorite_link_placeholder"),
                                 minHeight: LmuSizes.size_72,
                                 content: [
                                   LmuText.body(
-                                    "Favorited links will appear here and on the home screen",
+                                    context.locals.home.favoriteLinksEmptyBefore,
+                                    color: context.colors.neutralColors.textColors.mediumColors.base,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  StarIcon(
+                                    isActive: false,
+                                    disabledColor: context.colors.neutralColors.textColors.weakColors.base,
+                                    size: LmuSizes.size_16,
+                                  ),
+                                  LmuText.body(
+                                    context.locals.home.favoriteLinksEmptyAfter,
                                     color: context.colors.neutralColors.textColors.mediumColors.base,
                                     textAlign: TextAlign.center,
                                   ),

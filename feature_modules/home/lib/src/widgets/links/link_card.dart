@@ -37,7 +37,11 @@ class LinkCard extends StatelessWidget {
               LmuVibrations.secondary();
             },
             child: Padding(
-              padding: const EdgeInsets.only(top: LmuSizes.size_4),
+              padding: const EdgeInsets.only(
+                top: LmuSizes.size_4,
+                left: LmuSizes.size_12,
+                bottom: LmuSizes.size_12,
+              ),
               child: StarIcon(isActive: likedLinkTitles.contains(link.title)),
             ),
           );

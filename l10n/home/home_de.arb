@@ -32,5 +32,7 @@
   "operaTitle": "Staatsoper",
   "operaDescription": "Günstigere Tickets und zahlreiche Aktivitäten",
   "forYou": "Für Dich",
+  "favoriteLinksEmptyBefore": "Füge Links mit dem ",
+  "favoriteLinksEmptyAfter": " hier und auf Home hinzu",
   "linkCopiedToClipboard": "Link kopiert"
 }
