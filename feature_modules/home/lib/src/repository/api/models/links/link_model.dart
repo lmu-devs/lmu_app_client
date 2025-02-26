@@ -10,7 +10,7 @@ class LinkModel extends Equatable {
     required this.description,
     required this.url,
     required this.faviconUrl,
-    required this.tags,
+    required this.types,
     required this.aliases,
   });
 
@@ -19,7 +19,7 @@ class LinkModel extends Equatable {
   final String url;
   @JsonKey(name: 'favicon_url')
   final String faviconUrl;
-  final List<String> tags;
+  final List<String> types;
   final List<String> aliases;
 
   factory LinkModel.fromJson(Map<String, dynamic> json) => _$LinkModelFromJson(json);
@@ -32,7 +32,7 @@ class LinkModel extends Equatable {
         description,
         url,
         faviconUrl,
-        tags,
+        types,
         aliases,
       ];
 }

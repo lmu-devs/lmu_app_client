@@ -113,5 +113,9 @@
   "philarmonikerDescription": "Cheaper student tickets for classical concerts",
   "operaTitle": "State Opera",
   "operaDescription": "Range of special activities and cheaper tickets",
-  "forYou": "For You"
+  "forYou": "For You",
+  "linkCopiedToClipboard": "Link copied to clipboard",
+  "@linkCopiedToClipboard": {
+    "description": "Toast message for copying a link to clipboard"
+  }
 }
