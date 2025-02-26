@@ -4,6 +4,7 @@ import 'package:core/api.dart';
 import 'package:get_it/get_it.dart';
 
 import 'home_api_endpoints.dart';
+import 'models/benefits/benefit_model.dart';
 import 'models/home_model.dart';
 import 'models/links/link_model.dart';
 
@@ -33,6 +34,17 @@ class HomeApiClient {
       return jsonList.map((json) => LinkModel.fromJson(json as Map<String, dynamic>)).toList();
     } else {
       throw Exception('Failed to load link data - ${response.statusCode}');
+    }
+  }
+
+  Future<List<BenefitModel>> getBenefits() async {
+    final response = await _baseApiClient.get(HomeApiEndpoints.getBenefits());
+
+    if (response.statusCode == 200) {
+      final jsonList = json.decode(response.body) as List<dynamic>;
+      return jsonList.map((json) => BenefitModel.fromJson(json as Map<String, dynamic>)).toList();
+    } else {
+      throw Exception('Failed to load benefit data - ${response.statusCode}');
     }
   }
 }
