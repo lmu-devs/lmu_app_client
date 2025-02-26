@@ -32,6 +32,7 @@ class LinkCard extends StatelessWidget {
         valueListenable: GetIt.I<HomePreferencesService>().likedLinksNotifier,
         builder: (context, likedLinkTitles, child) {
           return GestureDetector(
+            behavior: HitTestBehavior.translucent,
             onTap: () async {
               await GetIt.I<HomePreferencesService>().toggleLikedLinks(link.title);
               LmuVibrations.secondary();
