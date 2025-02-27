@@ -20,6 +20,10 @@ StatefulShellBranch get $homeData => StatefulShellBranchData.$branch(
               path: '/links',
               factory: $LinksRouteExtension._fromState,
             ),
+            GoRouteData.$route(
+              path: '/benefits',
+              factory: $BenefitsRouteExtension._fromState,
+            ),
           ],
         ),
       ],
@@ -47,6 +51,23 @@ extension $LinksRouteExtension on LinksRoute {
 
   String get location => GoRouteData.$location(
         '/links',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $BenefitsRouteExtension on BenefitsRoute {
+  static BenefitsRoute _fromState(GoRouterState state) => const BenefitsRoute();
+
+  String get location => GoRouteData.$location(
+        '/benefits',
       );
 
   void go(BuildContext context) => context.go(location);

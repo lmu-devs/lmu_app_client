@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
-import '../pages/links_page.dart';
 import '../pages/pages.dart';
 
 part 'home_routes.g.dart';
@@ -13,6 +12,9 @@ part 'home_routes.g.dart';
       routes: <TypedGoRoute<GoRouteData>>[
         TypedGoRoute<LinksRoute>(
           path: '/links',
+        ),
+        TypedGoRoute<BenefitsRoute>(
+          path: '/benefits',
         ),
       ],
     ),
@@ -36,4 +38,11 @@ class LinksRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => const LinksPage();
+}
+
+class BenefitsRoute extends GoRouteData {
+  const BenefitsRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const BenefitsPage();
 }

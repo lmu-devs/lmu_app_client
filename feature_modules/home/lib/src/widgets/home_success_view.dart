@@ -14,6 +14,7 @@ import 'package:shared_api/sports.dart';
 import 'package:shared_api/timeline.dart';
 import 'package:shared_api/wishlist.dart';
 
+import '../pages/benefits_page.dart';
 import '../pages/links_page.dart';
 import 'links/favorite_link_row.dart';
 
@@ -110,8 +111,13 @@ class HomeSuccessView extends StatelessWidget {
                 onTap: () => GetIt.I.get<CinemaService>().navigateToCinemaPage(context),
               ),
               const SizedBox(height: LmuSizes.size_16),
-              const LmuFeatureTile(
+              LmuFeatureTile(
                 title: "Benefits",
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const BenefitsPage(),
+                  ),
+                ),
               ),
               const SizedBox(height: LmuSizes.size_16),
               Row(

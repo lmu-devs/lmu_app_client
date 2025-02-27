@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/home_api_client.dart';
+import 'api/models/benefits/benefit_model.dart';
 import 'api/models/home_model.dart';
 import 'api/models/links/link_model.dart';
 
@@ -14,6 +15,8 @@ abstract class HomeRepository {
   Future<void> saveLikedLinks(List<String> ids);
 
   Future<void> deleteAllLocalData();
+
+  Future<List<BenefitModel>> getBenefits();
 }
 
 class ConnectedHomeRepository implements HomeRepository {
@@ -64,5 +67,15 @@ class ConnectedHomeRepository implements HomeRepository {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.remove(_likedLinksKey);
+  }
+
+  @override
+  Future<List<BenefitModel>> getBenefits() async {
+    try {
+      final benefits = await homeApiClient.getBenefits();
+      return benefits;
+    } catch (e) {
+      rethrow;
+    }
   }
 }
