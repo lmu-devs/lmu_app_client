@@ -20,7 +20,7 @@ class BenefitModel extends Equatable {
   @JsonKey(name: 'favicon_url')
   final String faviconUrl;
   @JsonKey(name: 'image_url')
-  final String imageUrl;
+  final String? imageUrl;
   final List<String> aliases;
 
   factory BenefitModel.fromJson(Map<String, dynamic> json) => _$BenefitModelFromJson(json);
