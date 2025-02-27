@@ -11,19 +11,23 @@ class BenefitsCard extends StatelessWidget {
 
   final BenefitModel benefit;
 
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => LmuUrlLauncher.launchWebsite(
+  void _handleTap(BuildContext context) => LmuUrlLauncher.launchWebsite(
         url: benefit.url,
         context: context,
         mode: LmuUrlLauncherMode.externalApplication,
-      ),
-      onLongPress: () => CopyToClipboardUtil.copyToClipboard(
+      );
+
+  void _handleLongPress(BuildContext context) => CopyToClipboardUtil.copyToClipboard(
         context: context,
         copiedText: benefit.url,
         message: context.locals.home.linkCopiedToClipboard,
-      ),
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => _handleTap(context),
+      onLongPress: () => _handleLongPress(context),
       child: LmuContentTile(
         padding: EdgeInsets.zero,
         content: [
@@ -48,6 +52,8 @@ class BenefitsCard extends StatelessWidget {
               height: LmuIconSizes.medium,
               width: LmuIconSizes.medium,
             ),
+            onTap: () => _handleTap(context),
+            onLongPress: () => _handleLongPress(context),
           ),
         ],
       ),
