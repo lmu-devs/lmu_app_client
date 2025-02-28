@@ -74,5 +74,9 @@
   "suggestionError": "Your suggestion couldn't be submitted",
   "@suggestionError": {
       "description": "The message shown when suggestion could not be sent"
+  },
+  "missingItemInput": "Missing something?",
+  "@missingItemInput": {
+      "description": "Missing something input title"
   }
 }

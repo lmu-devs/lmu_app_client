@@ -2,7 +2,6 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/mensa.dart';
 
@@ -35,11 +34,10 @@ class MenuContentView extends StatelessWidget {
 
       if (mensaMenuModel.isClosed) {
         return LmuIssueType(
-          title: "${mensaType.text(mensaLocals)} ${mensaLocals.closed.toLowerCase()}",
-          icon: LucideIcons.circle_x,
+          message: "${mensaType.text(mensaLocals)} ${mensaLocals.closed.toLowerCase()}",
         );
       }
-      return LmuIssueType(title: mensaLocals.menuNotAvailable, icon: LucideIcons.ban);
+      return LmuIssueType(message: mensaLocals.menuNotAvailable);
     }
 
     return Padding(

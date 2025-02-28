@@ -72,8 +72,8 @@ class MensaOverviewTile extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: colors.neutralColors.backgroundColors.tile,
                     borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(LmuRadiusSizes.medium),
-                      topRight: Radius.circular(LmuRadiusSizes.medium),
+                      topLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
+                      topRight: Radius.circular(LmuRadiusSizes.mediumLarge),
                     ),
                     image: imageUrl != null
                         ? DecorationImage(

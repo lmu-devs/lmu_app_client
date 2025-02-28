@@ -5,10 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'lmu_search_bar.dart';
-import 'lmu_search_controller.dart';
-import 'lmu_search_input.dart';
-
 class LmuSearchOverlay extends StatelessWidget {
   const LmuSearchOverlay({
     super.key,

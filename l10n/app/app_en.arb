@@ -25,8 +25,8 @@
   "@friday": {
     "description": "Friday"
   },
-  "saturady": "Saturday",
-  "@saturady": {
+  "saturday": "Saturday",
+  "@saturday": {
     "description": "Saturday"
   },
   "sunday": "Sunday",
@@ -64,6 +64,10 @@
   "search": "Search",
   "@search": {
     "description": "Search"
+  },
+  "searchEmpty": "No matching results for search",
+  "@searchEmpty": {
+    "description": "Search empty state"
   },
   "locationServiceDialogTitle": "Location Services Disabled",
   "@locationServiceDialogTitle": {

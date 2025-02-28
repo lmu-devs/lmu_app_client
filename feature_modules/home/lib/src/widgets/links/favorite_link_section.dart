@@ -29,7 +29,7 @@ class FavoriteLinkSection extends StatelessWidget {
         }
 
         return AnimatedSwitcher(
-          duration: const Duration(milliseconds: 250),
+          duration: const Duration(milliseconds: 350),
           transitionBuilder: (Widget child, Animation<double> animation) {
             return FadeTransition(
               opacity: animation,
@@ -45,7 +45,8 @@ class FavoriteLinkSection extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     StarIcon(
-                      disabledColor: context.colors.neutralColors.backgroundColors.strongColors.active,
+                      size: LmuIconSizes.small,
+                      disabledColor: context.colors.neutralColors.textColors.mediumColors.base,
                     ),
                     const SizedBox(height: LmuSizes.size_12),
                     LmuContentTile(

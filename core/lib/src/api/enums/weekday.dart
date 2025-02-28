@@ -26,7 +26,7 @@ extension WeekdayToString on Weekday {
       Weekday.wednesday => localizations.wednesday,
       Weekday.thursday => localizations.thursday,
       Weekday.friday => localizations.friday,
-      Weekday.saturday => localizations.saturady,
+      Weekday.saturday => localizations.saturday,
       Weekday.sunday => localizations.sunday,
     };
   }
@@ -38,7 +38,7 @@ extension WeekdayToString on Weekday {
       Weekday.wednesday => localizations.wednesday.substring(0, 2),
       Weekday.thursday => localizations.thursday.substring(0, 2),
       Weekday.friday => localizations.friday.substring(0, 2),
-      Weekday.saturday => localizations.saturady.substring(0, 2),
+      Weekday.saturday => localizations.saturday.substring(0, 2),
       Weekday.sunday => localizations.sunday.substring(0, 2),
     };
   }

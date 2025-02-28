@@ -13,15 +13,15 @@ class BenefitsCardLoading extends StatelessWidget {
       child: LmuContentTile(
         padding: EdgeInsets.zero,
         content: [
-          Container(
-            height: LmuSizes.size_16 * 10,
-            width: double.infinity,
-            decoration: BoxDecoration(
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
+              topRight: Radius.circular(LmuRadiusSizes.mediumLarge),
+            ),
+            child: Container(
               color: context.colors.neutralColors.backgroundColors.mediumColors.pressed,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
-                topRight: Radius.circular(LmuRadiusSizes.mediumLarge),
-              ),
+              height: LmuSizes.size_16 * 10,
+              width: double.infinity,
             ),
           ),
           LmuListItem.base(
@@ -32,8 +32,8 @@ class BenefitsCardLoading extends StatelessWidget {
                 color: context.colors.neutralColors.backgroundColors.mediumColors.pressed,
                 borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
               ),
-              height: LmuIconSizes.medium,
-              width: LmuIconSizes.medium,
+              height: LmuIconSizes.mediumSmall,
+              width: LmuIconSizes.mediumSmall,
             ),
           ),
         ],

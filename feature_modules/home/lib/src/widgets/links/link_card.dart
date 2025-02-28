@@ -23,10 +23,14 @@ class LinkCard extends StatelessWidget {
       mainContentAlignment: MainContentAlignment.top,
       title: link.title,
       subtitle: link.description,
-      leadingArea: LmuCachedNetworkImage(
-        imageUrl: link.faviconUrl,
-        height: LmuIconSizes.medium,
-        width: LmuIconSizes.medium,
+      leadingArea: Padding(
+        padding: const EdgeInsets.only(top: LmuSizes.size_2),
+        child: LmuCachedNetworkImage(
+          imageUrl: link.faviconUrl,
+          height: LmuIconSizes.mediumSmall,
+          width: LmuIconSizes.mediumSmall,
+          fit: BoxFit.cover,
+        ),
       ),
       trailingArea: ValueListenableBuilder<List<String>>(
         valueListenable: GetIt.I<HomePreferencesService>().likedLinksNotifier,

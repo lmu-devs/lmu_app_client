@@ -19,5 +19,6 @@
   "suggestionInputHint": "Ich wünsche mir ...",
   "suggestionButton": "Vorschlag senden",
   "suggestionSuccess": "Vorschlag gesendet",
-  "suggestionError": "Vorschlag konnte nicht gesendet werden"
+  "suggestionError": "Vorschlag konnte nicht gesendet werden",
+  "missingItemInput": "Fehlt etwas?"
 }

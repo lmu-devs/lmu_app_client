@@ -1,6 +1,9 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:shared_api/feedback.dart';
 import '../../repository/api/models/links/link_model.dart';
 import 'favorite_link_section.dart';
 import 'link_card.dart';
@@ -99,7 +102,14 @@ class _LinksContentViewState extends State<LinksContentView> {
                       );
                     },
                   ),
+                  const SizedBox(height: LmuSizes.size_6),
+                  GetIt.I<FeedbackService>().getMissingItemInput(
+                    context.locals.home.linkSuggestion,
+                    'LinksScreen',
+                  ),
                   const SizedBox(height: LmuSizes.size_96),
+                  /// Search Bar Size
+                  const SizedBox(height: LmuSizes.size_72),
                 ],
               ),
             ),
