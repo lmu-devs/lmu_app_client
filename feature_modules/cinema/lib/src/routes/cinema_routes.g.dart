@@ -79,7 +79,7 @@ extension $ScreeningDetailsRouteExtension on ScreeningDetailsRoute {
 
 extension $ScreeningsHistoryRouteExtension on ScreeningsHistoryRoute {
   static ScreeningsHistoryRoute _fromState(GoRouterState state) => ScreeningsHistoryRoute(
-        state.extra as List<ScreeningModel>,
+        state.extra as ScreeningsHistoryData,
       );
 
   String get location => GoRouteData.$location(

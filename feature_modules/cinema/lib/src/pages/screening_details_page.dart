@@ -29,6 +29,7 @@ class ScreeningDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CinemaModel cinema = screeningDetailsData.cinema;
     ScreeningModel screening = screeningDetailsData.screening;
     List<ScreeningModel> cinemaScreenings = screeningDetailsData.cinemaScreenings;
 
@@ -86,10 +87,18 @@ class ScreeningDetailsPage extends StatelessWidget {
                     getScreeningTime(context: context, time: screening.entryTime),
                     color: context.colors.neutralColors.textColors.mediumColors.base,
                   ),
-                  const SizedBox(height: LmuSizes.size_24),
+                  SizedBox(height: screening.movie.genres.isNotEmpty ? LmuSizes.size_8 : LmuSizes.size_24),
+                  if (screening.movie.genres.isNotEmpty) ...[
+                    LmuText.body(
+                      screening.movie.genres.length > 1
+                          ? '${screening.movie.genres.sublist(0, screening.movie.genres.length - 1).join(', ')} ${context.locals.cinema.and} ${screening.movie.genres.last}'
+                          : screening.movie.genres.first,
+                      color: context.colors.neutralColors.textColors.mediumColors.base,
+                    ),
+                    const SizedBox(height: LmuSizes.size_24),
+                  ],
                   if (screening.movie.budget != null ||
                       screening.isOv != null ||
-                      screening.movie.genres.isNotEmpty ||
                       screening.movie.releaseYear != null ||
                       screening.movie.ratings.isNotEmpty) ...[
                     ScreeningQuickFactsSection(screening: screening),
@@ -130,13 +139,13 @@ class ScreeningDetailsPage extends StatelessWidget {
                     const SizedBox(height: LmuSizes.size_24),
                   ],
                   LmuListItem.action(
-                    subtitle: screening.cinema.title,
+                    subtitle: cinema.title,
                     subtitleTextColor: context.colors.neutralColors.textColors.mediumColors.base,
                     subtitleInTextVisuals: [
                       LmuInTextVisual.text(
-                        title: screening.cinema.type.getValue(),
-                        textColor: screening.cinema.type.getTextColor(context),
-                        backgroundColor: screening.cinema.type.getBackgroundColor(context),
+                        title: cinema.type.getValue(),
+                        textColor: cinema.type.getTextColor(context),
+                        backgroundColor: cinema.type.getBackgroundColor(context),
                       )
                     ],
                     actionType: LmuListItemAction.chevron,
@@ -146,7 +155,7 @@ class ScreeningDetailsPage extends StatelessWidget {
                       MaterialPageRoute(
                         builder: (context) => CinemaDetailsPage(
                           cinemaDetailsData: CinemaDetailsData(
-                            cinema: screening.cinema,
+                            cinema: cinema,
                             screenings: cinemaScreenings,
                           ),
                         ),
@@ -154,7 +163,7 @@ class ScreeningDetailsPage extends StatelessWidget {
                     ),
                   ),
                   LmuListItem.base(
-                    subtitle: screening.cinema.cinemaLocation.address,
+                    subtitle: cinema.cinemaLocation.address,
                     subtitleTextColor: context.colors.neutralColors.textColors.mediumColors.base,
                     hasHorizontalPadding: false,
                     trailingArea: Icon(
@@ -165,9 +174,9 @@ class ScreeningDetailsPage extends StatelessWidget {
                     onTap: () => LmuBottomSheet.show(
                       context,
                       content: NavigationSheet(
-                        latitude: screening.cinema.cinemaLocation.latitude,
-                        longitude: screening.cinema.cinemaLocation.longitude,
-                        address: screening.cinema.cinemaLocation.address,
+                        latitude: cinema.cinemaLocation.latitude,
+                        longitude: cinema.cinemaLocation.longitude,
+                        address: cinema.cinemaLocation.address,
                       ),
                     ),
                   ),

@@ -133,7 +133,7 @@ class LmuInTextVisual extends StatelessWidget {
           color: textColor,
         );
       } else {
-        return LmuText.body(
+        return LmuText.bodyXSmall(
           title!,
           color: textColor,
         );

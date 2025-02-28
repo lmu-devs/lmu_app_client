@@ -37,6 +37,7 @@ class CinemaContentView extends StatelessWidget {
             }),
             const SizedBox(height: LmuSizes.size_32),
             ScreeningsList(
+              cinemas: cinemas,
               screenings: screenings,
               hasFilterRow: true,
             ),

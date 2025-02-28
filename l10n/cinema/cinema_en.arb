@@ -2,7 +2,10 @@
   "@@locale": "en",
   "@@context": "Cinema",
 
-
+  "pageTitle": "Movies",
+  "@pageTitle": {
+    "description": "Title of the page"
+  },
   "cinemasTitle": "Cinemas",
   "@cinemasTitle": {
     "description": "Cinemas section title"
@@ -95,8 +98,12 @@
   "@start": {
     "description": "Start time of screening"
   },
-  "movie": "Movies",
+  "movie": "Movie",
   "@movie": {
-    "description": "Movies"
+    "description": "Movie"
+  },
+  "and": "and",
+  "@and": {
+      "description": "and"
   }
 }

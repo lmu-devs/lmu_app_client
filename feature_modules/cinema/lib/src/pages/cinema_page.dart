@@ -13,7 +13,7 @@ class CinemaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LmuMasterAppBar(
-      largeTitle: context.locals.cinema.movie,
+      largeTitle: context.locals.cinema.pageTitle,
       leadingAction: LeadingAction.back,
       body: BlocBuilder<CinemaCubit, CinemaState>(
         bloc: GetIt.I.get<CinemaCubit>(),

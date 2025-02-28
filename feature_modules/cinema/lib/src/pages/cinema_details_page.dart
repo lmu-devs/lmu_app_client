@@ -106,6 +106,7 @@ class CinemaDetailsPage extends StatelessWidget {
                   ),
                   const SizedBox(height: LmuSizes.size_32),
                   ScreeningsList(
+                    cinemas: [cinema],
                     screenings: screenings,
                     hasFilterRow: false,
                     type: cinema.type,
