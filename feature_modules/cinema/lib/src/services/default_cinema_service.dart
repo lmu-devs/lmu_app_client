@@ -9,7 +9,6 @@ import '../../cinema.dart';
 import '../cubit/cubit.dart';
 import '../pages/cinema_page.dart';
 import '../routes/cinema_routes.dart';
-import '../widgets/widgets.dart';
 
 class DefaultCinemaService implements CinemaService {
   @override
@@ -17,11 +16,6 @@ class DefaultCinemaService implements CinemaService {
 
   @override
   StatefulShellBranch get cinemaData => $cinemaMainRoute;
-
-  @override
-  Widget get movieTeaserList {
-    return const MovieTeaserList();
-  }
 
   @override
   Stream<List<ExploreLocation>> get cinemaExploreLocationsStream {

@@ -1,7 +1,8 @@
 {
   "@@locale": "de",
   "@@context": "Cinema",
-  
+
+  "pageTitle": "Filme",
   "cinemasTitle": "Kinos",
   "upcomingTitle": "Demnächst",
   "upcomingMoviesTitle": "Demnächst im Uni-Kino",
@@ -25,5 +26,6 @@
   "share": "Teilen",
   "entry": "Einlass",
   "start": "Start",
-  "movie": "Filme"
+  "movie": "Film",
+  "and": "und"
 }

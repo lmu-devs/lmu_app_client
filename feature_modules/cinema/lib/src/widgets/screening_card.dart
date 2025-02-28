@@ -15,11 +15,13 @@ import '../util/screening_time.dart';
 class ScreeningCard extends StatelessWidget {
   const ScreeningCard({
     Key? key,
+    required this.cinema,
     required this.screening,
     required this.cinemaScreenings,
     required this.isLastItem,
   }) : super(key: key);
 
+  final CinemaModel cinema;
   final ScreeningModel screening;
   final List<ScreeningModel> cinemaScreenings;
   final bool isLastItem;
@@ -33,6 +35,7 @@ class ScreeningCard extends StatelessWidget {
         MaterialPageRoute(
           builder: (context) => ScreeningDetailsPage(
             screeningDetailsData: ScreeningDetailsData(
+              cinema: cinema,
               screening: screening,
               cinemaScreenings: cinemaScreenings,
             ),
@@ -166,7 +169,7 @@ class ScreeningCard extends StatelessWidget {
                       spacing: LmuSizes.size_2,
                       runSpacing: LmuSizes.size_2,
                       children: [
-                        LmuInTextVisual.text(title: screening.cinema.type.getValue()),
+                        LmuInTextVisual.text(title: cinema.type.getValue()),
                         if (screening.movie.budget != null)
                           LmuInTextVisual.text(title: '${screening.price.toStringAsFixed(2)} €'),
                         if (screening.movie.ratings.isNotEmpty)

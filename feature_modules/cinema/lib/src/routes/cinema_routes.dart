@@ -5,9 +5,9 @@ import '../pages/cinema_details_page.dart';
 import '../pages/pages.dart';
 import '../pages/screening_details_page.dart';
 import '../pages/screenings_history_page.dart';
-import '../repository/api/api.dart';
 import 'cinema_details_data.dart';
 import 'screening_details_data.dart';
+import 'screenings_history_data.dart';
 
 part 'cinema_routes.g.dart';
 
@@ -63,10 +63,10 @@ class ScreeningsHistoryRoute extends GoRouteData {
     this.$extra,
   );
 
-  final List<ScreeningModel> $extra;
+  final ScreeningsHistoryData $extra;
 
   @override
   Widget build(BuildContext context, GoRouterState state) => ScreeningsHistoryPage(
-        screenings: $extra,
+        screeningsHistoryData: $extra,
       );
 }

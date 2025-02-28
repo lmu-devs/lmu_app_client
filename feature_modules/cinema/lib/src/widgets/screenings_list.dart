@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 
+import '../routes/screenings_history_data.dart';
 import '../services/cinema_user_preference_service.dart';
 import '../util/cinema_screenings.dart';
 import '../util/cinema_type.dart';
@@ -17,11 +18,13 @@ import 'screening_placeholder.dart';
 class ScreeningsList extends StatelessWidget {
   ScreeningsList({
     super.key,
+    required this.cinemas,
     required this.screenings,
     required this.hasFilterRow,
     this.type,
   });
 
+  final List<CinemaModel> cinemas;
   final List<ScreeningModel> screenings;
   final bool hasFilterRow;
   final CinemaType? type;
@@ -48,8 +51,10 @@ class ScreeningsList extends StatelessWidget {
               onActionTap: () => Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => ScreeningsHistoryPage(
-                    screenings: _getPastScreenings(),
-                    type: type,
+                    screeningsHistoryData: ScreeningsHistoryData(
+                      cinemas: cinemas,
+                      screenings: _getPastScreenings(),
+                    ),
                   ),
                 ),
               ),
@@ -76,8 +81,9 @@ class ScreeningsList extends StatelessWidget {
                         final screening = futureScreenings[index];
                         return ScreeningCard(
                           key: ValueKey(screening.id),
+                          cinema: getCinemaForScreening(cinemas, screening.cinemaId),
                           screening: screening,
-                          cinemaScreenings: getScreeningsForCinema(screenings, screening.cinema.id),
+                          cinemaScreenings: getScreeningsForCinema(screenings, screening.cinemaId),
                           isLastItem: index == futureScreenings.length - 1,
                         );
                       },
@@ -104,9 +110,9 @@ class ScreeningsList extends StatelessWidget {
       final likedScreeningIds = GetIt.I<CinemaUserPreferenceService>().likedScreeningsIdsNotifier.value;
       return futureScreenings.where((screening) => likedScreeningIds.contains(screening.id)).toList();
     } else if (activeFilter == ScreeningFilterKeys.munich) {
-      return futureScreenings.where((screening) => screening.cinema.id != 'TUM_GARCHING').toList();
+      return futureScreenings.where((screening) => screening.cinemaId != 'TUM_GARCHING').toList();
     } else if (activeFilter == ScreeningFilterKeys.garching) {
-      return futureScreenings.where((screening) => screening.cinema.id == 'TUM_GARCHING').toList();
+      return futureScreenings.where((screening) => screening.cinemaId == 'TUM_GARCHING').toList();
     }
 
     return futureScreenings;

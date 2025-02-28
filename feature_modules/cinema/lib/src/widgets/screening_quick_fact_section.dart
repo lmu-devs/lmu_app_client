@@ -29,17 +29,6 @@ class ScreeningQuickFactsSection extends StatelessWidget {
             title: screening.isOv! ? context.locals.cinema.ov : context.locals.cinema.germanTranslation,
             size: InTextVisualSize.large,
           ),
-        if (screening.movie.genres.isNotEmpty)
-          Wrap(
-            spacing: LmuSizes.size_4,
-            runSpacing: LmuSizes.size_6,
-            children: screening.movie.genres.map((genre) {
-              return LmuInTextVisual.text(
-                title: genre,
-                size: InTextVisualSize.large,
-              );
-            }).toList(),
-          ),
         if (screening.movie.releaseYear != null)
           LmuInTextVisual.text(
             title: DateTime.parse(screening.movie.releaseYear!).year.toString(),

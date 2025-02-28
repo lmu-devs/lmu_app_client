@@ -3,7 +3,6 @@ import 'package:core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
-import 'package:shared_api/cinema.dart';
 import 'package:shared_api/sports.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -68,7 +67,7 @@ class ForYouLoadingView extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
           child: LmuTileHeadlineLoading(),
         ),
-        GetIt.I.get<CinemaService>().movieTeaserList,
+        //GetIt.I.get<CinemaService>().movieTeaserList,
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
           child: LmuTileHeadlineLoading(),

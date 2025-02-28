@@ -9,6 +9,8 @@ part of 'screening_model.dart';
 ScreeningModel _$ScreeningModelFromJson(Map<String, dynamic> json) =>
     ScreeningModel(
       id: json['id'] as String,
+      cinemaId: json['cinema_id'] as String,
+      universityId: json['university_id'] as String,
       entryTime: json['entry_time'] as String,
       startTime: json['start_time'] as String,
       endTime: json['end_time'] as String?,
@@ -18,14 +20,13 @@ ScreeningModel _$ScreeningModelFromJson(Map<String, dynamic> json) =>
       externalLink: json['external_link'] as String?,
       note: json['note'] as String?,
       movie: MovieModel.fromJson(json['movie'] as Map<String, dynamic>),
-      university:
-          UniversityModel.fromJson(json['university'] as Map<String, dynamic>),
-      cinema: CinemaModel.fromJson(json['cinema'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ScreeningModelToJson(ScreeningModel instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'cinema_id': instance.cinemaId,
+      'university_id': instance.universityId,
       'entry_time': instance.entryTime,
       'start_time': instance.startTime,
       'end_time': instance.endTime,
@@ -35,6 +36,4 @@ Map<String, dynamic> _$ScreeningModelToJson(ScreeningModel instance) =>
       'external_link': instance.externalLink,
       'note': instance.note,
       'movie': instance.movie,
-      'university': instance.university,
-      'cinema': instance.cinema,
     };
