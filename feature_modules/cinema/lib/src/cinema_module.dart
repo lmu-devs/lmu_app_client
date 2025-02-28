@@ -31,7 +31,6 @@ class CinemaModule extends AppModule
 
   @override
   void onAppStartNotice() async {
-    GetIt.I.get<CinemaCubit>().loadCinemas();
     await GetIt.I.get<CinemaUserPreferenceService>().init();
   }
 
