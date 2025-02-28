@@ -103,11 +103,7 @@ class HomeSuccessView extends StatelessWidget {
                 title: context.locals.sports.sportsTitle,
                 padding: EdgeInsets.zero,
                 //MarqueeTileContent(texts: sportTypes)],
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => GetIt.I.get<SportsService>().sportsPage,
-                  ),
-                ),
+                onTap: () => GetIt.I.get<SportsService>().navigateToSportsPage(context),
               ),
               const SizedBox(height: LmuSizes.size_16),
               LmuFeatureTile(

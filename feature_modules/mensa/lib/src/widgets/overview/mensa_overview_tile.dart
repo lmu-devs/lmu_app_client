@@ -32,14 +32,14 @@ class MensaOverviewTile extends StatelessWidget {
   final String? buttonText;
   final VoidCallback? buttonAction;
 
-  factory MensaOverviewTile.loading({String? name, hasLargeImage = false}) {
+  factory MensaOverviewTile.loading({String? name, hasLargeImage = false, bool hasDivider = true}) {
     return MensaOverviewTile(
       mensaModel: MensaModel.placeholder(
         name: name,
       ),
       isFavorite: false,
       hasLargeImage: hasLargeImage,
-      hasDivider: true,
+      hasDivider: hasDivider,
     );
   }
 

@@ -75,6 +75,7 @@ class SportsGroupedCourseSection extends StatelessWidget {
         ValueListenableBuilder(
           valueListenable: sportsStateService.filteredGroupedSportsNotifier,
           builder: (context, filteredGroupedSports, _) {
+            if (filteredGroupedSports.isEmpty) return LmuIssueType(message: locals.app.searchEmpty, hasSpacing: false);
             return ListView.builder(
               padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),

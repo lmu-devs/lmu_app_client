@@ -5,9 +5,14 @@ import 'package:skeletonizer/skeletonizer.dart';
 import '../../widgets.dart';
 
 class MensaOverviewTileLoading extends StatelessWidget {
-  const MensaOverviewTileLoading({super.key, this.hasLargeImage = false});
+  const MensaOverviewTileLoading({
+    super.key,
+    this.hasLargeImage = false,
+    this.hasDivider = true,
+  });
 
   final bool hasLargeImage;
+  final bool hasDivider;
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +20,7 @@ class MensaOverviewTileLoading extends StatelessWidget {
       child: MensaOverviewTile.loading(
         name: BoneMock.fullName,
         hasLargeImage: hasLargeImage,
+        hasDivider: hasDivider,
       ),
     );
   }
