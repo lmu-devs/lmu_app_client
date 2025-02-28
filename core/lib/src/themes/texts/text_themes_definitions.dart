@@ -30,7 +30,7 @@ LmuTextTheme getBaseTextTheme(
       fontStyle: FontStyle.normal,
       color: textColors.strongColors.base,
       fontWeight: FontWeight.w400,
-      height: 19.2 / 12,
+      height: 20 / 12,
       letterSpacing: 0,
     ),
     h0: TextStyle(

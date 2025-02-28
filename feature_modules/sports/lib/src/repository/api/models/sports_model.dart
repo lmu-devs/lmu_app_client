@@ -1,24 +1,29 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'sports_course.dart';
+import 'sports_type.dart';
 
 part 'sports_model.g.dart';
 
 @JsonSerializable()
 class SportsModel extends Equatable {
   const SportsModel({
-    required this.title,
-    required this.courses,
+    required this.baseUrl,
+    required this.basicTicket,
+    required this.sportTypes,
   });
 
-  final String title;
-  final List<SportsCourse> courses;
+  @JsonKey(name: 'base_url')
+  final String baseUrl;
+  @JsonKey(name: 'basic_ticket')
+  final SportsType basicTicket;
+  @JsonKey(name: 'sport_types')
+  final List<SportsType> sportTypes;
 
   factory SportsModel.fromJson(Map<String, dynamic> json) => _$SportsModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$SportsModelToJson(this);
 
   @override
-  List<Object?> get props => [title, courses];
+  List<Object?> get props => [baseUrl, basicTicket, sportTypes];
 }

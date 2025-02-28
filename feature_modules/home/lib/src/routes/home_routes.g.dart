@@ -24,6 +24,10 @@ StatefulShellBranch get $homeData => StatefulShellBranchData.$branch(
               path: '/benefits',
               factory: $BenefitsRouteExtension._fromState,
             ),
+            GetIt.I.get<SettingsService>().settingsData,
+            GetIt.I.get<SportsService>().sportsData,
+            GetIt.I.get<CinemaService>().cinemaData,
+            GetIt.I.get<TimelineService>().timelineData,
           ],
         ),
       ],
@@ -40,8 +44,7 @@ extension $HomeMainRouteExtension on HomeMainRoute {
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }
@@ -57,8 +60,7 @@ extension $LinksRouteExtension on LinksRoute {
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }
@@ -74,8 +76,7 @@ extension $BenefitsRouteExtension on BenefitsRoute {
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }

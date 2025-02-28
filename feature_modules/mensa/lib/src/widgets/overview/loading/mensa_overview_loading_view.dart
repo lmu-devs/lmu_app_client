@@ -1,6 +1,8 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
+import 'package:core/themes.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
@@ -45,18 +47,35 @@ class MensaOverviewLoadingView extends StatelessWidget {
           padding: const EdgeInsets.all(LmuSizes.size_16),
           child: Column(
             children: [
-              LmuTileHeadline.base(title: context.locals.canteen.favorites),
+              LmuTileHeadline.base(title: context.locals.canteen.favorites, customBottomPadding: LmuSizes.size_6),
               ListView.builder(
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: _calculateFavoriteLoadingItemCount(favoriteMensas.length),
-                itemBuilder: (context, index) => const MensaOverviewTileLoading(),
+                itemBuilder: (context, index) => const Padding(
+                  padding: EdgeInsets.symmetric(vertical: LmuSizes.size_6),
+                  child: MensaOverviewTileLoading(hasDivider: false),
+                ),
               ),
-              const SizedBox(height: LmuSizes.size_32),
+              const SizedBox(height: 26),
               LmuTileHeadline.base(title: context.locals.canteen.allCanteens),
               Row(
                 children: [
+                  Container(
+                    height: LmuActionSizes.base,
+                    width: LmuActionSizes.base,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(LmuRadiusSizes.medium),
+                      border: Border.all(
+                        color: context.colors.neutralColors.borderColors.seperatorLight,
+                      ),
+                      image: DecorationImage(
+                        image: AssetImage(getPngAssetTheme('assets/maps_icon'), package: "mensa"),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: LmuSizes.size_8),
                   LmuButton(
                     title: context.locals.canteen.alphabetically,
                     emphasis: ButtonEmphasis.secondary,

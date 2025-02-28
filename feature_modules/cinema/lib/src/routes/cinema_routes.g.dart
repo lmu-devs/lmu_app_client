@@ -6,29 +6,21 @@ part of 'cinema_routes.dart';
 // GoRouterGenerator
 // **************************************************************************
 
-List<StatefulShellBranch> get $appRoutes => [
-      $cinemaMainRoute,
-    ];
-
-StatefulShellBranch get $cinemaMainRoute => StatefulShellBranchData.$branch(
+RouteBase get $cinemaMainRoute => GoRouteData.$route(
+      path: '/cinema',
+      factory: $CinemaMainRouteExtension._fromState,
       routes: [
         GoRouteData.$route(
-          path: '/cinema',
-          factory: $CinemaMainRouteExtension._fromState,
-          routes: [
-            GoRouteData.$route(
-              path: 'cinema_details',
-              factory: $CinemaDetailsRouteExtension._fromState,
-            ),
-            GoRouteData.$route(
-              path: 'screening_details',
-              factory: $ScreeningDetailsRouteExtension._fromState,
-            ),
-            GoRouteData.$route(
-              path: 'screenings_history',
-              factory: $ScreeningsHistoryRouteExtension._fromState,
-            ),
-          ],
+          path: 'cinema_details',
+          factory: $CinemaDetailsRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'screening_details',
+          factory: $ScreeningDetailsRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'screenings_history',
+          factory: $ScreeningsHistoryRouteExtension._fromState,
         ),
       ],
     );
@@ -37,7 +29,7 @@ extension $CinemaMainRouteExtension on CinemaMainRoute {
   static CinemaMainRoute _fromState(GoRouterState state) => const CinemaMainRoute();
 
   String get location => GoRouteData.$location(
-        '/cinema',
+        '/home/cinema',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -55,7 +47,7 @@ extension $CinemaDetailsRouteExtension on CinemaDetailsRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/cinema/cinema_details',
+        '/home/cinema/cinema_details',
       );
 
   void go(BuildContext context) => context.go(location, extra: $extra);
@@ -73,7 +65,7 @@ extension $ScreeningDetailsRouteExtension on ScreeningDetailsRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/cinema/screening_details',
+        '/home/cinema/screening_details',
       );
 
   void go(BuildContext context) => context.go(location, extra: $extra);
@@ -91,7 +83,7 @@ extension $ScreeningsHistoryRouteExtension on ScreeningsHistoryRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/cinema/screenings_history',
+        '/home/cinema/screenings_history',
       );
 
   void go(BuildContext context) => context.go(location, extra: $extra);

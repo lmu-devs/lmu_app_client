@@ -28,6 +28,7 @@ dependencies:
   barcode: ^2.2.9
   barcode_widget: ^2.0.4
   diacritic: ^0.1.6
+  flutter_svg: ^2.0.17
 
 dev_dependencies:
   flutter_test:
@@ -37,3 +38,8 @@ dev_dependencies:
   go_router_builder: ^2.7.1
   build_runner: any
   build_verify: any
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/

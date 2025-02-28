@@ -5,7 +5,7 @@ import '../../../explore.dart';
 
 abstract class CinemaService {
   Widget get cinemaPage;
-  StatefulShellBranch get cinemaData;
+  RouteBase get cinemaData;
   Stream<List<ExploreLocation>> get cinemaExploreLocationsStream;
 
   void navigateToCinemaPage(BuildContext context);

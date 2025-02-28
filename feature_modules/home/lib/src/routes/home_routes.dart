@@ -1,5 +1,10 @@
 import 'package:flutter/widgets.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_api/cinema.dart';
+import 'package:shared_api/settings.dart';
+import 'package:shared_api/sports.dart';
+import 'package:shared_api/timeline.dart';
 
 import '../pages/pages.dart';
 

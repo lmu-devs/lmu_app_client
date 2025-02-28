@@ -9,10 +9,14 @@ import 'sports_api_endpoints.dart';
 class SportsApiClient {
   final _baseApiClient = GetIt.I.get<BaseApiClient>();
 
-  Future<List<SportsModel>> getSports() async {
+  Future<SportsModel> getSports() async {
     final response = await _baseApiClient.get(SportsApiEndpoints.sports);
 
-    final jsonList = json.decode(response.body) as List<dynamic>;
-    return jsonList.map((json) => SportsModel.fromJson(json as Map<String, dynamic>)).toList();
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body) as Map<String, dynamic>;
+      return SportsModel.fromJson(json);
+    } else {
+      throw Exception('Failed to load sports');
+    }
   }
 }

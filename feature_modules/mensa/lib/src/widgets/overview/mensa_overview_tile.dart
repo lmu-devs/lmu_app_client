@@ -32,14 +32,14 @@ class MensaOverviewTile extends StatelessWidget {
   final String? buttonText;
   final VoidCallback? buttonAction;
 
-  factory MensaOverviewTile.loading({String? name, hasLargeImage = false}) {
+  factory MensaOverviewTile.loading({String? name, hasLargeImage = false, bool hasDivider = true}) {
     return MensaOverviewTile(
       mensaModel: MensaModel.placeholder(
         name: name,
       ),
       isFavorite: false,
       hasLargeImage: hasLargeImage,
-      hasDivider: true,
+      hasDivider: hasDivider,
     );
   }
 
@@ -125,7 +125,7 @@ class MensaOverviewTile extends StatelessWidget {
                                     color: colors.neutralColors.textColors.weakColors.base,
                                   ),
                                   const SizedBox(width: LmuSizes.size_4),
-                                  StarIcon(isActive: isFavorite),
+                                  const SizedBox(width: LmuSizes.size_20), //placeholder for star
                                 ],
                               ),
                             )
@@ -178,10 +178,8 @@ class MensaOverviewTile extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // touch target for favorite toggle
                   Positioned(
-                    right: 0,
-                    bottom: LmuSizes.size_16,
+                    right: LmuSizes.size_6,
                     top: LmuSizes.size_8,
                     child: GestureDetector(
                       behavior: HitTestBehavior.opaque,
@@ -212,7 +210,13 @@ class MensaOverviewTile extends StatelessWidget {
 
                         userPreferencesService.toggleFavoriteMensaId(id);
                       },
-                      child: const SizedBox(width: LmuSizes.size_64),
+                      child: SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: Center(
+                          child: StarIcon(isActive: isFavorite),
+                        ),
+                      ),
                     ),
                   ),
                 ],

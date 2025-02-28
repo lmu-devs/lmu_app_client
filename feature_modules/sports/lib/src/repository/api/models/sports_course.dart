@@ -11,6 +11,7 @@ part 'sports_course.g.dart';
 @JsonSerializable()
 class SportsCourse extends Equatable {
   const SportsCourse({
+    required this.id,
     required this.title,
     required this.isAvailable,
     required this.startDate,
@@ -21,6 +22,7 @@ class SportsCourse extends Equatable {
     this.location,
   });
 
+  final String id;
   final String title;
   @JsonKey(name: 'is_available')
   final bool isAvailable;

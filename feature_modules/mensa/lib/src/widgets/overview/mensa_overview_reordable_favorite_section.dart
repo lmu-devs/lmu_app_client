@@ -62,24 +62,27 @@ class MensaOverviewReordableFavoriteSection extends StatelessWidget {
                 child: child,
               ),
               child: value.isEmpty
-                  ? PlaceholderTile(
-                      key: const ValueKey('placeholderTile'),
-                      minHeight: 80,
-                      content: [
-                        LmuText.bodySmall(
-                          canteenLocals.emptyFavoritesBefore,
-                          color: placeholderTextColor,
-                        ),
-                        StarIcon(
-                          isActive: false,
-                          disabledColor: starColor,
-                          size: LmuSizes.size_16,
-                        ),
-                        LmuText.bodySmall(
-                          canteenLocals.emptyFavoritesAfter,
-                          color: placeholderTextColor,
-                        ),
-                      ],
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_4),
+                      child: PlaceholderTile(
+                        key: const ValueKey('placeholderTile'),
+                        minHeight: 80,
+                        content: [
+                          LmuText.bodySmall(
+                            canteenLocals.emptyFavoritesBefore,
+                            color: placeholderTextColor,
+                          ),
+                          StarIcon(
+                            isActive: false,
+                            disabledColor: starColor,
+                            size: LmuSizes.size_16,
+                          ),
+                          LmuText.bodySmall(
+                            canteenLocals.emptyFavoritesAfter,
+                            color: placeholderTextColor,
+                          ),
+                        ],
+                      ),
                     )
                   : null,
             ),
@@ -101,11 +104,13 @@ class MensaOverviewReordableFavoriteSection extends StatelessWidget {
               isSameItem: (a, b) => a == b,
               itemBuilder: (context, index) {
                 final mensaModel = mensaModels.where((element) => element.canteenId == value[index]).first;
-                return MensaOverviewTile(
+                return Padding(
                   key: ValueKey(mensaModel.canteenId),
-                  mensaModel: mensaModel,
-                  isFavorite: true,
-                  hasDivider: index != value.length - 1,
+                  padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_6),
+                  child: MensaOverviewTile(
+                    mensaModel: mensaModel,
+                    isFavorite: true,
+                  ),
                 );
               },
             ),
