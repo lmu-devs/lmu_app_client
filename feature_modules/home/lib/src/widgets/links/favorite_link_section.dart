@@ -75,7 +75,7 @@ class FavoriteLinkSection extends StatelessWidget {
                       ),
                     ),
             ),
-            const SizedBox(height: LmuSizes.size_16),
+            const SizedBox(height: LmuSizes.size_32),
           ],
         );
       },

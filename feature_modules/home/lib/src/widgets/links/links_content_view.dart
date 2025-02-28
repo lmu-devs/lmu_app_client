@@ -95,7 +95,7 @@ class _LinksContentViewState extends State<LinksContentView> {
                               LmuContentTile(
                                 content: entry.value.map((link) => LinkCard(link: link)).toList(),
                               ),
-                              const SizedBox(height: LmuSizes.size_16),
+                              const SizedBox(height: LmuSizes.size_32),
                             ],
                           );
                         }).toList(),

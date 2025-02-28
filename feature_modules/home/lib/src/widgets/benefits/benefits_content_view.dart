@@ -27,7 +27,7 @@ class BenefitsContentView extends StatelessWidget {
               child: BenefitsCard(benefit: benefit),
             ),
           ),
-          const SizedBox(height: LmuSizes.size_6),
+          const SizedBox(height: LmuSizes.size_16),
           GetIt.I<FeedbackService>().getMissingItemInput(
             context.locals.home.benefitSuggestion,
             'BenefitsScreen',
