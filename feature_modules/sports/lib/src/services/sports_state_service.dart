@@ -4,45 +4,91 @@ import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 
 import '../cubit/sports_cubit/cubit.dart';
-import '../repository/api/models/sports_model.dart';
+import '../extensions/sports_url_constructor_extension.dart';
+import '../repository/api/models/sports_type.dart';
+import '../repository/sports_repository.dart';
 
-enum SportsFilterOption { all, available, upcoming }
+enum SportsFilterOption { all, available }
 
 class SportsStateService {
-  final sportsCubit = GetIt.I.get<SportsCubit>();
+  final _sportsCubit = GetIt.I.get<SportsCubit>();
+  final _sportsRepo = GetIt.I.get<SportsRepository>();
 
-  final ValueNotifier<Map<String, List<SportsModel>>> _filteredGroupedSportsNotifier = ValueNotifier({});
-  ValueNotifier<Map<String, List<SportsModel>>> get filteredGroupedSportsNotifier => _filteredGroupedSportsNotifier;
+  final ValueNotifier<Map<String, List<SportsType>>> _filteredGroupedSportsNotifier = ValueNotifier({});
+  ValueNotifier<Map<String, List<SportsType>>> get filteredGroupedSportsNotifier => _filteredGroupedSportsNotifier;
 
-  final _filterOptionsNotifier = ValueNotifier({
-    SportsFilterOption.all: true,
-    SportsFilterOption.available: false,
-    SportsFilterOption.upcoming: false,
-  });
+  final _filterOptionsNotifier = ValueNotifier({SportsFilterOption.all: true, SportsFilterOption.available: false});
   ValueNotifier<Map<SportsFilterOption, bool>> get filterOptionsNotifier => _filterOptionsNotifier;
 
-  Map<String, List<SportsModel>> _initialValue = {};
-  void init() {
-    sportsCubit.stream.withInitialValue(sportsCubit.state).listen(
+  final _favoriteSportsCoursesNotifier = ValueNotifier<List<Map<String, List<String>>>>([]);
+  ValueNotifier<List<Map<String, List<String>>>> get favoriteSportsCoursesNotifier => _favoriteSportsCoursesNotifier;
+
+  final _isSearchActiveNotifier = ValueNotifier(false);
+  ValueNotifier<bool> get isSearchActiveNotifier => _isSearchActiveNotifier;
+
+  Map<String, List<SportsType>> _initialSportTypes = {};
+
+  void init() async {
+    _sportsCubit.stream.withInitialValue(_sportsCubit.state).listen(
       (state) {
         if (state is SportsLoadSuccess) {
-          _initialValue = groupBy(state.sports, (sport) => sport.title[0].toUpperCase());
-          _filteredGroupedSportsNotifier.value = _initialValue;
+          _initialSportTypes = groupBy(state.sports.sportTypes, (sport) => sport.title[0].toUpperCase());
+          _filteredGroupedSportsNotifier.value = _initialSportTypes;
+          _baseUrl = state.sports.baseUrl;
+          _sportsRepo.getFavoriteSports().then((value) {
+            _favoriteSportsCoursesNotifier.value = value;
+          });
         }
       },
     );
   }
 
+  Future<void> toggleFavoriteSport(String courseId, String sportType) async {
+    final currentFavorites = List.of(_favoriteSportsCoursesNotifier.value);
+
+    final existingEntry = currentFavorites.firstWhere(
+      (map) => map.containsKey(sportType),
+      orElse: () => {},
+    );
+
+    if (existingEntry.isNotEmpty) {
+      final courses = existingEntry[sportType]!;
+
+      if (courses.contains(courseId)) {
+        courses.remove(courseId);
+        if (courses.isEmpty) {
+          currentFavorites.remove(existingEntry);
+        }
+      } else {
+        courses.add(courseId);
+      }
+    } else {
+      currentFavorites.add({
+        sportType: [courseId]
+      });
+    }
+    currentFavorites.sort((a, b) => a.keys.first.compareTo(b.keys.first));
+
+    _favoriteSportsCoursesNotifier.value = currentFavorites;
+    await _sportsRepo.saveFavoriteSports(currentFavorites);
+  }
+
+  String _baseUrl = "";
+  String constructUrl(String title) => _baseUrl.constructSportsUrl(title);
+
   void searchValues(List<String> values, bool nothingFound) {
+    bool isSearchActive = values.isNotEmpty || nothingFound;
+    _isSearchActiveNotifier.value = isSearchActive;
     if (nothingFound) {
       _filteredGroupedSportsNotifier.value = {};
+      _isSearchActiveNotifier.value = true;
       return;
     }
     if (values.isEmpty) {
-      _filteredGroupedSportsNotifier.value = _initialValue;
+      _filteredGroupedSportsNotifier.value = _initialSportTypes;
       return;
     }
-    _filteredGroupedSportsNotifier.value = _initialValue.entries.fold<Map<String, List<SportsModel>>>(
+    _filteredGroupedSportsNotifier.value = _initialSportTypes.entries.fold<Map<String, List<SportsType>>>(
       {},
       (acc, entry) {
         final key = entry.key;
@@ -66,25 +112,18 @@ class SportsStateService {
     final currentFilterOptions = _filterOptionsNotifier.value;
     final currentAllValue = currentFilterOptions[SportsFilterOption.all]!;
     final currentAvailableValue = currentFilterOptions[SportsFilterOption.available]!;
-    final currentUpcomingValue = currentFilterOptions[SportsFilterOption.upcoming]!;
 
-    final filteredSports = _initialValue.entries.fold<Map<String, List<SportsModel>>>(
+    final filteredSports = _initialSportTypes.entries.fold<Map<String, List<SportsType>>>(
       {},
       (acc, entry) {
         final key = entry.key;
         final value = entry.value;
 
         final filteredValue = value.where((sport) {
-          final currentDate = DateTime.now();
-
           if (currentAllValue) {
             return true;
           } else if (currentAvailableValue) {
             return sport.courses.any((course) => course.isAvailable);
-          } else if (currentUpcomingValue) {
-            final startDate = sport.courses.any((course) => currentDate.isBefore(DateTime.parse(course.startDate)));
-            final endDate = sport.courses.any((course) => currentDate.isBefore(DateTime.parse(course.endDate)));
-            return startDate && endDate;
           }
 
           return false;
@@ -105,53 +144,11 @@ class SportsStateService {
     final currentFilterOptions = _filterOptionsNotifier.value;
     final currentAllValue = currentFilterOptions[SportsFilterOption.all]!;
     final currentAvailableValue = currentFilterOptions[SportsFilterOption.available]!;
-    final currentUpcomingValue = currentFilterOptions[SportsFilterOption.upcoming]!;
 
-    switch (filterOption) {
-      case SportsFilterOption.all:
-        if (!currentAllValue) {
-          _filterOptionsNotifier.value = {
-            SportsFilterOption.all: true,
-            SportsFilterOption.available: false,
-            SportsFilterOption.upcoming: false,
-          };
-        }
-        break;
-
-      case SportsFilterOption.available:
-        if (currentAvailableValue) {
-          _filterOptionsNotifier.value = {
-            SportsFilterOption.all: currentUpcomingValue ? false : true,
-            SportsFilterOption.available: false,
-            SportsFilterOption.upcoming: currentUpcomingValue,
-          };
-        } else {
-          _filterOptionsNotifier.value = {
-            SportsFilterOption.all: false,
-            SportsFilterOption.available: true,
-            SportsFilterOption.upcoming: currentUpcomingValue,
-          };
-        }
-        break;
-
-      case SportsFilterOption.upcoming:
-        if (currentUpcomingValue) {
-          _filterOptionsNotifier.value = {
-            SportsFilterOption.all: currentAvailableValue ? false : true,
-            SportsFilterOption.available: currentAvailableValue,
-            SportsFilterOption.upcoming: false,
-          };
-        } else {
-          _filterOptionsNotifier.value = {
-            SportsFilterOption.all: false,
-            SportsFilterOption.available: currentAvailableValue,
-            SportsFilterOption.upcoming: true,
-          };
-        }
-
-        break;
-      default:
-    }
+    _filterOptionsNotifier.value = {
+      SportsFilterOption.all: !currentAllValue,
+      SportsFilterOption.available: !currentAvailableValue,
+    };
 
     _updateFilteredSports();
   }

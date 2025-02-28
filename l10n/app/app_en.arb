@@ -188,5 +188,21 @@
   "appUpdateButton": "Update App",
   "@appUpdateButton": {
     "description": "Button text for the app update screen"
+  },
+  "all": "All",
+  "@all": {
+    "description": "All"
+  },
+  "available": "Available",
+  "@available": {
+    "description": "Available"
+  },
+  "atLocation": "at",
+  "@atLocation": {
+    "description": "Preposition for location"
+  },
+  "withPerson": "with",
+  "@withPerson": {
+    "description": "Preposition for person"
   }
 }

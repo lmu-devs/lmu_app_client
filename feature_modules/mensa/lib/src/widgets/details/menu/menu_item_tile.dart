@@ -103,31 +103,29 @@ class MenuItemTile extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: LmuSizes.size_12),
-                    GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () => _toggleDishFavorite(context),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_2),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                if (_ratingModel.likeCount >= 0)
-                                  LmuText.bodyXSmall(
-                                    _ratingModel.calculateLikeCount(isFavorite),
-                                    color: context.colors.neutralColors.textColors.weakColors.base,
-                                  ),
-                                if (_ratingModel.likeCount >= 0) const SizedBox(width: LmuSizes.size_4),
-                                StarIcon(isActive: isFavorite),
-                              ],
-                            ),
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_2),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              if (_ratingModel.likeCount >= 0)
+                                LmuText.bodyXSmall(
+                                  _ratingModel.calculateLikeCount(isFavorite),
+                                  color: context.colors.neutralColors.textColors.weakColors.base,
+                                ),
+                              if (_ratingModel.likeCount >= 0) const SizedBox(width: LmuSizes.size_4),
+                              const SizedBox(width: LmuSizes.size_20), // placeholder for star
+                            ],
                           ),
-                          const SizedBox(height: LmuSizes.size_4),
-                          ConstrainedBox(
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_2),
+                          child: ConstrainedBox(
                             constraints: const BoxConstraints(minWidth: LmuSizes.size_20),
                             child: Center(
                               child: LmuText.bodyXSmall(
@@ -136,10 +134,25 @@ class MenuItemTile extends StatelessWidget {
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
+                ),
+              ),
+              Positioned(
+                right: LmuSizes.size_6,
+                top: LmuSizes.size_8,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => _toggleDishFavorite(context),
+                  child: SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: Center(
+                      child: StarIcon(isActive: isFavorite),
+                    ),
+                  ),
                 ),
               ),
             ],

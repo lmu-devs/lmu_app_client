@@ -93,7 +93,7 @@ class DishDetailsPage extends StatelessWidget {
                   ),
                   if (_prices.first.basePrice > 0.0)
                     LmuListItem.base(
-                      title: context.locals.canteen.basePrice,
+                      subtitle: context.locals.canteen.basePrice,
                       trailingTitle: '${_prices.first.basePrice.toStringAsFixed(2)} €',
                     ),
                   ..._prices.where((e) => e.pricePerUnit > 0.0).map(

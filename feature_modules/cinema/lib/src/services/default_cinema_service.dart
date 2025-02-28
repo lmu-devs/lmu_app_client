@@ -16,7 +16,7 @@ class DefaultCinemaService implements CinemaService {
   Widget get cinemaPage => const CinemaPage();
 
   @override
-  StatefulShellBranch get cinemaData => $cinemaMainRoute;
+  RouteBase get cinemaData => $cinemaMainRoute;
 
   @override
   Widget get movieTeaserList {

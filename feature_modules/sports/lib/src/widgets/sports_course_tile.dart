@@ -1,82 +1,135 @@
+import 'dart:ui';
+
 import 'package:core/api.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
 
 import '../repository/api/models/sports_course.dart';
 import '../repository/api/models/sports_time_slot.dart';
+import '../services/sports_state_service.dart';
 
 class SportsCourseTile extends StatelessWidget {
-  const SportsCourseTile({super.key, required this.course, this.hasDivider = false});
+  const SportsCourseTile({
+    super.key,
+    required this.course,
+    required this.sportType,
+    this.hasDivider = false,
+  });
 
   final SportsCourse course;
+  final String sportType;
   final bool hasDivider;
 
   @override
   Widget build(BuildContext context) {
+    final sportsStateService = GetIt.I.get<SportsStateService>();
     final colors = context.colors;
-    final sportsLocals = context.locals.sports;
+    final locals = context.locals;
+    final appLocals = locals.app;
+    final sportsLocals = locals.sports;
     final subtitleColor = colors.neutralColors.textColors.mediumColors.base;
     final isCourseInPast = DateTime.parse(course.endDate).isBefore(DateTime.now());
 
     final instructor = course.instructor;
     final timeSlots = course.timeSlots;
     final location = course.location;
-    return Container(
-      margin: EdgeInsets.only(bottom: hasDivider ? LmuSizes.size_12 : LmuSizes.none),
-      padding: const EdgeInsets.all(LmuSizes.size_16),
-      decoration: BoxDecoration(
-        color: colors.neutralColors.backgroundColors.tile,
-        borderRadius: BorderRadius.circular(LmuSizes.size_12),
-      ),
-      width: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
+
+    final price = course.price.studentPrice.toInt();
+
+    return GestureDetector(
+      onTap: () {
+        final url = GetIt.I.get<SportsStateService>().constructUrl(sportType);
+        LmuUrlLauncher.launchWebsite(context: context, url: url);
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: hasDivider ? LmuSizes.size_12 : LmuSizes.none),
+        decoration: BoxDecoration(
+          color: colors.neutralColors.backgroundColors.tile,
+          borderRadius: BorderRadius.circular(LmuSizes.size_12),
+        ),
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(LmuSizes.size_16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  LmuInTextVisual.text(
-                    title: isCourseInPast
-                        ? sportsLocals.past
-                        : course.isAvailable
-                            ? sportsLocals.available
-                            : sportsLocals.fullyBooked,
-                    actionType: isCourseInPast
-                        ? ActionType.base
-                        : course.isAvailable
-                            ? ActionType.success
-                            : ActionType.destructive,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2.0),
+                    child: LmuInTextVisual.text(
+                      title: isCourseInPast
+                          ? sportsLocals.past
+                          : course.isAvailable
+                              ? appLocals.available
+                              : sportsLocals.fullyBooked,
+                      actionType: isCourseInPast
+                          ? ActionType.base
+                          : course.isAvailable
+                              ? ActionType.success
+                              : ActionType.destructive,
+                    ),
                   ),
-                  const SizedBox(width: LmuSizes.size_8),
-                  LmuText.body("${course.price.studentPrice.toInt()} €", color: subtitleColor),
+                  const SizedBox(height: LmuSizes.size_8),
+                  LmuText.body(course.title.isEmpty ? sportsLocals.course : course.title, weight: FontWeight.w600),
+                  if (timeSlots.isNotEmpty || instructor.isNotEmpty) const SizedBox(height: LmuSizes.size_4),
+                  if (timeSlots.isNotEmpty)
+                    LmuText.body(formatSportsTimeSlots(appLocals, timeSlots), color: subtitleColor),
+                  if (instructor.isNotEmpty) LmuText.body("${appLocals.withPerson} $instructor", color: subtitleColor),
+                  if (location != null)
+                    LmuText.body("${appLocals.atLocation} ${location.address}", color: subtitleColor),
+                  const SizedBox(height: LmuSizes.size_8),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(_ticketAsset, package: "sports"),
+                      const SizedBox(width: LmuSizes.size_8),
+                      if (price > 0) LmuText.body("+ $price €", color: subtitleColor),
+                    ],
+                  ),
                 ],
               ),
-              GestureDetector(
-                child: const StarIcon(),
-                onTap: () {},
+            ),
+            Positioned(
+              right: LmuSizes.size_6,
+              top: LmuSizes.size_8,
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => sportsStateService.toggleFavoriteSport(course.id, sportType),
+                child: SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: Center(
+                    child: ValueListenableBuilder(
+                      valueListenable: sportsStateService.favoriteSportsCoursesNotifier,
+                      builder: (context, favoriteSportsIds, _) {
+                        final isFavorite = favoriteSportsIds.any(
+                          (map) => map.values.any((courseList) => courseList.contains(course.id)),
+                        );
+                        return StarIcon(isActive: isFavorite);
+                      },
+                    ),
+                  ),
+                ),
               ),
-            ],
-          ),
-          const SizedBox(height: LmuSizes.size_8),
-          LmuText.body(course.title.isEmpty ? sportsLocals.course : course.title, weight: FontWeight.w600),
-          if (timeSlots.isNotEmpty || instructor.isNotEmpty) const SizedBox(height: LmuSizes.size_4),
-          if (timeSlots.isNotEmpty) LmuText.body(formatSportsTimeSlots(context, timeSlots), color: subtitleColor),
-          if (instructor.isNotEmpty) LmuText.body("${sportsLocals.withTrainer} $instructor", color: subtitleColor),
-          if (location != null) const SizedBox(height: LmuSizes.size_8),
-          if (location != null) LmuText.body(course.location?.address, color: subtitleColor),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
+
+  String get _ticketAsset => PlatformDispatcher.instance.platformBrightness == Brightness.light
+      ? 'assets/basisticket_light.svg'
+      : 'assets/basisticket_dark.svg';
 }
 
-String formatSportsTimeSlots(BuildContext context, List<SportsTimeSlot> slots) {
-  final locals = context.locals.app;
+String formatSportsTimeSlots(AppLocalizations locals, List<SportsTimeSlot> slots) {
   if (slots.isEmpty) return '';
 
   final groupedByTime = <String, List<Weekday>>{};
@@ -90,7 +143,7 @@ String formatSportsTimeSlots(BuildContext context, List<SportsTimeSlot> slots) {
     days.sort((a, b) => a.index.compareTo(b.index));
 
     if (days.length == 1) {
-      return days.first.localizedWeekday(context.locals.app);
+      return days.first.localizedWeekday(locals);
     }
 
     final List<List<Weekday>> groupedRanges = [];

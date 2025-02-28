@@ -10,12 +10,12 @@ class LmuSearchOverlay extends StatelessWidget {
     super.key,
     required this.searchController,
     required this.searchInputs,
-    this.quickFilterButtons,
+    this.bottomWidget,
   });
 
   final LmuSearchController searchController;
   final List<LmuSearchInput> searchInputs;
-  final List<LmuButton>? quickFilterButtons;
+  final Widget? bottomWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +37,7 @@ class LmuSearchOverlay extends StatelessWidget {
             const SizedBox(height: LmuSizes.size_16),
             LmuSearchBar(searchController: searchController, searchInputs: searchInputs),
             const SizedBox(height: LmuSizes.size_16),
-            if (quickFilterButtons != null) LmuButtonRow(buttons: quickFilterButtons!),
-            if (quickFilterButtons != null) const SizedBox(height: LmuSizes.size_16),
+            if (bottomWidget != null) SizedBox(width: double.infinity, child: bottomWidget!),
           ],
         ),
       ),
