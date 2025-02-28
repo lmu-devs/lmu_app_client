@@ -1,19 +1,15 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:core/localizations.dart';
+import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-
-import '../pages/pages.dart';
 
 class SportsLoadingView extends StatelessWidget {
   const SportsLoadingView({super.key});
 
+  final loadingTileCount = const [6, 4, 2, 3];
   @override
   Widget build(BuildContext context) {
-    final sportsLocals = context.locals.sports;
-
-    const loadingTileCount = [6, 4, 2, 3];
-
+    final starColor = context.colors.neutralColors.textColors.weakColors.base;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -22,41 +18,39 @@ class SportsLoadingView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: LmuSizes.size_16),
-                LmuListItem.action(
-                  leadingArea: Center(child: LmuText.body("⁉️")),
-                  actionType: LmuListItemAction.chevron,
-                  subtitle: sportsLocals.sportsInfoEntry,
-                  hasHorizontalPadding: false,
-                  hasDivider: true,
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const SportsInfoPage(),
-                      ),
-                    );
-                  },
-                ),
-                LmuListItem.action(
+                LmuListItemLoading(
                   leadingArea: Center(child: LmuText.body("🎟️")),
-                  subtitle: sportsLocals.yourTickets,
-                  hasDivider: true,
+                  subtitleLength: 5,
                   hasHorizontalPadding: false,
-                  actionType: LmuListItemAction.chevron,
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const SportsTicketsPage(),
-                      ),
-                    );
-                    //const SportsTicketRoute().go(context);
-                  },
+                  hasDivier: true,
                 ),
                 LmuListItemLoading(
                   leadingArea: Center(child: LmuText.body("🥇")),
                   subtitleLength: 4,
                   hasHorizontalPadding: false,
                   hasDivier: true,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: LmuSizes.size_16),
+          Padding(
+            padding: const EdgeInsets.all(LmuSizes.size_16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                StarIcon(isActive: false, size: LmuIconSizes.small, disabledColor: starColor),
+                const SizedBox(height: LmuSizes.size_12),
+                LmuContentTile(
+                  content: List.generate(
+                    2,
+                    (index) => const LmuListItemLoading(
+                      leadingArea: LmuStatusDot(),
+                      titleLength: 2,
+                      trailingTitleLength: 1,
+                      action: LmuListItemAction.chevron,
+                    ),
+                  ),
                 ),
               ],
             ),

@@ -289,6 +289,7 @@ class LmuListItem extends StatelessWidget {
                               ],
                             ),
                           ),
+                        if (_hasMainContent && _hasActionArea) const SizedBox(width: 12),
                         if (_hasTrailingTitleArea || _hasTrailingSubtitleArea)
                           Flexible(
                             flex: maximizeTrailingTitleArea ? 2 : 1,

@@ -30,7 +30,7 @@ class SportsMainRoute extends GoRouteData {
 class SportsDetailsRoute extends GoRouteData {
   const SportsDetailsRoute(this.$extra);
 
-  final SportsModel $extra;
+  final SportsType $extra;
 
   @override
   Widget build(BuildContext context, GoRouterState state) => SportsDetailsPage(sport: $extra);

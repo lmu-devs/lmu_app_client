@@ -9,6 +9,7 @@ class LmuTileHeadline extends StatelessWidget {
   final String? actionTitle;
   final void Function()? onActionTap;
   final Widget? bottomWidget;
+  final double? customBottomPadding;
 
   const LmuTileHeadline._internal({
     super.key,
@@ -17,6 +18,7 @@ class LmuTileHeadline extends StatelessWidget {
     this.actionTitle,
     this.onActionTap,
     this.bottomWidget,
+    this.customBottomPadding,
   });
 
   factory LmuTileHeadline.base({
@@ -24,12 +26,14 @@ class LmuTileHeadline extends StatelessWidget {
     required String title,
     String? trailingTitle,
     Widget? bottomWidget,
+    double? customBottomPadding,
   }) =>
       LmuTileHeadline._internal(
         key: key,
         title: title,
         trailingTitle: trailingTitle,
         bottomWidget: bottomWidget,
+        customBottomPadding: customBottomPadding,
       );
 
   factory LmuTileHeadline.action({
@@ -38,6 +42,7 @@ class LmuTileHeadline extends StatelessWidget {
     required String actionTitle,
     required void Function() onActionTap,
     Widget? bottomWidget,
+    double? customBottomPadding,
   }) =>
       LmuTileHeadline._internal(
         key: key,
@@ -45,6 +50,7 @@ class LmuTileHeadline extends StatelessWidget {
         actionTitle: actionTitle,
         onActionTap: onActionTap,
         bottomWidget: bottomWidget,
+        customBottomPadding: customBottomPadding,
       );
 
   @override
@@ -75,7 +81,7 @@ class LmuTileHeadline extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(height: LmuSizes.size_12),
+        SizedBox(height: customBottomPadding ?? LmuSizes.size_12),
         if (bottomWidget != null)
           Column(
             children: [

@@ -7,6 +7,7 @@ part of 'sports_course.dart';
 // **************************************************************************
 
 SportsCourse _$SportsCourseFromJson(Map<String, dynamic> json) => SportsCourse(
+      id: json['id'] as String,
       title: json['title'] as String,
       isAvailable: json['is_available'] as bool,
       startDate: json['start_date'] as String,
@@ -19,6 +20,7 @@ SportsCourse _$SportsCourseFromJson(Map<String, dynamic> json) => SportsCourse(
     );
 
 Map<String, dynamic> _$SportsCourseToJson(SportsCourse instance) => <String, dynamic>{
+      'id': instance.id,
       'title': instance.title,
       'is_available': instance.isAvailable,
       'start_date': instance.startDate,

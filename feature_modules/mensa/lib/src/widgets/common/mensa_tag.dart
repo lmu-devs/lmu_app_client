@@ -1,5 +1,4 @@
 import 'package:core/components.dart';
-import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
@@ -18,16 +17,10 @@ class MensaTag extends StatelessWidget {
     final localizations = context.locals.canteen;
 
     final tagData = type.getTagData(colors, localizations);
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_4),
-      decoration: BoxDecoration(
-        color: tagData.backgroundColor,
-        borderRadius: BorderRadius.circular(LmuSizes.size_4),
-      ),
-      child: LmuText.bodySmall(
-        tagData.text,
-        color: tagData.textColor,
-      ),
+    return LmuInTextVisual.text(
+      title: tagData.text,
+      backgroundColor: tagData.backgroundColor,
+      textColor: tagData.textColor,
     );
   }
 }

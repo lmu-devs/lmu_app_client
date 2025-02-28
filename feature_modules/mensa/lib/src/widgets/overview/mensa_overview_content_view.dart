@@ -4,8 +4,6 @@ import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../repository/api/models/mensa/mensa_model.dart';
-import '../../repository/api/models/user_preferences/sort_option.dart';
 import '../../repository/repository.dart';
 import '../../services/services.dart';
 import '../widgets.dart';
@@ -48,9 +46,9 @@ class _MensaOverviewContentViewState extends State<MensaOverviewContentView> {
         padding: const EdgeInsets.all(LmuSizes.size_16),
         child: Column(
           children: [
-            LmuTileHeadline.base(title: localizations.favorites),
+            LmuTileHeadline.base(title: localizations.favorites, customBottomPadding: LmuSizes.size_6),
             MensaOverviewReordableFavoriteSection(mensaModels: _mensaModels),
-            const SizedBox(height: LmuSizes.size_32),
+            const SizedBox(height: 26),
             LmuTileHeadline.base(
               title: localizations.allCanteens,
               bottomWidget: MensaOverviewButtonSection(mensaModels: widget.mensaModels),

@@ -41,5 +41,9 @@
   "appUpdateTitle": "Zeit für ein Update",
   "appUpdateIntro": "Updates sind wie Klausuren, man kann sie nicht ewig aufschieben.",
   "appUpdateDescription": "Deine aktuelle App Version ist veraltet und wird nicht länger unterstützt. Bitte update die App auf die neueste Version.",
-  "appUpdateButton": "App updaten"
+  "appUpdateButton": "App updaten",
+  "all": "Alle",
+  "available": "Verfügbar",
+  "withPerson": "mit",
+  "atLocation": "in"
 }

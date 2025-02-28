@@ -16,6 +16,7 @@ class DefaultSportsService extends SportsService {
   @override
   Widget get sportsPage => const SportsPage();
 
+  @override
   void navigateToSportsPage(BuildContext context) {
     const SportsMainRoute().go(context);
   }

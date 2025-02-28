@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../repository/api/models/sports_model.dart';
+import '../../repository/api/api.dart';
 
 abstract class SportsState extends Equatable {
   const SportsState();
@@ -20,7 +20,7 @@ class SportsLoadInProgress extends SportsState {
 class SportsLoadSuccess extends SportsState {
   const SportsLoadSuccess({required this.sports});
 
-  final List<SportsModel> sports;
+  final SportsModel sports;
 
   @override
   List<Object> get props => [sports];

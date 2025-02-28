@@ -47,7 +47,7 @@ extension $SportsMainRouteExtension on SportsMainRoute {
 
 extension $SportsDetailsRouteExtension on SportsDetailsRoute {
   static SportsDetailsRoute _fromState(GoRouterState state) => SportsDetailsRoute(
-        state.extra as SportsModel,
+        state.extra as SportsType,
       );
 
   String get location => GoRouteData.$location(
