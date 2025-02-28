@@ -21,7 +21,7 @@ class CinemaLoadingView extends StatelessWidget {
             const SizedBox(height: LmuSizes.size_16),
             LmuTileHeadline.base(title: context.locals.cinema.cinemasTitle),
             ...List.generate(4, (index) {
-              return const CinemaCardLoading();
+              return CinemaCardLoading(isLastItem: index == 4 - 1);
             }),
             const SizedBox(height: LmuSizes.size_32),
             LmuTileHeadline.base(

@@ -2,7 +2,6 @@ import 'package:core/components.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../extensions/opening_hours_extensions.dart';
@@ -41,8 +40,7 @@ class MensaOverviewAllSection extends StatelessWidget {
 
                 if (filteredMensaModels.isEmpty) {
                   return LmuIssueType(
-                    title: context.locals.canteen.allClosed,
-                    icon: LucideIcons.bone,
+                    message: context.locals.canteen.allClosed,
                     hasSpacing: false,
                   );
                 }

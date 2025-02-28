@@ -18,6 +18,7 @@ dependencies:
   http: ^1.2.2
   json_annotation: ^4.0.1
   modal_bottom_sheet: ^3.0.0
+  flutter_lucide: ^1.2.0
 
 dev_dependencies:
   flutter_test:

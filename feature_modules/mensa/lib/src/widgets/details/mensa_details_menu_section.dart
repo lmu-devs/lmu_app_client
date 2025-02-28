@@ -106,7 +106,7 @@ extension _DateTimeName on DateTime {
       localizations.wednesday,
       localizations.thursday,
       localizations.friday,
-      localizations.saturady,
+      localizations.saturday,
       localizations.sunday,
     ];
 

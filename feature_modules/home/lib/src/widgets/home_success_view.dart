@@ -100,15 +100,23 @@ class HomeSuccessView extends StatelessWidget {
               ),
               const SizedBox(height: LmuSizes.size_16),
               LmuFeatureTile(
-                onTap: () => GetIt.I.get<SportsService>().navigateToSportsPage(context),
                 title: context.locals.sports.sportsTitle,
                 padding: EdgeInsets.zero,
                 //MarqueeTileContent(texts: sportTypes)],
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => GetIt.I.get<SportsService>().sportsPage,
+                  ),
+                ),
               ),
               const SizedBox(height: LmuSizes.size_16),
               LmuFeatureTile(
                 title: context.locals.cinema.cinemasTitle,
-                onTap: () => GetIt.I.get<CinemaService>().navigateToCinemaPage(context),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => GetIt.I.get<CinemaService>().cinemaPage,
+                  ),
+                ),
               ),
               const SizedBox(height: LmuSizes.size_16),
               LmuFeatureTile(

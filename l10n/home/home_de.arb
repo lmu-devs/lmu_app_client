@@ -34,5 +34,7 @@
   "forYou": "Für Dich",
   "favoriteLinksEmptyBefore": "Füge Links mit dem ",
   "favoriteLinksEmptyAfter": " hier und auf Home hinzu",
-  "linkCopiedToClipboard": "Link kopiert"
+  "linkCopiedToClipboard": "Link kopiert",
+  "linkSuggestion": "Schlage einen Link vor",
+  "benefitSuggestion": "Schlage einen Benefit vor"
 }

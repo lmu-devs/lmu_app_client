@@ -34,8 +34,8 @@ class BenefitsCard extends StatelessWidget {
           if (benefit.imageUrl != null)
             ClipRRect(
               borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(LmuRadiusSizes.medium),
-                topRight: Radius.circular(LmuRadiusSizes.medium),
+                topLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
+                topRight: Radius.circular(LmuRadiusSizes.mediumLarge),
               ),
               child: LmuCachedNetworkImage(
                 imageUrl: benefit.imageUrl!,
@@ -49,8 +49,9 @@ class BenefitsCard extends StatelessWidget {
             subtitle: benefit.description,
             leadingArea: LmuCachedNetworkImage(
               imageUrl: benefit.faviconUrl,
-              height: LmuIconSizes.medium,
-              width: LmuIconSizes.medium,
+              height: LmuIconSizes.mediumSmall,
+              width: LmuIconSizes.mediumSmall,
+              fit: BoxFit.cover,
             ),
             onTap: () => _handleTap(context),
             onLongPress: () => _handleLongPress(context),

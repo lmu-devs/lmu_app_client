@@ -28,59 +28,55 @@ class FavoriteLinkSection extends StatelessWidget {
           return const SizedBox.shrink();
         }
 
-        return AnimatedSwitcher(
-          duration: const Duration(milliseconds: 250),
-          transitionBuilder: (Widget child, Animation<double> animation) {
-            return FadeTransition(
-              opacity: animation,
-              child: SizeTransition(
-                sizeFactor: animation,
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            StarIcon(
+              size: LmuIconSizes.small,
+              disabledColor: context.colors.neutralColors.textColors.weakColors.base,
+            ),
+            const SizedBox(height: LmuSizes.size_12),
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 450),
+              transitionBuilder: (child, animation) => FadeTransition(
+                opacity: animation,
                 child: child,
               ),
-            );
-          },
-          child: likedLinkTitles.isNotEmpty
-              ? Column(
-                  key: const ValueKey("favorite_list"),
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    StarIcon(
-                      disabledColor: context.colors.neutralColors.backgroundColors.strongColors.active,
-                    ),
-                    const SizedBox(height: LmuSizes.size_12),
-                    LmuContentTile(
+              child: likedLinkTitles.isNotEmpty
+                  ? LmuContentTile(
+                      key: const ValueKey("favorite_list"),
                       content: links
                           .where((link) => likedLinkTitles.contains(link.title))
                           .map((link) => LinkCard(link: link))
                           .toList(),
+                    )
+                  : Padding(
+                      key: const ValueKey("empty_state"),
+                      padding: const EdgeInsets.only(bottom: LmuSizes.size_8),
+                      child: PlaceholderTile(
+                        minHeight: LmuSizes.size_72,
+                        content: [
+                          LmuText.body(
+                            context.locals.home.favoriteLinksEmptyBefore,
+                            color: context.colors.neutralColors.textColors.mediumColors.base,
+                            textAlign: TextAlign.center,
+                          ),
+                          StarIcon(
+                            isActive: false,
+                            disabledColor: context.colors.neutralColors.textColors.weakColors.base,
+                            size: LmuSizes.size_16,
+                          ),
+                          LmuText.body(
+                            context.locals.home.favoriteLinksEmptyAfter,
+                            color: context.colors.neutralColors.textColors.mediumColors.base,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: LmuSizes.size_16),
-                  ],
-                )
-              : Padding(
-                  key: const ValueKey("empty_state"),
-                  padding: const EdgeInsets.only(bottom: LmuSizes.size_32),
-                  child: PlaceholderTile(
-                    minHeight: LmuSizes.size_72,
-                    content: [
-                      LmuText.body(
-                        context.locals.home.favoriteLinksEmptyBefore,
-                        color: context.colors.neutralColors.textColors.mediumColors.base,
-                        textAlign: TextAlign.center,
-                      ),
-                      StarIcon(
-                        isActive: false,
-                        disabledColor: context.colors.neutralColors.textColors.weakColors.base,
-                        size: LmuSizes.size_16,
-                      ),
-                      LmuText.body(
-                        context.locals.home.favoriteLinksEmptyAfter,
-                        color: context.colors.neutralColors.textColors.mediumColors.base,
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
+            ),
+            const SizedBox(height: LmuSizes.size_32),
+          ],
         );
       },
     );

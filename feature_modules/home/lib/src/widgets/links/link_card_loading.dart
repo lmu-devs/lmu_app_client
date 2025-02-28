@@ -18,8 +18,8 @@ class LinkCardLoading extends StatelessWidget {
           color: context.colors.neutralColors.backgroundColors.mediumColors.pressed,
           borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
         ),
-        height: LmuIconSizes.medium,
-        width: LmuIconSizes.medium,
+        height: LmuIconSizes.mediumSmall,
+        width: LmuIconSizes.mediumSmall,
       ),
       trailingArea: const StarIcon(),
     );

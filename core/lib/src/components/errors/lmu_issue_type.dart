@@ -1,42 +1,42 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class LmuIssueType extends StatelessWidget {
   const LmuIssueType({
     super.key,
-    required this.title,
-    required this.icon,
+    required this.message,
     this.hasSpacing = true,
+    this.isCentered = true,
   });
 
-  final String title;
-  final IconData icon;
+  final String message;
   final bool hasSpacing;
+  final bool isCentered;
 
   @override
   Widget build(BuildContext context) {
-    final textColor = context.colors.neutralColors.textColors.mediumColors.base;
-
     return Column(
+      crossAxisAlignment: isCentered ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       children: [
-        if (hasSpacing) const SizedBox(height: LmuSizes.size_24),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(width: LmuSizes.size_8),
-            LmuIcon(icon: icon, size: LmuIconSizes.small, color: textColor),
-            const SizedBox(width: LmuSizes.size_8),
-            LmuText.body(title, color: textColor, textAlign: TextAlign.center),
-            const SizedBox(width: LmuSizes.size_8),
-            LmuIcon(icon: icon, size: LmuIconSizes.small, color: textColor),
-          ],
+        if (hasSpacing) const SizedBox(height: LmuSizes.size_12),
+        Lottie.asset(
+          'lib/assets/ghost.json',
+          package: 'core',
+          height: LmuSizes.size_16 * 10,
+          fit: BoxFit.cover,
+          repeat: true,
         ),
-        const SizedBox(height: LmuSizes.size_12),
-        Image.asset("core/lib/assets/sad.gif", width: 200),
-        if (hasSpacing) const SizedBox(height: LmuSizes.size_112),
+        const SizedBox(height: LmuSizes.size_2),
+        LmuText.body(
+          message,
+          color: context.colors.neutralColors.textColors.mediumColors.base,
+          textAlign: isCentered ? TextAlign.center : TextAlign.start,
+        ),
+        if (hasSpacing) const SizedBox(height: LmuSizes.size_96),
       ],
     );
   }

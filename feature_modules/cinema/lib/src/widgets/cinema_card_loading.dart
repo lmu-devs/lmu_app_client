@@ -5,12 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CinemaCardLoading extends StatelessWidget {
-  const CinemaCardLoading({super.key});
+  const CinemaCardLoading({
+    super.key,
+    required this.isLastItem,
+  });
+
+  final bool isLastItem;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: LmuSizes.size_12),
+      margin: EdgeInsets.only(bottom: isLastItem ? LmuSizes.none : LmuSizes.size_12),
       padding: const EdgeInsets.all(LmuSizes.size_4),
       decoration: BoxDecoration(
         color: context.colors.neutralColors.backgroundColors.tile,

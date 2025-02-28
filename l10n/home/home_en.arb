@@ -125,5 +125,13 @@
   },
   "@linkCopiedToClipboard": {
     "description": "Toast message for copying a link to clipboard"
+  },
+  "linkSuggestion": "Suggest a link",
+  "@linkSuggestion": {
+    "description": "Suggest a link"
+  },
+  "benefitSuggestion": "Suggest a benefit",
+  "@benefitSuggestion": {
+    "description": "Suggest a benefit"
   }
 }
