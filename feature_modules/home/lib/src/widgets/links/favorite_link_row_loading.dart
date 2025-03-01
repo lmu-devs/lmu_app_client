@@ -1,10 +1,10 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../service/home_preferences_service.dart';
+import '../favicon_fallback.dart';
 
 class FavoriteLinkRowLoading extends StatelessWidget {
   const FavoriteLinkRowLoading({super.key});
@@ -23,14 +23,7 @@ class FavoriteLinkRowLoading extends StatelessWidget {
                   (index) => LmuButton(
                     emphasis: ButtonEmphasis.secondary,
                     title: BoneMock.words(1),
-                    leadingWidget: Container(
-                      decoration: BoxDecoration(
-                        color: context.colors.neutralColors.backgroundColors.mediumColors.base,
-                        borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
-                      ),
-                      height: LmuIconSizes.small,
-                      width: LmuIconSizes.small,
-                    ),
+                    leadingWidget: const FaviconFallback(size: LmuIconSizes.small),
                   ),
                 ),
               ),

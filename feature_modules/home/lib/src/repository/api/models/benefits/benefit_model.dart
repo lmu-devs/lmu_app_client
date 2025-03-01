@@ -18,7 +18,7 @@ class BenefitModel extends Equatable {
   final String description;
   final String url;
   @JsonKey(name: 'favicon_url')
-  final String faviconUrl;
+  final String? faviconUrl;
   @JsonKey(name: 'image_url')
   final String? imageUrl;
   final List<String> aliases;

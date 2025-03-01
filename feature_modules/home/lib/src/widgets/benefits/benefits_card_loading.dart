@@ -4,6 +4,8 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../favicon_fallback.dart';
+
 class BenefitsCardLoading extends StatelessWidget {
   const BenefitsCardLoading({super.key});
 
@@ -27,14 +29,7 @@ class BenefitsCardLoading extends StatelessWidget {
           LmuListItem.base(
             title: BoneMock.title,
             subtitle: BoneMock.subtitle,
-            leadingArea: Container(
-              decoration: BoxDecoration(
-                color: context.colors.neutralColors.backgroundColors.mediumColors.pressed,
-                borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
-              ),
-              height: LmuIconSizes.mediumSmall,
-              width: LmuIconSizes.mediumSmall,
-            ),
+            leadingArea: const FaviconFallback(size: LmuIconSizes.mediumSmall),
           ),
         ],
       ),

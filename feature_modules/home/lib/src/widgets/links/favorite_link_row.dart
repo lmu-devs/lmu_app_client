@@ -9,6 +9,7 @@ import 'package:get_it/get_it.dart';
 import '../../bloc/links/links.dart';
 import '../../repository/api/models/links/link_model.dart';
 import '../../service/home_preferences_service.dart';
+import '../favicon_fallback.dart';
 import 'favorite_link_row_loading.dart';
 
 class FavoriteLinkRow extends StatelessWidget {
@@ -60,11 +61,13 @@ class FavoriteLinkRow extends StatelessWidget {
                               child: LmuButton(
                                 emphasis: ButtonEmphasis.secondary,
                                 title: link.title,
-                                leadingWidget: LmuCachedNetworkImage(
-                                  imageUrl: link.faviconUrl,
-                                  height: LmuIconSizes.small,
-                                  width: LmuIconSizes.small,
-                                ),
+                                leadingWidget: link.faviconUrl != null && link.faviconUrl!.isNotEmpty
+                                    ? LmuCachedNetworkImage(
+                                        imageUrl: link.faviconUrl!,
+                                        height: LmuIconSizes.small,
+                                        width: LmuIconSizes.small,
+                                      )
+                                    : const FaviconFallback(size: LmuIconSizes.small),
                                 onTap: () => LmuUrlLauncher.launchWebsite(
                                   url: link.url,
                                   context: context,

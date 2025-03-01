@@ -8,6 +8,7 @@ import 'package:get_it/get_it.dart';
 
 import '../../repository/api/models/links/link_model.dart';
 import '../../service/home_preferences_service.dart';
+import '../favicon_fallback.dart';
 
 class LinkCard extends StatelessWidget {
   const LinkCard({
@@ -25,12 +26,14 @@ class LinkCard extends StatelessWidget {
       subtitle: link.description,
       leadingArea: Padding(
         padding: const EdgeInsets.only(top: LmuSizes.size_2),
-        child: LmuCachedNetworkImage(
-          imageUrl: link.faviconUrl,
-          height: LmuIconSizes.mediumSmall,
-          width: LmuIconSizes.mediumSmall,
-          fit: BoxFit.cover,
-        ),
+        child: link.faviconUrl != null && link.faviconUrl!.isNotEmpty
+            ? LmuCachedNetworkImage(
+                imageUrl: link.faviconUrl!,
+                height: LmuIconSizes.mediumSmall,
+                width: LmuIconSizes.mediumSmall,
+                fit: BoxFit.cover,
+              )
+            : const FaviconFallback(size: LmuIconSizes.mediumSmall),
       ),
       trailingArea: ValueListenableBuilder<List<String>>(
         valueListenable: GetIt.I<HomePreferencesService>().likedLinksNotifier,
