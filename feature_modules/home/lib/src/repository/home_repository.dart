@@ -2,11 +2,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/home_api_client.dart';
 import 'api/models/benefits/benefit_model.dart';
-import 'api/models/home_model.dart';
+import 'api/models/home/home_data.dart';
 import 'api/models/links/link_model.dart';
 
 abstract class HomeRepository {
-  Future<HomeModel> getHomeData();
+  Future<HomeData> getHomeData();
 
   Future<List<LinkModel>> getLinks();
 
@@ -20,31 +20,20 @@ abstract class HomeRepository {
 }
 
 class ConnectedHomeRepository implements HomeRepository {
-  ConnectedHomeRepository({
-    required this.homeApiClient,
-  });
+  const ConnectedHomeRepository({required this.homeApiClient});
 
   final HomeApiClient homeApiClient;
 
   static const String _likedLinksKey = 'liked_links_key';
 
   @override
-  Future<HomeModel> getHomeData() async {
-    try {
-      return await homeApiClient.getHomeData();
-    } catch (e) {
-      rethrow;
-    }
+  Future<HomeData> getHomeData() async {
+    return await homeApiClient.getHomeData();
   }
 
   @override
   Future<List<LinkModel>> getLinks() async {
-    try {
-      final links = await homeApiClient.getLinks();
-      return links;
-    } catch (e) {
-      rethrow;
-    }
+    return await homeApiClient.getLinks();
   }
 
   @override
@@ -71,11 +60,6 @@ class ConnectedHomeRepository implements HomeRepository {
 
   @override
   Future<List<BenefitModel>> getBenefits() async {
-    try {
-      final benefits = await homeApiClient.getBenefits();
-      return benefits;
-    } catch (e) {
-      rethrow;
-    }
+    return await homeApiClient.getBenefits();
   }
 }

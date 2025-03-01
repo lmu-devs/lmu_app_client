@@ -108,6 +108,7 @@ class _LinksContentViewState extends State<LinksContentView> {
                     'LinksScreen',
                   ),
                   const SizedBox(height: LmuSizes.size_96),
+
                   /// Search Bar Size
                   const SizedBox(height: LmuSizes.size_72),
                 ],
