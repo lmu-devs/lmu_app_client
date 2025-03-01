@@ -29,6 +29,7 @@ dependencies:
   http: any
   collection: ^1.18.0
   shared_preferences: ^2.3.3
+  flutter_staggered_grid_view: ^0.7.0
 
 dev_dependencies:
   flutter_test:
@@ -37,3 +38,8 @@ dev_dependencies:
   build_runner: any
   build_verify: any
   json_serializable: ^6.7.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/

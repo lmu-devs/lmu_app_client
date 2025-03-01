@@ -53,7 +53,7 @@ extension $LinksRouteExtension on LinksRoute {
   static LinksRoute _fromState(GoRouterState state) => const LinksRoute();
 
   String get location => GoRouteData.$location(
-        '/links',
+        '/home/links',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -69,7 +69,7 @@ extension $BenefitsRouteExtension on BenefitsRoute {
   static BenefitsRoute _fromState(GoRouterState state) => const BenefitsRoute();
 
   String get location => GoRouteData.$location(
-        '/benefits',
+        '/home/benefits',
       );
 
   void go(BuildContext context) => context.go(location);
