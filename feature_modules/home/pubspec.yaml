@@ -23,6 +23,7 @@ dependencies:
     path: ../../shared_api
   json_annotation: ^4.8.1
   flutter_sticky_header: ^0.7.0
+  animated_reorderable_list: ^1.1.5
   skeletonizer: ^1.4.2
   intl: any
 

@@ -45,10 +45,10 @@ class FavoriteLinkSection extends StatelessWidget {
               child: likedLinkTitles.isNotEmpty
                   ? LmuContentTile(
                       key: const ValueKey("favorite_list"),
-                      content: links
-                          .where((link) => likedLinkTitles.contains(link.title))
-                          .map((link) => LinkCard(link: link))
-                          .toList(),
+                      content: [
+                        ...links.where((link) => likedLinkTitles.contains(link.title)).toList()
+                          ..sort((a, b) => likedLinkTitles.indexOf(a.title).compareTo(likedLinkTitles.indexOf(b.title)))
+                      ].map((link) => LinkCard(link: link)).toList(),
                     )
                   : Padding(
                       key: const ValueKey("empty_state"),

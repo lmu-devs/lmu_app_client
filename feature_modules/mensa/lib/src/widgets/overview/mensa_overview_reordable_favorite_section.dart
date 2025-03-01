@@ -18,30 +18,6 @@ class MensaOverviewReordableFavoriteSection extends StatelessWidget {
 
   final List<MensaModel> mensaModels;
 
-  AnimatedBuilder _buildAnimatedBuilder(Animation<double> animation, Widget child, {bool isReverse = false}) {
-    return AnimatedBuilder(
-      animation: animation,
-      builder: (context, child) {
-        return FadeTransition(
-          opacity: CurvedAnimation(
-            parent: animation,
-            curve: LmuAnimations.gentle,
-            reverseCurve: isReverse ? LmuAnimations.gentle.flipped : Curves.easeInCubic,
-          ),
-          child: SizeTransition(
-            sizeFactor: CurvedAnimation(
-              parent: animation,
-              curve: LmuAnimations.gentle,
-              reverseCurve: isReverse ? LmuAnimations.gentle.flipped : Curves.easeInCubic,
-            ),
-            child: child,
-          ),
-        );
-      },
-      child: child,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final userPreferencesService = GetIt.I<MensaUserPreferencesService>();
@@ -93,8 +69,8 @@ class MensaOverviewReordableFavoriteSection extends StatelessWidget {
               items: value,
               insertDuration: const Duration(milliseconds: 1200),
               removeDuration: const Duration(milliseconds: 1000),
-              insertItemBuilder: (child, animation) => _buildAnimatedBuilder(animation, child),
-              removeItemBuilder: (child, animation) => _buildAnimatedBuilder(animation, child, isReverse: true),
+              insertItemBuilder: (child, animation) => reorderableListAnimation(animation, child),
+              removeItemBuilder: (child, animation) => reorderableListAnimation(animation, child, isReverse: true),
               onReorder: (oldIndex, newIndex) {
                 final order = List.of(value);
                 final item = order.removeAt(oldIndex);
