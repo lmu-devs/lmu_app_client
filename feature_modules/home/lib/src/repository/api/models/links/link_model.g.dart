@@ -12,8 +12,7 @@ LinkModel _$LinkModelFromJson(Map<String, dynamic> json) => LinkModel(
       url: json['url'] as String,
       faviconUrl: json['favicon_url'] as String?,
       types: (json['types'] as List<dynamic>).map((e) => e as String).toList(),
-      aliases:
-          (json['aliases'] as List<dynamic>).map((e) => e as String).toList(),
+      aliases: (json['aliases'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$LinkModelToJson(LinkModel instance) => <String, dynamic>{

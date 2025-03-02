@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import '../repository/api/models/home_model.dart';
+
+import '../repository/api/models/home/home_data.dart';
 
 abstract class HomeState extends Equatable {}
 
@@ -16,7 +17,7 @@ class HomeLoading extends HomeState {
 class HomeLoadSuccess extends HomeState {
   HomeLoadSuccess({required this.homeData});
 
-  final HomeModel homeData;
+  final HomeData homeData;
 
   @override
   List<Object?> get props => [homeData];

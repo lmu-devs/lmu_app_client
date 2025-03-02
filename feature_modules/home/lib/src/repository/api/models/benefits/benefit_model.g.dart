@@ -12,12 +12,10 @@ BenefitModel _$BenefitModelFromJson(Map<String, dynamic> json) => BenefitModel(
       url: json['url'] as String,
       faviconUrl: json['favicon_url'] as String?,
       imageUrl: json['image_url'] as String?,
-      aliases:
-          (json['aliases'] as List<dynamic>).map((e) => e as String).toList(),
+      aliases: (json['aliases'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
-Map<String, dynamic> _$BenefitModelToJson(BenefitModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$BenefitModelToJson(BenefitModel instance) => <String, dynamic>{
       'title': instance.title,
       'description': instance.description,
       'url': instance.url,

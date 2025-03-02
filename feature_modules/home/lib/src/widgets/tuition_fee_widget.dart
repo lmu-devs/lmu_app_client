@@ -7,16 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lucide_icons_svg/lucide_icons_svg.dart';
 
-import '../repository/api/models/home_model.dart';
 import '../service/home_preferences_service.dart';
 
 class TuitionFeeWidget extends StatelessWidget {
   const TuitionFeeWidget({
     super.key,
-    required this.homeData,
   });
-
-  final HomeModel homeData;
 
   String _getSemester(DateTime date, HomeLocalizations locals) {
     return date.month >= 8 ? locals.winter : locals.summer;
@@ -25,7 +21,7 @@ class TuitionFeeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final preferenceServie = GetIt.I.get<HomePreferencesService>();
-    final endDate = homeData.semesterFee.timePeriod.endDate;
+    final endDate = DateTime.now();
 
     if (DateTime.now().isAfter(endDate)) {
       return const SizedBox.shrink();
@@ -74,7 +70,7 @@ class TuitionFeeWidget extends StatelessWidget {
                               CountdownUtil.getRemainingTime(
                                 context.locals.app,
                                 DateTime.now(),
-                                homeData.semesterFee.timePeriod.endDate,
+                                endDate,
                               ),
                             ),
                             trailingArea: LmuCheckboxAction(
@@ -114,7 +110,7 @@ class TuitionFeeWidget extends StatelessWidget {
                           LmuListItem.base(
                             title: context.locals.home.tuitionFee,
                             titleColor: context.colors.neutralColors.textColors.mediumColors.base,
-                            subtitle: "${homeData.semesterFee.fee.toStringAsFixed(2)} €",
+                            subtitle: " €",
                             subtitleTextColor: context.colors.brandColors.textColors.strongColors.base,
                             trailingArea: LucideIcon(
                               LucideIcons.copy,
@@ -125,15 +121,13 @@ class TuitionFeeWidget extends StatelessWidget {
                             mainContentAlignment: MainContentAlignment.center,
                             onTap: () {
                               CopyToClipboardUtil.copyToClipboard(
-                                  context: context,
-                                  copiedText: homeData.semesterFee.fee.toStringAsFixed(2),
-                                  message: context.locals.home.tuitionFeeCopy);
+                                  context: context, copiedText: "", message: context.locals.home.tuitionFeeCopy);
                             },
                           ),
                           LmuListItem.base(
                             title: context.locals.home.receiver,
                             titleColor: context.colors.neutralColors.textColors.mediumColors.base,
-                            subtitle: homeData.semesterFee.receiver,
+                            subtitle: "",
                             subtitleTextColor: context.colors.brandColors.textColors.strongColors.base,
                             trailingArea: LucideIcon(
                               LucideIcons.copy,
@@ -144,15 +138,13 @@ class TuitionFeeWidget extends StatelessWidget {
                             mainContentAlignment: MainContentAlignment.center,
                             onTap: () {
                               CopyToClipboardUtil.copyToClipboard(
-                                  context: context,
-                                  copiedText: homeData.semesterFee.receiver,
-                                  message: context.locals.home.receiverCopy);
+                                  context: context, copiedText: "", message: context.locals.home.receiverCopy);
                             },
                           ),
                           LmuListItem.base(
                             title: context.locals.home.iban,
                             titleColor: context.colors.neutralColors.textColors.mediumColors.base,
-                            subtitle: homeData.semesterFee.iban,
+                            subtitle: "",
                             subtitleTextColor: context.colors.brandColors.textColors.strongColors.base,
                             trailingArea: LucideIcon(
                               LucideIcons.copy,
@@ -163,16 +155,14 @@ class TuitionFeeWidget extends StatelessWidget {
                             maximizeTrailingTitleArea: true,
                             onTap: () {
                               CopyToClipboardUtil.copyToClipboard(
-                                  context: context,
-                                  copiedText: homeData.semesterFee.iban,
-                                  message: context.locals.home.ibanCopy);
+                                  context: context, copiedText: "", message: context.locals.home.ibanCopy);
                             },
                             mainContentAlignment: MainContentAlignment.center,
                           ),
                           LmuListItem.base(
                             title: context.locals.home.reference,
                             titleColor: context.colors.neutralColors.textColors.mediumColors.base,
-                            subtitle: homeData.semesterFee.reference,
+                            subtitle: "",
                             subtitleTextColor: context.colors.brandColors.textColors.strongColors.base,
                             maximizeTrailingTitleArea: true,
                             trailingArea: LucideIcon(
@@ -183,9 +173,7 @@ class TuitionFeeWidget extends StatelessWidget {
                             ),
                             onTap: () {
                               CopyToClipboardUtil.copyToClipboard(
-                                  context: context,
-                                  copiedText: homeData.semesterFee.reference,
-                                  message: context.locals.home.referenceCopy);
+                                  context: context, copiedText: "", message: context.locals.home.referenceCopy);
                             },
                             mainContentAlignment: MainContentAlignment.center,
                           ),
