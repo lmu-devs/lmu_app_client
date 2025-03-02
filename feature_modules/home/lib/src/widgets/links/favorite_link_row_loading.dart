@@ -15,15 +15,18 @@ class FavoriteLinkRowLoading extends StatelessWidget {
 
     return favoriteLinks.isNotEmpty
         ? Padding(
-            padding: const EdgeInsets.only(top: LmuSizes.size_4, bottom: LmuSizes.size_8),
-            child: LmuSkeleton(
-              child: LmuButtonRow(
-                buttons: List.generate(
-                  favoriteLinks.length,
-                  (index) => LmuButton(
-                    emphasis: ButtonEmphasis.secondary,
-                    title: BoneMock.words(1),
-                    leadingWidget: const FaviconFallback(size: LmuIconSizes.small),
+            padding: const EdgeInsets.only(top: LmuSizes.size_4),
+            child: SizedBox(
+              height: LmuSizes.size_48,
+              child: LmuSkeleton(
+                child: LmuButtonRow(
+                  buttons: List.generate(
+                    favoriteLinks.length,
+                    (index) => LmuButton(
+                      emphasis: ButtonEmphasis.secondary,
+                      title: BoneMock.words(1),
+                      leadingWidget: const FaviconFallback(size: LmuIconSizes.small),
+                    ),
                   ),
                 ),
               ),
