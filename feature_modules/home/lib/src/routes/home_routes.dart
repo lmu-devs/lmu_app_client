@@ -10,7 +10,7 @@ import '../pages/pages.dart';
 
 part 'home_routes.g.dart';
 
-@TypedStatefulShellBranch<HomeData>(
+@TypedStatefulShellBranch<HomeRouteData>(
   routes: <TypedRoute<RouteData>>[
     TypedGoRoute<HomeMainRoute>(
       path: '/home',
@@ -25,8 +25,8 @@ part 'home_routes.g.dart';
     ),
   ],
 )
-class HomeData extends StatefulShellBranchData {
-  const HomeData();
+class HomeRouteData extends StatefulShellBranchData {
+  const HomeRouteData();
 }
 
 class HomeMainRoute extends GoRouteData {
