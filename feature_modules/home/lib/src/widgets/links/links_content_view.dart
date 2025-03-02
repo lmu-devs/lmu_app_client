@@ -21,7 +21,8 @@ class _LinksContentViewState extends State<LinksContentView> {
   late final LmuSearchController _searchController;
   late List<LmuSearchInput> _searchInputs;
   late ValueNotifier<List<LinkModel>> _filteredLinks;
-  final ValueNotifier<bool> _isSearchActive = ValueNotifier(false);
+  final ValueNotifier<bool> _hasSearchFocus = ValueNotifier(false);
+  final ValueNotifier<bool> _hasTextQuery = ValueNotifier(false);
 
   @override
   void initState() {
@@ -30,7 +31,6 @@ class _LinksContentViewState extends State<LinksContentView> {
     _searchInputs = widget.links
         .map((link) => LmuSearchInput(
               title: link.title,
-              id: link.title,
               tags: link.aliases,
             ))
         .toList();
@@ -38,13 +38,20 @@ class _LinksContentViewState extends State<LinksContentView> {
     _filteredLinks = ValueNotifier(widget.links);
 
     _searchController.addListener(_filterLinks);
+    _searchController.addListener(() {
+      _hasTextQuery.value = _searchController.hasQuery;
+    });
   }
 
   void _filterLinks() {
     final query = _searchController.value.map((input) => input.title.toLowerCase()).toList();
 
     if (query.isEmpty) {
-      _filteredLinks.value = widget.links;
+      if (_searchController.hasQuery && _searchController.noResult) {
+        _filteredLinks.value = [];
+      } else {
+        _filteredLinks.value = widget.links;
+      }
     } else {
       _filteredLinks.value =
           widget.links.where((link) => query.any((q) => link.title.toLowerCase().contains(q))).toList();
@@ -56,7 +63,8 @@ class _LinksContentViewState extends State<LinksContentView> {
     _searchController.removeListener(_filterLinks);
     _searchController.dispose();
     _filteredLinks.dispose();
-    _isSearchActive.dispose();
+    _hasSearchFocus.dispose();
+    _hasTextQuery.dispose();
     super.dispose();
   }
 
@@ -71,15 +79,19 @@ class _LinksContentViewState extends State<LinksContentView> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: LmuSizes.size_16),
                   ValueListenableBuilder<bool>(
-                    valueListenable: _isSearchActive,
-                    builder: (context, isActive, child) {
-                      return FavoriteLinkSection(
-                        links: widget.links,
-                        isSearchActive: isActive,
+                    valueListenable: _hasSearchFocus,
+                    builder: (context, hasFocus, child) {
+                      return ValueListenableBuilder<bool>(
+                        valueListenable: _hasTextQuery,
+                        builder: (context, hasQuery, child) {
+                          return FavoriteLinkSection(
+                            links: widget.links,
+                            isSearchActive: hasFocus || hasQuery,
+                          );
+                        },
                       );
                     },
                   ),
@@ -87,19 +99,21 @@ class _LinksContentViewState extends State<LinksContentView> {
                     valueListenable: _filteredLinks,
                     builder: (context, filteredLinks, child) {
                       final groupedLinks = _groupLinks(filteredLinks);
-                      return Column(
-                        children: groupedLinks.entries.map((entry) {
-                          return Column(
-                            children: [
-                              LmuTileHeadline.base(title: entry.key),
-                              LmuContentTile(
-                                content: entry.value.map((link) => LinkCard(link: link)).toList(),
-                              ),
-                              const SizedBox(height: LmuSizes.size_32),
-                            ],
-                          );
-                        }).toList(),
-                      );
+                      return groupedLinks.isNotEmpty
+                          ? Column(
+                              children: groupedLinks.entries.map((entry) {
+                                return Column(
+                                  children: [
+                                    LmuTileHeadline.base(title: entry.key),
+                                    LmuContentTile(
+                                      content: entry.value.map((link) => LinkCard(link: link)).toList(),
+                                    ),
+                                    const SizedBox(height: LmuSizes.size_32),
+                                  ],
+                                );
+                              }).toList(),
+                            )
+                          : LmuIssueType(message: context.locals.app.searchEmpty);
                     },
                   ),
                   const SizedBox(height: LmuSizes.size_6),
@@ -107,10 +121,7 @@ class _LinksContentViewState extends State<LinksContentView> {
                     context.locals.home.linkSuggestion,
                     'LinksScreen',
                   ),
-                  const SizedBox(height: LmuSizes.size_96),
-
-                  /// Search Bar Size
-                  const SizedBox(height: LmuSizes.size_72),
+                  const SizedBox(height: LmuSizes.size_72 + LmuSizes.size_96),
                 ],
               ),
             ),
@@ -121,10 +132,12 @@ class _LinksContentViewState extends State<LinksContentView> {
           right: 0,
           bottom: 0,
           child: Focus(
-            onFocusChange: (hasFocus) => _isSearchActive.value = hasFocus,
+            onFocusChange: (hasFocus) => _hasSearchFocus.value = hasFocus,
             child: LmuSearchOverlay(
               searchController: _searchController,
               searchInputs: _searchInputs,
+              onCancel: () => _filteredLinks.value = widget.links,
+              onClear: () => _filteredLinks.value = widget.links,
             ),
           ),
         ),

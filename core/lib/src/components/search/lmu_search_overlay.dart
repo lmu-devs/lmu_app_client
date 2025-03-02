@@ -11,11 +11,15 @@ class LmuSearchOverlay extends StatelessWidget {
     required this.searchController,
     required this.searchInputs,
     this.bottomWidget,
+    this.onCancel,
+    this.onClear,
   });
 
   final LmuSearchController searchController;
   final List<LmuSearchInput> searchInputs;
   final Widget? bottomWidget;
+  final VoidCallback? onCancel;
+  final VoidCallback? onClear;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +39,12 @@ class LmuSearchOverlay extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: LmuSizes.size_16),
-            LmuSearchBar(searchController: searchController, searchInputs: searchInputs),
+            LmuSearchBar(
+              searchController: searchController,
+              searchInputs: searchInputs,
+              onCancelPressed: onCancel,
+              onClearPressed: onClear,
+            ),
             const SizedBox(height: LmuSizes.size_16),
             if (bottomWidget != null) SizedBox(width: double.infinity, child: bottomWidget!),
           ],

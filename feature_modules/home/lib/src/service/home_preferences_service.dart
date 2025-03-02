@@ -62,4 +62,9 @@ class HomePreferencesService {
     _likedLinksNotifier.value = likedLinks;
     await _homeRepository.saveLikedLinks(likedLinks);
   }
+
+  Future<void> updateLikedLinks(List<String> likedLinks) async {
+    _likedLinksNotifier.value = likedLinks;
+    await _homeRepository.saveLikedLinks(likedLinks);
+  }
 }

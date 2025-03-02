@@ -16,11 +16,11 @@ PODS:
     - Turf (= 4.0.0)
   - MapboxCommon (24.10.0):
     - Turf (= 4.0.0)
-  - MapboxCoreMaps (11.10.0):
+  - MapboxCoreMaps (11.10.2):
     - MapboxCommon (~> 24.10)
-  - MapboxMaps (11.10.0):
+  - MapboxMaps (11.10.1):
     - MapboxCommon (= 24.10.0)
-    - MapboxCoreMaps (= 11.10.0)
+    - MapboxCoreMaps (= 11.10.2)
     - Turf (= 4.0.0)
   - package_info_plus (0.4.5):
     - Flutter
@@ -95,24 +95,24 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
-  device_info_plus: bf2e3232933866d73fe290f2942f2156cdd10342
+  device_info_plus: 21fcca2080fbcd348be798aa36c3e5ed849eefbe
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_native_splash: edf599c81f74d093a4daf8e17bd7a018854bc778
-  fluttertoast: 21eecd6935e7064cc1fcb733a4c5a428f3f24f0f
-  geolocator_apple: 9bcea1918ff7f0062d98345d238ae12718acfbc1
-  in_app_review: a31b5257259646ea78e0e35fc914979b0031d011
-  mapbox_maps_flutter: d2d98051f751dfeefe088683f0c2c8f81c54ffbc
+  flutter_native_splash: 35ddbc7228eafcb3969dcc5f1fbbe27c1145a4f0
+  fluttertoast: 2c67e14dce98bbdb200df9e1acf610d7a6264ea1
+  geolocator_apple: 1560c3c875af2a412242c7a923e15d0d401966ff
+  in_app_review: 5596fe56fab799e8edb3561c03d053363ab13457
+  mapbox_maps_flutter: 396bbe352f50a0c827dab3f54b52791937522601
   MapboxCommon: 363dbed6bcdaa9a08674098fc5c661e826049dc2
-  MapboxCoreMaps: 85344d5f170f9fef5babdaba047f339f22785c68
-  MapboxMaps: f8f3a41382af13a95102b04cf27086ec48221013
-  package_info_plus: c0502532a26c7662a62a356cebe2692ec5fe4ec4
-  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
-  permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
-  share_plus: 8b6f8b3447e494cca5317c8c3073de39b3600d1f
-  shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
-  sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec
+  MapboxCoreMaps: ba391b7121c52d8ab656b0efa081d928648c8c6f
+  MapboxMaps: 5ec35b1ad72822b9b66c69955e6bb0a81129d4b0
+  package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
+  path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
+  permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
+  share_plus: 50da8cb520a8f0f65671c6c6a99b3617ed10a58a
+  shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
+  sqflite: c35dad70033b8862124f8337cc994a809fcd9fa3
   Turf: c9eb11a65d96af58cac523460fd40fec5061b081
-  url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
+  url_launcher_ios: 694010445543906933d732453a59da0a173ae33d
 
 PODFILE CHECKSUM: ebfd9482e42d74d3a8549e5fe3af27003cdf6c55
 

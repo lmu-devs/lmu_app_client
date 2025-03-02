@@ -10,7 +10,7 @@ BenefitModel _$BenefitModelFromJson(Map<String, dynamic> json) => BenefitModel(
       title: json['title'] as String,
       description: json['description'] as String,
       url: json['url'] as String,
-      faviconUrl: json['favicon_url'] as String,
+      faviconUrl: json['favicon_url'] as String?,
       imageUrl: json['image_url'] as String?,
       aliases: (json['aliases'] as List<dynamic>).map((e) => e as String).toList(),
     );

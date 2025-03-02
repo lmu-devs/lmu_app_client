@@ -54,13 +54,10 @@ class WishlistDetailsPage extends StatelessWidget {
       leadingAction: LeadingAction.back,
       largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
       largeTitleTrailingWidget: wishlistModel.status != WishlistStatus.none
-          ? Container(
-              padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_4),
-              decoration: BoxDecoration(
-                color: context.colors.neutralColors.backgroundColors.mediumColors.base,
-                borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
-              ),
-              child: LmuText.bodySmall(wishlistModel.status.getValue(context)),
+          ? LmuInTextVisual.text(
+              title: wishlistModel.status.getValue(context),
+              textColor: context.colors.neutralColors.textColors.strongColors.base,
+              size: InTextVisualSize.large,
             )
           : null,
       body: SingleChildScrollView(

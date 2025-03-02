@@ -18,7 +18,7 @@ class LinkModel extends Equatable {
   final String description;
   final String url;
   @JsonKey(name: 'favicon_url')
-  final String faviconUrl;
+  final String? faviconUrl;
   final List<String> types;
   final List<String> aliases;
 

@@ -5,6 +5,7 @@ import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../repository/api/models/benefits/benefit_model.dart';
+import '../favicon_fallback.dart';
 
 class BenefitsCard extends StatelessWidget {
   const BenefitsCard({super.key, required this.benefit});
@@ -47,12 +48,14 @@ class BenefitsCard extends StatelessWidget {
           LmuListItem.base(
             title: benefit.title,
             subtitle: benefit.description,
-            leadingArea: LmuCachedNetworkImage(
-              imageUrl: benefit.faviconUrl,
-              height: LmuIconSizes.mediumSmall,
-              width: LmuIconSizes.mediumSmall,
-              fit: BoxFit.cover,
-            ),
+            leadingArea: benefit.faviconUrl != null && benefit.faviconUrl!.isNotEmpty
+                ? LmuCachedNetworkImage(
+                    imageUrl: benefit.faviconUrl!,
+                    height: LmuIconSizes.mediumSmall,
+                    width: LmuIconSizes.mediumSmall,
+                    fit: BoxFit.cover,
+                  )
+                : const FaviconFallback(size: LmuIconSizes.mediumSmall),
             onTap: () => _handleTap(context),
             onLongPress: () => _handleLongPress(context),
           ),

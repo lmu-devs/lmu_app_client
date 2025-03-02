@@ -11,11 +11,15 @@ class LmuSearchController extends ValueNotifier<List<LmuSearchInput>> {
   final List<LmuSearchInput> _searchInputs = [];
 
   bool _noResult = false;
+  String _queryText = "";
 
   bool get noResult => _noResult;
+  String get queryText => _queryText;
+  bool get hasQuery => _queryText.isNotEmpty;
 
   void clear() {
     _noResult = false;
+    _queryText = "";
     value = [];
   }
 
@@ -25,6 +29,8 @@ class LmuSearchController extends ValueNotifier<List<LmuSearchInput>> {
   }
 
   void search(String query) {
+    _queryText = query;
+
     if (query.isEmpty) {
       value = [];
       _noResult = false;
