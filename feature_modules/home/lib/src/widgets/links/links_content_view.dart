@@ -21,7 +21,7 @@ class _LinksContentViewState extends State<LinksContentView> {
   late final LmuSearchController _searchController;
   late List<LmuSearchInput> _searchInputs;
   late ValueNotifier<List<LinkModel>> _filteredLinks;
-  final ValueNotifier<bool> _isSearchActive = ValueNotifier(false);
+  final ValueNotifier<bool> _hasSearchFocus = ValueNotifier(false);
   final ValueNotifier<bool> _hasTextQuery = ValueNotifier(false);
 
   @override
@@ -47,9 +47,7 @@ class _LinksContentViewState extends State<LinksContentView> {
     final query = _searchController.value.map((input) => input.title.toLowerCase()).toList();
 
     if (query.isEmpty) {
-      if (_isSearchActive.value && !_searchController.hasQuery) {
-        _filteredLinks.value = widget.links;
-      } else if (_searchController.hasQuery && _searchController.noResult) {
+      if (_searchController.hasQuery && _searchController.noResult) {
         _filteredLinks.value = [];
       } else {
         _filteredLinks.value = widget.links;
@@ -65,7 +63,7 @@ class _LinksContentViewState extends State<LinksContentView> {
     _searchController.removeListener(_filterLinks);
     _searchController.dispose();
     _filteredLinks.dispose();
-    _isSearchActive.dispose();
+    _hasSearchFocus.dispose();
     _hasTextQuery.dispose();
     super.dispose();
   }
@@ -84,14 +82,14 @@ class _LinksContentViewState extends State<LinksContentView> {
                 children: [
                   const SizedBox(height: LmuSizes.size_16),
                   ValueListenableBuilder<bool>(
-                    valueListenable: _isSearchActive,
-                    builder: (context, isActive, child) {
+                    valueListenable: _hasSearchFocus,
+                    builder: (context, hasFocus, child) {
                       return ValueListenableBuilder<bool>(
                         valueListenable: _hasTextQuery,
                         builder: (context, hasQuery, child) {
                           return FavoriteLinkSection(
                             links: widget.links,
-                            isSearchActive: isActive || hasQuery,
+                            isSearchActive: hasFocus || hasQuery,
                           );
                         },
                       );
@@ -134,7 +132,7 @@ class _LinksContentViewState extends State<LinksContentView> {
           right: 0,
           bottom: 0,
           child: Focus(
-            onFocusChange: (hasFocus) => _isSearchActive.value = hasFocus,
+            onFocusChange: (hasFocus) => _hasSearchFocus.value = hasFocus,
             child: LmuSearchOverlay(
               searchController: _searchController,
               searchInputs: _searchInputs,
