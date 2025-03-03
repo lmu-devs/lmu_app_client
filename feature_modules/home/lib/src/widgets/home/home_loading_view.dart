@@ -3,6 +3,8 @@ import 'package:core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import '../links/favorite_link_row_loading.dart';
+
 class HomeLoadingView extends StatelessWidget {
   const HomeLoadingView({super.key});
 
@@ -13,6 +15,7 @@ class HomeLoadingView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const FavoriteLinkRowLoading(),
           const SizedBox(height: LmuSizes.size_16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),

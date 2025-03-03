@@ -12,7 +12,7 @@ class LmuDevStrings {
 
   /// Beta
   static String openBetaTestFlight = 'https://testflight.apple.com/join/JWEgpYxh';
-  static String openBetaPlayStore = 'https://lmu-app.lmu-dev.org';
+  static String openBetaPlayStore = 'https://play.google.com/store/apps/details?id=com.lmu_dev.lmu_app';
 
   /// Sharing
   static String shareAppUrl = 'https://lmu-app.lmu-dev.org';

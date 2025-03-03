@@ -49,11 +49,14 @@ class BenefitsCard extends StatelessWidget {
             title: benefit.title,
             subtitle: benefit.description,
             leadingArea: benefit.faviconUrl != null && benefit.faviconUrl!.isNotEmpty
-                ? LmuCachedNetworkImage(
-                    imageUrl: benefit.faviconUrl!,
-                    height: LmuIconSizes.mediumSmall,
-                    width: LmuIconSizes.mediumSmall,
-                    fit: BoxFit.cover,
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(LmuRadiusSizes.xsmall),
+                    child: LmuCachedNetworkImage(
+                      imageUrl: benefit.faviconUrl!,
+                      height: LmuIconSizes.mediumSmall,
+                      width: LmuIconSizes.mediumSmall,
+                      fit: BoxFit.cover,
+                    ),
                   )
                 : const FaviconFallback(size: LmuIconSizes.mediumSmall),
             onTap: () => _handleTap(context),

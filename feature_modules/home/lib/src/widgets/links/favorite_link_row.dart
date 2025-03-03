@@ -62,10 +62,13 @@ class FavoriteLinkRow extends StatelessWidget {
                                 emphasis: ButtonEmphasis.secondary,
                                 title: link.title,
                                 leadingWidget: link.faviconUrl != null && link.faviconUrl!.isNotEmpty
-                                    ? LmuCachedNetworkImage(
-                                        imageUrl: link.faviconUrl!,
-                                        height: LmuIconSizes.small,
-                                        width: LmuIconSizes.small,
+                                    ? ClipRRect(
+                                        borderRadius: BorderRadius.circular(LmuRadiusSizes.xsmall),
+                                        child: LmuCachedNetworkImage(
+                                          imageUrl: link.faviconUrl!,
+                                          height: LmuIconSizes.small,
+                                          width: LmuIconSizes.small,
+                                        ),
                                       )
                                     : const FaviconFallback(size: LmuIconSizes.small),
                                 onTap: () => LmuUrlLauncher.launchWebsite(
