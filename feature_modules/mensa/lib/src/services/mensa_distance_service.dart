@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:core/logging.dart';
+import 'package:core/permissions.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:rxdart/rxdart.dart';
@@ -8,17 +9,17 @@ import 'package:rxdart/rxdart.dart';
 import '../repository/api/models/mensa/mensa_location.dart';
 
 class MensaDistanceService with ChangeNotifier {
-  MensaDistanceService() {
-    _init();
-  }
-
   final _appLogger = AppLogger();
   final _locationSettings = const LocationSettings(accuracy: LocationAccuracy.best, distanceFilter: 50);
 
   Position? _currentLocation;
   StreamSubscription<List<Position>>? positionStream;
 
-  Future<void> _init() async {
+  Future<void> init() async {
+    final hasPermission = await PermissionsService.isLocationPermissionGranted();
+    final isLocationServiceEnabled = await PermissionsService.isLocationServicesEnabled();
+    if (!hasPermission || !isLocationServiceEnabled) return;
+
     _currentLocation = await Geolocator.getCurrentPosition(locationSettings: _locationSettings);
     _appLogger.logMessage('[MensaDistanceService]: Initial location: $_currentLocation');
     notifyListeners();

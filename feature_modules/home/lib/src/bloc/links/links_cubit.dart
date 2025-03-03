@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:core/extensions.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
@@ -16,6 +19,9 @@ class LinksCubit extends Cubit<LinksState> {
       final links = await _repository.getLinks();
       emit(LinksLoadSuccess(links: links));
     } catch (e) {
+      if (e is SocketException) {
+        listenForConnectivityRestoration(getLinks);
+      }
       emit(const LinksLoadFailure());
     }
   }

@@ -3,7 +3,7 @@ export 'details/mensa_details_info_section.dart';
 export 'details/mensa_details_menu_section.dart';
 export 'details/menu/loading/menu_loading_view.dart';
 export 'details/menu/menu_cafe_bar_view.dart';
-export 'details/menu/menu_content_view.dart';
+export 'details/menu/menu_day_entry.dart';
 export 'details/menu/menu_excluded_section.dart';
 export 'details/menu/menu_filtered_section.dart';
 export 'overview/loading/mensa_overview_loading_view.dart';

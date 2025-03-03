@@ -1,4 +1,9 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:core/extensions.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../repository/home_repository.dart';
 import 'home_state.dart';
 
@@ -14,6 +19,9 @@ class HomeCubit extends Cubit<HomeState> {
       emit(HomeLoadSuccess(homeData: homeData));
     } catch (e) {
       emit(HomeLoadFailure());
+      if (e is SocketException) {
+        listenForConnectivityRestoration(loadHomeData);
+      }
     }
   }
 }

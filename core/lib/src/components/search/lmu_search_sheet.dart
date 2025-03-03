@@ -52,7 +52,7 @@ class LmuSearchSheetState extends State<LmuSearchSheet> {
   late ValueNotifier<List<LmuSearchEntry>> _searchEntriesNotifier;
 
   late final double _minSize;
-  late final double _baseSize;
+  //late final double _baseSize;
   late final double _maxSize;
 
   List<LmuSearchEntry> get _searchEntries => widget.searchEntries;
@@ -64,7 +64,6 @@ class LmuSearchSheetState extends State<LmuSearchSheet> {
 
     //TODO: Dynamic min/base sizes
     _minSize = 0.105; // 1px == 0.0013125
-    _baseSize = 0.35;
     _maxSize = 0.9;
 
     _sheetController = DraggableScrollableController();
@@ -155,10 +154,10 @@ class LmuSearchSheetState extends State<LmuSearchSheet> {
     final colors = context.colors;
     return DraggableScrollableSheet(
       controller: _sheetController,
-      initialChildSize: _baseSize,
+      initialChildSize: _minSize,
       minChildSize: _minSize,
       maxChildSize: _maxSize,
-      snapSizes: [_minSize, _baseSize, _maxSize],
+      snapSizes: [_minSize, _maxSize],
       snap: true,
       snapAnimationDuration: const Duration(milliseconds: 150),
       builder: (context, scrollController) {
@@ -202,7 +201,7 @@ class LmuSearchSheetState extends State<LmuSearchSheet> {
                     onCancelPressed: () {
                       _isSearchActiveNotifier.value = false;
                       _sheetController.animateTo(
-                        _baseSize,
+                        _minSize,
                         duration: const Duration(milliseconds: 300),
                         curve: LmuAnimations.fastSmooth,
                       );
@@ -235,7 +234,7 @@ class LmuSearchSheetState extends State<LmuSearchSheet> {
                                     subtitle: searchEntry.subtitle,
                                     onTap: () {
                                       _sheetController.animateTo(
-                                        _baseSize,
+                                        _minSize,
                                         duration: const Duration(milliseconds: 300),
                                         curve: LmuAnimations.fastSmooth,
                                       );

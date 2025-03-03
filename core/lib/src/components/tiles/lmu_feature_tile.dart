@@ -89,7 +89,7 @@ class LmuFeatureTile extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      LmuText.h3(title),
+                      LmuText.body(title, weight: FontWeight.bold),
                       if (subtitle != null)
                         LmuText.body(
                           subtitle,

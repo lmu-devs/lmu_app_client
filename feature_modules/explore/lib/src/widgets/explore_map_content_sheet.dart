@@ -58,7 +58,7 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
 
     //TODO: Dynamic min/base sizes
     _minSize = 0; // 1px == 0.0013125
-    _baseSize = 0.35;
+    _baseSize = 0.20;
     _maxSize = 0.9;
 
     _sheetController = DraggableScrollableController();

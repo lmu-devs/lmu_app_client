@@ -187,12 +187,12 @@ class SettingsMainPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: LmuSizes.size_32),
-              LmuText.bodySmall(
+              LmuText.bodyXSmall(
                 '${GetIt.I<String>(instanceName: 'appName')} • ${GetIt.I<String>(instanceName: 'appVersion')}',
                 color: context.colors.neutralColors.textColors.mediumColors.base,
               ),
-              const SizedBox(height: LmuSizes.size_6),
-              LmuText.bodySmall(
+              const SizedBox(height: LmuSizes.size_2),
+              LmuText.bodyXSmall(
                 'Created by ${LmuDevStrings.devTeam}, ${DateTime.now().year} ©',
                 color: context.colors.neutralColors.textColors.mediumColors.base,
               ),

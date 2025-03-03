@@ -12,10 +12,27 @@ import 'package:in_app_review/in_app_review.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_api/feedback.dart';
 
-import '../views/views.dart';
+import '../bloc/wishlist_cubit.dart';
+import '../bloc/wishlist_state.dart';
+import '../widgets/wishlist_entry_list.dart';
 
-class WishlistPage extends StatelessWidget {
+class WishlistPage extends StatefulWidget {
   const WishlistPage({super.key});
+
+  @override
+  State<WishlistPage> createState() => _WishlistPageState();
+}
+
+class _WishlistPageState extends State<WishlistPage> {
+  @override
+  void initState() {
+    final wishlistCubit = GetIt.I.get<WishlistCubit>();
+    if (wishlistCubit.state is! WishlistLoadSuccess) {
+      wishlistCubit.loadWishlistEntries();
+    }
+
+    super.initState();
+  }
 
   Future<void> _requestAppReview(BuildContext context) async {
     InAppReview inAppReview = InAppReview.instance;
@@ -127,7 +144,9 @@ class WishlistPage extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: LmuSizes.size_24),
-                  const WishlistEntryView(),
+                  LmuTileHeadline.base(title: context.locals.wishlist.wishlistEntriesTitle),
+                  const WishlistEntryList(),
+                  const SizedBox(height: LmuSizes.size_24),
                   LmuContentTile(
                     content: [
                       LmuListItem.base(

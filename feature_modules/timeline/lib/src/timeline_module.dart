@@ -7,8 +7,7 @@ import 'repository/api/timeline_api_client.dart';
 import 'repository/timeline_repository.dart';
 import 'services/default_timeline_service.dart';
 
-class TimelineModule extends AppModule
-    with LocalDependenciesProvidingAppModule, PublicApiProvidingAppModule, NoticeableAppStartAppModule {
+class TimelineModule extends AppModule with LocalDependenciesProvidingAppModule, PublicApiProvidingAppModule {
   @override
   String get moduleName => 'TimelineModule';
 
@@ -22,11 +21,5 @@ class TimelineModule extends AppModule
     GetIt.I.registerSingleton<TimelineApiClient>(TimelineApiClient());
     GetIt.I.registerSingleton<TimelineRepository>(ConnectedTimelineRepository());
     GetIt.I.registerSingleton<TimelineCubit>(TimelineCubit());
-  }
-
-  @override
-  void onAppStartNotice() {
-    final timelineCubit = GetIt.I.get<TimelineCubit>();
-    timelineCubit.loadTimeline();
   }
 }

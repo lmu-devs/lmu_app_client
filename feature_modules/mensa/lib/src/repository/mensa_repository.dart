@@ -68,15 +68,15 @@ class ConnectedMensaRepository implements MensaRepository {
   static const String _unsyncedFavoriteDishIdsKey = 'unsynced_favorite_dish_ids_key';
 
   static const String _tasteProfileKey = 'taste_profile_key';
-  static const String _pasteProfileSelectionsKey = 'taste_profile_selections_key';
+  static const String _tasteProfileTimestampKey = 'taste_profile_timestamp_key';
+  static const String _tasteProfileSelectionsKey = 'taste_profile_selections_key';
 
   static const String _mensaSortOptionKey = 'mensa_sort_option';
   static const String _menuPriceCategory = 'menu_price_category';
   static const String _menuBaseKey = 'mensa_menu_base_key';
 
-  /// Function to fetch mensa models from the API, [forceRefresh] parameter can be used to ignore the cache
   @override
-  Future<List<MensaModel>> getMensaModels({bool forceRefresh = false}) async {
+  Future<List<MensaModel>> getMensaModels() async {
     final prefs = await SharedPreferences.getInstance();
 
     try {
@@ -197,15 +197,18 @@ class ConnectedMensaRepository implements MensaRepository {
         final jsonList = json.decode(cachedMenu) as List<dynamic>;
         final menuModels = jsonList.map((json) => MenuDayModel.fromJson(json as Map<String, dynamic>)).toList();
         final today = DateTime.now();
-        final todayString = '${today.year}-${today.month}-${today.day}';
-        final todayIndex = menuModels.indexWhere((element) => element.date == todayString);
-        if (todayIndex == -1) {
+        final filteredDays = menuModels.where((mensaDay) {
+          DateTime mensaDate = DateTime.parse(mensaDay.date.replaceAll('-', '-').padLeft(10, '0'));
+          return mensaDate.isAfter(today) || mensaDate.isAtSameMomentAs(today);
+        }).toList();
+
+        if (filteredDays.isEmpty) {
           await prefs.remove(key);
           rethrow;
         }
-        final filteredMenuModels = menuModels.sublist(todayIndex);
+
         _appLogger.logMessage('[MensaRepository]: Using menu models from cache');
-        return filteredMenuModels;
+        return filteredDays;
       }
       rethrow;
     }
@@ -214,10 +217,24 @@ class ConnectedMensaRepository implements MensaRepository {
   @override
   Future<TasteProfileModel> getTasteProfileContent() async {
     final prefs = await SharedPreferences.getInstance();
+    final lastTimestamp = prefs.getString(_tasteProfileTimestampKey);
+
+    if (lastTimestamp != null) {
+      final lastUpdate = DateTime.parse(lastTimestamp);
+      _appLogger.logMessage('[MensaRepository]: TasteProfile last update: $lastUpdate');
+      if (lastUpdate.day == DateTime.now().day) {
+        final cachedTasteProfile = prefs.getString(_tasteProfileKey);
+        if (cachedTasteProfile != null) {
+          final jsonMap = json.decode(cachedTasteProfile) as Map<String, dynamic>;
+          return TasteProfileModel.fromJson(jsonMap);
+        }
+      }
+    }
 
     try {
       final tasteProfile = await mensaApiClient.getTasteProfile();
       await prefs.setString(_tasteProfileKey, json.encode(tasteProfile.toJson()));
+      await prefs.setString(_tasteProfileTimestampKey, DateTime.now().toIso8601String());
       return tasteProfile;
     } catch (e) {
       final cachedTasteProfile = prefs.getString(_tasteProfileKey);
@@ -232,7 +249,7 @@ class ConnectedMensaRepository implements MensaRepository {
   @override
   Future<TasteProfileStateModel> getTasteProfileState() async {
     final prefs = await SharedPreferences.getInstance();
-    final saveModel = prefs.getString(_pasteProfileSelectionsKey);
+    final saveModel = prefs.getString(_tasteProfileSelectionsKey);
 
     if (saveModel == null) {
       return TasteProfileStateModel.empty();
@@ -245,7 +262,7 @@ class ConnectedMensaRepository implements MensaRepository {
   Future<void> saveTasteProfileState(TasteProfileStateModel saveModel) async {
     final prefs = await SharedPreferences.getInstance();
 
-    await prefs.setString(_pasteProfileSelectionsKey, json.encode(saveModel.toJson()));
+    await prefs.setString(_tasteProfileSelectionsKey, json.encode(saveModel.toJson()));
     _appLogger.logMessage('[MensaRepository]: Saved taste profile state: $saveModel');
   }
 
@@ -309,7 +326,8 @@ class ConnectedMensaRepository implements MensaRepository {
     await prefs.remove(_favoriteMensaIdsKey);
     await prefs.remove(_favoriteDishIdsKey);
     await prefs.remove(_tasteProfileKey);
-    await prefs.remove(_pasteProfileSelectionsKey);
+    await prefs.remove(_tasteProfileSelectionsKey);
+    await prefs.remove(_tasteProfileTimestampKey);
     await prefs.remove(_mensaSortOptionKey);
     await prefs.remove(_menuPriceCategory);
     await prefs.remove(_menuBaseKey);
