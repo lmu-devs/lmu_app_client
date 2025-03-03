@@ -32,11 +32,11 @@ class _SportsPageState extends State<SportsPage> {
       body: BlocBuilder<SportsCubit, SportsState>(
         bloc: GetIt.I.get<SportsCubit>(),
         builder: (context, state) {
-          if (state is SportsLoadSuccess) {
-            return SportsContentView(sports: state.sports);
-          }
-
-          return const SportsLoadingView();
+          return LmuPageAnimationWrapper(
+            child: state is SportsLoadSuccess
+                ? SportsContentView(key: const ValueKey("sportsContent"), sports: state.sports)
+                : const SportsLoadingView(key: ValueKey("sportsLoading")),
+          );
         },
       ),
     );

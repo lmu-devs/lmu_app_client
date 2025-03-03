@@ -31,11 +31,11 @@ class _BenefitsPageState extends State<BenefitsPage> {
       body: BlocBuilder<BenefitsCubit, BenefitsState>(
         bloc: GetIt.I.get<BenefitsCubit>(),
         builder: (context, state) {
-          if (state is BenefitsLoadSuccess) {
-            return BenefitsContentView(benefits: state.benefits);
-          }
-
-          return const BenefitsLoadingView();
+          return LmuPageAnimationWrapper(
+            child: state is BenefitsLoadSuccess
+                ? BenefitsContentView(key: const ValueKey("benefitsContent"), benefits: state.benefits)
+                : const BenefitsLoadingView(key: ValueKey("benefitsLoading")),
+          );
         },
       ),
     );

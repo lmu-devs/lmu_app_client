@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../bloc/taste_profile/taste_profile_cubit.dart';
-import '../../bloc/taste_profile/taste_profile_state.dart';
 import '../../repository/api/models/taste_profile/taste_profile.dart';
 import '../../services/taste_profile_service.dart';
 
 class TasteProfileLabelsSection extends StatefulWidget {
-  const TasteProfileLabelsSection({super.key});
+  const TasteProfileLabelsSection({super.key, required this.tasteProfileModel});
+
+  final TasteProfileModel tasteProfileModel;
 
   @override
   State<TasteProfileLabelsSection> createState() => _TasteProfileLabelsSectionState();
@@ -39,6 +39,8 @@ class _TasteProfileLabelsSectionState extends State<TasteProfileLabelsSection> {
   ScrollController? _primaryScrollController;
   double _stickyHeaderScrollOffset = 606;
 
+  TasteProfileModel get _tasteProfileModel => widget.tasteProfileModel;
+
   @override
   void initState() {
     super.initState();
@@ -56,10 +58,9 @@ class _TasteProfileLabelsSectionState extends State<TasteProfileLabelsSection> {
       _calculteCategoryOffsets();
     });
 
-    final tasteProfile = (GetIt.I.get<TasteProfileCubit>().state as TasteProfileLoadSuccess).tasteProfile;
-    _sortedLabels = tasteProfile.sortedLabels;
-    _preferencesPresets = tasteProfile.preferencesPresets;
-    _allergiesPresets = tasteProfile.allergiesPresets;
+    _sortedLabels = _tasteProfileModel.sortedLabels;
+    _preferencesPresets = _tasteProfileModel.preferencesPresets;
+    _allergiesPresets = _tasteProfileModel.allergiesPresets;
 
     _calculteCategoryOffsets();
   }

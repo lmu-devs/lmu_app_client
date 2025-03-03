@@ -1,7 +1,6 @@
 {
     "@@locale": "de",
-    "@@context": "Explore",
-
+    "@@context": "Karte",
     "tabTitle": "Entdecken",
     "navigate": "Navigieren",
     "openWith": "Öffnen mit",

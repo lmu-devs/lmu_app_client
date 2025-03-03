@@ -4,12 +4,13 @@ import 'package:core/localizations.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../bloc/taste_profile/cubit.dart';
-import '../../repository/api/models/taste_profile/taste_profile_preset.dart';
+import '../../repository/api/models/taste_profile/taste_profile.dart';
 import '../../services/taste_profile_service.dart';
 
 class TasteProfilePresetsSection extends StatefulWidget {
-  const TasteProfilePresetsSection({super.key});
+  const TasteProfilePresetsSection({super.key, required this.tasteProfileModel});
+
+  final TasteProfileModel tasteProfileModel;
 
   @override
   State<TasteProfilePresetsSection> createState() => _TasteProfilePresetsSectionState();
@@ -23,17 +24,17 @@ class _TasteProfilePresetsSectionState extends State<TasteProfilePresetsSection>
   late final List<TasteProfilePreset> _preferencesPresets;
   late final List<TasteProfilePreset> _allergiesPresets;
 
+  TasteProfileModel get _tasteProfileModel => widget.tasteProfileModel;
+
   @override
   void initState() {
     final tasteProfleService = GetIt.I.get<TasteProfileService>();
-    final tasteProfileCubit = GetIt.I.get<TasteProfileCubit>();
     _selectedAllergiesPresetsNotifier = tasteProfleService.selectedAllergiesPresetsNotifier;
     _selectedPreferencePresetNotifier = tasteProfleService.selectedPreferencePresetNotifier;
     _isActiveNotifier = tasteProfleService.isActiveNotifier;
     _excludedLabelsNotifier = tasteProfleService.excludedLabelsNotifier;
-    final tasteProfile = (tasteProfileCubit.state as TasteProfileLoadSuccess).tasteProfile;
-    _preferencesPresets = tasteProfile.preferencesPresets;
-    _allergiesPresets = tasteProfile.allergiesPresets;
+    _preferencesPresets = _tasteProfileModel.preferencesPresets;
+    _allergiesPresets = _tasteProfileModel.allergiesPresets;
     super.initState();
   }
 

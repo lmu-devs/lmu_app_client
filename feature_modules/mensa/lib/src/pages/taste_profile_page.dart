@@ -45,11 +45,12 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
       body: BlocBuilder<TasteProfileCubit, TasteProfileState>(
         bloc: _tasteProfileCubit,
         builder: (context, state) {
-          if (state is TasteProfileLoadSuccess) {
-            return const TasteProfileContentView();
-          }
-
-          return const TasteProfileLoadingView();
+          return LmuPageAnimationWrapper(
+            child: state is TasteProfileLoadSuccess
+                ? TasteProfileContentView(
+                    key: const ValueKey("tasteProfileContent"), tasteProfileModel: state.tasteProfile)
+                : const TasteProfileLoadingView(key: ValueKey("tasteProfileLoading")),
+          );
         },
       ),
     );

@@ -26,7 +26,7 @@ class MensaTag extends StatelessWidget {
 }
 
 extension TagColors on MensaType {
-  ({Color backgroundColor, Color textColor, String text}) getTagData(
+  ({Color? backgroundColor, Color? textColor, String text}) getTagData(
       LmuColors colors, CanteenLocalizations localizations) {
     return (
       backgroundColor: backgroundColor(colors),
@@ -35,7 +35,7 @@ extension TagColors on MensaType {
     );
   }
 
-  Color _textColor(LmuColors colors) {
+  Color? _textColor(LmuColors colors) {
     final mensaTextColors = colors.mensaColors.textColors;
     return switch (this) {
       MensaType.mensa => mensaTextColors.mensa,
@@ -43,7 +43,7 @@ extension TagColors on MensaType {
       MensaType.stuCafe => mensaTextColors.stuCafe,
       MensaType.lounge => mensaTextColors.stuLounge,
       MensaType.cafeBar => mensaTextColors.stuLounge,
-      MensaType.none => mensaTextColors.stuLounge,
+      MensaType.none => null,
     };
   }
 }

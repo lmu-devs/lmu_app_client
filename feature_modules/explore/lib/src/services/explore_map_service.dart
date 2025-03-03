@@ -60,7 +60,7 @@ class ExploreMapService {
     if (zoom <= 14) {
       if (currentSize == ExploreMarkerSize.small) return;
       _exploreMarkerSizeNotifier.value = ExploreMarkerSize.small;
-    } else if (zoom > 14 && zoom <= 16.5) {
+    } else if (zoom > 14 && zoom <= 16) {
       if (currentSize == ExploreMarkerSize.medium) return;
       _exploreMarkerSizeNotifier.value = ExploreMarkerSize.medium;
     } else {

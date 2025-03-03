@@ -1,4 +1,5 @@
 export 'actions/actions.dart';
+export 'animation_wrappers/animation_wrappers.dart';
 export 'bottom_sheets/bottom_sheets.dart';
 export 'buttons/buttons.dart';
 export 'buttons/lmu_button.dart';

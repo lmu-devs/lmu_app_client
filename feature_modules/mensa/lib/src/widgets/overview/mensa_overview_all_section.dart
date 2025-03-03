@@ -24,7 +24,7 @@ class MensaOverviewAllSection extends StatelessWidget {
       builder: (context, sortedMensaModels, _) {
         return ListenableBuilder(
           listenable: GetIt.I.get<MensaStatusUpdateService>(),
-          builder: (context, child) {
+          builder: (context, _) {
             return ValueListenableBuilder(
               valueListenable: userPreferencesService.isOpenNowFilterNotifier,
               builder: (context, isFilterActive, _) {

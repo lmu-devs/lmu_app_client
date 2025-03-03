@@ -13,6 +13,10 @@ class MensaApiClient {
   Future<List<MensaModel>> getMensaModels() async {
     final response = await _baseApiClient.get(MensaApiEndpoints.getMensaModels());
 
+    if (response.statusCode == 504) {
+      throw Exception('Failed to load mensa data - ${response.statusCode}');
+    }
+
     final jsonList = json.decode(response.body) as List<dynamic>;
     return jsonList.map((json) => MensaModel.fromJson(json as Map<String, dynamic>)).toList();
   }

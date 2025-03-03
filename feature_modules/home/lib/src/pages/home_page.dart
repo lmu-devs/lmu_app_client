@@ -23,13 +23,11 @@ class HomePage extends StatelessWidget {
       ),
       body: BlocBuilder<HomeCubit, HomeState>(
         bloc: GetIt.I.get<HomeCubit>(),
-        builder: (context, state) {
-          return AnimatedSwitcher(
-            duration: const Duration(milliseconds: 300),
-            transitionBuilder: (Widget child, Animation<double> animation) {
-              return FadeTransition(opacity: animation, child: child);
-            },
-            child: state is HomeLoadSuccess ? HomeSuccessView(homeData: state.homeData) : const HomeLoadingView(),
+        builder: (_, state) {
+          return LmuPageAnimationWrapper(
+            child: state is HomeLoadSuccess
+                ? HomeSuccessView(key: const ValueKey("homeContent"), homeData: state.homeData)
+                : const HomeLoadingView(key: ValueKey("homeLoading")),
           );
         },
       ),

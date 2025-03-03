@@ -27,7 +27,6 @@ class _MensaOverviewContentViewState extends State<MensaOverviewContentView> {
   @override
   void initState() {
     super.initState();
-    _userPreferecesService.sortMensaModels(_mensaModels);
     _mensaDistanceService.addListener(_onDistanceChange);
   }
 

@@ -65,6 +65,7 @@ class MensaUserPreferencesService {
     final mensaCubitState = mensaCubit.state;
     mensaCubit.stream.withInitialValue(mensaCubitState).listen((state) async {
       if (state is MensaLoadSuccess) {
+        sortMensaModels(state.mensaModels);
         final retrievedFavoriteMensaIds =
             state.mensaModels.where((mensa) => mensa.ratingModel.isLiked).map((mensa) => mensa.canteenId).toList();
         _appLogger

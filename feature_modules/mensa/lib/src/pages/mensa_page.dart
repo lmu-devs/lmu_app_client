@@ -9,8 +9,27 @@ import '../widgets/overview/loading/mensa_overview_loading_view.dart';
 import '../widgets/overview/mensa_overview_content_view.dart';
 import 'taste_profile_page.dart';
 
-class MensaPage extends StatelessWidget {
+class MensaPage extends StatefulWidget {
   const MensaPage({super.key});
+
+  @override
+  State<MensaPage> createState() => _MensaPageState();
+}
+
+class _MensaPageState extends State<MensaPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    final mensaCubit = GetIt.I.get<MensaCubit>();
+    final tasteProfileCubit = GetIt.I.get<TasteProfileCubit>();
+    if (mensaCubit.state is! MensaLoadSuccess) {
+      mensaCubit.loadMensaData();
+    }
+    if (tasteProfileCubit.state is! TasteProfileLoadSuccess) {
+      tasteProfileCubit.loadTasteProfile();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +48,12 @@ class MensaPage extends StatelessWidget {
       ),
       body: BlocBuilder<MensaCubit, MensaState>(
         bloc: GetIt.I.get<MensaCubit>(),
-        builder: (context, state) {
-          if (state is MensaLoadSuccess) {
-            return MensaOverviewContentView(mensaModels: state.mensaModels);
-          }
-
-          return const MensaOverviewLoadingView();
+        builder: (_, state) {
+          return LmuPageAnimationWrapper(
+            child: state is MensaLoadSuccess
+                ? MensaOverviewContentView(key: const ValueKey("mensaContent"), mensaModels: state.mensaModels)
+                : const MensaOverviewLoadingView(key: ValueKey("mensaLoading")),
+          );
         },
       ),
     );

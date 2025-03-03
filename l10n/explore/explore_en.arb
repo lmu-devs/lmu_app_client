@@ -1,19 +1,18 @@
 {
-  "@@locale": "en",
-  "@@context": "Explore",
-
-  "tabTitle": "Explore",
-  "@tabTitle": {
-    "description": "The title of the explore tab"
-  },
-  "navigate": "Navigate",
-  "@tabTitle": {
+   "@@locale": "en",
+   "@@context": "Explore",
+   "tabTitle": "Map",
+   "@tabTitle": {
+      "description": "The title of the explore tab"
+   },
+   "navigate": "Navigate",
+   "@tabTitle": {
       "description": "Navigate"
-    },
-  "openWith": "Open with",
-  "@tabTitle": {
+   },
+   "openWith": "Open with",
+   "@tabTitle": {
       "description": "Open with"
-    },
+   },
    "appleMaps": "Apple Maps",
    "@tabTitle": {
       "description": "Navigation option with Apple Maps"
