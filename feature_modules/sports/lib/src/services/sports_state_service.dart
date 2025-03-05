@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 
 import '../cubit/sports_cubit/cubit.dart';
 import '../extensions/sports_url_constructor_extension.dart';
+import '../repository/api/models/sports_favorites.dart';
 import '../repository/api/models/sports_type.dart';
 import '../repository/sports_repository.dart';
 
@@ -20,8 +21,8 @@ class SportsStateService {
   final _filterOptionsNotifier = ValueNotifier({SportsFilterOption.all: true, SportsFilterOption.available: false});
   ValueNotifier<Map<SportsFilterOption, bool>> get filterOptionsNotifier => _filterOptionsNotifier;
 
-  final _favoriteSportsCoursesNotifier = ValueNotifier<List<Map<String, List<String>>>>([]);
-  ValueNotifier<List<Map<String, List<String>>>> get favoriteSportsCoursesNotifier => _favoriteSportsCoursesNotifier;
+  final _favoriteSportsCoursesNotifier = ValueNotifier<List<SportsFavorites>>([]);
+  ValueNotifier<List<SportsFavorites>> get favoriteSportsCoursesNotifier => _favoriteSportsCoursesNotifier;
 
   final _isSearchActiveNotifier = ValueNotifier(false);
   ValueNotifier<bool> get isSearchActiveNotifier => _isSearchActiveNotifier;
@@ -46,29 +47,32 @@ class SportsStateService {
   Future<void> toggleFavoriteSport(String courseId, String sportType) async {
     final currentFavorites = List.of(_favoriteSportsCoursesNotifier.value);
 
+    // Find existing entry for the given sport type
     final existingEntry = currentFavorites.firstWhere(
-      (map) => map.containsKey(sportType),
-      orElse: () => {},
+      (entry) => entry.category == sportType,
+      orElse: () => SportsFavorites(category: sportType, favorites: []),
     );
 
-    if (existingEntry.isNotEmpty) {
-      final courses = existingEntry[sportType]!;
-
-      if (courses.contains(courseId)) {
-        courses.remove(courseId);
-        if (courses.isEmpty) {
+    if (existingEntry.favorites.isNotEmpty) {
+      if (existingEntry.favorites.contains(courseId)) {
+        // Remove courseId if it exists
+        existingEntry.favorites.remove(courseId);
+        if (existingEntry.favorites.isEmpty) {
           currentFavorites.remove(existingEntry);
         }
       } else {
-        courses.add(courseId);
+        // Add courseId if it doesn't exist
+        existingEntry.favorites.add(courseId);
       }
     } else {
-      currentFavorites.add({
-        sportType: [courseId]
-      });
+      // Add a new entry if it doesn't exist
+      currentFavorites.add(SportsFavorites(category: sportType, favorites: [courseId]));
     }
-    currentFavorites.sort((a, b) => a.keys.first.compareTo(b.keys.first));
 
+    // Sort entries alphabetically by category
+    currentFavorites.sort((a, b) => a.category.compareTo(b.category));
+
+    // Update notifier and save to shared preferences
     _favoriteSportsCoursesNotifier.value = currentFavorites;
     await _sportsRepo.saveFavoriteSports(currentFavorites);
   }

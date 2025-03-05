@@ -39,7 +39,10 @@ class SportsLoadingView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                StarIcon(isActive: false, size: LmuIconSizes.small, disabledColor: starColor),
+                SizedBox(
+                  height: LmuSizes.size_24,
+                  child: StarIcon(isActive: false, size: LmuIconSizes.small, disabledColor: starColor),
+                ),
                 const SizedBox(height: LmuSizes.size_12),
                 LmuContentTile(
                   content: List.generate(

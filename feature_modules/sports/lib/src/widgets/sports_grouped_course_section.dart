@@ -33,14 +33,18 @@ class SportsGroupedCourseSection extends StatelessWidget {
           child: ValueListenableBuilder(
             valueListenable: sportsStateService.favoriteSportsCoursesNotifier,
             builder: (context, favoriteSports, _) {
-              final favoriteSportTitles = favoriteSports.expand((map) => map.keys).toList();
+              final favoriteSportTitles = favoriteSports.map((sport) => sport.category).toList();
               final favoriteSportTypes = sportsTypes.where((sport) => favoriteSportTitles.contains(sport.title));
+
               return Padding(
                 padding: const EdgeInsets.all(LmuSizes.size_16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    StarIcon(isActive: false, size: LmuIconSizes.small, disabledColor: starColor),
+                    SizedBox(
+                      height: LmuSizes.size_24,
+                      child: StarIcon(isActive: false, size: LmuIconSizes.small, disabledColor: starColor),
+                    ),
                     const SizedBox(height: LmuSizes.size_12),
                     if (favoriteSports.isNotEmpty)
                       LmuContentTile(

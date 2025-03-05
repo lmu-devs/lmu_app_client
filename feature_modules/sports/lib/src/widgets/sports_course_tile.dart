@@ -98,24 +98,45 @@ class SportsCourseTile extends StatelessWidget {
             Positioned(
               right: LmuSizes.size_6,
               top: LmuSizes.size_8,
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () => sportsStateService.toggleFavoriteSport(course.id, sportType),
-                child: SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: Center(
-                    child: ValueListenableBuilder(
-                      valueListenable: sportsStateService.favoriteSportsCoursesNotifier,
-                      builder: (context, favoriteSportsIds, _) {
-                        final isFavorite = favoriteSportsIds.any(
-                          (map) => map.values.any((courseList) => courseList.contains(course.id)),
+              child: ValueListenableBuilder(
+                valueListenable: sportsStateService.favoriteSportsCoursesNotifier,
+                builder: (context, favoriteSports, _) {
+                  final isFavorite = favoriteSports.any(
+                    (entry) => entry.category == sportType && entry.favorites.contains(course.id),
+                  );
+
+                  return GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () {
+                      LmuVibrations.secondary();
+                      sportsStateService.toggleFavoriteSport(course.id, sportType);
+                      if (isFavorite) {
+                        LmuToast.show(
+                          context: context,
+                          type: ToastType.success,
+                          message: appLocals.favoriteRemoved,
+                          actionText: appLocals.undo,
+                          onActionPressed: () {
+                            sportsStateService.toggleFavoriteSport(course.id, sportType);
+                          },
                         );
-                        return StarIcon(isActive: isFavorite);
-                      },
+                      } else {
+                        LmuToast.show(
+                          context: context,
+                          type: ToastType.success,
+                          message: appLocals.favoriteAdded,
+                        );
+                      }
+                    },
+                    child: SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: Center(
+                        child: StarIcon(isActive: isFavorite),
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                },
               ),
             ),
           ],
