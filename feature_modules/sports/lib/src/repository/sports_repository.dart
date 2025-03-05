@@ -5,13 +5,14 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/api.dart';
+import 'api/models/sports_favorites.dart';
 
 abstract class SportsRepository {
   Future<SportsModel> getSports();
 
-  Future<void> saveFavoriteSports(List<Map<String, List<String>>> favoriteSports);
+  Future<void> saveFavoriteSports(List<SportsFavorites> favoriteSports);
 
-  Future<List<Map<String, List<String>>>> getFavoriteSports();
+  Future<List<SportsFavorites>> getFavoriteSports();
 }
 
 class ConnectedSportsRepository implements SportsRepository {
@@ -24,30 +25,23 @@ class ConnectedSportsRepository implements SportsRepository {
   }
 
   @override
-  Future<void> saveFavoriteSports(List<Map<String, List<String>>> favoriteSports) async {
+  Future<void> saveFavoriteSports(List<SportsFavorites> favoriteSports) async {
     final prefs = await SharedPreferences.getInstance();
-    String encodedData = jsonEncode(favoriteSports);
+
+    final encodedData = jsonEncode(favoriteSports.map((e) => e.toJson()).toList());
     await prefs.setString(_favoriteSportsKey, encodedData);
 
     AppLogger().logMessage('[SportsRepository]: Saved favorite sports $favoriteSports');
   }
 
   @override
-  Future<List<Map<String, List<String>>>> getFavoriteSports() async {
+  Future<List<SportsFavorites>> getFavoriteSports() async {
     final prefs = await SharedPreferences.getInstance();
-
-    await prefs.remove(_favoriteSportsKey);
-
     final jsonString = prefs.getString(_favoriteSportsKey);
 
     if (jsonString == null) return [];
 
-    final decodedList = jsonDecode(jsonString);
-
-    return decodedList.map((map) {
-      return (map as Map<String, dynamic>).map((key, value) {
-        return MapEntry(key, List<String>.from(value));
-      });
-    }).toList();
+    final List<dynamic> decodedList = jsonDecode(jsonString);
+    return decodedList.map((e) => SportsFavorites.fromJson(e)).toList();
   }
 }

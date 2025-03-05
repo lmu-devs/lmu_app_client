@@ -40,14 +40,21 @@ class _SportsContentViewState extends State<SportsContentView> {
       return LmuSearchInput(
         title: sport.title,
         id: sport.title,
-        tags: sport.courses.map((course) => course.instructor).toList(),
       );
     }).toList();
   }
 
   @override
+  void dispose() {
+    _searchController.clear();
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Stack(
+      fit: StackFit.expand,
       children: [
         SingleChildScrollView(
           child: Column(
