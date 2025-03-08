@@ -28,6 +28,7 @@ StatefulShellBranch get $homeData => StatefulShellBranchData.$branch(
             GetIt.I.get<SportsService>().sportsData,
             GetIt.I.get<CinemaService>().cinemaData,
             GetIt.I.get<TimelineService>().timelineData,
+            GetIt.I.get<RoomfinderService>().roomfinderData,
           ],
         ),
       ],

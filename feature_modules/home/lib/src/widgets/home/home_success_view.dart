@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/cinema.dart';
-import 'package:shared_api/explore.dart';
 import 'package:shared_api/feedback.dart';
 import 'package:shared_api/mensa.dart';
+import 'package:shared_api/roomfinder.dart';
 import 'package:shared_api/sports.dart';
 import 'package:shared_api/timeline.dart';
 import 'package:shared_api/wishlist.dart';
@@ -71,7 +71,7 @@ extension HomeTileMapper on HomeTile {
       HomeTileType.benefits => () => const BenefitsRoute().go(context),
       HomeTileType.cinemas => () => GetIt.I.get<CinemaService>().navigateToCinemaPage(context),
       HomeTileType.feedback => () => GetIt.I.get<FeedbackService>().navigateToFeedback(context, 'Home General'),
-      HomeTileType.roomfinder => () => GetIt.I.get<ExploreService>().navigateToExplore(context),
+      HomeTileType.roomfinder => () => GetIt.I.get<RoomfinderService>().navigateToRoomfinder(context),
       HomeTileType.sports => () => GetIt.I.get<SportsService>().navigateToSportsPage(context),
       HomeTileType.timeline => () => GetIt.I.get<TimelineService>().navigateToTimelinePage(context),
       HomeTileType.wishlist => () => GetIt.I.get<WishlistService>().navigateToWishlistPage(context),

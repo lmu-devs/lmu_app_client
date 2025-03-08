@@ -34,6 +34,8 @@ dependencies:
     path: ./feature_modules/sports
   timeline:
     path: ./feature_modules/timeline
+  roomfinder:
+    path: ./feature_modules/roomfinder
   shared_api:
     path: ./shared_api
   shared_preferences: ^2.0.7
