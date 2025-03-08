@@ -3,13 +3,13 @@ import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
 
-import 'api/explore_api_client.dart';
 import 'api/models/models.dart';
+import 'api/roomfinder_api_client.dart';
 
-class ExploreRepository {
-  const ExploreRepository({required this.exploreApiClient});
+class RoomfinderRepository {
+  const RoomfinderRepository({required this.roomfinderApiClient});
 
-  final ExploreApiClient exploreApiClient;
+  final RoomfinderApiClient roomfinderApiClient;
 
   final _cacheKey = "roomfinder_cities";
 
@@ -41,7 +41,7 @@ class ExploreRepository {
     citites = await getCachedJsonString(_cacheKey);
 
     if (citites == null) {
-      citites = await exploreApiClient.getRoomfinderCities();
+      citites = await roomfinderApiClient.getRoomfinderCities();
       await cacheJsonList(_cacheKey, citites);
     }
 

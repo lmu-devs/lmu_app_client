@@ -1,9 +1,9 @@
 import 'package:core/api.dart';
 import 'package:get_it/get_it.dart';
 
-import 'explore_api_endpoints.dart';
+import 'roomfinder_api_endpoints.dart';
 
-class ExploreApiClient {
+class RoomfinderApiClient {
   final _baseApiClient = GetIt.I.get<BaseApiClient>();
 
   Future<String> getRoomfinderCities() async {

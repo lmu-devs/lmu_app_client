@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/explore.dart';
 
-import '../../repository/explore_repository.dart';
+import '../../repository/roomfinder_repository.dart';
 import 'roomfinder_state.dart';
 
 class RoomfinderCubit extends Cubit<RoomfinderState> {
   RoomfinderCubit() : super(const RoomfinderInitial());
 
-  final _repository = GetIt.I.get<ExploreRepository>();
+  final _repository = GetIt.I.get<RoomfinderRepository>();
 
   Future<void> loadRoomfinderLocations() async {
     emit(const RoomfinderLoadInProgress());
