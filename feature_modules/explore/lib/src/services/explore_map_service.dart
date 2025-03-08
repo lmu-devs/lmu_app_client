@@ -5,8 +5,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:shared_api/cinema.dart';
 import 'package:shared_api/explore.dart';
 import 'package:shared_api/mensa.dart';
-
-import '../cubit/cubit.dart';
+import 'package:shared_api/roomfinder.dart';
 
 class ExploreMapService {
   void init() {
@@ -41,8 +40,8 @@ class ExploreMapService {
 
       _exploreLocationsNotifier.value = updatedLocations;
     });
-    final roomfinderLocationsCubit = GetIt.I<RoomfinderCubit>();
-    roomfinderLocationsCubit.roomfinderExploreLocationsStream.listen((locations) {
+    final roomfinderService = GetIt.I<RoomfinderService>();
+    roomfinderService.roomfinderExploreLocationsStream.listen((locations) {
       final currentLocations = List.of(_exploreLocationsNotifier.value);
       final updatedLocations = currentLocations..addAll(locations);
 
