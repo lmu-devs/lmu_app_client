@@ -128,8 +128,8 @@ class LmuSearchSheetState extends State<LmuSearchSheet> {
   void _openExtended(bool focusSearch) async {
     await _sheetController.animateTo(
       _maxSize,
-      duration: const Duration(milliseconds: 200),
-      curve: Curves.easeInOut,
+      duration: const Duration(milliseconds: 1000),
+      curve: LmuAnimations.slowSmooth,
     );
     if (focusSearch) {
       _isSearchActiveNotifier.value = true;
@@ -194,8 +194,8 @@ class LmuSearchSheetState extends State<LmuSearchSheet> {
                       _isSearchActiveNotifier.value = true;
                       _sheetController.animateTo(
                         _maxSize,
-                        duration: const Duration(milliseconds: 300),
-                        curve: LmuAnimations.fastSmooth,
+                        duration: const Duration(milliseconds: 600),
+                        curve: LmuAnimations.slowSmooth,
                       );
                     },
                     onCancelPressed: () {

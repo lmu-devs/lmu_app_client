@@ -1,14 +1,15 @@
 import 'dart:async';
 
+import 'package:core/core_services.dart';
 import 'package:core/logging.dart';
-import 'package:core/permissions.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../repository/api/models/mensa/mensa_location.dart';
-
-class MensaDistanceService with ChangeNotifier {
+class LocationService with ChangeNotifier {
+  LocationService() {
+    init();
+  }
   final _appLogger = AppLogger();
   final _locationSettings = const LocationSettings(accuracy: LocationAccuracy.best, distanceFilter: 50);
 
@@ -21,7 +22,7 @@ class MensaDistanceService with ChangeNotifier {
     if (!hasPermission || !isLocationServiceEnabled) return;
 
     _currentLocation = await Geolocator.getCurrentPosition(locationSettings: _locationSettings);
-    _appLogger.logMessage('[MensaDistanceService]: Initial location: $_currentLocation');
+    _appLogger.logMessage('[LocationService]: Initial location: $_currentLocation');
     notifyListeners();
 
     positionStream = Geolocator.getPositionStream(locationSettings: _locationSettings).distinct().pairwise().listen(
@@ -31,7 +32,7 @@ class MensaDistanceService with ChangeNotifier {
 
         if (previous.latitude != current.latitude || previous.longitude != current.longitude) {
           _currentLocation = current;
-          _appLogger.logMessage('[MensaDistanceService]: Location updated: $current');
+          _appLogger.logMessage('[LocationService]: Location updated: $current');
           notifyListeners();
         }
       },
@@ -40,7 +41,7 @@ class MensaDistanceService with ChangeNotifier {
 
   Future<void> updatePosition() async {
     _currentLocation = await Geolocator.getCurrentPosition(locationSettings: _locationSettings);
-    _appLogger.logMessage('[MensaDistanceService]: Updated location: $_currentLocation');
+    _appLogger.logMessage('[LocationService]: Updated location: $_currentLocation');
     notifyListeners();
   }
 
@@ -50,14 +51,9 @@ class MensaDistanceService with ChangeNotifier {
     super.dispose();
   }
 
-  double? getDistanceToMensa(MensaLocation mensaLocation) {
+  double? getDistance({required double lat, required double long}) {
     if (_currentLocation == null) return null;
-    return Geolocator.distanceBetween(
-      _currentLocation!.latitude,
-      _currentLocation!.longitude,
-      mensaLocation.latitude,
-      mensaLocation.longitude,
-    );
+    return Geolocator.distanceBetween(_currentLocation!.latitude, _currentLocation!.longitude, lat, long);
   }
 }
 

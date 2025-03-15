@@ -1,8 +1,8 @@
+import 'package:core/core_services.dart';
 import 'package:get_it/get_it.dart';
 
 import '../repository/api/models/mensa/mensa_model.dart';
 import '../repository/api/models/user_preferences/sort_option.dart';
-import '../services/services.dart';
 
 extension SortOptionSortExtension on SortOption {
   List<MensaModel> sort(List<MensaModel> mensaModels) {
@@ -32,11 +32,11 @@ extension SortOptionSortExtension on SortOption {
             return a.name.compareTo(b.name);
           });
       case SortOption.distance:
-        final distanceService = GetIt.I.get<MensaDistanceService>();
+        final distanceService = GetIt.I.get<LocationService>();
         return List.from(mensaModels)
           ..sort((a, b) {
-            final distanceA = distanceService.getDistanceToMensa(a.location);
-            final distanceB = distanceService.getDistanceToMensa(b.location);
+            final distanceA = distanceService.getDistance(lat: a.location.latitude, long: a.location.longitude);
+            final distanceB = distanceService.getDistance(lat: b.location.latitude, long: b.location.longitude);
             if (distanceA == null && distanceB == null) return 0;
             if (distanceA == null) return 1;
             if (distanceB == null) return -1;

@@ -5,9 +5,11 @@ import 'package:shared_api/roomfinder.dart';
 import 'cubit/roomfinder_cubit/cubit.dart';
 import 'repository/api/roomfinder_api_client.dart';
 import 'repository/roomfinder_repository.dart';
-import 'services/default_roomfinder_service.dart';
+import 'services/roomfinder_filter_service.dart';
+import 'services/services.dart';
 
-class RoomfinderModule extends AppModule with LocalDependenciesProvidingAppModule, PublicApiProvidingAppModule {
+class RoomfinderModule extends AppModule
+    with LocalDependenciesProvidingAppModule, PublicApiProvidingAppModule, NoticeableAppStartAppModule {
   @override
   String get moduleName => 'RoomfinderModule';
 
@@ -20,5 +22,14 @@ class RoomfinderModule extends AppModule with LocalDependenciesProvidingAppModul
   void provideLocalDependencies() {
     GetIt.I.registerSingleton<RoomfinderRepository>(RoomfinderRepository(roomfinderApiClient: RoomfinderApiClient()));
     GetIt.I.registerSingleton<RoomfinderCubit>(RoomfinderCubit());
+    GetIt.I
+        .registerSingleton<RoomfinderFavoritesService>(RoomfinderFavoritesService(), dispose: (srv) => srv.dispose());
+    GetIt.I.registerSingleton<RoomfinderFilterService>(RoomfinderFilterService(), dispose: (srv) => srv.dispose());
+  }
+
+  @override
+  void onAppStartNotice() {
+    GetIt.I.get<RoomfinderFavoritesService>().init();
+    GetIt.I.get<RoomfinderFilterService>().init();
   }
 }

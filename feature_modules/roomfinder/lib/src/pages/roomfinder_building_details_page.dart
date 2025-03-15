@@ -6,14 +6,16 @@ import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
+import 'package:get_it/get_it.dart';
 
-import '../repository/api/models/roomfinder_building.dart';
-import '../repository/api/models/roomfinder_floor.dart';
+import '../cubit/cubit.dart';
+import '../repository/api/models/models.dart';
+import '../services/services.dart';
 
 class RoomfinderBuildingDetailsPage extends StatefulWidget {
-  const RoomfinderBuildingDetailsPage({super.key, required this.building});
+  const RoomfinderBuildingDetailsPage({super.key, required this.buildingId});
 
-  final RoomfinderBuilding building;
+  final String buildingId;
 
   @override
   State<RoomfinderBuildingDetailsPage> createState() => _RoomfinderBuildingDetailsPageState();
@@ -26,11 +28,23 @@ class _RoomfinderBuildingDetailsPageState extends State<RoomfinderBuildingDetail
 
   late ValueNotifier<int> _activeTabIndexNotifier;
 
-  List<RoomfinderFloor> get _floors => widget.building.buildingParts.first.floors;
+  late final List<RoomfinderFloor> _floors;
+  late final RoomfinderBuilding _building;
 
   @override
   void initState() {
     super.initState();
+    final roomfinderCubit = GetIt.I<RoomfinderCubit>();
+    roomfinderCubit.state as RoomfinderLoadSuccess;
+    if (roomfinderCubit.state is RoomfinderLoadSuccess) {
+      final state = roomfinderCubit.state as RoomfinderLoadSuccess;
+      _building = state.cities
+          .expand((city) => city.streets)
+          .expand((street) => street.buildings)
+          .firstWhere((building) => building.id == widget.buildingId);
+      _floors = _building.buildingParts.expand((part) => part.floors).toList();
+    }
+
     _activeTabIndexNotifier = ValueNotifier<int>(0);
     _pageController = PageController();
   }
@@ -39,8 +53,9 @@ class _RoomfinderBuildingDetailsPageState extends State<RoomfinderBuildingDetail
   Widget build(BuildContext context) {
     return LmuMasterAppBar(
       leadingAction: LeadingAction.back,
-      largeTitle: widget.building.title,
+      largeTitle: _building.title,
       largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
+      trailingWidgets: [_trailingAppBarAction],
       largeTitleTrailingWidget: LmuInTextVisual.text(
         title: "Building",
         textColor: buildingColor,
@@ -54,7 +69,7 @@ class _RoomfinderBuildingDetailsPageState extends State<RoomfinderBuildingDetail
               child: Column(
                 children: [
                   LmuListItem.base(
-                    subtitle: widget.building.location.address,
+                    subtitle: _building.location.address,
                     trailingArea: Icon(
                       LucideIcons.map,
                       size: LmuIconSizes.mediumSmall,
@@ -66,9 +81,9 @@ class _RoomfinderBuildingDetailsPageState extends State<RoomfinderBuildingDetail
                       LmuBottomSheet.show(
                         context,
                         content: NavigationSheet(
-                          latitude: widget.building.location.latitude,
-                          longitude: widget.building.location.longitude,
-                          address: widget.building.location.address,
+                          latitude: _building.location.latitude,
+                          longitude: _building.location.longitude,
+                          address: _building.location.address,
                         ),
                       );
                     },
@@ -124,7 +139,7 @@ class _RoomfinderBuildingDetailsPageState extends State<RoomfinderBuildingDetail
                             ),
                             onTap: () {
                               final url =
-                                  "https://www.lmu.de/raumfinder/index.html#/building/${widget.building.id}/map?room=${room.id}";
+                                  "https://www.lmu.de/raumfinder/index.html#/building/${_building.id}/map?room=${room.id}";
                               LmuUrlLauncher.launchWebsite(context: context, url: url);
                             },
                           );
@@ -137,6 +152,37 @@ class _RoomfinderBuildingDetailsPageState extends State<RoomfinderBuildingDetail
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget get _trailingAppBarAction {
+    final favoritesService = GetIt.I<RoomfinderFavoritesService>();
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_4),
+      child: ValueListenableBuilder(
+        valueListenable: favoritesService.favoriteBuildingsNotifier,
+        builder: (context, favoriteBuildings, _) {
+          final isFavorite = favoriteBuildings.any((building) => building.id == _building.id);
+          return GestureDetector(
+            onTap: () {
+              favoritesService.toggleFavorite(_building.id);
+              LmuVibrations.secondary();
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(LmuSizes.size_4),
+              child: Row(
+                children: [
+                  StarIcon(
+                    isActive: isFavorite,
+                    disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }

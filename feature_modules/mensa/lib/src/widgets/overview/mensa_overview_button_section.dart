@@ -1,9 +1,8 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
-import 'package:core/permissions.dart';
 import 'package:core/themes.dart';
-import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
@@ -27,22 +26,7 @@ class MensaOverviewButtonSection extends StatelessWidget {
 
     return Row(
       children: [
-        GestureDetector(
-          onTap: () => GetIt.I.get<ExploreService>().navigateToExplore(context),
-          child: Container(
-            height: LmuActionSizes.base,
-            width: LmuActionSizes.base,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(LmuRadiusSizes.medium),
-              border: Border.all(
-                color: context.colors.neutralColors.borderColors.seperatorLight,
-              ),
-              image: DecorationImage(
-                image: AssetImage(getPngAssetTheme('assets/maps_icon'), package: "mensa"),
-              ),
-            ),
-          ),
-        ),
+        LmuMapImageButton(onTap: () => GetIt.I<ExploreService>().navigateToExplore(context)),
         const SizedBox(width: LmuSizes.size_8),
         ValueListenableBuilder(
           valueListenable: userPreferencesService.sortOptionNotifier,
@@ -103,9 +87,9 @@ class _SortOptionActionSheetContent extends StatelessWidget {
                 return Column(
                   children: [
                     LmuListItem.base(
-                      title: sortOption == activeValue ? sortOption.title(context.locals.canteen) : null,
+                      title: isActive ? sortOption.title(context.locals.canteen) : null,
                       titleColor: textColor,
-                      subtitle: sortOption == activeValue ? null : sortOption.title(context.locals.canteen),
+                      subtitle: isActive ? null : sortOption.title(context.locals.canteen),
                       mainContentAlignment: MainContentAlignment.center,
                       leadingArea: LmuIcon(
                         icon: sortOption.icon,
@@ -114,7 +98,7 @@ class _SortOptionActionSheetContent extends StatelessWidget {
                       ),
                       onTap: () async {
                         if (sortOption == SortOption.distance) {
-                          GetIt.I.get<MensaDistanceService>().updatePosition();
+                          GetIt.I.get<LocationService>().updatePosition();
                           bool dontSort = false;
                           await PermissionsService.isLocationPermissionGranted().then(
                             (isPermissionGranted) async {

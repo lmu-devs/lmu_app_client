@@ -11,7 +11,7 @@ import 'base_api_client.dart';
 class DefaultBaseApiClient extends BaseApiClient {
   final String _localHostUrl = 'http://localhost:8001';
   final String _prodBaseUrl = 'https://api.lmu-dev.org';
-  final String _devBaseUrl = 'https://dev-api.lmu-dev.org';
+  final String _devBaseUrl = 'https://api-staging.lmu-dev.org';
 
   Locale _locale = PlatformDispatcher.instance.locale;
   final _appLogger = AppLogger();

@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import '../pages/pages.dart';
 import '../pages/roomfinder_building_details_page.dart';
 import '../pages/roomfinder_room_details_page.dart';
-import '../repository/api/models/roomfinder_building.dart';
 import '../repository/api/models/roomfinder_room.dart';
 
 part 'roomfinder_routes.g.dart';
@@ -33,12 +32,12 @@ class RoomfinderMainRoute extends GoRouteData {
 }
 
 class RoomfinderBuildingDetailsRoute extends GoRouteData {
-  const RoomfinderBuildingDetailsRoute(this.$extra);
+  const RoomfinderBuildingDetailsRoute(this.buildingId);
 
-  final RoomfinderBuilding $extra;
+  final String buildingId;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => RoomfinderBuildingDetailsPage(building: $extra);
+  Widget build(BuildContext context, GoRouterState state) => RoomfinderBuildingDetailsPage(buildingId: buildingId);
 }
 
 class RoomfinderRoomDetailsRoute extends GoRouteData {
