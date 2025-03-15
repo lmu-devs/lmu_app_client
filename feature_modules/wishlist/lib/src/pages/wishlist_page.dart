@@ -123,7 +123,7 @@ class _WishlistPageState extends State<WishlistPage> {
               child: Column(
                 children: [
                   LmuContentTile(
-                    content: [
+                    contentList: [
                       LmuListItem.base(
                         title: context.locals.wishlist.betaTitle,
                         subtitle: context.locals.wishlist.betaSubtitle,
@@ -148,7 +148,7 @@ class _WishlistPageState extends State<WishlistPage> {
                   const WishlistEntryList(),
                   const SizedBox(height: LmuSizes.size_24),
                   LmuContentTile(
-                    content: [
+                    contentList: [
                       LmuListItem.base(
                         title: context.locals.app.suggestFeature,
                         mainContentAlignment: MainContentAlignment.center,

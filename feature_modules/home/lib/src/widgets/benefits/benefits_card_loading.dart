@@ -14,7 +14,7 @@ class BenefitsCardLoading extends StatelessWidget {
     return LmuSkeleton(
       child: LmuContentTile(
         padding: EdgeInsets.zero,
-        content: [
+        contentList: [
           ClipRRect(
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(LmuRadiusSizes.mediumLarge),

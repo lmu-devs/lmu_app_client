@@ -7,8 +7,7 @@ import 'repository/api/roomfinder_api_client.dart';
 import 'repository/roomfinder_repository.dart';
 import 'services/default_roomfinder_service.dart';
 
-class RoomfinderModule extends AppModule
-    with NoticeableAppStartAppModule, LocalDependenciesProvidingAppModule, PublicApiProvidingAppModule {
+class RoomfinderModule extends AppModule with LocalDependenciesProvidingAppModule, PublicApiProvidingAppModule {
   @override
   String get moduleName => 'RoomfinderModule';
 
@@ -21,10 +20,5 @@ class RoomfinderModule extends AppModule
   void provideLocalDependencies() {
     GetIt.I.registerSingleton<RoomfinderRepository>(RoomfinderRepository(roomfinderApiClient: RoomfinderApiClient()));
     GetIt.I.registerSingleton<RoomfinderCubit>(RoomfinderCubit());
-  }
-
-  @override
-  void onAppStartNotice() {
-    GetIt.I<RoomfinderCubit>().loadRoomfinderLocations();
   }
 }

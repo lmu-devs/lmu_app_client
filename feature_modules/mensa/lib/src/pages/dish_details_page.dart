@@ -71,7 +71,7 @@ class DishDetailsPage extends StatelessWidget {
                   children: [
                     LmuTileHeadline.base(title: context.locals.canteen.ingredients),
                     LmuContentTile(
-                      content: labelItems.map(
+                      contentList: labelItems.map(
                         (labelItem) {
                           return LmuListItem.base(
                             leadingArea: LmuText.h1(
@@ -86,7 +86,7 @@ class DishDetailsPage extends StatelessWidget {
                 ),
               LmuTileHeadline.base(title: context.locals.canteen.prices),
               LmuContentTile(
-                content: [
+                contentList: [
                   LmuListItem.base(
                     subtitle: context.locals.canteen.simplePrice,
                     trailingTitle: menuItemModel.priceSimple,

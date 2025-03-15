@@ -50,6 +50,7 @@ class _LmuTabBarState extends State<LmuTabBar> {
       alignment: Alignment.bottomCenter,
       children: [
         Container(
+          width: double.infinity,
           color: context.colors.neutralColors.backgroundColors.base,
           padding: EdgeInsets.only(
             top: widget.hasDefaultPaddings ? LmuSizes.size_12 : 0,

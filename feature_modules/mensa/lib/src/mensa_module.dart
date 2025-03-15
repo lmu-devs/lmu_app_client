@@ -37,7 +37,6 @@ class MensaModule extends AppModule
 
   @override
   void onAppStartNotice() {
-    GetIt.I.get<MensaCubit>().loadMensaData();
     GetIt.I.get<MensaDistanceService>().init();
   }
 

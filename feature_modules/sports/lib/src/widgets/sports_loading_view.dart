@@ -45,7 +45,7 @@ class SportsLoadingView extends StatelessWidget {
                 ),
                 const SizedBox(height: LmuSizes.size_12),
                 LmuContentTile(
-                  content: List.generate(
+                  contentList: List.generate(
                     2,
                     (index) => const LmuListItemLoading(
                       leadingArea: LmuStatusDot(),
@@ -68,7 +68,7 @@ class SportsLoadingView extends StatelessWidget {
                   children: [
                     const LmuTileHeadlineLoading(titleLength: 1),
                     LmuContentTile(
-                      content: List.generate(
+                      contentList: List.generate(
                         loadingTileCount[index],
                         (index) => const LmuListItemLoading(
                           leadingArea: LmuStatusDot(),

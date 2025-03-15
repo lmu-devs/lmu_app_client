@@ -219,7 +219,7 @@ class LmuSearchSheetState extends State<LmuSearchSheet> {
                           if (searchEntries.isEmpty) return const SizedBox.shrink();
 
                           return LmuContentTile(
-                            content: searchEntries
+                            contentList: searchEntries
                                 .map(
                                   (searchEntry) => LmuListItem.base(
                                     leadingArea: searchEntry.icon != null

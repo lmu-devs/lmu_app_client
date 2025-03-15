@@ -26,7 +26,7 @@ class SettingsLanguagePage extends StatelessWidget {
               listenable: languageProvider,
               builder: (context, child) {
                 return LmuContentTile(
-                  content: [
+                  contentList: [
                     LmuListItem.action(
                       title: localization.systemMode,
                       actionType: LmuListItemAction.radio,

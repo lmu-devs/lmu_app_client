@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_api/explore.dart';
 import 'package:shared_api/roomfinder.dart';
 
-import '../cubit/roomfinder_cubit/roomfinder_cubit.dart';
+import '../cubit/cubit.dart';
 import '../routes/roomfinder_routes.dart';
 
 class DefaultRoomfinderService extends RoomfinderService {
@@ -18,6 +18,12 @@ class DefaultRoomfinderService extends RoomfinderService {
 
   @override
   Stream<List<ExploreLocation>> get roomfinderExploreLocationsStream {
-    return GetIt.I.get<RoomfinderCubit>().roomfinderExploreLocationsStream;
+    final roomfinderCubit = GetIt.I.get<RoomfinderCubit>();
+    final state = roomfinderCubit.state;
+    if (state is! RoomfinderLoadSuccess && state is! RoomfinderLoadInProgress) {
+      roomfinderCubit.loadRoomfinderLocations();
+    }
+
+    return roomfinderCubit.roomfinderExploreLocationsStream;
   }
 }

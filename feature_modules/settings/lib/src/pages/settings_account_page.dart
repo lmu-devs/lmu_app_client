@@ -22,16 +22,14 @@ class SettingsAccountPage extends StatelessWidget {
           child: Column(
             children: [
               LmuContentTile(
-                content: [
-                  LmuListItem.base(
-                    subtitle: localization.accountStatus,
-                    trailingTitle: localization.accountStatusLocal,
-                  ),
-                  /**LmuListItem.base(
+                content: LmuListItem.base(
+                  subtitle: localization.accountStatus,
+                  trailingTitle: localization.accountStatusLocal,
+                ),
+                /**LmuListItem.base(
                       subtitle: localization.accountMemberSince,
                       trailingTitle: "5 days",
                       ),**/
-                ],
               ),
               /**const SizedBox(
                 height: LmuSizes.size_8,

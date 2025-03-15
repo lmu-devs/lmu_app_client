@@ -46,12 +46,10 @@ class TasteProfileLoadingView extends StatelessWidget {
               child: Column(
                 children: [
                   LmuContentTile(
-                    content: [
-                      LmuListItemLoading(
-                        titleLength: 2,
-                        action: LmuListItemAction.toggle,
-                      ),
-                    ],
+                    content: LmuListItemLoading(
+                      titleLength: 2,
+                      action: LmuListItemAction.toggle,
+                    ),
                   ),
                   SizedBox(height: LmuSizes.size_32),
                 ],
@@ -65,7 +63,7 @@ class TasteProfileLoadingView extends StatelessWidget {
                 children: [
                   LmuTileHeadline.base(title: localizations.presets),
                   LmuContentTile(
-                    content: [
+                    contentList: [
                       for (var i = 0; i < _preferencePresetsItems; i++)
                         LmuListItemLoading(
                           titleLength: 2,
@@ -76,7 +74,7 @@ class TasteProfileLoadingView extends StatelessWidget {
                   ),
                   const SizedBox(height: LmuSizes.size_16),
                   LmuContentTile(
-                    content: [
+                    contentList: [
                       for (var i = 0; i < _allergiesPresetsItems; i++)
                         LmuListItemLoading(
                           titleLength: 2,
@@ -109,7 +107,7 @@ class TasteProfileLoadingView extends StatelessWidget {
                       Column(
                         children: [
                           LmuContentTile(
-                            content: [
+                            contentList: [
                               for (var j = 0; j < _labelsItems[i]; j++)
                                 LmuListItemLoading(
                                   titleLength: 2,

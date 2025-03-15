@@ -21,6 +21,11 @@ class DefaultCinemaService implements CinemaService {
   Stream<List<ExploreLocation>> get cinemaExploreLocationsStream {
     final cinemaCubit = GetIt.I.get<CinemaCubit>();
 
+    final state = cinemaCubit.state;
+    if (state is! CinemaLoadSuccess && state is! CinemaLoadInProgress) {
+      cinemaCubit.loadCinemaData();
+    }
+
     return cinemaCubit.stream.withInitialValue(cinemaCubit.state).map((state) {
       if (state is CinemaLoadSuccess) {
         return state.cinemas.map((cinemaModel) {

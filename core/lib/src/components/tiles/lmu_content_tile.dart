@@ -6,20 +6,23 @@ enum ContentTileType { top, middle, bottom }
 
 class LmuContentTile extends StatelessWidget {
   const LmuContentTile({
-    required this.content,
+    this.content,
+    this.contentList,
     super.key,
     this.contentTileType = ContentTileType.middle,
     this.padding,
-  });
+    this.useListView = false,
+  }) : assert(content != null || contentList != null);
 
-  final List<Widget> content;
+  final Widget? content;
+  final List<Widget>? contentList;
   final ContentTileType contentTileType;
   final EdgeInsets? padding;
+  final bool useListView;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors.neutralColors;
-    if (content.isEmpty) return const SizedBox.shrink();
     return Container(
       padding: padding ?? const EdgeInsets.all(LmuSizes.size_4),
       decoration: BoxDecoration(
@@ -34,10 +37,7 @@ class LmuContentTile extends StatelessWidget {
               )
             : null,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: content,
-      ),
+      child: content ?? Column(mainAxisSize: MainAxisSize.min, children: contentList!),
     );
   }
 }

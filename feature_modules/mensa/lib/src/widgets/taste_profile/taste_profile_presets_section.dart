@@ -51,7 +51,7 @@ class _TasteProfilePresetsSectionState extends State<TasteProfilePresetsSection>
             valueListenable: _selectedPreferencePresetNotifier,
             builder: (context, selectedPreferencePreset, _) {
               return LmuContentTile(
-                content: _preferencesPresets.map(
+                contentList: _preferencesPresets.map(
                   (preferencesPreset) {
                     return LmuListItem.action(
                       title: preferencesPreset.text,
@@ -72,7 +72,7 @@ class _TasteProfilePresetsSectionState extends State<TasteProfilePresetsSection>
             valueListenable: _selectedAllergiesPresetsNotifier,
             builder: (context, selectedAllergiesPresets, _) {
               return LmuContentTile(
-                content: _allergiesPresets.map(
+                contentList: _allergiesPresets.map(
                   (allergiesPreset) {
                     return LmuListItem.action(
                       title: allergiesPreset.text,

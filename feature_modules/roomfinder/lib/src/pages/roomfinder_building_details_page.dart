@@ -1,6 +1,7 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
+import 'package:core/utils.dart';
 import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
@@ -8,7 +9,6 @@ import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 
 import '../repository/api/models/roomfinder_building.dart';
 import '../repository/api/models/roomfinder_floor.dart';
-import 'roomfinder_room_details_page.dart';
 
 class RoomfinderBuildingDetailsPage extends StatefulWidget {
   const RoomfinderBuildingDetailsPage({super.key, required this.building});
@@ -82,13 +82,11 @@ class _RoomfinderBuildingDetailsPageState extends State<RoomfinderBuildingDetail
             header: LmuTabBar(
               activeTabIndexNotifier: _activeTabIndexNotifier,
               hasDivider: true,
-              items: _floors.map(
-                (floor) {
-                  return LmuTabBarItemData(
-                    title: floor.name,
-                  );
-                },
-              ).toList(),
+              items: _floors
+                  .map(
+                    (floor) => LmuTabBarItemData(title: floor.name),
+                  )
+                  .toList(),
               onTabChanged: (index, _) => _pageController.jumpToPage(index),
             ),
             sliver: SliverToBoxAdapter(
@@ -109,20 +107,29 @@ class _RoomfinderBuildingDetailsPageState extends State<RoomfinderBuildingDetail
                       LmuSizes.size_96,
                     ),
                     child: LmuContentTile(
-                      content: rooms
-                          .map(
-                            (room) => LmuListItem.action(
-                              title: room.name,
-                              actionType: LmuListItemAction.chevron,
-                              onTap: () => Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      RoomfinderRoomDetailsPage(room: room, buildingId: widget.building.id),
-                                ),
-                              ),
+                      content: ListView.builder(
+                        itemCount: rooms.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: EdgeInsets.zero,
+                        itemBuilder: (context, index) {
+                          final room = rooms[index];
+                          return LmuListItem.base(
+                            key: Key(room.id),
+                            title: room.name,
+                            trailingArea: LmuIcon(
+                              icon: LucideIcons.external_link,
+                              size: LmuIconSizes.mediumSmall,
+                              color: context.colors.neutralColors.textColors.weakColors.base,
                             ),
-                          )
-                          .toList(),
+                            onTap: () {
+                              final url =
+                                  "https://www.lmu.de/raumfinder/index.html#/building/${widget.building.id}/map?room=${room.id}";
+                              LmuUrlLauncher.launchWebsite(context: context, url: url);
+                            },
+                          );
+                        },
+                      ),
                     ),
                   );
                 },

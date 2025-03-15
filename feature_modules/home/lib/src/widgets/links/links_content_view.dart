@@ -4,6 +4,7 @@ import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/feedback.dart';
+
 import '../../repository/api/models/links/link_model.dart';
 import 'favorite_link_section.dart';
 import 'link_card.dart';
@@ -106,7 +107,9 @@ class _LinksContentViewState extends State<LinksContentView> {
                                   children: [
                                     LmuTileHeadline.base(title: entry.key),
                                     LmuContentTile(
-                                      content: entry.value.map((link) => LinkCard(link: link)).toList(),
+                                      content: Column(
+                                        children: entry.value.map((link) => LinkCard(link: link)).toList(),
+                                      ),
                                     ),
                                     const SizedBox(height: LmuSizes.size_32),
                                   ],

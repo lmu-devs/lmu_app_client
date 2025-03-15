@@ -122,7 +122,7 @@ class _TasteProfileLabelsSectionState extends State<TasteProfileLabelsSection> {
             final sortedLabelItems = label.items.toList()..sort((a, b) => a.text.compareTo(b.text));
             return LmuContentTile(
               key: GlobalObjectKey(label.name),
-              content: [
+              contentList: [
                 for (final item in sortedLabelItems)
                   ValueListenableBuilder(
                     valueListenable: _excludedLabelsNotifier,
