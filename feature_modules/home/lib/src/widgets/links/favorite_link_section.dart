@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../repository/api/models/links/link_model.dart';
 import '../../service/home_preferences_service.dart';
@@ -45,7 +45,7 @@ class FavoriteLinkSection extends StatelessWidget {
               child: likedLinkTitles.isNotEmpty
                   ? LmuContentTile(
                       key: const ValueKey("favorite_list"),
-                      content: [
+                      contentList: [
                         ...links.where((link) => likedLinkTitles.contains(link.title)).toList()
                           ..sort((a, b) => likedLinkTitles.indexOf(a.title).compareTo(likedLinkTitles.indexOf(b.title)))
                       ].map((link) => LinkCard(link: link)).toList(),

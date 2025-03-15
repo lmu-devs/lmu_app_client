@@ -21,16 +21,14 @@ class MissingItemInput extends StatelessWidget {
       children: [
         LmuTileHeadline.base(title: context.locals.feedback.missingItemInput),
         LmuContentTile(
-          content: [
-            LmuListItem.base(
-              title: title,
-              mainContentAlignment: MainContentAlignment.center,
-              leadingArea: const LeadingFancyIcons(icon: LucideIcons.megaphone),
-              onTap: () {
-                GetIt.I.get<FeedbackService>().navigateToSuggestion(context, feedbackOrigin);
-              },
-            ),
-          ],
+          content: LmuListItem.base(
+            title: title,
+            mainContentAlignment: MainContentAlignment.center,
+            leadingArea: const LeadingFancyIcons(icon: LucideIcons.megaphone),
+            onTap: () {
+              GetIt.I.get<FeedbackService>().navigateToSuggestion(context, feedbackOrigin);
+            },
+          ),
         ),
       ],
     );

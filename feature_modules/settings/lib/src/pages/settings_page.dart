@@ -38,17 +38,15 @@ class SettingsMainPage extends StatelessWidget {
             children: [
               const SizedBox(height: LmuSizes.size_16),
               LmuContentTile(
-                content: [
-                  LmuListItem.action(
-                    title: settingLocalizations.account,
-                    actionType: LmuListItemAction.chevron,
-                    onTap: () => const SettingsAccountRoute().go(context),
-                  ),
-                ],
+                content: LmuListItem.action(
+                  title: settingLocalizations.account,
+                  actionType: LmuListItemAction.chevron,
+                  onTap: () => const SettingsAccountRoute().go(context),
+                ),
               ),
               const SizedBox(height: LmuSizes.size_16),
               LmuContentTile(
-                content: [
+                contentList: [
                   ListenableBuilder(
                     listenable: themeMode,
                     builder: (context, _) => LmuListItem.action(
@@ -75,7 +73,7 @@ class SettingsMainPage extends StatelessWidget {
               ),
               const SizedBox(height: LmuSizes.size_16),
               LmuContentTile(
-                content: [
+                contentList: [
                   LmuListItem.base(
                     title: settingLocalizations.aboutLmuDevelopers,
                     trailingArea: linkIcon,
@@ -122,7 +120,7 @@ class SettingsMainPage extends StatelessWidget {
               ),
               const SizedBox(height: LmuSizes.size_16),
               LmuContentTile(
-                content: [
+                contentList: [
                   LmuListItem.base(
                     title: settingLocalizations.dataPrivacy,
                     trailingArea: linkIcon,
@@ -155,19 +153,17 @@ class SettingsMainPage extends StatelessWidget {
               const SizedBox(height: LmuSizes.size_16),
               kDebugMode
                   ? LmuContentTile(
-                      content: [
-                        LmuListItem.action(
-                          title: "Debug",
-                          mainContentAlignment: MainContentAlignment.center,
-                          actionType: LmuListItemAction.chevron,
-                          onTap: () => const SettingsDebugRoute().go(context),
-                        ),
-                      ],
+                      content: LmuListItem.action(
+                        title: "Debug",
+                        mainContentAlignment: MainContentAlignment.center,
+                        actionType: LmuListItemAction.chevron,
+                        onTap: () => const SettingsDebugRoute().go(context),
+                      ),
                     )
                   : const SizedBox.shrink(),
               const SizedBox(height: kDebugMode ? LmuSizes.size_16 : LmuSizes.none),
               LmuContentTile(
-                content: [
+                contentList: [
                   LmuListItem.base(
                     title: context.locals.app.suggestFeature,
                     mainContentAlignment: MainContentAlignment.center,

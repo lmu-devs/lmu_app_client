@@ -18,7 +18,7 @@ class TasteProfileToggleSection extends StatelessWidget {
       child: Column(
         children: [
           LmuContentTile(
-            content: [
+            contentList: [
               ValueListenableBuilder(
                 valueListenable: isActiveNotifier,
                 builder: (context, isActive, _) {

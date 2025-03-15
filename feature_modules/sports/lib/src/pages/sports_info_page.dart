@@ -22,7 +22,7 @@ class SportsInfoPage extends StatelessWidget {
               const SizedBox(height: LmuSizes.size_32),
               LmuTileHeadline.base(title: "Welches Ticket brauche ich für was?"),
               LmuContentTile(
-                content: [
+                contentList: [
                   LmuListItem.base(
                     title: "Grundlage",
                     subtitle: "Basis-Ticket",

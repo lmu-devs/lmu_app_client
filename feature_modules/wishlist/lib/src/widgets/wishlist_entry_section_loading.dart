@@ -12,7 +12,7 @@ class WishlistEntrySectionLoading extends StatelessWidget {
     if (length == 0) return const SizedBox.shrink();
 
     return LmuContentTile(
-      content: List.generate(
+      contentList: List.generate(
         length,
         (index) => LmuSkeleton(
           child: LmuListItem.action(

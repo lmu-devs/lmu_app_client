@@ -57,7 +57,7 @@ class TimelineContentView extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
                       child: LmuContentTile(
-                        content: oldEvents.mapIndexed(
+                        contentList: oldEvents.mapIndexed(
                           (index, event) {
                             final eventStart = event.timeframe.start;
                             final eventEnd = event.timeframe.end;
@@ -112,7 +112,7 @@ class TimelineContentView extends StatelessWidget {
                           SizedBox(
                             width: MediaQuery.of(context).size.width - 32,
                             child: LmuContentTile(
-                              content: currentEvents.mapIndexed(
+                              contentList: currentEvents.mapIndexed(
                                 (index, event) {
                                   final eventStart = event.timeframe.start;
                                   final eventEnd = event.timeframe.end;
@@ -149,7 +149,7 @@ class TimelineContentView extends StatelessWidget {
                         top: (oldEvents.isNotEmpty || currentEvents.isNotEmpty) ? LmuSizes.size_8 : 0,
                       ),
                       child: LmuContentTile(
-                        content: upcomingEvents.mapIndexed(
+                        contentList: upcomingEvents.mapIndexed(
                           (index, event) {
                             final eventStart = event.timeframe.start;
                             final eventEnd = event.timeframe.end;

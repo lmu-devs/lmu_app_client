@@ -37,7 +37,7 @@ class WishlistEntrySection extends StatelessWidget {
       valueListenable: GetIt.I<WishlistUserPreferenceService>().likedWishlistIdsNotifier,
       builder: (context, likedWishlistIds, _) {
         return LmuContentTile(
-          content: _publicWishlistModels
+          contentList: _publicWishlistModels
               .map(
                 (wishlistModel) => LmuListItem.action(
                   title: wishlistModel.title,

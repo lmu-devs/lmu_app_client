@@ -48,7 +48,7 @@ class SportsGroupedCourseSection extends StatelessWidget {
                     const SizedBox(height: LmuSizes.size_12),
                     if (favoriteSports.isNotEmpty)
                       LmuContentTile(
-                        content: favoriteSportTypes.map(
+                        contentList: favoriteSportTypes.map(
                           (sport) {
                             return LmuListItem.action(
                               title: sport.title,
@@ -98,7 +98,7 @@ class SportsGroupedCourseSection extends StatelessWidget {
                     children: [
                       LmuTileHeadline.base(title: groupKey),
                       LmuContentTile(
-                        content: sportsInGroup.map(
+                        contentList: sportsInGroup.map(
                           (sport) {
                             final courseCount = sport.courses.length;
 

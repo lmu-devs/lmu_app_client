@@ -25,7 +25,7 @@ class SettingsApperancePage extends StatelessWidget {
             child: ListenableBuilder(
               listenable: themeProvider,
               builder: (context, _) => LmuContentTile(
-                content: ThemeMode.values
+                contentList: ThemeMode.values
                     .map(
                       (themeMode) => LmuListItem.action(
                         title: themeMode.localizedName(localization),

@@ -21,7 +21,7 @@ class TimelineLoadingView extends StatelessWidget {
                   const SizedBox(height: LmuSizes.size_16),
                   const LmuTileHeadlineLoading(),
                   LmuContentTile(
-                    content: List.generate(
+                    contentList: List.generate(
                       _count,
                       (index) => LmuListItemLoading(
                         titleLength: 2,
@@ -31,9 +31,7 @@ class TimelineLoadingView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: LmuSizes.size_16),
-                  const LmuContentTile(
-                    content: [LmuListItemLoading(titleLength: 2, subtitleLength: 3)],
-                  ),
+                  const LmuContentTile(content: LmuListItemLoading(titleLength: 2, subtitleLength: 3)),
                 ],
               ),
             ),

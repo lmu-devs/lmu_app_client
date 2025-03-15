@@ -44,44 +44,40 @@ class TuitionFeeWidget extends StatelessWidget {
                 child: isPayed
                     ? LmuContentTile(
                         key: const ValueKey('payed'),
-                        content: [
-                          LmuListItem.base(
-                            title: context.locals.home.tuitionFeePayed(
-                              _getSemester(DateTime.now(), context.locals.home),
-                              DateTime.now().year,
-                            ),
-                            titleColor: context.colors.successColors.textColors.strongColors.base,
-                            trailingArea: LmuCheckboxAction(
-                              isActive: isPayed,
-                            ),
-                            mainContentAlignment: MainContentAlignment.center,
-                            onTap: () async {
-                              preferenceServie.setTuitionPayed(!isPayed);
-                            },
+                        content: LmuListItem.base(
+                          title: context.locals.home.tuitionFeePayed(
+                            _getSemester(DateTime.now(), context.locals.home),
+                            DateTime.now().year,
                           ),
-                        ],
+                          titleColor: context.colors.successColors.textColors.strongColors.base,
+                          trailingArea: LmuCheckboxAction(
+                            isActive: isPayed,
+                          ),
+                          mainContentAlignment: MainContentAlignment.center,
+                          onTap: () async {
+                            preferenceServie.setTuitionPayed(!isPayed);
+                          },
+                        ),
                       )
                     : LmuContentTile(
                         key: const ValueKey('not_payed'),
                         contentTileType: ContentTileType.top,
-                        content: [
-                          LmuListItem.base(
-                            title: context.locals.home.tuitionFeeCountdown(
-                              CountdownUtil.getRemainingTime(
-                                context.locals.app,
-                                DateTime.now(),
-                                endDate,
-                              ),
+                        content: LmuListItem.base(
+                          title: context.locals.home.tuitionFeeCountdown(
+                            CountdownUtil.getRemainingTime(
+                              context.locals.app,
+                              DateTime.now(),
+                              endDate,
                             ),
-                            trailingArea: LmuCheckboxAction(
-                              isActive: isPayed,
-                            ),
-                            mainContentAlignment: MainContentAlignment.center,
-                            onTap: () async {
-                              preferenceServie.setTuitionPayed(!isPayed);
-                            },
                           ),
-                        ],
+                          trailingArea: LmuCheckboxAction(
+                            isActive: isPayed,
+                          ),
+                          mainContentAlignment: MainContentAlignment.center,
+                          onTap: () async {
+                            preferenceServie.setTuitionPayed(!isPayed);
+                          },
+                        ),
                       ),
               ),
             ),
@@ -106,7 +102,7 @@ class TuitionFeeWidget extends StatelessWidget {
                       ),
                       child: LmuContentTile(
                         contentTileType: ContentTileType.bottom,
-                        content: [
+                        contentList: [
                           LmuListItem.base(
                             title: context.locals.home.tuitionFee,
                             titleColor: context.colors.neutralColors.textColors.mediumColors.base,

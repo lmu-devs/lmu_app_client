@@ -22,7 +22,6 @@ class ExploreModule extends AppModule
 
   @override
   void onAppStartNotice() {
-    GetIt.I<ExploreMapService>().init();
     GetIt.I<ExploreSheetService>().init();
   }
 }

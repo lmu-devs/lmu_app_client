@@ -11,6 +11,10 @@ class DefaultMensaService implements MensaService {
   @override
   Stream<List<ExploreLocation>> get mensaExploreLocationsStream {
     final mensaCubit = GetIt.I.get<MensaCubit>();
+    final state = mensaCubit.state;
+    if (state is! MensaLoadSuccess && state is! MensaLoadInProgress) {
+      mensaCubit.loadMensaData();
+    }
 
     return mensaCubit.stream.withInitialValue(mensaCubit.state).map((state) {
       if (state is MensaLoadSuccess) {

@@ -31,7 +31,7 @@ class BenefitsCard extends StatelessWidget {
       onLongPress: () => _handleLongPress(context),
       child: LmuContentTile(
         padding: EdgeInsets.zero,
-        content: [
+        contentList: [
           if (benefit.imageUrl != null)
             ClipRRect(
               borderRadius: const BorderRadius.only(

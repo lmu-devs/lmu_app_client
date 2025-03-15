@@ -25,6 +25,7 @@ dependencies:
   path_provider: ^2.1.5
   flutter_sticky_header: ^0.7.0
   expandable_page_view: ^1.0.17
+  collection: ^1.18.0
 
 dev_dependencies:
   flutter_test:
@@ -34,8 +35,3 @@ dev_dependencies:
   go_router_builder: ^2.7.1
   build_runner: any
   build_verify: any
-
-flutter:
-  uses-material-design: true
-  assets:
-    - assets/

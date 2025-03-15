@@ -22,30 +22,32 @@ class _ExplorePageState extends State<ExplorePage> {
   late final ExploreMapContentSheetController mapContentSheetController;
   late final LmuSearchSheetController searchSheetController;
 
+  final _mapService = GetIt.I<ExploreMapService>();
+
   @override
   void initState() {
     super.initState();
+    _mapService.init();
+
     mapContentSheetController = ExploreMapContentSheetController();
     searchSheetController = LmuSearchSheetController();
   }
 
   @override
   Widget build(BuildContext context) {
-    final mapService = GetIt.I<ExploreMapService>();
-
     return SoftBlur(
       child: Stack(
         children: [
           FlutterMap(
-            mapController: mapService.mapController,
+            mapController: _mapService.mapController,
             options: MapOptions(
               backgroundColor: context.colors.neutralColors.backgroundColors.tile,
               initialCenter: const latlong.LatLng(48.150578, 11.580767),
               initialZoom: 15,
-              onPositionChanged: (camera, _) => mapService.updateZoomLevel(camera.zoom),
+              onPositionChanged: (camera, _) => _mapService.updateZoomLevel(camera.zoom),
               onTap: (_, __) {
                 mapContentSheetController.close();
-                mapService.deselectMarker();
+                _mapService.deselectMarker();
               },
             ),
             children: [
@@ -60,7 +62,7 @@ class _ExplorePageState extends State<ExplorePage> {
                 },
               ),
               ValueListenableBuilder(
-                valueListenable: mapService.exploreLocationsNotifier,
+                valueListenable: _mapService.exploreLocationsNotifier,
                 builder: (context, locations, _) {
                   return MarkerLayer(
                     rotate: true,
@@ -87,7 +89,7 @@ class _ExplorePageState extends State<ExplorePage> {
             ],
           ),
           ValueListenableBuilder(
-            valueListenable: mapService.exploreLocationsNotifier,
+            valueListenable: _mapService.exploreLocationsNotifier,
             builder: (context, locations, _) {
               final searchEntrys = locations.map(
                 (location) {
@@ -95,7 +97,7 @@ class _ExplorePageState extends State<ExplorePage> {
                     title: location.name,
                     subtitle: location.type.localizedName,
                     onTap: () {
-                      mapService.focusMarker(location.id);
+                      _mapService.focusMarker(location.id);
                       mapContentSheetController.open(location, fromSearch: true);
                     },
                     icon: location.type.icon,

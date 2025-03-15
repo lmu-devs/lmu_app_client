@@ -126,15 +126,13 @@ class ScreeningDetailsPage extends StatelessWidget {
                   ],
                   if (screening.note != null && screening.note!.isNotEmpty) ...[
                     LmuContentTile(
-                      content: [
-                        Padding(
-                          padding: const EdgeInsets.all(LmuSizes.size_8),
-                          child: LmuText.body(
-                            screening.note,
-                            color: context.colors.neutralColors.textColors.mediumColors.base,
-                          ),
+                      content: Padding(
+                        padding: const EdgeInsets.all(LmuSizes.size_8),
+                        child: LmuText.body(
+                          screening.note,
+                          color: context.colors.neutralColors.textColors.mediumColors.base,
                         ),
-                      ],
+                      ),
                     ),
                     const SizedBox(height: LmuSizes.size_24),
                   ],
@@ -230,7 +228,7 @@ class ScreeningDetailsPage extends StatelessWidget {
               child: Column(
                 children: [
                   LmuContentTile(
-                    content: [
+                    contentList: [
                       LmuListItem.base(
                         subtitle: context.locals.cinema.entry,
                         trailingTitle: DateFormat('HH:mm').format(DateTime.parse(screening.entryTime)),

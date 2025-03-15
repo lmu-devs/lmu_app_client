@@ -22,29 +22,19 @@ class LinksLoadingView extends StatelessWidget {
                 children: [
                   const SizedBox(height: LmuSizes.size_16),
                   LmuTileHeadline.base(title: BoneMock.chars(2)),
-                  LmuContentTile(
-                    content: List.generate(2, (index) => const LinkCardLoading()),
-                  ),
+                  LmuContentTile(contentList: List.generate(2, (index) => const LinkCardLoading())),
                   const SizedBox(height: LmuSizes.size_16),
                   LmuTileHeadline.base(title: BoneMock.chars(2)),
-                  const LmuContentTile(
-                    content: [LinkCardLoading()],
-                  ),
+                  const LmuContentTile(content: LinkCardLoading()),
                   const SizedBox(height: LmuSizes.size_16),
                   LmuTileHeadline.base(title: BoneMock.chars(2)),
-                  LmuContentTile(
-                    content: List.generate(2, (index) => const LinkCardLoading()),
-                  ),
+                  LmuContentTile(contentList: List.generate(2, (index) => const LinkCardLoading())),
                   const SizedBox(height: LmuSizes.size_16),
                   LmuTileHeadline.base(title: BoneMock.chars(2)),
-                  const LmuContentTile(
-                    content: [LinkCardLoading()],
-                  ),
+                  const LmuContentTile(content: LinkCardLoading()),
                   const SizedBox(height: LmuSizes.size_16),
                   LmuTileHeadline.base(title: BoneMock.chars(2)),
-                  LmuContentTile(
-                    content: List.generate(2, (index) => const LinkCardLoading()),
-                  ),
+                  LmuContentTile(contentList: List.generate(2, (index) => const LinkCardLoading())),
                   const SizedBox(height: LmuSizes.size_96),
                 ],
               ),
