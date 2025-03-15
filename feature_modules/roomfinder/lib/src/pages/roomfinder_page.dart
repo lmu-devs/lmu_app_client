@@ -18,6 +18,7 @@ class _RoomfinderPageState extends State<RoomfinderPage> {
   void initState() {
     super.initState();
     final roomfinderCubit = GetIt.I.get<RoomfinderCubit>();
+
     if (roomfinderCubit.state is! RoomfinderLoadSuccess) {
       roomfinderCubit.loadRoomfinderLocations();
     }
@@ -30,10 +31,10 @@ class _RoomfinderPageState extends State<RoomfinderPage> {
       leadingAction: LeadingAction.back,
       body: BlocBuilder<RoomfinderCubit, RoomfinderState>(
         bloc: GetIt.I.get<RoomfinderCubit>(),
-        builder: (context, state) {
+        builder: (_, state) {
           return LmuPageAnimationWrapper(
             child: state is RoomfinderLoadSuccess
-                ? RoomfinderContentView(key: const ValueKey("roomfinderContent"), cities: state.cities)
+                ? const RoomfinderContentView(key: ValueKey("roomfinderContent"))
                 : const RoomfinderLoadingView(key: ValueKey("roomfinderLoading")),
           );
         },

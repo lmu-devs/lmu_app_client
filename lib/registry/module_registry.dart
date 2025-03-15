@@ -1,4 +1,5 @@
 import 'package:core/api.dart';
+import 'package:core/core_services.dart';
 import 'package:core/module.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
@@ -10,7 +11,7 @@ class ModuleRegistry {
 
   final List<AppModule> modules;
 
-  Future init() async {
+  Future<void> init() async {
     String appName = await PackageInfoUtil().getAppName();
     String appVersion = await PackageInfoUtil().getAppVersion();
     String systemVersion = await DeviceInfoUtil().getOSVersion();
@@ -20,6 +21,8 @@ class ModuleRegistry {
     GetIt.I.registerSingleton<ThemeProvider>(ThemeProvider());
     final baseApiClient = GetIt.I.registerSingleton<BaseApiClient>(DefaultBaseApiClient());
     final languageProvider = GetIt.I.registerSingleton<LanguageProvider>(LanguageProvider());
+    GetIt.I.registerSingleton<LocationService>(LocationService(), dispose: (srv) => srv.dispose());
+
     await languageProvider.init();
     baseApiClient.locale = languageProvider.locale;
 

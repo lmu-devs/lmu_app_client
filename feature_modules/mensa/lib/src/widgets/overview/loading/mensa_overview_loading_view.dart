@@ -1,8 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
-import 'package:core/themes.dart';
-import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
@@ -62,19 +60,7 @@ class MensaOverviewLoadingView extends StatelessWidget {
               LmuTileHeadline.base(title: context.locals.canteen.allCanteens),
               Row(
                 children: [
-                  Container(
-                    height: LmuActionSizes.base,
-                    width: LmuActionSizes.base,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(LmuRadiusSizes.medium),
-                      border: Border.all(
-                        color: context.colors.neutralColors.borderColors.seperatorLight,
-                      ),
-                      image: DecorationImage(
-                        image: AssetImage(getPngAssetTheme('assets/maps_icon'), package: "mensa"),
-                      ),
-                    ),
-                  ),
+                  LmuMapImageButton(onTap: () {}),
                   const SizedBox(width: LmuSizes.size_8),
                   LmuButton(
                     title: context.locals.canteen.alphabetically,

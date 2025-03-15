@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -19,7 +20,7 @@ class MensaOverviewContentView extends StatefulWidget {
 }
 
 class _MensaOverviewContentViewState extends State<MensaOverviewContentView> {
-  final _mensaDistanceService = GetIt.I.get<MensaDistanceService>();
+  final _mensaDistanceService = GetIt.I.get<LocationService>();
   final _userPreferecesService = GetIt.I.get<MensaUserPreferencesService>();
 
   List<MensaModel> get _mensaModels => widget.mensaModels;

@@ -10,7 +10,6 @@ import 'services/services.dart';
 class MensaModule extends AppModule
     with
         LocalDependenciesProvidingAppModule,
-        NoticeableAppStartAppModule,
         PublicApiProvidingAppModule,
         PrivateDataContainingAppModule,
         LocalizedDataContainigAppModule {
@@ -26,18 +25,12 @@ class MensaModule extends AppModule
     GetIt.I
         .registerSingleton<MensaUserPreferencesService>(MensaUserPreferencesService(), dispose: (srv) => srv.dispose());
     GetIt.I.registerSingleton<MenuService>(MenuService(), dispose: (srv) => srv.dispose());
-    GetIt.I.registerSingleton<MensaDistanceService>(MensaDistanceService(), dispose: (srv) => srv.dispose());
     GetIt.I.registerSingleton<MensaStatusUpdateService>(MensaStatusUpdateService(), dispose: (srv) => srv.dispose());
   }
 
   @override
   void providePublicApi() {
     GetIt.I.registerSingleton<MensaService>(DefaultMensaService());
-  }
-
-  @override
-  void onAppStartNotice() {
-    GetIt.I.get<MensaDistanceService>().init();
   }
 
   @override

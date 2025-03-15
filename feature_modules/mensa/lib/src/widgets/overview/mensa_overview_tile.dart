@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/core_services.dart';
 import 'package:core/extensions.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
@@ -52,7 +53,7 @@ class MensaOverviewTile extends StatelessWidget {
     final type = mensaModel.type;
     final imageUrl = mensaModel.images.isNotEmpty ? mensaModel.images.first.url : null;
 
-    final distanceService = GetIt.I.get<MensaDistanceService>();
+    final distanceService = GetIt.I.get<LocationService>();
     final statusUpdateService = GetIt.I.get<MensaStatusUpdateService>();
 
     return Padding(
@@ -150,7 +151,9 @@ class MensaOverviewTile extends StatelessWidget {
                             ListenableBuilder(
                               listenable: distanceService,
                               builder: (context, _) {
-                                final distance = distanceService.getDistanceToMensa(mensaModel.location);
+                                final mensaLocation = mensaModel.location;
+                                final distance = distanceService.getDistance(
+                                    lat: mensaLocation.latitude, long: mensaLocation.longitude);
                                 return distance != null
                                     ? Padding(
                                         padding: const EdgeInsets.only(left: LmuSizes.size_8),

@@ -49,20 +49,23 @@ extension $RoomfinderMainRouteExtension on RoomfinderMainRoute {
 
 extension $RoomfinderBuildingDetailsRouteExtension on RoomfinderBuildingDetailsRoute {
   static RoomfinderBuildingDetailsRoute _fromState(GoRouterState state) => RoomfinderBuildingDetailsRoute(
-        state.extra as RoomfinderBuilding,
+        state.uri.queryParameters['building-id']!,
       );
 
   String get location => GoRouteData.$location(
         '/home/roomfinder/buildingDetails',
+        queryParams: {
+          'building-id': buildingId,
+        },
       );
 
-  void go(BuildContext context) => context.go(location, extra: $extra);
+  void go(BuildContext context) => context.go(location);
 
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location, extra: $extra);
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) => context.pushReplacement(location, extra: $extra);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
-  void replace(BuildContext context) => context.replace(location, extra: $extra);
+  void replace(BuildContext context) => context.replace(location);
 }
 
 extension $RoomfinderBuildingRoomDetailsRouteExtension on RoomfinderBuildingRoomDetailsRoute {

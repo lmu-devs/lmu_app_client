@@ -1,0 +1,4 @@
+enum RoomfinderSortOption {
+  alphabetically,
+  distance,
+}
