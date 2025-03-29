@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 import '../util/send_feedback.dart';
 
-class FeedbackModal extends StatelessWidget {
+class FeedbackModal extends StatefulWidget {
   const FeedbackModal({
     super.key,
     required this.feedbackOrigin,
@@ -17,10 +17,34 @@ class FeedbackModal extends StatelessWidget {
   final String feedbackOrigin;
 
   @override
+  State<FeedbackModal> createState() => _FeedbackModalState();
+}
+
+class _FeedbackModalState extends State<FeedbackModal> {
+  late final TextEditingController _textController;
+  late final ValueNotifier<String?> _feedbackNotifier;
+
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _textController = TextEditingController();
+    _feedbackNotifier = ValueNotifier<String?>(null);
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    _feedbackNotifier.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final localizations = context.locals.feedback;
-    final textController = TextEditingController();
-    final feedbackNotifier = ValueNotifier<String?>(null);
 
     return LmuMasterAppBar.bottomSheet(
       largeTitle: localizations.feedbackTitle,
@@ -41,16 +65,16 @@ class FeedbackModal extends StatelessWidget {
                   ),
                   const SizedBox(height: LmuSizes.size_48),
                   EmojiFeedbackSelector(
-                    feedbackNotifier: feedbackNotifier,
+                    feedbackNotifier: _feedbackNotifier,
                     onFeedbackSelected: (feedback) {
-                      feedbackNotifier.value = feedback;
+                      _feedbackNotifier.value = feedback;
                     },
                   ),
                   const SizedBox(height: LmuSizes.size_24),
                   LmuInputField(
                     hintText: localizations.feedbackInputHint,
                     isMultiline: true,
-                    controller: textController,
+                    controller: _textController,
                     isAutocorrect: true,
                   ),
                   const SizedBox(height: 400),
@@ -66,23 +90,33 @@ class FeedbackModal extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(LmuSizes.size_12),
                 child: ValueListenableBuilder<String?>(
-                  valueListenable: feedbackNotifier,
+                  valueListenable: _feedbackNotifier,
                   builder: (context, selectedFeedback, _) {
                     return LmuButton(
                       title: localizations.feedbackButton,
                       size: ButtonSize.large,
                       showFullWidth: true,
-                      state: selectedFeedback == null ? ButtonState.disabled : ButtonState.enabled,
+                      state: selectedFeedback == null
+                          ? ButtonState.disabled
+                          : _isLoading
+                              ? ButtonState.loading
+                              : ButtonState.enabled,
                       onTap: selectedFeedback == null
                           ? null
-                          : () => sendFeedback(
+                          : () async {
+                              setState(() => _isLoading = true);
+                              await sendFeedback(
                                 context: context,
                                 type: FeedbackType.general,
                                 rating: selectedFeedback,
-                                message: textController.text.isEmpty ? null : textController.text,
-                                screen: feedbackOrigin,
+                                message: _textController.text.isEmpty ? null : _textController.text,
+                                screen: widget.feedbackOrigin,
                                 tags: null,
-                              ),
+                              ).then((_) {
+                                Navigator.of(context).pop();
+                                setState(() => _isLoading = false);
+                              });
+                            },
                     );
                   },
                 ),
