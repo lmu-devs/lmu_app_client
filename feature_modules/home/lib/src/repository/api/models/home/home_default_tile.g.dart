@@ -18,5 +18,6 @@ Map<String, dynamic> _$HomeDefaultTileToJson(HomeDefaultTile instance) => <Strin
       'size': instance.size,
       'title': instance.title,
       'description': instance.description,
-      'data': instance.data,
+      'data': instance.data?.map((e) => e is HomeTile ? e.toJson() : e).toList(),
+      'type': $HomeTileTypeEnumMap[instance.type],
     };

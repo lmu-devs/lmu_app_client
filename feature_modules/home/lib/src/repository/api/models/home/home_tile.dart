@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'home_benefits_tile.dart';
 import 'home_default_tile.dart';
 import 'home_tile_type.dart';
 
@@ -23,7 +22,7 @@ abstract class HomeTile extends Equatable {
     final type = $enumDecode($HomeTileTypeEnumMap, json['type']);
 
     return switch (type) {
-      HomeTileType.benefits => HomeBenefitsTile.fromJson(json),
+      HomeTileType.benefits => HomeDefaultTile.fromJson(json),
       HomeTileType.cinemas => HomeDefaultTile.fromJson(json),
       HomeTileType.feedback => HomeDefaultTile.fromJson(json),
       HomeTileType.roomfinder => HomeDefaultTile.fromJson(json),
