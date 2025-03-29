@@ -22,6 +22,14 @@ part 'roomfinder_routes.g.dart';
     TypedGoRoute<RoomfinderRoomDetailsRoute>(
       path: 'roomDetails',
     ),
+    TypedGoRoute<RoomfinderSearchRoute>(
+      path: 'search',
+      routes: [
+        TypedGoRoute<RoomfinderSearchBuildingRoute>(
+          path: 'buildingDetails',
+        ),
+      ],
+    ),
   ],
 )
 class RoomfinderMainRoute extends GoRouteData {
@@ -56,4 +64,20 @@ class RoomfinderBuildingRoomDetailsRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => RoomfinderRoomDetailsPage(room: $extra, buildingId: "");
+}
+
+class RoomfinderSearchRoute extends GoRouteData {
+  const RoomfinderSearchRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const RoomfinderSearchPage();
+}
+
+class RoomfinderSearchBuildingRoute extends GoRouteData {
+  const RoomfinderSearchBuildingRoute(this.buildingId);
+
+  final String buildingId;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => RoomfinderBuildingDetailsPage(buildingId: buildingId);
 }

@@ -5,6 +5,7 @@ import 'package:shared_api/mensa.dart';
 import 'bloc/bloc.dart';
 import 'repository/repository.dart';
 import 'services/default_mensa_service.dart';
+import 'services/mensa_search_service.dart';
 import 'services/services.dart';
 
 class MensaModule extends AppModule
@@ -12,7 +13,8 @@ class MensaModule extends AppModule
         LocalDependenciesProvidingAppModule,
         PublicApiProvidingAppModule,
         PrivateDataContainingAppModule,
-        LocalizedDataContainigAppModule {
+        LocalizedDataContainigAppModule,
+        NoticeableAppStartAppModule {
   @override
   String get moduleName => 'MensaModule';
 
@@ -26,6 +28,8 @@ class MensaModule extends AppModule
         .registerSingleton<MensaUserPreferencesService>(MensaUserPreferencesService(), dispose: (srv) => srv.dispose());
     GetIt.I.registerSingleton<MenuService>(MenuService(), dispose: (srv) => srv.dispose());
     GetIt.I.registerSingleton<MensaStatusUpdateService>(MensaStatusUpdateService(), dispose: (srv) => srv.dispose());
+
+    GetIt.I.registerSingleton<MensaSearchService>(MensaSearchService(), dispose: (srv) => srv.dispose());
   }
 
   @override
@@ -42,5 +46,10 @@ class MensaModule extends AppModule
   void onLocaleChange() {
     GetIt.I.get<MenuService>().dispose();
     GetIt.I.get<TasteProfileCubit>().resetTasteProfile();
+  }
+
+  @override
+  void onAppStartNotice() {
+    GetIt.I.get<MensaSearchService>().init();
   }
 }

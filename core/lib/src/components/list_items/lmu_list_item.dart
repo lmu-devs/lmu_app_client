@@ -205,9 +205,8 @@ class LmuListItem extends StatelessWidget {
 
     return Column(
       children: [
-        InkWell(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: () {
             if (actionValueNotifier != null) {
               final currentValue = actionValueNotifier!.value;

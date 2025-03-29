@@ -204,5 +204,17 @@
   "withPerson": "with",
   "@withPerson": {
     "description": "Preposition for person"
+  },
+  "clear": "Clear",
+  "@clear": {
+    "description": "Clear"
+  },
+  "prevSearch": "Previous Search",
+  "@prevSearch": {
+    "description": "Previous Search"
+  },
+  "noResults": "No results",
+  "@noResults": {
+    "description": "No results"
   }
 }

@@ -19,55 +19,9 @@ class LinksContentView extends StatefulWidget {
 }
 
 class _LinksContentViewState extends State<LinksContentView> {
-  late final LmuSearchController _searchController;
-  late List<LmuSearchInput> _searchInputs;
-  late ValueNotifier<List<LinkModel>> _filteredLinks;
-  final ValueNotifier<bool> _hasSearchFocus = ValueNotifier(false);
-  final ValueNotifier<bool> _hasTextQuery = ValueNotifier(false);
+  List<LinkModel> get links => widget.links;
 
-  @override
-  void initState() {
-    super.initState();
-    _searchController = LmuSearchController();
-    _searchInputs = widget.links
-        .map((link) => LmuSearchInput(
-              title: link.title,
-              tags: link.aliases,
-            ))
-        .toList();
-
-    _filteredLinks = ValueNotifier(widget.links);
-
-    _searchController.addListener(_filterLinks);
-    _searchController.addListener(() {
-      _hasTextQuery.value = _searchController.hasQuery;
-    });
-  }
-
-  void _filterLinks() {
-    final query = _searchController.value.map((input) => input.title.toLowerCase()).toList();
-
-    if (query.isEmpty) {
-      if (_searchController.hasQuery && _searchController.noResult) {
-        _filteredLinks.value = [];
-      } else {
-        _filteredLinks.value = widget.links;
-      }
-    } else {
-      _filteredLinks.value =
-          widget.links.where((link) => query.any((q) => link.title.toLowerCase().contains(q))).toList();
-    }
-  }
-
-  @override
-  void dispose() {
-    _searchController.removeListener(_filterLinks);
-    _searchController.dispose();
-    _filteredLinks.dispose();
-    _hasSearchFocus.dispose();
-    _hasTextQuery.dispose();
-    super.dispose();
-  }
+  Map<String, List<LinkModel>> get _groupedLinks => _groupLinks(widget.links);
 
   @override
   Widget build(BuildContext context) {
@@ -82,42 +36,23 @@ class _LinksContentViewState extends State<LinksContentView> {
               child: Column(
                 children: [
                   const SizedBox(height: LmuSizes.size_16),
-                  ValueListenableBuilder<bool>(
-                    valueListenable: _hasSearchFocus,
-                    builder: (context, hasFocus, child) {
-                      return ValueListenableBuilder<bool>(
-                        valueListenable: _hasTextQuery,
-                        builder: (context, hasQuery, child) {
-                          return FavoriteLinkSection(
-                            links: widget.links,
-                            isSearchActive: hasFocus || hasQuery,
-                          );
-                        },
-                      );
-                    },
-                  ),
-                  ValueListenableBuilder<List<LinkModel>>(
-                    valueListenable: _filteredLinks,
-                    builder: (context, filteredLinks, child) {
-                      final groupedLinks = _groupLinks(filteredLinks);
-                      return groupedLinks.isNotEmpty
-                          ? Column(
-                              children: groupedLinks.entries.map((entry) {
-                                return Column(
-                                  children: [
-                                    LmuTileHeadline.base(title: entry.key),
-                                    LmuContentTile(
-                                      content: Column(
-                                        children: entry.value.map((link) => LinkCard(link: link)).toList(),
-                                      ),
-                                    ),
-                                    const SizedBox(height: LmuSizes.size_32),
-                                  ],
-                                );
-                              }).toList(),
-                            )
-                          : LmuIssueType(message: context.locals.app.searchEmpty);
-                    },
+                  FavoriteLinkSection(links: widget.links, isSearchActive: false),
+                  Column(
+                    children: _groupedLinks.entries.map(
+                      (entry) {
+                        return Column(
+                          children: [
+                            LmuTileHeadline.base(title: entry.key),
+                            LmuContentTile(
+                              content: Column(
+                                children: entry.value.map((link) => LinkCard(link: link)).toList(),
+                              ),
+                            ),
+                            const SizedBox(height: LmuSizes.size_32),
+                          ],
+                        );
+                      },
+                    ).toList(),
                   ),
                   const SizedBox(height: LmuSizes.size_6),
                   GetIt.I<FeedbackService>().getMissingItemInput(
@@ -127,20 +62,6 @@ class _LinksContentViewState extends State<LinksContentView> {
                   const SizedBox(height: LmuSizes.size_72 + LmuSizes.size_96),
                 ],
               ),
-            ),
-          ),
-        ),
-        Positioned(
-          left: 0,
-          right: 0,
-          bottom: 0,
-          child: Focus(
-            onFocusChange: (hasFocus) => _hasSearchFocus.value = hasFocus,
-            child: LmuSearchOverlay(
-              searchController: _searchController,
-              searchInputs: _searchInputs,
-              onCancel: () => _filteredLinks.value = widget.links,
-              onClear: () => _filteredLinks.value = widget.links,
             ),
           ),
         ),

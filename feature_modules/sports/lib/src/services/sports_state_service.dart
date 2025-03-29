@@ -47,7 +47,6 @@ class SportsStateService {
   Future<void> toggleFavoriteSport(String courseId, String sportType) async {
     final currentFavorites = List.of(_favoriteSportsCoursesNotifier.value);
 
-    // Find existing entry for the given sport type
     final existingEntry = currentFavorites.firstWhere(
       (entry) => entry.category == sportType,
       orElse: () => SportsFavorites(category: sportType, favorites: []),
@@ -55,62 +54,25 @@ class SportsStateService {
 
     if (existingEntry.favorites.isNotEmpty) {
       if (existingEntry.favorites.contains(courseId)) {
-        // Remove courseId if it exists
         existingEntry.favorites.remove(courseId);
         if (existingEntry.favorites.isEmpty) {
           currentFavorites.remove(existingEntry);
         }
       } else {
-        // Add courseId if it doesn't exist
         existingEntry.favorites.add(courseId);
       }
     } else {
-      // Add a new entry if it doesn't exist
       currentFavorites.add(SportsFavorites(category: sportType, favorites: [courseId]));
     }
 
-    // Sort entries alphabetically by category
     currentFavorites.sort((a, b) => a.category.compareTo(b.category));
 
-    // Update notifier and save to shared preferences
     _favoriteSportsCoursesNotifier.value = currentFavorites;
     await _sportsRepo.saveFavoriteSports(currentFavorites);
   }
 
   String _baseUrl = "";
   String constructUrl(String title) => _baseUrl.constructSportsUrl(title);
-
-  void searchValues(List<String> values, bool nothingFound) {
-    bool isSearchActive = values.isNotEmpty || nothingFound;
-    _isSearchActiveNotifier.value = isSearchActive;
-    if (nothingFound) {
-      _filteredGroupedSportsNotifier.value = {};
-      _isSearchActiveNotifier.value = true;
-      return;
-    }
-    if (values.isEmpty) {
-      _filteredGroupedSportsNotifier.value = _initialSportTypes;
-      return;
-    }
-    _filteredGroupedSportsNotifier.value = _initialSportTypes.entries.fold<Map<String, List<SportsType>>>(
-      {},
-      (acc, entry) {
-        final key = entry.key;
-        final value = entry.value;
-
-        final filteredValue = value.where((sport) {
-          final title = sport.title.toLowerCase();
-          return values.any((value) => title.contains(value.toLowerCase()));
-        }).toList();
-
-        if (filteredValue.isNotEmpty) {
-          acc[key] = filteredValue;
-        }
-
-        return acc;
-      },
-    );
-  }
 
   void _updateFilteredSports() {
     final currentFilterOptions = _filterOptionsNotifier.value;

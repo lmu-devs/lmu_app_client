@@ -8,6 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_api/explore.dart';
 
 import '../repository/api/enums/roomfinder_sort_option.dart';
+import '../routes/roomfinder_routes.dart';
 import '../services/roomfinder_filter_service.dart';
 
 class RoomfinderButtonSection extends StatefulWidget {
@@ -36,6 +37,11 @@ class _RoomfinderButtonSectionState extends State<RoomfinderButtonSection> {
         Row(
           children: [
             LmuMapImageButton(onTap: () => GetIt.I<ExploreService>().navigateToExplore(context)),
+            const SizedBox(width: LmuSizes.size_8),
+            LmuIconButton(
+              icon: LucideIcons.search,
+              onPressed: () => const RoomfinderSearchRoute().go(context),
+            ),
             const SizedBox(width: LmuSizes.size_8),
             ValueListenableBuilder(
               valueListenable: _sortOptionNotifier,

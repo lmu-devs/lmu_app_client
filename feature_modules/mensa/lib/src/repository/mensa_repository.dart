@@ -50,6 +50,10 @@ abstract class MensaRepository {
   Future<void> deleteAllLocalData();
 
   Future<void> deleteAllLocalizedData();
+
+  Future<void> saveRecentSearches(List<String> values);
+
+  Future<List<String>> getRecentSearches();
 }
 
 /// MensaRepository implementation for fetching mensa data from the API
@@ -74,6 +78,8 @@ class ConnectedMensaRepository implements MensaRepository {
   static const String _mensaSortOptionKey = 'mensa_sort_option';
   static const String _menuPriceCategory = 'menu_price_category';
   static const String _menuBaseKey = 'mensa_menu_base_key';
+
+  static const String _recentSearchesKey = 'mensa_recentSearches';
 
   @override
   Future<List<MensaModel>> getMensaModels() async {
@@ -332,6 +338,7 @@ class ConnectedMensaRepository implements MensaRepository {
     await prefs.remove(_menuPriceCategory);
     await prefs.remove(_menuBaseKey);
     await prefs.remove(_unsyncedFavoriteDishIdsKey);
+    await prefs.remove(_recentSearchesKey);
 
     _appLogger.logMessage('[MensaRepository]: Deleted all local data');
   }
@@ -343,5 +350,18 @@ class ConnectedMensaRepository implements MensaRepository {
     await prefs.remove(_tasteProfileKey);
 
     _appLogger.logMessage('[MensaRepository]: Deleted all localized data');
+  }
+
+  @override
+  Future<void> saveRecentSearches(List<String> values) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(_recentSearchesKey, values);
+  }
+
+  @override
+  Future<List<String>> getRecentSearches() async {
+    final prefs = await SharedPreferences.getInstance();
+    final recentSearches = prefs.getStringList(_recentSearchesKey) ?? [];
+    return recentSearches;
   }
 }

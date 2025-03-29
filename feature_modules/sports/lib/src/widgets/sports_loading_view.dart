@@ -1,7 +1,9 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 
 class SportsLoadingView extends StatelessWidget {
   const SportsLoadingView({super.key});
@@ -54,6 +56,30 @@ class SportsLoadingView extends StatelessWidget {
                       action: LmuListItemAction.chevron,
                     ),
                   ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: LmuSizes.size_16),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+            child: Column(
+              children: [
+                const LmuTileHeadlineLoading(titleLength: 2),
+                Row(
+                  children: [
+                    LmuIconButton(
+                      icon: LucideIcons.search,
+                      isDisabled: true,
+                      onPressed: () {},
+                    ),
+                    const SizedBox(width: LmuSizes.size_8),
+                    LmuButton(
+                      title: context.locals.app.available,
+                      emphasis: ButtonEmphasis.secondary,
+                      state: ButtonState.disabled,
+                    ),
+                  ],
                 ),
               ],
             ),
