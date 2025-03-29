@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/home_api_client.dart';
@@ -25,10 +27,24 @@ class ConnectedHomeRepository implements HomeRepository {
   final HomeApiClient homeApiClient;
 
   static const String _likedLinksKey = 'liked_links_key';
+  final String _homeDataKey = 'home_data_key';
 
   @override
   Future<HomeData> getHomeData() async {
-    return await homeApiClient.getHomeData();
+    final prefs = await SharedPreferences.getInstance();
+
+    try {
+      final data = await homeApiClient.getHomeData();
+      await prefs.setString(_homeDataKey, jsonEncode(data.toJson()));
+      return data;
+    } catch (e) {
+      final cachedData = prefs.getString(_homeDataKey);
+      if (cachedData != null) {
+        return HomeData.fromJson(jsonDecode(cachedData));
+      } else {
+        rethrow;
+      }
+    }
   }
 
   @override

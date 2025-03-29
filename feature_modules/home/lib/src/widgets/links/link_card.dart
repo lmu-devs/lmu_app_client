@@ -20,6 +20,7 @@ class LinkCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appLocals = context.locals.app;
     return LmuListItem.base(
       mainContentAlignment: MainContentAlignment.top,
       title: link.title,
@@ -41,10 +42,28 @@ class LinkCard extends StatelessWidget {
       trailingArea: ValueListenableBuilder<List<String>>(
         valueListenable: GetIt.I<HomePreferencesService>().likedLinksNotifier,
         builder: (context, likedLinkTitles, child) {
+          final isFavorite = likedLinkTitles.contains(link.title);
           return GestureDetector(
             behavior: HitTestBehavior.translucent,
             onTap: () async {
-              await GetIt.I<HomePreferencesService>().toggleLikedLinks(link.title);
+              GetIt.I<HomePreferencesService>().toggleLikedLinks(link.title);
+              if (isFavorite) {
+                LmuToast.show(
+                  context: context,
+                  type: ToastType.success,
+                  message: appLocals.favoriteRemoved,
+                  actionText: appLocals.undo,
+                  onActionPressed: () {
+                    GetIt.I<HomePreferencesService>().toggleLikedLinks(link.title);
+                  },
+                );
+              } else {
+                LmuToast.show(
+                  context: context,
+                  type: ToastType.success,
+                  message: appLocals.favoriteAdded,
+                );
+              }
               LmuVibrations.secondary();
             },
             child: Padding(

@@ -6,7 +6,7 @@ import 'package:feedback/src/util/feedback_types.dart';
 import 'package:feedback/src/util/send_feedback.dart';
 import 'package:flutter/material.dart';
 
-class BugModal extends StatelessWidget {
+class BugModal extends StatefulWidget {
   const BugModal({
     super.key,
     required this.feedbackOrigin,
@@ -15,14 +15,40 @@ class BugModal extends StatelessWidget {
   final String feedbackOrigin;
 
   @override
+  State<BugModal> createState() => _BugModalState();
+}
+
+class _BugModalState extends State<BugModal> {
+  late final TextEditingController _textController;
+  late final ValueNotifier<bool> _textNotifier;
+
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _textController = TextEditingController();
+    _textNotifier = ValueNotifier<bool>(false);
+
+    _textController.addListener(_onTextControllerValue);
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    _textNotifier.dispose();
+
+    super.dispose();
+  }
+
+  void _onTextControllerValue() {
+    _textNotifier.value = _textController.text.isNotEmpty;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final localizations = context.locals.feedback;
-    final textController = TextEditingController();
-    final textNotifier = ValueNotifier<bool>(false);
-
-    textController.addListener(() {
-      textNotifier.value = textController.text.isNotEmpty;
-    });
 
     return LmuMasterAppBar.bottomSheet(
       largeTitle: localizations.bugTitle,
@@ -43,7 +69,7 @@ class BugModal extends StatelessWidget {
                   const SizedBox(height: LmuSizes.size_32),
                   LmuInputField(
                     hintText: localizations.bugInputHint,
-                    controller: textController,
+                    controller: _textController,
                     isAutofocus: true,
                     isMultiline: true,
                     isAutocorrect: true,
@@ -61,22 +87,32 @@ class BugModal extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(LmuSizes.size_12),
                 child: ValueListenableBuilder<bool>(
-                  valueListenable: textNotifier,
+                  valueListenable: _textNotifier,
                   builder: (context, isTextNotEmpty, _) {
                     return LmuButton(
                       title: localizations.bugButton,
                       size: ButtonSize.large,
                       showFullWidth: true,
-                      state: isTextNotEmpty ? ButtonState.enabled : ButtonState.disabled,
+                      state: isTextNotEmpty
+                          ? _isLoading
+                              ? ButtonState.loading
+                              : ButtonState.enabled
+                          : ButtonState.disabled,
                       onTap: isTextNotEmpty
-                          ? () => sendFeedback(
+                          ? () async {
+                              setState(() => _isLoading = true);
+                              await sendFeedback(
                                 context: context,
                                 type: FeedbackType.bug,
                                 rating: null,
-                                message: textController.text,
-                                screen: feedbackOrigin,
+                                message: _textController.text,
+                                screen: widget.feedbackOrigin,
                                 tags: null,
-                              )
+                              ).then((_) {
+                                Navigator.of(context).pop();
+                                setState(() => _isLoading = false);
+                              });
+                            }
                           : null,
                     );
                   },

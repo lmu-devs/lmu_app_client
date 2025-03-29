@@ -18,23 +18,24 @@ Future<void> sendFeedback({
 }) async {
   final localizations = context.locals.feedback;
 
-  try {
-    String appVersion = _getAppVersion();
-    String systemVersion = GetIt.I<String>(instanceName: 'systemVersion');
+  String appVersion = _getAppVersion();
+  String systemVersion = GetIt.I<String>(instanceName: 'systemVersion');
 
-    await GetIt.I.get<FeedbackRepository>().saveFeedback(
-          FeedbackModel(
-            type: type.getValue(),
-            rating: rating,
-            message: message,
-            screen: screen,
-            tags: tags,
-            appVersion: appVersion,
-            systemVersion: systemVersion,
-          ),
-        );
-    if (context.mounted) {
-      Navigator.pop(context);
+  await GetIt.I
+      .get<FeedbackRepository>()
+      .saveFeedback(
+        FeedbackModel(
+          type: type.getValue(),
+          rating: rating,
+          message: message,
+          screen: screen,
+          tags: tags,
+          appVersion: appVersion,
+          systemVersion: systemVersion,
+        ),
+      )
+      .then(
+    (_) {
       LmuToast.show(
         context: context,
         message: type == FeedbackType.general
@@ -45,10 +46,9 @@ Future<void> sendFeedback({
         type: ToastType.success,
       );
       LmuVibrations.success();
-    }
-  } catch (e) {
-    if (context.mounted) {
-      Navigator.pop(context);
+    },
+  ).onError(
+    (e, _) {
       LmuToast.show(
         context: context,
         message: type == FeedbackType.general
@@ -59,8 +59,8 @@ Future<void> sendFeedback({
         type: ToastType.error,
       );
       LmuVibrations.error();
-    }
-  }
+    },
+  );
 }
 
 String _getAppVersion() {

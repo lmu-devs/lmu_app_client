@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import '../util/feedback_types.dart';
 import '../util/send_feedback.dart';
 
-class SuggestionModal extends StatelessWidget {
+class SuggestionModal extends StatefulWidget {
   const SuggestionModal({
     super.key,
     required this.feedbackOrigin,
@@ -16,14 +16,40 @@ class SuggestionModal extends StatelessWidget {
   final String feedbackOrigin;
 
   @override
+  State<SuggestionModal> createState() => _SuggestionModalState();
+}
+
+class _SuggestionModalState extends State<SuggestionModal> {
+  late final TextEditingController _textController;
+  late final ValueNotifier<bool> _textNotifier;
+
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _textController = TextEditingController();
+    _textNotifier = ValueNotifier<bool>(false);
+
+    _textController.addListener(_onTextControllerValue);
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    _textNotifier.dispose();
+
+    super.dispose();
+  }
+
+  void _onTextControllerValue() {
+    _textNotifier.value = _textController.text.isNotEmpty;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final localizations = context.locals.feedback;
-    final textController = TextEditingController();
-    final textNotifier = ValueNotifier<bool>(false);
-
-    textController.addListener(() {
-      textNotifier.value = textController.text.isNotEmpty;
-    });
 
     return LmuMasterAppBar.bottomSheet(
       largeTitle: localizations.suggestionTitle,
@@ -44,7 +70,7 @@ class SuggestionModal extends StatelessWidget {
                   const SizedBox(height: LmuSizes.size_32),
                   LmuInputField(
                     hintText: localizations.suggestionInputHint,
-                    controller: textController,
+                    controller: _textController,
                     isAutofocus: true,
                     isMultiline: true,
                     isAutocorrect: true,
@@ -62,22 +88,32 @@ class SuggestionModal extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(LmuSizes.size_12),
                 child: ValueListenableBuilder<bool>(
-                  valueListenable: textNotifier,
+                  valueListenable: _textNotifier,
                   builder: (context, isTextNotEmpty, _) {
                     return LmuButton(
                       title: localizations.suggestionButton,
                       size: ButtonSize.large,
                       showFullWidth: true,
-                      state: isTextNotEmpty ? ButtonState.enabled : ButtonState.disabled,
+                      state: isTextNotEmpty
+                          ? _isLoading
+                              ? ButtonState.loading
+                              : ButtonState.enabled
+                          : ButtonState.disabled,
                       onTap: isTextNotEmpty
-                          ? () => sendFeedback(
+                          ? () async {
+                              setState(() => _isLoading = true);
+                              await sendFeedback(
                                 context: context,
                                 type: FeedbackType.suggestion,
                                 rating: null,
-                                message: textController.text,
-                                screen: feedbackOrigin,
+                                message: _textController.text,
+                                screen: widget.feedbackOrigin,
                                 tags: null,
-                              )
+                              ).then((_) {
+                                Navigator.of(context).pop();
+                                setState(() => _isLoading = false);
+                              });
+                            }
                           : null,
                     );
                   },
