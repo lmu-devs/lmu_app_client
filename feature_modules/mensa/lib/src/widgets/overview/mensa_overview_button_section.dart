@@ -104,7 +104,6 @@ class _SortOptionActionSheetContent extends StatelessWidget {
                       ),
                       onTap: () async {
                         if (sortOption == SortOption.distance) {
-                          GetIt.I.get<LocationService>().updatePosition();
                           bool dontSort = false;
                           await PermissionsService.isLocationPermissionGranted().then(
                             (isPermissionGranted) async {
@@ -117,6 +116,9 @@ class _SortOptionActionSheetContent extends StatelessWidget {
                                   if (!isLocationServicesEnabled) {
                                     dontSort = true;
                                     await PermissionsService.showLocationServiceDisabledDialog(context);
+                                  }
+                                  if (isPermissionGranted && isLocationServicesEnabled) {
+                                    GetIt.I.get<LocationService>().updatePosition();
                                   }
                                 },
                               );

@@ -171,12 +171,18 @@ class _SortOptionActionSheetContent extends StatelessWidget {
         final isActive = sortOption == sortOptionNotifier.value;
 
         return LmuListItem.base(
-          title: sortOption.title(context.locals.cinema),
-          titleColor: isActive ? context.colors.brandColors.textColors.strongColors.base : null,
+          mainContentAlignment: MainContentAlignment.center,
+          title: isActive ? sortOption.title(context.locals.cinema) : null,
+          subtitle: isActive ? null : sortOption.title(context.locals.cinema),
+          titleColor: isActive
+              ? context.colors.brandColors.textColors.strongColors.base
+              : context.colors.neutralColors.textColors.mediumColors.base,
           leadingArea: LmuIcon(
             icon: sortOption.icon,
             size: LmuIconSizes.medium,
-            color: isActive ? context.colors.brandColors.textColors.strongColors.base : null,
+            color: isActive
+                ? context.colors.brandColors.textColors.strongColors.base
+                : context.colors.neutralColors.textColors.mediumColors.base,
           ),
           onTap: () {
             sortOptionNotifier.value = sortOption;

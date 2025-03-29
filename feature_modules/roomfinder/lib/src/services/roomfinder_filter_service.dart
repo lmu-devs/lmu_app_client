@@ -91,14 +91,13 @@ class RoomfinderFilterService {
   }
 
   Future<bool> hasLocationPermission() async {
-    await GetIt.I.get<LocationService>().updatePosition();
-
     final isLocationPermissionGranted = await PermissionsService.isLocationPermissionGranted();
     if (!isLocationPermissionGranted) return false;
 
     final isLocationServicesEnabled = await PermissionsService.isLocationServicesEnabled();
     if (!isLocationServicesEnabled) return false;
 
+    await GetIt.I.get<LocationService>().updatePosition();
     return true;
   }
 }
