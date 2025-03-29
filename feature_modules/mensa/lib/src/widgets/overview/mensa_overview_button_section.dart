@@ -11,6 +11,7 @@ import 'package:shared_api/explore.dart';
 
 import '../../repository/api/models/mensa/mensa_model.dart';
 import '../../repository/api/models/user_preferences/sort_option.dart';
+import '../../routes/mensa_routes.dart';
 import '../../services/services.dart';
 
 class MensaOverviewButtonSection extends StatelessWidget {
@@ -27,6 +28,11 @@ class MensaOverviewButtonSection extends StatelessWidget {
     return Row(
       children: [
         LmuMapImageButton(onTap: () => GetIt.I<ExploreService>().navigateToExplore(context)),
+        const SizedBox(width: LmuSizes.size_8),
+        LmuIconButton(
+          icon: LucideIcons.search,
+          onPressed: () => const MensaSearchRoute().go(context),
+        ),
         const SizedBox(width: LmuSizes.size_8),
         ValueListenableBuilder(
           valueListenable: userPreferencesService.sortOptionNotifier,

@@ -62,6 +62,12 @@ class MensaOverviewLoadingView extends StatelessWidget {
                 children: [
                   LmuMapImageButton(onTap: () {}),
                   const SizedBox(width: LmuSizes.size_8),
+                  LmuIconButton(
+                    icon: LucideIcons.search,
+                    isDisabled: true,
+                    onPressed: () {},
+                  ),
+                  const SizedBox(width: LmuSizes.size_8),
                   LmuButton(
                     title: context.locals.canteen.alphabetically,
                     emphasis: ButtonEmphasis.secondary,

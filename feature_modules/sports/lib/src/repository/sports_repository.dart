@@ -13,10 +13,16 @@ abstract class SportsRepository {
   Future<void> saveFavoriteSports(List<SportsFavorites> favoriteSports);
 
   Future<List<SportsFavorites>> getFavoriteSports();
+
+  Future<void> saveRecentSearches(List<String> values);
+
+  Future<List<String>> getRecentSearches();
 }
 
 class ConnectedSportsRepository implements SportsRepository {
   final _favoriteSportsKey = 'favoriteSports';
+  final _recentSearchesKey = 'sports_recentSearches';
+
   final _apiClient = GetIt.I.get<SportsApiClient>();
 
   @override
@@ -43,5 +49,18 @@ class ConnectedSportsRepository implements SportsRepository {
 
     final List<dynamic> decodedList = jsonDecode(jsonString);
     return decodedList.map((e) => SportsFavorites.fromJson(e)).toList();
+  }
+
+  @override
+  Future<void> saveRecentSearches(List<String> values) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(_recentSearchesKey, values);
+  }
+
+  @override
+  Future<List<String>> getRecentSearches() async {
+    final prefs = await SharedPreferences.getInstance();
+    final recentSearches = prefs.getStringList(_recentSearchesKey) ?? [];
+    return recentSearches;
   }
 }

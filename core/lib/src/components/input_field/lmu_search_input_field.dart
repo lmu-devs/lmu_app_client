@@ -45,10 +45,10 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> with SingleTi
   static const _animationDuration = Duration(milliseconds: 300);
   final Curve _animationCurve = LmuAnimations.fastSmooth;
   static const _baseIconConstraints = BoxConstraints(
-    minWidth: 48,
-    maxWidth: 48,
-    minHeight: 48,
-    maxHeight: 48,
+    minWidth: 44,
+    maxWidth: 44,
+    minHeight: 44,
+    maxHeight: 44,
   );
   static const _focusedIconConstraints = BoxConstraints(
     minHeight: 16,
@@ -62,7 +62,7 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> with SingleTi
 
   InputState _inputState = InputState.base;
 
-  bool get _showCancelButton => _inputState == InputState.active || _inputState == InputState.typing;
+  //bool get _showCancelButton => _inputState == InputState.active || _inputState == InputState.typing;
 
   TextEditingController get _controller => widget.controller;
 
@@ -110,50 +110,39 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> with SingleTi
   @override
   Widget build(BuildContext context) {
     final localizations = context.locals.app;
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Expanded(
-          child: AnimatedBuilder(
-            animation: _constraintsAnimation,
-            builder: (context, child) => LmuInputField(
-              hintText: localizations.search,
-              controller: _controller,
-              keyboardType: TextInputType.text,
-              focusNode: _focusNode,
-              inputState: _inputState,
-              isAutocorrect: widget.isAutocorrect,
-              leadingIcon: _buildLeadingIcon(inputState: _inputState),
-              leadingIconConstraints: _buildLeadingIconConstraints(_inputState),
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 0,
-                horizontal: LmuSizes.size_16,
-              ),
-              trailingIcon: _buildTrailingIcon(
-                inputState: _inputState,
-                context: context,
-              ),
-              onTap: () => widget.onTap?.call(_inputState),
-              onTapOutside: widget.onOutsideTap,
-              onSubmitted: widget.onSubmitted,
-              onChanged: (value) {
-                _updateInputState();
-                widget.onChanged?.call(value);
-              },
-              onClearPressed: () {
-                widget.onClearPressed?.call();
-                _updateInputState();
-              },
-              focusAfterClear: widget.focusAfterClear,
-              isAutofocus: widget.isAutofocus,
-            ),
-          ),
+    return AnimatedBuilder(
+      animation: _constraintsAnimation,
+      builder: (context, child) => LmuInputField(
+        hintText: localizations.search,
+        controller: _controller,
+        keyboardType: TextInputType.text,
+        focusNode: _focusNode,
+        inputState: _inputState,
+        isAutocorrect: widget.isAutocorrect,
+        leadingIcon: _buildLeadingIcon(inputState: _inputState),
+        leadingIconConstraints: _buildLeadingIconConstraints(_inputState),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 0,
+          horizontal: LmuSizes.size_16,
         ),
-        _buildSuffix(
+        trailingIcon: _buildTrailingIcon(
           inputState: _inputState,
           context: context,
         ),
-      ],
+        onTap: () => widget.onTap?.call(_inputState),
+        onTapOutside: widget.onOutsideTap,
+        onSubmitted: widget.onSubmitted,
+        onChanged: (value) {
+          _updateInputState();
+          widget.onChanged?.call(value);
+        },
+        onClearPressed: () {
+          widget.onClearPressed?.call();
+          _updateInputState();
+        },
+        focusAfterClear: widget.focusAfterClear,
+        isAutofocus: widget.isAutofocus,
+      ),
     );
   }
 
@@ -179,7 +168,12 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> with SingleTi
           ),
         );
       },
-      child: inputState == InputState.base ? const Icon(LucideIcons.search) : null,
+      child: inputState == InputState.base
+          ? const LmuIcon(
+              icon: LucideIcons.search,
+              size: LmuIconSizes.mediumSmall,
+            )
+          : null,
     );
   }
 
@@ -201,28 +195,20 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> with SingleTi
     );
   }
 
-  static Widget _getTrailingIconByState(
-    InputState inputState,
-    BuildContext context,
-  ) {
+  Widget _getTrailingIconByState(InputState inputState, BuildContext context) {
     switch (inputState) {
       case InputState.base:
       case InputState.active:
         return const SizedBox.shrink();
-      case InputState.typing:
-        return Icon(
-          key: const ValueKey('typing'),
-          LucideIcons.x,
-          color: context.colors.neutralColors.textColors.weakColors.base,
-          size: LmuIconSizes.medium,
-        );
       case InputState.filled:
-        return Icon(
-          key: const ValueKey('filled'),
-          LucideIcons.x,
-          color: context.colors.neutralColors.textColors.strongColors.base,
-          size: LmuIconSizes.medium,
+      case InputState.typing:
+        return LmuIcon(
+          key: const ValueKey('typing'),
+          icon: LucideIcons.x,
+          color: context.colors.neutralColors.textColors.weakColors.base,
+          size: LmuIconSizes.mediumSmall,
         );
+
       case InputState.loading:
         return const LmuProgressIndicator(
           color: ProgressIndicatorColor.weak,
@@ -231,62 +217,62 @@ class _LmuSearchInputFieldState extends State<LmuSearchInputField> with SingleTi
     }
   }
 
-  Widget _buildSuffix({
-    required InputState inputState,
-    required BuildContext context,
-  }) {
-    return AnimatedSwitcher(
-      duration: _animationDuration,
-      switchInCurve: LmuAnimations.fastSmooth,
-      switchOutCurve: LmuAnimations.fastSmooth.flipped,
-      layoutBuilder: (Widget? currentChild, List<Widget> previousChildren) {
-        return Stack(
-          alignment: Alignment.centerRight,
-          children: <Widget>[
-            ...previousChildren,
-            if (currentChild != null) currentChild,
-          ],
-        );
-      },
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        return FadeTransition(
-          opacity: animation,
-          child: SizeTransition(
-            sizeFactor: animation,
-            axis: Axis.horizontal,
-            axisAlignment: 1.0,
-            child: child,
-          ),
-        );
-      },
-      child: _getSuffixByState(inputState, context),
-    );
-  }
+  // Widget _buildSuffix({
+  //   required InputState inputState,
+  //   required BuildContext context,
+  // }) {
+  //   return AnimatedSwitcher(
+  //     duration: _animationDuration,
+  //     switchInCurve: LmuAnimations.fastSmooth,
+  //     switchOutCurve: LmuAnimations.fastSmooth.flipped,
+  //     layoutBuilder: (Widget? currentChild, List<Widget> previousChildren) {
+  //       return Stack(
+  //         alignment: Alignment.centerRight,
+  //         children: <Widget>[
+  //           ...previousChildren,
+  //           if (currentChild != null) currentChild,
+  //         ],
+  //       );
+  //     },
+  //     transitionBuilder: (Widget child, Animation<double> animation) {
+  //       return FadeTransition(
+  //         opacity: animation,
+  //         child: SizeTransition(
+  //           sizeFactor: animation,
+  //           axis: Axis.horizontal,
+  //           axisAlignment: 1.0,
+  //           child: child,
+  //         ),
+  //       );
+  //     },
+  //     child: _getSuffixByState(inputState, context),
+  //   );
+  // }
 
-  Widget _getSuffixByState(
-    InputState inputState,
-    BuildContext context,
-  ) {
-    if (_showCancelButton) {
-      return Padding(
-        key: const ValueKey('cancel_button'),
-        padding: const EdgeInsets.only(left: LmuSizes.size_12),
-        child: LmuButton(
-          title: context.locals.app.cancel,
-          emphasis: ButtonEmphasis.link,
-          size: ButtonSize.large,
-          increaseTouchTarget: true,
-          onTap: _handleCancelTap,
-        ),
-      );
-    }
+  // Widget _getSuffixByState(
+  //   InputState inputState,
+  //   BuildContext context,
+  // ) {
+  //   if (_showCancelButton) {
+  //     return Padding(
+  //       key: const ValueKey('cancel_button'),
+  //       padding: const EdgeInsets.only(left: LmuSizes.size_12),
+  //       child: LmuButton(
+  //         title: context.locals.app.cancel,
+  //         emphasis: ButtonEmphasis.link,
+  //         size: ButtonSize.large,
+  //         increaseTouchTarget: true,
+  //         onTap: _handleCancelTap,
+  //       ),
+  //     );
+  //   }
 
-    return const SizedBox.shrink(key: ValueKey('empty'));
-  }
+  //   return const SizedBox.shrink(key: ValueKey('empty'));
+  // }
 
-  void _handleCancelTap() {
-    _controller.clear();
-    _updateInputState();
-    widget.onCancelPressed?.call();
-  }
+  // void _handleCancelTap() {
+  //   _controller.clear();
+  //   _updateInputState();
+  //   widget.onCancelPressed?.call();
+  // }
 }

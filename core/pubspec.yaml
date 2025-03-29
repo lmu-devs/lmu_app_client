@@ -43,6 +43,7 @@ dependencies:
   connectivity_plus: ^6.1.3
   geolocator: ^13.0.2
   rxdart: ^0.28.0
+  fuzzywuzzy: ^1.2.0
 
 dev_dependencies:
   flutter_test:

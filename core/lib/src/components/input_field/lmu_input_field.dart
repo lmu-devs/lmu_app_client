@@ -92,7 +92,6 @@ class _LmuInputFieldState extends State<LmuInputField> {
 
   @override
   void dispose() {
-    _focusNode.dispose();
     widget.controller.removeListener(_updateInputState);
 
     super.dispose();
@@ -122,7 +121,13 @@ class _LmuInputFieldState extends State<LmuInputField> {
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.circular(LmuRadiusSizes.medium);
     final fillColor = InputFieldColorHelper.getFillColor(context, _inputState);
-    const borderColor = Colors.transparent;
+
+    final border = OutlineInputBorder(
+      borderRadius: borderRadius,
+      borderSide: const BorderSide(color: Colors.transparent),
+    );
+
+    final colors = context.colors;
 
     return TextField(
       controller: widget.controller,
@@ -144,7 +149,7 @@ class _LmuInputFieldState extends State<LmuInputField> {
       onTap: widget.onTap,
       autofillHints: widget.autofillHints,
       style: TextStyle(
-        color: context.colors.neutralColors.textColors.strongColors.base,
+        color: colors.neutralColors.textColors.strongColors.base,
       ),
       onTapOutside: (value) {
         if (widget.closeKeyboardOnTapOutside) {
@@ -153,41 +158,29 @@ class _LmuInputFieldState extends State<LmuInputField> {
         widget.onTapOutside?.call();
       },
       cursorHeight: 20,
-      cursorErrorColor: context.colors.dangerColors.textColors.strongColors.base,
+      cursorErrorColor: colors.dangerColors.textColors.strongColors.base,
       cursorOpacityAnimates: true,
       decoration: InputDecoration(
         contentPadding: widget.contentPadding,
         filled: true,
         fillColor: fillColor,
-        focusedBorder: OutlineInputBorder(
-          borderRadius: borderRadius,
-          borderSide: const BorderSide(color: borderColor),
-        ),
-        border: OutlineInputBorder(
-          borderRadius: borderRadius,
-          borderSide: const BorderSide(color: borderColor),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: borderRadius,
-          borderSide: const BorderSide(color: borderColor),
-        ),
-        hoverColor: context.colors.neutralColors.backgroundColors.mediumColors.base,
+        focusedBorder: border,
+        border: border,
+        enabledBorder: border,
+        hoverColor: colors.neutralColors.backgroundColors.mediumColors.base,
         hintText: widget.hintText,
         hintStyle: TextStyle(
-          color: context.colors.neutralColors.textColors.weakColors.base,
+          color: colors.neutralColors.textColors.weakColors.base,
           fontWeight: FontWeight.w400,
         ),
         prefixIcon: widget.leadingIcon,
-        prefixIconColor: context.colors.neutralColors.textColors.weakColors.base,
+        prefixIconColor: colors.neutralColors.textColors.weakColors.base,
         prefixIconConstraints: widget.leadingIconConstraints,
         suffixIcon: widget.trailingIcon != null
             ? GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: _handleClear,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: LmuSizes.size_8),
-                  child: widget.trailingIcon!,
-                ),
+                child: widget.trailingIcon!,
               )
             : null,
         prefix: widget.prefix,

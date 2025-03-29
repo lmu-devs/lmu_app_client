@@ -45,5 +45,8 @@
   "all": "Alle",
   "available": "Verfügbar",
   "withPerson": "mit",
-  "atLocation": "in"
+  "atLocation": "in",
+  "clear": "Löschen",
+  "prevSearch": "Zuletzt gesucht",
+  "noResults": "Keine Ergebnisse"
 }

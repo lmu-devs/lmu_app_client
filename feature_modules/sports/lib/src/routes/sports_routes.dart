@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
 import '../pages/pages.dart';
+import '../pages/sports_search_page.dart';
 import '../repository/repository.dart';
 
 part 'sports_routes.g.dart';
@@ -17,6 +18,14 @@ part 'sports_routes.g.dart';
     ),
     TypedGoRoute<SportsTicketRoute>(
       path: 'tickets',
+    ),
+    TypedGoRoute<SportsSearchRoute>(
+      path: 'search',
+      routes: [
+        TypedGoRoute<SportsSearchDetailsRoute>(
+          path: 'searchDetails',
+        ),
+      ],
     ),
   ],
 )
@@ -48,4 +57,20 @@ class SportsTicketRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => const SportsTicketsPage();
+}
+
+class SportsSearchRoute extends GoRouteData {
+  const SportsSearchRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const SportsSearchPage();
+}
+
+class SportsSearchDetailsRoute extends GoRouteData {
+  const SportsSearchDetailsRoute(this.$extra);
+
+  final SportsType $extra;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => SportsDetailsPage(sport: $extra);
 }

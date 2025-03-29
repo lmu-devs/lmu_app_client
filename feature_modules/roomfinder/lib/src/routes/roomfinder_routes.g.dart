@@ -28,6 +28,16 @@ RouteBase get $roomfinderMainRoute => GoRouteData.$route(
           path: 'roomDetails',
           factory: $RoomfinderRoomDetailsRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: 'search',
+          factory: $RoomfinderSearchRouteExtension._fromState,
+          routes: [
+            GoRouteData.$route(
+              path: 'buildingDetails',
+              factory: $RoomfinderSearchBuildingRouteExtension._fromState,
+            ),
+          ],
+        ),
       ],
     );
 
@@ -102,4 +112,41 @@ extension $RoomfinderRoomDetailsRouteExtension on RoomfinderRoomDetailsRoute {
   void pushReplacement(BuildContext context) => context.pushReplacement(location, extra: $extra);
 
   void replace(BuildContext context) => context.replace(location, extra: $extra);
+}
+
+extension $RoomfinderSearchRouteExtension on RoomfinderSearchRoute {
+  static RoomfinderSearchRoute _fromState(GoRouterState state) => const RoomfinderSearchRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/roomfinder/search',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $RoomfinderSearchBuildingRouteExtension on RoomfinderSearchBuildingRoute {
+  static RoomfinderSearchBuildingRoute _fromState(GoRouterState state) => RoomfinderSearchBuildingRoute(
+        state.uri.queryParameters['building-id']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/home/roomfinder/search/buildingDetails',
+        queryParams: {
+          'building-id': buildingId,
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
 }
