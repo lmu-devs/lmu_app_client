@@ -39,7 +39,7 @@ class _RoomfinderFilteredBuildingsSectionState extends State<RoomfinderFilteredB
             key: ValueKey(filteredBuildings.expand((element) => element).map((e) => e.id).join()),
             itemCount: filteredBuildings.length,
             shrinkWrap: true,
-            padding: const EdgeInsets.only(bottom: 80 + 96),
+            padding: const EdgeInsets.only(bottom: LmuSizes.size_96),
             physics: const NeverScrollableScrollPhysics(),
             separatorBuilder: (_, index) => const SizedBox(height: LmuSizes.size_12),
             itemBuilder: (_, index) {

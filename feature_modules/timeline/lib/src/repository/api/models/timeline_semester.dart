@@ -13,10 +13,10 @@ enum SemesterType {
 
 @JsonSerializable()
 class TimelineSemester {
+  const TimelineSemester({required this.timeframe, required this.type});
+
   final TimelineTimeframe timeframe;
   final SemesterType type;
-
-  TimelineSemester({required this.timeframe, required this.type});
 
   factory TimelineSemester.fromJson(Map<String, dynamic> json) => _$TimelineSemesterFromJson(json);
   Map<String, dynamic> toJson() => _$TimelineSemesterToJson(this);

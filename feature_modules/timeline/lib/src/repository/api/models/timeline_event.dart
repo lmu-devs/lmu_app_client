@@ -6,14 +6,7 @@ part 'timeline_event.g.dart';
 
 @JsonSerializable()
 class TimelineEvent {
-  final String title;
-  final String type;
-  final TimelineTimeframe timeframe;
-  final String? description;
-  final String? location;
-  final String? url;
-
-  TimelineEvent({
+  const TimelineEvent({
     required this.title,
     required this.type,
     required this.timeframe,
@@ -21,6 +14,13 @@ class TimelineEvent {
     this.location,
     this.url,
   });
+
+  final String title;
+  final String type;
+  final TimelineTimeframe timeframe;
+  final String? description;
+  final String? location;
+  final String? url;
 
   factory TimelineEvent.fromJson(Map<String, dynamic> json) => _$TimelineEventFromJson(json);
   Map<String, dynamic> toJson() => _$TimelineEventToJson(this);
