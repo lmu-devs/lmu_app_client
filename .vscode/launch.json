@@ -1,33 +1,80 @@
 {
-    "version": "0.2.0",
+    "version": "1.0.0",
     "configurations": [
-
         {
-            "name": "App • Debugging",
+            "name": "App • DEV Debug",
             "request": "launch",
             "type": "dart",
-            "program": "lib/main.dart"
-        },
-        {
-            "name": "App • Profile mode",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "App • Release mode",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
-        },
-        {
-            "name": "Web • Debugging",
-            "request": "launch",
-            "type": "dart",
+            "program": "lib/main.dart",
             "args": [
-                "-d",
-                "chrome",
-                "--web-port=53480"
+                "--flavor",
+                "dev",
+                "--dart-define=FLAVOR=dev",
+                "--dart-define=API_KEY="
+            ]
+        },
+        {
+            "name": "App • DEV Profile",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": [
+                "--flavor",
+                "dev",
+                "--profile",
+                "--dart-define=FLAVOR=dev",
+                "--dart-define=API_KEY="
+            ]
+        },
+        {
+            "name": "App • DEV Release",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": [
+                "--flavor",
+                "dev",
+                "--release",
+                "--dart-define=FLAVOR=dev",
+                "--dart-define=API_KEY="
+            ]
+        },
+        {
+            "name": "App • PROD Debug",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": [
+                "--flavor",
+                "prod",
+                "--dart-define=FLAVOR=prod",
+                "--dart-define=API_KEY="
+            ]
+        },
+        {
+            "name": "App • PROD Profile",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": [
+                "--flavor",
+                "prod",
+                "--profile",
+                "--dart-define=FLAVOR=prod",
+                "--dart-define=API_KEY="
+            ]
+        },
+        {
+            "name": "App • PROD Release",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": [
+                "--flavor",
+                "prod",
+                "--release",
+                "--dart-define=FLAVOR=prod",
+                "--dart-define=API_KEY="
             ]
         }
     ]

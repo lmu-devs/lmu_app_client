@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../pages.dart';
+import '../env/env_config.dart';
 import 'base_api_client.dart';
 
 class DefaultBaseApiClient extends BaseApiClient {
@@ -15,13 +16,6 @@ class DefaultBaseApiClient extends BaseApiClient {
 
   Locale _locale = PlatformDispatcher.instance.locale;
   final _appLogger = AppLogger();
-
-  bool _isDevEnv = false;
-
-  @override
-  set isDevEnv(bool value) {
-    _isDevEnv = value;
-  }
 
   bool _useLocalHost = false;
 
@@ -44,11 +38,11 @@ class DefaultBaseApiClient extends BaseApiClient {
     _appLogger.logMessage("[BaseApiClient]: User API Key set: $value");
   }
 
-  String get _baseUrl => _useLocalHost
-      ? _localHostUrl
-      : _isDevEnv
-          ? _devBaseUrl
-          : _prodBaseUrl;
+  String get _baseUrl {
+    if (EnvConfig.isDev) return _devBaseUrl;
+    if (_useLocalHost) return _localHostUrl;
+    return _prodBaseUrl;
+  }
 
   Map<String, String> get _defaultHeaders => {
         "app-version": GetIt.I.get<String>(instanceName: 'appVersion'),

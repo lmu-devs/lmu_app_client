@@ -1,3 +1,4 @@
+import 'package:core/api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
@@ -18,6 +19,11 @@ class UserApiKeyBloc extends Bloc<UserApiKeyEvent, UserApiKeyState> {
     Emitter<UserApiKeyState> emit,
   ) async {
     emit(UserApiKeyLoadInProgress());
+
+    if (EnvConfig.apiKey.isNotEmpty) {
+      emit(UserApiKeyLoadSuccess(apiKey: EnvConfig.apiKey));
+      return;
+    }
 
     try {
       final apiKey = await _repository.getUser();
