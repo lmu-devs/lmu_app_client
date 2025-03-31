@@ -72,15 +72,15 @@ android {
         }
     }
 
-    flavorDimensions "env"
+   flavorDimensions += "default"
     productFlavors {
-        dev {
-            dimension "env"
-            applicationIdSuffix ".dev"
-            versionNameSuffix "-dev"
+        create("dev") {
+            dimension = "default"
+            applicationIdSuffix = ".dev"
         }
-        prod {
-            dimension "env"
+        create("prod") {
+            dimension = "default"
+            applicationIdSuffix = ".prod"
         }
     }
 }
