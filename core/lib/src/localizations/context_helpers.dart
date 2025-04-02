@@ -9,6 +9,7 @@ import 'generated/cinema_localizations.dart';
 import 'generated/feedback_localizations.dart';
 import 'generated/home_localizations.dart';
 import 'generated/settings_localizations.dart';
+import 'generated/timeline_localizations.dart';
 import 'generated/wishlist_localizations.dart';
 
 extension LocalizationExtension on BuildContext {
@@ -29,6 +30,7 @@ class LmuLocalizations {
   HomeLocalizations get home => HomeLocalizations.of(_context)!;
   CinemaLocalizations get cinema => CinemaLocalizations.of(_context)!;
   SportsLocatizations get sports => SportsLocatizations.of(_context)!;
+  TimelineLocatizations get timeline => TimelineLocatizations.of(_context)!;
   // Add other localizations
 
   /// List of all supported localizations delegates
@@ -42,6 +44,7 @@ class LmuLocalizations {
         HomeLocalizations.delegate,
         CinemaLocalizations.delegate,
         SportsLocatizations.delegate,
+        TimelineLocatizations.delegate,
         // Add other localizations delegates
 
         GlobalMaterialLocalizations.delegate,

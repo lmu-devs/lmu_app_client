@@ -6,8 +6,6 @@ import 'package:http/http.dart' as http;
 abstract class BaseApiClient {
   set userApiKey(String? value);
 
-  set isDevEnv(bool value);
-
   set useLocalHost(bool value);
 
   set locale(Locale value);

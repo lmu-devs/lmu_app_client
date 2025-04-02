@@ -34,11 +34,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
-    <string>Your location is needed to show distances to university buildings and cafeterias, and to display nearby facilities on the map.</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>Your location is needed to show distances to university buildings and cafeterias, and to display nearby facilities on the map.</string>
+	<string>Your location is needed to show distances to university buildings and cafeterias, and to display nearby facilities on the map.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Your location is needed to show distances to university buildings and cafeterias, and to display nearby facilities on the map.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Your location is needed to show distances to university buildings and cafeterias, and to display nearby facilities on the map.</string>
+	<string>Your location is needed to show distances to university buildings and cafeterias, and to display nearby facilities on the map.</string>
 	<key>MBXAccessToken</key>
 	<string>pk.eyJ1IjoibHVrYXNwbGVuayIsImEiOiJjbTJ4OWRvcXkwMmJoMmxyMzNreHJnemp0In0.Y2tZBr2Ek1F-s-yP2DxnNA</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

@@ -7,10 +7,10 @@ part 'timeline_data.g.dart';
 
 @JsonSerializable()
 class TimelineData {
+  const TimelineData({required this.semesters, required this.events});
+
   final List<TimelineSemester> semesters;
   final List<TimelineEvent> events;
-
-  TimelineData({required this.semesters, required this.events});
 
   factory TimelineData.fromJson(Map<String, dynamic> json) => _$TimelineDataFromJson(json);
   Map<String, dynamic> toJson() => _$TimelineDataToJson(this);
