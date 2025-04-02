@@ -8,7 +8,6 @@ import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
-import 'package:in_app_review/in_app_review.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_api/feedback.dart';
 
@@ -32,22 +31,6 @@ class _WishlistPageState extends State<WishlistPage> {
     }
 
     super.initState();
-  }
-
-  Future<void> _requestAppReview(BuildContext context) async {
-    InAppReview inAppReview = InAppReview.instance;
-
-    if (await inAppReview.isAvailable()) {
-      inAppReview.openStoreListing(appStoreId: LmuDevStrings.appStoreId);
-    } else {
-      if (context.mounted) {
-        LmuToast.show(
-          context: context,
-          message: context.locals.wishlist.rateAppError,
-          type: ToastType.error,
-        );
-      }
-    }
   }
 
   Future<void> _openInstagram(BuildContext context) async {
@@ -90,7 +73,7 @@ class _WishlistPageState extends State<WishlistPage> {
                 LmuButton(
                   title: context.locals.wishlist.rateApp,
                   emphasis: ButtonEmphasis.secondary,
-                  onTap: () => _requestAppReview(context),
+                  onTap: () => AppReviewUtil.openStoreListing(context, context.locals.wishlist.rateAppError),
                 ),
                 LmuButton(
                   title: LmuDevStrings.devTeam,

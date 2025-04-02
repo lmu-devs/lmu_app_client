@@ -44,6 +44,7 @@ dependencies:
   geolocator: ^13.0.2
   rxdart: ^0.28.0
   fuzzywuzzy: ^1.2.0
+  in_app_review: ^2.0.10
 
 dev_dependencies:
   flutter_test:

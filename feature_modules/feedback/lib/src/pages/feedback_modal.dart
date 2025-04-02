@@ -2,10 +2,11 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
-import 'package:feedback/src/util/feedback_types.dart';
+import 'package:core/utils.dart';
 import 'package:feedback/src/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
+import '../util/feedback_types.dart';
 import '../util/send_feedback.dart';
 
 class FeedbackModal extends StatefulWidget {
@@ -112,9 +113,12 @@ class _FeedbackModalState extends State<FeedbackModal> {
                                 message: _textController.text.isEmpty ? null : _textController.text,
                                 screen: widget.feedbackOrigin,
                                 tags: null,
-                              ).then((_) {
+                              ).then((_) async {
                                 Navigator.of(context).pop();
                                 setState(() => _isLoading = false);
+                                if (selectedFeedback == EmojiFeedback.good.name.toUpperCase()) {
+                                  AppReviewUtil.askForAppReview();
+                                }
                               });
                             },
                     );
