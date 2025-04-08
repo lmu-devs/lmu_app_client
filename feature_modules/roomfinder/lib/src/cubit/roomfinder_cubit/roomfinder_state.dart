@@ -18,12 +18,12 @@ class RoomfinderLoadInProgress extends RoomfinderState {
 }
 
 class RoomfinderLoadSuccess extends RoomfinderState {
-  const RoomfinderLoadSuccess({required this.cities});
+  const RoomfinderLoadSuccess({required this.streets});
 
-  final List<RoomfinderCity> cities;
+  final List<RoomfinderStreet> streets;
 
   @override
-  List<Object> get props => [cities];
+  List<Object> get props => [streets];
 }
 
 class RoomfinderLoadFailure extends RoomfinderState {

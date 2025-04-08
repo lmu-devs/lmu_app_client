@@ -8,19 +8,13 @@ class RoomfinderRoom extends Equatable {
   const RoomfinderRoom({
     required this.id,
     required this.name,
-    required this.posX,
-    required this.posY,
   });
 
   final String id;
   final String name;
-  @JsonKey(name: 'pos_x')
-  final int posX;
-  @JsonKey(name: 'pos_y')
-  final int posY;
 
   @override
-  List<Object?> get props => [id, name, posX, posY];
+  List<Object?> get props => [id, name];
 
   factory RoomfinderRoom.fromJson(Map<String, dynamic> json) => _$RoomfinderRoomFromJson(json);
   Map<String, dynamic> toJson() => _$RoomfinderRoomToJson(this);

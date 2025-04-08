@@ -5,6 +5,7 @@ export 'generated/cinema_localizations.dart';
 export 'generated/explore_localizations.dart';
 export 'generated/feedback_localizations.dart';
 export 'generated/home_localizations.dart';
+export 'generated/roomfinder_localizations.dart';
 export 'generated/settings_localizations.dart';
 export 'generated/sports_localizations.dart';
 export 'generated/timeline_localizations.dart';

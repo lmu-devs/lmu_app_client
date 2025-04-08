@@ -13,7 +13,7 @@ class RoomfinderRepository {
 
   final RoomfinderApiClient roomfinderApiClient;
 
-  final _cacheKey = "roomfinder_cities";
+  final _cacheKey = "roomfinder_streets";
   final _favoriteBuildingsKey = "favorite_buildings";
   final _sortOptionKey = "roomfinder_sort_option";
   final _recentSearchesKey = "roomfinder_recentSearches";
@@ -41,18 +41,26 @@ class RoomfinderRepository {
     return jsonString;
   }
 
-  Future<List<RoomfinderCity>> getRoomfinderCities() async {
-    String? citites;
-    citites = await getCachedJsonString(_cacheKey);
+  Future<void> deleteCachedJson() async {
+    final path = await _getFilePath(_cacheKey);
+    final file = File(path);
+    if (await file.exists()) {
+      await file.delete();
+    }
+  }
 
-    if (citites == null) {
-      citites = await roomfinderApiClient.getRoomfinderCities();
-      await cacheJsonList(_cacheKey, citites);
+  Future<List<RoomfinderStreet>> getRoomfinderData() async {
+    String? data;
+
+    data = await getCachedJsonString(_cacheKey);
+    if (data == null) {
+      data = await roomfinderApiClient.getRoomfinderData();
+      await cacheJsonList(_cacheKey, data);
     }
 
-    final encodedJson = json.decode(citites) as List<dynamic>;
-    final cachedCities = encodedJson.map((json) => RoomfinderCity.fromJson(json as Map<String, dynamic>)).toList();
-    return cachedCities;
+    final encodedJson = json.decode(data) as List<dynamic>;
+    final streets = encodedJson.map((json) => RoomfinderStreet.fromJson(json as Map<String, dynamic>)).toList();
+    return streets;
   }
 
   Future<void> saveFavoriteBuildings(List<String> favoriteBuildingIds) async {

@@ -31,7 +31,7 @@ class RoomfinderFilterService {
       if (state is RoomfinderLoadSuccess) {
         _streets
           ..clear()
-          ..addAll(state.cities.expand((city) => city.streets));
+          ..addAll(state.streets);
 
         _updateFilteredBuildings();
       }
@@ -53,7 +53,7 @@ class RoomfinderFilterService {
         final location = building.location;
         final distance = _locationService.getDistance(lat: location.latitude, long: location.longitude);
         return RoomfinderBuildingViewItem(
-          id: building.id,
+          id: building.buildingPartId,
           title: building.title,
           distance: distance,
         );

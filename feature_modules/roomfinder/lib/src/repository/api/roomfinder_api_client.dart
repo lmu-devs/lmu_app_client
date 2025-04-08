@@ -6,7 +6,7 @@ import 'roomfinder_api_endpoints.dart';
 class RoomfinderApiClient {
   final _baseApiClient = GetIt.I.get<BaseApiClient>();
 
-  Future<String> getRoomfinderCities() async {
+  Future<String> getRoomfinderData() async {
     final response = await _baseApiClient.get(ExploreApiEndpoints.getRoomfinderAll());
 
     if (response.statusCode == 200) {

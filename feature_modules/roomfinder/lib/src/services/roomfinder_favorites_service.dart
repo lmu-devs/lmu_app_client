@@ -27,16 +27,16 @@ class RoomfinderFavoritesService {
       if (state is RoomfinderLoadSuccess) {
         _roomfinderRepo.getFavoriteBuildings().then(
           (favoriteBuildingIds) {
-            _buildings = state.cities.expand((city) => city.streets).expand((street) => street.buildings).toList();
+            _buildings = state.streets.expand((street) => street.buildings).toList();
 
             final favoriteBuildings =
-                _buildings.where((building) => favoriteBuildingIds.contains(building.id)).toList();
+                _buildings.where((building) => favoriteBuildingIds.contains(building.buildingPartId)).toList();
 
             _favoriteBuildingsNotifier.value = favoriteBuildings.map((building) {
               final location = building.location;
               final distance = _locationService.getDistance(lat: location.latitude, long: location.longitude);
               return RoomfinderBuildingViewItem(
-                id: building.id,
+                id: building.buildingPartId,
                 title: building.title,
                 distance: distance,
               );
@@ -70,10 +70,10 @@ class RoomfinderFavoritesService {
     if (isAlreadyFavorite) {
       currentFavorites.removeWhere((building) => building.id == buildingId);
     } else {
-      final building = _buildings.firstWhere((building) => building.id == buildingId);
+      final building = _buildings.firstWhere((building) => building.buildingPartId == buildingId);
       currentFavorites.add(
         RoomfinderBuildingViewItem(
-          id: building.id,
+          id: building.buildingPartId,
           title: building.title,
           distance: _locationService.getDistance(
             lat: building.location.latitude,
