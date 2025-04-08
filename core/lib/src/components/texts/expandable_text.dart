@@ -26,15 +26,18 @@ class ExpandableText extends StatelessWidget {
     );
     final textPainter = TextPainter(
       text: textSpan,
-      maxLines: maxLines,
+      maxLines: null,
       textDirection: TextDirection.ltr,
     )..layout(maxWidth: MediaQuery.of(context).size.width - amountOfHorizontalPadding);
 
-    final textExceedsMaxLines = textPainter.didExceedMaxLines;
+    final lineCount = textPainter.computeLineMetrics().length;
+    final textExceedsMaxLines = lineCount > maxLines + 1;
 
     return ValueListenableBuilder<bool>(
       valueListenable: _isExpanded,
       builder: (context, isExpanded, child) {
+        final displayAll = !textExceedsMaxLines;
+
         return GestureDetector(
           onTap: () => _isExpanded.value = true,
           child: Column(
@@ -42,8 +45,8 @@ class ExpandableText extends StatelessWidget {
             children: [
               LmuText.body(
                 text,
-                maxLines: isExpanded ? null : maxLines,
-                customOverFlow: isExpanded ? null : TextOverflow.fade,
+                maxLines: isExpanded || displayAll ? null : maxLines,
+                customOverFlow: isExpanded || displayAll ? null : TextOverflow.fade,
               ),
               if (textExceedsMaxLines && !isExpanded)
                 Column(

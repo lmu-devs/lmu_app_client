@@ -24,7 +24,7 @@ class _SportsButtonSectionState extends State<SportsButtonSection> {
       padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
       child: Column(
         children: [
-          LmuTileHeadline.base(title: "Alle Sportarten"),
+          LmuTileHeadline.base(title: context.locals.sports.sportOverviewTitle),
           Row(
             children: [
               LmuIconButton(
