@@ -53,12 +53,12 @@ class _ExplorePageState extends State<ExplorePage> {
             children: [
               TileLayer(
                 retinaMode: RetinaMode.isHighDensity(context),
-                urlTemplate: 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
+                urlTemplate: 'https://api.mapbox.com/styles/v1/{id}/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}',
                 additionalOptions: {
                   'accessToken': dotenv.env['MAPBOX_ACCESS_TOKEN'] ?? '',
-                  'id': MediaQuery.of(context).platformBrightness == Brightness.dark
-                      ? 'mapbox/dark-v10'
-                      : 'mapbox/light-v10',
+                  'id': Theme.of(context).brightness == Brightness.light
+                      ? 'lukasplenk/cm989564200fm01skgcmldzlm'
+                      : 'lukasplenk/cm989vvs200h801qz1imtcjx4',
                 },
               ),
               ValueListenableBuilder(
@@ -91,7 +91,7 @@ class _ExplorePageState extends State<ExplorePage> {
           ValueListenableBuilder(
             valueListenable: _mapService.exploreLocationsNotifier,
             builder: (context, locations, _) {
-              final searchEntrys = locations.map(
+              final searchEntries = locations.map(
                 (location) {
                   return LmuSearchEntry(
                     title: location.name,
@@ -106,7 +106,7 @@ class _ExplorePageState extends State<ExplorePage> {
                 },
               ).toList();
               return LmuSearchSheet(
-                searchEntries: searchEntrys,
+                searchEntries: searchEntries,
                 controller: searchSheetController,
               );
             },
