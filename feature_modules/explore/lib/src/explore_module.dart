@@ -18,6 +18,7 @@ class ExploreModule extends AppModule
   void provideLocalDependencies() {
     GetIt.I.registerSingleton<ExploreMapService>(ExploreMapService());
     GetIt.I.registerSingleton<ExploreSheetService>(ExploreSheetService());
+    GetIt.I.registerSingleton<ExploreSearchService>(ExploreSearchService());
   }
 
   @override

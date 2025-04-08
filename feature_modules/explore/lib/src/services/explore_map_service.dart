@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shared_api/cinema.dart';
@@ -94,6 +95,14 @@ class ExploreMapService {
       offset: Offset(0, -100),
     );
     updateMarker(id);
+  }
+
+  void focuUserLocation() async {
+    final currentUserLocation = await Geolocator.getCurrentPosition();
+    _mapController.move(
+      LatLng(currentUserLocation.latitude, currentUserLocation.longitude),
+      _mapController.camera.zoom,
+    );
   }
 }
 

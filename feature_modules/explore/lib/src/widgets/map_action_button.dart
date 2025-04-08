@@ -27,10 +27,10 @@ class MapActionButton extends StatelessWidget {
             border: Border.all(color: context.colors.neutralColors.textColors.weakColors.base, width: 0.25),
             shape: BoxShape.circle,
           ),
-          padding: const EdgeInsets.all(LmuSizes.size_8),
+          padding: const EdgeInsets.all(10),
           child: Icon(
             icon,
-            size: LmuIconSizes.medium,
+            size: LmuIconSizes.mediumSmall,
           ),
         ),
       ),

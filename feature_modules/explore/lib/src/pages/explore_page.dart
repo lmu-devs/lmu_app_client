@@ -1,12 +1,14 @@
 import 'package:core/components.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:latlong2/latlong.dart' as latlong;
+import 'package:vector_map_tiles/vector_map_tiles.dart';
 
-import '../extensions/explore_marker_type_extension.dart';
+import '../routes/explore_routes.dart';
 import '../services/explore_map_service.dart';
 import '../widgets/explore_map_content_sheet.dart';
 import '../widgets/explore_marker.dart';
@@ -21,7 +23,8 @@ class ExplorePage extends StatefulWidget {
 class _ExplorePageState extends State<ExplorePage> {
   late final ExploreMapContentSheetController mapContentSheetController;
   late final LmuSearchSheetController searchSheetController;
-
+  late final Stream<double?> alignPositionStream;
+  Style? style;
   final _mapService = GetIt.I<ExploreMapService>();
 
   @override
@@ -29,8 +32,22 @@ class _ExplorePageState extends State<ExplorePage> {
     super.initState();
     _mapService.init();
 
+    initStyle();
+
     mapContentSheetController = ExploreMapContentSheetController();
     searchSheetController = LmuSearchSheetController();
+  }
+
+  Future<Style> _readStyle() {
+    return StyleReader(
+      uri: 'mapbox://styles/mapbox/streets-v12?access_token={key}',
+      apiKey: "pk.eyJ1IjoiYml0dGVyc2Nob2tpIiwiYSI6ImNtOGltOW1lcDA1NjMya3F4c2Vta2tyenYifQ.yDusjqyBsYa4Lw325r_CBA",
+    ).read();
+  }
+
+  void initStyle() async {
+    style = await _readStyle();
+    setState(() {});
   }
 
   @override
@@ -51,15 +68,39 @@ class _ExplorePageState extends State<ExplorePage> {
               },
             ),
             children: [
-              TileLayer(
-                retinaMode: RetinaMode.isHighDensity(context),
-                urlTemplate: 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
-                additionalOptions: {
-                  'accessToken': dotenv.env['MAPBOX_ACCESS_TOKEN'] ?? '',
-                  'id': MediaQuery.of(context).platformBrightness == Brightness.dark
-                      ? 'mapbox/dark-v10'
-                      : 'mapbox/light-v10',
-                },
+              // TileLayer(
+              //   retinaMode: RetinaMode.isHighDensity(context),
+              //   urlTemplate: 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
+              //   additionalOptions: {
+              //     'accessToken': dotenv.env['MAPBOX_ACCESS_TOKEN'] ?? '',
+              //     'id': MediaQuery.of(context).platformBrightness == Brightness.dark
+              //         ? 'mapbox/dark-v10'
+              //         : 'mapbox/light-v10',
+              //   },
+              // ),
+              if (style != null)
+                VectorTileLayer(
+                  theme: style!.theme,
+                  sprites: style!.sprites,
+                  tileOffset: TileOffset.mapbox,
+                  tileProviders: style!.providers,
+                ),
+              CurrentLocationLayer(
+                style: LocationMarkerStyle(
+                  showAccuracyCircle: false,
+                  marker: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: const Color(0xFF1A95F3),
+                      border: Border.all(
+                        color: context.colors.neutralColors.borderColors.iconOutline,
+                        width: 2,
+                      ),
+                    ),
+                  ),
+                  markerSize: const Size(24, 24),
+                  markerDirection: MarkerDirection.heading,
+                ),
               ),
               ValueListenableBuilder(
                 valueListenable: _mapService.exploreLocationsNotifier,
@@ -88,35 +129,64 @@ class _ExplorePageState extends State<ExplorePage> {
               ),
             ],
           ),
-          ValueListenableBuilder(
-            valueListenable: _mapService.exploreLocationsNotifier,
-            builder: (context, locations, _) {
-              final searchEntrys = locations.map(
-                (location) {
-                  return LmuSearchEntry(
-                    title: location.name,
-                    subtitle: location.type.localizedName,
-                    onTap: () {
-                      _mapService.focusMarker(location.id);
-                      mapContentSheetController.open(location, fromSearch: true);
-                    },
-                    icon: location.type.icon,
-                    iconColor: location.type.markerColor(context.colors),
-                  );
-                },
-              ).toList();
-              return LmuSearchSheet(
-                searchEntries: searchEntrys,
-                controller: searchSheetController,
-              );
-            },
+          // MapActionButton(
+          //   icon: LucideIcons.compass,
+          //   sheetHeight: 168,
+          //   onTap: () => _mapService.focuUserLocation(),
+          // ),
+          // MapActionButton(
+          //   icon: LucideIcons.map_pin,
+          //   sheetHeight: 114,
+          //   onTap: () => _mapService.focuUserLocation(),
+          // ),
+          // MapActionButton(
+          //   icon: LucideIcons.layers,
+          //   sheetHeight: 66,
+          //   onTap: () => () {},
+          // ),
+          // MapActionButton(
+          //   icon: LucideIcons.search,
+          //   sheetHeight: 16,
+          //   onTap: () => () {},
+          // ),
+          // ValueListenableBuilder(
+          //   valueListenable: _mapService.exploreLocationsNotifier,
+          //   builder: (context, locations, _) {
+          //     final searchEntrys = locations.map(
+          //       (location) {
+          //         return LmuSearchEntry(
+          //           title: location.name,
+          //           subtitle: location.type.localizedName,
+          //           onTap: () {
+          //             _mapService.focusMarker(location.id);
+          //             mapContentSheetController.open(location, fromSearch: true);
+          //           },
+          //           icon: location.type.icon,
+          //           iconColor: location.type.markerColor(context.colors),
+          //         );
+          //       },
+          //     ).toList();
+          //     return LmuSearchSheet(
+          //       searchEntries: searchEntrys,
+          //       controller: searchSheetController,
+          //     );
+          //   },
+          // ),
+          Positioned(
+            right: 16,
+            bottom: 16,
+            child: LmuIconButton(
+              icon: LucideIcons.search,
+              backgroundColor: context.colors.neutralColors.backgroundColors.tile,
+              onPressed: () => const ExploreSearchRoute().go(context),
+            ),
           ),
           ExploreMapContentSheet(
             controller: mapContentSheetController,
             onClose: (fromSearch) {
               if (fromSearch) searchSheetController.openExtended(true);
             },
-          )
+          ),
         ],
       ),
     );
