@@ -41,7 +41,7 @@ class _RoomfinderFilteredBuildingsSectionState extends State<RoomfinderFilteredB
             shrinkWrap: true,
             padding: const EdgeInsets.only(bottom: LmuSizes.size_96),
             physics: const NeverScrollableScrollPhysics(),
-            separatorBuilder: (_, index) => const SizedBox(height: LmuSizes.size_12),
+            separatorBuilder: (_, index) => const SizedBox(height: LmuSizes.size_16),
             itemBuilder: (_, index) {
               final buildings = filteredBuildings[index];
               return LmuContentTile(

@@ -1,0 +1,9 @@
+{
+  "@@locale": "de",
+  "@@context": "Raumfinder",
+  "popular": "Beliebt",
+  "allBuildings": "Alle Gebäude",
+  "alphabetical": "Alphabetisch",
+  "distance": "Entfernung",
+  "building": "Gebäude"
+}

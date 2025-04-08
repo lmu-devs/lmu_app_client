@@ -15,8 +15,8 @@ class RoomfinderCubit extends Cubit<RoomfinderState> {
     emit(const RoomfinderLoadInProgress());
 
     try {
-      final cities = await _repository.getRoomfinderCities();
-      emit(RoomfinderLoadSuccess(cities: cities));
+      final streets = await _repository.getRoomfinderData();
+      emit(RoomfinderLoadSuccess(streets: streets));
     } catch (e) {
       emit(const RoomfinderLoadFailure());
     }
@@ -26,14 +26,13 @@ class RoomfinderCubit extends Cubit<RoomfinderState> {
     return stream.withInitialValue(state).map(
       (state) {
         if (state is RoomfinderLoadSuccess) {
-          final cities = state.cities;
-          final streets = cities.expand((city) => city.streets).toList();
+          final streets = state.streets;
           final buildings = streets.expand((street) => street.buildings).toList();
 
           return buildings.map((building) {
             final buildingLocation = building.location;
             return ExploreLocation(
-              id: building.id,
+              id: building.buildingPartId,
               latitude: buildingLocation.latitude,
               longitude: buildingLocation.longitude,
               name: building.title,

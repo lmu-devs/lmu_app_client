@@ -1,6 +1,7 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/core_services.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
@@ -33,7 +34,7 @@ class _RoomfinderButtonSectionState extends State<RoomfinderButtonSection> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        LmuTileHeadline.base(title: "Alle Gebäude"),
+        LmuTileHeadline.base(title: context.locals.roomfinder.allBuildings),
         Row(
           children: [
             LmuMapImageButton(onTap: () => GetIt.I<ExploreService>().navigateToExplore(context)),
@@ -47,7 +48,7 @@ class _RoomfinderButtonSectionState extends State<RoomfinderButtonSection> {
               valueListenable: _sortOptionNotifier,
               builder: (context, sortOption, child) {
                 return LmuButton(
-                  title: sortOption.localizedName,
+                  title: sortOption.localizedName(context.locals.roomfinder),
                   emphasis: ButtonEmphasis.secondary,
                   trailingIcon: LucideIcons.chevron_down,
                   onTap: () {
@@ -92,7 +93,7 @@ class _RoomfinderSortOptionSheet extends StatelessWidget {
               final isActive = option == activeSortOption;
               final textColor = option.textColor(context.colors, isActive: isActive);
               final isLast = option.index == RoomfinderSortOption.values.length - 1;
-              final name = option.localizedName;
+              final name = option.localizedName(context.locals.roomfinder);
               return Padding(
                 padding: EdgeInsets.only(bottom: isLast ? 0 : LmuSizes.size_8),
                 child: LmuListItem.base(
@@ -139,10 +140,10 @@ extension on RoomfinderSortOption {
     };
   }
 
-  String get localizedName {
+  String localizedName(RoomfinderLocatizations locals) {
     return switch (this) {
-      RoomfinderSortOption.alphabetically => "Alphabetisch",
-      RoomfinderSortOption.distance => "Entfernung",
+      RoomfinderSortOption.alphabetically => locals.alphabetical,
+      RoomfinderSortOption.distance => locals.distance,
     };
   }
 

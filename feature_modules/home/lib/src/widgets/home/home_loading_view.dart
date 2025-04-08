@@ -10,7 +10,7 @@ class HomeLoadingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<(int, int)> loadingTileSizes = [(2, 1), (1, 1), (1, 1), (1, 1), (1, 1), (2, 2), (1, 1), (1, 1)];
+    final List<(int, int)> loadingTileSizes = [(1, 1), (1, 1), (1, 1), (1, 1), (1, 1), (1, 1), (1, 1), (1, 1)];
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
