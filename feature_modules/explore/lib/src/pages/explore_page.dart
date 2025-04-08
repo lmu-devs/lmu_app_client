@@ -57,8 +57,8 @@ class _ExplorePageState extends State<ExplorePage> {
                 additionalOptions: {
                   'accessToken': dotenv.env['MAPBOX_ACCESS_TOKEN'] ?? '',
                   'id': Theme.of(context).brightness == Brightness.light
-                      ? 'lukasplenk/cm989564200fm01skgcmldzlm'
-                      : 'lukasplenk/cm989vvs200h801qz1imtcjx4',
+                      ? 'lmu-dev/cm990f48l00ic01pge084c9aa'
+                      : 'lmu-dev/cm990gii100ho01sk6f2hhh3m',
                 },
               ),
               ValueListenableBuilder(
