@@ -8,6 +8,7 @@ import 'generated/canteen_localizations.dart';
 import 'generated/cinema_localizations.dart';
 import 'generated/feedback_localizations.dart';
 import 'generated/home_localizations.dart';
+import 'generated/roomfinder_localizations.dart';
 import 'generated/settings_localizations.dart';
 import 'generated/timeline_localizations.dart';
 import 'generated/wishlist_localizations.dart';
@@ -31,6 +32,7 @@ class LmuLocalizations {
   CinemaLocalizations get cinema => CinemaLocalizations.of(_context)!;
   SportsLocatizations get sports => SportsLocatizations.of(_context)!;
   TimelineLocatizations get timeline => TimelineLocatizations.of(_context)!;
+  RoomfinderLocatizations get roomfinder => RoomfinderLocatizations.of(_context)!;
   // Add other localizations
 
   /// List of all supported localizations delegates
@@ -45,6 +47,7 @@ class LmuLocalizations {
         CinemaLocalizations.delegate,
         SportsLocatizations.delegate,
         TimelineLocatizations.delegate,
+        RoomfinderLocatizations.delegate,
         // Add other localizations delegates
 
         GlobalMaterialLocalizations.delegate,

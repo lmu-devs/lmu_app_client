@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -48,7 +49,7 @@ class HomeSuccessView extends StatelessWidget {
                     crossAxisCellCount: cellCount.crossAxis,
                     mainAxisCellCount: cellCount.mainAxis,
                     child: LmuFeatureTile(
-                      title: tile.title,
+                      title: tile.localizedTitle(context.locals),
                       subtitle: tile.description,
                       content: tile.content,
                       onTap: tile.onTap(context),
@@ -80,6 +81,23 @@ extension HomeTileMapper on HomeTile {
       HomeTileType.events => () => {_notYetImplemeted(context)},
       HomeTileType.mensa => () => {GetIt.I.get<MensaService>().navigateToMensaPage(context)},
       HomeTileType.other => () => {_notYetImplemeted(context)},
+    };
+  }
+
+  String localizedTitle(LmuLocalizations locals) {
+    return switch (type) {
+      HomeTileType.benefits => locals.home.benefits,
+      HomeTileType.cinemas => locals.home.moviesTab,
+      HomeTileType.feedback => locals.home.benefits,
+      HomeTileType.roomfinder => locals.roomfinder.title,
+      HomeTileType.sports => locals.sports.sportsTitle,
+      HomeTileType.timeline => locals.timeline.datesTitle,
+      HomeTileType.wishlist => locals.wishlist.tabTitle,
+      HomeTileType.links => "Links",
+      HomeTileType.news => "News",
+      HomeTileType.events => "events",
+      HomeTileType.mensa => locals.canteen.tabTitle,
+      HomeTileType.other => "",
     };
   }
 

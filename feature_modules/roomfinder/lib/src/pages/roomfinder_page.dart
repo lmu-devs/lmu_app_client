@@ -1,4 +1,5 @@
 import 'package:core/components.dart';
+import 'package:core/localizations.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -27,7 +28,7 @@ class _RoomfinderPageState extends State<RoomfinderPage> {
   @override
   Widget build(BuildContext context) {
     return LmuMasterAppBar(
-      largeTitle: "Roomfinder",
+      largeTitle: context.locals.roomfinder.title,
       leadingAction: LeadingAction.back,
       body: BlocBuilder<RoomfinderCubit, RoomfinderState>(
         bloc: GetIt.I.get<RoomfinderCubit>(),

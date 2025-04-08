@@ -1,4 +1,5 @@
 import 'package:core/components.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
@@ -39,7 +40,7 @@ class _RoomfinderSearchPageState extends State<RoomfinderSearchPage> {
     final buildings = _searchService.buildings
         .map((building) => RoomfinderSearchEntry(
               title: building.title,
-              id: building.id,
+              id: building.buildingPartId,
               type: RoomfinderSearchEntryType.building,
               subtitle: building.location.address,
             ))
@@ -49,7 +50,7 @@ class _RoomfinderSearchPageState extends State<RoomfinderSearchPage> {
     _recentSearchEntries = _searchService.recentSearches
         .map((building) => RoomfinderSearchEntry(
               title: building.title,
-              id: building.id,
+              id: building.buildingPartId,
               type: RoomfinderSearchEntryType.building,
               subtitle: building.location.address,
             ))
@@ -60,7 +61,7 @@ class _RoomfinderSearchPageState extends State<RoomfinderSearchPage> {
   Widget build(BuildContext context) {
     return LmuSearchPage<RoomfinderSearchEntry>(
       searchEntries: _searchEntries,
-      emptySearchEntriesTitle: "Popular",
+      emptySearchEntriesTitle: context.locals.roomfinder.popular,
       emptySearchEntries: [_searchEntries[0], _searchEntries[1]],
       recentSearchEntries: _recentSearchEntries,
       recentSearchController: _recentSearchController,

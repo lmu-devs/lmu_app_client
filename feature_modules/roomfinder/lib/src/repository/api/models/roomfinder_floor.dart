@@ -11,8 +11,6 @@ class RoomfinderFloor extends Equatable {
     required this.id,
     required this.name,
     required this.mapUri,
-    required this.mapSizeX,
-    required this.mapSizeY,
     required this.rooms,
   });
 
@@ -20,14 +18,10 @@ class RoomfinderFloor extends Equatable {
   final String name;
   @JsonKey(name: 'map_uri')
   final String mapUri;
-  @JsonKey(name: 'map_size_x')
-  final int mapSizeX;
-  @JsonKey(name: 'map_size_y')
-  final int mapSizeY;
   final List<RoomfinderRoom> rooms;
 
   @override
-  List<Object?> get props => [id, name, mapUri, mapSizeX, mapSizeY, rooms];
+  List<Object?> get props => [id, name, mapUri, rooms];
 
   factory RoomfinderFloor.fromJson(Map<String, dynamic> json) => _$RoomfinderFloorFromJson(json);
   Map<String, dynamic> toJson() => _$RoomfinderFloorToJson(this);
