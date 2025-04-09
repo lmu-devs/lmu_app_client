@@ -88,7 +88,7 @@ extension HomeTileMapper on HomeTile {
     return switch (type) {
       HomeTileType.benefits => locals.home.benefits,
       HomeTileType.cinemas => locals.home.moviesTab,
-      HomeTileType.feedback => locals.home.benefits,
+      HomeTileType.feedback => locals.home.feedback,
       HomeTileType.roomfinder => locals.roomfinder.title,
       HomeTileType.sports => locals.sports.sportsTitle,
       HomeTileType.timeline => locals.timeline.datesTitle,
