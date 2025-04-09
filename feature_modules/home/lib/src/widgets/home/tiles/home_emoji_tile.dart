@@ -9,12 +9,14 @@ class HomeEmojiTile extends StatelessWidget {
   const HomeEmojiTile({super.key, required this.emoji});
 
   final String emoji;
+  String get firstEmoji => emoji.characters.first;
 
   @override
   Widget build(BuildContext context) {
     final themeProvider = GetIt.I.get<ThemeProvider>();
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
+      clipBehavior: Clip.antiAlias,
       child: Stack(
         children: [
           Positioned(
@@ -25,11 +27,14 @@ class HomeEmojiTile extends StatelessWidget {
               child: ListenableBuilder(
                 listenable: themeProvider,
                 builder: (context, _) => Text(
-                  emoji,
+                  firstEmoji,
                   style: TextStyle(
                     fontSize: 124,
-                    color: Colors.black
-                        .withOpacity(PlatformDispatcher.instance.platformBrightness == Brightness.light ? 0.3 : 0.2),
+                    color: Colors.black.withOpacity(
+                        PlatformDispatcher.instance.platformBrightness ==
+                                Brightness.light
+                            ? 0.3
+                            : 0.2),
                     letterSpacing: -64,
                   ),
                 ),
