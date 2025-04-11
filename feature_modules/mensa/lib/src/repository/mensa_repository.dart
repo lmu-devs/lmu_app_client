@@ -35,7 +35,7 @@ abstract class MensaRepository {
 
   Future<List<MenuDayModel>> getMenuDayForMensa(String canteenId);
 
-  Future<TasteProfileModel> getTasteProfileContent();
+  Future<TasteProfileModel> getTasteProfileContent({bool forceRefresh = false});
 
   Future<TasteProfileStateModel> getTasteProfileState();
 
@@ -239,11 +239,11 @@ class ConnectedMensaRepository implements MensaRepository {
   }
 
   @override
-  Future<TasteProfileModel> getTasteProfileContent() async {
+  Future<TasteProfileModel> getTasteProfileContent({bool forceRefresh = false}) async {
     final prefs = await SharedPreferences.getInstance();
     final lastTimestamp = prefs.getString(_tasteProfileTimestampKey);
 
-    if (lastTimestamp != null) {
+    if (lastTimestamp != null && !forceRefresh) {
       final lastUpdate = DateTime.parse(lastTimestamp);
       _appLogger.logMessage('[MensaRepository]: TasteProfile last update: $lastUpdate');
       if (lastUpdate.day == DateTime.now().day) {

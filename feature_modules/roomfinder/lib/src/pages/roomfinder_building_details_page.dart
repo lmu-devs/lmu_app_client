@@ -162,9 +162,9 @@ class _RoomfinderBuildingDetailsPageState extends State<RoomfinderBuildingDetail
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_4),
       child: ValueListenableBuilder(
-        valueListenable: favoritesService.favoriteBuildingsNotifier,
+        valueListenable: favoritesService.favoriteBuildingIdsNotifier,
         builder: (context, favoriteBuildings, _) {
-          final isFavorite = favoriteBuildings.any((building) => building.id == _building.buildingPartId);
+          final isFavorite = favoriteBuildings.contains(_building.buildingPartId);
           return GestureDetector(
             onTap: () {
               favoritesService.toggleFavorite(_building.buildingPartId);
