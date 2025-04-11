@@ -9,6 +9,7 @@ import 'package:get_it/get_it.dart';
 import '../../roomfinder.dart';
 import '../services/roomfinder_building_view_item.dart';
 import '../services/roomfinder_favorites_service.dart';
+import '../services/roomfinder_filter_service.dart';
 
 class RoomfinderFavoritesSection extends StatefulWidget {
   const RoomfinderFavoritesSection({super.key});
@@ -19,13 +20,18 @@ class RoomfinderFavoritesSection extends StatefulWidget {
 
 class _RoomfinderFavoritesSectionState extends State<RoomfinderFavoritesSection> {
   final _roomfinderFavoritesService = GetIt.I.get<RoomfinderFavoritesService>();
+  final _roomfinderFilterService = GetIt.I.get<RoomfinderFilterService>();
 
-  late final ValueNotifier<List<RoomfinderBuildingViewItem>> _favoriteBuildingsNotifier;
+  late ValueNotifier<List<String>> _favoriteBuildingIdsNotifier;
+  late ValueNotifier<List<RoomfinderBuildingViewItem>> _buildingsNotifier;
 
   @override
   void initState() {
     super.initState();
-    _favoriteBuildingsNotifier = _roomfinderFavoritesService.favoriteBuildingsNotifier;
+    _favoriteBuildingIdsNotifier = _roomfinderFavoritesService.favoriteBuildingIdsNotifier;
+    final availableBuildings =
+        _roomfinderFilterService.filteredBuildingsNotifier.value.expand((group) => group).toList();
+    _buildingsNotifier = ValueNotifier(availableBuildings);
   }
 
   @override
@@ -47,9 +53,9 @@ class _RoomfinderFavoritesSectionState extends State<RoomfinderFavoritesSection>
         ),
         const SizedBox(height: LmuSizes.size_12),
         ValueListenableBuilder(
-          valueListenable: _favoriteBuildingsNotifier,
-          builder: (context, favoriteBuildings, child) {
-            if (favoriteBuildings.isEmpty) {
+          valueListenable: _favoriteBuildingIdsNotifier,
+          builder: (context, favoriteBuildingIds, child) {
+            if (favoriteBuildingIds.isEmpty) {
               return PlaceholderTile(
                 minHeight: 56,
                 content: [
@@ -60,18 +66,25 @@ class _RoomfinderFavoritesSectionState extends State<RoomfinderFavoritesSection>
               );
             }
 
-            return LmuContentTile(
-              contentList: favoriteBuildings.map(
-                (building) {
-                  return LmuListItem.action(
-                    key: Key('favorite${building.id}'),
-                    title: building.title,
-                    trailingTitle: building.distance?.formatDistance(),
-                    actionType: LmuListItemAction.chevron,
-                    onTap: () => RoomfinderBuildingDetailsRoute(building.id).go(context),
-                  );
-                },
-              ).toList(),
+            return ValueListenableBuilder(
+              valueListenable: _buildingsNotifier,
+              builder: (context, buildings, child) {
+                final favoriteBuildings =
+                    buildings.where((building) => favoriteBuildingIds.contains(building.id)).toList();
+                return LmuContentTile(
+                  contentList: favoriteBuildings.map(
+                    (building) {
+                      return LmuListItem.action(
+                        key: Key('favorite${building.id}'),
+                        title: building.title,
+                        trailingTitle: building.distance?.formatDistance(),
+                        actionType: LmuListItemAction.chevron,
+                        onTap: () => RoomfinderBuildingDetailsRoute(building.id).go(context),
+                      );
+                    },
+                  ).toList(),
+                );
+              },
             );
           },
         ),

@@ -9,10 +9,10 @@ class TasteProfileCubit extends Cubit<TasteProfileState> {
 
   final _mensaRepository = GetIt.I.get<MensaRepository>();
 
-  Future<void> loadTasteProfile() async {
+  Future<void> loadTasteProfile({bool forceRefresh = false}) async {
     emit(TasteProfileLoadInProgress());
     try {
-      final tasteProfile = await _mensaRepository.getTasteProfileContent();
+      final tasteProfile = await _mensaRepository.getTasteProfileContent(forceRefresh: forceRefresh);
       emit(TasteProfileLoadSuccess(tasteProfile));
     } catch (e) {
       emit(TasteProfileLoadFailure());
@@ -20,6 +20,6 @@ class TasteProfileCubit extends Cubit<TasteProfileState> {
   }
 
   void resetTasteProfile() {
-    emit(TasteProfileInitial());
+    loadTasteProfile(forceRefresh: true);
   }
 }

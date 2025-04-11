@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:core/utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 
 import '../bloc/bloc.dart';
@@ -10,9 +11,9 @@ class MensaSearchService {
   final _sportsCubit = GetIt.I.get<MensaCubit>();
   final _mensaRepository = GetIt.I.get<MensaRepository>();
 
-  List<MensaModel> _recentSearches = [];
+  List<String> _recentSearchIds = [];
 
-  List<MensaModel> get recentSearches => _recentSearches;
+  List<String> get recentSearchIds => _recentSearchIds;
 
   List<MensaModel> _mensaModels = [];
   List<MensaModel> _popularMensaModels = [];
@@ -22,17 +23,12 @@ class MensaSearchService {
   List<MensaModel> get mensaModels => _mensaModels;
   List<MensaModel> get popularMensaModels => _popularMensaModels;
 
-  void _updateRecentSearch(List<String> recentSearch) {
-    _recentSearches = _mensaModels.where((mensaModel) => recentSearch.contains(mensaModel.canteenId)).toSet().toList()
-      ..sort((a, b) => recentSearch.indexOf(a.name).compareTo(recentSearch.indexOf(b.name)));
-  }
-
   void init() {
     _cubitSubscription = _sportsCubit.stream.withInitialValue(_sportsCubit.state).listen((state) {
       if (state is MensaLoadSuccess) {
         _mensaModels = state.mensaModels;
         _mensaRepository.getRecentSearches().then((recentSearch) {
-          _updateRecentSearch(recentSearch);
+          _recentSearchIds = recentSearch;
         });
 
         final popularMensa = List.of(_mensaModels);
@@ -51,8 +47,8 @@ class MensaSearchService {
   }
 
   Future<void> updateRecentSearch(List<String> recentSearch) async {
-    if (_recentSearches.map((search) => search.canteenId).toList() == recentSearch) return;
-    _updateRecentSearch(recentSearch);
+    if (listEquals(_recentSearchIds, recentSearch)) return;
+    _recentSearchIds = recentSearch;
     await _mensaRepository.saveRecentSearches(recentSearch);
   }
 }

@@ -36,9 +36,10 @@ class _MensaSearchPageState extends State<MensaSearchPage> {
     _searchEntries = _searchService.mensaModels
         .map((mensa) => MensaSearchEntry(title: "${mensa.name}${mensa.type.name}", id: mensa.canteenId))
         .toList();
-    _recentSearchEntries = _searchService.recentSearches
-        .map((mensa) => MensaSearchEntry(title: "${mensa.name}${mensa.type.name}", id: mensa.canteenId))
-        .toList();
+    _recentSearchEntries = _searchService.recentSearchIds.map((id) {
+      final mensaModel = _searchService.getMensaModel(id);
+      return MensaSearchEntry(title: "${mensaModel.name}${mensaModel.type.name}", id: id);
+    }).toList();
   }
 
   @override

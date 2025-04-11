@@ -25,39 +25,45 @@ class MensaOverviewButtonSection extends StatelessWidget {
     final userPreferencesService = GetIt.I.get<MensaUserPreferencesService>();
     final isOpenNowFilterNotifier = userPreferencesService.isOpenNowFilterNotifier;
 
-    return Row(
-      children: [
-        LmuMapImageButton(onTap: () => GetIt.I<ExploreService>().navigateToExplore(context)),
-        const SizedBox(width: LmuSizes.size_8),
-        LmuIconButton(
-          icon: LucideIcons.search,
-          onPressed: () => const MensaSearchRoute().go(context),
-        ),
-        const SizedBox(width: LmuSizes.size_8),
-        ValueListenableBuilder(
-          valueListenable: userPreferencesService.sortOptionNotifier,
-          builder: (context, activeSortOption, _) {
-            return LmuButton(
-              title: SortOption.values.firstWhere((option) => option == activeSortOption).title(localizations),
-              emphasis: ButtonEmphasis.secondary,
-              trailingIcon: LucideIcons.chevron_down,
-              onTap: () => _showSortOptionActionSheet(context),
-            );
-          },
-        ),
-        const SizedBox(width: LmuSizes.size_8),
-        ValueListenableBuilder(
-          valueListenable: isOpenNowFilterNotifier,
-          builder: (context, isOpenNowFilterActive, _) {
-            return LmuButton(
-              title: localizations.openNow,
-              emphasis: isOpenNowFilterActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
-              action: isOpenNowFilterActive ? ButtonAction.contrast : ButtonAction.base,
-              onTap: () => isOpenNowFilterNotifier.value = !isOpenNowFilterNotifier.value,
-            );
-          },
-        )
-      ],
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const SizedBox(width: LmuSizes.size_16),
+          LmuMapImageButton(onTap: () => GetIt.I<ExploreService>().navigateToExplore(context)),
+          const SizedBox(width: LmuSizes.size_8),
+          LmuIconButton(
+            icon: LucideIcons.search,
+            onPressed: () => const MensaSearchRoute().go(context),
+          ),
+          const SizedBox(width: LmuSizes.size_8),
+          ValueListenableBuilder(
+            valueListenable: userPreferencesService.sortOptionNotifier,
+            builder: (context, activeSortOption, _) {
+              return LmuButton(
+                title: SortOption.values.firstWhere((option) => option == activeSortOption).title(localizations),
+                emphasis: ButtonEmphasis.secondary,
+                trailingIcon: LucideIcons.chevron_down,
+                onTap: () => _showSortOptionActionSheet(context),
+              );
+            },
+          ),
+          const SizedBox(width: LmuSizes.size_8),
+          ValueListenableBuilder(
+            valueListenable: isOpenNowFilterNotifier,
+            builder: (context, isOpenNowFilterActive, _) {
+              return LmuButton(
+                title: localizations.openNow,
+                emphasis: isOpenNowFilterActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
+                action: isOpenNowFilterActive ? ButtonAction.contrast : ButtonAction.base,
+                onTap: () => isOpenNowFilterNotifier.value = !isOpenNowFilterNotifier.value,
+              );
+            },
+          ),
+          const SizedBox(width: LmuSizes.size_16),
+        ],
+      ),
     );
   }
 
