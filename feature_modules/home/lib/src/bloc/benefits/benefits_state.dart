@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+
 import '../../repository/api/models/benefits/benefit_model.dart';
 
 abstract class BenefitsState extends Equatable {
@@ -13,7 +14,12 @@ class BenefitsInitial extends BenefitsState {
 }
 
 class BenefitsLoadInProgress extends BenefitsState {
-  const BenefitsLoadInProgress();
+  const BenefitsLoadInProgress({this.benefits});
+
+  final List<BenefitModel>? benefits;
+
+  @override
+  List<Object> get props => [benefits ?? []];
 }
 
 class BenefitsLoadSuccess extends BenefitsState {

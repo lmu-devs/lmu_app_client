@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
-import 'cinema_state.dart';
 import '../repository/cinema_repository.dart';
+import 'cinema_state.dart';
 
 class CinemaCubit extends Cubit<CinemaState> {
   CinemaCubit() : super(const CinemaInitial());
@@ -10,14 +10,17 @@ class CinemaCubit extends Cubit<CinemaState> {
   final _repository = GetIt.I.get<CinemaRepository>();
 
   Future<void> loadCinemaData() async {
-    emit(const CinemaLoadInProgress());
+    final cachedCinemas = await _repository.getCachedCinemas();
+    final cachedScreenings = await _repository.getCachedScreenings();
+    emit(CinemaLoadInProgress(cinemas: cachedCinemas, screenings: cachedScreenings));
 
-    try {
-      final cinemas = await _repository.getCinemas();
-      final screenings = await _repository.getScreenings();
-      emit(CinemaLoadSuccess(cinemas: cinemas, screenings: screenings));
-    } catch (e) {
+    final cinemas = await _repository.getCinemas();
+    final screenings = await _repository.getScreenings();
+
+    if (cinemas == null && screenings == null && cachedCinemas == null && cachedScreenings == null) {
       emit(const CinemaLoadFailure());
+      return;
     }
+    emit(CinemaLoadSuccess(cinemas: cinemas ?? cachedCinemas!, screenings: screenings ?? cachedScreenings!));
   }
 }

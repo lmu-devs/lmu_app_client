@@ -17,11 +17,12 @@ class MensaPage extends StatefulWidget {
 }
 
 class _MensaPageState extends State<MensaPage> {
+  final mensaCubit = GetIt.I.get<MensaCubit>();
+
   @override
   void initState() {
     super.initState();
 
-    final mensaCubit = GetIt.I.get<MensaCubit>();
     final tasteProfileCubit = GetIt.I.get<TasteProfileCubit>();
     if (mensaCubit.state is! MensaLoadSuccess) {
       mensaCubit.loadMensaData();
@@ -47,13 +48,15 @@ class _MensaPageState extends State<MensaPage> {
         },
       ),
       body: BlocBuilder<MensaCubit, MensaState>(
-        bloc: GetIt.I.get<MensaCubit>(),
+        bloc: mensaCubit,
         builder: (_, state) {
-          return LmuPageAnimationWrapper(
-            child: state is MensaLoadSuccess
-                ? MensaOverviewContentView(key: const ValueKey("mensaContent"), mensaModels: state.mensaModels)
-                : const MensaOverviewLoadingView(key: ValueKey("mensaLoading")),
-          );
+          Widget child = const MensaOverviewLoadingView(key: ValueKey("mensaLoading"));
+          if (state is MensaLoadInProgress && state.mensaModels != null) {
+            child = MensaOverviewContentView(key: const ValueKey("mensaContent"), mensaModels: state.mensaModels!);
+          } else if (state is MensaLoadSuccess) {
+            child = MensaOverviewContentView(key: const ValueKey("mensaContent"), mensaModels: state.mensaModels);
+          }
+          return LmuPageAnimationWrapper(child: child);
         },
       ),
     );

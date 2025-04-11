@@ -32,7 +32,14 @@ class SportsStateService {
   void init() async {
     _sportsCubit.stream.withInitialValue(_sportsCubit.state).listen(
       (state) {
-        if (state is SportsLoadSuccess) {
+        if (state is SportsLoadInProgress && state.sports != null) {
+          _initialSportTypes = groupBy(state.sports!.sportTypes, (sport) => sport.title[0].toUpperCase());
+          _filteredGroupedSportsNotifier.value = _initialSportTypes;
+          _baseUrl = state.sports!.baseUrl;
+          _sportsRepo.getFavoriteSports().then((value) {
+            _favoriteSportsCoursesNotifier.value = value;
+          });
+        } else if (state is SportsLoadSuccess) {
           _initialSportTypes = groupBy(state.sports.sportTypes, (sport) => sport.title[0].toUpperCase());
           _filteredGroupedSportsNotifier.value = _initialSportTypes;
           _baseUrl = state.sports.baseUrl;

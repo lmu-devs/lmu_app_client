@@ -64,7 +64,9 @@ class MensaUserPreferencesService {
     final mensaCubit = GetIt.I<MensaCubit>();
     final mensaCubitState = mensaCubit.state;
     mensaCubit.stream.withInitialValue(mensaCubitState).listen((state) async {
-      if (state is MensaLoadSuccess) {
+      if (state is MensaLoadInProgress && state.mensaModels != null) {
+        sortMensaModels(state.mensaModels!);
+      } else if (state is MensaLoadSuccess) {
         sortMensaModels(state.mensaModels);
         final retrievedFavoriteMensaIds =
             state.mensaModels.where((mensa) => mensa.ratingModel.isLiked).map((mensa) => mensa.canteenId).toList();
@@ -143,6 +145,9 @@ class MensaUserPreferencesService {
 
   void sortMensaModels(List<MensaModel> mensaModels) {
     final sortedMensaModels = _sortOptionNotifier.value.sort(mensaModels);
+    if (listEquals(sortedMensaModels, _sortedMensaModelsNotifier.value)) {
+      return;
+    }
     _sortedMensaModelsNotifier.value = sortedMensaModels;
   }
 

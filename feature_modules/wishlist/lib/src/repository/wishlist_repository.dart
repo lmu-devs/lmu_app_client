@@ -4,7 +4,9 @@ import 'api/models/wishlist_model.dart';
 import 'api/wishlist_api_client.dart';
 
 abstract class WishlistRepository {
-  Future<List<WishlistModel>> getWishlistEntries({int? id});
+  Future<List<WishlistModel>?> getWishlistEntries({int? id});
+
+  Future<List<WishlistModel>?> getCachedWishlistEntries({int? id});
 
   Future<List<String>?> getLikedWishlistIds();
 
@@ -22,15 +24,41 @@ class ConnectedWishlistRepository implements WishlistRepository {
 
   final WishlistApiClient wishlistApiClient;
 
+  final String _cachedWishlistEntriesKey = 'cached_wishlist_entries_key';
+  final _cachedWihshlistEntriesTimestampKey = 'cached_wishlist_entries_timestamp_key';
+
+  final _maxCacheTime = const Duration(days: 7);
+
   static const String _likedWishlistIdsKey = 'liked_wishlist_ids_key';
 
   @override
-  Future<List<WishlistModel>> getWishlistEntries({int? id}) async {
+  Future<List<WishlistModel>?> getWishlistEntries({int? id}) async {
+    final prefs = await SharedPreferences.getInstance();
     try {
       final wishlistEntries = await wishlistApiClient.getWishlistModels(id: id);
+      await prefs.setString(_cachedWishlistEntriesKey, wishlistEntries.map((e) => e.toJson()).toString());
+      await prefs.setInt(_cachedWihshlistEntriesTimestampKey, DateTime.now().millisecondsSinceEpoch);
       return wishlistEntries;
     } catch (e) {
-      rethrow;
+      return null;
+    }
+  }
+
+  @override
+  Future<List<WishlistModel>?> getCachedWishlistEntries({int? id}) async {
+    final prefs = await SharedPreferences.getInstance();
+    final cachedData = prefs.getString(_cachedWishlistEntriesKey);
+    final cachedTimeStamp = prefs.getInt(_cachedWihshlistEntriesTimestampKey);
+    final isCacheValid = cachedTimeStamp != null &&
+        DateTime.fromMillisecondsSinceEpoch(cachedTimeStamp).add(_maxCacheTime).isAfter(DateTime.now());
+    if (cachedData != null && isCacheValid) {
+      try {
+        return (cachedData as List).map((e) => WishlistModel.fromJson(e)).toList();
+      } catch (e) {
+        return null;
+      }
+    } else {
+      return null;
     }
   }
 

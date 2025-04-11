@@ -6,6 +6,7 @@ import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+
 import '../../bloc/links/links.dart';
 import '../../repository/api/models/links/link_model.dart';
 import '../../service/home_preferences_service.dart';
@@ -20,8 +21,13 @@ class FavoriteLinkRow extends StatelessWidget {
     return BlocBuilder<LinksCubit, LinksState>(
       bloc: GetIt.I.get<LinksCubit>(),
       builder: (context, state) {
-        if (state is LinksLoadSuccess) {
-          final List<LinkModel> fetchedLinks = state.links;
+        if (state is LinksLoadSuccess || (state is LinksLoadInProgress && state.links != null)) {
+          List<LinkModel> fetchedLinks = [];
+          if (state is LinksLoadSuccess) {
+            fetchedLinks = state.links;
+          } else if (state is LinksLoadInProgress) {
+            fetchedLinks = state.links!;
+          }
           return ValueListenableBuilder<List<String>>(
             valueListenable: GetIt.I<HomePreferencesService>().likedLinksNotifier,
             builder: (context, likedLinks, child) {

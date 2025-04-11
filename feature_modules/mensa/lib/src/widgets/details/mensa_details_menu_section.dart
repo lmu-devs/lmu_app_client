@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/mensa.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../bloc/menu_cubit/cubit.dart';
 import '../../services/menu_service.dart';
@@ -23,11 +24,13 @@ class MensaDetailsMenuSection extends StatelessWidget {
     return BlocBuilder<MenuCubit, MenuState>(
       bloc: GetIt.I.get<MenuService>().getMenuCubit(canteenId),
       builder: (context, state) {
-        if (state is MenuLoadSuccess) {
-          return MenuContentView(menuModels: state.menuModels, mensaType: mensaType);
-        }
-
-        return MenuLoadingView(canteendId: canteenId);
+        return SliverAnimatedSwitcher(
+          switchOutCurve: Curves.easeOut,
+          duration: const Duration(milliseconds: 200),
+          child: state is MenuLoadSuccess
+              ? MenuContentView(menuModels: state.menuModels, mensaType: mensaType)
+              : MenuLoadingView(canteendId: canteenId),
+        );
       },
     );
   }

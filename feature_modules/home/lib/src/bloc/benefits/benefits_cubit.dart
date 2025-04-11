@@ -10,13 +10,16 @@ class BenefitsCubit extends Cubit<BenefitsState> {
   final _repository = GetIt.I.get<HomeRepository>();
 
   Future<void> getBenefits() async {
-    emit(const BenefitsLoadInProgress());
+    final cachedData = await _repository.getCachedBenefits();
+    emit(BenefitsLoadInProgress(benefits: cachedData));
 
-    try {
-      final benefits = await _repository.getBenefits();
-      emit(BenefitsLoadSuccess(benefits: benefits));
-    } catch (e) {
+    final benefits = await _repository.getBenefits();
+
+    if (benefits == null && cachedData == null) {
       emit(const BenefitsLoadFailure());
+      return;
     }
+
+    emit(BenefitsLoadSuccess(benefits: benefits ?? cachedData!));
   }
 }
