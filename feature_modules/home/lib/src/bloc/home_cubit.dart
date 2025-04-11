@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:core/extensions.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,15 +12,16 @@ class HomeCubit extends Cubit<HomeState> {
   final HomeRepository homeRepository;
 
   Future<void> loadHomeData() async {
-    try {
-      emit(HomeLoading());
-      final homeData = await homeRepository.getHomeData();
-      emit(HomeLoadSuccess(homeData: homeData));
-    } catch (e) {
+    final cachedData = await homeRepository.getCachedHomeData();
+    emit(HomeLoadInProgress(homeData: cachedData));
+
+    final homeData = await homeRepository.getHomeData();
+
+    if (homeData == null && cachedData == null) {
       emit(HomeLoadFailure());
-      if (e is SocketException) {
-        listenForConnectivityRestoration(loadHomeData);
-      }
+      listenForConnectivityRestoration(loadHomeData);
+      return;
     }
+    emit(HomeLoadSuccess(homeData: homeData ?? cachedData!));
   }
 }

@@ -33,11 +33,13 @@ class _TimelinePageState extends State<TimelinePage> {
       body: BlocBuilder<TimelineCubit, TimelineState>(
         bloc: GetIt.I.get<TimelineCubit>(),
         builder: (context, state) {
-          return LmuPageAnimationWrapper(
-            child: state is TimelineLoadSuccess
-                ? TimelineContentView(key: const ValueKey("timelineContent"), data: state.data)
-                : const TimelineLoadingView(key: ValueKey("timelineLoading")),
-          );
+          Widget child = const TimelineLoadingView(key: ValueKey("timelineLoading"));
+          if (state is TimelineLoadInProgress && state.data != null) {
+            child = TimelineContentView(key: const ValueKey("timelineContent"), data: state.data!);
+          } else if (state is TimelineLoadSuccess) {
+            child = TimelineContentView(key: const ValueKey("timelineContent"), data: state.data);
+          }
+          return LmuPageAnimationWrapper(child: child);
         },
       ),
     );

@@ -24,11 +24,15 @@ class HomePage extends StatelessWidget {
       body: BlocBuilder<HomeCubit, HomeState>(
         bloc: GetIt.I.get<HomeCubit>(),
         builder: (_, state) {
-          return LmuPageAnimationWrapper(
-            child: state is HomeLoadSuccess
-                ? HomeSuccessView(key: const ValueKey("homeContent"), homeData: state.homeData)
-                : const HomeLoadingView(key: ValueKey("homeLoading")),
-          );
+          Widget child = const HomeLoadingView(key: ValueKey("homeLoading"));
+
+          if (state is HomeLoadInProgress && state.homeData != null) {
+            child = HomeSuccessView(key: const ValueKey("homeContent"), homeData: state.homeData!);
+          } else if (state is HomeLoadSuccess) {
+            child = HomeSuccessView(key: const ValueKey("homeContent"), homeData: state.homeData);
+          }
+
+          return LmuPageAnimationWrapper(child: child);
         },
       ),
     );

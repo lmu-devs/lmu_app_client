@@ -32,15 +32,22 @@ class _CinemaPageState extends State<CinemaPage> {
       body: BlocBuilder<CinemaCubit, CinemaState>(
         bloc: GetIt.I.get<CinemaCubit>(),
         builder: (context, state) {
-          return LmuPageAnimationWrapper(
-            child: state is CinemaLoadSuccess
-                ? CinemaContentView(
-                    key: const ValueKey("cinemaContent"),
-                    cinemas: state.cinemas,
-                    screenings: state.screenings,
-                  )
-                : const CinemaLoadingView(key: ValueKey("cinemaLoading")),
-          );
+          Widget child = const CinemaLoadingView(key: ValueKey("cinemaLoading"));
+
+          if (state is CinemaLoadInProgress && state.cinemas != null && state.screenings != null) {
+            child = CinemaContentView(
+              key: const ValueKey("cinemaContent"),
+              cinemas: state.cinemas!,
+              screenings: state.screenings!,
+            );
+          } else if (state is CinemaLoadSuccess) {
+            child = CinemaContentView(
+              key: const ValueKey("cinemaContent"),
+              cinemas: state.cinemas,
+              screenings: state.screenings,
+            );
+          }
+          return LmuPageAnimationWrapper(child: child);
         },
       ),
     );

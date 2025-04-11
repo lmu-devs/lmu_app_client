@@ -11,7 +11,9 @@ import 'api/models/taste_profile/taste_profile.dart';
 import 'api/models/user_preferences/sort_option.dart';
 
 abstract class MensaRepository {
-  Future<List<MensaModel>> getMensaModels();
+  Future<List<MensaModel>?> getMensaModels();
+
+  Future<List<MensaModel>?> getCachedMensaModels();
 
   Future<bool> toggleFavoriteMensaId(String mensaId);
 
@@ -66,6 +68,9 @@ class ConnectedMensaRepository implements MensaRepository {
   final _appLogger = AppLogger();
 
   static const String _mensaModelsCacheKey = 'mensa_models_cache_key';
+  static const String _mensaModelsCacheTimeStampKey = 'mensa_models_cache_time_stamp_key';
+
+  final _maxCacheTime = const Duration(days: 14);
 
   static const String _favoriteMensaIdsKey = 'favorite_mensa_ids_key';
   static const String _favoriteDishIdsKey = 'favorite_dish_ids_key';
@@ -82,7 +87,7 @@ class ConnectedMensaRepository implements MensaRepository {
   static const String _recentSearchesKey = 'mensa_recentSearches';
 
   @override
-  Future<List<MensaModel>> getMensaModels() async {
+  Future<List<MensaModel>?> getMensaModels() async {
     final prefs = await SharedPreferences.getInstance();
 
     try {
@@ -90,17 +95,30 @@ class ConnectedMensaRepository implements MensaRepository {
       final jsonResponse = json.encode(mensaModels.map((mensa) => mensa.toJson()).toList());
 
       await prefs.setString(_mensaModelsCacheKey, jsonResponse);
+      await prefs.setInt(_mensaModelsCacheTimeStampKey, DateTime.now().millisecondsSinceEpoch);
 
       return mensaModels;
     } catch (e) {
-      final cachedData = prefs.getString(_mensaModelsCacheKey);
-      if (cachedData != null) {
+      return null;
+    }
+  }
+
+  @override
+  Future<List<MensaModel>?> getCachedMensaModels() async {
+    final prefs = await SharedPreferences.getInstance();
+    final cachedData = prefs.getString(_mensaModelsCacheKey);
+    final cachedTimeStamp = prefs.getInt(_mensaModelsCacheTimeStampKey);
+    final isCacheValid = cachedTimeStamp != null &&
+        DateTime.fromMillisecondsSinceEpoch(cachedTimeStamp).add(_maxCacheTime).isAfter(DateTime.now());
+    if (cachedData != null && isCacheValid) {
+      try {
         final jsonList = json.decode(cachedData) as List<dynamic>;
-        final mensaModels = jsonList.map((json) => MensaModel.fromJson(json as Map<String, dynamic>)).toList();
-        _appLogger.logMessage('[MensaRepository]: Using mensa models from cache');
-        return mensaModels;
+        return jsonList.map((json) => MensaModel.fromJson(json as Map<String, dynamic>)).toList();
+      } catch (e) {
+        return null;
       }
-      rethrow;
+    } else {
+      return null;
     }
   }
 

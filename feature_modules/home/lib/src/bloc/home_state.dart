@@ -9,9 +9,13 @@ class HomeInitial extends HomeState {
   List<Object?> get props => [];
 }
 
-class HomeLoading extends HomeState {
+class HomeLoadInProgress extends HomeState {
+  HomeLoadInProgress({this.homeData});
+
+  final HomeData? homeData;
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [homeData];
 }
 
 class HomeLoadSuccess extends HomeState {

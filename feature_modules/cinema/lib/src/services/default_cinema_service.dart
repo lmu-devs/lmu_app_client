@@ -27,7 +27,17 @@ class DefaultCinemaService implements CinemaService {
     }
 
     return cinemaCubit.stream.withInitialValue(cinemaCubit.state).map((state) {
-      if (state is CinemaLoadSuccess) {
+      if (state is CinemaLoadInProgress && state.cinemas != null) {
+        return state.cinemas!.map((cinemaModel) {
+          return ExploreLocation(
+            id: cinemaModel.id,
+            latitude: cinemaModel.cinemaLocation.latitude,
+            longitude: cinemaModel.cinemaLocation.longitude,
+            name: cinemaModel.title,
+            type: ExploreMarkerType.cinema,
+          );
+        }).toList();
+      } else if (state is CinemaLoadSuccess) {
         return state.cinemas.map((cinemaModel) {
           return ExploreLocation(
             id: cinemaModel.id,

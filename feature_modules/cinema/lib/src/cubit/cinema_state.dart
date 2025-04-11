@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 
 import '../repository/api/api.dart';
 
-
 abstract class CinemaState extends Equatable {
   const CinemaState();
 
@@ -15,7 +14,10 @@ class CinemaInitial extends CinemaState {
 }
 
 class CinemaLoadInProgress extends CinemaState {
-  const CinemaLoadInProgress();
+  const CinemaLoadInProgress({this.cinemas, this.screenings});
+
+  final List<CinemaModel>? cinemas;
+  final List<ScreeningModel>? screenings;
 }
 
 class CinemaLoadSuccess extends CinemaState {

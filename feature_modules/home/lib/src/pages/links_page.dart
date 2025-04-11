@@ -28,16 +28,13 @@ class _LinksPageState extends State<LinksPage> {
     return BlocBuilder<LinksCubit, LinksState>(
       bloc: GetIt.I.get<LinksCubit>(),
       builder: (context, state) {
-        return LmuPageAnimationWrapper(
-          child: state is LinksLoadSuccess
-              ? LinksContentView(
-                  key: const ValueKey("linksContent"),
-                  links: state.links,
-                )
-              : const LinksLoadingView(
-                  key: ValueKey("linksLoading"),
-                ),
-        );
+        Widget child = const LinksLoadingView(key: ValueKey("linksLoading"));
+        if (state is LinksLoadInProgress && state.links != null) {
+          child = LinksContentView(key: const ValueKey("linksContent"), links: state.links!);
+        } else if (state is LinksLoadSuccess) {
+          child = LinksContentView(key: const ValueKey("linksContent"), links: state.links);
+        }
+        return LmuPageAnimationWrapper(child: child);
       },
     );
   }
