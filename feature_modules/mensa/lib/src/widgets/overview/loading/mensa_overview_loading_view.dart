@@ -58,29 +58,32 @@ class MensaOverviewLoadingView extends StatelessWidget {
               ),
               const SizedBox(height: 26),
               LmuTileHeadline.base(title: context.locals.canteen.allCanteens),
-              Row(
-                children: [
-                  LmuMapImageButton(onTap: () {}),
-                  const SizedBox(width: LmuSizes.size_8),
-                  LmuIconButton(
-                    icon: LucideIcons.search,
-                    isDisabled: true,
-                    onPressed: () {},
-                  ),
-                  const SizedBox(width: LmuSizes.size_8),
-                  LmuButton(
-                    title: context.locals.canteen.alphabetically,
-                    emphasis: ButtonEmphasis.secondary,
-                    state: ButtonState.disabled,
-                    trailingIcon: LucideIcons.chevron_down,
-                  ),
-                  const SizedBox(width: LmuSizes.size_8),
-                  LmuButton(
-                    title: context.locals.canteen.openNow,
-                    emphasis: ButtonEmphasis.secondary,
-                    state: ButtonState.disabled,
-                  ),
-                ],
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    LmuMapImageButton(onTap: () {}),
+                    const SizedBox(width: LmuSizes.size_8),
+                    LmuIconButton(
+                      icon: LucideIcons.search,
+                      isDisabled: true,
+                      onPressed: () {},
+                    ),
+                    const SizedBox(width: LmuSizes.size_8),
+                    LmuButton(
+                      title: context.locals.canteen.alphabetically,
+                      emphasis: ButtonEmphasis.secondary,
+                      state: ButtonState.disabled,
+                      trailingIcon: LucideIcons.chevron_down,
+                    ),
+                    const SizedBox(width: LmuSizes.size_8),
+                    LmuButton(
+                      title: context.locals.canteen.openNow,
+                      emphasis: ButtonEmphasis.secondary,
+                      state: ButtonState.disabled,
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: LmuSizes.size_16),
               ListView.builder(

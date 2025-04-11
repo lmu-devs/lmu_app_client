@@ -5,6 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 extension ConnectivityListener<T extends Cubit<S>, S> on T {
   void listenForConnectivityRestoration(void Function() onRestored) async {
+    final connectivity = Connectivity();
+    final currentStatus = await connectivity.checkConnectivity();
+    if (!currentStatus.contains(ConnectivityResult.none)) {
+      return;
+    }
+
     StreamSubscription? subscription;
 
     subscription = Connectivity().onConnectivityChanged.listen((results) {

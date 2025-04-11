@@ -28,78 +28,84 @@ class LmuFeatureTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    return ClipRRect(
-      borderRadius: const BorderRadius.all(Radius.circular(LmuRadiusSizes.mediumLarge)),
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          decoration: BoxDecoration(
-            color: colors.neutralColors.backgroundColors.tile,
-            border: hasBorder
-                ? Border.all(
-                    strokeAlign: BorderSide.strokeAlignOutside,
-                    color: colors.neutralColors.borderColors.seperatorLight,
-                    width: 1,
-                  )
-                : null,
-          ),
-          child: Stack(
-            children: [
-              if (content != null)
-                LayoutBuilder(builder: (context, constraints) {
-                  return SizedBox(
-                    width: constraints.maxWidth,
-                    height: constraints.maxHeight,
-                    child: content!,
-                  );
-                }),
-              // Positioned.fill(
-              //   child: Container(
-              //     decoration: BoxDecoration(
-              //       gradient: LinearGradient(
-              //         begin: Alignment.topCenter,
-              //         end: Alignment.bottomCenter,
-              //         stops: const [0.6, 1],
-              //         colors: [
-              //           colors.gradientColors.gradientFadeColors.end.withOpacity(0.4),
-              //           colors.gradientColors.gradientFadeColors.end.withOpacity(0.8),
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              // Positioned(
-              //   child: Container(
-              //     padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_2, horizontal: LmuSizes.size_8),
-              //     decoration: BoxDecoration(
-              //       borderRadius: const BorderRadius.only(
-              //         topLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
-              //         bottomRight: Radius.circular(LmuRadiusSizes.mediumLarge),
-              //       ),
-              //       color: context.colors.brandColors.backgroundColors.strongColors.active,
-              //     ),
-              //     child: LmuText.body("New Offers", weight: FontWeight.w600),
-              //   ),
-              // ),
-              Positioned(
-                bottom: 0,
-                child: Padding(
-                  padding: const EdgeInsets.all(LmuSizes.size_16),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      LmuText.body(title, weight: FontWeight.bold),
-                      if (subtitle != null)
-                        LmuText.body(
-                          subtitle,
-                          color: colors.neutralColors.textColors.mediumColors.base,
-                        ),
-                    ],
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: colors.neutralColors.borderColors.tile, width: 1),
+        borderRadius: const BorderRadius.all(Radius.circular(LmuRadiusSizes.mediumLarge+1)),
+      ),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.all(Radius.circular(LmuRadiusSizes.mediumLarge)),
+        child: GestureDetector(
+          onTap: onTap,
+          child: Container(
+            decoration: BoxDecoration(
+              color: colors.neutralColors.backgroundColors.tile,
+              border: hasBorder
+                  ? Border.all(
+                      strokeAlign: BorderSide.strokeAlignOutside,
+                      color: colors.neutralColors.borderColors.seperatorLight,
+                      width: 1,
+                    )
+                  : null,
+            ),
+            child: Stack(
+              children: [
+                if (content != null)
+                  LayoutBuilder(builder: (context, constraints) {
+                    return SizedBox(
+                      width: constraints.maxWidth,
+                      height: constraints.maxHeight,
+                      child: content!,
+                    );
+                  }),
+                // Positioned.fill(
+                //   child: Container(
+                //     decoration: BoxDecoration(
+                //       gradient: LinearGradient(
+                //         begin: Alignment.topCenter,
+                //         end: Alignment.bottomCenter,
+                //         stops: const [0.6, 1],
+                //         colors: [
+                //           colors.gradientColors.gradientFadeColors.end.withOpacity(0.4),
+                //           colors.gradientColors.gradientFadeColors.end.withOpacity(0.8),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                // Positioned(
+                //   child: Container(
+                //     padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_2, horizontal: LmuSizes.size_8),
+                //     decoration: BoxDecoration(
+                //       borderRadius: const BorderRadius.only(
+                //         topLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
+                //         bottomRight: Radius.circular(LmuRadiusSizes.mediumLarge),
+                //       ),
+                //       color: context.colors.brandColors.backgroundColors.strongColors.active,
+                //     ),
+                //     child: LmuText.body("New Offers", weight: FontWeight.w600),
+                //   ),
+                // ),
+                Positioned(
+                  bottom: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(LmuSizes.size_16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        LmuText.body(title, weight: FontWeight.bold),
+                        if (subtitle != null)
+                          LmuText.body(
+                            subtitle,
+                            color: colors.neutralColors.textColors.mediumColors.base,
+                          ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

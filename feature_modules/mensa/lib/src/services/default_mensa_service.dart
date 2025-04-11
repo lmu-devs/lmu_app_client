@@ -17,7 +17,17 @@ class DefaultMensaService implements MensaService {
     }
 
     return mensaCubit.stream.withInitialValue(mensaCubit.state).map((state) {
-      if (state is MensaLoadSuccess) {
+      if (state is MensaLoadInProgress && state.mensaModels != null) {
+        return state.mensaModels!.map((mensaModel) {
+          return ExploreLocation(
+            id: mensaModel.canteenId,
+            latitude: mensaModel.location.latitude,
+            longitude: mensaModel.location.longitude,
+            name: mensaModel.name,
+            type: mensaModel.type.exploreMarkerType,
+          );
+        }).toList();
+      } else if (state is MensaLoadSuccess) {
         return state.mensaModels.map((mensaModel) {
           return ExploreLocation(
             id: mensaModel.canteenId,

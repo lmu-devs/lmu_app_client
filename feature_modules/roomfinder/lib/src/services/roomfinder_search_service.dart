@@ -21,21 +21,17 @@ class RoomfinderSearchService {
   StreamSubscription? _cubitSubscription;
 
   List<RoomfinderBuilding> get buildings => _buildings;
-  List<RoomfinderRoom> get rooms => _buildings
-      .expand((building) => building.buildingParts)
-      .expand((part) => part.floors)
-      .expand((floor) => floor.rooms)
-      .toList();
+  List<RoomfinderRoom> get rooms => _buildings.expand((part) => part.floors).expand((floor) => floor.rooms).toList();
 
   void _updateRecentSearch(List<String> recentSearch) {
-    _recentSearches = _buildings.where((building) => recentSearch.contains(building.id)).toList()
-      ..sort((a, b) => recentSearch.indexOf(a.id).compareTo(recentSearch.indexOf(b.id)));
+    _recentSearches = _buildings.where((building) => recentSearch.contains(building.buildingPartId)).toList()
+      ..sort((a, b) => recentSearch.indexOf(a.buildingPartId).compareTo(recentSearch.indexOf(b.buildingPartId)));
   }
 
   void init() {
     _cubitSubscription = _roomfinderCubit.stream.withInitialValue(_roomfinderCubit.state).listen((state) {
       if (state is RoomfinderLoadSuccess) {
-        _buildings = state.cities.expand((city) => city.streets).expand((street) => street.buildings).toList();
+        _buildings = state.streets.expand((street) => street.buildings).toList();
         _roomfinderRepository.getRecentSearches().then((recentSearch) {
           _updateRecentSearch(recentSearch);
         });
@@ -48,7 +44,7 @@ class RoomfinderSearchService {
   }
 
   Future<void> updateRecentSearch(List<String> recentSearch) async {
-    if (_recentSearches.map((building) => building.id).toList() == recentSearch) return;
+    if (_recentSearches.map((building) => building.buildingPartId).toList() == recentSearch) return;
     _updateRecentSearch(recentSearch);
     await _roomfinderRepository.saveRecentSearches(recentSearch);
   }

@@ -12,11 +12,14 @@ class SportsCubit extends Cubit<SportsState> {
   Future<void> loadSports() async {
     emit(const SportsLoadInProgress());
 
-    try {
-      final data = await _repository.getSports();
-      emit(SportsLoadSuccess(sports: data));
-    } catch (e) {
+    final cachedData = await _repository.getCachedSports();
+    emit(SportsLoadInProgress(sports: cachedData));
+
+    final sports = await _repository.getSports();
+    if (sports == null && cachedData == null) {
       emit(const SportsLoadFailure());
+      return;
     }
+    emit(SportsLoadSuccess(sports: sports ?? cachedData!));
   }
 }

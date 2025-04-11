@@ -60,6 +60,7 @@ class BorderColors {
     required this.cutout,
     required this.seperatorDark,
     required this.iconOutline,
+    required this.tile,
   });
 
   final Color seperatorLight;
@@ -67,4 +68,5 @@ class BorderColors {
   final Color cutout;
   final Color seperatorDark;
   final Color iconOutline;
+  final Color tile;
 }

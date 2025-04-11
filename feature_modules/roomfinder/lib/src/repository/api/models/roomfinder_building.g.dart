@@ -7,17 +7,20 @@ part of 'roomfinder_building.dart';
 // **************************************************************************
 
 RoomfinderBuilding _$RoomfinderBuildingFromJson(Map<String, dynamic> json) => RoomfinderBuilding(
-      id: json['id'] as String,
+      id: json['building_id'] as String,
       title: json['title'] as String,
       location: RoomfinderLocation.fromJson(json['location'] as Map<String, dynamic>),
-      buildingParts: (json['building_parts'] as List<dynamic>)
-          .map((e) => RoomfinderBuildingPart.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      buildingPartId: json['building_part_id'] as String,
+      aliases: (json['aliases'] as List<dynamic>).map((e) => e as String).toList(),
+      floors:
+          (json['floors'] as List<dynamic>).map((e) => RoomfinderFloor.fromJson(e as Map<String, dynamic>)).toList(),
     );
 
 Map<String, dynamic> _$RoomfinderBuildingToJson(RoomfinderBuilding instance) => <String, dynamic>{
-      'id': instance.id,
+      'building_id': instance.id,
+      'building_part_id': instance.buildingPartId,
       'title': instance.title,
+      'aliases': instance.aliases,
       'location': instance.location.toJson(),
-      'building_parts': instance.buildingParts.map((e) => e.toJson()).toList(),
+      'building_parts': instance.floors.map((e) => e.toJson()).toList(),
     };

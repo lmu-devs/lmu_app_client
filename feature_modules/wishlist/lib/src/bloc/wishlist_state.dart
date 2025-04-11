@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+
 import '../repository/api/api.dart';
 
 abstract class WishlistState extends Equatable {}
@@ -9,8 +10,12 @@ class WishlistInitial extends WishlistState {
 }
 
 class WishlistLoadInProgress extends WishlistState {
+  WishlistLoadInProgress({this.wishlistModels});
+
+  final List<WishlistModel>? wishlistModels;
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [wishlistModels];
 }
 
 class WishlistLoadSuccess extends WishlistState {
@@ -22,4 +27,9 @@ class WishlistLoadSuccess extends WishlistState {
 
   @override
   List<Object?> get props => [wishlistModels];
+}
+
+class WishlistLoadFailure extends WishlistState {
+  @override
+  List<Object?> get props => [];
 }

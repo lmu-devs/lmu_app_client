@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:expandable_page_view/expandable_page_view.dart';
@@ -38,11 +39,10 @@ class _RoomfinderBuildingDetailsPageState extends State<RoomfinderBuildingDetail
     roomfinderCubit.state as RoomfinderLoadSuccess;
     if (roomfinderCubit.state is RoomfinderLoadSuccess) {
       final state = roomfinderCubit.state as RoomfinderLoadSuccess;
-      _building = state.cities
-          .expand((city) => city.streets)
+      _building = state.streets
           .expand((street) => street.buildings)
-          .firstWhere((building) => building.id == widget.buildingId);
-      _floors = _building.buildingParts.expand((part) => part.floors).toList();
+          .firstWhere((building) => building.buildingPartId == widget.buildingId);
+      _floors = _building.floors;
     }
 
     _activeTabIndexNotifier = ValueNotifier<int>(0);
@@ -57,7 +57,7 @@ class _RoomfinderBuildingDetailsPageState extends State<RoomfinderBuildingDetail
       largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
       trailingWidgets: [_trailingAppBarAction],
       largeTitleTrailingWidget: LmuInTextVisual.text(
-        title: "Building",
+        title: context.locals.roomfinder.building,
         textColor: buildingColor,
         backgroundColor: buildingColor.withOpacity(0.14),
       ),
@@ -162,12 +162,12 @@ class _RoomfinderBuildingDetailsPageState extends State<RoomfinderBuildingDetail
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_4),
       child: ValueListenableBuilder(
-        valueListenable: favoritesService.favoriteBuildingsNotifier,
+        valueListenable: favoritesService.favoriteBuildingIdsNotifier,
         builder: (context, favoriteBuildings, _) {
-          final isFavorite = favoriteBuildings.any((building) => building.id == _building.id);
+          final isFavorite = favoriteBuildings.contains(_building.buildingPartId);
           return GestureDetector(
             onTap: () {
-              favoritesService.toggleFavorite(_building.id);
+              favoritesService.toggleFavorite(_building.buildingPartId);
               LmuVibrations.secondary();
             },
             child: Padding(

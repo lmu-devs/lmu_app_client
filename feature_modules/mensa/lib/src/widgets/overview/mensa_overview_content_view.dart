@@ -42,22 +42,37 @@ class _MensaOverviewContentViewState extends State<MensaOverviewContentView> {
     final localizations = context.locals.canteen;
 
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(LmuSizes.size_16),
-        child: Column(
-          children: [
-            LmuTileHeadline.base(title: localizations.favorites, customBottomPadding: LmuSizes.size_6),
-            MensaOverviewReordableFavoriteSection(mensaModels: _mensaModels),
-            const SizedBox(height: 26),
-            LmuTileHeadline.base(
-              title: localizations.allCanteens,
-              bottomWidget: MensaOverviewButtonSection(mensaModels: widget.mensaModels),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: LmuSizes.size_16),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+            child: Column(
+              children: [
+                LmuTileHeadline.base(title: localizations.favorites, customBottomPadding: LmuSizes.size_6),
+                MensaOverviewReordableFavoriteSection(mensaModels: _mensaModels),
+              ],
             ),
-            MensaOverviewAllSection(mensaModels: _mensaModels),
-            const MensaOverviewInfoSection(),
-            const SizedBox(height: LmuSizes.size_96),
-          ],
-        ),
+          ),
+          const SizedBox(height: 26),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+            child: LmuTileHeadline.base(title: localizations.allCanteens),
+          ),
+          MensaOverviewButtonSection(mensaModels: widget.mensaModels),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+            child: Column(
+              children: [
+                const SizedBox(height: LmuSizes.size_16),
+                MensaOverviewAllSection(mensaModels: _mensaModels),
+                const MensaOverviewInfoSection(),
+                const SizedBox(height: LmuSizes.size_96),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

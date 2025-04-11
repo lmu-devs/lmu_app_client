@@ -12,6 +12,10 @@ class MensaInitial extends MensaState {
 }
 
 class MensaLoadInProgress extends MensaState {
+  const MensaLoadInProgress({this.mensaModels});
+
+  final List<MensaModel>? mensaModels;
+
   @override
   List<Object?> get props => [];
 }

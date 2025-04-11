@@ -105,6 +105,10 @@
   "@benefits": {
     "description": "Benefits"
   },
+  "feedback": "Feedback",
+  "@feedback": {
+    "description": "Feedback"
+  },
   "mvgTitle": "MVG Ermäßigungsticket",
   "mvgDescription": "Discounted Deutschlandticket for €38 per month",
   "newsTitle": "Newspapers & Magazines",

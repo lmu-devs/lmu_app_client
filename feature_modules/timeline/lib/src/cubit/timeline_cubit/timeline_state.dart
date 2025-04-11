@@ -6,7 +6,7 @@ abstract class TimelineState extends Equatable {
   const TimelineState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class TimelineInitial extends TimelineState {
@@ -14,7 +14,12 @@ class TimelineInitial extends TimelineState {
 }
 
 class TimelineLoadInProgress extends TimelineState {
-  const TimelineLoadInProgress();
+  const TimelineLoadInProgress({this.data});
+
+  final TimelineData? data;
+
+  @override
+  List<Object?> get props => [data];
 }
 
 class TimelineLoadSuccess extends TimelineState {

@@ -32,13 +32,17 @@ class _SportsPageState extends State<SportsPage> {
       body: BlocBuilder<SportsCubit, SportsState>(
         bloc: GetIt.I.get<SportsCubit>(),
         builder: (context, state) {
+          Widget child = const SportsLoadingView(key: ValueKey("sportsLoading"));
+
+          if (state is SportsLoadInProgress && state.sports != null) {
+            child = SportsContentView(key: const ValueKey("sportsContent"), sports: state.sports!);
+          } else if (state is SportsLoadSuccess) {
+            child = SportsContentView(key: const ValueKey("sportsContent"), sports: state.sports);
+          }
+
           return Align(
             alignment: Alignment.topCenter,
-            child: LmuPageAnimationWrapper(
-              child: state is SportsLoadSuccess
-                  ? SportsContentView(key: const ValueKey("sportsContent"), sports: state.sports)
-                  : const SportsLoadingView(key: ValueKey("sportsLoading")),
-            ),
+            child: LmuPageAnimationWrapper(child: child),
           );
         },
       ),

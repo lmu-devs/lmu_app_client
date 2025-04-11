@@ -76,12 +76,15 @@ class NavigationSheet extends StatelessWidget {
               height: LmuIconSizes.large,
               width: LmuIconSizes.large,
             ),
-            onTap: () => _openExternalApplication(
-              context: context,
-              isApple: true,
-              latitude: latitude,
-              longitude: longitude,
-            ),
+            onTap: () {
+              _openExternalApplication(
+                context: context,
+                isApple: true,
+                latitude: latitude,
+                longitude: longitude,
+              );
+              Navigator.pop(context);
+            },
           ),
         LmuListItem.base(
           title: context.locals.explore.googleMaps,
@@ -91,12 +94,15 @@ class NavigationSheet extends StatelessWidget {
             height: LmuIconSizes.large,
             width: LmuIconSizes.large,
           ),
-          onTap: () => _openExternalApplication(
-            context: context,
-            isApple: false,
-            latitude: latitude,
-            longitude: longitude,
-          ),
+          onTap: () {
+            _openExternalApplication(
+              context: context,
+              isApple: false,
+              latitude: latitude,
+              longitude: longitude,
+            );
+            Navigator.pop(context);
+          },
         ),
         const Padding(
             padding: EdgeInsets.symmetric(
@@ -110,11 +116,14 @@ class NavigationSheet extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: LmuSizes.size_6),
             child: Icon(LucideIcons.copy, size: LmuIconSizes.mediumSmall),
           ),
-          onTap: () => CopyToClipboardUtil.copyToClipboard(
-            context: context,
-            copiedText: address,
-            message: context.locals.explore.copiedToClipboard,
-          ),
+          onTap: () {
+            Navigator.pop(context);
+            CopyToClipboardUtil.copyToClipboard(
+              context: context,
+              copiedText: address,
+              message: context.locals.explore.copiedToClipboard,
+            );
+          },
         ),
       ],
     );

@@ -8,7 +8,9 @@ import 'api/api.dart';
 import 'api/models/sports_favorites.dart';
 
 abstract class SportsRepository {
-  Future<SportsModel> getSports();
+  Future<SportsModel?> getSports();
+
+  Future<SportsModel?> getCachedSports();
 
   Future<void> saveFavoriteSports(List<SportsFavorites> favoriteSports);
 
@@ -22,12 +24,43 @@ abstract class SportsRepository {
 class ConnectedSportsRepository implements SportsRepository {
   final _favoriteSportsKey = 'favoriteSports';
   final _recentSearchesKey = 'sports_recentSearches';
+  final _cachedSportsKey = 'sports_cached_data';
+  final _cachedTimeStampKey = 'sports_cached_time_stamp';
+
+  final _maxCacheTime = const Duration(days: 2);
 
   final _apiClient = GetIt.I.get<SportsApiClient>();
 
   @override
-  Future<SportsModel> getSports() async {
-    return _apiClient.getSports();
+  Future<SportsModel?> getSports() async {
+    final prefs = await SharedPreferences.getInstance();
+    try {
+      final sportsData = await _apiClient.getSports();
+      await prefs.setString(_cachedSportsKey, jsonEncode(sportsData.toJson()));
+      await prefs.setInt(_cachedTimeStampKey, DateTime.now().millisecondsSinceEpoch);
+
+      return sportsData;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  @override
+  Future<SportsModel?> getCachedSports() async {
+    final prefs = await SharedPreferences.getInstance();
+    final cachedData = prefs.getString(_cachedSportsKey);
+    final cachedTimeStamp = prefs.getInt(_cachedTimeStampKey);
+    final isCacheValid = cachedTimeStamp != null &&
+        DateTime.fromMillisecondsSinceEpoch(cachedTimeStamp).add(_maxCacheTime).isAfter(DateTime.now());
+    if (cachedData != null && isCacheValid) {
+      try {
+        return SportsModel.fromJson(jsonDecode(cachedData));
+      } catch (e) {
+        return null;
+      }
+    } else {
+      return null;
+    }
   }
 
   @override

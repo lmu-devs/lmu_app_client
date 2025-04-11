@@ -37,6 +37,7 @@ dependencies:
   animated_reorderable_list: ^1.1.5
   scroll_to_index: ^3.0.1
   scrollview_observer: ^1.25.0
+  sliver_tools: ^0.2.12
 
 dev_dependencies:
   flutter_test:

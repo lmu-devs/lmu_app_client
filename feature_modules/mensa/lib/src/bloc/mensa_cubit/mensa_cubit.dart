@@ -1,3 +1,4 @@
+import 'package:core/extensions.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
@@ -10,14 +11,16 @@ class MensaCubit extends Cubit<MensaState> {
   final _mensaRepository = GetIt.I.get<MensaRepository>();
 
   void loadMensaData() async {
-    emit(MensaLoadInProgress());
+    final cachedData = await _mensaRepository.getCachedMensaModels();
+    emit(MensaLoadInProgress(mensaModels: cachedData));
 
-    try {
-      final mensaModels = await _mensaRepository.getMensaModels();
-
-      emit(MensaLoadSuccess(mensaModels: mensaModels));
-    } catch (e) {
+    final mensaModels = await _mensaRepository.getMensaModels();
+    if (mensaModels == null && cachedData == null) {
       emit(MensaLoadFailure());
+      listenForConnectivityRestoration(loadMensaData);
+      return;
     }
+
+    emit(MensaLoadSuccess(mensaModels: mensaModels ?? cachedData!));
   }
 }
