@@ -4,8 +4,7 @@ import 'package:shared_api/explore.dart';
 
 import 'services/services.dart';
 
-class ExploreModule extends AppModule
-    with LocalDependenciesProvidingAppModule, PublicApiProvidingAppModule, NoticeableAppStartAppModule {
+class ExploreModule extends AppModule with LocalDependenciesProvidingAppModule, PublicApiProvidingAppModule {
   @override
   String get moduleName => 'ExploreModule';
 
@@ -17,12 +16,6 @@ class ExploreModule extends AppModule
   @override
   void provideLocalDependencies() {
     GetIt.I.registerSingleton<ExploreMapService>(ExploreMapService());
-    GetIt.I.registerSingleton<ExploreSheetService>(ExploreSheetService());
     GetIt.I.registerSingleton<ExploreSearchService>(ExploreSearchService());
-  }
-
-  @override
-  void onAppStartNotice() {
-    GetIt.I<ExploreSheetService>().init();
   }
 }
