@@ -1,19 +1,26 @@
+import 'package:collection/collection.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/explore.dart';
 import 'package:shared_api/mensa.dart';
 
-import '../bloc/mensa_cubit/cubit.dart';
+import '../bloc/bloc.dart';
+import '../pages/pages.dart';
 import '../routes/mensa_routes.dart';
 
 class DefaultMensaService implements MensaService {
   @override
   Stream<List<ExploreLocation>> get mensaExploreLocationsStream {
     final mensaCubit = GetIt.I.get<MensaCubit>();
+    final tasteProfilCubit = GetIt.I.get<TasteProfileCubit>();
     final state = mensaCubit.state;
     if (state is! MensaLoadSuccess && state is! MensaLoadInProgress) {
       mensaCubit.loadMensaData();
+    }
+
+    if (tasteProfilCubit.state is! TasteProfileLoadSuccess && tasteProfilCubit.state is! TasteProfileLoadInProgress) {
+      tasteProfilCubit.loadTasteProfile();
     }
 
     return mensaCubit.stream.withInitialValue(mensaCubit.state).map((state) {
@@ -45,6 +52,22 @@ class DefaultMensaService implements MensaService {
   @override
   void navigateToMensaPage(BuildContext context) {
     const MensaMainRoute().go(context);
+  }
+
+  @override
+  Widget getMensaPage(String mensaId) {
+    final mensaCubit = GetIt.I.get<MensaCubit>();
+    final state = mensaCubit.state;
+    if (state is! MensaLoadSuccess) {
+      return const SizedBox.shrink();
+    }
+    final mensaModel = state.mensaModels.firstWhereOrNull((mensaModel) => mensaModel.canteenId == mensaId);
+
+    if (mensaModel == null) {
+      return const SizedBox.shrink();
+    }
+
+    return MensaDetailsPage(mensaModel: mensaModel);
   }
 }
 

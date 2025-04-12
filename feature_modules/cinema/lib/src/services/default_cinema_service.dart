@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -7,8 +8,11 @@ import 'package:shared_api/explore.dart';
 
 import '../../cinema.dart';
 import '../cubit/cubit.dart';
+import '../pages/cinema_details_page.dart';
 import '../pages/cinema_page.dart';
+import '../routes/cinema_details_data.dart';
 import '../routes/cinema_routes.dart';
+import '../util/cinema_screenings.dart';
 
 class DefaultCinemaService implements CinemaService {
   @override
@@ -55,5 +59,25 @@ class DefaultCinemaService implements CinemaService {
   @override
   void navigateToCinemaPage(BuildContext context) {
     const CinemaMainRoute().go(context);
+  }
+
+  @override
+  Widget getCinemaPage(String cinemaId) {
+    final cinemaCubit = GetIt.I.get<CinemaCubit>();
+    final state = cinemaCubit.state;
+    if (state is! CinemaLoadSuccess) {
+      return const SizedBox.shrink();
+    } else {
+      final cinemaModel = state.cinemas.firstWhereOrNull((cinemaModel) => cinemaModel.id == cinemaId);
+      if (cinemaModel == null) {
+        return const SizedBox.shrink();
+      }
+      return CinemaDetailsPage(
+        cinemaDetailsData: CinemaDetailsData(
+          cinema: cinemaModel,
+          screenings: getScreeningsForCinema(state.screenings, cinemaModel.id),
+        ),
+      );
+    }
   }
 }

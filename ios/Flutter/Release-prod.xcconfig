@@ -1,2 +1,1 @@
-FLAVOR=prod
-API_KEY=your_prod_api_key
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release-prod.xcconfig"

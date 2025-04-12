@@ -9,4 +9,6 @@ abstract class CinemaService {
   Stream<List<ExploreLocation>> get cinemaExploreLocationsStream;
 
   void navigateToCinemaPage(BuildContext context);
+
+  Widget getCinemaPage(String cinemaId);
 }

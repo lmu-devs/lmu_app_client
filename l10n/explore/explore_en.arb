@@ -1,32 +1,33 @@
 {
-   "@@locale": "en",
-   "@@context": "Explore",
-   "tabTitle": "Map",
-   "@tabTitle": {
-      "description": "The title of the explore tab"
-   },
-   "navigate": "Navigate",
-   "@tabTitle": {
-      "description": "Navigate"
-   },
-   "openWith": "Open with",
-   "@tabTitle": {
-      "description": "Open with"
-   },
-   "appleMaps": "Apple Maps",
-   "@tabTitle": {
-      "description": "Navigation option with Apple Maps"
-   },
-   "googleMaps": "Google Maps",
-   "@tabTitle": {
-      "description": "Navigation option with Google Maps"
-   },
-   "copyToClipboard": "Copy Address",
-   "@copyToClipboard": {
-      "description": "Copy address to clipboard"
-   },
-   "copiedToClipboard": "Address copied to clipboard",
-   "@copiedToClipboard": {
-      "description": "Toast message for copied address"
-   }
+  "@@locale": "en",
+  "@@context": "Explore",
+  "tabTitle": "Map",
+  "@tabTitle": {
+    "description": "The title of the explore tab"
+  },
+  "navigate": "Navigate",
+  "@tabTitle": {
+    "description": "Navigate"
+  },
+  "openWith": "Open with",
+  "@tabTitle": {
+    "description": "Open with"
+  },
+  "appleMaps": "Apple Maps",
+  "@tabTitle": {
+    "description": "Navigation option with Apple Maps"
+  },
+  "googleMaps": "Google Maps",
+  "@tabTitle": {
+    "description": "Navigation option with Google Maps"
+  },
+  "copyToClipboard": "Copy Address",
+  "@copyToClipboard": {
+    "description": "Copy address to clipboard"
+  },
+  "copiedToClipboard": "Address copied to clipboard",
+  "@copiedToClipboard": {
+    "description": "Toast message for copied address"
+  },
+  "nearby": "Nearby"
 }
