@@ -1,11 +1,12 @@
 {
-    "@@locale": "de",
-    "@@context": "Karte",
-    "tabTitle": "Karte",
-    "navigate": "Navigieren",
-    "openWith": "Öffnen mit",
-    "appleMaps": "Apple Karten",
-    "googleMaps": "Google Maps",
-    "copyToClipboard": "Adresse kopieren",
-    "copiedToClipboard": "Adresse kopiert"
+  "@@locale": "de",
+  "@@context": "Karte",
+  "tabTitle": "Karte",
+  "navigate": "Navigieren",
+  "openWith": "Öffnen mit",
+  "appleMaps": "Apple Karten",
+  "googleMaps": "Google Maps",
+  "copyToClipboard": "Adresse kopieren",
+  "copiedToClipboard": "Adresse kopiert",
+  "nearby": "In der Nähe"
 }

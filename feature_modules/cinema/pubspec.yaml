@@ -25,6 +25,7 @@ dependencies:
   intl: any
   share_plus: ^10.1.2
   skeletonizer: ^1.4.2
+  collection: ^1.18.0
 
 dev_dependencies:
   flutter_test:

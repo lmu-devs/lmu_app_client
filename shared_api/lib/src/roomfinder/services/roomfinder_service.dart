@@ -9,4 +9,6 @@ abstract class RoomfinderService {
   Stream<List<ExploreLocation>> get roomfinderExploreLocationsStream;
 
   void navigateToRoomfinder(BuildContext context);
+
+  Widget getRoomfinderPage(String buildingId);
 }

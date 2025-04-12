@@ -6,37 +6,11 @@ import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/explore.dart';
 
+import '../routes/explore_routes.dart';
 import '../services/explore_map_service.dart';
 
-class ExploreMapContentSheetController {
-  ExploreMapContentSheetState? _state;
-
-  void _attach(ExploreMapContentSheetState state) {
-    _state = state;
-  }
-
-  void _detach() {
-    _state = null;
-  }
-
-  void open(ExploreLocation location, {bool fromSearch = false}) {
-    _state?._open(location, fromSearch: fromSearch);
-  }
-
-  void close() {
-    _state?._close();
-  }
-}
-
 class ExploreMapContentSheet extends StatefulWidget {
-  const ExploreMapContentSheet({
-    super.key,
-    this.controller,
-    required this.onClose,
-  });
-
-  final ExploreMapContentSheetController? controller;
-  final void Function(bool) onClose;
+  const ExploreMapContentSheet({super.key});
 
   @override
   ExploreMapContentSheetState createState() => ExploreMapContentSheetState();
@@ -44,59 +18,78 @@ class ExploreMapContentSheet extends StatefulWidget {
 
 class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
   late DraggableScrollableController _sheetController;
-
-  ExploreLocation? _location;
-  bool? _fromSearch;
-
+  bool _isOpen = false;
   late final double _minSize;
   late final double _baseSize;
   late final double _maxSize;
+
+  ExploreLocation? _selectedLocation;
+
+  final _mapService = GetIt.I<ExploreMapService>();
 
   @override
   void initState() {
     super.initState();
 
-    //TODO: Dynamic min/base sizes
-    _minSize = 0; // 1px == 0.0013125
-    _baseSize = 0.20;
+    _minSize = 0;
+    _baseSize = 0.3;
     _maxSize = 0.9;
 
     _sheetController = DraggableScrollableController();
     _sheetController.addListener(_onScroll);
 
-    widget.controller?._attach(this);
+    _mapService.selectedMarkerNotifier.addListener(_onMarkerSelection);
   }
 
   @override
   void dispose() {
     _sheetController.dispose();
-    widget.controller?._detach();
+    _mapService.selectedMarkerNotifier.removeListener(_onMarkerSelection);
     super.dispose();
   }
 
-  void _onScroll() {}
+  void _onScroll() {
+    if (_sheetController.size < _minSize + 0.01 && _isOpen) {
+      _mapService.deselectMarker();
+    }
+  }
 
-  void _open(ExploreLocation location, {bool fromSearch = false}) {
+  void _onMarkerSelection() {
     setState(() {
-      _location = location;
-      _fromSearch = fromSearch;
+      _selectedLocation = _mapService.selectedMarker;
     });
-    _sheetController.animateTo(
+    if (_selectedLocation != null) {
+      _open();
+    } else {
+      _close();
+    }
+  }
+
+  void _open() {
+    if (_isOpen) return;
+
+    _sheetController
+        .animateTo(
       _baseSize,
       duration: const Duration(milliseconds: 200),
       curve: Curves.easeInOut,
-    );
+    )
+        .then((_) {
+      _isOpen = true;
+    });
   }
 
-  void _close() async {
-    await _sheetController.animateTo(
+  void _close() {
+    if (!_isOpen) return;
+
+    _sheetController
+        .animateTo(
       _minSize,
       duration: const Duration(milliseconds: 200),
       curve: Curves.easeInOut,
-    );
-    setState(() {
-      _location = null;
-      _fromSearch = null;
+    )
+        .then((_) {
+      _isOpen = false;
     });
   }
 
@@ -108,7 +101,7 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
       initialChildSize: _minSize,
       minChildSize: _minSize,
       maxChildSize: _maxSize,
-      snapSizes: [_baseSize, _maxSize],
+      snapSizes: [_minSize, _baseSize],
       snap: true,
       snapAnimationDuration: const Duration(milliseconds: 150),
       builder: (context, scrollController) {
@@ -136,21 +129,21 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
             child: Padding(
               padding: const EdgeInsets.all(LmuSizes.size_16),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Flexible(
-                          child: LmuText.h1(
-                        _location?.name,
-                      )),
+                        child: LmuText.h1(
+                          _selectedLocation?.name,
+                        ),
+                      ),
                       GestureDetector(
                         onTap: () {
-                          widget.onClose(_fromSearch ?? false);
                           _close();
-                          GetIt.I<ExploreMapService>().deselectMarker();
+                          _mapService.deselectMarker();
                         },
                         child: Container(
                           padding: const EdgeInsets.all(LmuSizes.size_4),
@@ -158,13 +151,38 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
                             shape: BoxShape.circle,
                             color: colors.neutralColors.backgroundColors.mediumColors.base,
                           ),
-                          child: LmuIcon(
+                          child: const /*  */ LmuIcon(
                             icon: LucideIcons.x,
                             size: LmuIconSizes.medium,
                           ),
                         ),
                       ),
                     ],
+                  ),
+                  const SizedBox(height: LmuSizes.size_32),
+                  LmuButton(
+                    title: "Show more",
+                    emphasis: ButtonEmphasis.secondary,
+                    onTap: () {
+                      if (_selectedLocation != null) {
+                        final id = _selectedLocation!.id;
+                        final exploreType = _selectedLocation!.type;
+                        switch (exploreType) {
+                          case ExploreMarkerType.mensaMensa:
+                          case ExploreMarkerType.mensaStuBistro:
+                          case ExploreMarkerType.mensaStuCafe:
+                          case ExploreMarkerType.mensaStuLounge:
+                            ExploreMensaRoute(id).go(context);
+                            break;
+                          case ExploreMarkerType.cinema:
+                            ExploreCinemaRoute(id).go(context);
+                            break;
+                          case ExploreMarkerType.roomfinderRoom:
+                            ExploreBuildingRoute(id).go(context);
+                            break;
+                        }
+                      }
+                    },
                   ),
                 ],
               ),

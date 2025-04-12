@@ -5,6 +5,7 @@ import 'package:shared_api/explore.dart';
 import 'package:shared_api/roomfinder.dart';
 
 import '../cubit/cubit.dart';
+import '../pages/roomfinder_building_details_page.dart';
 import '../routes/roomfinder_routes.dart';
 
 class DefaultRoomfinderService extends RoomfinderService {
@@ -25,5 +26,16 @@ class DefaultRoomfinderService extends RoomfinderService {
     }
 
     return roomfinderCubit.roomfinderExploreLocationsStream;
+  }
+
+  @override
+  Widget getRoomfinderPage(String buildingId) {
+    final roomfinderCubit = GetIt.I.get<RoomfinderCubit>();
+    final state = roomfinderCubit.state;
+    if (state is! RoomfinderLoadSuccess) {
+      return const SizedBox.shrink();
+    } else {
+      return RoomfinderBuildingDetailsPage(buildingId: buildingId);
+    }
   }
 }

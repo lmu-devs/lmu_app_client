@@ -1,16 +1,18 @@
-import 'package:core/components.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:latlong2/latlong.dart' as latlong;
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 
-import '../routes/explore_routes.dart';
 import '../services/explore_map_service.dart';
+import '../widgets/explore_compass.dart';
 import '../widgets/explore_map_content_sheet.dart';
+import '../widgets/explore_map_overlay.dart';
 import '../widgets/explore_marker.dart';
 
 class ExplorePage extends StatefulWidget {
@@ -20,10 +22,8 @@ class ExplorePage extends StatefulWidget {
   State<ExplorePage> createState() => _ExplorePageState();
 }
 
-class _ExplorePageState extends State<ExplorePage> {
-  late final ExploreMapContentSheetController mapContentSheetController;
-  late final LmuSearchSheetController searchSheetController;
-  late final Stream<double?> alignPositionStream;
+class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin {
+  late final AnimatedMapController _animatedMapController;
   Style? style;
   final _mapService = GetIt.I<ExploreMapService>();
 
@@ -34,8 +34,14 @@ class _ExplorePageState extends State<ExplorePage> {
 
     initStyle();
 
-    mapContentSheetController = ExploreMapContentSheetController();
-    searchSheetController = LmuSearchSheetController();
+    _animatedMapController = AnimatedMapController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+      mapController: _mapService.mapController,
+    );
+
+    _mapService.animatedMapController = _animatedMapController;
   }
 
   Future<Style> _readStyle() {
@@ -56,52 +62,37 @@ class _ExplorePageState extends State<ExplorePage> {
       child: Stack(
         children: [
           FlutterMap(
-            mapController: _mapService.mapController,
+            mapController: _animatedMapController.mapController,
             options: MapOptions(
               backgroundColor: context.colors.neutralColors.backgroundColors.tile,
               initialCenter: const latlong.LatLng(48.150578, 11.580767),
               initialZoom: 15,
               onPositionChanged: (camera, _) => _mapService.updateZoomLevel(camera.zoom),
               onTap: (_, __) {
-                mapContentSheetController.close();
                 _mapService.deselectMarker();
               },
             ),
             children: [
-              // TileLayer(
-              //   retinaMode: RetinaMode.isHighDensity(context),
-              //   urlTemplate: 'https://api.mapbox.com/styles/v1/{id}/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}',
-              //   additionalOptions: {
-              //     'accessToken': dotenv.env['MAPBOX_ACCESS_TOKEN'] ?? '',
-              //     'id': Theme.of(context).brightness == Brightness.light
-              //         ? 'lmu-dev/cm990f48l00ic01pge084c9aa'
-              //         : 'lmu-dev/cm990gii100ho01sk6f2hhh3m',
-              //   },
-              // ),
-              if (style != null)
-                VectorTileLayer(
-                  theme: style!.theme,
-                  sprites: style!.sprites,
-                  tileOffset: TileOffset.mapbox,
-                  tileProviders: style!.providers,
-                ),
-              CurrentLocationLayer(
-                style: LocationMarkerStyle(
-                  showAccuracyCircle: false,
-                  marker: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: const Color(0xFF1A95F3),
-                      border: Border.all(
-                        color: context.colors.neutralColors.borderColors.iconOutline,
-                        width: 2,
-                      ),
-                    ),
-                  ),
-                  markerSize: const Size(24, 24),
-                  markerDirection: MarkerDirection.heading,
-                ),
+              TileLayer(
+                retinaMode: RetinaMode.isHighDensity(context),
+                urlTemplate:
+                    'https://api.mapbox.com/styles/v1/{id}/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}',
+                additionalOptions: {
+                  'accessToken': dotenv.env['MAPBOX_ACCESS_TOKEN'] ?? '',
+                  'id': Theme.of(context).brightness == Brightness.light
+                      ? 'lmu-dev/cm990f48l00ic01pge084c9aa'
+                      : 'lmu-dev/cm990gii100ho01sk6f2hhh3m',
+                },
               ),
+              // if (style != null)
+              //   VectorTileLayer(
+              //     theme: style!.theme,
+              //     sprites: style!.sprites,
+              //     tileOffset: TileOffset.mapbox,
+              //     tileProviders: style!.providers,
+              //   ),
+
+              CurrentLocationLayer(),
               ValueListenableBuilder(
                 valueListenable: _mapService.exploreLocationsNotifier,
                 builder: (context, locations, _) {
@@ -117,9 +108,6 @@ class _ExplorePageState extends State<ExplorePage> {
                             point: latlong.LatLng(location.latitude, location.longitude),
                             child: ExploreMarker(
                               exploreLocation: location,
-                              onActive: (fromSearch) {
-                                mapContentSheetController.open(location, fromSearch: fromSearch);
-                              },
                             ),
                           ),
                         )
@@ -127,66 +115,36 @@ class _ExplorePageState extends State<ExplorePage> {
                   );
                 },
               ),
+              SafeArea(
+                child: MapCompass(
+                  icon: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: context.colors.neutralColors.backgroundColors.tile,
+                      border: Border.all(
+                        color: context.colors.neutralColors.borderColors.iconOutline,
+                        width: 2,
+                      ),
+                    ),
+                    child: const Icon(
+                      LucideIcons.drafting_compass,
+                      size: 24,
+                    ),
+                  ),
+                  onPressed: () => _mapService.faceNorth(),
+                  hideIfRotatedNorth: true,
+                  padding: const EdgeInsets.only(top: 16, right: 16),
+                ),
+              ),
             ],
           ),
-          // MapActionButton(
-          //   icon: LucideIcons.compass,
-          //   sheetHeight: 168,
-          //   onTap: () => _mapService.focuUserLocation(),
-          // ),
-          // MapActionButton(
-          //   icon: LucideIcons.map_pin,
-          //   sheetHeight: 114,
-          //   onTap: () => _mapService.focuUserLocation(),
-          // ),
-          // MapActionButton(
-          //   icon: LucideIcons.layers,
-          //   sheetHeight: 66,
-          //   onTap: () => () {},
-          // ),
-          // MapActionButton(
-          //   icon: LucideIcons.search,
-          //   sheetHeight: 16,
-          //   onTap: () => () {},
-          // ),
-          // ValueListenableBuilder(
-          //   valueListenable: _mapService.exploreLocationsNotifier,
-          //   builder: (context, locations, _) {
-          //     final searchEntrys = locations.map(
-          //       (location) {
-          //         return LmuSearchEntry(
-          //           title: location.name,
-          //           subtitle: location.type.localizedName,
-          //           onTap: () {
-          //             _mapService.focusMarker(location.id);
-          //             mapContentSheetController.open(location, fromSearch: true);
-          //           },
-          //           icon: location.type.icon,
-          //           iconColor: location.type.markerColor(context.colors),
-          //         );
-          //       },
-          //     ).toList();
-          //     return LmuSearchSheet(
-          //       searchEntries: searchEntrys,
-          //       controller: searchSheetController,
-          //     );
-          //   },
-          // ),
-          Positioned(
+          const Positioned(
             right: 16,
             bottom: 16,
-            child: LmuIconButton(
-              icon: LucideIcons.search,
-              backgroundColor: context.colors.neutralColors.backgroundColors.tile,
-              onPressed: () => const ExploreSearchRoute().go(context),
-            ),
+            child: ExploreMapOverlay(),
           ),
-          ExploreMapContentSheet(
-            controller: mapContentSheetController,
-            onClose: (fromSearch) {
-              if (fromSearch) searchSheetController.openExtended(true);
-            },
-          ),
+          const ExploreMapContentSheet(),
         ],
       ),
     );

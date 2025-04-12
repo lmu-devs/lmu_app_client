@@ -9,10 +9,9 @@ import 'explore_map_dot.dart';
 import 'explore_map_pin.dart';
 
 class ExploreMarker extends StatefulWidget {
-  const ExploreMarker({super.key, required this.exploreLocation, required this.onActive});
+  const ExploreMarker({super.key, required this.exploreLocation});
 
   final ExploreLocation exploreLocation;
-  final void Function(bool) onActive;
 
   @override
   State<ExploreMarker> createState() => _ExploreMarkerState();
@@ -30,7 +29,6 @@ class _ExploreMarkerState extends State<ExploreMarker> with TickerProviderStateM
 
   String get _id => widget.exploreLocation.id;
   ExploreMarkerType get _type => widget.exploreLocation.type;
-  void Function(bool) get _onActive => widget.onActive;
 
   @override
   void initState() {
@@ -95,38 +93,50 @@ class _ExploreMarkerState extends State<ExploreMarker> with TickerProviderStateM
   @override
   Widget build(BuildContext context) {
     final color = _type.markerColor(context.colors);
-    return GestureDetector(
-      onTap: () {
-        print(widget.exploreLocation.name);
-        if (_selectedMarkerNotifier.value != _id) {
-          _onActive(false);
-        }
-        exploreMapService.updateMarker(_id);
-      },
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          FadeTransition(
-            opacity: _opacityAnimation,
-            child: ValueListenableBuilder(
-              valueListenable: _markerSizeNotifier,
-              builder: (_, markerSize, __) {
-                return ExploreMapDot(
-                  dotColor: color,
-                  icon: _type.icon,
-                  markerSize: markerSize,
-                );
-              },
-            ),
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        FadeTransition(
+          opacity: _opacityAnimation,
+          child: ValueListenableBuilder(
+            valueListenable: _markerSizeNotifier,
+            builder: (_, markerSize, __) {
+              return ExploreMapDot(
+                dotColor: color,
+                icon: _type.icon,
+                markerSize: markerSize,
+              );
+            },
           ),
-          ScaleTransition(
-            alignment: Alignment.bottomCenter,
-            scale: _scaleAnimation,
-            child: ExploreMapPin(pinColor: color, icon: _type.icon),
+        ),
+        ScaleTransition(
+          alignment: Alignment.bottomCenter,
+          scale: _scaleAnimation,
+          child: ExploreMapPin(pinColor: color, icon: _type.icon),
+        ),
+        GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () {
+            print(widget.exploreLocation.name);
+            exploreMapService.updateMarker(_id);
+          },
+          child: SizedBox(
+            width: _markerSizeNotifier.value.size,
+            height: _markerSizeNotifier.value.size,
           ),
-        ],
-      ),
+        ),
+      ],
     );
+  }
+}
+
+extension HitTestSize on ExploreMarkerSize {
+  double get size {
+    return switch (this) {
+      ExploreMarkerSize.small => 20,
+      ExploreMarkerSize.medium => 30,
+      ExploreMarkerSize.large => 48,
+    };
   }
 }
 

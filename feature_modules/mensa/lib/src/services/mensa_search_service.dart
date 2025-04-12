@@ -33,7 +33,7 @@ class MensaSearchService {
 
         final popularMensa = List.of(_mensaModels);
         popularMensa.sort((a, b) => b.ratingModel.likeCount.compareTo(a.ratingModel.likeCount));
-        _popularMensaModels = popularMensa.take(3).toList();
+        _popularMensaModels = popularMensa.take(4).toList();
       }
     });
   }

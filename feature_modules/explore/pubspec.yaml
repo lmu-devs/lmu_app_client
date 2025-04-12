@@ -30,6 +30,8 @@ dependencies:
   path_provider: ^2.1.5
   vector_map_tiles: ^8.0.0
   flutter_map_location_marker: ^9.1.1
+  flutter_map_animations: ^0.8.0
+  collection: ^1.18.0
 
 dev_dependencies:
   flutter_test:
