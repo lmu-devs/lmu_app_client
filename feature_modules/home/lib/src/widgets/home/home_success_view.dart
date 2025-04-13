@@ -77,10 +77,10 @@ extension HomeTileMapper on HomeTile {
       HomeTileType.timeline => () => GetIt.I.get<TimelineService>().navigateToTimelinePage(context),
       HomeTileType.wishlist => () => GetIt.I.get<WishlistService>().navigateToWishlistPage(context),
       HomeTileType.links => () => const LinksRoute().go(context),
-      HomeTileType.news => () => {_notYetImplemeted(context)},
-      HomeTileType.events => () => {_notYetImplemeted(context)},
+      HomeTileType.news => () => {_notYetImplemented(context)},
+      HomeTileType.events => () => {_notYetImplemented(context)},
       HomeTileType.mensa => () => {GetIt.I.get<MensaService>().navigateToMensaPage(context)},
-      HomeTileType.other => () => {_notYetImplemeted(context)},
+      HomeTileType.other => () => {_notYetImplemented(context)},
     };
   }
 
@@ -88,7 +88,7 @@ extension HomeTileMapper on HomeTile {
     return switch (type) {
       HomeTileType.benefits => locals.home.benefits,
       HomeTileType.cinemas => locals.home.moviesTab,
-      HomeTileType.feedback => locals.home.feedback,
+      HomeTileType.feedback => locals.feedback.feedbackTitle,
       HomeTileType.roomfinder => locals.roomfinder.title,
       HomeTileType.sports => locals.sports.sportsTitle,
       HomeTileType.timeline => locals.timeline.datesTitle,
@@ -118,9 +118,9 @@ extension HomeTileMapper on HomeTile {
     };
   }
 
-  void _notYetImplemeted(BuildContext context) {
+  void _notYetImplemented(BuildContext context) {
     LmuToast.removeAll(context: context);
-    LmuToast.show(context: context, message: "Not implemeted yet");
+    LmuToast.show(context: context, message: "Not implemented yet");
   }
 
   ({int crossAxis, int mainAxis}) get cellCount {
