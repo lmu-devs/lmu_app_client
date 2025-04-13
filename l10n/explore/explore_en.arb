@@ -29,5 +29,9 @@
   "@copiedToClipboard": {
     "description": "Toast message for copied address"
   },
-  "nearby": "Nearby"
+  "nearby": "Nearby",
+  "mapboxAttribution": "About Mapbox Maps",
+  "@mapboxAttribution": {
+    "description": "Mapbox attribution text"
+  }
 }

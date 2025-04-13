@@ -21,8 +21,9 @@ class LmuDialog {
   static Future<void> show({
     required BuildContext context,
     required String title,
-    required String description,
     required List<LmuDialogAction> buttonActions,
+    String? description,
+    Widget? customChild,
   }) async {
     await showDialog(
       context: context,
@@ -44,11 +45,17 @@ class LmuDialog {
                   color: neutralColors.textColors.strongColors.base,
                   weight: FontWeight.bold,
                 ),
-                const SizedBox(height: LmuSizes.size_4),
-                LmuText.body(
-                  description,
-                  color: neutralColors.textColors.mediumColors.base,
-                ),
+                if (description != null) ...[
+                  const SizedBox(height: LmuSizes.size_4),
+                  LmuText.body(
+                    description,
+                    color: neutralColors.textColors.mediumColors.base,
+                  ),
+                ],
+                if (customChild != null) ...[
+                  const SizedBox(height: LmuSizes.size_4),
+                  customChild,
+                ],
                 const SizedBox(height: LmuSizes.size_20),
                 LayoutBuilder(
                   builder: (_, constraints) {

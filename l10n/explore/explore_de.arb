@@ -8,5 +8,6 @@
   "googleMaps": "Google Maps",
   "copyToClipboard": "Adresse kopieren",
   "copiedToClipboard": "Adresse kopiert",
-  "nearby": "In der Nähe"
+  "nearby": "In der Nähe",
+  "mapboxAttribution": "Über Mapbox Karten"
 }

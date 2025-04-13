@@ -1,3 +1,4 @@
+import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -10,6 +11,7 @@ import 'package:latlong2/latlong.dart' as latlong;
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 
 import '../services/explore_map_service.dart';
+import '../widgets/explore_attribution.dart';
 import '../widgets/explore_compass.dart';
 import '../widgets/explore_map_content_sheet.dart';
 import '../widgets/explore_map_overlay.dart';
@@ -91,7 +93,6 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
               //     tileOffset: TileOffset.mapbox,
               //     tileProviders: style!.providers,
               //   ),
-
               CurrentLocationLayer(),
               ValueListenableBuilder(
                 valueListenable: _mapService.exploreLocationsNotifier,
@@ -102,8 +103,8 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                         .map(
                           (location) => Marker(
                             key: ValueKey(location.id),
-                            width: 48,
-                            height: 64,
+                            width: LmuSizes.size_48,
+                            height: LmuSizes.size_64,
                             alignment: Alignment.topCenter,
                             point: latlong.LatLng(location.latitude, location.longitude),
                             child: ExploreMarker(
@@ -118,7 +119,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
               SafeArea(
                 child: MapCompass(
                   icon: Container(
-                    padding: const EdgeInsets.all(4),
+                    padding: const EdgeInsets.all(LmuSizes.size_4),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: context.colors.neutralColors.backgroundColors.tile,
@@ -129,21 +130,28 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                     ),
                     child: const Icon(
                       LucideIcons.drafting_compass,
-                      size: 24,
+                      size: LmuIconSizes.medium,
                     ),
                   ),
                   onPressed: () => _mapService.faceNorth(),
                   hideIfRotatedNorth: true,
-                  padding: const EdgeInsets.only(top: 16, right: 16),
+                  padding: const EdgeInsets.only(top: LmuSizes.size_16, right: LmuSizes.size_16),
                 ),
               ),
             ],
           ),
           const Positioned(
-            right: 16,
-            bottom: 16,
-            child: ExploreMapOverlay(),
-          ),
+              right: LmuSizes.size_16,
+              left: LmuSizes.size_16,
+              bottom: LmuSizes.size_16,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  ExploreAttribution(),
+                  ExploreMapOverlay(),
+                ],
+              )),
           const ExploreMapContentSheet(),
         ],
       ),
