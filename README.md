@@ -59,6 +59,20 @@ Before you can start with Flutter, ensure you have the following installed:
 4. **Android SDK**: Necessary for building and running Android apps.
 5. **Xcode**: Required for building and running iOS apps (macOS only).
 
+</br>
+
+Check if required tools are installed:
+```sh
+flutter doctor
+```
+
+Check running emulators, connected devices, and web browsers for development and testing:
+```sh
+flutter devices
+```
+
+</br>
+
 ### Installation
 
 Follow these steps to set up your development environment:
@@ -91,6 +105,8 @@ Follow these steps to set up your development environment:
    cp .env-example .env
    ```
 
+</br>
+
 ### Running the App
 
 To run the app on an emulator or physical device:
@@ -112,39 +128,45 @@ To run the app on an emulator or physical device:
 
 ## Project Structure
 
-Here's a brief overview of the main directories in the project with the mensa module as an example:
+Here's a brief overview of the main directories in the project, using the Mensa module as an example. We develop the app using multiple independent modules to ensure better scalability, separation of concerns, and easier maintainability as the project grows.
 
-- `android`: Configurations for the Android platform.
-- `core/`: Contains app wide assets like colors, font styles and fundamental interface components.
-  - `lib/` 
-    - `assets`: Pictures and files that can be accessed in components. 
-    - `src/`:
-      - `api/`: Basic api operations with backend.
-      - `components/`: Directory for common widgets.
-      - `constants/`: Sizing constants and dev strings.
-      - `core_services`: Permission handling.
-      - `extensions`: Extensions for common, high-level widgets.
-      - `localizations`: Generated translations.
-      - `logs`: Logging of in-app messages.
-      - `pages`: High-level pages, e.g. app update screen for deprecated versions.
-      - `themes/`: Color themes, design tokens.
-      - `utils/`: High-level utility methods and classes.
-- `feature_modules/`: List of all features (like Mensa, Noten)
-  - `mensa/`:
-    - `src`:
-      - `bloc`: State management.
-      - `extensions`: Extensions on classes and objects.
-      - `pages`: Pages of the module which are showed to the user.
-      - `repository`: Api operations and model classes.
-      - `routes`: Routing for the module pages.
-      - `services`: Services for user interactions, search and shared files accross modules.
-      - `widgets`: Components of the module.
-- `ios`: Configurations for the iOS platform. 
-- `l10n`: Localizations for the supported languages.
-- `shared-api`: Shared files accross modules. 
-- `Makefile`: Pre-built shell commands for quick operations.
-- `pubspec.yaml`: Dependencies and packages of the project.
-- `test/`: Contains the unit and widget test files.
+```
+.
+├── android/                       # Configurations for the Android platform
+├── core/                          # App-wide assets like colors, fonts, and shared components
+│
+├── lib/
+│   ├── assets/                    # Pictures and files accessible in components
+│   └── src/
+│       ├── api/                   # Basic API operations with the backend
+│       ├── components/            # Common reusable widgets
+│       ├── constants/             # Sizing constants and dev strings
+│       ├── core_services/         # Permission handling and core platform services
+│       ├── extensions/            # Extensions for common high-level widgets
+│       ├── localizations/         # Generated translations
+│       ├── logs/                  # In-app message logging
+│       ├── pages/                 # High-level pages like app update screens
+│       ├── themes/                # Color themes and design tokens
+│       └── utils/                 # Utility methods and helper classes
+│
+├── feature_modules/               # Folder of modules (e.g., mensa, cinema, sport, ...)
+│   └── mensa/
+│       └── src/
+│           ├── bloc/              # State management (e.g., BLoC/Cubit)
+│           ├── extensions/        # Feature-specific extensions
+│           ├── pages/             # Pages visible to the user
+│           ├── repository/        # API operations and model classes
+│           ├── routes/            # Routing definitions for this module
+│           ├── services/          # User interactions, search, and shared files
+│           └── widgets/           # UI components for this module
+│
+├── ios/                           # Configurations for the iOS platform
+├── l10n/                          # Localizations for supported languages
+├── shared-api/                    # Shared files, widgets, and logic across modules
+├── Makefile                       # Pre-built shell commands for automation
+├── pubspec.yaml                   # Project dependencies and package config
+└── test/                          # Test files
+```
 
 </br>
 
