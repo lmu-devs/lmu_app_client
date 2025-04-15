@@ -3,7 +3,7 @@
 [![Download App](https://img.shields.io/badge/Download-App-287FF4?style=flat)](https://lmu-app.lmu-dev.org/)
 [![Website](https://img.shields.io/badge/Visit-Website-0B7E32?style=flat)](https://www.lmu-dev.org/)
 [![Instagram](https://img.shields.io/badge/Follow-Instagram-FF1B64?style=flat)](https://www.instagram.com/lmu.developers/)
-[![LinkedIn](https://img.shields.io/badge/Follow-LinkedIn-0077B5?style=flat)](https://www.linkedin.com/company/105490877/)
+[![LinkedIn](https://img.shields.io/badge/Follow-LinkedIn-0077B5?style=flat)](https://www.linkedin.com/company/lmu-dev/)
 ![GitHub License](https://img.shields.io/github/license/lmu-devs/lmu_app_client?color=F1F1F1&style=flat&label=License)
 
 Your Companion for Study and Campus Life at LMU Munich.
@@ -13,6 +13,8 @@ Developed by students for students, the LMU Students app provides a platform for
 Supported Platforms: Android, iOS
 
 </br>
+
+![app_preview](https://github.com/user-attachments/assets/6f49c9d5-f537-4e3a-87dd-8c5055f72351)
 
 ## Table of Contents
 
