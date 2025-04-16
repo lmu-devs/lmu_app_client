@@ -16,22 +16,13 @@ run_generator:
 generate_splash_screen:
 	dart run flutter_native_splash:create
 
-setup_mapbox:
-	sh scripts/mapbox_setup.sh ${MAPBOX_ACCESS_TOKEN}
-
 update_pods:
 	cd ios && pod repo update && pod install && cd ..
-
 
 love:
 	flutter pub get
 	make localizations
-	make setup_mapbox
 	make update_pods
-
-setup:
-	flutter pub get
-	make localizations
 
 activate_mason: 
 	dart pub global activate mason_cli

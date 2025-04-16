@@ -20,11 +20,15 @@ abstract class HomeRepository {
 
   Future<void> saveLikedLinks(List<String> ids);
 
-  Future<void> deleteAllLocalData();
+  Future<void> saveRecentLinkSearches(List<String> values);
+
+  Future<List<String>> getRecentLinkSearches();
 
   Future<List<BenefitModel>?> getBenefits();
 
   Future<List<BenefitModel>?> getCachedBenefits();
+
+  Future<void> deleteAllLocalData();
 }
 
 class ConnectedHomeRepository implements HomeRepository {
@@ -38,8 +42,11 @@ class ConnectedHomeRepository implements HomeRepository {
   final String _cachedLinksKey = 'cached_links_key';
   final String _cachedLinksTimestampKey = 'cached_links_timestamp_key';
 
+  final _recentLinkSearchesKey = 'links_recentSearches';
+
   final String _cachedBenefitsKey = 'cached_benefits_key';
   final String _cachedBenefitsTimestampKey = 'cached_benefits_timestamp_key';
+
   final _maxCacheTime = const Duration(days: 7);
 
   @override
@@ -115,6 +122,19 @@ class ConnectedHomeRepository implements HomeRepository {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setStringList(_likedLinksKey, ids);
+  }
+
+  @override
+  Future<void> saveRecentLinkSearches(List<String> values) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(_recentLinkSearchesKey, values);
+  }
+
+  @override
+  Future<List<String>> getRecentLinkSearches() async {
+    final prefs = await SharedPreferences.getInstance();
+    final recentLinkSearches = prefs.getStringList(_recentLinkSearchesKey) ?? [];
+    return recentLinkSearches;
   }
 
   @override

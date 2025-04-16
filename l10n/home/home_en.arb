@@ -114,7 +114,6 @@
   "operaTitle": "State Opera",
   "operaDescription": "Range of special activities and cheaper tickets",
   "forYou": "For You",
-  "linkCopiedToClipboard": "Link copied to clipboard",
   "favoriteLinksEmptyBefore": "Tap the ",
   "@favoriteLinksEmptyBefore": {
     "description": "Empty favorite link text before the star icon"
@@ -123,6 +122,11 @@
   "@favoriteLinksEmptyAfter": {
     "description": "Empty favorite link text after the star icon"
   },
+  "allLinksTitle": "All Links",
+  "@allLinksTitle": {
+    "description": "Title for the link list"
+  },
+  "linkCopiedToClipboard": "Link copied to clipboard",
   "@linkCopiedToClipboard": {
     "description": "Toast message for copying a link to clipboard"
   },

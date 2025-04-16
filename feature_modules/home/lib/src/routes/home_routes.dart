@@ -18,6 +18,11 @@ part 'home_routes.g.dart';
       routes: <TypedGoRoute<GoRouteData>>[
         TypedGoRoute<LinksRoute>(
           path: '/links',
+          routes: <TypedGoRoute<GoRouteData>>[
+            TypedGoRoute<LinksSearchRoute>(
+              path: '/search',
+            ),
+          ],
         ),
         TypedGoRoute<BenefitsRoute>(
           path: '/benefits',
@@ -44,6 +49,13 @@ class LinksRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => const LinksPage();
+}
+
+class LinksSearchRoute extends GoRouteData {
+  const LinksSearchRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const LinksSearchPage();
 }
 
 class BenefitsRoute extends GoRouteData {

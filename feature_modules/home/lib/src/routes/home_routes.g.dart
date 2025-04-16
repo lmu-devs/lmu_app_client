@@ -19,6 +19,12 @@ StatefulShellBranch get $homeData => StatefulShellBranchData.$branch(
             GoRouteData.$route(
               path: '/links',
               factory: $LinksRouteExtension._fromState,
+              routes: [
+                GoRouteData.$route(
+                  path: '/search',
+                  factory: $LinksSearchRouteExtension._fromState,
+                ),
+              ],
             ),
             GoRouteData.$route(
               path: '/benefits',
@@ -45,7 +51,8 @@ extension $HomeMainRouteExtension on HomeMainRoute {
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }
@@ -61,7 +68,26 @@ extension $LinksRouteExtension on LinksRoute {
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LinksSearchRouteExtension on LinksSearchRoute {
+  static LinksSearchRoute _fromState(GoRouterState state) =>
+      const LinksSearchRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/links/search',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }
@@ -77,7 +103,8 @@ extension $BenefitsRouteExtension on BenefitsRoute {
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }

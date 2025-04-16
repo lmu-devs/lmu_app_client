@@ -7,6 +7,7 @@ import 'package:shared_api/feedback.dart';
 
 import '../../repository/api/models/links/link_model.dart';
 import 'favorite_link_section.dart';
+import 'link_button_section.dart';
 import 'link_card.dart';
 
 class LinksContentView extends StatefulWidget {
@@ -36,7 +37,9 @@ class _LinksContentViewState extends State<LinksContentView> {
               child: Column(
                 children: [
                   const SizedBox(height: LmuSizes.size_16),
-                  FavoriteLinkSection(links: widget.links, isSearchActive: false),
+                  FavoriteLinkSection(links: widget.links),
+                  const LinkButtonSection(),
+                  const SizedBox(height: LmuSizes.size_16),
                   Column(
                     children: _groupedLinks.entries.map(
                       (entry) {
