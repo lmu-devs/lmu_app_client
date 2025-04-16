@@ -7,6 +7,7 @@ class LmuBottomSheet {
   static void show(
     BuildContext context, {
     required Widget content,
+    Color? barrierColor,
   }) {
     showMaterialModalBottomSheet(
       context: context,
@@ -20,7 +21,7 @@ class LmuBottomSheet {
           topRight: Radius.circular(LmuSizes.size_24),
         ),
       ),
-      barrierColor: Colors.black.withOpacity(0.6),
+      barrierColor: barrierColor ?? Colors.black.withOpacity(0.6),
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
       builder: (_) => Padding(
         padding: const EdgeInsets.only(

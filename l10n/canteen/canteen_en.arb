@@ -302,5 +302,9 @@
   "unsavedChangesDescription": "Do you want to continue editing?",
   "@unsavedChangesDescription": {
     "description": "Unsaved changes description"
+  },
+  "canteens": "Canteens",
+  "@canteens": {
+    "description": "Canteens"
   }
 }

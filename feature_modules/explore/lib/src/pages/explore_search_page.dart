@@ -42,17 +42,17 @@ class _ExploreSearchPageState extends State<ExploreSearchPage> {
 
     _recentSearchController = LmuRecentSearchController<ExploreSearchEntry>();
     _onExploreLocations();
-    _exploreMapService.exploreLocationsNotifier.addListener(_onExploreLocations);
+    _exploreMapService.allExploreLocationsNotifier.addListener(_onExploreLocations);
   }
 
   @override
   void dispose() {
-    _exploreMapService.exploreLocationsNotifier.removeListener(_onExploreLocations);
+    _exploreMapService.allExploreLocationsNotifier.removeListener(_onExploreLocations);
     super.dispose();
   }
 
   void _onExploreLocations() {
-    _searchEntries = _exploreMapService.exploreLocationsNotifier.value
+    _searchEntries = _exploreMapService.allExploreLocationsNotifier.value
         .map((location) => ExploreSearchEntry(
               title: location.name,
               id: location.id,
@@ -75,6 +75,8 @@ class _ExploreSearchPageState extends State<ExploreSearchPage> {
               title: location.title,
               id: location.id,
               type: location.type,
+              lat: location.lat,
+              long: location.long,
             ))
         .toList();
 
@@ -115,6 +117,7 @@ class _ExploreSearchPageState extends State<ExploreSearchPage> {
       onRecentSearchesUpdated: (recentSearchEntries) =>
           _searchService.updateRecentSearch(recentSearchEntries.map((e) => e.id).toList()),
       searchEntryBuilder: (ExploreSearchEntry input) {
+        final distance = _locationService.getDistance(lat: input.lat, long: input.long);
         return LmuListItem.action(
           title: input.title,
           leadingArea: LmuIcon(
@@ -122,6 +125,7 @@ class _ExploreSearchPageState extends State<ExploreSearchPage> {
             size: LmuIconSizes.medium,
             color: input.type.markerColor(context.colors),
           ),
+          trailingTitle: distance?.formatDistance(),
           actionType: LmuListItemAction.chevron,
           onTap: () {
             Navigator.of(context).pop();

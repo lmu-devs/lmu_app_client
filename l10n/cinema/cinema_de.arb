@@ -1,7 +1,6 @@
 {
   "@@locale": "de",
   "@@context": "Cinema",
-
   "pageTitle": "Filme",
   "cinemasTitle": "Kinos",
   "upcomingTitle": "Demnächst",
@@ -27,5 +26,6 @@
   "entry": "Einlass",
   "start": "Start",
   "movie": "Film",
-  "and": "und"
+  "and": "und",
+  "cinema": "Kino"
 }

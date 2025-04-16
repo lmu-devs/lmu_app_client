@@ -10,7 +10,7 @@ import 'package:shared_api/explore.dart';
 import 'package:shared_api/mensa.dart';
 import 'package:shared_api/roomfinder.dart';
 
-enum ExploreLocationFilter { all, mensa, building, cinema }
+enum ExploreLocationFilter { mensa, building, cinema }
 
 class ExploreMapService {
   void init() {
@@ -26,14 +26,17 @@ class ExploreMapService {
   ExploreLocation? get selectedMarker =>
       _exploreLocationsNotifier.value.firstWhereOrNull((element) => element.id == _selectedMarkerNotifier.value);
   ValueNotifier<List<ExploreLocation>> get exploreLocationsNotifier => _exploreLocationsNotifier;
+  ValueNotifier<List<ExploreLocation>> get allExploreLocationsNotifier => _allExploreLocationsNotifier;
   ValueNotifier<ExploreMarkerSize> get exploreMarkerSizeNotifier => _exploreMarkerSizeNotifier;
 
   final ValueNotifier<String?> _selectedMarkerNotifier = ValueNotifier(null);
 
-  final ValueNotifier<ExploreLocationFilter> _exploreLocationFilterNotifier = ValueNotifier(ExploreLocationFilter.all);
-  ValueNotifier<ExploreLocationFilter> get exploreLocationFilterNotifier => _exploreLocationFilterNotifier;
+  final ValueNotifier<List<ExploreLocationFilter>> _exploreLocationFilterNotifier =
+      ValueNotifier(ExploreLocationFilter.values);
+  ValueNotifier<List<ExploreLocationFilter>> get exploreLocationFilterNotifier => _exploreLocationFilterNotifier;
 
   final ValueNotifier<List<ExploreLocation>> _exploreLocationsNotifier = ValueNotifier([]);
+  final ValueNotifier<List<ExploreLocation>> _allExploreLocationsNotifier = ValueNotifier([]);
   final ValueNotifier<ExploreMarkerSize> _exploreMarkerSizeNotifier = ValueNotifier(ExploreMarkerSize.medium);
   late final MapController _mapController;
 
@@ -45,6 +48,7 @@ class ExploreMapService {
       final currentLocations = List.of(_availableLocations);
       final updatedLocations = currentLocations..addAll(locations);
       _availableLocations = updatedLocations;
+
       _updateFilteredExploreLocations();
     });
 
@@ -136,36 +140,43 @@ class ExploreMapService {
   }
 
   void updateFilter(ExploreLocationFilter filter) {
-    _exploreLocationFilterNotifier.value = filter;
+    final currentFilter = List.of(_exploreLocationFilterNotifier.value);
+    if (currentFilter.contains(filter)) {
+      currentFilter.remove(filter);
+    } else {
+      currentFilter.add(filter);
+    }
+    _exploreLocationFilterNotifier.value = currentFilter;
     _updateFilteredExploreLocations();
   }
 
   void _updateFilteredExploreLocations() {
-    final filter = _exploreLocationFilterNotifier.value;
-    switch (filter) {
-      case ExploreLocationFilter.all:
-        _exploreLocationsNotifier.value = _availableLocations;
-        break;
-      case ExploreLocationFilter.mensa:
-        _exploreLocationsNotifier.value = _availableLocations.where((location) {
-          return location.type == ExploreMarkerType.mensaMensa ||
-              location.type == ExploreMarkerType.mensaStuBistro ||
-              location.type == ExploreMarkerType.mensaStuCafe ||
-              location.type == ExploreMarkerType.mensaStuLounge;
-        }).toList();
-        break;
-      case ExploreLocationFilter.building:
-        _exploreLocationsNotifier.value =
-            _availableLocations.where((location) => location.type == ExploreMarkerType.roomfinderRoom).toList();
-        break;
-      case ExploreLocationFilter.cinema:
-        _exploreLocationsNotifier.value =
-            _availableLocations.where((location) => location.type == ExploreMarkerType.cinema).toList();
-        break;
-      default:
-        _exploreLocationsNotifier.value = _availableLocations;
-        break;
+    allExploreLocationsNotifier.value = _availableLocations;
+
+    final filters = _exploreLocationFilterNotifier.value;
+
+    if (filters.isEmpty) {
+      _exploreLocationsNotifier.value = _availableLocations;
+      return;
     }
+
+    final filtered = _availableLocations.where((location) {
+      return filters.any((filter) {
+        switch (filter) {
+          case ExploreLocationFilter.mensa:
+            return location.type == ExploreMarkerType.mensaMensa ||
+                location.type == ExploreMarkerType.mensaStuBistro ||
+                location.type == ExploreMarkerType.mensaStuCafe ||
+                location.type == ExploreMarkerType.mensaStuLounge;
+          case ExploreLocationFilter.building:
+            return location.type == ExploreMarkerType.roomfinderRoom;
+          case ExploreLocationFilter.cinema:
+            return location.type == ExploreMarkerType.cinema;
+        }
+      });
+    }).toList();
+
+    _exploreLocationsNotifier.value = filtered;
   }
 }
 

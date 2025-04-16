@@ -56,7 +56,7 @@ class SportsStateService {
 
     final existingEntry = currentFavorites.firstWhere(
       (entry) => entry.category == sportType,
-      orElse: () => SportsFavorites(category: sportType, favorites: []),
+      orElse: () => SportsFavorites(category: sportType, favorites: const []),
     );
 
     if (existingEntry.favorites.isNotEmpty) {

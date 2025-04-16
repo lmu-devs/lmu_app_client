@@ -1,9 +1,9 @@
-import 'package:cinema/src/repository/api/models/movie/trailer_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'movie_rating_model.dart';
 import 'poster_model.dart';
+import 'trailer_model.dart';
 
 part 'movie_model.g.dart';
 
@@ -40,19 +40,19 @@ class MovieModel extends Equatable {
 
   @override
   List<Object?> get props => [
-    id,
-    title,
-    tagline,
-    overview,
-    releaseYear,
-    budget,
-    poster,
-    backdrop,
-    runtime,
-    genres,
-    ratings,
-    trailers,
-  ];
+        id,
+        title,
+        tagline,
+        overview,
+        releaseYear,
+        budget,
+        poster,
+        backdrop,
+        runtime,
+        genres,
+        ratings,
+        trailers,
+      ];
 
   factory MovieModel.fromJson(Map<String, dynamic> json) => _$MovieModelFromJson(json);
 

@@ -9,5 +9,6 @@
   "copyToClipboard": "Adresse kopieren",
   "copiedToClipboard": "Adresse kopiert",
   "nearby": "In der Nähe",
-  "mapboxAttribution": "Über Mapbox Karten"
+  "mapboxAttribution": "Über Mapbox Karten",
+  "show": "Zeige"
 }

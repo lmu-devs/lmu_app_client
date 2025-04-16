@@ -107,11 +107,9 @@ class _MapCompassState extends State<MapCompass> with TickerProviderStateMixin {
         padding: widget.padding,
         child: Transform.rotate(
           angle: (camera.rotation + widget.rotationOffset) * deg2Rad,
-          child: IconButton(
-            alignment: Alignment.center,
-            padding: EdgeInsets.zero,
-            icon: widget.icon,
-            onPressed: () {
+          child: GestureDetector(
+            child: widget.icon,
+            onTap: () {
               if (widget.onPressedOverridesDefault) {
                 if (widget.onPressed case final VoidCallback onPressed) {
                   onPressed();

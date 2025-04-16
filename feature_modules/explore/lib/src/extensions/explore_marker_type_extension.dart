@@ -1,3 +1,4 @@
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
@@ -15,14 +16,14 @@ extension ExploreMarkerTypeStyling on ExploreMarkerType {
     };
   }
 
-  String get localizedName {
+  String localizedName(LmuLocalizations localizations) {
     return switch (this) {
-      ExploreMarkerType.mensaMensa => 'Mensa',
-      ExploreMarkerType.mensaStuBistro => 'StuBistro',
-      ExploreMarkerType.mensaStuCafe => 'StuCafe',
-      ExploreMarkerType.mensaStuLounge => 'StuLounge',
-      ExploreMarkerType.cinema => 'Kino',
-      ExploreMarkerType.roomfinderRoom => 'Gebäude',
+      ExploreMarkerType.mensaMensa => localizations.canteen.mensaTypeMensa,
+      ExploreMarkerType.mensaStuBistro => localizations.canteen.mensaTypeStuBistro,
+      ExploreMarkerType.mensaStuCafe => localizations.canteen.mensaTypeStuCafe,
+      ExploreMarkerType.mensaStuLounge => localizations.canteen.mensaTypeCafeBar,
+      ExploreMarkerType.cinema => localizations.cinema.cinema,
+      ExploreMarkerType.roomfinderRoom => localizations.roomfinder.building,
     };
   }
 

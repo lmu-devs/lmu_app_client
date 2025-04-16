@@ -37,6 +37,7 @@ class DefaultCinemaService implements CinemaService {
             id: cinemaModel.id,
             latitude: cinemaModel.cinemaLocation.latitude,
             longitude: cinemaModel.cinemaLocation.longitude,
+            address: cinemaModel.cinemaLocation.address,
             name: cinemaModel.title,
             type: ExploreMarkerType.cinema,
           );
@@ -48,6 +49,7 @@ class DefaultCinemaService implements CinemaService {
             latitude: cinemaModel.cinemaLocation.latitude,
             longitude: cinemaModel.cinemaLocation.longitude,
             name: cinemaModel.title,
+            address: cinemaModel.cinemaLocation.address,
             type: ExploreMarkerType.cinema,
           );
         }).toList();

@@ -9,9 +9,6 @@ class ExploreMapPin extends StatelessWidget {
   final Color pinColor;
   final IconData icon;
 
-  final double _pinWidth = 48.0;
-  final double _pinHeight = 54.0;
-
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
@@ -22,7 +19,7 @@ class ExploreMapPin extends StatelessWidget {
           borderColor: colors.neutralColors.borderColors.iconOutline,
         ),
         child: Align(
-          alignment: Alignment(0, 0 - ((_pinHeight - _pinWidth + 12) / _pinHeight)),
+          alignment: const Alignment(0, -0.7),
           child: LmuIcon(
             icon: icon,
             size: LmuIconSizes.medium,

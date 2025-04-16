@@ -30,6 +30,7 @@ class DefaultMensaService implements MensaService {
             id: mensaModel.canteenId,
             latitude: mensaModel.location.latitude,
             longitude: mensaModel.location.longitude,
+            address: mensaModel.location.address,
             name: mensaModel.name,
             type: mensaModel.type.exploreMarkerType,
           );
@@ -40,6 +41,7 @@ class DefaultMensaService implements MensaService {
             id: mensaModel.canteenId,
             latitude: mensaModel.location.latitude,
             longitude: mensaModel.location.longitude,
+            address: mensaModel.location.address,
             name: mensaModel.name,
             type: mensaModel.type.exploreMarkerType,
           );

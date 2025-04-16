@@ -1,9 +1,9 @@
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/explore.dart';
 
+import '../extensions/explore_marker_type_extension.dart';
 import '../services/explore_map_service.dart';
 import 'explore_map_dot.dart';
 import 'explore_map_pin.dart';
@@ -94,7 +94,7 @@ class _ExploreMarkerState extends State<ExploreMarker> with TickerProviderStateM
   Widget build(BuildContext context) {
     final color = _type.markerColor(context.colors);
     return Stack(
-      alignment: Alignment.bottomCenter,
+      alignment: Alignment.center,
       children: [
         FadeTransition(
           opacity: _opacityAnimation,
@@ -110,7 +110,7 @@ class _ExploreMarkerState extends State<ExploreMarker> with TickerProviderStateM
           ),
         ),
         ScaleTransition(
-          alignment: Alignment.bottomCenter,
+          alignment: Alignment.center,
           scale: _scaleAnimation,
           child: ExploreMapPin(pinColor: color, icon: _type.icon),
         ),
@@ -136,30 +136,6 @@ extension HitTestSize on ExploreMarkerSize {
       ExploreMarkerSize.small => 20,
       ExploreMarkerSize.medium => 30,
       ExploreMarkerSize.large => 48,
-    };
-  }
-}
-
-extension on ExploreMarkerType {
-  Color markerColor(LmuColors colors) {
-    return switch (this) {
-      ExploreMarkerType.mensaMensa => colors.mensaColors.textColors.mensa,
-      ExploreMarkerType.mensaStuBistro => colors.mensaColors.textColors.stuBistro,
-      ExploreMarkerType.mensaStuCafe => colors.mensaColors.textColors.stuCafe,
-      ExploreMarkerType.mensaStuLounge => colors.mensaColors.textColors.stuLounge,
-      ExploreMarkerType.cinema => const Color(0xFFD64444),
-      ExploreMarkerType.roomfinderRoom => const Color(0xFF1A95F3),
-    };
-  }
-
-  IconData get icon {
-    return switch (this) {
-      ExploreMarkerType.mensaMensa => LucideIcons.utensils,
-      ExploreMarkerType.mensaStuBistro => LucideIcons.utensils,
-      ExploreMarkerType.mensaStuCafe => LucideIcons.utensils,
-      ExploreMarkerType.mensaStuLounge => LucideIcons.coffee,
-      ExploreMarkerType.cinema => LucideIcons.clapperboard,
-      ExploreMarkerType.roomfinderRoom => LucideIcons.school,
     };
   }
 }
