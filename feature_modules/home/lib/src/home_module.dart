@@ -34,6 +34,7 @@ class HomeModule extends AppModule
     GetIt.I.get<HomePreferencesService>().init();
     GetIt.I.get<HomeCubit>().loadHomeData();
     GetIt.I.get<LinksCubit>().getLinks();
+    GetIt.I.get<LinksSearchService>().init();
   }
 
   @override

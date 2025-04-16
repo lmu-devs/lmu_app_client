@@ -7,10 +7,19 @@ import '../service/links_search_service.dart';
 import '../widgets/links/link_card.dart';
 
 class LinksSearchEntry extends SearchEntry {
-  const LinksSearchEntry({required super.title, required this.description, required this.aliases});
+  const LinksSearchEntry({
+    required super.title,
+    super.tags,
+    required this.description,
+    required this.url,
+    required this.faviconUrl,
+    required this.types,
+  });
 
   final String description;
-  final List<String> aliases;
+  final String url;
+  final String? faviconUrl;
+  final List<String> types;
 }
 
 class LinksSearchPage extends StatefulWidget {
@@ -35,8 +44,11 @@ class _LinksSearchPageState extends State<LinksSearchPage> {
     final links = _searchService.links
         .map((link) => LinksSearchEntry(
               title: link.title,
+              tags: link.aliases,
               description: link.description,
-              aliases: link.aliases,
+              url: link.url,
+              faviconUrl: link.faviconUrl,
+              types: link.types,
             ))
         .toList();
 
@@ -44,8 +56,11 @@ class _LinksSearchPageState extends State<LinksSearchPage> {
     _recentSearchEntries = _searchService.recentSearches
         .map((link) => LinksSearchEntry(
               title: link.title,
+              tags: link.aliases,
               description: link.description,
-              aliases: link.aliases,
+              url: link.url,
+              faviconUrl: link.faviconUrl,
+              types: link.types,
             ))
         .toList();
   }
@@ -58,7 +73,16 @@ class _LinksSearchPageState extends State<LinksSearchPage> {
       recentSearchController: _recentSearchController,
       onRecentSearchesUpdated: (recentSearchEntries) =>
           _searchService.updateRecentSearch(recentSearchEntries.map((e) => e.title).toList()),
-      searchEntryBuilder: (LinksSearchEntry input) => LinkCard(link: input as LinkModel),
+      searchEntryBuilder: (LinksSearchEntry input) => LinkCard(
+        link: LinkModel(
+          title: input.title,
+          description: input.description,
+          url: input.url,
+          faviconUrl: input.faviconUrl,
+          aliases: input.tags!,
+          types: input.types,
+        ),
+      ),
     );
   }
 }
