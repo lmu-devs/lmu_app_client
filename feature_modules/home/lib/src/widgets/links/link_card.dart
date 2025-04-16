@@ -14,9 +14,11 @@ class LinkCard extends StatelessWidget {
   const LinkCard({
     super.key,
     required this.link,
+    this.additionalCallbackOnTap,
   });
 
   final LinkModel link;
+  final VoidCallback? additionalCallbackOnTap;
 
   @override
   Widget build(BuildContext context) {
@@ -77,11 +79,16 @@ class LinkCard extends StatelessWidget {
           );
         },
       ),
-      onTap: () => LmuUrlLauncher.launchWebsite(
-        url: link.url,
-        context: context,
-        mode: LmuUrlLauncherMode.externalApplication,
-      ),
+      onTap: () {
+        if (additionalCallbackOnTap != null) {
+          additionalCallbackOnTap!();
+        }
+        LmuUrlLauncher.launchWebsite(
+          url: link.url,
+          context: context,
+          mode: LmuUrlLauncherMode.externalApplication,
+        );
+      },
       onLongPress: () => CopyToClipboardUtil.copyToClipboard(
         context: context,
         copiedText: link.url,

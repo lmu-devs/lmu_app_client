@@ -7,6 +7,7 @@ import 'package:shared_api/feedback.dart';
 
 import '../../repository/api/models/links/link_model.dart';
 import 'favorite_link_section.dart';
+import 'link_button_section.dart';
 import 'link_card.dart';
 
 class LinksContentView extends StatefulWidget {
@@ -20,8 +21,7 @@ class LinksContentView extends StatefulWidget {
 
 class _LinksContentViewState extends State<LinksContentView> {
   List<LinkModel> get links => widget.links;
-
-  Map<String, List<LinkModel>> get _groupedLinks => _groupLinks(widget.links);
+  final ValueNotifier<String?> _activeFilterNotifier = ValueNotifier<String?>(null);
 
   @override
   Widget build(BuildContext context) {
@@ -33,34 +33,46 @@ class _LinksContentViewState extends State<LinksContentView> {
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-              child: Column(
-                children: [
-                  const SizedBox(height: LmuSizes.size_16),
-                  FavoriteLinkSection(links: widget.links, isSearchActive: false),
-                  Column(
-                    children: _groupedLinks.entries.map(
-                      (entry) {
-                        return Column(
-                          children: [
-                            LmuTileHeadline.base(title: entry.key),
-                            LmuContentTile(
-                              content: Column(
-                                children: entry.value.map((link) => LinkCard(link: link)).toList(),
-                              ),
-                            ),
-                            const SizedBox(height: LmuSizes.size_32),
-                          ],
-                        );
-                      },
-                    ).toList(),
-                  ),
-                  const SizedBox(height: LmuSizes.size_6),
-                  GetIt.I<FeedbackService>().getMissingItemInput(
-                    context.locals.home.linkSuggestion,
-                    'LinksScreen',
-                  ),
-                  const SizedBox(height: LmuSizes.size_72 + LmuSizes.size_96),
-                ],
+              child: ValueListenableBuilder<String?>(
+                valueListenable: _activeFilterNotifier,
+                builder: (context, activeFilter, child) {
+                  Map<String, List<LinkModel>> groupedLinks = _groupLinks(links, activeFilter);
+
+                  return Column(
+                    children: [
+                      const SizedBox(height: LmuSizes.size_16),
+                      FavoriteLinkSection(links: widget.links),
+                      LinkButtonSection(
+                        activeFilter: activeFilter,
+                        onFilterSelected: (filter) => _activeFilterNotifier.value = filter,
+                      ),
+                      const SizedBox(height: LmuSizes.size_16),
+                      Column(
+                        children: groupedLinks.entries.map(
+                          (entry) {
+                            return Column(
+                              children: [
+                                LmuTileHeadline.base(title: entry.key),
+                                LmuContentTile(
+                                  content: Column(
+                                    children: entry.value.map((link) => LinkCard(link: link)).toList(),
+                                  ),
+                                ),
+                                const SizedBox(height: LmuSizes.size_32),
+                              ],
+                            );
+                          },
+                        ).toList(),
+                      ),
+                      const SizedBox(height: LmuSizes.size_6),
+                      GetIt.I<FeedbackService>().getMissingItemInput(
+                        context.locals.home.linkSuggestion,
+                        'LinksScreen',
+                      ),
+                      const SizedBox(height: LmuSizes.size_72 + LmuSizes.size_96),
+                    ],
+                  );
+                },
               ),
             ),
           ),
@@ -69,8 +81,18 @@ class _LinksContentViewState extends State<LinksContentView> {
     );
   }
 
-  Map<String, List<LinkModel>> _groupLinks(List<LinkModel> links) {
-    final sortedLinks = List.from(links)..sort((a, b) => a.title.compareTo(b.title));
+  Map<String, List<LinkModel>> _groupLinks(List<LinkModel> links, String? activeFilter) {
+    List<LinkModel> filteredLinks;
+
+    if (activeFilter == LinkFilterKeys.internal) {
+      filteredLinks = links.where((link) => link.types.contains(LinkFilterKeys.internal.toUpperCase())).toList();
+    } else if (activeFilter == LinkFilterKeys.external) {
+      filteredLinks = links.where((link) => link.types.contains(LinkFilterKeys.external.toUpperCase())).toList();
+    } else {
+      filteredLinks = links;
+    }
+
+    final sortedLinks = List.from(filteredLinks)..sort((a, b) => a.title.compareTo(b.title));
     final Map<String, List<LinkModel>> groupedLinks = {};
     for (var link in sortedLinks) {
       final firstLetter = link.title[0].toUpperCase();

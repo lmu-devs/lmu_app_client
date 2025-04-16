@@ -7,6 +7,7 @@ import 'bloc/home_cubit.dart';
 import 'bloc/links/links.dart';
 import 'repository/api/home_api_client.dart';
 import 'repository/repository.dart';
+import 'service/links_search_service.dart';
 import 'service/services.dart';
 
 class HomeModule extends AppModule
@@ -25,6 +26,7 @@ class HomeModule extends AppModule
     GetIt.I.registerSingleton<LinksCubit>(LinksCubit());
     GetIt.I.registerSingleton<BenefitsCubit>(BenefitsCubit());
     GetIt.I.registerSingleton<HomePreferencesService>(HomePreferencesService());
+    GetIt.I.registerSingleton<LinksSearchService>(LinksSearchService());
   }
 
   @override
@@ -32,6 +34,7 @@ class HomeModule extends AppModule
     GetIt.I.get<HomePreferencesService>().init();
     GetIt.I.get<HomeCubit>().loadHomeData();
     GetIt.I.get<LinksCubit>().getLinks();
+    GetIt.I.get<LinksSearchService>().init();
   }
 
   @override

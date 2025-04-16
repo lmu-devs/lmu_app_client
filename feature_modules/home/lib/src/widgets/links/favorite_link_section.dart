@@ -13,21 +13,15 @@ class FavoriteLinkSection extends StatelessWidget {
   const FavoriteLinkSection({
     super.key,
     required this.links,
-    required this.isSearchActive,
   });
 
   final List<LinkModel> links;
-  final bool isSearchActive;
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<List<String>>(
       valueListenable: GetIt.I<HomePreferencesService>().likedLinksNotifier,
       builder: (context, likedLinkTitles, child) {
-        if (isSearchActive) {
-          return const SizedBox.shrink();
-        }
-
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

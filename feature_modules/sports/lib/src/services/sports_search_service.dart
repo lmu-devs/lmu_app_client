@@ -53,7 +53,7 @@ class SportsSearchService {
   }
 
   Future<void> updateRecentSearch(List<String> recentSearch) async {
-    if (_recentSearches.map((building) => building.title).toList() == recentSearch) return;
+    if (_recentSearches.map((sportType) => sportType.title).toList() == recentSearch) return;
     _updateRecentSearch(recentSearch);
     await _sportsRepository.saveRecentSearches(recentSearch);
   }
