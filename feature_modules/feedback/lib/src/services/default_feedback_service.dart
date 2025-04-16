@@ -1,7 +1,7 @@
+import 'package:core/components.dart';
 import 'package:feedback/src/pages/pages.dart';
 import 'package:feedback/src/widgets/missing_item_input.dart';
 import 'package:flutter/widgets.dart';
-import 'package:core/components.dart';
 import 'package:shared_api/feedback.dart';
 
 class DefaultFeedbackService implements FeedbackService {
@@ -29,6 +29,7 @@ class DefaultFeedbackService implements FeedbackService {
     );
   }
 
+  @override
   Widget getMissingItemInput(String title, String feedbackOrigin) {
     return MissingItemInput(title: title, feedbackOrigin: feedbackOrigin);
   }

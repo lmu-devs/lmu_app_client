@@ -1,4 +1,3 @@
-import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -8,10 +7,10 @@ import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:latlong2/latlong.dart' as latlong;
+import 'package:shared_api/explore.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 
 import '../services/explore_map_service.dart';
-import '../widgets/explore_attribution.dart';
 import '../widgets/explore_compass.dart';
 import '../widgets/explore_map_content_sheet.dart';
 import '../widgets/explore_map_overlay.dart';
@@ -27,6 +26,7 @@ class ExplorePage extends StatefulWidget {
 class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin {
   late final AnimatedMapController _animatedMapController;
   Style? style;
+  List<Marker> markers = [];
   final _mapService = GetIt.I<ExploreMapService>();
 
   @override
@@ -43,7 +43,16 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
       mapController: _mapService.mapController,
     );
 
+    _onExploreLocationsChanged();
+    _mapService.exploreLocationsNotifier.addListener(_onExploreLocationsChanged);
+
     _mapService.animatedMapController = _animatedMapController;
+  }
+
+  void _onExploreLocationsChanged() {
+    setState(() {
+      markers = _mapService.exploreLocationsNotifier.value.map((location) => location.toMarker).toList();
+    });
   }
 
   Future<Style> _readStyle() {
@@ -56,6 +65,12 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
   void initStyle() async {
     style = await _readStyle();
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _mapService.exploreLocationsNotifier.removeListener(_onExploreLocationsChanged);
+    super.dispose();
   }
 
   @override
@@ -94,67 +109,76 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
               //     tileProviders: style!.providers,
               //   ),
               CurrentLocationLayer(),
-              ValueListenableBuilder(
-                valueListenable: _mapService.exploreLocationsNotifier,
-                builder: (context, locations, _) {
-                  return MarkerLayer(
-                    rotate: true,
-                    markers: locations
-                        .map(
-                          (location) => Marker(
-                            key: ValueKey(location.id),
-                            width: LmuSizes.size_48,
-                            height: LmuSizes.size_64,
-                            alignment: Alignment.topCenter,
-                            point: latlong.LatLng(location.latitude, location.longitude),
-                            child: ExploreMarker(
-                              exploreLocation: location,
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  );
-                },
+              MarkerLayer(
+                rotate: true,
+                markers: markers,
               ),
+              // MarkerClusterLayerWidget(
+              //   options: MarkerClusterLayerOptions(
+              //     maxClusterRadius: 50,
+              //     size: const Size(36, 36),
+              //     alignment: Alignment.center,
+              //     padding: const EdgeInsets.all(50),
+              //     maxZoom: 15,
+              //     markers: markers,
+              //     builder: (context, markers) {
+              //       return Container(
+              //         decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.circular(20),
+              //           border: Border.all(
+              //             color: context.colors.neutralColors.borderColors.iconOutline,
+              //             width: 1.5,
+              //           ),
+              //           color: context.colors.neutralColors.backgroundColors.tile,
+              //         ),
+              //         child: Center(
+              //           child: LmuText.bodySmall(
+              //             markers.length.toString(),
+              //           ),
+              //         ),
+              //       );
+              //     },
+              //   ),
+              // ),
               SafeArea(
                 child: MapCompass(
+                  alignment: Alignment.topRight,
                   icon: Container(
-                    padding: const EdgeInsets.all(LmuSizes.size_4),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: context.colors.neutralColors.backgroundColors.tile,
-                      border: Border.all(
-                        color: context.colors.neutralColors.borderColors.iconOutline,
-                        width: 2,
-                      ),
                     ),
-                    child: const Icon(
-                      LucideIcons.drafting_compass,
-                      size: LmuIconSizes.medium,
-                    ),
+                    child: const Icon(LucideIcons.drafting_compass, size: 20),
                   ),
                   onPressed: () => _mapService.faceNorth(),
                   hideIfRotatedNorth: true,
-                  padding: const EdgeInsets.only(top: LmuSizes.size_16, right: LmuSizes.size_16),
+                  padding: const EdgeInsets.only(top: 8, right: 8),
                 ),
               ),
             ],
           ),
-          const Positioned(
-              right: LmuSizes.size_16,
-              left: LmuSizes.size_16,
-              bottom: LmuSizes.size_16,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  ExploreAttribution(),
-                  ExploreMapOverlay(),
-                ],
-              )),
+          Positioned(
+            bottom: 0,
+            width: MediaQuery.of(context).size.width,
+            child: const ExploreMapOverlay(),
+          ),
           const ExploreMapContentSheet(),
         ],
       ),
+    );
+  }
+}
+
+extension on ExploreLocation {
+  Marker get toMarker {
+    return Marker(
+      key: ValueKey(id),
+      width: 48,
+      height: 108,
+      alignment: Alignment.center,
+      point: latlong.LatLng(latitude, longitude),
+      child: ExploreMarker(exploreLocation: this),
     );
   }
 }

@@ -96,7 +96,7 @@ extension RoomfinderSearchEntryTypeExtension on RoomfinderSearchEntryType {
 
   Color color(LmuColors colors) {
     return switch (this) {
-      RoomfinderSearchEntryType.building => Color(0xFF00A0E4),
+      RoomfinderSearchEntryType.building => const Color(0xFF00A0E4),
       RoomfinderSearchEntryType.room => colors.warningColors.textColors.strongColors.base,
     };
   }

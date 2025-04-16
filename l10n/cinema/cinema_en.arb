@@ -1,7 +1,6 @@
 {
   "@@locale": "en",
   "@@context": "Cinema",
-
   "pageTitle": "Movies",
   "@pageTitle": {
     "description": "Title of the page"
@@ -35,11 +34,11 @@
     "description": "No more movies this semester"
   },
   "watchlistEmptyBefore": "Tap the ",
-  "@watchlistEmpty": {
+  "@watchlistEmptyBefore": {
     "description": "Empty watchlist text before the star icon"
   },
   "watchlistEmptyAfter": " icon to add movies here",
-  "@watchlistEmpty": {
+  "@watchlistEmptyAfter": {
     "description": "Empty watchlist text after the star icon"
   },
   "historyAction": "Show History",
@@ -104,6 +103,10 @@
   },
   "and": "and",
   "@and": {
-      "description": "and"
+    "description": "and"
+  },
+  "cinema": "Cinema",
+  "@cinema": {
+    "description": "Cinema"
   }
 }

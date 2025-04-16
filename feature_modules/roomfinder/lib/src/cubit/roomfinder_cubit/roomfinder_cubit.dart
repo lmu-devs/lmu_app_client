@@ -36,6 +36,7 @@ class RoomfinderCubit extends Cubit<RoomfinderState> {
               latitude: buildingLocation.latitude,
               longitude: buildingLocation.longitude,
               name: building.title,
+              address: buildingLocation.address,
               type: ExploreMarkerType.roomfinderRoom,
             );
           }).toList();

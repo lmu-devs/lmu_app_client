@@ -33,5 +33,12 @@
   "mapboxAttribution": "About Mapbox Maps",
   "@mapboxAttribution": {
     "description": "Mapbox attribution text"
+  },
+  "@nearby": {
+    "description": "Nearby"
+  },
+  "show": "Show",
+  "@show": {
+    "description": "Show"
   }
 }

@@ -9,6 +9,7 @@ class ExploreLocation extends Equatable {
     required this.id,
     required this.latitude,
     required this.longitude,
+    required this.address,
     required this.name,
     required this.type,
     this.customColor,
@@ -18,9 +19,10 @@ class ExploreLocation extends Equatable {
   final double latitude;
   final double longitude;
   final String name;
+  final String address;
   final Color? customColor;
   final ExploreMarkerType type;
 
   @override
-  List<Object?> get props => [latitude, longitude, id, name, type, customColor];
+  List<Object?> get props => [latitude, longitude, address, id, name, type, customColor];
 }
