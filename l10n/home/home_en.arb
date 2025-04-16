@@ -126,6 +126,14 @@
   "@allLinksTitle": {
     "description": "Title for the link list"
   },
+  "linksFilterInternal": "Internal",
+  "@linksFilterInternal": {
+    "description": "Filter for internal links"
+  },
+  "linksFilterExternal": "External",
+  "@linksFilterExternal": {
+    "description": "Filter for external links"
+  },
   "linkCopiedToClipboard": "Link copied to clipboard",
   "@linkCopiedToClipboard": {
     "description": "Toast message for copying a link to clipboard"

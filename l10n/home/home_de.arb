@@ -35,6 +35,8 @@
   "favoriteLinksEmptyBefore": "Füge Links mit dem ",
   "favoriteLinksEmptyAfter": " hier und auf Home hinzu",
   "allLinksTitle": "Alle Links",
+  "linksFilterInternal": "Intern",
+  "linksFilterExternal": "Extern",
   "linkCopiedToClipboard": "Link kopiert",
   "linkSuggestion": "Schlage einen Link vor",
   "benefitSuggestion": "Schlage einen Benefit vor"
