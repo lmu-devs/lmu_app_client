@@ -82,6 +82,7 @@ class _LinksSearchPageState extends State<LinksSearchPage> {
           aliases: input.tags!,
           types: input.types,
         ),
+        additionalCallbackOnTap: () => _recentSearchController.trigger(input),
       ),
     );
   }
