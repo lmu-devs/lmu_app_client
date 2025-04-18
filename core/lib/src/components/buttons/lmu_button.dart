@@ -47,6 +47,7 @@ class LmuButton extends StatelessWidget {
     this.customSemanticsLabel,
     this.showFullWidth = false,
     this.increaseTouchTarget = false,
+    this.textScaleFactorEnabled = true,
   }) : assert(title != null || leadingWidget != null || leadingIcon != null || trailingIcon != null);
 
   final ButtonSize size;
@@ -62,6 +63,7 @@ class LmuButton extends StatelessWidget {
   final String? customSemanticsLabel;
   final bool showFullWidth;
   final bool increaseTouchTarget;
+  final bool textScaleFactorEnabled;
 
   bool get _hasTitle => title != null && !_isLoading;
 
@@ -155,11 +157,7 @@ class LmuButton extends StatelessWidget {
                       ),
                   ],
                 ),
-              if (_hasTitle)
-                size.textWidget(
-                  title!,
-                  textColor,
-                ),
+              if (_hasTitle) size.textWidget(title!, textScaleFactorEnabled, textColor),
               if (_isLoading)
                 SizedBox(
                   width: size.loadingIndicatorSize,
@@ -195,19 +193,21 @@ class LmuButton extends StatelessWidget {
 }
 
 extension ButtonSizeExtension on ButtonSize {
-  Widget textWidget(String title, Color color) {
+  Widget textWidget(String title, bool textScaleFactorEnabled, Color color) {
     switch (this) {
       case ButtonSize.medium:
         return LmuText.bodySmall(
           title,
           weight: FontWeight.w600,
           color: color,
+          textScaleFactor: textScaleFactorEnabled ? null : 1.0,
         );
       case ButtonSize.large:
         return LmuText.body(
           title,
           weight: FontWeight.w600,
           color: color,
+          textScaleFactor: textScaleFactorEnabled ? null : 1.0,
         );
     }
   }

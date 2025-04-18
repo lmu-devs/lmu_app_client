@@ -57,7 +57,7 @@ class _LmuTabBarState extends State<LmuTabBar> {
             bottom: widget.hasDefaultPaddings ? LmuSizes.size_12 : 0,
           ),
           child: SizedBox(
-            height: 36,
+            height: 36 * MediaQuery.of(context).textScaler.textScaleFactor,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: widget.items.length,

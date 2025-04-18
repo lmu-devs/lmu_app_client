@@ -48,7 +48,7 @@ class LmuTabBarItem extends StatelessWidget {
         constraints: BoxConstraints(
           minWidth: titleWidth + LmuSizes.size_16,
         ),
-        height: 36.0,
+        height: 36.0 * MediaQuery.of(context).textScaler.textScaleFactor,
         padding: const EdgeInsets.all(LmuSizes.size_8),
         decoration: BoxDecoration(
           color: isActive ? context.colors.neutralColors.backgroundColors.mediumColors.base : Colors.transparent,

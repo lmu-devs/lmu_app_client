@@ -269,6 +269,7 @@ class _CollapsedToolbar extends StatelessWidget {
               collapsedTitle,
               style: collapsedTitleTextStyle,
               maxLines: 1,
+              textScaler: TextScaler.noScaling,
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -353,6 +354,7 @@ class _LargeTitle extends StatelessWidget {
                                     style: largeTitleTextStyle,
                                     maxLines: largeTitleMaxLines,
                                     overflow: TextOverflow.ellipsis,
+                                    textScaler: TextScaler.noScaling,
                                   ),
                                 );
                               },

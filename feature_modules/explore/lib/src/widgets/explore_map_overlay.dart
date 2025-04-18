@@ -21,6 +21,7 @@ class ExploreMapOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mapService = GetIt.I<ExploreMapService>();
+    final colors = context.colors;
 
     final locals = context.locals;
     return Column(
@@ -36,8 +37,12 @@ class ExploreMapOverlay extends StatelessWidget {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: context.colors.neutralColors.backgroundColors.tile,
+                  color: colors.neutralColors.backgroundColors.tile,
                   borderRadius: BorderRadius.circular(LmuSizes.size_8),
+                  border: Border.all(
+                    color: context.colors.neutralColors.borderColors.seperatorLight,
+                    width: 1,
+                  ),
                 ),
                 child: GestureDetector(
                   onTap: () async {
@@ -69,8 +74,16 @@ class ExploreMapOverlay extends StatelessWidget {
           ),
         ),
         Container(
-          color: context.colors.neutralColors.backgroundColors.base,
           padding: const EdgeInsets.symmetric(vertical: 16),
+          decoration: BoxDecoration(
+            color: context.colors.neutralColors.backgroundColors.base,
+            border: Border(
+              top: BorderSide(
+                color: context.colors.neutralColors.borderColors.seperatorLight,
+                width: 1,
+              ),
+            ),
+          ),
           child: ValueListenableBuilder(
             valueListenable: mapService.exploreLocationFilterNotifier,
             builder: (context, activeFilters, child) {

@@ -28,7 +28,7 @@ class ScreeningCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double cardHeight = 165;
+    final double cardHeight = 165 * MediaQuery.of(context).textScaler.textScaleFactor;
 
     return GestureDetector(
       onTap: () => Navigator.of(context).push(

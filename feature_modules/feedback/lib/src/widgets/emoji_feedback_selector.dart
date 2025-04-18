@@ -53,6 +53,7 @@ class EmojiFeedbackSelector extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 36,
                       ),
+                      textScaler: TextScaler.noScaling,
                     ),
                   ),
                 ),

@@ -58,7 +58,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
   Future<Style> _readStyle() {
     return StyleReader(
       uri: 'mapbox://styles/mapbox/streets-v12?access_token={key}',
-      apiKey: "pk.eyJ1IjoiYml0dGVyc2Nob2tpIiwiYSI6ImNtOGltOW1lcDA1NjMya3F4c2Vta2tyenYifQ.yDusjqyBsYa4Lw325r_CBA",
+      apiKey: "${dotenv.env['MAPBOX_ACCESS_TOKEN']}",
     ).read();
   }
 
@@ -83,11 +83,18 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
             options: MapOptions(
               backgroundColor: context.colors.neutralColors.backgroundColors.tile,
               initialCenter: const latlong.LatLng(48.150578, 11.580767),
+              cameraConstraint: CameraConstraint.contain(
+                bounds: LatLngBounds(
+                  const latlong.LatLng(47.3, 11.0), // SW
+                  const latlong.LatLng(48.9, 13.2), // NE
+                ),
+              ),
               initialZoom: 15,
+              maxZoom: 18,
+              minZoom: 10,
+              onMapReady: () => _mapService.focuUserLocation(withAnimation: false),
               onPositionChanged: (camera, _) => _mapService.updateZoomLevel(camera.zoom),
-              onTap: (_, __) {
-                _mapService.deselectMarker();
-              },
+              onTap: (_, __) => _mapService.deselectMarker(),
             ),
             children: [
               TileLayer(
@@ -107,12 +114,12 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
               //     sprites: style!.sprites,
               //     tileOffset: TileOffset.mapbox,
               //     tileProviders: style!.providers,
+              //     layerMode: VectorTileLayerMode.vector,
+              //     showTileDebugInfo: true,
+              //     logCacheStats: true,
               //   ),
               CurrentLocationLayer(),
-              MarkerLayer(
-                rotate: true,
-                markers: markers,
-              ),
+              MarkerLayer(rotate: true, markers: markers),
               // MarkerClusterLayerWidget(
               //   options: MarkerClusterLayerOptions(
               //     maxClusterRadius: 50,

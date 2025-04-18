@@ -105,7 +105,7 @@ class LmuInTextVisual extends StatelessWidget {
     final double padding = size == InTextVisualSize.large ? LmuSizes.size_4 : LmuSizes.size_2;
 
     return Container(
-      height: height,
+      height: height * MediaQuery.of(context).textScaler.textScaleFactor,
       width: hasIcon ? height : null,
       decoration: hasIconBox && hasIcon
           ? null

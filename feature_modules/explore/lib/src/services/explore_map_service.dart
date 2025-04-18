@@ -31,8 +31,7 @@ class ExploreMapService {
 
   final ValueNotifier<String?> _selectedMarkerNotifier = ValueNotifier(null);
 
-  final ValueNotifier<List<ExploreLocationFilter>> _exploreLocationFilterNotifier =
-      ValueNotifier(ExploreLocationFilter.values);
+  final ValueNotifier<List<ExploreLocationFilter>> _exploreLocationFilterNotifier = ValueNotifier([]);
   ValueNotifier<List<ExploreLocationFilter>> get exploreLocationFilterNotifier => _exploreLocationFilterNotifier;
 
   final ValueNotifier<List<ExploreLocation>> _exploreLocationsNotifier = ValueNotifier([]);
@@ -119,13 +118,17 @@ class ExploreMapService {
     updateMarker(id);
   }
 
-  void focuUserLocation() async {
+  void focuUserLocation({bool withAnimation = true}) async {
     final currentUserLocation = await Geolocator.getCurrentPosition();
     if (animatedMapController != null) {
-      animatedMapController!.animateTo(
-        dest: LatLng(currentUserLocation.latitude, currentUserLocation.longitude),
-        zoom: 16,
-      );
+      if (withAnimation) {
+        animatedMapController!.animateTo(
+          dest: LatLng(currentUserLocation.latitude, currentUserLocation.longitude),
+          zoom: 16,
+        );
+      } else {
+        mapController.move(LatLng(currentUserLocation.latitude, currentUserLocation.longitude), 15);
+      }
     }
   }
 

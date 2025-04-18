@@ -85,12 +85,7 @@ class LmuTileHeadline extends StatelessWidget {
         if (bottomWidget != null)
           Column(
             children: [
-              ConstrainedBox(
-                constraints: const BoxConstraints(
-                  maxHeight: 36,
-                ),
-                child: bottomWidget!,
-              ),
+              bottomWidget!,
               const SizedBox(height: LmuSizes.size_16),
             ],
           ),

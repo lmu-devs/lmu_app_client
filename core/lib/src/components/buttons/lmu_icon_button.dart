@@ -31,7 +31,7 @@ class LmuIconButton extends StatelessWidget {
         ),
         child: LmuIcon(
           icon: icon,
-          size: LmuIconSizes.mediumSmall,
+          size: LmuIconSizes.mediumSmall * MediaQuery.of(context).textScaler.textScaleFactor,
           color: isDisabled ? colors.neutralColors.textColors.weakColors.disabled! : null,
         ),
       ),

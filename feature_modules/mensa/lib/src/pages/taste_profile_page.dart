@@ -155,6 +155,7 @@ class _SaveButtonState extends State<_SaveButton> {
               state: isDisabled ? ButtonState.disabled : ButtonState.enabled,
               size: ButtonSize.large,
               increaseTouchTarget: true,
+              textScaleFactorEnabled: false,
               onTap: () {
                 tasteProfileService.saveTasteProfileState(
                   selectedAllergiesPresets: tasteProfileService.selectedAllergiesPresetsNotifier.value,
