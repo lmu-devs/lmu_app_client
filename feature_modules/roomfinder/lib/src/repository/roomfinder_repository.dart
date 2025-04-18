@@ -17,6 +17,7 @@ class RoomfinderRepository {
   final _favoriteBuildingsKey = "favorite_buildings";
   final _sortOptionKey = "roomfinder_sort_option";
   final _recentSearchesKey = "roomfinder_recentSearches";
+  final _recentRoomSearchesBaseKey = "roomfinder_room_recentSearches";
 
   Future<String> _getFilePath(String filename) async {
     final dir = await getApplicationDocumentsDirectory();
@@ -94,6 +95,17 @@ class RoomfinderRepository {
   Future<List<String>> getRecentSearches() async {
     final prefs = await SharedPreferences.getInstance();
     final recentSearches = prefs.getStringList(_recentSearchesKey) ?? [];
+    return recentSearches;
+  }
+
+  Future<void> saveRecentRoomSearches(List<String> values, String id) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList("$_recentRoomSearchesBaseKey$id", values);
+  }
+
+  Future<List<String>> getRecentRoomSearches(String id) async {
+    final prefs = await SharedPreferences.getInstance();
+    final recentSearches = prefs.getStringList("$_recentRoomSearchesBaseKey$id") ?? [];
     return recentSearches;
   }
 }

@@ -28,6 +28,7 @@ class LmuSearchPage<T extends SearchEntry> extends StatefulWidget {
     this.recentSearchController,
     this.emptySearchEntries,
     this.emptySearchEntriesTitle,
+    this.searchCutoff = 60,
   });
 
   final Widget Function(T) searchEntryBuilder;
@@ -38,6 +39,7 @@ class LmuSearchPage<T extends SearchEntry> extends StatefulWidget {
   final int maxRecentSearchEntries;
   final String? emptySearchEntriesTitle;
   final List<T>? emptySearchEntries;
+  final int searchCutoff;
 
   @override
   State<LmuSearchPage<T>> createState() => _LmuSearchPageState<T>();
@@ -98,7 +100,7 @@ class _LmuSearchPageState<T extends SearchEntry> extends State<LmuSearchPage<T>>
       query: searchQuery,
       choices: widget.searchEntries,
       getter: (obj) => obj.title,
-      cutoff: 60,
+      cutoff: widget.searchCutoff,
     );
 
     final results = list.map((e) => e.choice).toList();
@@ -143,9 +145,9 @@ class _LmuSearchPageState<T extends SearchEntry> extends State<LmuSearchPage<T>>
                             ? child!
                             : searchEntries.isEmpty
                                 ? LmuIssueType(
-                                    key: const Key("roomfinder_empty"), message: appLocals.noResults, hasSpacing: false)
+                                    key: const Key("search_empty"), message: appLocals.noResults, hasSpacing: false)
                                 : ListView(
-                                    key: const Key("roomfinder_search_entries"),
+                                    key: const Key("search_entries"),
                                     padding: const EdgeInsets.only(top: LmuSizes.size_16, bottom: LmuSizes.size_96),
                                     children: [
                                       LmuContentTile(
@@ -157,7 +159,7 @@ class _LmuSearchPageState<T extends SearchEntry> extends State<LmuSearchPage<T>>
                       );
                     },
                     child: ListView(
-                      key: const Key("roomfinder_recent_searches"),
+                      key: const Key("recent_searches"),
                       padding: const EdgeInsets.only(top: LmuSizes.size_16, bottom: LmuSizes.size_96),
                       children: [
                         ValueListenableBuilder(

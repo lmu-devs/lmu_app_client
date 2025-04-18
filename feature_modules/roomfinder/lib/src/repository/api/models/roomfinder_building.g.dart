@@ -22,5 +22,5 @@ Map<String, dynamic> _$RoomfinderBuildingToJson(RoomfinderBuilding instance) => 
       'title': instance.title,
       'aliases': instance.aliases,
       'location': instance.location.toJson(),
-      'building_parts': instance.floors.map((e) => e.toJson()).toList(),
+      'floors': instance.floors.map((e) => e.toJson()).toList(),
     };

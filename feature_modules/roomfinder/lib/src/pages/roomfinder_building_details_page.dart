@@ -8,9 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/explore.dart';
 
 import '../cubit/cubit.dart';
 import '../repository/api/models/models.dart';
+import '../routes/roomfinder_routes.dart';
+import '../services/roomfinder_room_search_service.dart';
 import '../services/services.dart';
 
 class RoomfinderBuildingDetailsPage extends StatefulWidget {
@@ -68,27 +71,57 @@ class _RoomfinderBuildingDetailsPageState extends State<RoomfinderBuildingDetail
               padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
               child: Column(
                 children: [
-                  LmuListItem.base(
-                    subtitle: _building.location.address,
-                    trailingArea: Icon(
-                      LucideIcons.map,
-                      size: LmuIconSizes.mediumSmall,
-                      color: context.colors.neutralColors.textColors.weakColors.base,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: LmuSizes.size_16),
+                    child: LmuListItem.base(
+                      subtitle: _building.location.address,
+                      trailingArea: Icon(
+                        LucideIcons.map,
+                        size: LmuIconSizes.mediumSmall,
+                        color: context.colors.neutralColors.textColors.weakColors.base,
+                      ),
+                      hasHorizontalPadding: false,
+                      hasDivider: true,
+                      onTap: () {
+                        LmuBottomSheet.show(
+                          context,
+                          content: NavigationSheet(
+                            latitude: _building.location.latitude,
+                            longitude: _building.location.longitude,
+                            address: _building.location.address,
+                          ),
+                        );
+                      },
                     ),
-                    hasHorizontalPadding: false,
-                    hasDivider: true,
-                    onTap: () {
-                      LmuBottomSheet.show(
-                        context,
-                        content: NavigationSheet(
-                          latitude: _building.location.latitude,
-                          longitude: _building.location.longitude,
-                          address: _building.location.address,
-                        ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: LmuSizes.size_16),
+              child: Row(
+                children: [
+                  const SizedBox(width: LmuSizes.size_16),
+                  LmuMapImageButton(onTap: () => GetIt.I<ExploreService>().navigateToExplore(context)),
+                  const SizedBox(width: LmuSizes.size_8),
+                  LmuIconButton(
+                    icon: LucideIcons.search,
+                    onPressed: () {
+                      if (GetIt.I.isRegistered<RoomfinderRoomSearchService>()) {
+                        GetIt.I.unregister<RoomfinderRoomSearchService>();
+                      }
+
+                      final instance = RoomfinderRoomSearchService(
+                        buildingPartId: _building.buildingPartId,
+                        buildingId: _building.id,
                       );
+                      GetIt.I.registerSingleton<RoomfinderRoomSearchService>(instance);
+                      instance.init().then((_) => RoomfinderRoomSearchRoute(_building.buildingPartId).go(context));
                     },
                   ),
-                  const SizedBox(height: LmuSizes.size_16),
+                  const SizedBox(width: LmuSizes.size_16),
                 ],
               ),
             ),
