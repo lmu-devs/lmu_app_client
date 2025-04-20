@@ -15,13 +15,17 @@ class WishlistEntryList extends StatelessWidget {
     return BlocBuilder<WishlistCubit, WishlistState>(
       bloc: GetIt.I.get<WishlistCubit>(),
       builder: (context, state) {
-        return LmuPageAnimationWrapper(
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: state is WishlistLoadSuccess
-                ? WishlistEntrySection(key: const ValueKey("wishlistContent"), wishlistModels: state.wishlistModels)
-                : const WishlistEntrySectionLoading(key: ValueKey("wishlistLoading"), length: 5),
-          ),
+        Widget child = const WishlistEntrySectionLoading(key: ValueKey("wishlistLoading"), length: 5);
+
+        if (state is WishlistLoadInProgress && state.wishlistModels != null) {
+          child = WishlistEntrySection(key: const ValueKey("wishlistContent"), wishlistModels: state.wishlistModels!);
+        } else if (state is WishlistLoadSuccess) {
+          child = WishlistEntrySection(key: const ValueKey("wishlistContent"), wishlistModels: state.wishlistModels);
+        }
+
+        return Align(
+          alignment: Alignment.topCenter,
+          child: LmuPageAnimationWrapper(child: child),
         );
       },
     );

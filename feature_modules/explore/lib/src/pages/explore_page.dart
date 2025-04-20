@@ -83,12 +83,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
             options: MapOptions(
               backgroundColor: context.colors.neutralColors.backgroundColors.tile,
               initialCenter: const latlong.LatLng(48.150578, 11.580767),
-              cameraConstraint: CameraConstraint.contain(
-                bounds: LatLngBounds(
-                  const latlong.LatLng(47.3, 11.0), // SW
-                  const latlong.LatLng(48.9, 13.2), // NE
-                ),
-              ),
+              cameraConstraint: CameraConstraint.contain(bounds: _mapService.mapBounds),
               initialZoom: 15,
               maxZoom: 18,
               minZoom: 10,
@@ -98,15 +93,14 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
             ),
             children: [
               TileLayer(
-                retinaMode: RetinaMode.isHighDensity(context),
-                urlTemplate:
-                    'https://api.mapbox.com/styles/v1/{id}/tiles/256/{z}/{x}/{y}@2x?access_token={accessToken}',
-                additionalOptions: {
-                  'accessToken': dotenv.env['MAPBOX_ACCESS_TOKEN'] ?? '',
-                  'id': Theme.of(context).brightness == Brightness.light
-                      ? 'lmu-dev/cm990f48l00ic01pge084c9aa'
-                      : 'lmu-dev/cm990gii100ho01sk6f2hhh3m',
-                },
+                urlTemplate: MediaQuery.of(context).platformBrightness == Brightness.light
+                    ? 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png'
+                    : 'https://{s}.basemaps.cartocdn.com/rastertiles/dark_nolabels/{z}/{x}/{y}.png',
+                subdomains: const ['a', 'b', 'c'],
+                // tileProvider: CachedTileProvider(
+                //   maxStale: const Duration(days: 30),
+                //   store: HiveCacheStore("erter"),
+                // ),
               ),
               // if (style != null)
               //   VectorTileLayer(

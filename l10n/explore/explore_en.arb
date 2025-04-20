@@ -40,5 +40,9 @@
   "show": "Show",
   "@show": {
     "description": "Show"
+  },
+  "errorFocusUser": "User location outside map area",
+  "@errorFocusUser": {
+    "description": "Error message when user location is outside map area"
   }
 }
