@@ -62,7 +62,17 @@ class ExploreMapOverlay extends StatelessWidget {
                         );
                       },
                     );
-                    mapService.focuUserLocation();
+                    mapService.focuUserLocation().then(
+                      (value) {
+                        if (!value) {
+                          LmuToast.show(
+                            context: context,
+                            message: context.locals.explore.errorFocusUser,
+                            type: ToastType.error,
+                          );
+                        }
+                      },
+                    );
                   },
                   child: const LmuIcon(
                     icon: LucideIcons.navigation,

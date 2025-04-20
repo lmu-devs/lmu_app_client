@@ -41,6 +41,11 @@ class ExploreMapService {
 
   List<ExploreLocation> _availableLocations = [];
 
+  LatLngBounds get mapBounds => LatLngBounds(
+        const LatLng(47.5, 11.2), // SW
+        const LatLng(48.6, 12.3), // NE
+      );
+
   void _loadExploreLocations() {
     final mensaService = GetIt.I<MensaService>();
     mensaService.mensaExploreLocationsStream.listen((locations) {
@@ -118,8 +123,16 @@ class ExploreMapService {
     updateMarker(id);
   }
 
-  void focuUserLocation({bool withAnimation = true}) async {
+  Future<bool> focuUserLocation({bool withAnimation = true}) async {
     final currentUserLocation = await Geolocator.getCurrentPosition();
+
+    if (currentUserLocation.latitude < mapBounds.southWest.latitude ||
+        currentUserLocation.latitude > mapBounds.northEast.latitude ||
+        currentUserLocation.longitude < mapBounds.southWest.longitude ||
+        currentUserLocation.longitude > mapBounds.northEast.longitude) {
+      return false;
+    }
+
     if (animatedMapController != null) {
       if (withAnimation) {
         animatedMapController!.animateTo(
@@ -130,6 +143,7 @@ class ExploreMapService {
         mapController.move(LatLng(currentUserLocation.latitude, currentUserLocation.longitude), 15);
       }
     }
+    return true;
   }
 
   void faceNorth() {

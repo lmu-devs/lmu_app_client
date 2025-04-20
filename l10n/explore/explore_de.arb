@@ -10,5 +10,6 @@
   "copiedToClipboard": "Adresse kopiert",
   "nearby": "In der Nähe",
   "mapboxAttribution": "Über Mapbox Karten",
-  "show": "Zeige"
+  "show": "Zeige",
+  "errorFocusUser": "Benutzerstandort außerhalb des Kartenbereichs"
 }
