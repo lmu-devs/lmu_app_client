@@ -30,9 +30,9 @@ class ExploreMapOverlay extends StatelessWidget {
           padding: const EdgeInsets.all(LmuSizes.size_8),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const ExploreAttribution(),
+              //const ExploreAttribution(),
               Container(
                 width: 40,
                 height: 40,

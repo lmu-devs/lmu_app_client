@@ -1,3 +1,4 @@
+import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -58,7 +59,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
   Future<Style> _readStyle() {
     return StyleReader(
       uri: 'mapbox://styles/mapbox/streets-v12?access_token={key}',
-      apiKey: "${dotenv.env['MAPBOX_ACCESS_TOKEN']}",
+      apiKey: dotenv.env['MAPBOX_ACCESS_TOKEN'] ?? '',
     ).read();
   }
 
@@ -154,7 +155,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                   ),
                   onPressed: () => _mapService.faceNorth(),
                   hideIfRotatedNorth: true,
-                  padding: const EdgeInsets.only(top: 8, right: 8),
+                  padding: const EdgeInsets.only(top: LmuSizes.size_8, right: LmuSizes.size_8),
                 ),
               ),
             ],
