@@ -10,5 +10,5 @@ abstract class CinemaService {
 
   void navigateToCinemaPage(BuildContext context);
 
-  Widget getCinemaPage(String cinemaId);
+  List<Widget> cinemaMapContentBuilder(BuildContext context, String cinemaId, ScrollController controller);
 }

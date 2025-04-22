@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:core/components.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -6,8 +7,10 @@ import 'package:shared_api/explore.dart';
 import 'package:shared_api/mensa.dart';
 
 import '../bloc/bloc.dart';
-import '../pages/pages.dart';
+import '../extensions/opening_hours_extensions.dart';
 import '../routes/mensa_routes.dart';
+import '../widgets/widgets.dart';
+import 'menu_service.dart';
 
 class DefaultMensaService implements MensaService {
   @override
@@ -57,19 +60,39 @@ class DefaultMensaService implements MensaService {
   }
 
   @override
-  Widget getMensaPage(String mensaId) {
+  List<Widget> mensaMapContentBuilder(BuildContext context, String mensaId, ScrollController controller) {
+    final menuService = GetIt.I.get<MenuService>();
+
+    final hasMenuCubit = menuService.hasMenuCubit(mensaId);
+    if (!hasMenuCubit) {
+      menuService.initMenuCubit(mensaId);
+    } else {
+      final menuCubit = menuService.getMenuCubit(mensaId);
+      if (menuCubit.state is MenuLoadFailure) {
+        menuCubit.loadMensaMenuData();
+      }
+    }
+
     final mensaCubit = GetIt.I.get<MensaCubit>();
     final state = mensaCubit.state;
-    if (state is! MensaLoadSuccess) {
-      return const SizedBox.shrink();
-    }
+    if (state is! MensaLoadSuccess) return [];
+
     final mensaModel = state.mensaModels.firstWhereOrNull((mensaModel) => mensaModel.canteenId == mensaId);
+    if (mensaModel == null) return [];
 
-    if (mensaModel == null) {
-      return const SizedBox.shrink();
-    }
+    final isTemporarilyClosed = mensaModel.currentOpeningStatus == Status.temporarilyClosed;
+    final isCafeBar = mensaModel.type == MensaType.cafeBar;
 
-    return MensaDetailsPage(mensaModel: mensaModel);
+    return [
+      SliverToBoxAdapter(child: LmuDynamicImageGallery(images: mensaModel.images)),
+      SliverToBoxAdapter(child: MensaDetailsInfoSection(mensaModel: mensaModel)),
+      if (!(isTemporarilyClosed || isCafeBar))
+        MensaDetailsMenuSection(
+          canteenId: mensaModel.canteenId,
+          mensaType: mensaModel.type,
+        ),
+      if (isCafeBar) const SliverToBoxAdapter(child: MenuCafeBarView()),
+    ];
   }
 }
 

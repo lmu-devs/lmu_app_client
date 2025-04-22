@@ -7,5 +7,5 @@ abstract class MensaService {
 
   void navigateToMensaPage(BuildContext context);
 
-  Widget getMensaPage(String mensaId);
+  List<Widget> mensaMapContentBuilder(BuildContext context, String mensaId, ScrollController controller);
 }
