@@ -5,8 +5,8 @@ import 'package:shared_api/explore.dart';
 import 'package:shared_api/roomfinder.dart';
 
 import '../cubit/cubit.dart';
-import '../pages/roomfinder_building_details_page.dart';
 import '../routes/roomfinder_routes.dart';
+import '../widgets/widgets.dart';
 
 class DefaultRoomfinderService extends RoomfinderService {
   @override
@@ -29,13 +29,31 @@ class DefaultRoomfinderService extends RoomfinderService {
   }
 
   @override
-  Widget getRoomfinderPage(String buildingId) {
-    final roomfinderCubit = GetIt.I.get<RoomfinderCubit>();
+  List<Widget> roomfinderMapContentBuilder(BuildContext context, String buildingId, ScrollController controller) {
+    final roomfinderCubit = GetIt.I<RoomfinderCubit>();
     final state = roomfinderCubit.state;
-    if (state is! RoomfinderLoadSuccess) {
-      return const SizedBox.shrink();
-    } else {
-      return RoomfinderBuildingDetailsPage(buildingId: buildingId);
-    }
+    if (state is! RoomfinderLoadSuccess) return [];
+
+    final building = state.streets
+        .expand((street) => street.buildings)
+        .firstWhere((building) => building.buildingPartId == buildingId);
+    final floors = building.floors;
+
+    return [
+      RoomfinderBuildingDetailsSection(
+        key: Key('roomfinderMapDetails$buildingId'),
+        building: building,
+      ),
+      RoomfinderBuildingButtonSection(
+        key: Key('roomfinderMapButton$buildingId'),
+        building: building,
+        withMapButton: false,
+      ),
+      RoomfinderBuildingFloorsSection(
+        key: Key('roomfinderMapFloors$buildingId'),
+        floors: floors,
+        building: building,
+      ),
+    ];
   }
 }

@@ -110,6 +110,7 @@ class ExploreMapService {
     animatedMapController?.animateTo(
       dest: LatLng(selectedMarker.latitude, selectedMarker.longitude),
       zoom: _mapController.camera.zoom <= 13 ? 16 : _mapController.camera.zoom,
+      offset: const Offset(0, -60),
     );
   }
 

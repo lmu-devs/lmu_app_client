@@ -10,5 +10,5 @@ abstract class RoomfinderService {
 
   void navigateToRoomfinder(BuildContext context);
 
-  Widget getRoomfinderPage(String buildingId);
+  List<Widget> roomfinderMapContentBuilder(BuildContext context, String buildingId, ScrollController controller);
 }
