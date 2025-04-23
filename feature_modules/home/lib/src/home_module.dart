@@ -21,7 +21,7 @@ class HomeModule extends AppModule
 
   @override
   void provideLocalDependencies() {
-    GetIt.I.registerSingleton<HomeRepository>(ConnectedHomeRepository(homeApiClient: HomeApiClient()));
+    GetIt.I.registerSingleton<HomeRepository>(HomeRepository(homeApiClient: HomeApiClient()));
     GetIt.I.registerSingleton<HomeCubit>(HomeCubit(homeRepository: GetIt.I.get<HomeRepository>()));
     GetIt.I.registerSingleton<LinksCubit>(LinksCubit());
     GetIt.I.registerSingleton<BenefitsCubit>(BenefitsCubit());

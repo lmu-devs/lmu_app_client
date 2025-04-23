@@ -16,20 +16,22 @@ import 'package:shared_api/timeline.dart';
 import 'package:shared_api/wishlist.dart';
 
 import '../../../home.dart';
-import '../../repository/api/models/home/home_data.dart';
+import '../../repository/api/models/home/home_featured.dart';
 import '../../repository/api/models/home/home_tile.dart';
 import '../../repository/api/models/home/home_tile_type.dart';
+import '../../service/home_preferences_service.dart';
 import '../links/favorite_link_row.dart';
 import 'tiles/home_emoji_tile.dart';
+import 'tiles/home_featured_tile.dart';
 
 class HomeSuccessView extends StatelessWidget {
-  const HomeSuccessView({super.key, required this.homeData});
+  const HomeSuccessView({super.key, required this.tiles, this.featured});
 
-  final HomeData homeData;
+  final List<HomeTile> tiles;
+  final HomeFeatured? featured;
 
   @override
   Widget build(BuildContext context) {
-    final tiles = homeData.tiles;
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,25 +40,34 @@ class HomeSuccessView extends StatelessWidget {
           const SizedBox(height: LmuSizes.size_16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-            child: StaggeredGrid.count(
-              crossAxisCount: 2,
-              mainAxisSpacing: LmuSizes.size_16,
-              crossAxisSpacing: LmuSizes.size_16,
-              children: tiles.map(
-                (tile) {
-                  final cellCount = tile.cellCount;
-                  return StaggeredGridTile.count(
-                    crossAxisCellCount: cellCount.crossAxis,
-                    mainAxisCellCount: cellCount.mainAxis,
-                    child: LmuFeatureTile(
-                      title: tile.localizedTitle(context.locals),
-                      subtitle: tile.description,
-                      content: tile.content,
-                      onTap: tile.onTap(context),
-                    ),
-                  );
-                },
-              ).toList(),
+            child: ValueListenableBuilder(
+              valueListenable: GetIt.I.get<HomePreferencesService>().isFeaturedClosedNotifier,
+              builder: (context, isFeaturedClosed, _) {
+                final showFeatured = featured != null && !isFeaturedClosed;
+                return StaggeredGrid.count(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: LmuSizes.size_16,
+                  crossAxisSpacing: LmuSizes.size_16,
+                  children: [
+                    if (showFeatured) HomeFeaturedTile(featured: featured!),
+                    ...tiles.map(
+                      (tile) {
+                        final cellCount = tile.cellCount;
+                        return StaggeredGridTile.count(
+                          crossAxisCellCount: cellCount.crossAxis,
+                          mainAxisCellCount: cellCount.mainAxis,
+                          child: LmuFeatureTile(
+                            title: tile.localizedTitle(context.locals),
+                            subtitle: tile.description,
+                            content: tile.content,
+                            onTap: tile.onTap(context),
+                          ),
+                        );
+                      },
+                    )
+                  ],
+                );
+              },
             ),
           ),
           const SizedBox(height: LmuSizes.size_96),

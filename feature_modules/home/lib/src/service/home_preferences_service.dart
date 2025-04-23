@@ -1,7 +1,6 @@
 import 'package:core/logging.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../repository/home_repository.dart';
 
@@ -11,37 +10,21 @@ class HomePreferencesService {
   final _homeRepository = GetIt.I.get<HomeRepository>();
   final _appLogger = AppLogger();
 
-  final _tuitionKey = 'tuitionPayed';
-
   final _likedLinksNotifier = ValueNotifier<List<String>>([]);
   ValueNotifier<List<String>> get likedLinksNotifier => _likedLinksNotifier;
 
-  final ValueNotifier<bool> _tuitionPayed = ValueNotifier<bool>(false);
-  ValueNotifier<bool> get tuitionPayed => _tuitionPayed;
+  final ValueNotifier<bool> _isFeaturedClosedNotifier = ValueNotifier<bool>(false);
+  ValueNotifier<bool> get isFeaturedClosedNotifier => _isFeaturedClosedNotifier;
 
   Future init() {
     return Future.wait([
-      initTuition(),
       initLikedLinks(),
     ]);
   }
 
-  Future reset() {
-    return Future.wait([
-      _homeRepository.deleteAllLocalData(),
-      Future.value(_likedLinksNotifier.value = []),
-    ]);
-  }
-
-  Future<void> initTuition() async {
-    final prefs = await SharedPreferences.getInstance();
-    _tuitionPayed.value = prefs.getBool(_tuitionKey) ?? false;
-  }
-
-  Future<void> setTuitionPayed(bool value) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_tuitionKey, value);
-    _tuitionPayed.value = value;
+  Future<void> setFeaturedClosed(String id) async {
+    _isFeaturedClosedNotifier.value = true;
+    await _homeRepository.updateClosedFeaturedTiles(id);
   }
 
   Future<void> initLikedLinks() async {
@@ -66,5 +49,12 @@ class HomePreferencesService {
   Future<void> updateLikedLinks(List<String> likedLinks) async {
     _likedLinksNotifier.value = likedLinks;
     await _homeRepository.saveLikedLinks(likedLinks);
+  }
+
+  Future reset() {
+    return Future.wait([
+      _homeRepository.deleteAllLocalData(),
+      Future.value(_likedLinksNotifier.value = []),
+    ]);
   }
 }
