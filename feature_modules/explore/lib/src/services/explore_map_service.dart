@@ -16,28 +16,42 @@ class ExploreMapService {
   void init() {
     _mapController = MapController();
 
+    _mapController.mapEventStream.listen((event) async {
+      final isFocused = await isUserLocationFocused();
+      _isUserFocusedNotifier.value = isFocused;
+    });
+
     _loadExploreLocations();
   }
 
   AnimatedMapController? animatedMapController;
 
   MapController get mapController => _mapController;
+
   ValueNotifier<String?> get selectedMarkerNotifier => _selectedMarkerNotifier;
+
   ExploreLocation? get selectedMarker =>
       _exploreLocationsNotifier.value.firstWhereOrNull((element) => element.id == _selectedMarkerNotifier.value);
+
   ValueNotifier<List<ExploreLocation>> get exploreLocationsNotifier => _exploreLocationsNotifier;
+
   ValueNotifier<List<ExploreLocation>> get allExploreLocationsNotifier => _allExploreLocationsNotifier;
+
   ValueNotifier<ExploreMarkerSize> get exploreMarkerSizeNotifier => _exploreMarkerSizeNotifier;
 
   final ValueNotifier<String?> _selectedMarkerNotifier = ValueNotifier(null);
 
   final ValueNotifier<List<ExploreLocationFilter>> _exploreLocationFilterNotifier = ValueNotifier([]);
+
   ValueNotifier<List<ExploreLocationFilter>> get exploreLocationFilterNotifier => _exploreLocationFilterNotifier;
 
   final ValueNotifier<List<ExploreLocation>> _exploreLocationsNotifier = ValueNotifier([]);
   final ValueNotifier<List<ExploreLocation>> _allExploreLocationsNotifier = ValueNotifier([]);
   final ValueNotifier<ExploreMarkerSize> _exploreMarkerSizeNotifier = ValueNotifier(ExploreMarkerSize.medium);
   late final MapController _mapController;
+
+  final ValueNotifier<bool> _isUserFocusedNotifier = ValueNotifier(false);
+  ValueNotifier<bool> get isUserFocusedNotifier => _isUserFocusedNotifier;
 
   List<ExploreLocation> _availableLocations = [];
 
@@ -123,7 +137,24 @@ class ExploreMapService {
     updateMarker(id);
   }
 
-  Future<bool> focuUserLocation({bool withAnimation = true}) async {
+  Future<bool> isUserLocationFocused({double thresholdInMeters = 20}) async {
+    try {
+      final userPosition = await Geolocator.getCurrentPosition();
+      final center = _mapController.camera.center;
+
+      final distance = const Distance().as(
+        LengthUnit.Meter,
+        LatLng(userPosition.latitude, userPosition.longitude),
+        center,
+      );
+
+      return distance <= thresholdInMeters;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> focusUserLocation({bool withAnimation = true}) async {
     final currentUserLocation = await Geolocator.getCurrentPosition();
 
     if (currentUserLocation.latitude < mapBounds.southWest.latitude ||

@@ -2,6 +2,7 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
@@ -12,7 +13,12 @@ import '../routes/explore_routes.dart';
 import '../services/explore_map_service.dart';
 
 class ExploreMapContentSheet extends StatefulWidget {
-  const ExploreMapContentSheet({super.key});
+  const ExploreMapContentSheet({
+    super.key,
+    required this.sheetController,
+  });
+
+  final DraggableScrollableController sheetController;
 
   @override
   ExploreMapContentSheetState createState() => ExploreMapContentSheetState();
@@ -38,7 +44,7 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
     _baseSize = 0.27;
     _maxSize = 0.9;
 
-    _sheetController = DraggableScrollableController();
+    _sheetController = widget.sheetController;
     _sheetController.addListener(_onScroll);
 
     _mapService.selectedMarkerNotifier.addListener(_onMarkerSelection);

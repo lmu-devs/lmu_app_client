@@ -1,5 +1,6 @@
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
+import 'package:core/src/constants/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,7 +10,7 @@ class StarIcon extends StatelessWidget {
     Key? key,
     this.isActive = false,
     this.disabledColor,
-    this.size = LmuSizes.size_20,
+    this.size = LmuIconSizes.mediumSmall,
   }) : super(key: key);
 
   final bool isActive;

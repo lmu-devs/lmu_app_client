@@ -13,6 +13,7 @@ import '../extensions/explore_marker_type_extension.dart';
 import '../routes/explore_routes.dart';
 import '../services/explore_map_service.dart';
 import 'explore_attribution.dart';
+import '../widgets/explore_compass.dart';
 import 'explore_map_dot.dart';
 
 class ExploreMapOverlay extends StatelessWidget {
@@ -24,18 +25,33 @@ class ExploreMapOverlay extends StatelessWidget {
     final colors = context.colors;
 
     final locals = context.locals;
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(LmuSizes.size_8),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.end,
+    return Padding(
+      padding: const EdgeInsets.all(LmuSizes.size_8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          //const ExploreAttribution(),
+          Column(
             children: [
-              //const ExploreAttribution(),
+              MapCompass(
+                alignment: Alignment.bottomRight,
+                icon: Container(
+                  //padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: context.colors.neutralColors.backgroundColors.tile,
+                  ),
+                  child: const CompassIcon(),
+                ),
+                onPressed: () => mapService.faceNorth(),
+                hideIfRotatedNorth: true,
+                padding: EdgeInsets.zero,
+              ),
+              const SizedBox(height: LmuSizes.size_8),
               Container(
-                width: 40,
-                height: 40,
+                width: 44,
+                height: 44,
                 decoration: BoxDecoration(
                   color: colors.neutralColors.backgroundColors.tile,
                   borderRadius: BorderRadius.circular(LmuSizes.size_8),
@@ -62,7 +78,7 @@ class ExploreMapOverlay extends StatelessWidget {
                         );
                       },
                     );
-                    mapService.focuUserLocation().then(
+                    mapService.focusUserLocation().then(
                       (value) {
                         if (!value) {
                           LmuToast.show(
@@ -74,55 +90,60 @@ class ExploreMapOverlay extends StatelessWidget {
                       },
                     );
                   },
-                  child: const LmuIcon(
-                    icon: LucideIcons.navigation,
-                    size: LmuIconSizes.medium,
+                  child: ValueListenableBuilder<bool>(
+                    valueListenable: mapService.isUserFocusedNotifier,
+                    builder: (context, isUserLocationFocused, child) {
+                      return LocationIcon(
+                        size: LmuIconSizes.medium,
+                        isFocused: isUserLocationFocused,
+                      );
+                    },
                   ),
                 ),
               ),
             ],
           ),
+        ],
+      ),
+    );
+    Container(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      decoration: BoxDecoration(
+        color: context.colors.neutralColors.backgroundColors.base,
+        border: Border(
+          top: BorderSide(
+            color: context.colors.neutralColors.borderColors.seperatorLight,
+            width: 1,
+          ),
         ),
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          decoration: BoxDecoration(
-            color: context.colors.neutralColors.backgroundColors.base,
-            border: Border(
-              top: BorderSide(
-                color: context.colors.neutralColors.borderColors.seperatorLight,
-                width: 1,
+      ),
+      child: ValueListenableBuilder(
+        valueListenable: mapService.exploreLocationFilterNotifier,
+        builder: (context, activeFilters, child) {
+          return LmuButtonRow(
+            buttons: [
+              LmuButton(
+                title: context.locals.app.search,
+                leadingIcon: LucideIcons.search,
+                emphasis: ButtonEmphasis.secondary,
+                onTap: () => const ExploreSearchRoute().go(context),
               ),
-            ),
-          ),
-          child: ValueListenableBuilder(
-            valueListenable: mapService.exploreLocationFilterNotifier,
-            builder: (context, activeFilters, child) {
-              return LmuButtonRow(
-                buttons: [
-                  LmuButton(
-                    title: context.locals.app.search,
-                    leadingIcon: LucideIcons.search,
-                    emphasis: ButtonEmphasis.secondary,
-                    onTap: () => const ExploreSearchRoute().go(context),
-                  ),
-                  ...ExploreLocationFilter.values.map(
-                    (val) {
-                      final isActive = activeFilters.contains(val);
-                      return LmuButton(
-                        leadingWidget: _getIconWidget(context.colors, val),
-                        title: _labelForFilter(locals, val),
-                        emphasis: isActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
-                        action: isActive ? ButtonAction.contrast : ButtonAction.base,
-                        onTap: () => mapService.updateFilter(val),
-                      );
-                    },
-                  )
-                ],
-              );
-            },
-          ),
-        ),
-      ],
+              ...ExploreLocationFilter.values.map(
+                (val) {
+                  final isActive = activeFilters.contains(val);
+                  return LmuButton(
+                    leadingWidget: _getIconWidget(context.colors, val),
+                    title: _labelForFilter(locals, val),
+                    emphasis: isActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
+                    action: isActive ? ButtonAction.contrast : ButtonAction.base,
+                    onTap: () => mapService.updateFilter(val),
+                  );
+                },
+              )
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -271,3 +292,110 @@ class ExploreMapOverlay extends StatelessWidget {
 //     );
 //   }
 // }
+
+class CompassIcon extends StatelessWidget {
+  final double size;
+
+  const CompassIcon({
+    Key? key,
+    this.size = 44.0,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: context.colors.neutralColors.backgroundColors.tile,
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 2,
+            spreadRadius: 1,
+          ),
+        ],
+      ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          // Outer circle with triangular tick marks
+          CustomPaint(
+            size: Size(size, size),
+            painter: CompassMarkerPainter(context: context),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CompassMarkerPainter extends CustomPainter {
+  CompassMarkerPainter({required this.context});
+
+  final BuildContext context;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = size.width / 2 - 4;
+
+    // Draw the light gray ring
+    final ringPaint = Paint()
+      ..color = context.colors.neutralColors.backgroundColors.mediumColors.base
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 8;
+
+    canvas.drawCircle(center, radius, ringPaint);
+
+    // Draw the tick marks as triangles
+    final tickPaint = Paint()
+      ..color = context.colors.neutralColors.textColors.mediumColors.base
+      ..style = PaintingStyle.fill;
+
+    final redPaint = Paint()
+      ..color = context.colors.dangerColors.backgroundColors.strongColors.active ??
+          context.colors.dangerColors.backgroundColors.strongColors.base
+      ..style = PaintingStyle.fill;
+
+    // Calculate triangle dimensions
+    const triangleHeight = 6.5;
+    const triangleBaseWidth = 2.25;
+
+    // North tick (top) - red triangle
+    final northPath = Path();
+    northPath.moveTo(center.dx, center.dy - radius + 1); // Tip
+    northPath.lineTo(center.dx - triangleBaseWidth, center.dy - radius + triangleHeight + 1); // Left base
+    northPath.lineTo(center.dx + triangleBaseWidth, center.dy - radius + triangleHeight + 1); // Right base
+    northPath.close();
+    canvas.drawPath(northPath, redPaint);
+
+    // East tick (right) - black triangle
+    final eastPath = Path();
+    eastPath.moveTo(center.dx + radius - 1, center.dy); // Tip
+    eastPath.lineTo(center.dx + radius - triangleHeight - 1, center.dy - triangleBaseWidth); // Top base
+    eastPath.lineTo(center.dx + radius - triangleHeight - 1, center.dy + triangleBaseWidth); // Bottom base
+    eastPath.close();
+    canvas.drawPath(eastPath, tickPaint);
+
+    // South tick (bottom) - black triangle
+    final southPath = Path();
+    southPath.moveTo(center.dx, center.dy + radius - 1); // Tip
+    southPath.lineTo(center.dx - triangleBaseWidth, center.dy + radius - triangleHeight - 1); // Left base
+    southPath.lineTo(center.dx + triangleBaseWidth, center.dy + radius - triangleHeight - 1); // Right base
+    southPath.close();
+    canvas.drawPath(southPath, tickPaint);
+
+    // West tick (left) - black triangle
+    final westPath = Path();
+    westPath.moveTo(center.dx - radius + 1, center.dy); // Tip
+    westPath.lineTo(center.dx - radius + triangleHeight + 1, center.dy - triangleBaseWidth); // Top base
+    westPath.lineTo(center.dx - radius + triangleHeight + 1, center.dy + triangleBaseWidth); // Bottom base
+    westPath.close();
+    canvas.drawPath(westPath, tickPaint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
+}

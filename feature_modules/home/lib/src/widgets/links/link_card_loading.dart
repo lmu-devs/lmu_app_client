@@ -15,7 +15,7 @@ class LinkCardLoading extends StatelessWidget {
       title: BoneMock.words(2),
       subtitle: BoneMock.words(4),
       leadingArea: const FaviconFallback(size: LmuIconSizes.mediumSmall),
-      trailingArea: const StarIcon(),
+      trailingArea: StarIcon(),
     );
   }
 }

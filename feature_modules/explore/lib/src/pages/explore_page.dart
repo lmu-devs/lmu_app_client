@@ -1,8 +1,6 @@
-import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
@@ -12,7 +10,6 @@ import 'package:shared_api/explore.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 
 import '../services/explore_map_service.dart';
-import '../widgets/explore_compass.dart';
 import '../widgets/explore_map_content_sheet.dart';
 import '../widgets/explore_map_overlay.dart';
 import '../widgets/explore_marker.dart';
@@ -26,6 +23,7 @@ class ExplorePage extends StatefulWidget {
 
 class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin {
   late final AnimatedMapController _animatedMapController;
+  late final DraggableScrollableController _sheetController;
   Style? style;
   List<Marker> markers = [];
   final _mapService = GetIt.I<ExploreMapService>();
@@ -48,6 +46,8 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
     _mapService.exploreLocationsNotifier.addListener(_onExploreLocationsChanged);
 
     _mapService.animatedMapController = _animatedMapController;
+
+    _sheetController = DraggableScrollableController();
   }
 
   void _onExploreLocationsChanged() {
@@ -88,13 +88,13 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
               initialZoom: 15,
               maxZoom: 18,
               minZoom: 10,
-              onMapReady: () => _mapService.focuUserLocation(withAnimation: false),
+              onMapReady: () => _mapService.focusUserLocation(withAnimation: false),
               onPositionChanged: (camera, _) => _mapService.updateZoomLevel(camera.zoom),
               onTap: (_, __) => _mapService.deselectMarker(),
             ),
             children: [
               TileLayer(
-                urlTemplate: MediaQuery.of(context).platformBrightness == Brightness.light
+                urlTemplate: Theme.of(context).brightness == Brightness.light
                     ? 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png'
                     : 'https://{s}.basemaps.cartocdn.com/rastertiles/dark_nolabels/{z}/{x}/{y}.png',
                 subdomains: const ['a', 'b', 'c'],
@@ -142,30 +142,14 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
               //     },
               //   ),
               // ),
-              SafeArea(
-                child: MapCompass(
-                  alignment: Alignment.topRight,
-                  icon: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: context.colors.neutralColors.backgroundColors.tile,
-                    ),
-                    child: const Icon(LucideIcons.drafting_compass, size: 20),
-                  ),
-                  onPressed: () => _mapService.faceNorth(),
-                  hideIfRotatedNorth: true,
-                  padding: const EdgeInsets.only(top: LmuSizes.size_8, right: LmuSizes.size_8),
-                ),
+              Positioned(
+                bottom: 0,
+                width: MediaQuery.of(context).size.width,
+                child: ExploreMapOverlay(),
               ),
             ],
           ),
-          Positioned(
-            bottom: 0,
-            width: MediaQuery.of(context).size.width,
-            child: const ExploreMapOverlay(),
-          ),
-          const ExploreMapContentSheet(),
+          ExploreMapContentSheet(sheetController: _sheetController),
         ],
       ),
     );
