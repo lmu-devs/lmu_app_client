@@ -7,32 +7,8 @@ import 'api/models/benefits/benefit_model.dart';
 import 'api/models/home/home_data.dart';
 import 'api/models/links/link_model.dart';
 
-abstract class HomeRepository {
-  Future<HomeData?> getHomeData();
-
-  Future<HomeData?> getCachedHomeData();
-
-  Future<List<LinkModel>?> getLinks();
-
-  Future<List<LinkModel>?> getCachedLinks();
-
-  Future<List<String>?> getLikedLinks();
-
-  Future<void> saveLikedLinks(List<String> ids);
-
-  Future<void> saveRecentLinkSearches(List<String> values);
-
-  Future<List<String>> getRecentLinkSearches();
-
-  Future<List<BenefitModel>?> getBenefits();
-
-  Future<List<BenefitModel>?> getCachedBenefits();
-
-  Future<void> deleteAllLocalData();
-}
-
-class ConnectedHomeRepository implements HomeRepository {
-  const ConnectedHomeRepository({required this.homeApiClient});
+class HomeRepository {
+  const HomeRepository({required this.homeApiClient});
 
   final HomeApiClient homeApiClient;
 
@@ -49,7 +25,8 @@ class ConnectedHomeRepository implements HomeRepository {
 
   final _maxCacheTime = const Duration(days: 7);
 
-  @override
+  final String _featuredTilesClosedKey = 'featured_tiles_closed_key';
+
   Future<HomeData?> getHomeData() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -62,7 +39,6 @@ class ConnectedHomeRepository implements HomeRepository {
     }
   }
 
-  @override
   Future<HomeData?> getCachedHomeData() async {
     final prefs = await SharedPreferences.getInstance();
     final cachedData = prefs.getString(_homeDataKey);
@@ -77,7 +53,6 @@ class ConnectedHomeRepository implements HomeRepository {
     }
   }
 
-  @override
   Future<List<LinkModel>?> getLinks() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -91,7 +66,6 @@ class ConnectedHomeRepository implements HomeRepository {
     }
   }
 
-  @override
   Future<List<LinkModel>?> getCachedLinks() async {
     final prefs = await SharedPreferences.getInstance();
     final cachedData = prefs.getString(_cachedLinksKey);
@@ -109,7 +83,6 @@ class ConnectedHomeRepository implements HomeRepository {
     }
   }
 
-  @override
   Future<List<String>?> getLikedLinks() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -117,27 +90,23 @@ class ConnectedHomeRepository implements HomeRepository {
     return favoriteLinks;
   }
 
-  @override
   Future<void> saveLikedLinks(List<String> ids) async {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setStringList(_likedLinksKey, ids);
   }
 
-  @override
   Future<void> saveRecentLinkSearches(List<String> values) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setStringList(_recentLinkSearchesKey, values);
   }
 
-  @override
   Future<List<String>> getRecentLinkSearches() async {
     final prefs = await SharedPreferences.getInstance();
     final recentLinkSearches = prefs.getStringList(_recentLinkSearchesKey) ?? [];
     return recentLinkSearches;
   }
 
-  @override
   Future<List<BenefitModel>?> getBenefits() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -151,7 +120,6 @@ class ConnectedHomeRepository implements HomeRepository {
     }
   }
 
-  @override
   Future<List<BenefitModel>?> getCachedBenefits() async {
     final prefs = await SharedPreferences.getInstance();
     final cachedData = prefs.getString(_cachedBenefitsKey);
@@ -169,7 +137,21 @@ class ConnectedHomeRepository implements HomeRepository {
     }
   }
 
-  @override
+  Future<void> updateClosedFeaturedTiles(String id) async {
+    final prefs = await SharedPreferences.getInstance();
+    final closedTiles = prefs.getStringList(_featuredTilesClosedKey) ?? [];
+    if (!closedTiles.contains(id)) {
+      closedTiles.add(id);
+    }
+    await prefs.setStringList(_featuredTilesClosedKey, closedTiles);
+  }
+
+  Future<List<String>> getClosedFeaturedTiles() async {
+    final prefs = await SharedPreferences.getInstance();
+    final closedTiles = prefs.getStringList(_featuredTilesClosedKey) ?? [];
+    return closedTiles;
+  }
+
   Future<void> deleteAllLocalData() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -179,5 +161,6 @@ class ConnectedHomeRepository implements HomeRepository {
     await prefs.remove(_cachedLinksTimestampKey);
     await prefs.remove(_cachedBenefitsKey);
     await prefs.remove(_cachedBenefitsTimestampKey);
+    await prefs.remove(_featuredTilesClosedKey);
   }
 }

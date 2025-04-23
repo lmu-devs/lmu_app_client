@@ -20,7 +20,6 @@ class LinksSearchService {
 
   List<LinkModel> get links => _links;
 
-
   void _updateRecentSearch(List<String> recentSearch) {
     _recentSearches = _links.where((link) => recentSearch.contains(link.title)).toList()
       ..sort((a, b) => recentSearch.indexOf(a.title).compareTo(recentSearch.indexOf(b.title)));

@@ -167,7 +167,7 @@
   "@guests": {
     "description": "Guests"
   },
-  "mainDish": "Main Dish",
+  "mainDish": "Main Dishes",
   "@mainDish": {
     "description": "Main Dish"
   },
