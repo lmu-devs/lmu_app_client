@@ -1,147 +1,43 @@
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
+import 'package:core/components.dart';
+import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:get_it/get_it.dart';
+import 'dart:math' as math;
 
-/// Saved calculation
-const deg2Rad = pi / 180.0;
+import '../services/explore_map_service.dart';
 
-/// A compass for flutter_map that shows the map rotation and allows to reset
-/// the rotation back to 0.
-class MapCompass extends StatefulWidget {
-  /// Use this constructor if you want to customize your compass.
-  ///
-  /// Use [MapCompass.cupertino] to use the default.
-  const MapCompass({
-    required this.icon,
+class ExploreCompass extends StatefulWidget {
+  const ExploreCompass({
     super.key,
-    this.rotationOffset = 0,
-    this.rotationDuration = const Duration(seconds: 1),
-    this.animationCurve = Curves.fastOutSlowIn,
+    this.size = 44.0,
     this.onPressed,
-    this.onPressedOverridesDefault = true,
-    this.hideIfRotatedNorth = false,
-    this.alignment = Alignment.topRight,
-    this.padding = const EdgeInsets.all(10),
   });
 
-  /// The default map compass based on the cupertino compass icon
-  const MapCompass.cupertino({
-    super.key,
-    this.onPressed,
-    this.hideIfRotatedNorth = false,
-    this.onPressedOverridesDefault = true,
-    this.rotationDuration = const Duration(seconds: 1),
-    this.animationCurve = Curves.fastOutSlowIn,
-    this.alignment = Alignment.topRight,
-    this.padding = const EdgeInsets.all(10),
-  })  : rotationOffset = -45,
-        icon = const Stack(
-          children: [
-            Icon(CupertinoIcons.compass, color: Colors.red, size: 50),
-            Icon(CupertinoIcons.compass_fill, color: Colors.white54, size: 50),
-            Icon(CupertinoIcons.circle, color: Colors.black, size: 50),
-          ],
-        );
-
-  /// This child widget, for example a [Icon] width with a compass icon.
-  final Widget icon;
-
-  /// Sometimes icons are rotated itself. Use this to fix the rotation offset.
-  final double rotationOffset;
-
-  /// Overrides the default behaviour for a tap or click event
-  ///
-  /// This will override the default behaviour.
+  final double size;
   final VoidCallback? onPressed;
 
-  /// Set to true to hide the compass while the map is not rotated.
-  ///
-  /// Defaults to false (always visible).
-  final bool hideIfRotatedNorth;
-
-  /// The [Alignment] of the compass on the map.
-  ///
-  /// Default to [Alignment.topRight].
-  final Alignment alignment;
-
-  /// The padding of the compass widget.
-  ///
-  /// Defaults to 10px on all sides.
-  final EdgeInsets padding;
-
-  /// The duration of the rotation animation.
-  ///
-  /// Default to 1 second.
-  final Duration rotationDuration;
-
-  /// The curve of the rotation animation.
-  final Curve animationCurve;
-
-  /// When [onPressedOverridesDefault] is true, [onPressed] overrides
-  /// the default rotation.
-  final bool onPressedOverridesDefault;
-
   @override
-  State<MapCompass> createState() => _MapCompassState();
+  ExploreCompassState createState() => ExploreCompassState();
 }
 
-class _MapCompassState extends State<MapCompass> with TickerProviderStateMixin {
+class ExploreCompassState extends State<ExploreCompass> with TickerProviderStateMixin {
   AnimationController? _animationController;
   late Animation<double> _rotateAnimation;
-
   late Tween<double> _rotationTween;
 
-  @override
-  Widget build(BuildContext context) {
-    final camera = MapCamera.of(context);
-
-    if (widget.hideIfRotatedNorth && camera.rotation == 0) {
-      return const SizedBox.shrink();
-    }
-
-    return Align(
-      alignment: widget.alignment,
-      child: Padding(
-        padding: widget.padding,
-        child: Transform.rotate(
-          angle: (camera.rotation + widget.rotationOffset) * deg2Rad,
-          child: GestureDetector(
-            child: widget.icon,
-            onTap: () {
-              if (widget.onPressedOverridesDefault) {
-                if (widget.onPressed case final VoidCallback onPressed) {
-                  onPressed();
-                } else {
-                  _resetRotation(context, camera);
-                }
-              } else {
-                _resetRotation(context, camera);
-                widget.onPressed?.call();
-              }
-            },
-          ),
-        ),
-      ),
-    );
-  }
-
   void _resetRotation(BuildContext context, MapCamera camera) {
-    // current rotation of the map
     final rotation = camera.rotation;
-    // nearest north (0°, 360°, -360°, ...)
     final endRotation = (rotation / 360).round() * 360.0;
-    // don't start animation if rotation doesn't need to change
     if (rotation == endRotation) return;
 
     _animationController = AnimationController(
-      duration: widget.rotationDuration,
+      duration: const Duration(seconds: 1),
       vsync: this,
     )..addListener(_handleAnimation);
     _rotateAnimation = CurvedAnimation(
       parent: _animationController!,
-      curve: widget.animationCurve,
+      curve: Curves.fastOutSlowIn,
     );
 
     _rotationTween = Tween<double>(begin: rotation, end: endRotation);
@@ -158,4 +54,145 @@ class _MapCompassState extends State<MapCompass> with TickerProviderStateMixin {
     _animationController?.dispose();
     super.dispose();
   }
+
+  @override
+  Widget build(BuildContext context) {
+    final camera = MapCamera.of(context);
+
+    if (camera.rotation == 0) {
+      return const SizedBox.shrink();
+    }
+
+    return Transform.rotate(
+      angle: camera.rotation * math.pi / 180.0,
+      child: GestureDetector(
+        onTap: () => {
+          _resetRotation(context, camera),
+          widget.onPressed,
+        },
+        child: Container(
+          width: widget.size,
+          height: widget.size,
+          decoration: BoxDecoration(
+            color: context.colors.neutralColors.backgroundColors.tile,
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: context.colors.neutralColors.borderColors.seperatorLight,
+                offset: const Offset(0, 1),
+                blurRadius: 1,
+                spreadRadius: 0,
+              ),
+            ],
+          ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              ValueListenableBuilder<String>(
+                valueListenable: GetIt.I<ExploreMapService>().compassDirectionNotifier,
+                builder: (context, direction, _) {
+                  return LmuText.bodySmall(direction);
+                },
+              ),
+              CustomPaint(
+                size: Size(widget.size, widget.size),
+                painter: CompassMarkerPainter(context: context),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CompassMarkerPainter extends CustomPainter {
+  CompassMarkerPainter({required this.context});
+
+  final BuildContext context;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = size.width / 2 - 2;
+
+    final weakTickPaint = Paint()
+      ..color = context.colors.neutralColors.textColors.strongColors.disabled ??
+          context.colors.neutralColors.textColors.weakColors.base
+      ..style = PaintingStyle.fill;
+
+    final mediumTickPaint = Paint()
+      ..color = context.colors.neutralColors.textColors.mediumColors.base
+      ..style = PaintingStyle.fill;
+
+    final redTickPaint = Paint()
+      ..color = context.colors.dangerColors.textColors.strongColors.pressed ??
+          context.colors.dangerColors.textColors.strongColors.base
+      ..style = PaintingStyle.fill;
+
+    const triangleHeight = 6.5;
+    const triangleBaseWidth = 1.25;
+
+    final northPath = Path();
+    northPath.moveTo(center.dx, center.dy - radius + 0.5);
+    northPath.lineTo(center.dx - triangleBaseWidth * 2.5, center.dy - radius + triangleHeight + 1);
+    northPath.lineTo(center.dx + triangleBaseWidth * 2.5, center.dy - radius + triangleHeight + 1);
+    northPath.close();
+    canvas.drawPath(northPath, redTickPaint);
+
+    final eastPath = Path();
+    eastPath.moveTo(center.dx + radius - 0.5, center.dy);
+    eastPath.lineTo(center.dx + radius - triangleHeight - 1, center.dy - triangleBaseWidth);
+    eastPath.lineTo(center.dx + radius - triangleHeight - 1, center.dy + triangleBaseWidth);
+    eastPath.close();
+    canvas.drawPath(eastPath, mediumTickPaint);
+
+    final southPath = Path();
+    southPath.moveTo(center.dx, center.dy + radius - 0.5);
+    southPath.lineTo(center.dx - triangleBaseWidth, center.dy + radius - triangleHeight - 1);
+    southPath.lineTo(center.dx + triangleBaseWidth, center.dy + radius - triangleHeight - 1);
+    southPath.close();
+    canvas.drawPath(southPath, mediumTickPaint);
+
+    final westPath = Path();
+    westPath.moveTo(center.dx - radius + 0.5, center.dy);
+    westPath.lineTo(center.dx - radius + triangleHeight + 1, center.dy - triangleBaseWidth);
+    westPath.lineTo(center.dx - radius + triangleHeight + 1, center.dy + triangleBaseWidth);
+    westPath.close();
+    canvas.drawPath(westPath, mediumTickPaint);
+
+    final intermediateAngles = [30, 60, 120, 150, 210, 240, 300, 330];
+
+    for (final angleDegrees in intermediateAngles) {
+      final angleRadians = angleDegrees * (math.pi / 180);
+      _drawIntermediateTick(canvas, center, radius, angleRadians, triangleHeight, triangleBaseWidth, weakTickPaint);
+    }
+  }
+
+  void _drawIntermediateTick(Canvas canvas, Offset center, double radius, double angle, double triangleHeight,
+      double triangleBaseWidth, Paint paint) {
+    final tipX = center.dx + radius * math.cos(angle);
+    final tipY = center.dy + radius * math.sin(angle);
+
+    final dirX = math.cos(angle);
+    final dirY = math.sin(angle);
+
+    final perpX = -dirY;
+    final perpY = dirX;
+
+    final path = Path();
+    path.moveTo(tipX - dirX * 0.5, tipY - dirY * 0.5);
+
+    final baseX = tipX - dirX * (triangleHeight + 1);
+    final baseY = tipY - dirY * (triangleHeight + 1);
+
+    path.lineTo(baseX + perpX * triangleBaseWidth, baseY + perpY * triangleBaseWidth);
+    path.lineTo(baseX - perpX * triangleBaseWidth, baseY - perpY * triangleBaseWidth);
+    path.close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }

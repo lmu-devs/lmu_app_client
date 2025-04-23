@@ -53,6 +53,10 @@
   "@iconStar": {
     "description": "Star icon"
   },
+  "iconLocation": "Location",
+  "@iconLocation": {
+    "description": "Location icon"
+  },
   "today": "Today",
   "@today": {
     "description": "Today"

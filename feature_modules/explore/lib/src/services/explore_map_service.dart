@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -9,6 +11,7 @@ import 'package:shared_api/cinema.dart';
 import 'package:shared_api/explore.dart';
 import 'package:shared_api/mensa.dart';
 import 'package:shared_api/roomfinder.dart';
+import 'dart:math' as math;
 
 enum ExploreLocationFilter { mensa, building, cinema }
 
@@ -16,28 +19,51 @@ class ExploreMapService {
   void init() {
     _mapController = MapController();
 
+    _mapController.mapEventStream.listen((event) async {
+      final isFocused = await isUserLocationFocused();
+      _isUserFocusedNotifier.value = isFocused;
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _startCameraRotationPolling();
+    });
+
     _loadExploreLocations();
   }
 
   AnimatedMapController? animatedMapController;
 
   MapController get mapController => _mapController;
+
   ValueNotifier<String?> get selectedMarkerNotifier => _selectedMarkerNotifier;
+
   ExploreLocation? get selectedMarker =>
       _exploreLocationsNotifier.value.firstWhereOrNull((element) => element.id == _selectedMarkerNotifier.value);
+
   ValueNotifier<List<ExploreLocation>> get exploreLocationsNotifier => _exploreLocationsNotifier;
+
   ValueNotifier<List<ExploreLocation>> get allExploreLocationsNotifier => _allExploreLocationsNotifier;
+
   ValueNotifier<ExploreMarkerSize> get exploreMarkerSizeNotifier => _exploreMarkerSizeNotifier;
 
   final ValueNotifier<String?> _selectedMarkerNotifier = ValueNotifier(null);
 
   final ValueNotifier<List<ExploreLocationFilter>> _exploreLocationFilterNotifier = ValueNotifier([]);
+
   ValueNotifier<List<ExploreLocationFilter>> get exploreLocationFilterNotifier => _exploreLocationFilterNotifier;
 
   final ValueNotifier<List<ExploreLocation>> _exploreLocationsNotifier = ValueNotifier([]);
   final ValueNotifier<List<ExploreLocation>> _allExploreLocationsNotifier = ValueNotifier([]);
   final ValueNotifier<ExploreMarkerSize> _exploreMarkerSizeNotifier = ValueNotifier(ExploreMarkerSize.medium);
   late final MapController _mapController;
+
+  final ValueNotifier<bool> _isUserFocusedNotifier = ValueNotifier(false);
+
+  ValueNotifier<bool> get isUserFocusedNotifier => _isUserFocusedNotifier;
+
+  final ValueNotifier<String> _compassDirectionNotifier = ValueNotifier("N");
+
+  ValueNotifier<String> get compassDirectionNotifier => _compassDirectionNotifier;
 
   List<ExploreLocation> _availableLocations = [];
 
@@ -75,6 +101,8 @@ class ExploreMapService {
   void dispose() {
     _selectedMarkerNotifier.dispose();
     _exploreLocationsNotifier.dispose();
+    _isUserFocusedNotifier.dispose();
+    _compassDirectionNotifier.dispose();
   }
 
   void updateZoomLevel(double zoom) {
@@ -124,7 +152,24 @@ class ExploreMapService {
     updateMarker(id);
   }
 
-  Future<bool> focuUserLocation({bool withAnimation = true}) async {
+  Future<bool> isUserLocationFocused({double thresholdInMeters = 20}) async {
+    try {
+      final userPosition = await Geolocator.getCurrentPosition();
+      final center = _mapController.camera.center;
+
+      final distance = const Distance().as(
+        LengthUnit.Meter,
+        LatLng(userPosition.latitude, userPosition.longitude),
+        center,
+      );
+
+      return distance <= thresholdInMeters;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> focusUserLocation({bool withAnimation = true}) async {
     final currentUserLocation = await Geolocator.getCurrentPosition();
 
     if (currentUserLocation.latitude < mapBounds.southWest.latitude ||
@@ -154,6 +199,38 @@ class ExploreMapService {
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
       );
+    }
+  }
+
+  void _startCameraRotationPolling() {
+    double previousRotation = _mapController.camera.rotationRad;
+
+    Timer.periodic(const Duration(milliseconds: 100), (_) {
+      double currentRotation = _mapController.camera.rotationRad;
+      if (currentRotation != previousRotation) {
+        _updateCompassDirection(currentRotation);
+        previousRotation = currentRotation;
+      }
+    });
+  }
+
+  void _updateCompassDirection(double rotationRad) {
+    double degrees = (rotationRad * 180 / math.pi) % 360;
+    if (degrees < 0) degrees += 360;
+
+    String direction;
+    if (degrees >= 315 || degrees < 45) {
+      direction = "N";
+    } else if (degrees >= 45 && degrees < 135) {
+      direction = "E";
+    } else if (degrees >= 135 && degrees < 225) {
+      direction = "S";
+    } else {
+      direction = "W";
+    }
+
+    if (_compassDirectionNotifier.value != direction) {
+      _compassDirectionNotifier.value = direction;
     }
   }
 

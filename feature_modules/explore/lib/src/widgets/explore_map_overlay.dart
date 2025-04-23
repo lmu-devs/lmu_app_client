@@ -13,6 +13,7 @@ import '../extensions/explore_marker_type_extension.dart';
 import '../routes/explore_routes.dart';
 import '../services/explore_map_service.dart';
 import 'explore_attribution.dart';
+import '../widgets/explore_compass.dart';
 import 'explore_map_dot.dart';
 
 class ExploreMapOverlay extends StatelessWidget {
@@ -24,25 +25,31 @@ class ExploreMapOverlay extends StatelessWidget {
     final colors = context.colors;
 
     final locals = context.locals;
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(LmuSizes.size_8),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.end,
+    return Padding(
+      padding: const EdgeInsets.all(LmuSizes.size_8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          //const ExploreAttribution(),
+          Column(
             children: [
-              //const ExploreAttribution(),
+              ExploreCompass(onPressed: () => mapService.faceNorth()),
+              const SizedBox(height: LmuSizes.size_8),
               Container(
-                width: 40,
-                height: 40,
+                width: 44,
+                height: 44,
                 decoration: BoxDecoration(
                   color: colors.neutralColors.backgroundColors.tile,
                   borderRadius: BorderRadius.circular(LmuSizes.size_8),
-                  border: Border.all(
-                    color: context.colors.neutralColors.borderColors.seperatorLight,
-                    width: 1,
-                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: context.colors.neutralColors.borderColors.seperatorLight,
+                      offset: const Offset(0, 1),
+                      blurRadius: 1,
+                      spreadRadius: 0,
+                    ),
+                  ],
                 ),
                 child: GestureDetector(
                   onTap: () async {
@@ -62,7 +69,7 @@ class ExploreMapOverlay extends StatelessWidget {
                         );
                       },
                     );
-                    mapService.focuUserLocation().then(
+                    mapService.focusUserLocation().then(
                       (value) {
                         if (!value) {
                           LmuToast.show(
@@ -74,55 +81,60 @@ class ExploreMapOverlay extends StatelessWidget {
                       },
                     );
                   },
-                  child: const LmuIcon(
-                    icon: LucideIcons.navigation,
-                    size: LmuIconSizes.medium,
+                  child: ValueListenableBuilder<bool>(
+                    valueListenable: mapService.isUserFocusedNotifier,
+                    builder: (context, isUserLocationFocused, child) {
+                      return LocationIcon(
+                        size: LmuIconSizes.medium,
+                        isFocused: isUserLocationFocused,
+                      );
+                    },
                   ),
                 ),
               ),
             ],
           ),
+        ],
+      ),
+    );
+    Container(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      decoration: BoxDecoration(
+        color: context.colors.neutralColors.backgroundColors.base,
+        border: Border(
+          top: BorderSide(
+            color: context.colors.neutralColors.borderColors.seperatorLight,
+            width: 1,
+          ),
         ),
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          decoration: BoxDecoration(
-            color: context.colors.neutralColors.backgroundColors.base,
-            border: Border(
-              top: BorderSide(
-                color: context.colors.neutralColors.borderColors.seperatorLight,
-                width: 1,
+      ),
+      child: ValueListenableBuilder(
+        valueListenable: mapService.exploreLocationFilterNotifier,
+        builder: (context, activeFilters, child) {
+          return LmuButtonRow(
+            buttons: [
+              LmuButton(
+                title: context.locals.app.search,
+                leadingIcon: LucideIcons.search,
+                emphasis: ButtonEmphasis.secondary,
+                onTap: () => const ExploreSearchRoute().go(context),
               ),
-            ),
-          ),
-          child: ValueListenableBuilder(
-            valueListenable: mapService.exploreLocationFilterNotifier,
-            builder: (context, activeFilters, child) {
-              return LmuButtonRow(
-                buttons: [
-                  LmuButton(
-                    title: context.locals.app.search,
-                    leadingIcon: LucideIcons.search,
-                    emphasis: ButtonEmphasis.secondary,
-                    onTap: () => const ExploreSearchRoute().go(context),
-                  ),
-                  ...ExploreLocationFilter.values.map(
-                    (val) {
-                      final isActive = activeFilters.contains(val);
-                      return LmuButton(
-                        leadingWidget: _getIconWidget(context.colors, val),
-                        title: _labelForFilter(locals, val),
-                        emphasis: isActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
-                        action: isActive ? ButtonAction.contrast : ButtonAction.base,
-                        onTap: () => mapService.updateFilter(val),
-                      );
-                    },
-                  )
-                ],
-              );
-            },
-          ),
-        ),
-      ],
+              ...ExploreLocationFilter.values.map(
+                (val) {
+                  final isActive = activeFilters.contains(val);
+                  return LmuButton(
+                    leadingWidget: _getIconWidget(context.colors, val),
+                    title: _labelForFilter(locals, val),
+                    emphasis: isActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
+                    action: isActive ? ButtonAction.contrast : ButtonAction.base,
+                    onTap: () => mapService.updateFilter(val),
+                  );
+                },
+              )
+            ],
+          );
+        },
+      ),
     );
   }
 
