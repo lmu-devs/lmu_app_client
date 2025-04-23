@@ -145,7 +145,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
               Positioned(
                 bottom: 0,
                 width: MediaQuery.of(context).size.width,
-                child: ExploreMapOverlay(),
+                child: const ExploreMapOverlay(),
               ),
             ],
           ),

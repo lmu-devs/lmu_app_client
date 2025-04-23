@@ -47,7 +47,7 @@ class ExploreAttribution extends StatelessWidget {
         ],
       ),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_4),
+        padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_8),
         child: SvgPicture.asset(
           'assets/mapbox_logo.svg',
           package: 'explore',
