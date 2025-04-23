@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/explore.dart';
+import 'dart:math' as math;
 
 import '../extensions/explore_marker_type_extension.dart';
 import '../routes/explore_routes.dart';
@@ -55,10 +56,14 @@ class ExploreMapOverlay extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: colors.neutralColors.backgroundColors.tile,
                   borderRadius: BorderRadius.circular(LmuSizes.size_8),
-                  border: Border.all(
-                    color: context.colors.neutralColors.borderColors.seperatorLight,
-                    width: 1,
-                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: context.colors.neutralColors.borderColors.seperatorLight,
+                      offset: const Offset(0, 1),
+                      blurRadius: 1,
+                      spreadRadius: 0,
+                    ),
+                  ],
                 ),
                 child: GestureDetector(
                   onTap: () async {
@@ -296,10 +301,7 @@ class ExploreMapOverlay extends StatelessWidget {
 class CompassIcon extends StatelessWidget {
   final double size;
 
-  const CompassIcon({
-    Key? key,
-    this.size = 44.0,
-  }) : super(key: key);
+  const CompassIcon({super.key, this.size = 44.0});
 
   @override
   Widget build(BuildContext context) {
@@ -311,16 +313,16 @@ class CompassIcon extends StatelessWidget {
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 2,
-            spreadRadius: 1,
+            color: context.colors.neutralColors.borderColors.seperatorLight,
+            offset: const Offset(0, 1),
+            blurRadius: 1,
+            spreadRadius: 0,
           ),
         ],
       ),
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // Outer circle with triangular tick marks
           CustomPaint(
             size: Size(size, size),
             painter: CompassMarkerPainter(context: context),
@@ -339,61 +341,83 @@ class CompassMarkerPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
-    final radius = size.width / 2 - 4;
+    final radius = size.width / 2 - 2;
 
-    // Draw the light gray ring
-    final ringPaint = Paint()
-      ..color = context.colors.neutralColors.backgroundColors.mediumColors.base
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 8;
+    final weakTickPaint = Paint()
+      ..color = context.colors.neutralColors.textColors.strongColors.disabled ??
+          context.colors.neutralColors.textColors.weakColors.base
+      ..style = PaintingStyle.fill;
 
-    canvas.drawCircle(center, radius, ringPaint);
-
-    // Draw the tick marks as triangles
-    final tickPaint = Paint()
+    final mediumTickPaint = Paint()
       ..color = context.colors.neutralColors.textColors.mediumColors.base
       ..style = PaintingStyle.fill;
 
-    final redPaint = Paint()
-      ..color = context.colors.dangerColors.backgroundColors.strongColors.active ??
-          context.colors.dangerColors.backgroundColors.strongColors.base
+    final redTickPaint = Paint()
+      ..color = context.colors.dangerColors.textColors.strongColors.pressed ??
+          context.colors.dangerColors.textColors.strongColors.base
       ..style = PaintingStyle.fill;
 
-    // Calculate triangle dimensions
     const triangleHeight = 6.5;
-    const triangleBaseWidth = 2.25;
+    const triangleBaseWidth = 1.25;
 
-    // North tick (top) - red triangle
     final northPath = Path();
-    northPath.moveTo(center.dx, center.dy - radius + 1); // Tip
-    northPath.lineTo(center.dx - triangleBaseWidth, center.dy - radius + triangleHeight + 1); // Left base
-    northPath.lineTo(center.dx + triangleBaseWidth, center.dy - radius + triangleHeight + 1); // Right base
+    northPath.moveTo(center.dx, center.dy - radius + 0.5);
+    northPath.lineTo(center.dx - triangleBaseWidth * 2.5, center.dy - radius + triangleHeight + 1);
+    northPath.lineTo(center.dx + triangleBaseWidth * 2.5, center.dy - radius + triangleHeight + 1);
     northPath.close();
-    canvas.drawPath(northPath, redPaint);
+    canvas.drawPath(northPath, redTickPaint);
 
-    // East tick (right) - black triangle
     final eastPath = Path();
-    eastPath.moveTo(center.dx + radius - 1, center.dy); // Tip
-    eastPath.lineTo(center.dx + radius - triangleHeight - 1, center.dy - triangleBaseWidth); // Top base
-    eastPath.lineTo(center.dx + radius - triangleHeight - 1, center.dy + triangleBaseWidth); // Bottom base
+    eastPath.moveTo(center.dx + radius - 0.5, center.dy);
+    eastPath.lineTo(center.dx + radius - triangleHeight - 1, center.dy - triangleBaseWidth);
+    eastPath.lineTo(center.dx + radius - triangleHeight - 1, center.dy + triangleBaseWidth);
     eastPath.close();
-    canvas.drawPath(eastPath, tickPaint);
+    canvas.drawPath(eastPath, mediumTickPaint);
 
-    // South tick (bottom) - black triangle
     final southPath = Path();
-    southPath.moveTo(center.dx, center.dy + radius - 1); // Tip
-    southPath.lineTo(center.dx - triangleBaseWidth, center.dy + radius - triangleHeight - 1); // Left base
-    southPath.lineTo(center.dx + triangleBaseWidth, center.dy + radius - triangleHeight - 1); // Right base
+    southPath.moveTo(center.dx, center.dy + radius - 0.5);
+    southPath.lineTo(center.dx - triangleBaseWidth, center.dy + radius - triangleHeight - 1);
+    southPath.lineTo(center.dx + triangleBaseWidth, center.dy + radius - triangleHeight - 1);
     southPath.close();
-    canvas.drawPath(southPath, tickPaint);
+    canvas.drawPath(southPath, mediumTickPaint);
 
-    // West tick (left) - black triangle
     final westPath = Path();
-    westPath.moveTo(center.dx - radius + 1, center.dy); // Tip
-    westPath.lineTo(center.dx - radius + triangleHeight + 1, center.dy - triangleBaseWidth); // Top base
-    westPath.lineTo(center.dx - radius + triangleHeight + 1, center.dy + triangleBaseWidth); // Bottom base
+    westPath.moveTo(center.dx - radius + 0.5, center.dy);
+    westPath.lineTo(center.dx - radius + triangleHeight + 1, center.dy - triangleBaseWidth);
+    westPath.lineTo(center.dx - radius + triangleHeight + 1, center.dy + triangleBaseWidth);
     westPath.close();
-    canvas.drawPath(westPath, tickPaint);
+    canvas.drawPath(westPath, mediumTickPaint);
+
+    final intermediateAngles = [30, 60, 120, 150, 210, 240, 300, 330];
+
+    for (final angleDegrees in intermediateAngles) {
+      final angleRadians = angleDegrees * (math.pi / 180);
+      _drawIntermediateTick(canvas, center, radius, angleRadians, triangleHeight, triangleBaseWidth, weakTickPaint);
+    }
+  }
+
+  void _drawIntermediateTick(Canvas canvas, Offset center, double radius, double angle, double triangleHeight,
+      double triangleBaseWidth, Paint paint) {
+    final tipX = center.dx + radius * math.cos(angle);
+    final tipY = center.dy + radius * math.sin(angle);
+
+    final dirX = math.cos(angle);
+    final dirY = math.sin(angle);
+
+    final perpX = -dirY;
+    final perpY = dirX;
+
+    final path = Path();
+    path.moveTo(tipX - dirX * 0.5, tipY - dirY * 0.5);
+
+    final baseX = tipX - dirX * (triangleHeight + 1);
+    final baseY = tipY - dirY * (triangleHeight + 1);
+
+    path.lineTo(baseX + perpX * triangleBaseWidth, baseY + perpY * triangleBaseWidth);
+    path.lineTo(baseX - perpX * triangleBaseWidth, baseY - perpY * triangleBaseWidth);
+    path.close();
+
+    canvas.drawPath(path, paint);
   }
 
   @override
