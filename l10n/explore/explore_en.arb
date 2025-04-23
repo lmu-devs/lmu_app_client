@@ -44,5 +44,21 @@
   "errorFocusUser": "User location outside map area",
   "@errorFocusUser": {
     "description": "Error message when user location is outside map area"
+  },
+  "directionNorth": "N",
+  "@directionNorth": {
+    "description": "Compass direction north"
+  },
+  "directionSouth": "S",
+  "@directionSouth": {
+    "description": "Compass direction south"
+  },
+  "directionEast": "E",
+  "@directionEast": {
+    "description": "Compass direction east"
+  },
+  "directionWest": "W",
+  "@directionWest": {
+    "description": "Compass direction west"
   }
 }

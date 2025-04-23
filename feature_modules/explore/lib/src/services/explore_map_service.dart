@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -9,6 +11,7 @@ import 'package:shared_api/cinema.dart';
 import 'package:shared_api/explore.dart';
 import 'package:shared_api/mensa.dart';
 import 'package:shared_api/roomfinder.dart';
+import 'dart:math' as math;
 
 enum ExploreLocationFilter { mensa, building, cinema }
 
@@ -19,6 +22,10 @@ class ExploreMapService {
     _mapController.mapEventStream.listen((event) async {
       final isFocused = await isUserLocationFocused();
       _isUserFocusedNotifier.value = isFocused;
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _startCameraRotationPolling();
     });
 
     _loadExploreLocations();
@@ -51,7 +58,12 @@ class ExploreMapService {
   late final MapController _mapController;
 
   final ValueNotifier<bool> _isUserFocusedNotifier = ValueNotifier(false);
+
   ValueNotifier<bool> get isUserFocusedNotifier => _isUserFocusedNotifier;
+
+  final ValueNotifier<String> _compassDirectionNotifier = ValueNotifier("N");
+
+  ValueNotifier<String> get compassDirectionNotifier => _compassDirectionNotifier;
 
   List<ExploreLocation> _availableLocations = [];
 
@@ -89,6 +101,8 @@ class ExploreMapService {
   void dispose() {
     _selectedMarkerNotifier.dispose();
     _exploreLocationsNotifier.dispose();
+    _isUserFocusedNotifier.dispose();
+    _compassDirectionNotifier.dispose();
   }
 
   void updateZoomLevel(double zoom) {
@@ -184,6 +198,38 @@ class ExploreMapService {
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
       );
+    }
+  }
+
+  void _startCameraRotationPolling() {
+    double previousRotation = _mapController.camera.rotationRad;
+
+    Timer.periodic(const Duration(milliseconds: 100), (_) {
+      double currentRotation = _mapController.camera.rotationRad;
+      if (currentRotation != previousRotation) {
+        _updateCompassDirection(currentRotation);
+        previousRotation = currentRotation;
+      }
+    });
+  }
+
+  void _updateCompassDirection(double rotationRad) {
+    double degrees = (rotationRad * 180 / math.pi) % 360;
+    if (degrees < 0) degrees += 360;
+
+    String direction;
+    if (degrees >= 315 || degrees < 45) {
+      direction = "N";
+    } else if (degrees >= 45 && degrees < 135) {
+      direction = "E";
+    } else if (degrees >= 135 && degrees < 225) {
+      direction = "S";
+    } else {
+      direction = "W";
+    }
+
+    if (_compassDirectionNotifier.value != direction) {
+      _compassDirectionNotifier.value = direction;
     }
   }
 

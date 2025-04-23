@@ -11,5 +11,9 @@
   "nearby": "In der Nähe",
   "mapboxAttribution": "Über Mapbox Karten",
   "show": "Zeige",
-  "errorFocusUser": "Benutzerstandort außerhalb des Kartenbereichs"
+  "errorFocusUser": "Benutzerstandort außerhalb des Kartenbereichs",
+  "directionNorth": "N",
+  "directionSouth": "S",
+  "directionEast": "O",
+  "directionWest": "W"
 }

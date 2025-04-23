@@ -299,9 +299,9 @@ class ExploreMapOverlay extends StatelessWidget {
 // }
 
 class CompassIcon extends StatelessWidget {
-  final double size;
-
   const CompassIcon({super.key, this.size = 44.0});
+
+  final double size;
 
   @override
   Widget build(BuildContext context) {
@@ -323,6 +323,12 @@ class CompassIcon extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
+          ValueListenableBuilder<String>(
+            valueListenable: GetIt.I<ExploreMapService>().compassDirectionNotifier,
+            builder: (context, direction, _) {
+              return LmuText.bodySmall(direction);
+            },
+          ),
           CustomPaint(
             size: Size(size, size),
             painter: CompassMarkerPainter(context: context),
