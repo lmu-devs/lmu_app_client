@@ -15,14 +15,92 @@ class CinemaDetailsPage extends StatelessWidget {
   const CinemaDetailsPage({
     super.key,
     required this.cinemaDetailsData,
+    this.withAppBar = true,
   });
 
   final CinemaDetailsData cinemaDetailsData;
+  final bool withAppBar;
 
   @override
   Widget build(BuildContext context) {
     final CinemaModel cinema = cinemaDetailsData.cinema;
     final List<ScreeningModel> screenings = cinemaDetailsData.screenings;
+
+    final content = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        LmuButtonRow(
+          buttons: [
+            LmuButton(
+              title: 'Instagram',
+              emphasis: ButtonEmphasis.secondary,
+              onTap: () => LmuUrlLauncher.launchWebsite(
+                url: cinema.instagramLink,
+                context: context,
+                mode: LmuUrlLauncherMode.externalApplication,
+              ),
+            ),
+            LmuButton(
+              title: 'Website',
+              emphasis: ButtonEmphasis.secondary,
+              onTap: () => LmuUrlLauncher.launchWebsite(
+                url: cinema.externalLink,
+                context: context,
+                mode: LmuUrlLauncherMode.inAppWebView,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: LmuSizes.size_16),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+          child: Column(
+            children: [
+              LmuListItem.base(
+                trailingArea: Icon(
+                  LucideIcons.map,
+                  size: LmuIconSizes.mediumSmall,
+                  color: context.colors.neutralColors.textColors.weakColors.base,
+                ),
+                subtitle: cinema.cinemaLocation.address,
+                hasHorizontalPadding: false,
+                hasDivider: true,
+                onTap: () => LmuBottomSheet.show(
+                  context,
+                  content: NavigationSheet(
+                    latitude: cinema.cinemaLocation.latitude,
+                    longitude: cinema.cinemaLocation.longitude,
+                    address: cinema.cinemaLocation.address,
+                  ),
+                ),
+              ),
+              ...List.generate(
+                cinema.descriptions.length,
+                (index) {
+                  final description = cinema.descriptions[index];
+                  return LmuListItem.base(
+                    leadingArea: LmuText(description.emoji),
+                    subtitle: description.description,
+                    hasHorizontalPadding: false,
+                    hasDivider: true,
+                  );
+                },
+              ),
+              const SizedBox(height: LmuSizes.size_32),
+              ScreeningsList(
+                cinemas: [cinema],
+                screenings: screenings,
+                hasFilterRow: false,
+                type: cinema.type,
+              ),
+              const SizedBox(height: LmuSizes.size_96),
+            ],
+          ),
+        ),
+      ],
+    );
+
+    if (!withAppBar) return content;
 
     return LmuMasterAppBar(
       largeTitle: cinema.title,
@@ -44,79 +122,7 @@ class CinemaDetailsPage extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            LmuButtonRow(
-              buttons: [
-                LmuButton(
-                  title: 'Instagram',
-                  emphasis: ButtonEmphasis.secondary,
-                  onTap: () => LmuUrlLauncher.launchWebsite(
-                    url: cinema.instagramLink,
-                    context: context,
-                    mode: LmuUrlLauncherMode.externalApplication,
-                  ),
-                ),
-                LmuButton(
-                  title: 'Website',
-                  emphasis: ButtonEmphasis.secondary,
-                  onTap: () => LmuUrlLauncher.launchWebsite(
-                    url: cinema.externalLink,
-                    context: context,
-                    mode: LmuUrlLauncherMode.inAppWebView,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: LmuSizes.size_16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-              child: Column(
-                children: [
-                  LmuListItem.base(
-                    trailingArea: Icon(
-                      LucideIcons.map,
-                      size: LmuIconSizes.mediumSmall,
-                      color: context.colors.neutralColors.textColors.weakColors.base,
-                    ),
-                    subtitle: cinema.cinemaLocation.address,
-                    hasHorizontalPadding: false,
-                    hasDivider: true,
-                    onTap: () => LmuBottomSheet.show(
-                      context,
-                      content: NavigationSheet(
-                        latitude: cinema.cinemaLocation.latitude,
-                        longitude: cinema.cinemaLocation.longitude,
-                        address: cinema.cinemaLocation.address,
-                      ),
-                    ),
-                  ),
-                  ...List.generate(
-                    cinema.descriptions.length,
-                    (index) {
-                      final description = cinema.descriptions[index];
-                      return LmuListItem.base(
-                        leadingArea: LmuText(description.emoji),
-                        subtitle: description.description,
-                        hasHorizontalPadding: false,
-                        hasDivider: true,
-                      );
-                    },
-                  ),
-                  const SizedBox(height: LmuSizes.size_32),
-                  ScreeningsList(
-                    cinemas: [cinema],
-                    screenings: screenings,
-                    hasFilterRow: false,
-                    type: cinema.type,
-                  ),
-                  const SizedBox(height: LmuSizes.size_96),
-                ],
-              ),
-            ),
-          ],
-        ),
+        child: content,
       ),
     );
   }

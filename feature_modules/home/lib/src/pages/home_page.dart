@@ -26,10 +26,10 @@ class HomePage extends StatelessWidget {
         builder: (_, state) {
           Widget child = const HomeLoadingView(key: ValueKey("homeLoading"));
 
-          if (state is HomeLoadInProgress && state.homeData != null) {
-            child = HomeSuccessView(key: const ValueKey("homeContent"), homeData: state.homeData!);
+          if (state is HomeLoadInProgress && state.tiles != null) {
+            child = HomeSuccessView(key: const ValueKey("homeContent"), tiles: state.tiles!, featured: state.featured);
           } else if (state is HomeLoadSuccess) {
-            child = HomeSuccessView(key: const ValueKey("homeContent"), homeData: state.homeData);
+            child = HomeSuccessView(key: const ValueKey("homeContent"), tiles: state.tiles, featured: state.featured);
           }
 
           return LmuPageAnimationWrapper(child: child);

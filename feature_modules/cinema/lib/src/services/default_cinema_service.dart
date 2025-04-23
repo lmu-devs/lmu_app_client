@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:core/components.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -64,22 +65,29 @@ class DefaultCinemaService implements CinemaService {
   }
 
   @override
-  Widget getCinemaPage(String cinemaId) {
+  List<Widget> cinemaMapContentBuilder(BuildContext context, String cinemaId, ScrollController controller) {
     final cinemaCubit = GetIt.I.get<CinemaCubit>();
     final state = cinemaCubit.state;
     if (state is! CinemaLoadSuccess) {
-      return const SizedBox.shrink();
+      return [];
     } else {
       final cinemaModel = state.cinemas.firstWhereOrNull((cinemaModel) => cinemaModel.id == cinemaId);
       if (cinemaModel == null) {
-        return const SizedBox.shrink();
+        return [];
       }
-      return CinemaDetailsPage(
-        cinemaDetailsData: CinemaDetailsData(
-          cinema: cinemaModel,
-          screenings: getScreeningsForCinema(state.screenings, cinemaModel.id),
+      final images = cinemaModel.images;
+      return [
+        if (images != null) SliverToBoxAdapter(child: LmuDynamicImageGallery(images: images)),
+        SliverToBoxAdapter(
+          child: CinemaDetailsPage(
+            cinemaDetailsData: CinemaDetailsData(
+              cinema: cinemaModel,
+              screenings: getScreeningsForCinema(state.screenings, cinemaModel.id),
+            ),
+            withAppBar: false,
+          ),
         ),
-      );
+      ];
     }
   }
 }

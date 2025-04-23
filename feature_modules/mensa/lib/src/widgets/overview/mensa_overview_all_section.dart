@@ -34,7 +34,9 @@ class MensaOverviewAllSection extends StatelessWidget {
                       return true;
                     }
                     final mensaStatus = element.openingHours.openingHours.status;
-                    return mensaStatus != Status.closed && mensaStatus != Status.openingSoon;
+                    final isNotClosedOrOpeningSoon = mensaStatus != Status.closed && mensaStatus != Status.openingSoon;
+                    final isClosedPerDefault = element.status.isClosed;
+                    return isNotClosedOrOpeningSoon && !isClosedPerDefault;
                   },
                 ).toList();
 

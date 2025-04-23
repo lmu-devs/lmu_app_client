@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-import '../repository/api/models/home/home_data.dart';
+import '../repository/api/models/home/home_featured.dart';
+import '../repository/api/models/home/home_tile.dart';
 
 abstract class HomeState extends Equatable {}
 
@@ -10,21 +11,23 @@ class HomeInitial extends HomeState {
 }
 
 class HomeLoadInProgress extends HomeState {
-  HomeLoadInProgress({this.homeData});
+  HomeLoadInProgress({this.featured, this.tiles});
 
-  final HomeData? homeData;
+  final HomeFeatured? featured;
+  final List<HomeTile>? tiles;
 
   @override
-  List<Object?> get props => [homeData];
+  List<Object?> get props => [featured, tiles];
 }
 
 class HomeLoadSuccess extends HomeState {
-  HomeLoadSuccess({required this.homeData});
+  HomeLoadSuccess({required this.tiles, this.featured});
 
-  final HomeData homeData;
+  final HomeFeatured? featured;
+  final List<HomeTile> tiles;
 
   @override
-  List<Object?> get props => [homeData];
+  List<Object?> get props => [featured, tiles];
 }
 
 class HomeLoadFailure extends HomeState {

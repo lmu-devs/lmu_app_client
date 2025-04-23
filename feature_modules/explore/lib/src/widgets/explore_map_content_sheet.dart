@@ -6,10 +6,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/cinema.dart';
 import 'package:shared_api/explore.dart';
+import 'package:shared_api/mensa.dart';
+import 'package:shared_api/roomfinder.dart';
 
 import '../extensions/explore_marker_type_extension.dart';
-import '../routes/explore_routes.dart';
 import '../services/explore_map_service.dart';
 
 class ExploreMapContentSheet extends StatefulWidget {
@@ -41,7 +43,7 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
     super.initState();
 
     _minSize = 0;
-    _baseSize = 0.27;
+    _baseSize = 0.40;
     _maxSize = 0.9;
 
     _sheetController = widget.sheetController;
@@ -69,11 +71,6 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
     });
 
     if (_selectedLocation != null) {
-      final titleLength = _selectedLocation!.name.length;
-      if (titleLength >= 24) {
-        _resize();
-        return;
-      }
       if (!_isOpen || _isExpanded) {
         _open();
       }
@@ -82,30 +79,13 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
     }
   }
 
-  void _resize() {
-    _sheetController
-        .animateTo(
-      _baseSize + 0.115,
-      duration: const Duration(milliseconds: 200),
-      curve: Curves.easeInOut,
-    )
-        .then((_) {
-      _isOpen = true;
-      _isExpanded = true;
-    });
-  }
-
   void _open() {
-    _sheetController
-        .animateTo(
-      _baseSize,
-      duration: const Duration(milliseconds: 200),
-      curve: Curves.easeInOut,
-    )
-        .then((_) {
-      _isOpen = true;
-      _isExpanded = false;
-    });
+    _sheetController.animateTo(_baseSize, duration: const Duration(milliseconds: 200), curve: Curves.easeInOut).then(
+      (_) {
+        _isOpen = true;
+        _isExpanded = false;
+      },
+    );
   }
 
   void _close() {
@@ -125,7 +105,6 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final locals = context.locals;
     return DraggableScrollableSheet(
       controller: _sheetController,
       initialChildSize: _minSize,
@@ -153,24 +132,31 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
               BoxShadow(color: Colors.black.withOpacity(0.10), blurRadius: LmuSizes.size_64),
             ],
           ),
-          child: SingleChildScrollView(
+          child: CustomScrollView(
             controller: scrollController,
-            physics: const ClampingScrollPhysics(),
-            child: _selectedLocation == null
-                ? const SizedBox.shrink()
-                : Padding(
-                    padding: const EdgeInsets.all(LmuSizes.size_16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
+            slivers: _selectedLocation == null
+                ? const [SliverToBoxAdapter(child: SizedBox.shrink())]
+                : [
+                    PinnedHeaderSliver(
+                      child: Container(
+                        padding: const EdgeInsets.all(LmuSizes.size_16),
+                        decoration: BoxDecoration(
+                          color: colors.neutralColors.backgroundColors.base,
+                          border: Border(
+                            bottom: BorderSide(
+                              color: colors.neutralColors.borderColors.seperatorLight,
+                              width: 0.5,
+                            ),
+                          ),
+                        ),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Flexible(
                               child: Wrap(
-                                spacing: 8,
-                                runSpacing: 8,
+                                spacing: LmuSizes.size_8,
+                                runSpacing: LmuSizes.size_8,
                                 crossAxisAlignment: WrapCrossAlignment.center,
                                 children: [
                                   LmuText.h1(_selectedLocation!.name),
@@ -182,79 +168,53 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
                                 ],
                               ),
                             ),
+                            const SizedBox(width: LmuSizes.size_16),
                             GestureDetector(
                               onTap: () {
                                 _close();
                                 _mapService.deselectMarker();
                               },
-                              child: Container(
-                                padding: const EdgeInsets.all(LmuSizes.size_4),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: colors.neutralColors.backgroundColors.mediumColors.base,
-                                ),
-                                child: const /*  */ LmuIcon(
-                                  icon: LucideIcons.x,
-                                  size: LmuIconSizes.medium,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_2),
+                                child: Container(
+                                  padding: const EdgeInsets.all(LmuSizes.size_4),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: colors.neutralColors.backgroundColors.mediumColors.base,
+                                  ),
+                                  child: const LmuIcon(
+                                    icon: LucideIcons.x,
+                                    size: LmuIconSizes.medium,
+                                  ),
                                 ),
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(height: LmuSizes.size_16),
-                        LmuListItem.base(
-                          subtitle: _selectedLocation!.address,
-                          trailingArea: Icon(
-                            LucideIcons.map,
-                            size: LmuIconSizes.mediumSmall,
-                            color: context.colors.neutralColors.textColors.weakColors.base,
-                          ),
-                          hasHorizontalPadding: false,
-                          hasDivider: true,
-                          onTap: () {
-                            LmuBottomSheet.show(
-                              context,
-                              content: NavigationSheet(
-                                latitude: _selectedLocation!.latitude,
-                                longitude: _selectedLocation!.longitude,
-                                address: _selectedLocation!.address,
-                              ),
-                            );
-                          },
-                        ),
-                        const SizedBox(height: LmuSizes.size_16),
-                        LmuContentTile(
-                          content: LmuListItem.action(
-                            title: "${locals.explore.show} ${_selectedLocation!.type.localizedName(locals)}",
-                            actionType: LmuListItemAction.chevron,
-                            onTap: () {
-                              if (_selectedLocation != null) {
-                                final id = _selectedLocation!.id;
-                                final exploreType = _selectedLocation!.type;
-                                switch (exploreType) {
-                                  case ExploreMarkerType.mensaMensa:
-                                  case ExploreMarkerType.mensaStuBistro:
-                                  case ExploreMarkerType.mensaStuCafe:
-                                  case ExploreMarkerType.mensaStuLounge:
-                                    ExploreMensaRoute(id).go(context);
-                                    break;
-                                  case ExploreMarkerType.cinema:
-                                    ExploreCinemaRoute(id).go(context);
-                                    break;
-                                  case ExploreMarkerType.roomfinderRoom:
-                                    ExploreBuildingRoute(id).go(context);
-                                    break;
-                                }
-                              }
-                            },
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                    ..._selectedLocation!.type.getContent(context, _selectedLocation!.id, scrollController),
+                  ],
           ),
         );
       },
     );
+  }
+}
+
+extension on ExploreMarkerType {
+  List<Widget> getContent(BuildContext context, String id, ScrollController controller) {
+    switch (this) {
+      case ExploreMarkerType.mensaMensa:
+      case ExploreMarkerType.mensaStuBistro:
+      case ExploreMarkerType.mensaStuCafe:
+      case ExploreMarkerType.mensaStuLounge:
+        return GetIt.I.get<MensaService>().mensaMapContentBuilder(context, id, controller);
+      case ExploreMarkerType.cinema:
+        return GetIt.I.get<CinemaService>().cinemaMapContentBuilder(context, id, controller);
+
+      case ExploreMarkerType.roomfinderRoom:
+        return GetIt.I.get<RoomfinderService>().roomfinderMapContentBuilder(context, id, controller);
+    }
   }
 }
