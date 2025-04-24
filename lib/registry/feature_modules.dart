@@ -9,6 +9,7 @@ import 'package:sports/sports.dart';
 import 'package:timeline/timeline.dart';
 import 'package:user/user.dart';
 import 'package:wishlist/wishlist.dart';
+import 'package:libraries/libraries.dart';
 
 final modules = [
   UserModule(),
@@ -22,4 +23,5 @@ final modules = [
   FeedbackModule(),
   SportsModule(),
   TimelineModule(),
+  LibrariesModule(),
 ];

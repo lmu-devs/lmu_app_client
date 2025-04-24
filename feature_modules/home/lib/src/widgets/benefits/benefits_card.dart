@@ -51,15 +51,13 @@ class BenefitsCard extends StatelessWidget {
             title: benefit.title,
             subtitle: benefit.description,
             leadingArea: benefit.faviconUrl != null && benefit.faviconUrl!.isNotEmpty
-                ? Container(
-                    height: LmuIconSizes.mediumSmall,
-                    width: LmuIconSizes.mediumSmall,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(LmuRadiusSizes.xsmall),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: LmuCachedNetworkImageProvider(benefit.faviconUrl!),
-                      ),
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(LmuRadiusSizes.xsmall),
+                    child: LmuCachedNetworkImage(
+                      imageUrl: benefit.faviconUrl!,
+                      height: LmuIconSizes.mediumSmall,
+                      width: LmuIconSizes.mediumSmall,
+                      fit: BoxFit.cover,
                     ),
                   )
                 : const FaviconFallback(size: LmuIconSizes.mediumSmall),
