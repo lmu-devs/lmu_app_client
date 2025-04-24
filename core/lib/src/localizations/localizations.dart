@@ -10,3 +10,4 @@ export 'generated/settings_localizations.dart';
 export 'generated/sports_localizations.dart';
 export 'generated/timeline_localizations.dart';
 export 'generated/wishlist_localizations.dart';
+export 'generated/libraries_localizations.dart';

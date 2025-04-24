@@ -20,7 +20,7 @@ class LibraryDetailsPage extends StatelessWidget {
     if (!withAppBar) return content;
 
     return LmuMasterAppBar(
-      largeTitle: "Libraries",
+      largeTitle: "Philosophicum",
       leadingAction: LeadingAction.back,
       /**imageUrls: cinema.images != null ? cinema.images!.map((image) => image.url).toList() : [],
       largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,

@@ -10,7 +10,9 @@ localizations:
 	flutter gen-l10n --arb-dir ./l10n/sports --output-dir ./core/lib/src/localizations/generated --template-arb-file sports_en.arb --output-localization-file sports_localizations.dart --output-class SportsLocatizations --no-synthetic-package
 	flutter gen-l10n --arb-dir ./l10n/timeline --output-dir ./core/lib/src/localizations/generated --template-arb-file timeline_en.arb --output-localization-file timeline_localizations.dart --output-class TimelineLocatizations --no-synthetic-package
 	flutter gen-l10n --arb-dir ./l10n/roomfinder --output-dir ./core/lib/src/localizations/generated --template-arb-file roomfinder_en.arb --output-localization-file roomfinder_localizations.dart --output-class RoomfinderLocatizations --no-synthetic-package
-run_generator: 
+	flutter gen-l10n --arb-dir ./l10n/libraries --output-dir ./core/lib/src/localizations/generated --template-arb-file libraries_en.arb --output-localization-file libraries_localizations.dart --output-class LibrariesLocatizations --no-synthetic-package
+
+run_generator:
 	dart run build_runner build --delete-conflicting-outputs
 
 generate_splash_screen:
