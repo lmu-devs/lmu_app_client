@@ -1,5 +1,5 @@
 import 'package:core/themes.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class NavigationBarColorSetter extends StatelessWidget {
@@ -7,7 +7,7 @@ class NavigationBarColorSetter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = MediaQuery.of(context).platformBrightness;
+    final brightness = Theme.of(context).brightness;
     final Color navBarColor = context.colors.neutralColors.backgroundColors.base;
 
     SystemChrome.setSystemUIOverlayStyle(

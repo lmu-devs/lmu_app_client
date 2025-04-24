@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import 'cinema_card_loading.dart';
-import 'screenings_card_loading.dart';
+import 'screening_card_loading.dart';
 
 class CinemaLoadingView extends StatelessWidget {
   const CinemaLoadingView({super.key});

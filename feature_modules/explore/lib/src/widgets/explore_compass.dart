@@ -59,7 +59,7 @@ class ExploreCompassState extends State<ExploreCompass> with TickerProviderState
   Widget build(BuildContext context) {
     final camera = MapCamera.of(context);
 
-    if (camera.rotation == 0) {
+    if (camera.rotation.abs() < 0.5) {
       return const SizedBox.shrink();
     }
 
@@ -91,7 +91,22 @@ class ExploreCompassState extends State<ExploreCompass> with TickerProviderState
               ValueListenableBuilder<String>(
                 valueListenable: GetIt.I<ExploreMapService>().compassDirectionNotifier,
                 builder: (context, direction, _) {
-                  return LmuText.bodySmall(direction);
+                  return AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 250),
+                    switchInCurve: Curves.easeOut,
+                    switchOutCurve: Curves.easeIn,
+                    transitionBuilder: (child, animation) {
+                      return FadeTransition(
+                        opacity: animation,
+                        child: ScaleTransition(scale: animation, child: child),
+                      );
+                    },
+                    child: LmuText.bodySmall(
+                      direction,
+                      textScaleFactor: 1,
+                      key: ValueKey(direction),
+                    ),
+                  );
                 },
               ),
               CustomPaint(

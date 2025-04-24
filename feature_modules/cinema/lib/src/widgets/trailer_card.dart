@@ -36,30 +36,16 @@ class TrailerCard extends StatelessWidget {
               ),
               child: AspectRatio(
                 aspectRatio: 16 / 9,
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(LmuRadiusSizes.medium)),
-                  child: FutureBuilder(
-                    future: precacheImage(
-                      NetworkImage(trailer.thumbnail.url),
-                      context,
+                child: Semantics(
+                  label: trailer.thumbnail.name,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(LmuRadiusSizes.medium)),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: LmuCachedNetworkImageProvider(trailer.thumbnail.url),
+                      ),
                     ),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        return Image.network(
-                          trailer.thumbnail.url,
-                          fit: BoxFit.cover,
-                          semanticLabel: trailer.thumbnail.name,
-                        );
-                      } else {
-                        return LmuSkeleton(
-                          child: Container(
-                            width: 220,
-                            height: 125,
-                            color: Colors.white,
-                          ),
-                        );
-                      }
-                    },
                   ),
                 ),
               ),
