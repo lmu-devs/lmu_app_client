@@ -30,13 +30,15 @@ class LinkCard extends StatelessWidget {
       leadingArea: Padding(
         padding: const EdgeInsets.only(top: LmuSizes.size_2),
         child: link.faviconUrl != null && link.faviconUrl!.isNotEmpty
-            ? ClipRRect(
-                borderRadius: BorderRadius.circular(LmuRadiusSizes.xsmall),
-                child: LmuCachedNetworkImage(
-                  imageUrl: link.faviconUrl!,
-                  height: LmuIconSizes.mediumSmall,
-                  width: LmuIconSizes.mediumSmall,
-                  fit: BoxFit.cover,
+            ? Container(
+                height: LmuIconSizes.mediumSmall,
+                width: LmuIconSizes.mediumSmall,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(LmuRadiusSizes.xsmall),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: LmuCachedNetworkImageProvider(link.faviconUrl!),
+                  ),
                 ),
               )
             : const FaviconFallback(size: LmuIconSizes.mediumSmall),

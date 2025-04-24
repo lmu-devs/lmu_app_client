@@ -33,29 +33,33 @@ class BenefitsCard extends StatelessWidget {
         padding: EdgeInsets.zero,
         contentList: [
           if (benefit.imageUrl != null)
-            ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
-                topRight: Radius.circular(LmuRadiusSizes.mediumLarge),
-              ),
-              child: LmuCachedNetworkImage(
-                imageUrl: benefit.imageUrl!,
-                height: LmuSizes.size_16 * 10,
-                width: double.infinity,
-                fit: BoxFit.cover,
+            Container(
+              height: LmuSizes.size_16 * 10,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
+                  topRight: Radius.circular(LmuRadiusSizes.mediumLarge),
+                ),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: LmuCachedNetworkImageProvider(benefit.imageUrl!),
+                ),
               ),
             ),
           LmuListItem.base(
             title: benefit.title,
             subtitle: benefit.description,
             leadingArea: benefit.faviconUrl != null && benefit.faviconUrl!.isNotEmpty
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(LmuRadiusSizes.xsmall),
-                    child: LmuCachedNetworkImage(
-                      imageUrl: benefit.faviconUrl!,
-                      height: LmuIconSizes.mediumSmall,
-                      width: LmuIconSizes.mediumSmall,
-                      fit: BoxFit.cover,
+                ? Container(
+                    height: LmuIconSizes.mediumSmall,
+                    width: LmuIconSizes.mediumSmall,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(LmuRadiusSizes.xsmall),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: LmuCachedNetworkImageProvider(benefit.faviconUrl!),
+                      ),
                     ),
                   )
                 : const FaviconFallback(size: LmuIconSizes.mediumSmall),
