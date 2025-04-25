@@ -142,6 +142,10 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
                         padding: const EdgeInsets.all(LmuSizes.size_16),
                         decoration: BoxDecoration(
                           color: colors.neutralColors.backgroundColors.base,
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(LmuSizes.size_24),
+                            topRight: Radius.circular(LmuSizes.size_24),
+                          ),
                           border: Border(
                             bottom: BorderSide(
                               color: colors.neutralColors.borderColors.seperatorLight,
