@@ -47,7 +47,7 @@ class LmuDynamicImageGallery extends StatelessWidget {
                 child: LmuCachedNetworkImage(
                   imageUrl: imageUrl,
                   width: (constraints.maxWidth / 2) - 20,
-                  fit: BoxFit.fitWidth,
+                  fit: BoxFit.cover,
                 ),
               );
             },

@@ -34,6 +34,7 @@ class _ExploreSearchPageState extends State<ExploreSearchPage> {
 
   final _searchService = GetIt.I.get<ExploreSearchService>();
   final _exploreMapService = GetIt.I.get<ExploreMapService>();
+  final _exploreLocationService = GetIt.I.get<ExploreLocationService>();
   final _locationService = GetIt.I.get<LocationService>();
 
   @override
@@ -42,17 +43,17 @@ class _ExploreSearchPageState extends State<ExploreSearchPage> {
 
     _recentSearchController = LmuRecentSearchController<ExploreSearchEntry>();
     _onExploreLocations();
-    _exploreMapService.allExploreLocationsNotifier.addListener(_onExploreLocations);
+    _exploreLocationService.exploreLocationsNotifier.addListener(_onExploreLocations);
   }
 
   @override
   void dispose() {
-    _exploreMapService.allExploreLocationsNotifier.removeListener(_onExploreLocations);
+    _exploreLocationService.exploreLocationsNotifier.removeListener(_onExploreLocations);
     super.dispose();
   }
 
   void _onExploreLocations() {
-    _searchEntries = _exploreMapService.allExploreLocationsNotifier.value
+    _searchEntries = _exploreLocationService.exploreLocationsNotifier.value
         .map((location) => ExploreSearchEntry(
               title: location.name,
               id: location.id,
@@ -129,7 +130,9 @@ class _ExploreSearchPageState extends State<ExploreSearchPage> {
           actionType: LmuListItemAction.chevron,
           onTap: () {
             Navigator.of(context).pop();
-            _exploreMapService.focusMarker(input.id);
+            final location = _exploreLocationService.getLocationById(input.id);
+            _exploreMapService.focusMarker(location);
+            _exploreLocationService.ensureLocationVisible(location);
             Future.delayed(
               const Duration(milliseconds: 100),
               () => _recentSearchController.trigger(input),
