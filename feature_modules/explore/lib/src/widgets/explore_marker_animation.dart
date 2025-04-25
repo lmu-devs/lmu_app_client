@@ -15,13 +15,13 @@ class PulsatingRadarLayer extends StatefulWidget {
   final double gradientEndOpacity;
   final double maxZoomLevel;
   final double zoomScaleFactor;
-  final Stream<LocationMarkerPosition?>? locationStream; // Add this
+  final Stream<LocationMarkerPosition?>? locationStream;
 
   const PulsatingRadarLayer({
     super.key,
     this.color,
-    this.baseMinRadius = 20.0,
-    this.baseMaxRadius = 50.0,
+    this.baseMinRadius = 100.0,
+    this.baseMaxRadius = 5000.0,
     this.duration = const Duration(seconds: 2),
     this.opacity = 0.4,
     this.numberOfCircles = 3,
@@ -30,7 +30,7 @@ class PulsatingRadarLayer extends StatefulWidget {
     this.gradientEndOpacity = 0.0,
     this.maxZoomLevel = 18.0,
     this.zoomScaleFactor = 1.0,
-    this.locationStream, // Add this
+    this.locationStream,
   });
 
   @override

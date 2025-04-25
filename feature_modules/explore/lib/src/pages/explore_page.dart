@@ -14,6 +14,7 @@ import '../widgets/explore_map_content_sheet.dart';
 import '../widgets/explore_map_overlay.dart';
 import '../widgets/explore_marker.dart';
 import '../widgets/explore_marker_animation.dart';
+import '../widgets/explore_marker_wave.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
@@ -106,32 +107,64 @@ class _ExplorePageState extends State<ExplorePage>
               onTap: (_, __) => _mapService.deselectMarker(),
             ),
             children: [
+              // Base tile layer (lowest z-index)
               TileLayer(
                 urlTemplate: Theme.of(context).brightness == Brightness.light
                     ? 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png'
                     : 'https://{s}.basemaps.cartocdn.com/rastertiles/dark_nolabels/{z}/{x}/{y}.png',
                 subdomains: const ['a', 'b', 'c'],
-                // tileProvider: CachedTileProvider(
-                //   maxStale: const Duration(days: 30),
-                //   store: HiveCacheStore("erter"),
-                // ),
               ),
-              // if (style != null)
-              //   VectorTileLayer(
-              //     theme: style!.theme,
-              //     sprites: style!.sprites,
-              //     tileOffset: TileOffset.mapbox,
-              //     tileProviders: style!.providers,
-              //     layerMode: VectorTileLayerMode.vector,
-              //     showTileDebugInfo: true,
-              //     logCacheStats: true,
-              //   ),
 
+              // Marker selection wave positioned below markers (2nd lowest z-index)
+              ValueListenableBuilder<String?>(
+                valueListenable: _mapService.selectedMarkerNotifier,
+                builder: (context, selectedMarkerId, _) {
+                  // Return early if no marker is selected
+                  if (selectedMarkerId == null) {
+                    return const SizedBox.shrink();
+                  }
+
+                  // Find the selected location
+                  final locations = _mapService.exploreLocationsNotifier.value;
+                  ExploreLocation? selectedLocation;
+                  try {
+                    selectedLocation = locations.firstWhere(
+                      (loc) => loc.id == selectedMarkerId,
+                    );
+                  } catch (_) {
+                    // Location not found
+                  }
+
+                  // Return empty if location not found
+                  if (selectedLocation == null) {
+                    return const SizedBox.shrink();
+                  }
+
+                  return MarkerWave(
+                    selectedMarkerPosition: latlong.LatLng(
+                      selectedLocation.latitude,
+                      selectedLocation.longitude,
+                    ),
+                    color: Colors.blue,
+                    baseMinRadius: 10,
+                    baseMaxRadius: 500,
+                    duration: const Duration(milliseconds: 5000),
+                    opacity: 0.4,
+                    blurIntensity: 5.0,
+                    numberOfCircles: 3,
+                    transformY: -10.0,
+                    repeat: false,
+                    delay: const Duration(milliseconds: 300),
+                  );
+                },
+              ),
+
+              // Pulsating radar layer
               PulsatingRadarLayer(
                 locationStream: locationStream,
                 baseMinRadius: 10,
                 baseMaxRadius: 3000,
-                duration: Duration(seconds: 10),
+                duration: const Duration(seconds: 10),
                 opacity: 0.3,
                 color: Colors.blue,
                 numberOfCircles: 3,
@@ -141,38 +174,16 @@ class _ExplorePageState extends State<ExplorePage>
                 maxZoomLevel: 20.0,
                 zoomScaleFactor: 1.2,
               ),
+
+              // Current location layer
               CurrentLocationLayer(
                 positionStream: locationStream,
               ),
+
+              // Marker layer (highest z-index for map elements)
               MarkerLayer(rotate: true, markers: markers),
-              // MarkerClusterLayerWidget(
-              //   options: MarkerClusterLayerOptions(
-              //     maxClusterRadius: 50,
-              //     size: const Size(36, 36),
-              //     alignment: Alignment.center,
-              //     padding: const EdgeInsets.all(50),
-              //     maxZoom: 15,
-              //     markers: markers,
-              //     builder: (context, markers) {
-              //       return Container(
-              //         decoration: BoxDecoration(
-              //           borderRadius: BorderRadius.circular(20),
-              //           border: Border.all(
-              //             color: context.colors.neutralColors.borderColors.iconOutline,
-              //             width: 1.5,
-              //           ),
-              //           color: context.colors.neutralColors.backgroundColors.tile,
-              //         ),
-              //         child: Center(
-              //           child: LmuText.bodySmall(
-              //             markers.length.toString(),
-              //           ),
-              //         ),
-              //       );
-              //     },
-              //   ),
-              // ),
-              // ),
+
+              // UI overlay elements
               Positioned(
                 bottom: 0,
                 width: MediaQuery.of(context).size.width,

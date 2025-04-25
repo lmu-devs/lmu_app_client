@@ -17,7 +17,8 @@ class ExploreMarker extends StatefulWidget {
   State<ExploreMarker> createState() => _ExploreMarkerState();
 }
 
-class _ExploreMarkerState extends State<ExploreMarker> with TickerProviderStateMixin {
+class _ExploreMarkerState extends State<ExploreMarker>
+    with TickerProviderStateMixin {
   late final AnimationController _scaleController;
   late final AnimationController _fadeController;
   late final Animation<double> _scaleAnimation;
