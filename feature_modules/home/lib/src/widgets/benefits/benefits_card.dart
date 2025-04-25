@@ -26,46 +26,24 @@ class BenefitsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return LmuCard(
+      title: benefit.title,
+      subtitle: benefit.description,
+      imageUrl: benefit.imageUrl,
+      hasLargeImage: true,
+      leadingIcon: benefit.faviconUrl != null ?
+      ClipRRect(
+        borderRadius: BorderRadius.circular(LmuRadiusSizes.xsmall),
+        child: LmuCachedNetworkImage(
+          imageUrl: benefit.faviconUrl!,
+          height: LmuIconSizes.mediumSmall,
+          width: LmuIconSizes.mediumSmall,
+          fit: BoxFit.cover,
+        ),
+      ) :
+      const FaviconFallback(size: LmuIconSizes.mediumSmall),
       onTap: () => _handleTap(context),
       onLongPress: () => _handleLongPress(context),
-      child: LmuContentTile(
-        padding: EdgeInsets.zero,
-        contentList: [
-          if (benefit.imageUrl != null)
-            Container(
-              height: LmuSizes.size_16 * 10,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
-                  topRight: Radius.circular(LmuRadiusSizes.mediumLarge),
-                ),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: LmuCachedNetworkImageProvider(benefit.imageUrl!),
-                ),
-              ),
-            ),
-          LmuListItem.base(
-            title: benefit.title,
-            subtitle: benefit.description,
-            leadingArea: benefit.faviconUrl != null && benefit.faviconUrl!.isNotEmpty
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(LmuRadiusSizes.xsmall),
-                    child: LmuCachedNetworkImage(
-                      imageUrl: benefit.faviconUrl!,
-                      height: LmuIconSizes.mediumSmall,
-                      width: LmuIconSizes.mediumSmall,
-                      fit: BoxFit.cover,
-                    ),
-                  )
-                : const FaviconFallback(size: LmuIconSizes.mediumSmall),
-            onTap: () => _handleTap(context),
-            onLongPress: () => _handleLongPress(context),
-          ),
-        ],
-      ),
     );
   }
 }

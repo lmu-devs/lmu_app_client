@@ -32,10 +32,9 @@ class CinemaContentView extends StatelessWidget {
               return CinemaCard(
                 cinema: cinema,
                 screenings: getScreeningsForCinema(screenings, cinema.id),
-                isLastItem: index == cinemas.length - 1,
               );
             }),
-            const SizedBox(height: LmuSizes.size_32),
+            const SizedBox(height: LmuSizes.size_20),
             ScreeningsList(
               cinemas: cinemas,
               screenings: screenings,

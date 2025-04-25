@@ -42,7 +42,7 @@ class ExploreActionRow extends StatelessWidget {
                 onTap: () => const ExploreSearchRoute().go(context),
               ),
               ...ExploreLocationFilter.values.map(
-                    (val) {
+                (val) {
                   final isActive = activeFilters.contains(val);
                   return LmuButton(
                     leadingWidget: _getIconWidget(context.colors, val),
@@ -99,16 +99,18 @@ class ExploreActionRow extends StatelessWidget {
       children: exploreMarkerTypes!
           .mapIndexed(
             (index, marker) => Padding(
-          padding: EdgeInsets.only(
-            left: index * 8.0,
-          ),
-          child: ExploreMapDot(
-            dotColor: marker.markerColor(colors),
-            icon: marker.icon,
-            markerSize: ExploreMarkerSize.large,
-          ),
-        ),
-      )
+              padding: EdgeInsets.only(
+                left: index * 8.0,
+              ),
+              child: ExploreMapDot(
+                dotColor: marker.markerColor(colors),
+                icon: marker.icon,
+                markerSize: ExploreMarkerSize.large,
+              ),
+            ),
+          )
+          .toList()
+          .reversed
           .toList(),
     );
   }
