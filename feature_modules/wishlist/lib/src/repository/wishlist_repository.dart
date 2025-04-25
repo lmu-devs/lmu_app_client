@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/models/wishlist_model.dart';
@@ -36,7 +38,7 @@ class ConnectedWishlistRepository implements WishlistRepository {
     final prefs = await SharedPreferences.getInstance();
     try {
       final wishlistEntries = await wishlistApiClient.getWishlistModels(id: id);
-      await prefs.setString(_cachedWishlistEntriesKey, wishlistEntries.map((e) => e.toJson()).toString());
+      await prefs.setString(_cachedWishlistEntriesKey, jsonEncode(wishlistEntries.map((e) => e.toJson()).toList()));
       await prefs.setInt(_cachedWihshlistEntriesTimestampKey, DateTime.now().millisecondsSinceEpoch);
       return wishlistEntries;
     } catch (e) {
@@ -51,15 +53,16 @@ class ConnectedWishlistRepository implements WishlistRepository {
     final cachedTimeStamp = prefs.getInt(_cachedWihshlistEntriesTimestampKey);
     final isCacheValid = cachedTimeStamp != null &&
         DateTime.fromMillisecondsSinceEpoch(cachedTimeStamp).add(_maxCacheTime).isAfter(DateTime.now());
+
     if (cachedData != null && isCacheValid) {
       try {
-        return (cachedData as List).map((e) => WishlistModel.fromJson(e)).toList();
+        final List<dynamic> jsonList = jsonDecode(cachedData);
+        return jsonList.map((e) => WishlistModel.fromJson(e as Map<String, dynamic>)).toList();
       } catch (e) {
         return null;
       }
-    } else {
-      return null;
     }
+    return null;
   }
 
   @override

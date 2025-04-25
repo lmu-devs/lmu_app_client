@@ -11,7 +11,7 @@ WishlistModel _$WishlistModelFromJson(Map<String, dynamic> json) => WishlistMode
       title: json['title'] as String,
       description: json['description'] as String,
       descriptionShort: json['description_short'] as String,
-      status: WishlistModel._statusFromJson(json['status'] as String),
+      status: $enumDecode(_$WishlistStatusEnumMap, json['status']),
       releaseDate: json['release_date'] as String,
       prototypeUrl: json['prototype_url'] as String,
       ratingModel: RatingModel.fromJson(json['rating'] as Map<String, dynamic>),
@@ -36,9 +36,9 @@ Map<String, dynamic> _$WishlistModelToJson(WishlistModel instance) => <String, d
     };
 
 const _$WishlistStatusEnumMap = {
-  WishlistStatus.none: 'none',
-  WishlistStatus.hidden: 'hidden',
-  WishlistStatus.development: 'development',
-  WishlistStatus.beta: 'beta',
-  WishlistStatus.done: 'done',
+  WishlistStatus.none: 'NONE',
+  WishlistStatus.hidden: 'HIDDEN',
+  WishlistStatus.development: 'DEVELOPMENT',
+  WishlistStatus.beta: 'BETA',
+  WishlistStatus.done: 'DONE',
 };

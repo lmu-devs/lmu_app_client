@@ -1,11 +1,17 @@
 import 'package:core/localizations.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 enum WishlistStatus {
+  @JsonValue("NONE")
   none,
+  @JsonValue("HIDDEN")
   hidden,
+  @JsonValue("DEVELOPMENT")
   development,
+  @JsonValue("BETA")
   beta,
+  @JsonValue("DONE")
   done,
 }
 

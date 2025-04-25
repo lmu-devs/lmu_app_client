@@ -13,7 +13,6 @@ class WishlistModel extends Equatable {
   final String description;
   @JsonKey(name: 'description_short')
   final String descriptionShort;
-  @JsonKey(fromJson: _statusFromJson)
   final WishlistStatus status;
   @JsonKey(name: 'release_date')
   final String releaseDate;
@@ -41,8 +40,6 @@ class WishlistModel extends Equatable {
     required this.createdAt,
     required this.updatedAt,
   });
-
-  static WishlistStatus _statusFromJson(String status) => WishlistStatusMapper.fromString(status);
 
   factory WishlistModel.fromJson(Map<String, dynamic> json) => _$WishlistModelFromJson(json);
 
