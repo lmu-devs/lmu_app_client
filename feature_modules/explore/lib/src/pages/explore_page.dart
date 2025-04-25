@@ -13,6 +13,7 @@ import '../services/explore_map_service.dart';
 import '../widgets/explore_map_content_sheet.dart';
 import '../widgets/explore_map_overlay.dart';
 import '../widgets/explore_marker.dart';
+import '../widgets/explore_marker_animation.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
@@ -21,7 +22,8 @@ class ExplorePage extends StatefulWidget {
   State<ExplorePage> createState() => _ExplorePageState();
 }
 
-class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin {
+class _ExplorePageState extends State<ExplorePage>
+    with TickerProviderStateMixin {
   late final AnimatedMapController _animatedMapController;
   late final DraggableScrollableController _sheetController;
   Style? style;
@@ -43,7 +45,8 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
     );
 
     _onExploreLocationsChanged();
-    _mapService.exploreLocationsNotifier.addListener(_onExploreLocationsChanged);
+    _mapService.exploreLocationsNotifier
+        .addListener(_onExploreLocationsChanged);
 
     _mapService.animatedMapController = _animatedMapController;
 
@@ -52,7 +55,9 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
 
   void _onExploreLocationsChanged() {
     setState(() {
-      markers = _mapService.exploreLocationsNotifier.value.map((location) => location.toMarker).toList();
+      markers = _mapService.exploreLocationsNotifier.value
+          .map((location) => location.toMarker)
+          .toList();
     });
   }
 
@@ -70,26 +75,34 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
 
   @override
   void dispose() {
-    _mapService.exploreLocationsNotifier.removeListener(_onExploreLocationsChanged);
+    _mapService.exploreLocationsNotifier
+        .removeListener(_onExploreLocationsChanged);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final locationStream =
+        const LocationMarkerDataStreamFactory().fromGeolocatorPositionStream();
+
     return SoftBlur(
       child: Stack(
         children: [
           FlutterMap(
             mapController: _animatedMapController.mapController,
             options: MapOptions(
-              backgroundColor: context.colors.neutralColors.backgroundColors.tile,
+              backgroundColor:
+                  context.colors.neutralColors.backgroundColors.tile,
               initialCenter: const latlong.LatLng(48.150578, 11.580767),
-              cameraConstraint: CameraConstraint.contain(bounds: _mapService.mapBounds),
+              cameraConstraint:
+                  CameraConstraint.contain(bounds: _mapService.mapBounds),
               initialZoom: 15,
               maxZoom: 18,
               minZoom: 10,
-              onMapReady: () => _mapService.focusUserLocation(withAnimation: false),
-              onPositionChanged: (camera, _) => _mapService.updateZoomLevel(camera.zoom),
+              onMapReady: () =>
+                  _mapService.focusUserLocation(withAnimation: false),
+              onPositionChanged: (camera, _) =>
+                  _mapService.updateZoomLevel(camera.zoom),
               onTap: (_, __) => _mapService.deselectMarker(),
             ),
             children: [
@@ -113,7 +126,24 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
               //     showTileDebugInfo: true,
               //     logCacheStats: true,
               //   ),
-              CurrentLocationLayer(),
+
+              PulsatingRadarLayer(
+                locationStream: locationStream,
+                baseMinRadius: 10,
+                baseMaxRadius: 3000,
+                duration: Duration(seconds: 10),
+                opacity: 0.3,
+                color: Colors.blue,
+                numberOfCircles: 3,
+                blurIntensity: 5.0,
+                gradientStartOpacity: 0.8,
+                gradientEndOpacity: 0.0,
+                maxZoomLevel: 20.0,
+                zoomScaleFactor: 1.2,
+              ),
+              CurrentLocationLayer(
+                positionStream: locationStream,
+              ),
               MarkerLayer(rotate: true, markers: markers),
               // MarkerClusterLayerWidget(
               //   options: MarkerClusterLayerOptions(
@@ -141,6 +171,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
               //       );
               //     },
               //   ),
+              // ),
               // ),
               Positioned(
                 bottom: 0,

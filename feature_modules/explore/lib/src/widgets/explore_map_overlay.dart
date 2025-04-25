@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 
 import '../services/explore_map_service.dart';
 import 'explore_action_row.dart';
-import 'explore_attribution.dart';
 import '../widgets/explore_compass.dart';
 import 'explore_location_button.dart';
 

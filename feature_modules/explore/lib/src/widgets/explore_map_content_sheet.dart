@@ -2,7 +2,6 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
@@ -80,7 +79,11 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
   }
 
   void _open() {
-    _sheetController.animateTo(_baseSize, duration: const Duration(milliseconds: 200), curve: Curves.easeInOut).then(
+    _sheetController
+        .animateTo(_baseSize,
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.easeInOut)
+        .then(
       (_) {
         _isOpen = true;
         _isExpanded = false;
@@ -128,8 +131,12 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
               topRight: Radius.circular(LmuSizes.size_24),
             ),
             boxShadow: [
-              BoxShadow(color: Colors.black.withOpacity(0.10), blurRadius: LmuSizes.size_24),
-              BoxShadow(color: Colors.black.withOpacity(0.10), blurRadius: LmuSizes.size_64),
+              BoxShadow(
+                  color: Colors.black.withOpacity(0.10),
+                  blurRadius: LmuSizes.size_24),
+              BoxShadow(
+                  color: Colors.black.withOpacity(0.10),
+                  blurRadius: LmuSizes.size_64),
             ],
           ),
           child: CustomScrollView(
@@ -144,7 +151,8 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
                           color: colors.neutralColors.backgroundColors.base,
                           border: Border(
                             bottom: BorderSide(
-                              color: colors.neutralColors.borderColors.seperatorLight,
+                              color: colors
+                                  .neutralColors.borderColors.seperatorLight,
                               width: 0.5,
                             ),
                           ),
@@ -161,9 +169,13 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
                                 children: [
                                   LmuText.h1(_selectedLocation!.name),
                                   LmuInTextVisual.text(
-                                    title: _selectedLocation!.type.localizedName(context.locals),
-                                    textColor: _selectedLocation!.type.markerColor(colors),
-                                    backgroundColor: _selectedLocation!.type.markerColor(colors).withOpacity(0.14),
+                                    title: _selectedLocation!.type
+                                        .localizedName(context.locals),
+                                    textColor: _selectedLocation!.type
+                                        .markerColor(colors),
+                                    backgroundColor: _selectedLocation!.type
+                                        .markerColor(colors)
+                                        .withOpacity(0.14),
                                   ),
                                 ],
                               ),
@@ -175,12 +187,15 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
                                 _mapService.deselectMarker();
                               },
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_2),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: LmuSizes.size_2),
                                 child: Container(
-                                  padding: const EdgeInsets.all(LmuSizes.size_4),
+                                  padding:
+                                      const EdgeInsets.all(LmuSizes.size_4),
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: colors.neutralColors.backgroundColors.mediumColors.base,
+                                    color: colors.neutralColors.backgroundColors
+                                        .mediumColors.base,
                                   ),
                                   child: const LmuIcon(
                                     icon: LucideIcons.x,
@@ -193,7 +208,8 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
                         ),
                       ),
                     ),
-                    ..._selectedLocation!.type.getContent(context, _selectedLocation!.id, scrollController),
+                    ..._selectedLocation!.type.getContent(
+                        context, _selectedLocation!.id, scrollController),
                   ],
           ),
         );
@@ -203,18 +219,25 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
 }
 
 extension on ExploreMarkerType {
-  List<Widget> getContent(BuildContext context, String id, ScrollController controller) {
+  List<Widget> getContent(
+      BuildContext context, String id, ScrollController controller) {
     switch (this) {
       case ExploreMarkerType.mensaMensa:
       case ExploreMarkerType.mensaStuBistro:
       case ExploreMarkerType.mensaStuCafe:
       case ExploreMarkerType.mensaStuLounge:
-        return GetIt.I.get<MensaService>().mensaMapContentBuilder(context, id, controller);
+        return GetIt.I
+            .get<MensaService>()
+            .mensaMapContentBuilder(context, id, controller);
       case ExploreMarkerType.cinema:
-        return GetIt.I.get<CinemaService>().cinemaMapContentBuilder(context, id, controller);
+        return GetIt.I
+            .get<CinemaService>()
+            .cinemaMapContentBuilder(context, id, controller);
 
       case ExploreMarkerType.roomfinderRoom:
-        return GetIt.I.get<RoomfinderService>().roomfinderMapContentBuilder(context, id, controller);
+        return GetIt.I
+            .get<RoomfinderService>()
+            .roomfinderMapContentBuilder(context, id, controller);
     }
   }
 }
