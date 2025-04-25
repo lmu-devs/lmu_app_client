@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:core/components.dart';
+import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,6 +10,7 @@ import 'package:shared_api/explore.dart';
 
 import '../../explore.dart';
 import '../extensions/explore_marker_type_extension.dart';
+import '../services/explore_location_service.dart';
 import '../services/explore_map_service.dart';
 import 'explore_map_dot.dart';
 
@@ -17,10 +19,10 @@ class ExploreActionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mapService = GetIt.I<ExploreMapService>();
+    final locationService = GetIt.I<ExploreLocationService>();
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 16),
+      padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_16),
       decoration: BoxDecoration(
         color: context.colors.neutralColors.backgroundColors.base,
         border: Border(
@@ -31,7 +33,7 @@ class ExploreActionRow extends StatelessWidget {
         ),
       ),
       child: ValueListenableBuilder(
-        valueListenable: mapService.exploreLocationFilterNotifier,
+        valueListenable: locationService.filterNotifier,
         builder: (context, activeFilters, child) {
           return LmuButtonRow(
             buttons: [
@@ -41,15 +43,15 @@ class ExploreActionRow extends StatelessWidget {
                 emphasis: ButtonEmphasis.secondary,
                 onTap: () => const ExploreSearchRoute().go(context),
               ),
-              ...ExploreLocationFilter.values.map(
-                    (val) {
+              ...ExploreFilterType.values.map(
+                (val) {
                   final isActive = activeFilters.contains(val);
                   return LmuButton(
                     leadingWidget: _getIconWidget(context.colors, val),
                     title: _labelForFilter(context.locals, val),
                     emphasis: isActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
                     action: isActive ? ButtonAction.contrast : ButtonAction.base,
-                    onTap: () => mapService.updateFilter(val),
+                    onTap: () => locationService.updateFilter(val),
                   );
                 },
               )
@@ -60,31 +62,31 @@ class ExploreActionRow extends StatelessWidget {
     );
   }
 
-  String _labelForFilter(LmuLocalizations locals, ExploreLocationFilter filter) {
+  String _labelForFilter(LmuLocalizations locals, ExploreFilterType filter) {
     switch (filter) {
-      case ExploreLocationFilter.mensa:
+      case ExploreFilterType.mensa:
         return locals.canteen.canteens;
-      case ExploreLocationFilter.building:
+      case ExploreFilterType.building:
         return locals.roomfinder.buildings;
-      case ExploreLocationFilter.cinema:
+      case ExploreFilterType.cinema:
         return locals.cinema.cinemasTitle;
     }
   }
 
-  Widget? _getIconWidget(LmuColors colors, ExploreLocationFilter filter) {
+  Widget? _getIconWidget(LmuColors colors, ExploreFilterType filter) {
     final exploreMarkerTypes = () {
-      if (filter == ExploreLocationFilter.building) {
+      if (filter == ExploreFilterType.building) {
         return [
           ExploreMarkerType.roomfinderRoom,
         ];
-      } else if (filter == ExploreLocationFilter.mensa) {
+      } else if (filter == ExploreFilterType.mensa) {
         return [
           ExploreMarkerType.mensaMensa,
           ExploreMarkerType.mensaStuBistro,
           ExploreMarkerType.mensaStuCafe,
           ExploreMarkerType.mensaStuLounge,
         ];
-      } else if (filter == ExploreLocationFilter.cinema) {
+      } else if (filter == ExploreFilterType.cinema) {
         return [
           ExploreMarkerType.cinema,
         ];
@@ -99,16 +101,16 @@ class ExploreActionRow extends StatelessWidget {
       children: exploreMarkerTypes!
           .mapIndexed(
             (index, marker) => Padding(
-          padding: EdgeInsets.only(
-            left: index * 8.0,
-          ),
-          child: ExploreMapDot(
-            dotColor: marker.markerColor(colors),
-            icon: marker.icon,
-            markerSize: ExploreMarkerSize.large,
-          ),
-        ),
-      )
+              padding: EdgeInsets.only(
+                left: index * 8.0,
+              ),
+              child: ExploreMapDot(
+                dotColor: marker.markerColor(colors),
+                icon: marker.icon,
+                markerSize: ExploreMarkerSize.large,
+              ),
+            ),
+          )
           .toList(),
     );
   }

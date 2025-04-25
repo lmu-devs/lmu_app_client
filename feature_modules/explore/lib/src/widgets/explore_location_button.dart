@@ -33,13 +33,13 @@ class ExploreLocationButton extends StatelessWidget {
       child: GestureDetector(
         onTap: () async {
           await PermissionsService.isLocationPermissionGranted().then(
-                (isPermissionGranted) async {
+            (isPermissionGranted) async {
               if (!isPermissionGranted) {
                 await PermissionsService.showLocationPermissionDeniedDialog(context);
                 return;
               }
               await PermissionsService.isLocationServicesEnabled().then(
-                    (isLocationServicesEnabled) async {
+                (isLocationServicesEnabled) async {
                   if (!isLocationServicesEnabled) {
                     await PermissionsService.showLocationServiceDisabledDialog(context);
                     return;
@@ -49,7 +49,7 @@ class ExploreLocationButton extends StatelessWidget {
             },
           );
           mapService.focusUserLocation().then(
-                (value) {
+            (value) {
               if (!value && context.mounted) {
                 LmuToast.show(
                   context: context,

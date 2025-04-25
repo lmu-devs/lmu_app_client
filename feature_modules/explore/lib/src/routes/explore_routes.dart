@@ -26,7 +26,7 @@ class ExploreMainRoute extends GoRouteData {
   const ExploreMainRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const ExplorePage();
+  Widget build(BuildContext context, GoRouterState state) => const ExploreMapAnimationWrapper();
 }
 
 class ExploreSearchRoute extends GoRouteData {
