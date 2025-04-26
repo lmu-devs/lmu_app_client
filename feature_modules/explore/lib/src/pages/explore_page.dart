@@ -9,6 +9,7 @@ import 'package:latlong2/latlong.dart' as latlong;
 import 'package:shared_api/explore.dart';
 import 'package:vector_map_tiles/vector_map_tiles.dart';
 
+import '../extensions/explore_marker_type_extension.dart';
 import '../services/explore_map_service.dart';
 import '../widgets/explore_map_content_sheet.dart';
 import '../widgets/explore_map_overlay.dart';
@@ -145,16 +146,16 @@ class _ExplorePageState extends State<ExplorePage>
                       selectedLocation.latitude,
                       selectedLocation.longitude,
                     ),
-                    color: Colors.blue,
-                    baseMinRadius: 10,
-                    baseMaxRadius: 500,
-                    duration: const Duration(milliseconds: 5000),
-                    opacity: 0.4,
-                    blurIntensity: 5.0,
-                    numberOfCircles: 3,
+                    color: selectedLocation.type.markerColor(context.colors),
+                    opacity: 0.1,
+                    waveDuration: const Duration(milliseconds: 800),
+                    waveSpacing: const Duration(milliseconds: 40),
+                    pauseDuration: const Duration(seconds: 3),
+                    numberOfWaves: 5,
                     transformY: -10.0,
                     repeat: false,
-                    delay: const Duration(milliseconds: 300),
+                    initialDelay: const Duration(milliseconds: 300),
+                    strokeWidth: 1.5,
                   );
                 },
               ),
