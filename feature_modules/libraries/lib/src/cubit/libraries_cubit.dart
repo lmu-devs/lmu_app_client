@@ -9,5 +9,16 @@ class LibrariesCubit extends Cubit<LibrariesState> {
 
   final _repository = GetIt.I.get<LibrariesRepository>();
 
-  // fetching methods
+  Future<void> loadLibraries() async {
+    final cachedLibraries = await _repository.getCachedLibraries();
+    emit(LibrariesLoadInProgress(libraries: cachedLibraries));
+
+    final libraries = await _repository.getLibraries();
+
+    if (libraries == null && cachedLibraries == null) {
+      emit(const LibrariesLoadFailure());
+      return;
+    }
+    emit(LibrariesLoadSuccess(libraries: libraries ?? cachedLibraries!));
+  }
 }

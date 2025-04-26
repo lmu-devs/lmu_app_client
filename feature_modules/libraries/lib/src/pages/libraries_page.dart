@@ -20,7 +20,7 @@ class _LibrariesPageState extends State<LibrariesPage> {
     super.initState();
     final librariesCubit = GetIt.I.get<LibrariesCubit>();
     if (librariesCubit.state is! LibrariesLoadSuccess) {
-      //cinemaCubit.loadCinemaData();
+      librariesCubit.loadLibraries();
     }
   }
 
