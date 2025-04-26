@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:shared_api/mensa.dart';
 
-import 'mensa_location.dart';
 import 'mensa_opening_hours.dart';
 import 'mensa_status.dart';
 
@@ -14,7 +13,7 @@ class MensaModel extends Equatable {
   @JsonKey(name: 'id')
   final String canteenId;
   final String name;
-  final MensaLocation location;
+  final LocationModel location;
   @JsonKey(name: 'rating')
   final RatingModel ratingModel;
   @JsonKey(name: 'opening_hours')
@@ -37,7 +36,11 @@ class MensaModel extends Equatable {
   factory MensaModel.placeholder({String? name}) => MensaModel(
         canteenId: '',
         name: name ?? 'Name',
-        location: MensaLocation.placeholder(),
+        location: const LocationModel(
+          address: "",
+          latitude: 0,
+          longitude: 0,
+        ),
         ratingModel: RatingModel.placeholder(),
         openingHours: MensaOpeningHours.empty(),
         images: const [

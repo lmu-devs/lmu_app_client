@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'cinema_location_model.g.dart';
+part 'location_model.g.dart';
 
 @JsonSerializable()
-class CinemaLocationModel extends Equatable {
-  const CinemaLocationModel({
+class LocationModel extends Equatable {
+  const LocationModel({
     required this.address,
     required this.latitude,
     required this.longitude,
@@ -22,7 +22,7 @@ class CinemaLocationModel extends Equatable {
     longitude,
   ];
 
-  factory CinemaLocationModel.fromJson(Map<String, dynamic> json) => _$CinemaLocationModelFromJson(json);
+  factory LocationModel.fromJson(Map<String, dynamic> json) => _$LocationModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CinemaLocationModelToJson(this);
+  Map<String, dynamic> toJson() => _$LocationModelToJson(this);
 }

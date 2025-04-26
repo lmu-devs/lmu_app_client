@@ -1,8 +1,8 @@
+import 'package:core/api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'roomfinder_floor.dart';
-import 'roomfinder_location.dart';
 
 part 'roomfinder_building.g.dart';
 
@@ -23,7 +23,7 @@ class RoomfinderBuilding extends Equatable {
   final String buildingPartId;
   final String title;
   final List<String> aliases;
-  final RoomfinderLocation location;
+  final LocationModel location;
   final List<RoomfinderFloor> floors;
 
   @override

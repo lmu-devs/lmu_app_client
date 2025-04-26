@@ -30,18 +30,18 @@ class BenefitsCard extends StatelessWidget {
       title: benefit.title,
       subtitle: benefit.description,
       imageUrl: benefit.imageUrl,
-      hasLargeImage: true,
-      leadingIcon: benefit.faviconUrl != null ?
-      ClipRRect(
-        borderRadius: BorderRadius.circular(LmuRadiusSizes.xsmall),
-        child: LmuCachedNetworkImage(
-          imageUrl: benefit.faviconUrl!,
-          height: LmuIconSizes.mediumSmall,
-          width: LmuIconSizes.mediumSmall,
-          fit: BoxFit.cover,
-        ),
-      ) :
-      const FaviconFallback(size: LmuIconSizes.mediumSmall),
+      hasLargeImage: benefit.imageUrl != null && benefit.imageUrl!.isNotEmpty,
+      leadingIcon: benefit.faviconUrl != null
+          ? ClipRRect(
+              borderRadius: BorderRadius.circular(LmuRadiusSizes.xsmall),
+              child: LmuCachedNetworkImage(
+                imageUrl: benefit.faviconUrl!,
+                height: LmuIconSizes.mediumSmall,
+                width: LmuIconSizes.mediumSmall,
+                fit: BoxFit.cover,
+              ),
+            )
+          : const FaviconFallback(size: LmuIconSizes.mediumSmall),
       onTap: () => _handleTap(context),
       onLongPress: () => _handleLongPress(context),
     );

@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../util/cinema_type.dart';
-import 'cinema_location_model.dart';
 import 'description_model.dart';
 
 part 'cinema_model.g.dart';
@@ -17,7 +16,7 @@ class CinemaModel extends Equatable {
     required this.descriptions,
     required this.externalLink,
     required this.instagramLink,
-    required this.cinemaLocation,
+    required this.location,
   });
 
   final String id;
@@ -28,8 +27,7 @@ class CinemaModel extends Equatable {
   final String externalLink;
   @JsonKey(name: 'instagram_link')
   final String instagramLink;
-  @JsonKey(name: 'location')
-  final CinemaLocationModel cinemaLocation;
+  final LocationModel location;
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   CinemaType get type => CinemaTypeMapper.fromString(id);
@@ -43,7 +41,7 @@ class CinemaModel extends Equatable {
     descriptions,
     externalLink,
     instagramLink,
-    cinemaLocation,
+    location,
   ];
 
   factory CinemaModel.fromJson(Map<String, dynamic> json) => _$CinemaModelFromJson(json);
