@@ -1,4 +1,6 @@
 class LmuRadiusSizes {
+  LmuRadiusSizes._();
+
   /// 2px
   static const double xsmall = 2.0;
 

@@ -63,58 +63,58 @@ class ExploreCompassState extends State<ExploreCompass> with TickerProviderState
       return const SizedBox.shrink();
     }
 
-    return Transform.rotate(
-      angle: camera.rotation * math.pi / 180.0,
-      child: GestureDetector(
-        onTap: () => {
-          _resetRotation(context, camera),
-          widget.onPressed,
-        },
-        child: Container(
-          width: widget.size,
-          height: widget.size,
-          decoration: BoxDecoration(
-            color: context.colors.neutralColors.backgroundColors.tile,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: context.colors.neutralColors.borderColors.seperatorLight,
-                offset: const Offset(0, 1),
-                blurRadius: 1,
-                spreadRadius: 0,
-              ),
-            ],
-          ),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              ValueListenableBuilder<String>(
-                valueListenable: GetIt.I<ExploreMapService>().compassDirectionNotifier,
-                builder: (context, direction, _) {
-                  return AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 250),
-                    switchInCurve: Curves.easeOut,
-                    switchOutCurve: Curves.easeIn,
-                    transitionBuilder: (child, animation) {
-                      return FadeTransition(
-                        opacity: animation,
-                        child: ScaleTransition(scale: animation, child: child),
-                      );
-                    },
-                    child: LmuText.bodySmall(
-                      direction,
-                      textScaleFactor: 1,
-                      key: ValueKey(direction),
-                    ),
-                  );
-                },
-              ),
-              CustomPaint(
+    return GestureDetector(
+      onTap: () => {
+        _resetRotation(context, camera),
+        widget.onPressed,
+      },
+      child: Container(
+        width: widget.size,
+        height: widget.size,
+        decoration: BoxDecoration(
+          color: context.colors.neutralColors.backgroundColors.tile,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: context.colors.neutralColors.borderColors.seperatorLight,
+              offset: const Offset(0, 1),
+              blurRadius: 1,
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            ValueListenableBuilder<String>(
+              valueListenable: GetIt.I<ExploreMapService>().compassDirectionNotifier,
+              builder: (context, direction, _) {
+                return AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 250),
+                  switchInCurve: Curves.easeOut,
+                  switchOutCurve: Curves.easeIn,
+                  transitionBuilder: (child, animation) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: ScaleTransition(scale: animation, child: child),
+                    );
+                  },
+                  child: LmuText.bodySmall(
+                    direction,
+                    textScaleFactor: 1,
+                    key: ValueKey(direction),
+                  ),
+                );
+              },
+            ),
+            Transform.rotate(
+              angle: camera.rotation * math.pi / 180.0,
+              child: CustomPaint(
                 size: Size(widget.size, widget.size),
                 painter: CompassMarkerPainter(context: context),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

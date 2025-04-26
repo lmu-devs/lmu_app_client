@@ -27,17 +27,6 @@ class MensaOverviewTile extends StatelessWidget {
   final bool hasDivider;
   final bool hasLargeImage;
 
-  factory MensaOverviewTile.loading({String? name, hasLargeImage = false, bool hasDivider = true}) {
-    return MensaOverviewTile(
-      mensaModel: MensaModel.placeholder(
-        name: name,
-      ),
-      isFavorite: false,
-      hasLargeImage: hasLargeImage,
-      hasDivider: hasDivider,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final localizations = context.locals.canteen;

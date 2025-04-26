@@ -2,6 +2,7 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 
 class LmuCard extends StatelessWidget {
   const LmuCard({
@@ -19,70 +20,33 @@ class LmuCard extends StatelessWidget {
     this.isFavorite = false,
     this.onFavoriteTap,
     this.imageUrl,
+    this.hasLargeImage = false,
+    this.hasDivider = false,
+    this.contentTileType = ContentTileType.middle,
     this.onTap,
     this.onLongPress,
-    this.hasDivider = false,
-    this.additionalContent = const [],
-    this.contentTileType = ContentTileType.middle,
-    this.hasLargeImage = false,
   }) : super(key: key);
 
-  /// The title of the card
   final String title;
-
-  /// Optional tag label (like "Mensa", "TUM", etc.)
   final String? tag;
-
-  /// The type of tag styling to use
   final ActionType tagType;
-
-  /// Optional custom background color for the tag
   final Color? customTagColor;
-
-  /// Optional custom text color for the tag
   final Color? customTagTextColor;
-
-  /// Optional subtitle or description text
   final String? subtitle;
-
-  /// Optional subtitle or description text
   final Widget? customSubtitle;
-
-  /// Optional leading icon or widget (like favicon)
   final Widget? leadingIcon;
-
-  /// List of widgets to display in the trailing area (star, count, etc.)
   final bool hasFavoriteStar;
-
-  ///
   final String? favoriteCount;
-
-  ///
   final bool isFavorite;
-
-  ///
   final VoidCallback? onFavoriteTap;
-
-  /// Optional URL for card image
   final String? imageUrl;
-
-  /// Callback for when the card is tapped
-  final VoidCallback? onTap;
-
-  /// Callback for when the card is long pressed
-  final VoidCallback? onLongPress;
-
-  /// Whether to show a divider at the bottom of the card
+  final bool hasLargeImage;
   final bool hasDivider;
-
-  /// Additional content widgets to display below the main content
-  final List<Widget> additionalContent;
-
-  /// Type of content tile (affects border radius and borders)
+  final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
   final ContentTileType contentTileType;
 
-  /// Whether the image should be displayed larger
-  final bool hasLargeImage;
+  bool get hasImage => imageUrl != null && imageUrl!.isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -95,25 +59,33 @@ class LmuCard extends StatelessWidget {
           contentTileType: contentTileType,
           padding: EdgeInsets.zero,
           contentList: [
-            // Optional image
-            if (imageUrl != null)
+            if (hasLargeImage)
               Container(
-                height: hasLargeImage ? LmuSizes.size_16 * 10 : LmuSizes.size_16 * 7,
+                height: LmuSizes.size_16 * 10,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: context.colors.neutralColors.backgroundColors.tile,
+                  color: hasImage
+                      ? context.colors.neutralColors.backgroundColors.tile
+                      : context.colors.neutralColors.backgroundColors.mediumColors.pressed,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
                     topRight: Radius.circular(LmuRadiusSizes.mediumLarge),
                   ),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: LmuCachedNetworkImageProvider(imageUrl!),
-                  ),
+                  image: hasImage
+                      ? DecorationImage(
+                          fit: BoxFit.cover,
+                          image: LmuCachedNetworkImageProvider(imageUrl!),
+                        )
+                      : null,
                 ),
+                child: hasImage
+                    ? null
+                    : Icon(
+                        LucideIcons.image,
+                        size: LmuIconSizes.large,
+                        color: context.colors.neutralColors.textColors.mediumColors.base,
+                      ),
               ),
-
-            // Main content
             Stack(
               children: [
                 Padding(
@@ -179,7 +151,6 @@ class LmuCard extends StatelessWidget {
                                 color: context.colors.neutralColors.textColors.mediumColors.base,
                               ),
                             if (customSubtitle != null) customSubtitle!,
-                            if (additionalContent.isNotEmpty) ...additionalContent,
                           ],
                         ),
                       ),
@@ -207,21 +178,6 @@ class LmuCard extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  /// ToDo
-  factory LmuCard.loading({
-    String? title,
-    bool hasLargeImage = false,
-    bool hasDivider = true,
-    ContentTileType contentTileType = ContentTileType.middle,
-  }) {
-    return LmuCard(
-      title: title ?? 'Loading...',
-      hasDivider: hasDivider,
-      contentTileType: contentTileType,
-      hasLargeImage: hasLargeImage,
     );
   }
 }

@@ -1,5 +1,7 @@
 /// A class representing various size constants in pixels.
 class LmuSizes {
+  LmuSizes._();
+
   /// 0px
   static const double none = 0.0;
 

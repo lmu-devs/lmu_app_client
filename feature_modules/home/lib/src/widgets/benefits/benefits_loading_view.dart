@@ -1,7 +1,8 @@
+import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:flutter/material.dart';
 
-import 'benefits_card_loading.dart';
+import '../favicon_fallback.dart';
 
 class BenefitsLoadingView extends StatelessWidget {
   const BenefitsLoadingView({super.key});
@@ -18,8 +19,13 @@ class BenefitsLoadingView extends StatelessWidget {
         children: List.generate(4, (index) {
           return const Column(
             children: [
-              BenefitsCardLoading(),
-              SizedBox(height: 16),
+              LmuCardLoading(
+                hasSubtitle: true,
+                subtitleLength: 3,
+                leadingIcon: FaviconFallback(size: LmuIconSizes.mediumSmall),
+                hasLargeImage: true,
+                hasDivider: true,
+              ),
             ],
           );
         }),
