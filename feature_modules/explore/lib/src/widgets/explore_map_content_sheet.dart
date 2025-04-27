@@ -2,12 +2,12 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/cinema.dart';
 import 'package:shared_api/explore.dart';
+import 'package:shared_api/libraries.dart';
 import 'package:shared_api/mensa.dart';
 import 'package:shared_api/roomfinder.dart';
 
@@ -212,9 +212,10 @@ extension on ExploreMarkerType {
         return GetIt.I.get<MensaService>().mensaMapContentBuilder(context, id, controller);
       case ExploreMarkerType.cinema:
         return GetIt.I.get<CinemaService>().cinemaMapContentBuilder(context, id, controller);
-
-      case ExploreMarkerType.roomfinderRoom:
+      case ExploreMarkerType.roomfinderBuilding:
         return GetIt.I.get<RoomfinderService>().roomfinderMapContentBuilder(context, id, controller);
+      case ExploreMarkerType.library:
+        return GetIt.I.get<LibrariesService>().librariesMapContentBuilder(context, id, controller);
     }
   }
 }

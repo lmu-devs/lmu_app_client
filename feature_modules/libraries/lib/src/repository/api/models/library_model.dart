@@ -31,7 +31,7 @@ class LibraryModel extends Equatable {
   final ContactModel contact;
   @JsonKey(name: 'opening_hours')
   final OpeningHoursModel openingHours;
-  final List<String> services;
+  final List<ServiceModel> services;
   final List<EquipmentModel> equipment;
   @JsonKey(name: 'subject_areas')
   final List<String> subjects;

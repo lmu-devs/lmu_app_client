@@ -13,7 +13,7 @@ import 'package:shared_api/mensa.dart';
 import 'package:shared_api/roomfinder.dart';
 import 'dart:math' as math;
 
-enum ExploreLocationFilter { mensa, building, cinema }
+enum ExploreLocationFilter { mensa, building, library, cinema }
 
 class ExploreMapService {
   void init() {
@@ -264,9 +264,11 @@ class ExploreMapService {
                 location.type == ExploreMarkerType.mensaStuCafe ||
                 location.type == ExploreMarkerType.mensaStuLounge;
           case ExploreLocationFilter.building:
-            return location.type == ExploreMarkerType.roomfinderRoom;
+            return location.type == ExploreMarkerType.roomfinderBuilding;
           case ExploreLocationFilter.cinema:
             return location.type == ExploreMarkerType.cinema;
+          case ExploreLocationFilter.library:
+            return location.type == ExploreMarkerType.library;
         }
       });
     }).toList();

@@ -1,5 +1,6 @@
 {
   "@@locale": "de",
   "@@context": "Libraries",
-  "pageTitle": "Bibliotheken"
+  "pageTitle": "Bibliotheken",
+  "library": "Bibliothek"
 }

@@ -2,7 +2,7 @@ import 'package:core/src/themes/colors/university_colors.dart';
 import 'package:flutter/material.dart';
 
 import 'neutral_colors.dart';
-import 'mensa_colors.dart';
+import 'custom_colors.dart';
 import 'brand_colors.dart';
 import 'success_colors.dart';
 import 'danger_colors.dart';
@@ -12,7 +12,7 @@ import 'gradient_colors.dart';
 class LmuColors extends ThemeExtension<LmuColors> {
   const LmuColors({
     required this.neutralColors,
-    required this.mensaColors,
+    required this.customColors,
     required this.brandColors,
     required this.successColors,
     required this.dangerColors,
@@ -22,7 +22,7 @@ class LmuColors extends ThemeExtension<LmuColors> {
   });
 
   final NeutralColors neutralColors;
-  final MensaColors mensaColors;
+  final CustomColors customColors;
   final BrandColors brandColors;
   final SuccessColors successColors;
   final DangerColors dangerColors;
@@ -35,7 +35,7 @@ class LmuColors extends ThemeExtension<LmuColors> {
     Color? brandColor,
     Color? danger,
     NeutralColors? neutralColors,
-    MensaColors? mensaColors,
+    CustomColors? customColors,
     BrandColors? brandColors,
     SuccessColors? successColors,
     DangerColors? dangerColors,
@@ -45,7 +45,7 @@ class LmuColors extends ThemeExtension<LmuColors> {
   }) {
     return LmuColors(
       neutralColors: neutralColors ?? this.neutralColors,
-      mensaColors: mensaColors ?? this.mensaColors,
+      customColors: customColors ?? this.customColors,
       brandColors: brandColors ?? this.brandColors,
       successColors: successColors ?? this.successColors,
       dangerColors: dangerColors ?? this.dangerColors,
@@ -62,7 +62,7 @@ class LmuColors extends ThemeExtension<LmuColors> {
     }
     return LmuColors(
       neutralColors: neutralColors,
-      mensaColors: mensaColors,
+      customColors: customColors,
       brandColors: brandColors,
       successColors: successColors,
       dangerColors: dangerColors,

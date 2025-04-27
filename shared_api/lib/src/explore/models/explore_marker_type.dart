@@ -4,5 +4,6 @@ enum ExploreMarkerType {
   mensaStuBistro,
   mensaStuLounge,
   cinema,
-  roomfinderRoom,
+  roomfinderBuilding,
+  library,
 }

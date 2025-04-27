@@ -19,8 +19,9 @@ LibraryModel _$LibraryModelFromJson(Map<String, dynamic> json) => LibraryModel(
       contact: ContactModel.fromJson(json['contact'] as Map<String, dynamic>),
       openingHours: OpeningHoursModel.fromJson(
           json['opening_hours'] as Map<String, dynamic>),
-      services:
-          (json['services'] as List<dynamic>).map((e) => e as String).toList(),
+      services: (json['services'] as List<dynamic>)
+          .map((e) => ServiceModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       equipment: (json['equipment'] as List<dynamic>)
           .map((e) => EquipmentModel.fromJson(e as Map<String, dynamic>))
           .toList(),

@@ -68,6 +68,8 @@ class ExploreActionRow extends StatelessWidget {
         return locals.roomfinder.buildings;
       case ExploreLocationFilter.cinema:
         return locals.cinema.cinemasTitle;
+      case ExploreLocationFilter.library:
+        return locals.libraries.pageTitle;
     }
   }
 
@@ -75,7 +77,7 @@ class ExploreActionRow extends StatelessWidget {
     final exploreMarkerTypes = () {
       if (filter == ExploreLocationFilter.building) {
         return [
-          ExploreMarkerType.roomfinderRoom,
+          ExploreMarkerType.roomfinderBuilding,
         ];
       } else if (filter == ExploreLocationFilter.mensa) {
         return [
@@ -87,6 +89,10 @@ class ExploreActionRow extends StatelessWidget {
       } else if (filter == ExploreLocationFilter.cinema) {
         return [
           ExploreMarkerType.cinema,
+        ];
+      } else if (filter == ExploreLocationFilter.library) {
+        return [
+          ExploreMarkerType.library,
         ];
       }
     }();
