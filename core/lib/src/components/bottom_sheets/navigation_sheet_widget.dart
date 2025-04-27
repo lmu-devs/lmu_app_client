@@ -9,17 +9,12 @@ import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
-class NavigationSheet extends StatelessWidget {
-  const NavigationSheet({
-    super.key,
-    required this.latitude,
-    required this.longitude,
-    required this.address,
-  });
+import '../../../api.dart';
 
-  final double latitude;
-  final double longitude;
-  final String address;
+class NavigationSheet extends StatelessWidget {
+  const NavigationSheet({super.key, required this.location});
+
+  final LocationModel location;
 
   void _openExternalApplication({
     required BuildContext context,
@@ -80,8 +75,8 @@ class NavigationSheet extends StatelessWidget {
               _openExternalApplication(
                 context: context,
                 isApple: true,
-                latitude: latitude,
-                longitude: longitude,
+                latitude: location.latitude,
+                longitude: location.longitude,
               );
               Navigator.pop(context);
             },
@@ -98,8 +93,8 @@ class NavigationSheet extends StatelessWidget {
             _openExternalApplication(
               context: context,
               isApple: false,
-              latitude: latitude,
-              longitude: longitude,
+              latitude: location.latitude,
+              longitude: location.longitude,
             );
             Navigator.pop(context);
           },
@@ -120,7 +115,7 @@ class NavigationSheet extends StatelessWidget {
             Navigator.pop(context);
             CopyToClipboardUtil.copyToClipboard(
               context: context,
-              copiedText: address,
+              copiedText: location.address,
               message: context.locals.explore.copiedToClipboard,
             );
           },
