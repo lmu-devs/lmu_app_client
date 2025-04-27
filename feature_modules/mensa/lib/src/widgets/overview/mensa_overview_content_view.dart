@@ -21,7 +21,7 @@ class MensaOverviewContentView extends StatefulWidget {
 
 class _MensaOverviewContentViewState extends State<MensaOverviewContentView> {
   final _mensaDistanceService = GetIt.I.get<LocationService>();
-  final _userPreferecesService = GetIt.I.get<MensaUserPreferencesService>();
+  final _userPreferencesService = GetIt.I.get<MensaUserPreferencesService>();
 
   List<MensaModel> get _mensaModels => widget.mensaModels;
 
@@ -32,8 +32,8 @@ class _MensaOverviewContentViewState extends State<MensaOverviewContentView> {
   }
 
   void _onDistanceChange() {
-    if (_userPreferecesService.sortOptionNotifier.value == SortOption.distance) {
-      _userPreferecesService.sortMensaModels(_mensaModels);
+    if (_userPreferencesService.sortOptionNotifier.value == SortOption.distance) {
+      _userPreferencesService.sortMensaModels(_mensaModels);
     }
   }
 
@@ -51,7 +51,7 @@ class _MensaOverviewContentViewState extends State<MensaOverviewContentView> {
             child: Column(
               children: [
                 LmuTileHeadline.base(title: localizations.favorites, customBottomPadding: LmuSizes.size_6),
-                MensaOverviewReordableFavoriteSection(mensaModels: _mensaModels),
+                MensaOverviewReorderableFavoriteSection(mensaModels: _mensaModels),
               ],
             ),
           ),
