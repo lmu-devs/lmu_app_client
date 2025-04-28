@@ -21,4 +21,14 @@ class LibrariesApiClient {
       throw Exception('Failed to load library data - ${response.statusCode}');
     }
   }
+
+  Future<bool> toggleFavoriteLibraryId(String id) async {
+    final response = await _baseApiClient.post(LibrariesApiEndpoints.toggleFavoriteLibraryId(id));
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to toggle favorite library - ${response.statusCode}');
+    }
+
+    return response.body == 'true';
+  }
 }

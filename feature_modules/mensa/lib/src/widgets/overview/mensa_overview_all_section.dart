@@ -41,7 +41,7 @@ class MensaOverviewAllSection extends StatelessWidget {
 
                 if (filteredMensaModels.isEmpty) {
                   return LmuIssueType(
-                    message: context.locals.canteen.allClosed,
+                    message: context.locals.app.allClosed,
                     hasSpacing: false,
                   );
                 }

@@ -39,8 +39,6 @@ class _MensaOverviewContentViewState extends State<MensaOverviewContentView> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = context.locals.canteen;
-
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +48,7 @@ class _MensaOverviewContentViewState extends State<MensaOverviewContentView> {
             padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
             child: Column(
               children: [
-                LmuTileHeadline.base(title: localizations.favorites, customBottomPadding: LmuSizes.size_6),
+                LmuTileHeadline.base(title: context.locals.app.favorites, customBottomPadding: LmuSizes.size_6),
                 MensaOverviewReorderableFavoriteSection(mensaModels: _mensaModels),
               ],
             ),
@@ -58,7 +56,7 @@ class _MensaOverviewContentViewState extends State<MensaOverviewContentView> {
           const SizedBox(height: 26),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-            child: LmuTileHeadline.base(title: localizations.allCanteens),
+            child: LmuTileHeadline.base(title: context.locals.canteen.allCanteens),
           ),
           MensaOverviewButtonSection(mensaModels: widget.mensaModels),
           Padding(

@@ -28,6 +28,7 @@ LibraryModel _$LibraryModelFromJson(Map<String, dynamic> json) => LibraryModel(
       subjects: (json['subject_areas'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
+      rating: RatingModel.fromJson(json['rating'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$LibraryModelToJson(LibraryModel instance) =>
@@ -43,4 +44,5 @@ Map<String, dynamic> _$LibraryModelToJson(LibraryModel instance) =>
       'services': instance.services,
       'equipment': instance.equipment,
       'subject_areas': instance.subjects,
+      'rating': instance.rating,
     };

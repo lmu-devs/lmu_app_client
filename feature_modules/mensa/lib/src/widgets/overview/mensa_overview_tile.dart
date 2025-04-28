@@ -34,8 +34,8 @@ class MensaOverviewTile extends StatelessWidget {
 
     final tagData = mensaModel.type.getTagData(colors, localizations);
 
-    final distanceService = GetIt.I.get<LocationService>();
     final statusUpdateService = GetIt.I.get<MensaStatusUpdateService>();
+    final distanceService = GetIt.I.get<LocationService>();
 
     return ListenableBuilder(
       listenable: statusUpdateService,

@@ -49,5 +49,7 @@
   "atLocation": "in",
   "clear": "Löschen",
   "prevSearch": "Zuletzt gesucht",
-  "noResults": "Keine Ergebnisse"
+  "noResults": "Keine Ergebnisse",
+  "favorites": "Favoriten",
+  "allClosed": "Alles geschlossen"
 }

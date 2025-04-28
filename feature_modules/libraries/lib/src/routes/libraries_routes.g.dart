@@ -7,27 +7,27 @@ part of 'libraries_routes.dart';
 // **************************************************************************
 
 List<RouteBase> get $appRoutes => [
-      $librariesMainRoute,
-    ];
+  $librariesMainRoute,
+];
 
 RouteBase get $librariesMainRoute => GoRouteData.$route(
-      path: '/libraries',
-      factory: $LibrariesMainRouteExtension._fromState,
-      routes: [
-        GoRouteData.$route(
-          path: 'library_details',
-          factory: $LibraryDetailsRouteExtension._fromState,
-        ),
-      ],
-    );
+  path: '/libraries',
+  factory: $LibrariesMainRouteExtension._fromState,
+  routes: [
+    GoRouteData.$route(
+      path: 'library_details',
+      factory: $LibraryDetailsRouteExtension._fromState,
+    ),
+  ],
+);
 
 extension $LibrariesMainRouteExtension on LibrariesMainRoute {
   static LibrariesMainRoute _fromState(GoRouterState state) =>
       const LibrariesMainRoute();
 
   String get location => GoRouteData.$location(
-        '/libraries',
-      );
+    '/home/libraries',
+  );
 
   void go(BuildContext context) => context.go(location);
 
@@ -46,8 +46,8 @@ extension $LibraryDetailsRouteExtension on LibraryDetailsRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/libraries/library_details',
-      );
+    '/home/libraries/library_details',
+  );
 
   void go(BuildContext context) => context.go(location, extra: $extra);
 

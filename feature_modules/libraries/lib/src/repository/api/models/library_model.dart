@@ -20,6 +20,7 @@ class LibraryModel extends Equatable {
     required this.services,
     required this.equipment,
     required this.subjects,
+    required this.rating,
   });
 
   final String id;
@@ -35,6 +36,7 @@ class LibraryModel extends Equatable {
   final List<EquipmentModel> equipment;
   @JsonKey(name: 'subject_areas')
   final List<String> subjects;
+  final RatingModel rating;
 
   factory LibraryModel.fromJson(Map<String, dynamic> json) => _$LibraryModelFromJson(json);
 
@@ -53,5 +55,6 @@ class LibraryModel extends Equatable {
         services,
         equipment,
         subjects,
+        rating,
       ];
 }

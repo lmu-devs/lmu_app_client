@@ -8,5 +8,9 @@
   "library": "Library",
   "@library": {
     "description": "Library"
+  },
+  "allLibraries": "All Libraries",
+  "@allLibraries": {
+    "description": "All libraries"
   }
 }

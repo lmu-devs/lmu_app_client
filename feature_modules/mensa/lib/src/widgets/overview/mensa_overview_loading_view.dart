@@ -44,7 +44,7 @@ class MensaOverviewLoadingView extends StatelessWidget {
           padding: const EdgeInsets.all(LmuSizes.size_16),
           child: Column(
             children: [
-              LmuTileHeadline.base(title: context.locals.canteen.favorites, customBottomPadding: LmuSizes.size_6),
+              LmuTileHeadline.base(title: context.locals.app.favorites, customBottomPadding: LmuSizes.size_6),
               ListView.builder(
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,

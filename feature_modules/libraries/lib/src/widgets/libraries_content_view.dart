@@ -1,4 +1,6 @@
+import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import '../repository/api/models/library_model.dart';
 
@@ -22,7 +24,31 @@ class _LibrariesContentViewState extends State<LibrariesContentView> {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [],
+        children: [
+          const SizedBox(height: LmuSizes.size_16),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+            child: Column(
+              children: [
+                LmuTileHeadline.base(title: context.locals.app.favorites, customBottomPadding: LmuSizes.size_6),
+              ],
+            ),
+          ),
+          const SizedBox(height: 26),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+            child: LmuTileHeadline.base(title: context.locals.libraries.allLibraries),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+            child: Column(
+              children: [
+                const SizedBox(height: LmuSizes.size_16),
+                const SizedBox(height: LmuSizes.size_96),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -30,8 +30,8 @@ class LibrariesModule extends AppModule
   }
 
   @override
-  void onAppStartNotice() async {
-    await GetIt.I.get<LibrariesUserPreferenceService>().init();
+  void onAppStartNotice() {
+    GetIt.I.get<LibrariesUserPreferenceService>();
   }
 
   @override

@@ -45,6 +45,7 @@ class _LibrariesPageState extends State<LibrariesPage> {
               libraries: state.libraries,
             );
           }
+
           return LmuPageAnimationWrapper(child: child);
         },
       ),

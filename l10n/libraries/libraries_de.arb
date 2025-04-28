@@ -2,5 +2,6 @@
   "@@locale": "de",
   "@@context": "Libraries",
   "pageTitle": "Bibliotheken",
-  "library": "Bibliothek"
+  "library": "Bibliothek",
+  "allLibraries": "Alle Bibliotheken"
 }
