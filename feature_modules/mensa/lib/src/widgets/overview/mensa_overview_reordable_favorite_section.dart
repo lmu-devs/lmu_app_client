@@ -10,8 +10,8 @@ import '../../repository/api/models/mensa/mensa_model.dart';
 import '../../services/mensa_user_preferences_service.dart';
 import '../widgets.dart';
 
-class MensaOverviewReordableFavoriteSection extends StatelessWidget {
-  const MensaOverviewReordableFavoriteSection({
+class MensaOverviewReorderableFavoriteSection extends StatelessWidget {
+  const MensaOverviewReorderableFavoriteSection({
     super.key,
     required this.mensaModels,
   });

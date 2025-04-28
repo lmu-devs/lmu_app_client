@@ -63,16 +63,12 @@ class CinemaDetailsPage extends StatelessWidget {
                   size: LmuIconSizes.mediumSmall,
                   color: context.colors.neutralColors.textColors.weakColors.base,
                 ),
-                subtitle: cinema.cinemaLocation.address,
+                subtitle: cinema.location.address,
                 hasHorizontalPadding: false,
                 hasDivider: true,
                 onTap: () => LmuBottomSheet.show(
                   context,
-                  content: NavigationSheet(
-                    latitude: cinema.cinemaLocation.latitude,
-                    longitude: cinema.cinemaLocation.longitude,
-                    address: cinema.cinemaLocation.address,
-                  ),
+                  content: NavigationSheet(location: cinema.location),
                 ),
               ),
               ...List.generate(

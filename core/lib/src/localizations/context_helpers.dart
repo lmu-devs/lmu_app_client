@@ -4,6 +4,7 @@ import 'package:core/src/localizations/generated/sports_localizations.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import '../../localizations.dart';
 import 'generated/canteen_localizations.dart';
 import 'generated/cinema_localizations.dart';
 import 'generated/feedback_localizations.dart';
@@ -33,6 +34,7 @@ class LmuLocalizations {
   SportsLocatizations get sports => SportsLocatizations.of(_context)!;
   TimelineLocatizations get timeline => TimelineLocatizations.of(_context)!;
   RoomfinderLocatizations get roomfinder => RoomfinderLocatizations.of(_context)!;
+  LibrariesLocatizations get libraries => LibrariesLocatizations.of(_context)!;
   // Add other localizations
 
   /// List of all supported localizations delegates
@@ -48,6 +50,7 @@ class LmuLocalizations {
         SportsLocatizations.delegate,
         TimelineLocatizations.delegate,
         RoomfinderLocatizations.delegate,
+        LibrariesLocatizations.delegate,
         // Add other localizations delegates
 
         GlobalMaterialLocalizations.delegate,

@@ -37,10 +37,6 @@
   "@allCanteens": {
     "description": "Display all canteens"
   },
-  "favorites": "Favorites",
-  "@favorites": {
-    "description": "Favrourite canteens"
-  },
   "mensaTypeMensa": "Mensa",
   "@mensaTypeMensa": {
     "description": "The type of a canteen"
@@ -84,10 +80,6 @@
   "noFavorites": "No favorites added yet",
   "@noFavorites": {
     "description": "No favorites added yet"
-  },
-  "allClosed": "Everything is closed",
-  "@allClosed": {
-    "description": "All canteens are closed"
   },
   "save": "Save",
   "@save": {

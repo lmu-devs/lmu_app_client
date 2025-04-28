@@ -35,6 +35,7 @@ StatefulShellBranch get $homeData => StatefulShellBranchData.$branch(
             GetIt.I.get<CinemaService>().cinemaData,
             GetIt.I.get<TimelineService>().timelineData,
             GetIt.I.get<RoomfinderService>().roomfinderData,
+            GetIt.I.get<LibrariesService>().librariesData,
           ],
         ),
       ],

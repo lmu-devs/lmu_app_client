@@ -5,7 +5,6 @@ import 'package:core/themes.dart';
 import 'package:flutter/widgets.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import 'cinema_card_loading.dart';
 import 'screening_card_loading.dart';
 
 class CinemaLoadingView extends StatelessWidget {
@@ -21,9 +20,9 @@ class CinemaLoadingView extends StatelessWidget {
             const SizedBox(height: LmuSizes.size_16),
             LmuTileHeadline.base(title: context.locals.cinema.cinemasTitle),
             ...List.generate(4, (index) {
-              return CinemaCardLoading(isLastItem: index == 4 - 1);
+              return const LmuCardLoading(hasTag: true, hasSubtitle: true, hasDivider: true);
             }),
-            const SizedBox(height: LmuSizes.size_32),
+            const SizedBox(height: LmuSizes.size_20),
             LmuTileHeadline.base(
               title: context.locals.cinema.upcomingTitle,
               bottomWidget: Align(

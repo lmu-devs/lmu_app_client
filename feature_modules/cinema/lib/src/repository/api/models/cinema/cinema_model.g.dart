@@ -17,8 +17,8 @@ CinemaModel _$CinemaModelFromJson(Map<String, dynamic> json) => CinemaModel(
           .toList(),
       externalLink: json['external_link'] as String,
       instagramLink: json['instagram_link'] as String,
-      cinemaLocation: CinemaLocationModel.fromJson(
-          json['location'] as Map<String, dynamic>),
+      location:
+          LocationModel.fromJson(json['location'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CinemaModelToJson(CinemaModel instance) =>
@@ -29,5 +29,5 @@ Map<String, dynamic> _$CinemaModelToJson(CinemaModel instance) =>
       'descriptions': instance.descriptions,
       'external_link': instance.externalLink,
       'instagram_link': instance.instagramLink,
-      'location': instance.cinemaLocation,
+      'location': instance.location,
     };

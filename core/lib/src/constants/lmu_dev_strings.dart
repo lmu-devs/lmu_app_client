@@ -1,5 +1,5 @@
 class LmuDevStrings {
-  LmuDevStrings(_);
+  LmuDevStrings._();
 
   /// General Strings
   static String appStoreId = '6505039729';

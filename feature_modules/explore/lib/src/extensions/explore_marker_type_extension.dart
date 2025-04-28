@@ -7,12 +7,13 @@ import 'package:shared_api/explore.dart';
 extension ExploreMarkerTypeStyling on ExploreMarkerType {
   Color markerColor(LmuColors colors) {
     return switch (this) {
-      ExploreMarkerType.mensaMensa => colors.mensaColors.textColors.mensa,
-      ExploreMarkerType.mensaStuBistro => colors.mensaColors.textColors.stuBistro,
-      ExploreMarkerType.mensaStuCafe => colors.mensaColors.textColors.stuCafe,
-      ExploreMarkerType.mensaStuLounge => colors.mensaColors.textColors.stuLounge,
-      ExploreMarkerType.cinema => const Color(0xFFD64444),
-      ExploreMarkerType.roomfinderRoom => const Color(0xFF1A95F3),
+      ExploreMarkerType.mensaMensa => colors.customColors.textColors.mensa,
+      ExploreMarkerType.mensaStuBistro => colors.customColors.textColors.stuBistro,
+      ExploreMarkerType.mensaStuCafe => colors.customColors.textColors.stuCafe,
+      ExploreMarkerType.mensaStuLounge => colors.customColors.textColors.stuLounge,
+      ExploreMarkerType.cinema => colors.customColors.textColors.cinema,
+      ExploreMarkerType.roomfinderBuilding => colors.customColors.textColors.building,
+      ExploreMarkerType.library => colors.customColors.textColors.library,
     };
   }
 
@@ -23,7 +24,8 @@ extension ExploreMarkerTypeStyling on ExploreMarkerType {
       ExploreMarkerType.mensaStuCafe => localizations.canteen.mensaTypeStuCafe,
       ExploreMarkerType.mensaStuLounge => localizations.canteen.mensaTypeCafeBar,
       ExploreMarkerType.cinema => localizations.cinema.cinema,
-      ExploreMarkerType.roomfinderRoom => localizations.roomfinder.building,
+      ExploreMarkerType.roomfinderBuilding => localizations.roomfinder.building,
+      ExploreMarkerType.library => localizations.libraries.library,
     };
   }
 
@@ -34,7 +36,8 @@ extension ExploreMarkerTypeStyling on ExploreMarkerType {
       ExploreMarkerType.mensaStuCafe => LucideIcons.utensils,
       ExploreMarkerType.mensaStuLounge => LucideIcons.coffee,
       ExploreMarkerType.cinema => LucideIcons.clapperboard,
-      ExploreMarkerType.roomfinderRoom => LucideIcons.school,
+      ExploreMarkerType.roomfinderBuilding => LucideIcons.school,
+      ExploreMarkerType.library => LucideIcons.library_big,
     };
   }
 }

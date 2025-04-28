@@ -9,6 +9,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/cinema.dart';
 import 'package:shared_api/feedback.dart';
+import 'package:shared_api/libraries.dart';
 import 'package:shared_api/mensa.dart';
 import 'package:shared_api/roomfinder.dart';
 import 'package:shared_api/sports.dart';
@@ -91,6 +92,7 @@ extension HomeTileMapper on HomeTile {
       HomeTileType.news => () => {_notYetImplemented(context)},
       HomeTileType.events => () => {_notYetImplemented(context)},
       HomeTileType.mensa => () => {GetIt.I.get<MensaService>().navigateToMensaPage(context)},
+      HomeTileType.libraries => () => GetIt.I.get<LibrariesService>().navigateToLibrariesPage(context),
       HomeTileType.other => () => {_notYetImplemented(context)},
     };
   }
@@ -108,6 +110,7 @@ extension HomeTileMapper on HomeTile {
       HomeTileType.news => "News",
       HomeTileType.events => "events",
       HomeTileType.mensa => locals.canteen.tabTitle,
+      HomeTileType.libraries => locals.libraries.pageTitle,
       HomeTileType.other => "",
     };
   }
@@ -125,6 +128,7 @@ extension HomeTileMapper on HomeTile {
       HomeTileType.news => const HomeEmojiTile(emoji: "📰"),
       HomeTileType.events => const HomeEmojiTile(emoji: "🎉"),
       HomeTileType.mensa => const HomeEmojiTile(emoji: "🍽️"),
+      HomeTileType.libraries => const HomeEmojiTile(emoji: "📚"),
       HomeTileType.other => Container(),
     };
   }

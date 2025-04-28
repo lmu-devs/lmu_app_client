@@ -36,9 +36,9 @@ class DefaultCinemaService implements CinemaService {
         return state.cinemas!.map((cinemaModel) {
           return ExploreLocation(
             id: cinemaModel.id,
-            latitude: cinemaModel.cinemaLocation.latitude,
-            longitude: cinemaModel.cinemaLocation.longitude,
-            address: cinemaModel.cinemaLocation.address,
+            latitude: cinemaModel.location.latitude,
+            longitude: cinemaModel.location.longitude,
+            address: cinemaModel.location.address,
             name: cinemaModel.title,
             type: ExploreMarkerType.cinema,
           );
@@ -47,10 +47,10 @@ class DefaultCinemaService implements CinemaService {
         return state.cinemas.map((cinemaModel) {
           return ExploreLocation(
             id: cinemaModel.id,
-            latitude: cinemaModel.cinemaLocation.latitude,
-            longitude: cinemaModel.cinemaLocation.longitude,
+            latitude: cinemaModel.location.latitude,
+            longitude: cinemaModel.location.longitude,
             name: cinemaModel.title,
-            address: cinemaModel.cinemaLocation.address,
+            address: cinemaModel.location.address,
             type: ExploreMarkerType.cinema,
           );
         }).toList();

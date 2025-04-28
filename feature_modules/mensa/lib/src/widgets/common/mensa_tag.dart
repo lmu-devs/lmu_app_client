@@ -36,7 +36,7 @@ extension TagColors on MensaType {
   }
 
   Color? _textColor(LmuColors colors) {
-    final mensaTextColors = colors.mensaColors.textColors;
+    final mensaTextColors = colors.customColors.textColors;
     return switch (this) {
       MensaType.mensa => mensaTextColors.mensa,
       MensaType.stuBistro => mensaTextColors.stuBistro,

@@ -23,7 +23,7 @@ class BenefitsContentView extends StatelessWidget {
         children: [
           ...benefits.map(
             (benefit) => Padding(
-              padding: const EdgeInsets.only(bottom: LmuSizes.size_16),
+              padding: const EdgeInsets.only(bottom: LmuSizes.size_12),
               child: BenefitsCard(benefit: benefit),
             ),
           ),

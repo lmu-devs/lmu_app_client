@@ -167,7 +167,7 @@ class ScreeningDetailsPage extends StatelessWidget {
                     ),
                   ),
                   LmuListItem.base(
-                    subtitle: cinema.cinemaLocation.address,
+                    subtitle: cinema.location.address,
                     subtitleTextColor: context.colors.neutralColors.textColors.mediumColors.base,
                     hasHorizontalPadding: false,
                     trailingArea: Icon(
@@ -177,11 +177,7 @@ class ScreeningDetailsPage extends StatelessWidget {
                     ),
                     onTap: () => LmuBottomSheet.show(
                       context,
-                      content: NavigationSheet(
-                        latitude: cinema.cinemaLocation.latitude,
-                        longitude: cinema.cinemaLocation.longitude,
-                        address: cinema.cinemaLocation.address,
-                      ),
+                      content: NavigationSheet(location: cinema.location),
                     ),
                   ),
                   const SizedBox(height: LmuSizes.size_24),

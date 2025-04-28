@@ -1,5 +1,7 @@
 /// A class representing various size constants in pixels.
 class LmuActionSizes {
+  LmuActionSizes._();
+
   /// 36px
   static const double base = 36.0;
 

@@ -1,6 +1,5 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -42,41 +41,28 @@ class MensaOverviewAllSection extends StatelessWidget {
 
                 if (filteredMensaModels.isEmpty) {
                   return LmuIssueType(
-                    message: context.locals.canteen.allClosed,
+                    message: context.locals.app.allClosed,
                     hasSpacing: false,
                   );
                 }
 
-                return AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 500),
-                  switchInCurve: LmuAnimations.fastSmooth,
-                  switchOutCurve: LmuAnimations.fastSmooth,
-                  reverseDuration: const Duration(milliseconds: 50),
-                  transitionBuilder: (child, animation) => SlideTransition(
-                    position: Tween<Offset>(begin: const Offset(0, .7), end: Offset.zero).animate(animation),
-                    child: child,
-                  ),
-                  child: ListView.builder(
-                    key: ValueKey(filteredMensaModels.map((e) => e.canteenId).join()),
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: filteredMensaModels.length,
-                    itemBuilder: (context, index) {
-                      return ValueListenableBuilder(
-                        valueListenable: userPreferencesService.favoriteMensaIdsNotifier,
-                        builder: (context, favoriteMensaIds, _) {
-                          final isFavorite = favoriteMensaIds.contains(filteredMensaModels[index].canteenId);
-                          return MensaOverviewTile(
-                            mensaModel: filteredMensaModels[index],
-                            isFavorite: isFavorite,
-                            hasDivider: index != mensaModels.length - 1,
-                            hasLargeImage: filteredMensaModels[index].images.isNotEmpty,
-                          );
-                        },
-                      );
-                    },
-                  ),
+                return LmuAnimatedListView(
+                  valueKey: filteredMensaModels.map((e) => e.canteenId).join(),
+                  itemCount: filteredMensaModels.length,
+                  itemBuilder: (context, index) {
+                    return ValueListenableBuilder(
+                      valueListenable: userPreferencesService.favoriteMensaIdsNotifier,
+                      builder: (context, favoriteMensaIds, _) {
+                        final isFavorite = favoriteMensaIds.contains(filteredMensaModels[index].canteenId);
+                        return MensaOverviewTile(
+                          mensaModel: filteredMensaModels[index],
+                          isFavorite: isFavorite,
+                          hasDivider: index != mensaModels.length - 1,
+                          hasLargeImage: filteredMensaModels[index].images.isNotEmpty,
+                        );
+                      },
+                    );
+                  },
                 );
               },
             );

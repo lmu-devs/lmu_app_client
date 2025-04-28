@@ -6,9 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../bloc/bloc.dart';
-import '../../../services/mensa_user_preferences_service.dart';
-import '../../widgets.dart';
+import '../../bloc/bloc.dart';
+import '../../services/mensa_user_preferences_service.dart';
 
 class MensaOverviewLoadingView extends StatelessWidget {
   const MensaOverviewLoadingView({super.key});
@@ -45,7 +44,7 @@ class MensaOverviewLoadingView extends StatelessWidget {
           padding: const EdgeInsets.all(LmuSizes.size_16),
           child: Column(
             children: [
-              LmuTileHeadline.base(title: context.locals.canteen.favorites, customBottomPadding: LmuSizes.size_6),
+              LmuTileHeadline.base(title: context.locals.app.favorites, customBottomPadding: LmuSizes.size_6),
               ListView.builder(
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,
@@ -53,7 +52,15 @@ class MensaOverviewLoadingView extends StatelessWidget {
                 itemCount: _calculateFavoriteLoadingItemCount(favoriteMensas.length),
                 itemBuilder: (context, index) => const Padding(
                   padding: EdgeInsets.symmetric(vertical: LmuSizes.size_6),
-                  child: MensaOverviewTileLoading(hasDivider: false),
+                  child: LmuCardLoading(
+                    hasTag: true,
+                    hasSubtitle: true,
+                    subtitleLength: 3,
+                    hasLargeImage: false,
+                    hasFavoriteStar: true,
+                    hasFavoriteCount: true,
+                    hasDivider: false,
+                  ),
                 ),
               ),
               const SizedBox(height: 26),
@@ -91,7 +98,15 @@ class MensaOverviewLoadingView extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: 5,
-                itemBuilder: (context, index) => const MensaOverviewTileLoading(hasLargeImage: true),
+                itemBuilder: (context, index) => const LmuCardLoading(
+                  hasTag: true,
+                  hasSubtitle: true,
+                  subtitleLength: 3,
+                  hasLargeImage: true,
+                  hasFavoriteStar: true,
+                  hasFavoriteCount: true,
+                  hasDivider: true,
+                ),
               ),
             ],
           ),

@@ -3,6 +3,7 @@ import 'package:explore/explore.dart';
 import 'package:feedback/feedback.dart';
 import 'package:home/home.dart';
 import 'package:mensa/mensa.dart';
+import 'package:libraries/libraries.dart';
 import 'package:roomfinder/roomfinder.dart';
 import 'package:settings/settings.dart';
 import 'package:sports/sports.dart';
@@ -16,6 +17,7 @@ final modules = [
   CinemaModule(),
   RoomfinderModule(),
   MensaModule(),
+  LibrariesModule(),
   ExploreModule(),
   WishlistModule(),
   SettingsModule(),

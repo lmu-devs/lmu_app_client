@@ -2,10 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/cinema.dart';
 import 'package:shared_api/explore.dart';
+import 'package:shared_api/libraries.dart';
 import 'package:shared_api/mensa.dart';
 import 'package:shared_api/roomfinder.dart';
 
-enum ExploreFilterType { mensa, building, cinema }
+enum ExploreFilterType { mensa, building, library, cinema }
 
 class ExploreLocationService {
   final ValueNotifier<List<ExploreLocation>> _locationsNotifier = ValueNotifier([]);
@@ -70,6 +71,13 @@ class ExploreLocationService {
       exploreLocationsNotifier.value = updatedLocations;
       _updateFilteredExploreLocations();
     });
+    final librariesService = GetIt.I<LibrariesService>();
+    librariesService.librariesExploreLocationsStream.listen((locations) {
+      final currentLocations = List.of(exploreLocationsNotifier.value);
+      final updatedLocations = currentLocations..addAll(locations);
+      exploreLocationsNotifier.value = updatedLocations;
+      _updateFilteredExploreLocations();
+    });
   }
 
   void _updateFilteredExploreLocations() {
@@ -89,7 +97,9 @@ class ExploreLocationService {
                 location.type == ExploreMarkerType.mensaStuCafe ||
                 location.type == ExploreMarkerType.mensaStuLounge;
           case ExploreFilterType.building:
-            return location.type == ExploreMarkerType.roomfinderRoom;
+            return location.type == ExploreMarkerType.roomfinderBuilding;
+          case ExploreFilterType.library:
+            return location.type == ExploreMarkerType.library;
           case ExploreFilterType.cinema:
             return location.type == ExploreMarkerType.cinema;
         }

@@ -46,8 +46,6 @@ extension SortOptionSortExtension on SortOption {
             if (nameComparison != 0) return nameComparison;
             return a.type.index.compareTo(b.type.index);
           });
-      default:
-        return List.from(mensaModels);
     }
   }
 }

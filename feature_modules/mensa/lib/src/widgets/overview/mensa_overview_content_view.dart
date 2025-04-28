@@ -21,7 +21,7 @@ class MensaOverviewContentView extends StatefulWidget {
 
 class _MensaOverviewContentViewState extends State<MensaOverviewContentView> {
   final _mensaDistanceService = GetIt.I.get<LocationService>();
-  final _userPreferecesService = GetIt.I.get<MensaUserPreferencesService>();
+  final _userPreferencesService = GetIt.I.get<MensaUserPreferencesService>();
 
   List<MensaModel> get _mensaModels => widget.mensaModels;
 
@@ -32,15 +32,13 @@ class _MensaOverviewContentViewState extends State<MensaOverviewContentView> {
   }
 
   void _onDistanceChange() {
-    if (_userPreferecesService.sortOptionNotifier.value == SortOption.distance) {
-      _userPreferecesService.sortMensaModels(_mensaModels);
+    if (_userPreferencesService.sortOptionNotifier.value == SortOption.distance) {
+      _userPreferencesService.sortMensaModels(_mensaModels);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final localizations = context.locals.canteen;
-
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,15 +48,15 @@ class _MensaOverviewContentViewState extends State<MensaOverviewContentView> {
             padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
             child: Column(
               children: [
-                LmuTileHeadline.base(title: localizations.favorites, customBottomPadding: LmuSizes.size_6),
-                MensaOverviewReordableFavoriteSection(mensaModels: _mensaModels),
+                LmuTileHeadline.base(title: context.locals.app.favorites, customBottomPadding: LmuSizes.size_6),
+                MensaOverviewReorderableFavoriteSection(mensaModels: _mensaModels),
               ],
             ),
           ),
           const SizedBox(height: 26),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-            child: LmuTileHeadline.base(title: localizations.allCanteens),
+            child: LmuTileHeadline.base(title: context.locals.canteen.allCanteens),
           ),
           MensaOverviewButtonSection(mensaModels: widget.mensaModels),
           Padding(

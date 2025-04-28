@@ -220,5 +220,13 @@
   "noResults": "No results",
   "@noResults": {
     "description": "No results"
+  },
+  "favorites": "Favorites",
+  "@favorites": {
+    "description": "Favorites (canteens, libraries, etc.)"
+  },
+  "allClosed": "Everything is closed",
+  "@allClosed": {
+    "description": "All canteens or libraries are closed"
   }
 }

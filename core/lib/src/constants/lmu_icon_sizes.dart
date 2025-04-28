@@ -1,4 +1,6 @@
 class LmuIconSizes {
+  LmuIconSizes._();
+
   /// 16px
   static const double small = 16.0;
 

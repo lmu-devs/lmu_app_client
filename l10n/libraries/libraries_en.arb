@@ -1,0 +1,16 @@
+{
+  "@@locale": "en",
+  "@@context": "Libraries",
+  "pageTitle": "Libraries",
+  "@pageTitle": {
+    "description": "Title of the page"
+  },
+  "library": "Library",
+  "@library": {
+    "description": "Library"
+  },
+  "allLibraries": "All Libraries",
+  "@allLibraries": {
+    "description": "All libraries"
+  }
+}

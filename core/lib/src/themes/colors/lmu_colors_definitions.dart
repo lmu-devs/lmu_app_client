@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'color_construct.dart';
 import 'color_primitives.dart';
 import 'lmu_colors_theme_extension.dart';
-import 'mensa_colors.dart';
+import 'custom_colors.dart';
 import 'neutral_colors.dart';
 import 'warning_colors.dart';
 
@@ -131,18 +131,24 @@ const lmuColorsDark = LmuColors(
           disabled: ColorPrimitives.amber30),
     ),
   ),
-  mensaColors: MensaColors(
-    textColors: MensaTextColors(
+  customColors: CustomColors(
+    textColors: CustomTextColors(
       mensa: Color(0xFF75DB70),
       stuBistro: Color(0xFFE75589),
       stuCafe: Color(0xFFF3941A),
       stuLounge: Color(0xFFF3BE79),
+      cinema: Color(0xFFDE4242),
+      building: Color(0xFF1C94F0),
+      library: Color(0xFFB75AF1),
     ),
-    backgroundColors: MensaBackgroundColors(
+    backgroundColors: CustomBackgroundColors(
       mensa: Color(0x1F47EA3F),
       stuBistro: Color(0x29F40B5D),
       stuCafe: Color(0x26F18801),
       stuLounge: Color(0x2EB08B5D),
+      cinema: Color(0x24DE4242),
+      building: Color(0x2E1C94F0),
+      library: Color(0x29B75AF1),
     ),
   ),
   brandColors: BrandColors(
@@ -313,18 +319,24 @@ const lmuColorsLight = LmuColors(
               pressed: ColorPrimitives.amber60,
               active: ColorPrimitives.amber60,
               disabled: ColorPrimitives.amber60))),
-  mensaColors: MensaColors(
-    textColors: MensaTextColors(
+  customColors: CustomColors(
+    textColors: CustomTextColors(
       mensa: Color(0xFF4FBF4A),
       stuBistro: Color(0xFFD83972),
       stuCafe: Color(0xFFE78201),
       stuLounge: Color(0xFF745936),
+      cinema: Color(0xFFEA4A4A),
+      building: Color(0xFF39A6F9),
+      library: Color(0xFFBE67F4),
     ),
-    backgroundColors: MensaBackgroundColors(
+    backgroundColors: CustomBackgroundColors(
       mensa: Color(0x261CB814),
       stuBistro: Color(0x26F40B5D),
       stuCafe: Color(0x30FF9001),
       stuLounge: Color(0x2E977243),
+      cinema: Color(0x29EA4A4A),
+      building: Color(0x2139A6F9),
+      library: Color(0x24BE67F4),
     ),
   ),
   brandColors: BrandColors(

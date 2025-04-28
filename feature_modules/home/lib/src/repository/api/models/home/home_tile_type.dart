@@ -34,6 +34,9 @@ enum HomeTileType {
   @JsonValue("MENSA")
   mensa,
 
+  @JsonValue("LIBRARIES")
+  libraries,
+
   @JsonValue("OTHER")
   other
 }
