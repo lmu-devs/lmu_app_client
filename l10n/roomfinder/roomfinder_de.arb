@@ -1,6 +1,7 @@
 {
   "@@locale": "de",
   "@@context": "Raumfinder",
+  "title": "Raumfinder",
   "popular": "Beliebt",
   "allBuildings": "Alle Gebäude",
   "alphabetical": "Alphabetisch",

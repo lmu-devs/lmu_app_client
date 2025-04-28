@@ -6,6 +6,7 @@ import '../../../explore.dart';
 abstract class LibrariesService {
   Widget get librariesPage;
   RouteBase get librariesData;
+
   Stream<List<ExploreLocation>> get librariesExploreLocationsStream;
 
   void navigateToLibrariesPage(BuildContext context);

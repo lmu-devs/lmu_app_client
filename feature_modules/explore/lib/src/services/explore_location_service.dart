@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/cinema.dart';
 import 'package:shared_api/explore.dart';
+import 'package:shared_api/libraries.dart';
 import 'package:shared_api/mensa.dart';
 import 'package:shared_api/roomfinder.dart';
 
@@ -65,6 +66,13 @@ class ExploreLocationService {
     });
     final roomfinderService = GetIt.I<RoomfinderService>();
     roomfinderService.roomfinderExploreLocationsStream.listen((locations) {
+      final currentLocations = List.of(exploreLocationsNotifier.value);
+      final updatedLocations = currentLocations..addAll(locations);
+      exploreLocationsNotifier.value = updatedLocations;
+      _updateFilteredExploreLocations();
+    });
+    final librariesService = GetIt.I<LibrariesService>();
+    librariesService.librariesExploreLocationsStream.listen((locations) {
       final currentLocations = List.of(exploreLocationsNotifier.value);
       final updatedLocations = currentLocations..addAll(locations);
       exploreLocationsNotifier.value = updatedLocations;
