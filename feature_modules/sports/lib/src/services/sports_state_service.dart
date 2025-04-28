@@ -125,4 +125,9 @@ class SportsStateService {
 
     _updateFilteredSports();
   }
+
+  void resetFilter() {
+    _filterOptionsNotifier.value = {SportsFilterOption.all: true, SportsFilterOption.available: false};
+    _filteredGroupedSportsNotifier.value = _initialSportTypes;
+  }
 }

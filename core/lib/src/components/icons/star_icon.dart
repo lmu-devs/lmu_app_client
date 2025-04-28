@@ -20,6 +20,9 @@ class StarIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = context.locals.app;
+    final colors = context.colors;
+    final disabledLightColor = colors.neutralColors.borderColors.seperatorLight;
+    final disabledDarkColor = Colors.black;
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 500),
       transitionBuilder: (child, animation) {
@@ -44,7 +47,8 @@ class StarIcon extends StatelessWidget {
         colorFilter: ColorFilter.mode(
           isActive
               ? context.colors.warningColors.textColors.strongColors.base
-              : disabledColor ?? context.colors.neutralColors.backgroundColors.base,
+              : disabledColor ??
+                  (Theme.of(context).brightness == Brightness.light ? disabledLightColor : disabledDarkColor),
           BlendMode.srcIn,
         ),
       ),
