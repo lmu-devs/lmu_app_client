@@ -51,10 +51,6 @@ class HomeSuccessView extends StatelessWidget {
                   crossAxisSpacing: LmuSizes.size_16,
                   children: [
                     if (showFeatured) HomeFeaturedTile(featured: featured!),
-                    LmuButton(
-                      title: "Libraries",
-                      onTap: () => GetIt.I<LibrariesService>().navigateToLibrariesPage(context),
-                    ),
                     ...tiles.map(
                       (tile) {
                         final cellCount = tile.cellCount;
