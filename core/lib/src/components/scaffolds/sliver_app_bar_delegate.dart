@@ -157,7 +157,7 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 
   double _calculateLargeTitleHeight(double scrollOffset) {
     if (scrollOffset > 0 + imageOffset) {
-      return clampDouble(largeTitleHeight - scrollOffset + imageOffset, 0, largeTitleHeight);
+      return clampDouble(largeTitleHeight - scrollOffset + imageOffset - LmuSizes.size_4, 0, largeTitleHeight);
     }
     return largeTitleHeight;
   }

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../cubit/sports_cubit/cubit.dart';
+import '../services/sports_state_service.dart';
 import '../widgets/widgets.dart';
 
 class SportsPage extends StatefulWidget {
@@ -17,11 +18,15 @@ class SportsPage extends StatefulWidget {
 class _SportsPageState extends State<SportsPage> {
   @override
   void initState() {
+    super.initState();
+
     final sportsCubit = GetIt.I.get<SportsCubit>();
     if (sportsCubit.state is! SportsLoadSuccess) {
       sportsCubit.loadSports();
+    } else {
+      final stateService = GetIt.I.get<SportsStateService>();
+      stateService.resetFilter();
     }
-    super.initState();
   }
 
   @override
