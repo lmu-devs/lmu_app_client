@@ -1,7 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/extensions.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/mensa.dart';
@@ -61,27 +60,10 @@ class _MensaDetailsPageState extends State<MensaDetailsPage> {
         builder: (context, favoriteMensaIds, _) {
           final isFavorite = favoriteMensaIds.contains(_mensaModel.canteenId);
           final calculatedLikes = _mensaModel.ratingModel.calculateLikeCount(isFavorite);
-          return GestureDetector(
-            onTap: () {
-              mensaUserPreferencesService.toggleFavoriteMensaId(_mensaModel.canteenId);
-              LmuVibrations.secondary();
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(LmuSizes.size_8),
-              child: Row(
-                children: [
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(minWidth: 10),
-                    child: LmuText.bodySmall(calculatedLikes),
-                  ),
-                  const SizedBox(width: LmuSizes.size_4),
-                  StarIcon(
-                    isActive: isFavorite,
-                    disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
-                  ),
-                ],
-              ),
-            ),
+          return LmuFavoriteButton(
+            isFavorite: isFavorite,
+            calculatedLikes: calculatedLikes,
+            onTap: () => mensaUserPreferencesService.toggleFavoriteMensaId(_mensaModel.canteenId),
           );
         },
       ),
