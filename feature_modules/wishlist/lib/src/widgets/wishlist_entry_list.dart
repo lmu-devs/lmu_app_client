@@ -23,9 +23,11 @@ class WishlistEntryList extends StatelessWidget {
           child = WishlistEntrySection(key: const ValueKey("wishlistContent"), wishlistModels: state.wishlistModels);
         }
 
-        return Align(
-          alignment: Alignment.topCenter,
-          child: LmuPageAnimationWrapper(child: child),
+        return LmuPageAnimationWrapper(
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: child,
+          ),
         );
       },
     );

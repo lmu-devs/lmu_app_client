@@ -12,15 +12,11 @@ import 'package:shared_api/mensa.dart';
 import 'package:shared_api/roomfinder.dart';
 
 import '../extensions/explore_marker_type_extension.dart';
+import '../services/explore_location_service.dart';
 import '../services/explore_map_service.dart';
 
 class ExploreMapContentSheet extends StatefulWidget {
-  const ExploreMapContentSheet({
-    super.key,
-    required this.sheetController,
-  });
-
-  final DraggableScrollableController sheetController;
+  const ExploreMapContentSheet({super.key});
 
   @override
   ExploreMapContentSheetState createState() => ExploreMapContentSheetState();
@@ -37,6 +33,7 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
   ExploreLocation? _selectedLocation;
 
   final _mapService = GetIt.I<ExploreMapService>();
+  final _locationService = GetIt.I<ExploreLocationService>();
 
   @override
   void initState() {
@@ -46,7 +43,7 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
     _baseSize = 0.40;
     _maxSize = 0.9;
 
-    _sheetController = widget.sheetController;
+    _sheetController = DraggableScrollableController();
     _sheetController.addListener(_onScroll);
 
     _mapService.selectedMarkerNotifier.addListener(_onMarkerSelection);
@@ -66,8 +63,10 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
   }
 
   void _onMarkerSelection() {
+    final selectedMarkerId = _mapService.selectedMarkerNotifier.value;
+
     setState(() {
-      _selectedLocation = _mapService.selectedMarker;
+      _selectedLocation = selectedMarkerId == null ? null : _locationService.getLocationById(selectedMarkerId);
     });
 
     if (_selectedLocation != null) {
@@ -142,6 +141,10 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
                         padding: const EdgeInsets.all(LmuSizes.size_16),
                         decoration: BoxDecoration(
                           color: colors.neutralColors.backgroundColors.base,
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(LmuSizes.size_24),
+                            topRight: Radius.circular(LmuSizes.size_24),
+                          ),
                           border: Border(
                             bottom: BorderSide(
                               color: colors.neutralColors.borderColors.seperatorLight,

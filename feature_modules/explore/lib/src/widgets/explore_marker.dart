@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_api/explore.dart';
 
 import '../extensions/explore_marker_type_extension.dart';
+import '../services/explore_location_service.dart';
 import '../services/explore_map_service.dart';
 import 'explore_map_dot.dart';
 import 'explore_map_pin.dart';
@@ -25,7 +26,8 @@ class _ExploreMarkerState extends State<ExploreMarker> with TickerProviderStateM
   late final ValueNotifier<String?> _selectedMarkerNotifier;
   late final ValueNotifier<ExploreMarkerSize> _markerSizeNotifier;
 
-  final exploreMapService = GetIt.I<ExploreMapService>();
+  final _mapService = GetIt.I<ExploreMapService>();
+  final _locationService = GetIt.I<ExploreLocationService>();
 
   String get _id => widget.exploreLocation.id;
   ExploreMarkerType get _type => widget.exploreLocation.type;
@@ -34,8 +36,8 @@ class _ExploreMarkerState extends State<ExploreMarker> with TickerProviderStateM
   void initState() {
     super.initState();
 
-    _selectedMarkerNotifier = exploreMapService.selectedMarkerNotifier;
-    _markerSizeNotifier = exploreMapService.exploreMarkerSizeNotifier;
+    _selectedMarkerNotifier = _mapService.selectedMarkerNotifier;
+    _markerSizeNotifier = _mapService.exploreMarkerSizeNotifier;
 
     _scaleController = AnimationController(
       vsync: this,
@@ -117,8 +119,9 @@ class _ExploreMarkerState extends State<ExploreMarker> with TickerProviderStateM
         GestureDetector(
           behavior: HitTestBehavior.translucent,
           onTap: () {
-            print(widget.exploreLocation.name);
-            exploreMapService.updateMarker(_id);
+            final location = _locationService.getLocationById(_id);
+            _locationService.bringToFront(_id);
+            _mapService.updateMarker(location);
           },
           child: SizedBox(
             width: _markerSizeNotifier.value.size,

@@ -1,78 +1,49 @@
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:latlong2/latlong.dart' as latlong;
 import 'package:shared_api/explore.dart';
-import 'package:vector_map_tiles/vector_map_tiles.dart';
+import 'package:widget_driver/widget_driver.dart';
 
 import '../services/explore_map_service.dart';
 import '../widgets/explore_map_content_sheet.dart';
 import '../widgets/explore_map_overlay.dart';
 import '../widgets/explore_marker.dart';
+import 'explore_page_driver.dart';
 
-class ExplorePage extends StatefulWidget {
-  const ExplorePage({super.key});
+class ExploreMapAnimationWrapper extends StatefulWidget {
+  const ExploreMapAnimationWrapper({super.key});
 
   @override
-  State<ExplorePage> createState() => _ExplorePageState();
+  State<ExploreMapAnimationWrapper> createState() => _ExploreMapAnimationWrapperState();
 }
 
-class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin {
+class _ExploreMapAnimationWrapperState extends State<ExploreMapAnimationWrapper> with TickerProviderStateMixin {
   late final AnimatedMapController _animatedMapController;
-  late final DraggableScrollableController _sheetController;
-  Style? style;
-  List<Marker> markers = [];
-  final _mapService = GetIt.I<ExploreMapService>();
 
   @override
   void initState() {
     super.initState();
-    _mapService.init();
-
-    initStyle();
+    final mapService = GetIt.I<ExploreMapService>();
 
     _animatedMapController = AnimatedMapController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
-      mapController: _mapService.mapController,
+      mapController: mapService.mapController,
     );
-
-    _onExploreLocationsChanged();
-    _mapService.exploreLocationsNotifier.addListener(_onExploreLocationsChanged);
-
-    _mapService.animatedMapController = _animatedMapController;
-
-    _sheetController = DraggableScrollableController();
-  }
-
-  void _onExploreLocationsChanged() {
-    setState(() {
-      markers = _mapService.exploreLocationsNotifier.value.map((location) => location.toMarker).toList();
-    });
-  }
-
-  Future<Style> _readStyle() {
-    return StyleReader(
-      uri: 'mapbox://styles/mapbox/streets-v12?access_token={key}',
-      apiKey: dotenv.env['MAPBOX_ACCESS_TOKEN'] ?? '',
-    ).read();
-  }
-
-  void initStyle() async {
-    style = await _readStyle();
-    setState(() {});
+    mapService.animatedMapController = _animatedMapController;
   }
 
   @override
-  void dispose() {
-    _mapService.exploreLocationsNotifier.removeListener(_onExploreLocationsChanged);
-    super.dispose();
-  }
+  Widget build(BuildContext context) => ExplorePage();
+}
+
+class ExplorePage extends DrivableWidget<ExplorePageDriver> {
+  ExplorePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -80,24 +51,22 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
       child: Stack(
         children: [
           FlutterMap(
-            mapController: _animatedMapController.mapController,
+            mapController: driver.mapController,
             options: MapOptions(
               backgroundColor: context.colors.neutralColors.backgroundColors.tile,
-              initialCenter: const latlong.LatLng(48.150578, 11.580767),
-              cameraConstraint: CameraConstraint.contain(bounds: _mapService.mapBounds),
-              initialZoom: 15,
-              maxZoom: 18,
-              minZoom: 10,
-              onMapReady: () => _mapService.focusUserLocation(withAnimation: false),
-              onPositionChanged: (camera, _) => _mapService.updateZoomLevel(camera.zoom),
-              onTap: (_, __) => _mapService.deselectMarker(),
+              initialCenter: driver.initialCenter,
+              cameraConstraint: driver.cameraConstraint,
+              initialZoom: driver.zoomConfig.initialZoom,
+              minZoom: driver.zoomConfig.minZoom,
+              maxZoom: driver.zoomConfig.maxZoom,
+              onMapReady: driver.onMapReady,
+              onPositionChanged: driver.onPositionChanged,
+              onTap: driver.onMapTap,
             ),
             children: [
               TileLayer(
-                urlTemplate: Theme.of(context).brightness == Brightness.light
-                    ? 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png'
-                    : 'https://{s}.basemaps.cartocdn.com/rastertiles/dark_nolabels/{z}/{x}/{y}.png',
-                subdomains: const ['a', 'b', 'c'],
+                urlTemplate: driver.urlTemplate,
+                subdomains: driver.subdomains,
                 // tileProvider: CachedTileProvider(
                 //   maxStale: const Duration(days: 30),
                 //   store: HiveCacheStore("erter"),
@@ -114,7 +83,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
               //     logCacheStats: true,
               //   ),
               CurrentLocationLayer(),
-              MarkerLayer(rotate: true, markers: markers),
+              MarkerLayer(rotate: true, markers: driver.locations.map((location) => location.toMarker).toList()),
               // MarkerClusterLayerWidget(
               //   options: MarkerClusterLayerOptions(
               //     maxClusterRadius: 50,
@@ -149,11 +118,14 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
               ),
             ],
           ),
-          ExploreMapContentSheet(sheetController: _sheetController),
+          const ExploreMapContentSheet(),
         ],
       ),
     );
   }
+
+  @override
+  WidgetDriverProvider<ExplorePageDriver> get driverProvider => $ExplorePageDriverProvider();
 }
 
 extension on ExploreLocation {
