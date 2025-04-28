@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
@@ -113,91 +115,104 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
       snap: true,
       snapAnimationDuration: const Duration(milliseconds: 150),
       builder: (context, scrollController) {
-        return Container(
-          decoration: BoxDecoration(
-            color: colors.neutralColors.backgroundColors.base,
-            border: Border(
-              top: BorderSide(
-                color: colors.neutralColors.borderColors.seperatorDark,
-                width: 0.5,
-              ),
-            ),
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(LmuSizes.size_24),
-              topRight: Radius.circular(LmuSizes.size_24),
-            ),
-            boxShadow: [
-              BoxShadow(color: Colors.black.withOpacity(0.10), blurRadius: LmuSizes.size_24),
-              BoxShadow(color: Colors.black.withOpacity(0.10), blurRadius: LmuSizes.size_64),
-            ],
+        return ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(LmuSizes.size_24),
+            topRight: Radius.circular(LmuSizes.size_24),
           ),
-          child: CustomScrollView(
-            controller: scrollController,
-            slivers: _selectedLocation == null
-                ? const [SliverToBoxAdapter(child: SizedBox.shrink())]
-                : [
-                    PinnedHeaderSliver(
-                      child: Container(
-                        padding: const EdgeInsets.all(LmuSizes.size_16),
-                        decoration: BoxDecoration(
-                          color: colors.neutralColors.backgroundColors.base,
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(LmuSizes.size_24),
-                            topRight: Radius.circular(LmuSizes.size_24),
-                          ),
-                          border: Border(
-                            bottom: BorderSide(
-                              color: colors.neutralColors.borderColors.seperatorLight,
-                              width: 0.5,
-                            ),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Flexible(
-                              child: Wrap(
-                                spacing: LmuSizes.size_8,
-                                runSpacing: LmuSizes.size_8,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                children: [
-                                  LmuText.h1(_selectedLocation!.name),
-                                  LmuInTextVisual.text(
-                                    title: _selectedLocation!.type.localizedName(context.locals),
-                                    textColor: _selectedLocation!.type.markerColor(colors),
-                                    backgroundColor: _selectedLocation!.type.markerColor(colors).withOpacity(0.14),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(width: LmuSizes.size_16),
-                            GestureDetector(
-                              onTap: () {
-                                _close();
-                                _mapService.deselectMarker();
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_2),
-                                child: Container(
-                                  padding: const EdgeInsets.all(LmuSizes.size_4),
+          child: Container(
+            decoration: BoxDecoration(
+              color: colors.neutralColors.backgroundColors.base,
+              border: Border(
+                top: BorderSide(
+                  color: colors.neutralColors.borderColors.seperatorDark,
+                  width: 0.5,
+                ),
+              ),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.10), blurRadius: LmuSizes.size_24),
+                BoxShadow(color: Colors.black.withOpacity(0.10), blurRadius: LmuSizes.size_64),
+              ],
+            ),
+            child: CustomScrollView(
+              controller: scrollController,
+              slivers: _selectedLocation == null
+                  ? []
+                  : [
+                      PinnedHeaderSliver(
+                        child: ListenableBuilder(
+                          listenable: scrollController,
+                          builder: (context, child) {
+                            final scrollOffset = scrollController.hasClients ? scrollController.offset : 0.0;
+                            final borderOpacity = clampDouble(scrollOffset, 0, LmuSizes.size_16);
+                            return Stack(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(LmuSizes.size_16),
                                   decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: colors.neutralColors.backgroundColors.mediumColors.base,
+                                    color: colors.neutralColors.backgroundColors.base,
                                   ),
-                                  child: const LmuIcon(
-                                    icon: LucideIcons.x,
-                                    size: LmuIconSizes.medium,
+                                  child: child,
+                                ),
+                                Positioned(
+                                  bottom: 0,
+                                  left: 0,
+                                  right: 0,
+                                  child: Opacity(
+                                    opacity: borderOpacity / LmuSizes.size_16,
+                                    child: const LmuDivider(),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Flexible(
+                                child: Wrap(
+                                  spacing: LmuSizes.size_8,
+                                  runSpacing: LmuSizes.size_8,
+                                  crossAxisAlignment: WrapCrossAlignment.center,
+                                  children: [
+                                    LmuText.h1(_selectedLocation!.name),
+                                    LmuInTextVisual.text(
+                                      title: _selectedLocation!.type.localizedName(context.locals),
+                                      textColor: _selectedLocation!.type.markerColor(colors),
+                                      backgroundColor: _selectedLocation!.type.markerColor(colors).withOpacity(0.14),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: LmuSizes.size_16),
+                              GestureDetector(
+                                onTap: () {
+                                  _close();
+                                  _mapService.deselectMarker();
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_2),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(LmuSizes.size_4),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: colors.neutralColors.backgroundColors.mediumColors.base,
+                                    ),
+                                    child: const LmuIcon(
+                                      icon: LucideIcons.x,
+                                      size: LmuIconSizes.medium,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    ..._selectedLocation!.type.getContent(context, _selectedLocation!.id, scrollController),
-                  ],
+                      ..._selectedLocation!.type.getContent(context, _selectedLocation!.id, scrollController),
+                    ],
+            ),
           ),
         );
       },

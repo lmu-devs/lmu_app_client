@@ -1,10 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_cache/flutter_map_cache.dart';
 import 'package:get_it/get_it.dart';
+import 'package:http_cache_hive_store/http_cache_hive_store.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_api/explore.dart';
-import 'package:vector_map_tiles/vector_map_tiles.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../services/explore_location_service.dart';
@@ -20,10 +23,10 @@ class ExplorePageDriver extends WidgetDriver {
   final _locationService = GetIt.I<ExploreLocationService>();
 
   late final ValueNotifier<List<ExploreLocation>> _filteredLocationsNotifier;
-  late Brightness? _brightness;
+  late Brightness _brightness;
+  TileProvider? _tileProvider;
 
   List<ExploreLocation> _locations = [];
-  Style? _style;
 
   @TestDriverDefaultValue(_TestMapController())
   MapController get mapController => _mapService.mapController;
@@ -34,14 +37,14 @@ class ExplorePageDriver extends WidgetDriver {
   @TestDriverDefaultValue(LatLng(0, 0))
   LatLng get initialCenter => const LatLng(48.150578, 11.580767);
 
-  @TestDriverDefaultValue(null)
-  Style? get style => _style;
-
-  @TestDriverDefaultValue((initalZoom: 0, minZoom: 0, maxZoom: 0))
+  @TestDriverDefaultValue((initialZoom: 0, minZoom: 0, maxZoom: 0))
   ZoomConfig get zoomConfig => (initialZoom: 15, minZoom: 10, maxZoom: 18);
 
   @TestDriverDefaultValue(CameraConstraint.unconstrained())
   CameraConstraint get cameraConstraint => CameraConstraint.contain(bounds: _mapService.mapBounds);
+
+  @TestDriverDefaultValue(InteractionOptions())
+  InteractionOptions get interactionOptions => const InteractionOptions(rotationThreshold: 40);
 
   @TestDriverDefaultValue("")
   String get urlTemplate => _brightness == Brightness.light
@@ -51,36 +54,43 @@ class ExplorePageDriver extends WidgetDriver {
   @TestDriverDefaultValue([])
   List<String> get subdomains => const ['a', 'b', 'c'];
 
+  @TestDriverDefaultValue(null)
+  TileProvider? get tileProvider => _tileProvider;
+
   void onMapReady() => _mapService.focusUserLocation(withAnimation: false);
 
   void onPositionChanged(MapCamera camera, _) => _mapService.updateZoomLevel(camera.zoom);
 
   void onMapTap(_, __) => _mapService.deselectMarker();
 
-  void _initStyle() async {
-    final style = await StyleReader(
-      uri: 'mapbox://styles/mapbox/streets-v12?access_token={key}',
-      apiKey: dotenv.env['MAPBOX_ACCESS_TOKEN'] ?? '',
-    ).read();
-    _style = style;
-    notifyWidget();
-  }
-
   void _onExploreLocationsChanged() {
     _locations = _filteredLocationsNotifier.value;
     notifyWidget();
   }
 
+  Future<String> _getCacheDirectory() async {
+    final dir = await getTemporaryDirectory();
+    return '${dir.path}${Platform.pathSeparator}MapTiles';
+  }
+
+  Future<TileProvider> _initTileProvider() async {
+    final cacheDirectory = await _getCacheDirectory();
+
+    return CachedTileProvider(
+      maxStale: const Duration(days: 30),
+      store: HiveCacheStore(cacheDirectory, hiveBoxName: 'HiveCacheStore'),
+    );
+  }
+
   @override
-  void didInitDriver() {
+  void didInitDriver() async {
     super.didInitDriver();
     _mapService.init();
     _locationService.init();
 
     _filteredLocationsNotifier = _locationService.filteredLocationsNotifier;
     _filteredLocationsNotifier.addListener(_onExploreLocationsChanged);
-
-    _initStyle();
+    _tileProvider = await _initTileProvider();
   }
 
   @override

@@ -14,6 +14,8 @@ import '../widgets/explore_map_overlay.dart';
 import '../widgets/explore_marker.dart';
 import 'explore_page_driver.dart';
 
+/// This [ExploreMapAnimationWrapper] is needed since [DrivableWidget] does not support [TickerProviderStateMixin],
+/// which is needed for the animated map controller
 class ExploreMapAnimationWrapper extends StatefulWidget {
   const ExploreMapAnimationWrapper({super.key});
 
@@ -22,20 +24,18 @@ class ExploreMapAnimationWrapper extends StatefulWidget {
 }
 
 class _ExploreMapAnimationWrapperState extends State<ExploreMapAnimationWrapper> with TickerProviderStateMixin {
-  late final AnimatedMapController _animatedMapController;
-
   @override
   void initState() {
     super.initState();
     final mapService = GetIt.I<ExploreMapService>();
 
-    _animatedMapController = AnimatedMapController(
+    final animatedMapController = AnimatedMapController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
       mapController: mapService.mapController,
     );
-    mapService.animatedMapController = _animatedMapController;
+    mapService.animatedMapController = animatedMapController;
   }
 
   @override
@@ -47,6 +47,7 @@ class ExplorePage extends DrivableWidget<ExplorePageDriver> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return SoftBlur(
       child: Stack(
         children: [
@@ -62,60 +63,17 @@ class ExplorePage extends DrivableWidget<ExplorePageDriver> {
               onMapReady: driver.onMapReady,
               onPositionChanged: driver.onPositionChanged,
               onTap: driver.onMapTap,
+              interactionOptions: driver.interactionOptions,
             ),
             children: [
               TileLayer(
                 urlTemplate: driver.urlTemplate,
                 subdomains: driver.subdomains,
-                // tileProvider: CachedTileProvider(
-                //   maxStale: const Duration(days: 30),
-                //   store: HiveCacheStore("erter"),
-                // ),
+                tileProvider: driver.tileProvider,
               ),
-              // if (style != null)
-              //   VectorTileLayer(
-              //     theme: style!.theme,
-              //     sprites: style!.sprites,
-              //     tileOffset: TileOffset.mapbox,
-              //     tileProviders: style!.providers,
-              //     layerMode: VectorTileLayerMode.vector,
-              //     showTileDebugInfo: true,
-              //     logCacheStats: true,
-              //   ),
-              CurrentLocationLayer(),
+              const CurrentLocationLayer(),
               MarkerLayer(rotate: true, markers: driver.locations.map((location) => location.toMarker).toList()),
-              // MarkerClusterLayerWidget(
-              //   options: MarkerClusterLayerOptions(
-              //     maxClusterRadius: 50,
-              //     size: const Size(36, 36),
-              //     alignment: Alignment.center,
-              //     padding: const EdgeInsets.all(50),
-              //     maxZoom: 15,
-              //     markers: markers,
-              //     builder: (context, markers) {
-              //       return Container(
-              //         decoration: BoxDecoration(
-              //           borderRadius: BorderRadius.circular(20),
-              //           border: Border.all(
-              //             color: context.colors.neutralColors.borderColors.iconOutline,
-              //             width: 1.5,
-              //           ),
-              //           color: context.colors.neutralColors.backgroundColors.tile,
-              //         ),
-              //         child: Center(
-              //           child: LmuText.bodySmall(
-              //             markers.length.toString(),
-              //           ),
-              //         ),
-              //       );
-              //     },
-              //   ),
-              // ),
-              Positioned(
-                bottom: 0,
-                width: MediaQuery.of(context).size.width,
-                child: const ExploreMapOverlay(),
-              ),
+              Positioned(bottom: 0, width: screenWidth, child: const ExploreMapOverlay()),
             ],
           ),
           const ExploreMapContentSheet(),

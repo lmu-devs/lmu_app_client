@@ -29,6 +29,7 @@ class CinemaDetailsPage extends StatelessWidget {
     final content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SizedBox(height: LmuSizes.size_16),
         LmuButtonRow(
           buttons: [
             LmuButton(

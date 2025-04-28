@@ -21,19 +21,22 @@ class _$TestExplorePageDriver extends TestDriver implements ExplorePageDriver {
   LatLng get initialCenter => LatLng(0, 0);
 
   @override
-  Style? get style => null;
-
-  @override
   ZoomConfig get zoomConfig => (initialZoom: 0, minZoom: 0, maxZoom: 0);
 
   @override
   CameraConstraint get cameraConstraint => CameraConstraint.unconstrained();
 
   @override
+  InteractionOptions get interactionOptions => InteractionOptions();
+
+  @override
   String get urlTemplate => "";
 
   @override
   List<String> get subdomains => [];
+
+  @override
+  TileProvider? get tileProvider => null;
 
   @override
   void onMapReady() {}
