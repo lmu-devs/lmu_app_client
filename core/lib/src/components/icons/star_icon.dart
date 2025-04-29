@@ -22,7 +22,7 @@ class StarIcon extends StatelessWidget {
     final localization = context.locals.app;
     final colors = context.colors;
     final disabledLightColor = colors.neutralColors.borderColors.seperatorLight;
-    final disabledDarkColor = Colors.black;
+    const disabledDarkColor = Colors.black;
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 500),
       transitionBuilder: (child, animation) {

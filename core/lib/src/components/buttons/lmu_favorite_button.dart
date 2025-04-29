@@ -20,7 +20,7 @@ class LmuFavoriteButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        onTap;
+        onTap();
         LmuVibrations.secondary();
       },
       child: Padding(

@@ -117,6 +117,8 @@ class ExploreActionRow extends StatelessWidget {
               ),
             ),
           )
+          .toList()
+          .reversed
           .toList(),
     );
   }
