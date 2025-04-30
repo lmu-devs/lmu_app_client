@@ -15,11 +15,13 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
-      largeTitle: "Home",
-      largeTitleTrailingWidget: GestureDetector(
-        onTap: () => GetIt.I.get<SettingsService>().navigateToSettings(context),
-        child: const LmuIcon(icon: LucideIcons.settings, size: LmuIconSizes.medium),
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: "Home",
+        largeTitleTrailingWidget: GestureDetector(
+          onTap: () => GetIt.I.get<SettingsService>().navigateToSettings(context),
+          child: const LmuIcon(icon: LucideIcons.settings, size: LmuIconSizes.medium),
+        ),
       ),
       body: BlocBuilder<HomeCubit, HomeState>(
         bloc: GetIt.I.get<HomeCubit>(),

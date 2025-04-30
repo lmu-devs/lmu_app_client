@@ -1,4 +1,5 @@
 import 'package:core/components.dart';
+import 'package:core/localizations.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -25,9 +26,11 @@ class _BenefitsPageState extends State<BenefitsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
-      largeTitle: "Benefits",
-      leadingAction: LeadingAction.back,
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: context.locals.home.benefits,
+        leadingAction: LeadingAction.back,
+      ),
       body: BlocBuilder<BenefitsCubit, BenefitsState>(
         bloc: GetIt.I.get<BenefitsCubit>(),
         builder: (context, state) {

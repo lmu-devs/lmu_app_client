@@ -38,9 +38,11 @@ class SportsDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sportsLocals = context.locals.sports;
-    return LmuMasterAppBar(
-      largeTitle: sport.title,
-      leadingAction: LeadingAction.back,
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: sport.title,
+        leadingAction: LeadingAction.back,
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
         child: SingleChildScrollView(

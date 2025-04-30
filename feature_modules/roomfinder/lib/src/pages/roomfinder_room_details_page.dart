@@ -17,14 +17,16 @@ class RoomfinderRoomDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    return LmuMasterAppBar(
-      leadingAction: LeadingAction.back,
-      largeTitle: room.name,
-      largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
-      largeTitleTrailingWidget: LmuInTextVisual.text(
-        title: "Room",
-        textColor: colors.warningColors.textColors.strongColors.base,
-        backgroundColor: colors.customColors.backgroundColors.stuCafe,
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        leadingAction: LeadingAction.back,
+        largeTitle: room.name,
+        largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
+        largeTitleTrailingWidget: LmuInTextVisual.text(
+          title: "Room",
+          textColor: colors.warningColors.textColors.strongColors.base,
+          backgroundColor: colors.customColors.backgroundColors.stuCafe,
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(

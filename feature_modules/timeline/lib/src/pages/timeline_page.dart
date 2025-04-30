@@ -27,9 +27,11 @@ class _TimelinePageState extends State<TimelinePage> {
 
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
-      largeTitle: context.locals.timeline.datesTitle,
-      leadingAction: LeadingAction.back,
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: context.locals.timeline.datesTitle,
+        leadingAction: LeadingAction.back,
+      ),
       body: BlocBuilder<TimelineCubit, TimelineState>(
         bloc: GetIt.I.get<TimelineCubit>(),
         builder: (context, state) {

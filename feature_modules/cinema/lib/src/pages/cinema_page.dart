@@ -26,9 +26,11 @@ class _CinemaPageState extends State<CinemaPage> {
 
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
-      largeTitle: context.locals.cinema.pageTitle,
-      leadingAction: LeadingAction.back,
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: context.locals.cinema.pageTitle,
+        leadingAction: LeadingAction.back,
+      ),
       body: BlocBuilder<CinemaCubit, CinemaState>(
         bloc: GetIt.I.get<CinemaCubit>(),
         builder: (context, state) {

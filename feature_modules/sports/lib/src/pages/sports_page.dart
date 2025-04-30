@@ -31,9 +31,11 @@ class _SportsPageState extends State<SportsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
-      largeTitle: context.locals.sports.sportsTitle,
-      leadingAction: LeadingAction.back,
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: context.locals.sports.sportsTitle,
+        leadingAction: LeadingAction.back,
+      ),
       body: BlocBuilder<SportsCubit, SportsState>(
         bloc: GetIt.I.get<SportsCubit>(),
         builder: (context, state) {

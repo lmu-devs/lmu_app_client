@@ -27,9 +27,11 @@ class _RoomfinderPageState extends State<RoomfinderPage> {
 
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
-      largeTitle: context.locals.roomfinder.title,
-      leadingAction: LeadingAction.back,
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: context.locals.roomfinder.title,
+        leadingAction: LeadingAction.back,
+      ),
       body: BlocBuilder<RoomfinderCubit, RoomfinderState>(
         bloc: GetIt.I.get<RoomfinderCubit>(),
         builder: (_, state) {

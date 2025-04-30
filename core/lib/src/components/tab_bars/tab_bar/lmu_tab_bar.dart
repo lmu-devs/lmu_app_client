@@ -28,10 +28,12 @@ class _LmuTabBarState extends State<LmuTabBar> {
   late ValueNotifier<int> _activeTabIndexNotifier;
   final List<GlobalKey> _tabKeys = [];
 
+  int _activeIndex = 0;
+
   @override
   void initState() {
     super.initState();
-    _activeTabIndexNotifier = widget.activeTabIndexNotifier ?? ValueNotifier(0);
+    _activeTabIndexNotifier = widget.activeTabIndexNotifier ?? ValueNotifier(_activeIndex);
     _scrollController = ScrollController();
     _tabKeys.addAll(List.generate(widget.items.length, (_) => GlobalKey()));
 
@@ -42,6 +44,13 @@ class _LmuTabBarState extends State<LmuTabBar> {
   void dispose() {
     _activeTabIndexNotifier.removeListener(() => _centerSelectedItem(_activeTabIndexNotifier.value));
     super.dispose();
+  }
+
+  double get _startEnditemPadding {
+    if (widget.hasDefaultPaddings) {
+      return LmuSizes.size_16;
+    }
+    return 0;
   }
 
   @override
@@ -67,39 +76,29 @@ class _LmuTabBarState extends State<LmuTabBar> {
                 final tabItem = widget.items[index];
                 final isFirst = index == 0;
                 final isLast = index == widget.items.length - 1;
+                final isActive = _activeIndex == index;
+
                 return Row(
+                  key: Key('tab_bar_item_row_$index'),
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        right: isLast
-                            ? widget.hasDefaultPaddings
-                                ? LmuSizes.size_16
-                                : 0
-                            : LmuSizes.size_4,
-                        left: isFirst
-                            ? widget.hasDefaultPaddings
-                                ? LmuSizes.size_16
-                                : 0
-                            : LmuSizes.size_4,
+                        right: isLast ? _startEnditemPadding : LmuSizes.size_4,
+                        left: isFirst ? _startEnditemPadding : LmuSizes.size_4,
                       ),
-                      child: ValueListenableBuilder(
-                        valueListenable: _activeTabIndexNotifier,
-                        builder: (context, activeTabIndex, _) {
-                          return GestureDetector(
-                            key: _tabKeys[index],
-                            onTap: () => widget.onTabChanged.call(index, tabItem),
-                            child: AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 300),
-                              child: LmuTabBarItem(
-                                key: ValueKey('item_$index ${activeTabIndex == index}'),
-                                title: tabItem.title,
-                                isActive: activeTabIndex == index,
-                                leadingWidget: tabItem.leadingWidget,
-                                trailingWidget: tabItem.trailingWidget,
-                              ),
-                            ),
-                          );
-                        },
+                      child: GestureDetector(
+                        key: _tabKeys[index],
+                        onTap: () => widget.onTabChanged.call(index, tabItem),
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
+                          child: LmuTabBarItem(
+                            key: ValueKey('item_$index $isActive'),
+                            title: tabItem.title,
+                            isActive: isActive,
+                            leadingWidget: tabItem.leadingWidget,
+                            trailingWidget: tabItem.trailingWidget,
+                          ),
+                        ),
                       ),
                     ),
                     if (tabItem.hasDivider && !isLast)
@@ -126,27 +125,36 @@ class _LmuTabBarState extends State<LmuTabBar> {
   }
 
   void _centerSelectedItem(int index) {
-    final context = _tabKeys[index].currentContext;
-    if (context != null) {
-      final renderBox = context.findRenderObject() as RenderBox;
-      final tabPosition = renderBox.localToGlobal(Offset.zero);
-      final tabWidth = renderBox.size.width;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        setState(() => _activeIndex = index);
 
-      final screenWidth = MediaQuery.of(context).size.width;
-      final listViewPosition = _scrollController.position.pixels;
+        // Wait one more frame for layout to reflect the new active index
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          final context = _tabKeys[index].currentContext;
+          if (context != null) {
+            final renderBox = context.findRenderObject() as RenderBox;
+            final tabPosition = renderBox.localToGlobal(Offset.zero);
+            final tabWidth = renderBox.size.width;
 
-      double targetOffset = listViewPosition + tabPosition.dx + (tabWidth / 2) - (screenWidth / 2);
+            final screenWidth = MediaQuery.of(context).size.width;
+            final listViewPosition = _scrollController.position.pixels;
 
-      targetOffset = targetOffset.clamp(
-        _scrollController.position.minScrollExtent,
-        _scrollController.position.maxScrollExtent,
-      );
+            double targetOffset = listViewPosition + tabPosition.dx + (tabWidth / 2) - (screenWidth / 2);
 
-      _scrollController.animateTo(
-        targetOffset,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
+            targetOffset = targetOffset.clamp(
+              _scrollController.position.minScrollExtent,
+              _scrollController.position.maxScrollExtent,
+            );
+
+            _scrollController.animateTo(
+              targetOffset,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+            );
+          }
+        });
+      }
+    });
   }
 }

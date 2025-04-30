@@ -28,9 +28,11 @@ class SettingsMainPage extends StatelessWidget {
     final themeMode = GetIt.I.get<ThemeProvider>();
     final languageMode = GetIt.I.get<LanguageProvider>();
 
-    return LmuMasterAppBar(
-      largeTitle: settingLocalizations.settings,
-      leadingAction: LeadingAction.back,
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: settingLocalizations.settings,
+        leadingAction: LeadingAction.back,
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
         child: SingleChildScrollView(

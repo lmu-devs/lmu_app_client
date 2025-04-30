@@ -41,15 +41,17 @@ class _RoomfinderBuildingDetailsPageState extends State<RoomfinderBuildingDetail
 
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
-      leadingAction: LeadingAction.back,
-      largeTitle: _building.title,
-      largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
-      trailingWidgets: [_trailingAppBarAction],
-      largeTitleTrailingWidget: LmuInTextVisual.text(
-        title: context.locals.roomfinder.building,
-        textColor: buildingColor,
-        backgroundColor: buildingColor.withOpacity(0.14),
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        leadingAction: LeadingAction.back,
+        largeTitle: _building.title,
+        largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
+        trailingWidgets: [_trailingAppBarAction],
+        largeTitleTrailingWidget: LmuInTextVisual.text(
+          title: context.locals.roomfinder.building,
+          textColor: buildingColor,
+          backgroundColor: buildingColor.withOpacity(0.14),
+        ),
       ),
       body: CustomScrollView(
         slivers: [

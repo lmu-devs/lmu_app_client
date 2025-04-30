@@ -19,6 +19,7 @@ dependencies:
   json_annotation: ^4.0.1
   modal_bottom_sheet: ^3.0.0
   flutter_lucide: ^1.2.0
+  sliver_tools: ^0.2.12
 
 dev_dependencies:
   flutter_test:

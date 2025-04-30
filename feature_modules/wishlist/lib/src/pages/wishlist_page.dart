@@ -49,8 +49,8 @@ class _WishlistPageState extends State<WishlistPage> {
 
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
-      largeTitle: context.locals.wishlist.tabTitle,
+    return LmuScaffold(
+      appBar: LmuAppBarData(largeTitle: context.locals.wishlist.tabTitle),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

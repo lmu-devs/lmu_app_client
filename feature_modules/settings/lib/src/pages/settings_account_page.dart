@@ -13,9 +13,11 @@ class SettingsAccountPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = context.locals.settings;
 
-    return LmuMasterAppBar(
-      largeTitle: localization.account,
-      leadingAction: LeadingAction.back,
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: localization.account,
+        leadingAction: LeadingAction.back,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(LmuSizes.size_16),
