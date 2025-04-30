@@ -26,9 +26,11 @@ class _LibrariesPageState extends State<LibrariesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
-      largeTitle: context.locals.libraries.pageTitle,
-      leadingAction: LeadingAction.back,
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: context.locals.libraries.pageTitle,
+        leadingAction: LeadingAction.back,
+      ),
       body: BlocBuilder<LibrariesCubit, LibrariesState>(
         bloc: GetIt.I.get<LibrariesCubit>(),
         builder: (context, state) {

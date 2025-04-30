@@ -25,33 +25,35 @@ class LibraryDetailsPage extends StatelessWidget {
 
     if (!withAppBar) return content;
 
-    return LmuMasterAppBar(
-      largeTitle: library.name,
-      leadingAction: LeadingAction.back,
-      trailingWidgets: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_4),
-          child: ValueListenableBuilder(
-            valueListenable: GetIt.I<LibrariesUserPreferenceService>().favoriteLibraryIdsNotifier,
-            builder: (context, favoriteLibraryIds, _) {
-              final isFavorite = favoriteLibraryIds.contains(library.id);
-              final calculatedLikes = library.rating.calculateLikeCount(isFavorite);
-              return LmuFavoriteButton(
-                isFavorite: isFavorite,
-                calculatedLikes: calculatedLikes,
-                onTap: () => GetIt.I<LibrariesUserPreferenceService>().toggleFavoriteLibraryId(library.id),
-              );
-            },
+    return LmuScaffold(
+      appBar: LmuAppBarData.image(
+        largeTitle: library.name,
+        leadingAction: LeadingAction.back,
+        trailingWidgets: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_4),
+            child: ValueListenableBuilder(
+              valueListenable: GetIt.I<LibrariesUserPreferenceService>().favoriteLibraryIdsNotifier,
+              builder: (context, favoriteLibraryIds, _) {
+                final isFavorite = favoriteLibraryIds.contains(library.id);
+                final calculatedLikes = library.rating.calculateLikeCount(isFavorite);
+                return LmuFavoriteButton(
+                  isFavorite: isFavorite,
+                  calculatedLikes: calculatedLikes,
+                  onTap: () => GetIt.I<LibrariesUserPreferenceService>().toggleFavoriteLibraryId(library.id),
+                );
+              },
+            ),
           ),
+        ],
+        imageUrls: library.images.isNotEmpty ? library.images.map((image) => image.url).toList() : [],
+        largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
+        largeTitleTrailingWidget: LmuInTextVisual.text(
+          title: context.locals.libraries.library,
+          size: InTextVisualSize.large,
+          textColor: context.colors.customColors.textColors.library,
+          backgroundColor: context.colors.customColors.backgroundColors.library,
         ),
-      ],
-      imageUrls: library.images.isNotEmpty ? library.images.map((image) => image.url).toList() : [],
-      largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
-      largeTitleTrailingWidget: LmuInTextVisual.text(
-        title: context.locals.libraries.library,
-        size: InTextVisualSize.large,
-        textColor: context.colors.customColors.textColors.library,
-        backgroundColor: context.colors.customColors.backgroundColors.library,
       ),
       body: SingleChildScrollView(
         child: content,
