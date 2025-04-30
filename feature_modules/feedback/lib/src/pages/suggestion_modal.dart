@@ -3,6 +3,7 @@ import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
 import '../util/feedback_types.dart';
 import '../util/send_feedback.dart';
@@ -51,78 +52,82 @@ class _SuggestionModalState extends State<SuggestionModal> {
   Widget build(BuildContext context) {
     final localizations = context.locals.feedback;
 
-    return LmuMasterAppBar.bottomSheet(
-      largeTitle: localizations.suggestionTitle,
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.all(LmuSizes.size_16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: LmuSizes.size_4),
-                  LmuText.body(
-                    localizations.suggestionDescription,
-                    color: context.colors.neutralColors.textColors.mediumColors.base,
-                  ),
-                  const SizedBox(height: LmuSizes.size_32),
-                  LmuInputField(
-                    hintText: localizations.suggestionInputHint,
-                    controller: _textController,
-                    isAutofocus: true,
-                    isMultiline: true,
-                    isAutocorrect: true,
-                  ),
-                  const SizedBox(height: 400),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(LmuSizes.size_12),
-                child: ValueListenableBuilder<bool>(
-                  valueListenable: _textNotifier,
-                  builder: (context, isTextNotEmpty, _) {
-                    return LmuButton(
-                      title: localizations.suggestionButton,
-                      size: ButtonSize.large,
-                      showFullWidth: true,
-                      state: isTextNotEmpty
-                          ? _isLoading
-                              ? ButtonState.loading
-                              : ButtonState.enabled
-                          : ButtonState.disabled,
-                      onTap: isTextNotEmpty
-                          ? () async {
-                              setState(() => _isLoading = true);
-                              await sendFeedback(
-                                context: context,
-                                type: FeedbackType.suggestion,
-                                rating: null,
-                                message: _textController.text,
-                                screen: widget.feedbackOrigin,
-                                tags: null,
-                              ).then((_) {
-                                Navigator.of(context).pop();
-                                setState(() => _isLoading = false);
-                              });
-                            }
-                          : null,
-                    );
-                  },
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: localizations.suggestionTitle,
+        leadingAction: LeadingAction.close,
+      ),
+      isBottomSheet: true,
+      customScrollController: context.modalScrollController,
+      slivers: [
+        SliverPadding(
+          padding: const EdgeInsets.all(LmuSizes.size_16),
+          sliver: SliverStack(
+            children: [
+              SliverFillRemaining(
+                fillOverscroll: true,
+                hasScrollBody: false,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: LmuSizes.size_4),
+                    LmuText.body(
+                      localizations.suggestionDescription,
+                      color: context.colors.neutralColors.textColors.mediumColors.base,
+                    ),
+                    const SizedBox(height: LmuSizes.size_32),
+                    LmuInputField(
+                      hintText: localizations.suggestionInputHint,
+                      controller: _textController,
+                      isAutofocus: true,
+                      isMultiline: true,
+                      isAutocorrect: true,
+                    ),
+                  ],
                 ),
               ),
-            ),
+              SliverPositioned(
+                bottom: LmuSizes.size_16,
+                left: 0,
+                right: 0,
+                child: SafeArea(
+                  child: ValueListenableBuilder<bool>(
+                    valueListenable: _textNotifier,
+                    builder: (context, isTextNotEmpty, _) {
+                      return LmuButton(
+                        title: localizations.suggestionButton,
+                        size: ButtonSize.large,
+                        showFullWidth: true,
+                        state: isTextNotEmpty
+                            ? _isLoading
+                                ? ButtonState.loading
+                                : ButtonState.enabled
+                            : ButtonState.disabled,
+                        onTap: isTextNotEmpty
+                            ? () async {
+                                setState(() => _isLoading = true);
+                                await sendFeedback(
+                                  context: context,
+                                  type: FeedbackType.suggestion,
+                                  rating: null,
+                                  message: _textController.text,
+                                  screen: widget.feedbackOrigin,
+                                  tags: null,
+                                ).then((_) {
+                                  Navigator.of(context).pop();
+                                  setState(() => _isLoading = false);
+                                });
+                              }
+                            : null,
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

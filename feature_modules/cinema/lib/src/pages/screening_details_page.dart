@@ -33,29 +33,31 @@ class ScreeningDetailsPage extends StatelessWidget {
     ScreeningModel screening = screeningDetailsData.screening;
     List<ScreeningModel> cinemaScreenings = screeningDetailsData.cinemaScreenings;
 
-    return LmuMasterAppBar.custom(
-      collapsedTitle: screening.movie.title,
-      leadingAction: LeadingAction.back,
-      trailingWidgets: [
-        ValueListenableBuilder<List<String>>(
-          valueListenable: GetIt.I<CinemaUserPreferenceService>().likedScreeningsIdsNotifier,
-          builder: (context, likedScreeningIds, child) {
-            return GestureDetector(
-              onTap: () async {
-                await GetIt.I<CinemaUserPreferenceService>().toggleLikedScreeningId(screening.id);
-                LmuVibrations.secondary();
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(top: LmuSizes.size_4),
-                child: StarIcon(
-                  disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
-                  isActive: likedScreeningIds.contains(screening.id),
+    return LmuScaffold(
+      appBar: LmuAppBarData.custom(
+        collapsedTitle: screening.movie.title,
+        leadingAction: LeadingAction.back,
+        trailingWidgets: [
+          ValueListenableBuilder<List<String>>(
+            valueListenable: GetIt.I<CinemaUserPreferenceService>().likedScreeningsIdsNotifier,
+            builder: (context, likedScreeningIds, child) {
+              return GestureDetector(
+                onTap: () async {
+                  await GetIt.I<CinemaUserPreferenceService>().toggleLikedScreeningId(screening.id);
+                  LmuVibrations.secondary();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(top: LmuSizes.size_4),
+                  child: StarIcon(
+                    disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
+                    isActive: likedScreeningIds.contains(screening.id),
+                  ),
                 ),
-              ),
-            );
-          },
-        ),
-      ],
+              );
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

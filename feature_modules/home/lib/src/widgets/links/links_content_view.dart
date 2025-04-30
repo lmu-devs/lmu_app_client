@@ -27,9 +27,11 @@ class _LinksContentViewState extends State<LinksContentView> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        LmuMasterAppBar(
-          largeTitle: "Links",
-          leadingAction: LeadingAction.back,
+        LmuScaffold(
+          appBar: LmuAppBarData(
+            largeTitle: "Links",
+            leadingAction: LeadingAction.back,
+          ),
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),

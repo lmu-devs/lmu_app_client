@@ -12,5 +12,3 @@ export 'overview/mensa_overview_button_section.dart';
 export 'overview/mensa_overview_content_view.dart';
 export 'overview/mensa_overview_info_section.dart';
 export 'overview/mensa_overview_tile.dart';
-export 'taste_profile/loading/taste_profile_loading_view.dart';
-export 'taste_profile/taste_profile_content_view.dart';

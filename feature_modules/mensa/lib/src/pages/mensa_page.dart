@@ -35,17 +35,14 @@ class _MensaPageState extends State<MensaPage> {
   @override
   Widget build(BuildContext context) {
     final localization = context.locals.canteen;
-    return LmuMasterAppBar(
-      largeTitle: localization.tabTitle,
-      largeTitleTrailingWidget: LmuButton(
-        title: context.locals.canteen.myTaste,
-        emphasis: ButtonEmphasis.secondary,
-        onTap: () {
-          LmuBottomSheet.showExtended(
-            context,
-            content: const TasteProfilePage(),
-          );
-        },
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: localization.tabTitle,
+        largeTitleTrailingWidget: LmuButton(
+          title: context.locals.canteen.myTaste,
+          emphasis: ButtonEmphasis.secondary,
+          onTap: () => LmuBottomSheet.showExtended(context, content: const TasteProfilePage()),
+        ),
       ),
       body: BlocBuilder<MensaCubit, MensaState>(
         bloc: mensaCubit,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'colors/lmu_colors_theme_extension.dart';
 import 'texts/lmu_text_theme.dart';
@@ -13,4 +14,8 @@ extension TextThemeGetter on BuildContext {
         "Inter",
         Theme.of(this).extension<LmuColors>()!.neutralColors.textColors,
       );
+}
+
+extension ModalBottomSheetScrollControllerGetter on BuildContext {
+  ScrollController get modalScrollController => ModalScrollController.of(this)!;
 }

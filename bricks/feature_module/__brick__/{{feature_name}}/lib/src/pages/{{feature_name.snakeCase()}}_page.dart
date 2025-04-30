@@ -11,8 +11,11 @@ class {{feature_name.pascalCase()}}Page extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
-      largeTitle: "{{feature_name.pascalCase()}}", 
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: "{{feature_name.pascalCase()}}",
+        leadingAction: LeadingAction.back,
+      ),
       body: BlocBuilder<{{feature_name.pascalCase()}}Cubit, {{feature_name.pascalCase()}}State>(
         bloc: GetIt.I.get<{{feature_name.pascalCase()}}Cubit>(),
         builder: (context, state) {

@@ -11,9 +11,11 @@ class LinksLoadingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: LmuMasterAppBar(
-        largeTitle: "Links",
-        leadingAction: LeadingAction.back,
+      child: LmuScaffold(
+        appBar: LmuAppBarData(
+          largeTitle: "Links",
+          leadingAction: LeadingAction.back,
+        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),

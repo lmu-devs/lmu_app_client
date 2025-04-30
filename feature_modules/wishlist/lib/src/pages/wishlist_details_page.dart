@@ -49,17 +49,19 @@ class WishlistDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
-      largeTitle: wishlistModel.title,
-      leadingAction: LeadingAction.back,
-      largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
-      largeTitleTrailingWidget: wishlistModel.status != WishlistStatus.none
-          ? LmuInTextVisual.text(
-              title: wishlistModel.status.getValue(context),
-              textColor: context.colors.neutralColors.textColors.strongColors.base,
-              size: InTextVisualSize.large,
-            )
-          : null,
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: wishlistModel.title,
+        leadingAction: LeadingAction.back,
+        largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
+        largeTitleTrailingWidget: wishlistModel.status != WishlistStatus.none
+            ? LmuInTextVisual.text(
+                title: wishlistModel.status.getValue(context),
+                textColor: context.colors.neutralColors.textColors.strongColors.base,
+                size: InTextVisualSize.large,
+              )
+            : null,
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
