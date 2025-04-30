@@ -110,21 +110,23 @@ class _LmuSearchPageState<T extends SearchEntry> extends State<LmuSearchPage<T>>
   @override
   Widget build(BuildContext context) {
     final appLocals = context.locals.app;
-    return LmuMasterAppBar.custom(
-      leadingAction: LeadingAction.back,
-      customLargeTitleWidget: SizedBox(
-        height: 40,
-        child: LmuSearchInputField(
-          controller: _searchController,
-          focusNode: _searchFocusNode,
-          onClearPressed: () {
-            _isSearchActiveNotifier.value = false;
-            _searchEntriesNotifier.value = [];
-          },
-          onChanged: (searchQuery) {
-            _isSearchActiveNotifier.value = searchQuery.isNotEmpty;
-            _search(searchQuery);
-          },
+    return LmuScaffold(
+      appBar: LmuAppBarData.custom(
+        leadingAction: LeadingAction.back,
+        customLargeTitleWidget: SizedBox(
+          height: 40,
+          child: LmuSearchInputField(
+            controller: _searchController,
+            focusNode: _searchFocusNode,
+            onClearPressed: () {
+              _isSearchActiveNotifier.value = false;
+              _searchEntriesNotifier.value = [];
+            },
+            onChanged: (searchQuery) {
+              _isSearchActiveNotifier.value = searchQuery.isNotEmpty;
+              _search(searchQuery);
+            },
+          ),
         ),
       ),
       body: Column(
