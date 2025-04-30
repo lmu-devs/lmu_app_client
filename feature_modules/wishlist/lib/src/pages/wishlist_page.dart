@@ -55,7 +55,7 @@ class _WishlistPageState extends State<WishlistPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: LmuSizes.size_12),
+            const SizedBox(height: LmuSizes.size_16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
               child: LmuText.body(

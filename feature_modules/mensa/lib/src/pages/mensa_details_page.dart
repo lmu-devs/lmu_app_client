@@ -1,6 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:core/extensions.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/mensa.dart';

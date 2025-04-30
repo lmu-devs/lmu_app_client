@@ -1,5 +1,5 @@
 import 'package:core/components.dart';
-import 'package:core/extensions.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
