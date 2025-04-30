@@ -2,11 +2,11 @@ import 'dart:math';
 
 import 'package:core/constants.dart';
 import 'package:core/src/components/components.dart';
+import 'package:core/src/components/scaffolds/sliver_app_bar_delegate.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'sliver_app_bar_delegate.dart';
+import 'package:snap_scroll_physics/snap_scroll_physics.dart';
 
 class LmuScaffold extends StatefulWidget {
   const LmuScaffold({
@@ -39,9 +39,11 @@ class _LmuScaffoldState extends State<LmuScaffold> {
   late final ScrollController _scrollController;
 
   LmuAppBarData get _appBar => widget.appBar;
-  String get _largeTitle => _appBar.largeTitle ?? '';
+  String get _largeTitle => _appBar.largeTitle ?? ' ';
   double get _collapsedTitleHeight =>
       widget.isBottomSheet ? _bottomeSheetCollapsedTitleHeight : _defaultCollapsedTitleHeight;
+
+  bool get _hasImage => _appBar.imageUrls != null && _appBar.imageUrls!.isNotEmpty;
 
   @override
   void initState() {
@@ -79,6 +81,11 @@ class _LmuScaffoldState extends State<LmuScaffold> {
             mainAxisMargin: widget.isBottomSheet ? _bottomeSheetCollapsedTitleHeight : 3,
             child: CustomScrollView(
               controller: _scrollController,
+              physics: SnapScrollPhysics.preventStopBetween(
+                0,
+                calculatedLargeTitleHeight + (_hasImage ? 180 : 0),
+                parent: const AlwaysScrollableScrollPhysics(),
+              ),
               slivers: [
                 SliverPersistentHeader(
                   pinned: true,

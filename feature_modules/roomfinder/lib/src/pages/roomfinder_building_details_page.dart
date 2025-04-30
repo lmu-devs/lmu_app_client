@@ -53,13 +53,11 @@ class _RoomfinderBuildingDetailsPageState extends State<RoomfinderBuildingDetail
           backgroundColor: buildingColor.withOpacity(0.14),
         ),
       ),
-      body: CustomScrollView(
-        slivers: [
-          RoomfinderBuildingDetailsSection(building: _building),
-          RoomfinderBuildingButtonSection(building: _building),
-          RoomfinderBuildingFloorsSection(floors: _floors, building: _building),
-        ],
-      ),
+      slivers: [
+        RoomfinderBuildingDetailsSection(building: _building),
+        RoomfinderBuildingButtonSection(building: _building),
+        RoomfinderBuildingFloorsSection(floors: _floors, building: _building),
+      ],
     );
   }
 

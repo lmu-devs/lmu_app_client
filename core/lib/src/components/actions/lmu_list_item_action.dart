@@ -23,8 +23,6 @@ extension WidgetConfiguration on LmuListItemAction {
         return LmuChevronAction(chevronTitle: chevronTitle);
       case LmuListItemAction.toggle:
         return LmuToggleAction(isActive: isActive);
-      default:
-        return const SizedBox.shrink();
     }
   }
 }

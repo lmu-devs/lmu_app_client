@@ -1,4 +1,4 @@
-import 'package:core/extensions.dart';
+import 'package:core/utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 

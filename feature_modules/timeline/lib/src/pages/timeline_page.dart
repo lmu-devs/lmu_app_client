@@ -1,8 +1,9 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
 import '../cubit/timeline_cubit/cubit.dart';
 import '../widgets/timeline_content_view.dart';
@@ -32,18 +33,20 @@ class _TimelinePageState extends State<TimelinePage> {
         largeTitle: context.locals.timeline.datesTitle,
         leadingAction: LeadingAction.back,
       ),
-      body: BlocBuilder<TimelineCubit, TimelineState>(
-        bloc: GetIt.I.get<TimelineCubit>(),
-        builder: (context, state) {
-          Widget child = const TimelineLoadingView(key: ValueKey("timelineLoading"));
-          if (state is TimelineLoadInProgress && state.data != null) {
-            child = TimelineContentView(key: const ValueKey("timelineContent"), data: state.data!);
-          } else if (state is TimelineLoadSuccess) {
-            child = TimelineContentView(key: const ValueKey("timelineContent"), data: state.data);
-          }
-          return LmuPageAnimationWrapper(child: child);
-        },
-      ),
+      slivers: [
+        BlocBuilder<TimelineCubit, TimelineState>(
+          bloc: GetIt.I.get<TimelineCubit>(),
+          builder: (context, state) {
+            Widget child = const TimelineLoadingView(key: ValueKey("timelineLoading"));
+            if (state is TimelineLoadInProgress && state.data != null) {
+              child = TimelineContentView(key: const ValueKey("timelineContent"), data: state.data!);
+            } else if (state is TimelineLoadSuccess) {
+              child = TimelineContentView(key: const ValueKey("timelineContent"), data: state.data);
+            }
+            return SliverAnimatedSwitcher(duration: const Duration(milliseconds: 200), child: child);
+          },
+        ),
+      ],
     );
   }
 }
