@@ -19,8 +19,15 @@ class HomePage extends StatelessWidget {
       appBar: LmuAppBarData(
         largeTitle: "Home",
         largeTitleTrailingWidget: GestureDetector(
+          behavior: HitTestBehavior.translucent,
           onTap: () => GetIt.I.get<SettingsService>().navigateToSettings(context),
-          child: const LmuIcon(icon: LucideIcons.settings, size: LmuIconSizes.medium),
+          child: const Padding(
+            padding: EdgeInsets.only(left: LmuSizes.size_16),
+            child: SizedBox(
+              height: 40,
+              child: LmuIcon(icon: LucideIcons.settings, size: LmuIconSizes.medium),
+            ),
+          ),
         ),
       ),
       body: BlocBuilder<HomeCubit, HomeState>(
