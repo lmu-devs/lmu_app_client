@@ -8,16 +8,12 @@ import '../repository/repository.dart';
 
 class MensaRouterImpl extends MensaRouter {
   @override
+  Widget buildMain(BuildContext context) => const MensaPage();
+
+  @override
   Widget buildDetails(BuildContext context, RMensaModel mensaModel) =>
       MensaDetailsPage(mensaModel: mensaModel as MensaModel);
 
   @override
-  Widget buildMain(BuildContext context) => const MensaPage();
-
-  @override
   Widget buildSearch(BuildContext context) => const MensaSearchPage();
-
-  @override
-  Widget buildSearchDetails(BuildContext context, RMensaModel mensaModel) =>
-      MensaDetailsPage(mensaModel: mensaModel as MensaModel);
 }

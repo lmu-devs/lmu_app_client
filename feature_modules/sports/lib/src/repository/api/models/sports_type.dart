@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+import 'package:core_routes/sports.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'sports_course.dart';
@@ -6,7 +6,7 @@ import 'sports_course.dart';
 part 'sports_type.g.dart';
 
 @JsonSerializable()
-class SportsType extends Equatable {
+class SportsType extends RSportsType {
   const SportsType({
     required this.title,
     required this.courses,

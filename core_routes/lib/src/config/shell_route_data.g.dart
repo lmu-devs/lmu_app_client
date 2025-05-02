@@ -65,6 +65,26 @@ RouteBase get $shellRouteData => StatefulShellRouteData.$route(
                   path: 'timeline',
                   factory: $TimelineMainRouteExtension._fromState,
                 ),
+                GoRouteData.$route(
+                  path: 'sports',
+                  factory: $SportsMainRouteExtension._fromState,
+                  routes: [
+                    GoRouteData.$route(
+                      path: 'details',
+                      factory: $SportsDetailsRouteExtension._fromState,
+                    ),
+                    GoRouteData.$route(
+                      path: 'search',
+                      factory: $SportsSearchRouteExtension._fromState,
+                      routes: [
+                        GoRouteData.$route(
+                          path: 'details',
+                          factory: $SportsSearchDetailsRouteExtension._fromState,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ],
             ),
           ],
@@ -302,6 +322,74 @@ extension $TimelineMainRouteExtension on TimelineMainRoute {
   void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
+}
+
+extension $SportsMainRouteExtension on SportsMainRoute {
+  static SportsMainRoute _fromState(GoRouterState state) => const SportsMainRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/sports',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $SportsDetailsRouteExtension on SportsDetailsRoute {
+  static SportsDetailsRoute _fromState(GoRouterState state) => SportsDetailsRoute(
+        state.extra as RSportsType,
+      );
+
+  String get location => GoRouteData.$location(
+        '/home/sports/details',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) => context.replace(location, extra: $extra);
+}
+
+extension $SportsSearchRouteExtension on SportsSearchRoute {
+  static SportsSearchRoute _fromState(GoRouterState state) => const SportsSearchRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/sports/search',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $SportsSearchDetailsRouteExtension on SportsSearchDetailsRoute {
+  static SportsSearchDetailsRoute _fromState(GoRouterState state) => SportsSearchDetailsRoute(
+        state.extra as RSportsType,
+      );
+
+  String get location => GoRouteData.$location(
+        '/home/sports/search/details',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) => context.replace(location, extra: $extra);
 }
 
 extension $MensaMainRouteExtension on MensaMainRoute {

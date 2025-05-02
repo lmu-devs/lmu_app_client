@@ -5,6 +5,7 @@ import '../explore/explore.dart';
 import '../home/home.dart';
 import '../mensa/mensa.dart';
 import '../settings/settings.dart';
+import '../sports/sports.dart';
 import '../timeline/timeline.dart';
 import '../wishlist/wishlist.dart';
 import 'scaffold_with_nav_bar.dart';
@@ -53,6 +54,22 @@ part 'shell_route_data.g.dart';
             TypedGoRoute<TimelineMainRoute>(
               path: TimelineMainRoute.path,
             ),
+            TypedGoRoute<SportsMainRoute>(
+              path: SportsMainRoute.path,
+              routes: <TypedGoRoute<GoRouteData>>[
+                TypedGoRoute<SportsDetailsRoute>(
+                  path: SportsDetailsRoute.path,
+                ),
+                TypedGoRoute<SportsSearchRoute>(
+                  path: SportsSearchRoute.path,
+                  routes: [
+                    TypedGoRoute<SportsSearchDetailsRoute>(
+                      path: SportsSearchDetailsRoute.path,
+                    ),
+                  ],
+                ),
+              ],
+            )
           ],
         ),
       ],

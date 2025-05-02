@@ -8,6 +8,4 @@ abstract class MensaRouter {
   Widget buildDetails(BuildContext context, RMensaModel mensaModel);
 
   Widget buildSearch(BuildContext context);
-
-  Widget buildSearchDetails(BuildContext context, RMensaModel mensaModel);
 }

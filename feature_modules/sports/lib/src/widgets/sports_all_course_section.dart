@@ -1,12 +1,12 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
+import 'package:core_routes/sports.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../extensions/sports_status_color_extension.dart';
 import '../repository/api/models/sports_type.dart';
-import '../routes/sports_routes.dart';
 import '../services/sports_state_service.dart';
 
 class SportsAllCourseSection extends StatelessWidget {

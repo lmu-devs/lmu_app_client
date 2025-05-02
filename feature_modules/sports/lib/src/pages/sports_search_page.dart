@@ -1,9 +1,10 @@
 import 'package:core/components.dart';
+import 'package:core/localizations.dart';
+import 'package:core_routes/sports.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../extensions/sports_status_color_extension.dart';
-import '../routes/sports_routes.dart';
 import '../services/sports_search_service.dart';
 
 class SportsSearchEntry extends SearchEntry {
@@ -37,7 +38,7 @@ class _SportsSearchPageState extends State<SportsSearchPage> {
   Widget build(BuildContext context) {
     return LmuSearchPage<SportsSearchEntry>(
       searchEntries: _searchEntries,
-      emptySearchEntriesTitle: "Recommendations",
+      emptySearchEntriesTitle: context.locals.sports.reccommendations,
       emptySearchEntries:
           _searchService.sportsRecommendations.map((sport) => SportsSearchEntry(title: sport.title)).toList(),
       recentSearchEntries: _recentSearchEntries,
