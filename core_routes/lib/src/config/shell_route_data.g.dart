@@ -117,6 +117,16 @@ RouteBase get $shellRouteData => StatefulShellRouteData.$route(
                     ),
                   ],
                 ),
+                GoRouteData.$route(
+                  path: 'libraries',
+                  factory: $LibrariesMainRouteExtension._fromState,
+                  routes: [
+                    GoRouteData.$route(
+                      path: 'details',
+                      factory: $LibraryDetailsRouteExtension._fromState,
+                    ),
+                  ],
+                ),
               ],
             ),
           ],
@@ -530,6 +540,40 @@ extension $SportsSearchDetailsRouteExtension on SportsSearchDetailsRoute {
 
   String get location => GoRouteData.$location(
         '/home/sports/search/details',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) => context.replace(location, extra: $extra);
+}
+
+extension $LibrariesMainRouteExtension on LibrariesMainRoute {
+  static LibrariesMainRoute _fromState(GoRouterState state) => const LibrariesMainRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/libraries',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LibraryDetailsRouteExtension on LibraryDetailsRoute {
+  static LibraryDetailsRoute _fromState(GoRouterState state) => LibraryDetailsRoute(
+        state.extra as RLibraryModel,
+      );
+
+  String get location => GoRouteData.$location(
+        '/home/libraries/details',
       );
 
   void go(BuildContext context) => context.go(location, extra: $extra);

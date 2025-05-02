@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../libraries.dart';
 import '../explore/explore.dart';
 import '../home/home.dart';
 import '../mensa/mensa.dart';
@@ -96,7 +97,15 @@ part 'shell_route_data.g.dart';
                   ],
                 ),
               ],
-            )
+            ),
+            TypedGoRoute<LibrariesMainRoute>(
+              path: LibrariesMainRoute.path,
+              routes: <TypedGoRoute<GoRouteData>>[
+                TypedGoRoute<LibraryDetailsRoute>(
+                  path: LibraryDetailsRoute.path,
+                ),
+              ],
+            ),
           ],
         ),
       ],

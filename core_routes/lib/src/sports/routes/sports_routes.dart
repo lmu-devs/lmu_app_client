@@ -7,22 +7,6 @@ import '../router/sports_router.dart';
 
 SportsRouter get _router => GetIt.I.get<SportsRouter>();
 
-@TypedGoRoute<SportsMainRoute>(
-  path: SportsMainRoute.path,
-  routes: <TypedGoRoute<GoRouteData>>[
-    TypedGoRoute<SportsDetailsRoute>(
-      path: SportsDetailsRoute.path,
-    ),
-    TypedGoRoute<SportsSearchRoute>(
-      path: SportsSearchRoute.path,
-      routes: [
-        TypedGoRoute<SportsSearchDetailsRoute>(
-          path: SportsSearchDetailsRoute.path,
-        ),
-      ],
-    ),
-  ],
-)
 class SportsMainRoute extends GoRouteData {
   const SportsMainRoute();
 
