@@ -1,7 +1,6 @@
+import 'package:core_routes/wishlist.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_api/wishlist.dart';
-
-import '../routes/wishlist_routes.dart';
 
 class DefaultWishlistService extends WishlistService {
   @override

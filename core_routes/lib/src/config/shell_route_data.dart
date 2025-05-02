@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../explore/explore.dart';
 import '../mensa/mensa.dart';
+import '../wishlist/wishlist.dart';
 import 'scaffold_with_nav_bar.dart';
 
 part 'shell_route_data.g.dart';
@@ -36,6 +37,18 @@ part 'shell_route_data.g.dart';
           routes: [
             TypedGoRoute<ExploreSearchRoute>(
               path: ExploreSearchRoute.path,
+            ),
+          ],
+        ),
+      ],
+    ),
+    TypedStatefulShellBranch<WishlistData>(
+      routes: <TypedRoute<RouteData>>[
+        TypedGoRoute<WishlistMainRoute>(
+          path: WishlistMainRoute.path,
+          routes: <TypedGoRoute<GoRouteData>>[
+            TypedGoRoute<WishlistDetailsRoute>(
+              path: WishlistDetailsRoute.path,
             ),
           ],
         ),

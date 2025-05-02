@@ -11,7 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
   core:
-    path: ../../core 
+    path: ../../core
+  core_routes:
+    path: ../../core_routes
   equatable: ^2.0.5
   json_annotation: ^4.0.1
   shared_preferences: ^2.0.7
