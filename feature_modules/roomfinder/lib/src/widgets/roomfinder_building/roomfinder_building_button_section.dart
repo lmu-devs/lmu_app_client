@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core_routes/roomfinder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
@@ -7,7 +8,6 @@ import 'package:shared_api/explore.dart';
 
 import '../../pages/roomfinder_room_search_page.dart';
 import '../../repository/api/models/models.dart';
-import '../../routes/roomfinder_routes.dart';
 import '../../services/roomfinder_room_search_service.dart';
 
 class RoomfinderBuildingButtonSection extends StatelessWidget {

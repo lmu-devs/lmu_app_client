@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../explore/explore.dart';
 import '../home/home.dart';
 import '../mensa/mensa.dart';
+import '../roomfinder/roomfinder.dart';
 import '../settings/settings.dart';
 import '../sports/sports.dart';
 import '../timeline/timeline.dart';
@@ -50,6 +51,32 @@ part 'shell_route_data.g.dart';
             ),
             TypedGoRoute<BenefitsRoute>(
               path: BenefitsRoute.path,
+            ),
+            TypedGoRoute<RoomfinderMainRoute>(
+              path: RoomfinderMainRoute.path,
+              routes: <TypedGoRoute<GoRouteData>>[
+                TypedGoRoute<RoomfinderBuildingDetailsRoute>(
+                  path: RoomfinderBuildingDetailsRoute.path,
+                  routes: [
+                    TypedGoRoute<RoomfinderRoomSearchRoute>(
+                      path: RoomfinderRoomSearchRoute.path,
+                    ),
+                  ],
+                ),
+                TypedGoRoute<RoomfinderSearchRoute>(
+                  path: RoomfinderSearchRoute.path,
+                  routes: [
+                    TypedGoRoute<RoomfinderSearchBuildingDetailsRoute>(
+                      path: RoomfinderSearchBuildingDetailsRoute.path,
+                      routes: [
+                        TypedGoRoute<RoomfinderBuildingSearchRoomSearchRoute>(
+                          path: RoomfinderBuildingSearchRoomSearchRoute.path,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
             ),
             TypedGoRoute<TimelineMainRoute>(
               path: TimelineMainRoute.path,

@@ -12,6 +12,8 @@ dependencies:
     sdk: flutter
   core:
     path: ../../core
+  core_routes:
+    path: ../../core_routes
   shared_api:
     path: ../../shared_api
   equatable: ^2.0.5

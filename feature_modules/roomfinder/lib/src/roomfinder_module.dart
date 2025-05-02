@@ -1,10 +1,12 @@
 import 'package:core/module.dart';
+import 'package:core_routes/roomfinder.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/roomfinder.dart';
 
 import 'cubit/roomfinder_cubit/cubit.dart';
 import 'repository/api/roomfinder_api_client.dart';
 import 'repository/roomfinder_repository.dart';
+import 'routes/roomfinder_router.dart';
 import 'services/roomfinder_filter_service.dart';
 import 'services/roomfinder_search_service.dart';
 import 'services/services.dart';
@@ -17,6 +19,7 @@ class RoomfinderModule extends AppModule
   @override
   void providePublicApi() {
     GetIt.I.registerSingleton<RoomfinderService>(DefaultRoomfinderService());
+    GetIt.I.registerSingleton<RoomfinderRouter>(RoomfinderRouterImpl());
   }
 
   @override
