@@ -3,6 +3,7 @@ import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
+import 'package:core_routes/settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
@@ -10,7 +11,6 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_api/feedback.dart';
 
 import '../extensions/enum_naming_extensions.dart';
-import '../routes/settings_routes.dart';
 
 class SettingsMainPage extends StatelessWidget {
   const SettingsMainPage({super.key});

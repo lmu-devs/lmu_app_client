@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../explore/explore.dart';
 import '../home/home.dart';
 import '../mensa/mensa.dart';
+import '../settings/settings.dart';
 import '../timeline/timeline.dart';
 import '../wishlist/wishlist.dart';
 import 'scaffold_with_nav_bar.dart';
@@ -18,6 +19,26 @@ part 'shell_route_data.g.dart';
         TypedGoRoute<HomeMainRoute>(
           path: HomeMainRoute.path,
           routes: <TypedGoRoute<GoRouteData>>[
+            TypedGoRoute<SettingsMainRoute>(
+              path: SettingsMainRoute.path,
+              routes: <TypedGoRoute<GoRouteData>>[
+                TypedGoRoute<SettingsApperanceRoute>(
+                  path: SettingsApperanceRoute.path,
+                ),
+                TypedGoRoute<SettingsLanguageRoute>(
+                  path: SettingsLanguageRoute.path,
+                ),
+                TypedGoRoute<SettingsLicenceRoute>(
+                  path: SettingsLicenceRoute.path,
+                ),
+                TypedGoRoute<SettingsAccountRoute>(
+                  path: SettingsAccountRoute.path,
+                ),
+                TypedGoRoute<SettingsDebugRoute>(
+                  path: SettingsDebugRoute.path,
+                ),
+              ],
+            ),
             TypedGoRoute<LinksRoute>(
               path: LinksRoute.path,
               routes: <TypedGoRoute<GoRouteData>>[

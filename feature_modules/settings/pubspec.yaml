@@ -12,6 +12,8 @@ dependencies:
     sdk: flutter
   core:
     path: ../../core 
+  core_routes:
+    path: ../../core_routes
   equatable: ^2.0.5
   flutter_bloc: ^8.1.3
   go_router: ^15.1.0

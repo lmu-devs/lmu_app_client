@@ -54,6 +54,7 @@ class SettingsDebugPage extends StatelessWidget {
             return ListView.builder(
               padding: EdgeInsets.zero,
               itemCount: value.length,
+              shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) {
                 return Column(
                   mainAxisSize: MainAxisSize.min,

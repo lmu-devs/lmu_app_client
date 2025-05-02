@@ -1,7 +1,9 @@
 import 'package:core/module.dart';
+import 'package:core_routes/settings.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/settings.dart';
 
+import 'routes/settings_router.dart';
 import 'services/default_settings_service.dart';
 
 class SettingsModule extends AppModule with PublicApiProvidingAppModule {
@@ -11,5 +13,6 @@ class SettingsModule extends AppModule with PublicApiProvidingAppModule {
   @override
   void providePublicApi() {
     GetIt.I.registerSingleton<SettingsService>(DefaultSettingsService());
+    GetIt.I.registerSingleton<SettingsRouter>(SettingsRouterImpl());
   }
 }
