@@ -18,6 +18,34 @@ RouteBase get $shellRouteData => StatefulShellRouteData.$route(
         StatefulShellBranchData.$branch(
           routes: [
             GoRouteData.$route(
+              path: '/home',
+              factory: $HomeMainRouteExtension._fromState,
+              routes: [
+                GoRouteData.$route(
+                  path: 'links',
+                  factory: $LinksRouteExtension._fromState,
+                  routes: [
+                    GoRouteData.$route(
+                      path: 'search',
+                      factory: $LinksSearchRouteExtension._fromState,
+                    ),
+                  ],
+                ),
+                GoRouteData.$route(
+                  path: 'benefits',
+                  factory: $BenefitsRouteExtension._fromState,
+                ),
+                GoRouteData.$route(
+                  path: 'timeline',
+                  factory: $TimelineMainRouteExtension._fromState,
+                ),
+              ],
+            ),
+          ],
+        ),
+        StatefulShellBranchData.$branch(
+          routes: [
+            GoRouteData.$route(
               path: '/mensa',
               factory: $MensaMainRouteExtension._fromState,
               routes: [
@@ -72,6 +100,86 @@ RouteBase get $shellRouteData => StatefulShellRouteData.$route(
 
 extension $ShellRouteDataExtension on ShellRouteData {
   static ShellRouteData _fromState(GoRouterState state) => const ShellRouteData();
+}
+
+extension $HomeMainRouteExtension on HomeMainRoute {
+  static HomeMainRoute _fromState(GoRouterState state) => const HomeMainRoute();
+
+  String get location => GoRouteData.$location(
+        '/home',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LinksRouteExtension on LinksRoute {
+  static LinksRoute _fromState(GoRouterState state) => const LinksRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/links',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LinksSearchRouteExtension on LinksSearchRoute {
+  static LinksSearchRoute _fromState(GoRouterState state) => const LinksSearchRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/links/search',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $BenefitsRouteExtension on BenefitsRoute {
+  static BenefitsRoute _fromState(GoRouterState state) => const BenefitsRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/benefits',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $TimelineMainRouteExtension on TimelineMainRoute {
+  static TimelineMainRoute _fromState(GoRouterState state) => const TimelineMainRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/timeline',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
 }
 
 extension $MensaMainRouteExtension on MensaMainRoute {

@@ -4,6 +4,7 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:core_routes/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get_it/get_it.dart';
@@ -16,7 +17,6 @@ import 'package:shared_api/sports.dart';
 import 'package:shared_api/timeline.dart';
 import 'package:shared_api/wishlist.dart';
 
-import '../../../home.dart';
 import '../../repository/api/models/home/home_featured.dart';
 import '../../repository/api/models/home/home_tile.dart';
 import '../../repository/api/models/home/home_tile_type.dart';

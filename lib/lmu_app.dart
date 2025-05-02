@@ -51,6 +51,6 @@ class LmuApp extends StatelessWidget {
 
   final GoRouter _router = GoRouter(
     routes: $appRoutes,
-    initialLocation: '/mensa',
+    initialLocation: '/home',
   );
 }
