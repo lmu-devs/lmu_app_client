@@ -3,6 +3,7 @@ import 'package:core/constants.dart';
 import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:core_routes/mensa.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
@@ -11,7 +12,6 @@ import 'package:shared_api/explore.dart';
 
 import '../../repository/api/models/mensa/mensa_model.dart';
 import '../../repository/api/models/user_preferences/sort_option.dart';
-import '../../routes/mensa_routes.dart';
 import '../../services/services.dart';
 
 class MensaOverviewButtonSection extends StatelessWidget {

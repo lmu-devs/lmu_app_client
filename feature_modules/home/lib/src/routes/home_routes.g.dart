@@ -30,12 +30,6 @@ StatefulShellBranch get $homeData => StatefulShellBranchData.$branch(
               path: '/benefits',
               factory: $BenefitsRouteExtension._fromState,
             ),
-            GetIt.I.get<SettingsService>().settingsData,
-            GetIt.I.get<SportsService>().sportsData,
-            GetIt.I.get<CinemaService>().cinemaData,
-            GetIt.I.get<TimelineService>().timelineData,
-            GetIt.I.get<RoomfinderService>().roomfinderData,
-            GetIt.I.get<LibrariesService>().librariesData,
           ],
         ),
       ],
@@ -52,8 +46,7 @@ extension $HomeMainRouteExtension on HomeMainRoute {
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }
@@ -62,33 +55,30 @@ extension $LinksRouteExtension on LinksRoute {
   static LinksRoute _fromState(GoRouterState state) => const LinksRoute();
 
   String get location => GoRouteData.$location(
-        '/home/links',
+        '/links',
       );
 
   void go(BuildContext context) => context.go(location);
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }
 
 extension $LinksSearchRouteExtension on LinksSearchRoute {
-  static LinksSearchRoute _fromState(GoRouterState state) =>
-      const LinksSearchRoute();
+  static LinksSearchRoute _fromState(GoRouterState state) => const LinksSearchRoute();
 
   String get location => GoRouteData.$location(
-        '/home/links/search',
+        '/search',
       );
 
   void go(BuildContext context) => context.go(location);
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }
@@ -97,15 +87,14 @@ extension $BenefitsRouteExtension on BenefitsRoute {
   static BenefitsRoute _fromState(GoRouterState state) => const BenefitsRoute();
 
   String get location => GoRouteData.$location(
-        '/home/benefits',
+        '/benefits',
       );
 
   void go(BuildContext context) => context.go(location);
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }

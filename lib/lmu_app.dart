@@ -1,13 +1,13 @@
 import 'package:core/localizations.dart';
 import 'package:core/pages.dart';
 import 'package:core/themes.dart';
+import 'package:core_routes/config.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 import 'nav_bar_color_setter.dart';
-import 'routing/shell_route_data.dart';
 
 class LmuApp extends StatelessWidget {
   LmuApp({super.key});
@@ -50,13 +50,7 @@ class LmuApp extends StatelessWidget {
   }
 
   final GoRouter _router = GoRouter(
-    routes: [
-      $shellRouteData,
-      GoRoute(
-        path: '/app-update',
-        builder: (context, state) => const AppUpdatePage(),
-      ),
-    ],
-    initialLocation: '/home',
+    routes: $appRoutes,
+    initialLocation: '/mensa',
   );
 }

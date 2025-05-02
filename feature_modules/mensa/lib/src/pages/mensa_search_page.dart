@@ -1,10 +1,10 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:core_routes/mensa.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../mensa.dart';
 import '../services/mensa_search_service.dart';
 import '../widgets/common/mensa_tag.dart';
 

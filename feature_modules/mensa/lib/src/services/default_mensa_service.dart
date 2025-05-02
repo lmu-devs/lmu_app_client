@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:core/components.dart';
 import 'package:core/utils.dart';
+import 'package:core_routes/mensa.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/explore.dart';
@@ -8,7 +9,6 @@ import 'package:shared_api/mensa.dart';
 
 import '../bloc/bloc.dart';
 import '../extensions/opening_hours_extensions.dart';
-import '../routes/mensa_routes.dart';
 import '../widgets/widgets.dart';
 import 'menu_service.dart';
 

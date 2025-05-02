@@ -1,16 +1,31 @@
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_api/cinema.dart';
-import 'package:shared_api/libraries.dart';
-import 'package:shared_api/roomfinder.dart';
-import 'package:shared_api/settings.dart';
-import 'package:shared_api/sports.dart';
-import 'package:shared_api/timeline.dart';
 
 import '../pages/pages.dart';
 
 part 'home_routes.g.dart';
+
+void init() {
+  GetIt.I.registerLazySingleton<LinksRouteTet>(() => LinksRouteTestImpl());
+}
+
+class LinksRoute extends GoRouteData {
+  const LinksRoute();
+  @override
+  Widget build(BuildContext context, GoRouterState state) => GetIt.I<LinksRouteTet>().buildMain(context, state);
+}
+
+class LinksRouteTestImpl extends LinksRouteTet {
+  @override
+  Widget buildMain(BuildContext context, GoRouterState state) {
+    return const LinksPage();
+  }
+}
+
+abstract class LinksRouteTet {
+  Widget buildMain(BuildContext context, GoRouterState state);
+}
 
 @TypedStatefulShellBranch<HomeRouteData>(
   routes: <TypedRoute<RouteData>>[
@@ -43,13 +58,6 @@ class HomeMainRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) {
     return const HomePage();
   }
-}
-
-class LinksRoute extends GoRouteData {
-  const LinksRoute();
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) => const LinksPage();
 }
 
 class LinksSearchRoute extends GoRouteData {
