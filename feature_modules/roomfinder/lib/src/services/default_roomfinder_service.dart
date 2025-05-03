@@ -1,4 +1,3 @@
-import 'package:core_routes/roomfinder.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/explore.dart';
@@ -8,11 +7,6 @@ import '../cubit/cubit.dart';
 import '../widgets/widgets.dart';
 
 class DefaultRoomfinderService extends RoomfinderService {
-  @override
-  void navigateToRoomfinder(BuildContext context) {
-    const RoomfinderMainRoute().go(context);
-  }
-
   @override
   Stream<List<ExploreLocation>> get roomfinderExploreLocationsStream {
     final roomfinderCubit = GetIt.I.get<RoomfinderCubit>();

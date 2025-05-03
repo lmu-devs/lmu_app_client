@@ -137,7 +137,7 @@ class _WishlistPageState extends State<WishlistPage> {
                         mainContentAlignment: MainContentAlignment.center,
                         leadingArea: const LeadingFancyIcons(icon: LucideIcons.plus),
                         onTap: () {
-                          GetIt.I.get<FeedbackService>().navigateToSuggestion(context, 'WishlistScreen');
+                          GetIt.I.get<FeedbackService>().openSuggestion(context, 'WishlistScreen');
                         },
                       ),
                       LmuListItem.base(
@@ -145,7 +145,7 @@ class _WishlistPageState extends State<WishlistPage> {
                         mainContentAlignment: MainContentAlignment.center,
                         leadingArea: const LeadingFancyIcons(icon: LucideIcons.bug),
                         onTap: () {
-                          GetIt.I.get<FeedbackService>().navigateToBugReport(context, 'WishlistScreen');
+                          GetIt.I.get<FeedbackService>().openBugReport(context, 'WishlistScreen');
                         },
                       ),
                     ],

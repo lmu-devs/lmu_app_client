@@ -26,7 +26,7 @@ class MissingItemInput extends StatelessWidget {
             mainContentAlignment: MainContentAlignment.center,
             leadingArea: const LeadingFancyIcons(icon: LucideIcons.megaphone),
             onTap: () {
-              GetIt.I.get<FeedbackService>().navigateToSuggestion(context, feedbackOrigin);
+              GetIt.I.get<FeedbackService>().openSuggestion(context, feedbackOrigin);
             },
           ),
         ),

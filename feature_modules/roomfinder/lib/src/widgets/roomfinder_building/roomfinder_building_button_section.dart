@@ -1,10 +1,10 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core_routes/explore.dart';
 import 'package:core_routes/roomfinder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
-import 'package:shared_api/explore.dart';
 
 import '../../pages/roomfinder_room_search_page.dart';
 import '../../repository/api/models/models.dart';
@@ -28,7 +28,7 @@ class RoomfinderBuildingButtonSection extends StatelessWidget {
         child: Row(
           children: [
             const SizedBox(width: LmuSizes.size_16),
-            if (withMapButton) LmuMapImageButton(onTap: () => GetIt.I<ExploreService>().navigateToExplore(context)),
+            if (withMapButton) LmuMapImageButton(onTap: () => const ExploreMainRoute().go(context)),
             if (withMapButton) const SizedBox(width: LmuSizes.size_8),
             LmuIconButton(
               icon: LucideIcons.search,

@@ -1,7 +1,6 @@
 import 'package:core/module.dart';
 import 'package:core_routes/wishlist.dart';
 import 'package:get_it/get_it.dart';
-import 'package:shared_api/wishlist.dart';
 
 import 'bloc/wishlist_cubit.dart';
 import 'repository/api/wishlist_api_client.dart';
@@ -40,7 +39,6 @@ class WishlistModule extends AppModule
 
   @override
   void providePublicApi() {
-    GetIt.I.registerSingleton<WishlistService>(DefaultWishlistService());
     GetIt.I.registerSingleton<WishlistRouter>(WishlistRouterImpl());
   }
 }

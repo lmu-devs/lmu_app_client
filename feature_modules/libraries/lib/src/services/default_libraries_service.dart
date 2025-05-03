@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:core/components.dart';
 import 'package:core/utils.dart';
-import 'package:core_routes/libraries.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/explore.dart';
@@ -11,9 +10,6 @@ import '../cubit/cubit.dart';
 import '../pages/pages.dart';
 
 class DefaultLibrariesService implements LibrariesService {
-  @override
-  Widget get librariesPage => const LibrariesPage();
-
   @override
   Stream<List<ExploreLocation>> get librariesExploreLocationsStream {
     final librariesCubit = GetIt.I.get<LibrariesCubit>();
@@ -49,11 +45,6 @@ class DefaultLibrariesService implements LibrariesService {
       }
       return [];
     });
-  }
-
-  @override
-  void navigateToLibrariesPage(BuildContext context) {
-    const LibrariesMainRoute().go(context);
   }
 
   @override
