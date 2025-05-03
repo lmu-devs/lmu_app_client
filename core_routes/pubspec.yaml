@@ -1,5 +1,5 @@
 name: core_routes
-description: "Contains everything routing related to the app."
+description: "Contains app routes."
 version: 0.0.1
 publish_to: "none"
 
@@ -13,15 +13,14 @@ dependencies:
   core:
     path: ../core
   go_router: ^15.1.0
-  get_it: ^8.0.1
-
+  collection: ^1.18.0
   equatable: ^2.0.5
-
+  flutter_lucide: ^1.2.0
+  get_it: ^8.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
   build_runner: any
   build_verify: any
   go_router_builder: ^2.9.0
