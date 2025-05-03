@@ -8,7 +8,6 @@ import 'package:shared_api/mensa.dart';
 
 import '../bloc/bloc.dart';
 import '../extensions/opening_hours_extensions.dart';
-import '../routes/mensa_routes.dart';
 import '../widgets/widgets.dart';
 import 'menu_service.dart';
 
@@ -52,11 +51,6 @@ class DefaultMensaService implements MensaService {
       }
       return [];
     });
-  }
-
-  @override
-  void navigateToMensaPage(BuildContext context) {
-    const MensaMainRoute().go(context);
   }
 
   @override

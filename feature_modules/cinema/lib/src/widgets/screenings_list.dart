@@ -1,18 +1,17 @@
+import 'package:core/components.dart';
+import 'package:core/localizations.dart';
+import 'package:core_routes/cinema.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
+import '../repository/api/api.dart';
 import '../routes/screenings_history_data.dart';
 import '../services/cinema_user_preference_service.dart';
 import '../util/cinema_screenings.dart';
 import '../util/cinema_type.dart';
 import '../util/screening_filter_keys.dart';
-import 'screening_card.dart';
-import 'package:core/components.dart';
-import 'package:core/localizations.dart';
-import 'package:flutter/material.dart';
-
-import '../pages/screenings_history_page.dart';
-import '../repository/api/api.dart';
 import 'cinema_filter_row.dart';
+import 'screening_card.dart';
 import 'screening_placeholder.dart';
 
 class ScreeningsList extends StatelessWidget {
@@ -48,16 +47,9 @@ class ScreeningsList extends StatelessWidget {
                     )
                   : null,
               actionTitle: context.locals.cinema.historyAction,
-              onActionTap: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => ScreeningsHistoryPage(
-                    screeningsHistoryData: ScreeningsHistoryData(
-                      cinemas: cinemas,
-                      screenings: _getPastScreenings(),
-                    ),
-                  ),
-                ),
-              ),
+              onActionTap: () => ScreeningsHistoryRoute(
+                ScreeningsHistoryData(cinemas: cinemas, screenings: _getPastScreenings()),
+              ).go(context),
             ),
             futureScreenings.isNotEmpty
                 ? AnimatedSwitcher(

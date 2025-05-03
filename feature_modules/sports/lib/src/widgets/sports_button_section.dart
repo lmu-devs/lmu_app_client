@@ -1,11 +1,11 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
+import 'package:core_routes/sports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 
-import '../routes/sports_routes.dart';
 import '../services/sports_state_service.dart';
 
 class SportsButtonSection extends StatefulWidget {

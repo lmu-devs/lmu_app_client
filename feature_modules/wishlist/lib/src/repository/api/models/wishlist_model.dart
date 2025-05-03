@@ -1,5 +1,5 @@
 import 'package:core/api.dart';
-import 'package:equatable/equatable.dart';
+import 'package:core_routes/wishlist.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../util/util.dart';
@@ -7,7 +7,7 @@ import '../../../util/util.dart';
 part 'wishlist_model.g.dart';
 
 @JsonSerializable()
-class WishlistModel extends Equatable {
+class WishlistModel extends RWishlistModel {
   final int id;
   final String title;
   final String description;

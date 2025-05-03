@@ -3,12 +3,12 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:core_routes/explore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/explore.dart';
 
-import '../../explore.dart';
 import '../extensions/explore_marker_type_extension.dart';
 import '../services/explore_location_service.dart';
 import '../services/explore_map_service.dart';

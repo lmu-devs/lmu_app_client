@@ -11,14 +11,14 @@ dependencies:
   flutter:
     sdk: flutter
   core:
-    path: ../../core 
+    path: ../../core
+  core_routes:
+    path: ../../core_routes
   equatable: ^2.0.5
   json_annotation: ^4.0.1
   shared_preferences: ^2.0.7
   flutter_bloc: ^8.1.3
   skeletonizer: ^1.4.2
-  go_router: ^14.3.0
-  go_router_builder: ^2.7.1
   get_it: ^8.0.1
   http: ^1.2.2
   flutter_lucide: ^1.2.0

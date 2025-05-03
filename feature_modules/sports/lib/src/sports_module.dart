@@ -1,9 +1,10 @@
 import 'package:core/module.dart';
+import 'package:core_routes/sports.dart';
 import 'package:get_it/get_it.dart';
-import 'package:shared_api/sports.dart';
 
 import 'cubit/sports_cubit/cubit.dart';
 import 'repository/repository.dart';
+import 'routes/sports_router.dart';
 import 'services/services.dart';
 import 'services/sports_search_service.dart';
 
@@ -14,7 +15,7 @@ class SportsModule extends AppModule
 
   @override
   void providePublicApi() {
-    GetIt.I.registerSingleton<SportsService>(DefaultSportsService());
+    GetIt.I.registerSingleton<SportsRouter>(SportsRouterImpl());
   }
 
   @override

@@ -6,7 +6,7 @@ import 'package:shared_api/feedback.dart';
 
 class DefaultFeedbackService implements FeedbackService {
   @override
-  void navigateToFeedback(BuildContext context, String feedbackOrigin) {
+  void openFeedback(BuildContext context, String feedbackOrigin) {
     LmuBottomSheet.showExtended(
       context,
       content: FeedbackModal(feedbackOrigin: feedbackOrigin),
@@ -14,7 +14,7 @@ class DefaultFeedbackService implements FeedbackService {
   }
 
   @override
-  void navigateToBugReport(BuildContext context, String feedbackOrigin) {
+  void openBugReport(BuildContext context, String feedbackOrigin) {
     LmuBottomSheet.showExtended(
       context,
       content: BugModal(feedbackOrigin: feedbackOrigin),
@@ -22,7 +22,7 @@ class DefaultFeedbackService implements FeedbackService {
   }
 
   @override
-  void navigateToSuggestion(BuildContext context, String feedbackOrigin) {
+  void openSuggestion(BuildContext context, String feedbackOrigin) {
     LmuBottomSheet.showExtended(
       context,
       content: SuggestionModal(feedbackOrigin: feedbackOrigin),

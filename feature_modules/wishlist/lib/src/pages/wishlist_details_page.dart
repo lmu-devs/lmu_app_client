@@ -29,7 +29,7 @@ class WishlistDetailsPage extends StatelessWidget {
           context: context,
           mode: LmuUrlLauncherMode.inAppWebView,
         ).whenComplete(
-          () => GetIt.I.get<FeedbackService>().navigateToFeedback(
+          () => GetIt.I.get<FeedbackService>().openFeedback(
                 context,
                 'Wishlist Entry: ${wishlistModel.title}',
               ),
@@ -98,9 +98,8 @@ class WishlistDetailsPage extends StatelessWidget {
                   LmuButton(
                     title: context.locals.feedback.feedbackButton,
                     emphasis: ButtonEmphasis.secondary,
-                    onTap: () => GetIt.I
-                        .get<FeedbackService>()
-                        .navigateToFeedback(context, 'Wishlist Entry: ${wishlistModel.title}'),
+                    onTap: () =>
+                        GetIt.I.get<FeedbackService>().openFeedback(context, 'Wishlist Entry: ${wishlistModel.title}'),
                   ),
                 ],
               ),

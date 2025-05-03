@@ -1,10 +1,9 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
+import 'package:core_routes/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
-
-import '../../../home.dart';
 
 class LinkFilterKeys {
   LinkFilterKeys(_);

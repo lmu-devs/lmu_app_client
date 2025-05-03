@@ -3,10 +3,10 @@ import 'package:core/constants.dart';
 import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:core_routes/roomfinder.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../roomfinder.dart';
 import '../services/roomfinder_building_view_item.dart';
 import '../services/roomfinder_favorites_service.dart';
 import '../services/roomfinder_filter_service.dart';

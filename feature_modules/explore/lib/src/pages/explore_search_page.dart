@@ -132,6 +132,7 @@ class _ExploreSearchPageState extends State<ExploreSearchPage> {
             Navigator.of(context).pop();
             final location = _exploreLocationService.getLocationById(input.id);
             _exploreMapService.focusMarker(location);
+            _exploreLocationService.bringToFront(input.id);
             _exploreLocationService.ensureLocationVisible(location);
             Future.delayed(
               const Duration(milliseconds: 100),

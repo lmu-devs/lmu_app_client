@@ -1,4 +1,5 @@
 import 'package:core/module.dart';
+import 'package:core_routes/home.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/home.dart';
 
@@ -7,6 +8,7 @@ import 'bloc/home_cubit.dart';
 import 'bloc/links/links.dart';
 import 'repository/api/home_api_client.dart';
 import 'repository/repository.dart';
+import 'routes/home_router.dart';
 import 'service/links_search_service.dart';
 import 'service/services.dart';
 
@@ -40,6 +42,7 @@ class HomeModule extends AppModule
   @override
   void providePublicApi() {
     GetIt.I.registerSingleton<HomeService>(DefaultHomeService());
+    GetIt.I.registerSingleton<HomeRouter>(HomeRouterImpl());
   }
 
   @override

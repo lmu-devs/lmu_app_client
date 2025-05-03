@@ -1,9 +1,9 @@
 import 'package:core/components.dart';
 import 'package:core/utils.dart';
+import 'package:core_routes/wishlist.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../wishlist.dart';
 import '../repository/api/api.dart';
 import '../services/wishlist_user_preference_service.dart';
 import '../util/util.dart';

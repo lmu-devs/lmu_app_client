@@ -1,10 +1,10 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/core_services.dart';
+import 'package:core_routes/roomfinder.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../routes/roomfinder_routes.dart';
 import '../services/roomfinder_building_view_item.dart';
 import '../services/roomfinder_filter_service.dart';
 

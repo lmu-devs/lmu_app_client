@@ -4,12 +4,12 @@ import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
+import 'package:core_routes/mensa.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../extensions/extensions.dart';
 import '../../repository/api/api.dart';
-import '../../routes/mensa_routes.dart';
 import '../../services/services.dart';
 import '../common/mensa_tag.dart';
 
