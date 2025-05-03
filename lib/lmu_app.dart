@@ -1,6 +1,6 @@
 import 'package:core/localizations.dart';
-import 'package:core/pages.dart';
 import 'package:core/themes.dart';
+import 'package:core/utils.dart';
 import 'package:core_routes/config.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,6 +12,8 @@ import 'nav_bar_color_setter.dart';
 class LmuApp extends StatelessWidget {
   LmuApp({super.key});
 
+  final GoRouter _router = GoRouter(routes: $appRoutes, initialLocation: '/home');
+
   @override
   Widget build(BuildContext context) {
     final languageProvider = GetIt.I.get<LanguageProvider>();
@@ -21,7 +23,7 @@ class LmuApp extends StatelessWidget {
       builder: (context, _) => ListenableBuilder(
         listenable: themeProvider,
         builder: (context, _) {
-          AppUpdateNavigation.router = _router;
+          AppUpdateNavigatior.router = _router;
           return MaterialApp.router(
             localizationsDelegates: LmuLocalizations.localizationsDelegates,
             supportedLocales: LmuLocalizations.supportedLocales,
@@ -48,9 +50,4 @@ class LmuApp extends StatelessWidget {
       ),
     );
   }
-
-  final GoRouter _router = GoRouter(
-    routes: $appRoutes,
-    initialLocation: '/home',
-  );
 }

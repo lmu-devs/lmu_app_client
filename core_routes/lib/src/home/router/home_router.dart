@@ -8,4 +8,6 @@ abstract class HomeRouter {
   Widget buildLinksSearch(BuildContext context);
 
   Widget buildBenefits(BuildContext context);
+
+  Widget buildAppUpdate(BuildContext context);
 }

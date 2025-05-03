@@ -45,3 +45,12 @@ class BenefitsRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) => _router.buildBenefits(context);
 }
+
+class AppUpdateRoute extends GoRouteData {
+  const AppUpdateRoute();
+
+  static const String path = 'app_update';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => _router.buildAppUpdate(context);
+}

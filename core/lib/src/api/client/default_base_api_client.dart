@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:core/logging.dart';
+import 'package:core/utils.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../pages.dart';
 import '../env/env_config.dart';
 import 'base_api_client.dart';
 
@@ -107,7 +107,7 @@ class DefaultBaseApiClient extends BaseApiClient {
             "StatusCode: ${response.statusCode}, Body: $truncatedBody");
       } else if (response.statusCode == 426) {
         _appLogger.logMessage("[BaseApiClient][$method]: Update Required - StatusCode: ${response.statusCode}");
-        AppUpdateNavigation.popAllAndNavigate();
+        AppUpdateNavigatior.popAllAndNavigate();
       } else {
         _logError(method, constructedUrl, headers, response, stopwatch.elapsedMilliseconds);
       }

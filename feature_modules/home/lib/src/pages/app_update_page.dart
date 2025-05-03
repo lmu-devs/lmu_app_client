@@ -1,11 +1,9 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
-import 'package:core/src/core.dart';
-import 'package:core/src/utils/lmu_url_launcher.dart';
-import 'package:core/src/utils/themed_assets.dart';
+import 'package:core/themes.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class AppUpdatePage extends StatelessWidget {
   const AppUpdatePage({super.key});
@@ -26,7 +24,7 @@ class AppUpdatePage extends StatelessWidget {
                   children: [
                     Image.asset(
                       getPngAssetTheme('lib/assets/app_icon'),
-                      package: 'core',
+                      package: 'home',
                       semanticLabel: 'App Icon',
                       height: LmuSizes.size_64,
                       width: LmuSizes.size_64,
@@ -67,12 +65,3 @@ class AppUpdatePage extends StatelessWidget {
     );
   }
 }
-
-class AppUpdateNavigation {
-  static late GoRouter router;
-
-  static void popAllAndNavigate() {
-    router.go('/app-update');
-  }
-}
-
