@@ -1,18 +1,16 @@
 import 'package:collection/collection.dart';
 import 'package:core/components.dart';
 import 'package:core/utils.dart';
+import 'package:core_routes/cinema.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
 import 'package:shared_api/cinema.dart';
 import 'package:shared_api/explore.dart';
 
-import '../../cinema.dart';
 import '../cubit/cubit.dart';
 import '../pages/cinema_details_page.dart';
 import '../pages/cinema_page.dart';
 import '../routes/cinema_details_data.dart';
-import '../routes/cinema_routes.dart';
 import '../util/cinema_screenings.dart';
 
 class DefaultCinemaService implements CinemaService {
@@ -20,8 +18,6 @@ class DefaultCinemaService implements CinemaService {
   Widget get cinemaPage => const CinemaPage();
 
   @override
-  RouteBase get cinemaData => $cinemaMainRoute;
-
   @override
   Stream<List<ExploreLocation>> get cinemaExploreLocationsStream {
     final cinemaCubit = GetIt.I.get<CinemaCubit>();

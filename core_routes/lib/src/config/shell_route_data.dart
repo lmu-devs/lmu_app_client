@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../libraries.dart';
+import '../cinema/cinema.dart';
 import '../explore/explore.dart';
 import '../home/home.dart';
 import '../mensa/mensa.dart';
@@ -95,6 +96,20 @@ part 'shell_route_data.g.dart';
                       path: SportsSearchDetailsRoute.path,
                     ),
                   ],
+                ),
+              ],
+            ),
+            TypedGoRoute<CinemaMainRoute>(
+              path: CinemaMainRoute.path,
+              routes: <TypedGoRoute<GoRouteData>>[
+                TypedGoRoute<CinemaDetailsRoute>(
+                  path: CinemaDetailsRoute.path,
+                ),
+                TypedGoRoute<ScreeningDetailsRoute>(
+                  path: ScreeningDetailsRoute.path,
+                ),
+                TypedGoRoute<ScreeningsHistoryRoute>(
+                  path: ScreeningsHistoryRoute.path,
                 ),
               ],
             ),
