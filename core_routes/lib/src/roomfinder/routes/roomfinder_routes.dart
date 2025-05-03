@@ -35,23 +35,12 @@ class RoomfinderSearchRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) => _router.buildSearch(context);
 }
 
-class RoomfinderSearchBuildingDetailsRoute extends GoRouteData {
-  const RoomfinderSearchBuildingDetailsRoute(this.buildingId);
-
-  final String buildingId;
-
-  static const String path = 'details';
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) => _router.buildDetails(context, buildingId);
-}
-
 class RoomfinderRoomSearchRoute extends GoRouteData {
   const RoomfinderRoomSearchRoute(this.buildingId);
 
   final String buildingId;
 
-  static const String path = 'search';
+  static const String path = 'search_room';
 
   @override
   Widget build(BuildContext context, GoRouterState state) => _router.buildRoomSearch(context);

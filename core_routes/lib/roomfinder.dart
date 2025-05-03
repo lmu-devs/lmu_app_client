@@ -5,7 +5,5 @@ export 'src/config/shell_route_data.dart'
         $RoomfinderMainRouteExtension,
         $RoomfinderBuildingDetailsRouteExtension,
         $RoomfinderRoomSearchRouteExtension,
-        $RoomfinderSearchBuildingDetailsRouteExtension,
-        $RoomfinderSearchRouteExtension,
-        $RoomfinderBuildingSearchRoomSearchRouteExtension;
+        $RoomfinderSearchRouteExtension;
 export 'src/roomfinder/roomfinder.dart';

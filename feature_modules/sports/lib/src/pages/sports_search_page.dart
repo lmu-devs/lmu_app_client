@@ -52,7 +52,7 @@ class _SportsSearchPageState extends State<SportsSearchPage> {
           actionType: LmuListItemAction.chevron,
           leadingArea: LmuStatusDot(statusColor: sport.courses.statusColor),
           onTap: () {
-            SportsSearchDetailsRoute(sport).go(context);
+            SportsDetailsRoute(sport).push(context);
             _recentSearchController.trigger(input);
           },
         );

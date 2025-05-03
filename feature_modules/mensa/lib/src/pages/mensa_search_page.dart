@@ -68,7 +68,7 @@ class _MensaSearchPageState extends State<MensaSearchPage> {
             ),
           ],
           onTap: () {
-            MensaSearchDetailsRoute(mensa).go(context);
+            MensaDetailsRoute(mensa).push(context);
             Future.delayed(
               const Duration(milliseconds: 100),
               () => _recentSearchController.trigger(input),

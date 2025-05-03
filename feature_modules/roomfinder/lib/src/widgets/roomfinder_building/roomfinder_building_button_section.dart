@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../pages/roomfinder_room_search_page.dart';
 import '../../repository/api/models/models.dart';
 import '../../services/roomfinder_room_search_service.dart';
 
@@ -44,13 +43,7 @@ class RoomfinderBuildingButtonSection extends StatelessWidget {
                 GetIt.I.registerSingleton<RoomfinderRoomSearchService>(instance);
                 await instance.init();
                 if (context.mounted) {
-                  if (withMapButton) {
-                    RoomfinderRoomSearchRoute(building.buildingPartId).go(context);
-                  } else {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const RoomfinderRoomSearchPage()),
-                    );
-                  }
+                  RoomfinderRoomSearchRoute(building.buildingPartId).push(context);
                 }
               },
             ),

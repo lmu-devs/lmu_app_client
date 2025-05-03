@@ -35,14 +35,3 @@ class SportsSearchRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) => _router.buildSearch(context);
 }
-
-class SportsSearchDetailsRoute extends GoRouteData {
-  const SportsSearchDetailsRoute(this.$extra);
-
-  final RSportsType $extra;
-
-  static const String path = 'details';
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) => _router.buildDetails(context, $extra);
-}

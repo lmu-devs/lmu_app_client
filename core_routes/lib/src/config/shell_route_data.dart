@@ -69,16 +69,6 @@ part 'shell_route_data.g.dart';
                 ),
                 TypedGoRoute<RoomfinderSearchRoute>(
                   path: RoomfinderSearchRoute.path,
-                  routes: [
-                    TypedGoRoute<RoomfinderSearchBuildingDetailsRoute>(
-                      path: RoomfinderSearchBuildingDetailsRoute.path,
-                      routes: [
-                        TypedGoRoute<RoomfinderBuildingSearchRoomSearchRoute>(
-                          path: RoomfinderBuildingSearchRoomSearchRoute.path,
-                        ),
-                      ],
-                    ),
-                  ],
                 ),
               ],
             ),
@@ -93,11 +83,6 @@ part 'shell_route_data.g.dart';
                 ),
                 TypedGoRoute<SportsSearchRoute>(
                   path: SportsSearchRoute.path,
-                  routes: [
-                    TypedGoRoute<SportsSearchDetailsRoute>(
-                      path: SportsSearchDetailsRoute.path,
-                    ),
-                  ],
                 ),
               ],
             ),
@@ -137,11 +122,6 @@ part 'shell_route_data.g.dart';
             ),
             TypedGoRoute<MensaSearchRoute>(
               path: MensaSearchRoute.path,
-              routes: [
-                TypedGoRoute<MensaSearchDetailsRoute>(
-                  path: MensaSearchDetailsRoute.path,
-                ),
-              ],
             ),
           ],
         ),

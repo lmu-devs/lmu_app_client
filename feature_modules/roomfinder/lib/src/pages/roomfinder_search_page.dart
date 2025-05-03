@@ -77,7 +77,7 @@ class _RoomfinderSearchPageState extends State<RoomfinderSearchPage> {
           //   color: input.type.color(context.colors),
           // ),
           onTap: () {
-            RoomfinderSearchBuildingDetailsRoute(input.id).go(context);
+            RoomfinderBuildingDetailsRoute(input.id).push(context);
             _recentSearchController.trigger(input);
           },
         );

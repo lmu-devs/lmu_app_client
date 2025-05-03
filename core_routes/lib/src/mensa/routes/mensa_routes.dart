@@ -38,13 +38,3 @@ class MensaSearchRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) => _router.buildSearch(context);
 }
-
-class MensaSearchDetailsRoute extends GoRouteData {
-  const MensaSearchDetailsRoute(this.$extra);
-  final RMensaModel $extra;
-
-  static const String path = 'details';
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) => _router.buildDetails(context, $extra);
-}

@@ -48,35 +48,6 @@ class SportsInfoSection extends StatelessWidget {
               LmuUrlLauncher.launchWebsite(context: context, url: url);
             },
           ),
-          // LmuListItem.action(
-          //   leadingArea: Center(child: LmuText.body("⁉️")),
-          //   actionType: LmuListItemAction.chevron,
-          //   subtitle: sportsLocals.sportsInfoEntry,
-          //   hasHorizontalPadding: false,
-          //   hasDivider: true,
-          //   onTap: () {
-          //     Navigator.of(context).push(
-          //       MaterialPageRoute(
-          //         builder: (context) => const SportsInfoPage(),
-          //       ),
-          //     );
-          //   },
-          // ),
-          // LmuListItem.action(
-          //   leadingArea: Center(child: LmuText.body("🎟️")),
-          //   subtitle: sportsLocals.yourTickets,
-          //   hasDivider: true,
-          //   hasHorizontalPadding: false,
-          //   actionType: LmuListItemAction.chevron,
-          //   onTap: () {
-          //     //const SportsTicketRoute().go(context);
-          //     Navigator.of(context).push(
-          //       MaterialPageRoute(
-          //         builder: (context) => const SportsTicketsPage(),
-          //       ),
-          //     );
-          //   },
-          // ),
           LmuListItem.base(
             leadingArea: Center(child: LmuText.body("🥇")),
             hasHorizontalPadding: false,

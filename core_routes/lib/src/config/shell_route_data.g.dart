@@ -74,7 +74,7 @@ RouteBase get $shellRouteData => StatefulShellRouteData.$route(
                       factory: $RoomfinderBuildingDetailsRouteExtension._fromState,
                       routes: [
                         GoRouteData.$route(
-                          path: 'search',
+                          path: 'search_room',
                           factory: $RoomfinderRoomSearchRouteExtension._fromState,
                         ),
                       ],
@@ -82,18 +82,6 @@ RouteBase get $shellRouteData => StatefulShellRouteData.$route(
                     GoRouteData.$route(
                       path: 'search',
                       factory: $RoomfinderSearchRouteExtension._fromState,
-                      routes: [
-                        GoRouteData.$route(
-                          path: 'details',
-                          factory: $RoomfinderSearchBuildingDetailsRouteExtension._fromState,
-                          routes: [
-                            GoRouteData.$route(
-                              path: 'search',
-                              factory: $RoomfinderBuildingSearchRoomSearchRouteExtension._fromState,
-                            ),
-                          ],
-                        ),
-                      ],
                     ),
                   ],
                 ),
@@ -112,12 +100,6 @@ RouteBase get $shellRouteData => StatefulShellRouteData.$route(
                     GoRouteData.$route(
                       path: 'search',
                       factory: $SportsSearchRouteExtension._fromState,
-                      routes: [
-                        GoRouteData.$route(
-                          path: 'details',
-                          factory: $SportsSearchDetailsRouteExtension._fromState,
-                        ),
-                      ],
                     ),
                   ],
                 ),
@@ -166,12 +148,6 @@ RouteBase get $shellRouteData => StatefulShellRouteData.$route(
                 GoRouteData.$route(
                   path: 'search',
                   factory: $MensaSearchRouteExtension._fromState,
-                  routes: [
-                    GoRouteData.$route(
-                      path: 'details',
-                      factory: $MensaSearchDetailsRouteExtension._fromState,
-                    ),
-                  ],
                 ),
               ],
             ),
@@ -431,7 +407,7 @@ extension $RoomfinderRoomSearchRouteExtension on RoomfinderRoomSearchRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/home/roomfinder/details/search',
+        '/home/roomfinder/details/search_room',
         queryParams: {
           'building-id': buildingId,
         },
@@ -451,49 +427,6 @@ extension $RoomfinderSearchRouteExtension on RoomfinderSearchRoute {
 
   String get location => GoRouteData.$location(
         '/home/roomfinder/search',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) => context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
-extension $RoomfinderSearchBuildingDetailsRouteExtension on RoomfinderSearchBuildingDetailsRoute {
-  static RoomfinderSearchBuildingDetailsRoute _fromState(GoRouterState state) => RoomfinderSearchBuildingDetailsRoute(
-        state.uri.queryParameters['building-id']!,
-      );
-
-  String get location => GoRouteData.$location(
-        '/home/roomfinder/search/details',
-        queryParams: {
-          'building-id': buildingId,
-        },
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) => context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
-extension $RoomfinderBuildingSearchRoomSearchRouteExtension on RoomfinderBuildingSearchRoomSearchRoute {
-  static RoomfinderBuildingSearchRoomSearchRoute _fromState(GoRouterState state) =>
-      RoomfinderBuildingSearchRoomSearchRoute(
-        state.uri.queryParameters['building-id']!,
-      );
-
-  String get location => GoRouteData.$location(
-        '/home/roomfinder/search/details/search',
-        queryParams: {
-          'building-id': buildingId,
-        },
       );
 
   void go(BuildContext context) => context.go(location);
@@ -569,24 +502,6 @@ extension $SportsSearchRouteExtension on SportsSearchRoute {
   void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
-}
-
-extension $SportsSearchDetailsRouteExtension on SportsSearchDetailsRoute {
-  static SportsSearchDetailsRoute _fromState(GoRouterState state) => SportsSearchDetailsRoute(
-        state.extra as RSportsType,
-      );
-
-  String get location => GoRouteData.$location(
-        '/home/sports/search/details',
-      );
-
-  void go(BuildContext context) => context.go(location, extra: $extra);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location, extra: $extra);
-
-  void pushReplacement(BuildContext context) => context.pushReplacement(location, extra: $extra);
-
-  void replace(BuildContext context) => context.replace(location, extra: $extra);
 }
 
 extension $CinemaMainRouteExtension on CinemaMainRoute {
@@ -741,24 +656,6 @@ extension $MensaSearchRouteExtension on MensaSearchRoute {
   void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
-}
-
-extension $MensaSearchDetailsRouteExtension on MensaSearchDetailsRoute {
-  static MensaSearchDetailsRoute _fromState(GoRouterState state) => MensaSearchDetailsRoute(
-        state.extra as RMensaModel,
-      );
-
-  String get location => GoRouteData.$location(
-        '/mensa/search/details',
-      );
-
-  void go(BuildContext context) => context.go(location, extra: $extra);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location, extra: $extra);
-
-  void pushReplacement(BuildContext context) => context.pushReplacement(location, extra: $extra);
-
-  void replace(BuildContext context) => context.replace(location, extra: $extra);
 }
 
 extension $ExploreMainRouteExtension on ExploreMainRoute {
