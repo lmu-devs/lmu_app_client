@@ -18,13 +18,13 @@ RouteBase get $shellRouteData => StatefulShellRouteData.$route(
         StatefulShellBranchData.$branch(
           routes: [
             GoRouteData.$route(
-              path: 'app_update',
-              factory: $AppUpdateRouteExtension._fromState,
-            ),
-            GoRouteData.$route(
               path: '/home',
               factory: $HomeMainRouteExtension._fromState,
               routes: [
+                GoRouteData.$route(
+                  path: 'app_update',
+                  factory: $AppUpdateRouteExtension._fromState,
+                ),
                 GoRouteData.$route(
                   path: 'settings',
                   factory: $SettingsMainRouteExtension._fromState,
@@ -188,11 +188,11 @@ extension $ShellRouteDataExtension on ShellRouteData {
   static ShellRouteData _fromState(GoRouterState state) => const ShellRouteData();
 }
 
-extension $AppUpdateRouteExtension on AppUpdateRoute {
-  static AppUpdateRoute _fromState(GoRouterState state) => const AppUpdateRoute();
+extension $HomeMainRouteExtension on HomeMainRoute {
+  static HomeMainRoute _fromState(GoRouterState state) => const HomeMainRoute();
 
   String get location => GoRouteData.$location(
-        'app_update',
+        '/home',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -204,11 +204,11 @@ extension $AppUpdateRouteExtension on AppUpdateRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $HomeMainRouteExtension on HomeMainRoute {
-  static HomeMainRoute _fromState(GoRouterState state) => const HomeMainRoute();
+extension $AppUpdateRouteExtension on AppUpdateRoute {
+  static AppUpdateRoute _fromState(GoRouterState state) => const AppUpdateRoute();
 
   String get location => GoRouteData.$location(
-        '/home',
+        '/home/app_update',
       );
 
   void go(BuildContext context) => context.go(location);

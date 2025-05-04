@@ -19,12 +19,12 @@ part 'shell_route_data.g.dart';
   branches: [
     TypedStatefulShellBranch<HomeRouteData>(
       routes: <TypedRoute<RouteData>>[
-        TypedGoRoute<AppUpdateRoute>(
-          path: AppUpdateRoute.path,
-        ),
         TypedGoRoute<HomeMainRoute>(
           path: HomeMainRoute.path,
           routes: <TypedGoRoute<GoRouteData>>[
+            TypedGoRoute<AppUpdateRoute>(
+              path: AppUpdateRoute.path,
+            ),
             TypedGoRoute<SettingsMainRoute>(
               path: SettingsMainRoute.path,
               routes: <TypedGoRoute<GoRouteData>>[
