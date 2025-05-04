@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:core/core_services.dart';
 import 'package:core/logging.dart';
 import 'package:core/utils.dart';
 import 'package:get_it/get_it.dart';
@@ -45,7 +46,7 @@ class DefaultBaseApiClient extends BaseApiClient {
   }
 
   Map<String, String> get _defaultHeaders => {
-        "app-version": GetIt.I.get<String>(instanceName: 'appVersion'),
+        "app-version": GetIt.I.get<SystemInfoService>().systemInfo.appVersion,
         "accept-language": _locale.languageCode,
         if (_userApiKey != null) "user-api-key": _userApiKey!,
       };

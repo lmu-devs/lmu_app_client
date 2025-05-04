@@ -29,10 +29,14 @@ class WishlistDetailsPage extends StatelessWidget {
           context: context,
           mode: LmuUrlLauncherMode.inAppWebView,
         ).whenComplete(
-          () => GetIt.I.get<FeedbackService>().openFeedback(
-                context,
-                'Wishlist Entry: ${wishlistModel.title}',
-              ),
+          () {
+            if (!context.mounted) return;
+            GetIt.I.get<FeedbackApi>().showFeedback(
+                  context,
+                  type: FeedbackType.general,
+                  origin: 'Wishlist Entry: ${wishlistModel.title}',
+                );
+          },
         );
       }
     } else {
@@ -98,8 +102,11 @@ class WishlistDetailsPage extends StatelessWidget {
                   LmuButton(
                     title: context.locals.feedback.feedbackButton,
                     emphasis: ButtonEmphasis.secondary,
-                    onTap: () =>
-                        GetIt.I.get<FeedbackService>().openFeedback(context, 'Wishlist Entry: ${wishlistModel.title}'),
+                    onTap: () => GetIt.I.get<FeedbackApi>().showFeedback(
+                          context,
+                          type: FeedbackType.general,
+                          origin: 'Wishlist Entry: ${wishlistModel.title}',
+                        ),
                   ),
                 ],
               ),

@@ -73,7 +73,7 @@ class _WishlistPageState extends State<WishlistPage> {
                 LmuButton(
                   title: context.locals.wishlist.rateApp,
                   emphasis: ButtonEmphasis.secondary,
-                  onTap: () => AppReviewUtil.openStoreListing(context, context.locals.wishlist.rateAppError),
+                  onTap: () => GetIt.I.get<FeedbackApi>().openStoreListing(),
                 ),
                 LmuButton(
                   title: LmuDevStrings.devTeam,
@@ -137,7 +137,11 @@ class _WishlistPageState extends State<WishlistPage> {
                         mainContentAlignment: MainContentAlignment.center,
                         leadingArea: const LeadingFancyIcons(icon: LucideIcons.plus),
                         onTap: () {
-                          GetIt.I.get<FeedbackService>().openSuggestion(context, 'WishlistScreen');
+                          GetIt.I.get<FeedbackApi>().showFeedback(
+                                context,
+                                type: FeedbackType.suggestion,
+                                origin: 'WishlistScreen',
+                              );
                         },
                       ),
                       LmuListItem.base(
@@ -145,7 +149,11 @@ class _WishlistPageState extends State<WishlistPage> {
                         mainContentAlignment: MainContentAlignment.center,
                         leadingArea: const LeadingFancyIcons(icon: LucideIcons.bug),
                         onTap: () {
-                          GetIt.I.get<FeedbackService>().openBugReport(context, 'WishlistScreen');
+                          GetIt.I.get<FeedbackApi>().showFeedback(
+                                context,
+                                type: FeedbackType.bug,
+                                origin: 'WishlistScreen',
+                              );
                         },
                       ),
                     ],
