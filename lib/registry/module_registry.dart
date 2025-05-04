@@ -2,7 +2,6 @@ import 'package:core/api.dart';
 import 'package:core/core_services.dart';
 import 'package:core/module.dart';
 import 'package:core/themes.dart';
-import 'package:core/utils.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/user.dart';
 
@@ -12,13 +11,11 @@ class ModuleRegistry {
   final List<AppModule> modules;
 
   Future<void> init() async {
-    String appName = await PackageInfoUtil().getAppName();
-    String appVersion = await PackageInfoUtil().getAppVersion();
-    String systemVersion = await DeviceInfoUtil().getOSVersion();
-    GetIt.I.registerSingleton<String>(appName, instanceName: 'appName');
-    GetIt.I.registerSingleton<String>(appVersion, instanceName: 'appVersion');
-    GetIt.I.registerSingleton<String>(systemVersion, instanceName: 'systemVersion');
+    final systemInfoService = GetIt.I.registerSingleton<SystemInfoService>(SystemInfoService());
+    await systemInfoService.init();
+
     GetIt.I.registerSingleton<ThemeProvider>(ThemeProvider());
+
     final baseApiClient = GetIt.I.registerSingleton<BaseApiClient>(DefaultBaseApiClient());
     final languageProvider = GetIt.I.registerSingleton<LanguageProvider>(LanguageProvider());
     GetIt.I.registerSingleton<LocationService>(LocationService(), dispose: (srv) => srv.dispose());

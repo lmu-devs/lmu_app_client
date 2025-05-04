@@ -1,6 +1,8 @@
+import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/feedback.dart';
 
@@ -28,9 +30,20 @@ class BenefitsContentView extends StatelessWidget {
             ),
           ),
           const SizedBox(height: LmuSizes.size_16),
-          GetIt.I<FeedbackService>().getMissingItemInput(
-            context.locals.home.benefitSuggestion,
-            'BenefitsScreen',
+          LmuTileHeadline.base(title: context.locals.feedback.missingItemInput),
+          LmuContentTile(
+            content: LmuListItem.base(
+              title: context.locals.home.benefitSuggestion,
+              mainContentAlignment: MainContentAlignment.center,
+              leadingArea: const LeadingFancyIcons(icon: LucideIcons.megaphone),
+              onTap: () {
+                GetIt.I.get<FeedbackApi>().showFeedback(
+                      context,
+                      type: FeedbackType.suggestion,
+                      origin: 'BenefitsScreen',
+                    );
+              },
+            ),
           ),
           const SizedBox(height: LmuSizes.size_96),
         ],
