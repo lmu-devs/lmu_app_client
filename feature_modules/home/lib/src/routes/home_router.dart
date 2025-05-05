@@ -14,8 +14,5 @@ class HomeRouterImpl extends HomeRouter {
   Widget buildLinksSearch(BuildContext context) => const LinksSearchPage();
 
   @override
-  Widget buildBenefits(BuildContext context) => const BenefitsPage();
-
-  @override
   Widget buildAppUpdate(BuildContext context) => const AppUpdatePage();
 }

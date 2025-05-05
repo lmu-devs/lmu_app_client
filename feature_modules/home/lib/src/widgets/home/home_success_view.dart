@@ -4,6 +4,7 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:core_routes/benefits.dart';
 import 'package:core_routes/cinema.dart';
 import 'package:core_routes/home.dart';
 import 'package:core_routes/libraries.dart';
@@ -81,7 +82,7 @@ class HomeSuccessView extends StatelessWidget {
 extension HomeTileMapper on HomeTile {
   void Function() onTap(BuildContext context) {
     return switch (type) {
-      HomeTileType.benefits => () => const BenefitsRoute().go(context),
+      HomeTileType.benefits => () => const BenefitsMainRoute().go(context),
       HomeTileType.cinemas => () => const CinemaMainRoute().go(context),
       HomeTileType.feedback => () =>
           GetIt.I.get<FeedbackApi>().showFeedback(context, type: FeedbackType.general, origin: 'Home General'),

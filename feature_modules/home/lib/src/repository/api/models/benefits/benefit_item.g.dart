@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'benefit_model.dart';
+part of 'benefit_item.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-BenefitModel _$BenefitModelFromJson(Map<String, dynamic> json) => BenefitModel(
+BenefitItem _$BenefitItemFromJson(Map<String, dynamic> json) => BenefitItem(
       title: json['title'] as String,
       description: json['description'] as String,
       url: json['url'] as String,
@@ -15,7 +15,7 @@ BenefitModel _$BenefitModelFromJson(Map<String, dynamic> json) => BenefitModel(
       aliases: (json['aliases'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
-Map<String, dynamic> _$BenefitModelToJson(BenefitModel instance) => <String, dynamic>{
+Map<String, dynamic> _$BenefitItemToJson(BenefitItem instance) => <String, dynamic>{
       'title': instance.title,
       'description': instance.description,
       'url': instance.url,
