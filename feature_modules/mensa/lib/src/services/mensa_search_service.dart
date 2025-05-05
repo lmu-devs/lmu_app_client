@@ -8,7 +8,7 @@ import '../bloc/bloc.dart';
 import '../repository/repository.dart';
 
 class MensaSearchService {
-  final _sportsCubit = GetIt.I.get<MensaCubit>();
+  final _mensaCubit = GetIt.I.get<MensaCubit>();
   final _mensaRepository = GetIt.I.get<MensaRepository>();
 
   List<String> _recentSearchIds = [];
@@ -24,7 +24,7 @@ class MensaSearchService {
   List<MensaModel> get popularMensaModels => _popularMensaModels;
 
   void init() {
-    _cubitSubscription = _sportsCubit.stream.withInitialValue(_sportsCubit.state).listen((state) {
+    _cubitSubscription = _mensaCubit.stream.withInitialValue(_mensaCubit.state).listen((state) {
       if (state is MensaLoadSuccess) {
         _mensaModels = state.mensaModels;
         _mensaRepository.getRecentSearches().then((recentSearch) {

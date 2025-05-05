@@ -12,5 +12,17 @@
   "allLibraries": "All Libraries",
   "@allLibraries": {
     "description": "All libraries"
+  },
+  "seatBooking": "Book Seat",
+  "@seatBooking": {
+    "description": "Book Seat"
+  },
+  "equipment": "Equipment",
+  "@equipment": {
+    "description": "Equipment Title"
+  },
+  "subjectAreas": "Subject Areas",
+  "@subjectAreas": {
+    "description": "Subject Areas Title"
   }
 }

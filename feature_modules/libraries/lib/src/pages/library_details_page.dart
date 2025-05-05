@@ -3,11 +3,15 @@ import 'package:core/constants.dart';
 import 'package:core/extensions.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 
+import '../extensions/equipment_icon_extension.dart';
 import '../repository/api/api.dart';
 import '../services/libraries_user_preference_service.dart';
+import '../widgets/libraries_list_section.dart';
 
 class LibraryDetailsPage extends StatelessWidget {
   const LibraryDetailsPage({
@@ -21,7 +25,89 @@ class LibraryDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final content = Container();
+    final content = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: LmuSizes.size_8),
+        LmuButtonRow(
+          buttons: [
+            if (library.reservationUrl != null && library.reservationUrl!.isNotEmpty)
+              LmuButton(
+                title: context.locals.libraries.seatBooking,
+                leadingIcon: LucideIcons.armchair,
+                emphasis: ButtonEmphasis.secondary,
+                onTap: () => LmuUrlLauncher.launchWebsite(url: library.reservationUrl!, context: context),
+              ),
+            if (library.url.isNotEmpty)
+              LmuButton(
+                title: "Website",
+                emphasis: ButtonEmphasis.secondary,
+                onTap: () => LmuUrlLauncher.launchWebsite(url: library.url, context: context),
+              ),
+            if (library.phones != null && library.phones!.isNotEmpty)
+              LmuButton(
+                title: context.locals.app.phone,
+                emphasis: ButtonEmphasis.secondary,
+                onTap: () => library.phones!.length > 1
+                    ? LmuBottomSheet.show(
+                        context,
+                        content: PhoneSheet(phones: library.phones!),
+                      )
+                    : LmuUrlLauncher.launchPhone(
+                        phoneNumber: library.phones!.first.number,
+                        context: context,
+                      ),
+              ),
+          ],
+        ),
+        const SizedBox(height: LmuSizes.size_16),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+          child: LmuListItem.base(
+            subtitle: library.location.address,
+            trailingArea: Icon(
+              LucideIcons.map,
+              size: LmuIconSizes.mediumSmall,
+              color: context.colors.neutralColors.textColors.weakColors.base,
+            ),
+            hasHorizontalPadding: false,
+            hasDivider: true,
+            onTap: () {
+              LmuBottomSheet.show(
+                context,
+                content: NavigationSheet(location: library.location),
+              );
+            },
+          ),
+        ),
+        LibrariesListSection(
+          title: context.locals.libraries.equipment,
+          count: library.equipment.length,
+          items: library.equipment
+              .map(
+                (equipment) => LmuListItem.base(
+                  title: equipment.title,
+                  subtitle: equipment.description,
+                  leadingArea: Icon(equipment.getIcon()),
+                  onTap: () => equipment.url != null && equipment.url!.isNotEmpty
+                      ? LmuUrlLauncher.launchWebsite(url: equipment.url!, context: context)
+                      : null,
+                ),
+              )
+              .toList(),
+        ),
+        LibrariesListSection(
+          title: context.locals.libraries.subjectAreas,
+          count: library.subjects.length,
+          items: library.subjects
+              .map(
+                (subject) => LmuListItem.base(title: subject),
+              )
+              .toList(),
+        ),
+        const SizedBox(height: LmuSizes.size_96),
+      ],
+    );
 
     if (!withAppBar) return content;
 

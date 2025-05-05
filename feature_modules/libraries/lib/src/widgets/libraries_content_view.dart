@@ -2,7 +2,11 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import '../repository/api/models/library_model.dart';
+import '../services/libraries_user_preference_service.dart';
+import 'libraries_overview_button_section.dart';
+import 'library_tile.dart';
 
 class LibrariesContentView extends StatefulWidget {
   const LibrariesContentView({
@@ -18,6 +22,7 @@ class LibrariesContentView extends StatefulWidget {
 
 class _LibrariesContentViewState extends State<LibrariesContentView> {
   List<LibraryModel> get _libraries => widget.libraries;
+  final userPreferencesService = GetIt.I.get<LibrariesUserPreferenceService>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +44,35 @@ class _LibrariesContentViewState extends State<LibrariesContentView> {
             padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
             child: LmuTileHeadline.base(title: context.locals.libraries.allLibraries),
           ),
+          LibrariesOverviewButtonSection(libraries: _libraries),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
             child: Column(
               children: [
                 const SizedBox(height: LmuSizes.size_16),
+                ValueListenableBuilder(
+                  valueListenable: userPreferencesService.sortedLibrariesNotifier,
+                  builder: (context, sortedLibraries, _) {
+                    return LmuAnimatedListView(
+                      valueKey: "lib",
+                      itemCount: sortedLibraries.length,
+                      itemBuilder: (context, index) {
+                        return ValueListenableBuilder(
+                          valueListenable: userPreferencesService.favoriteLibraryIdsNotifier,
+                          builder: (context, favoriteLibraryIds, _) {
+                            final isFavorite = favoriteLibraryIds.contains(sortedLibraries[index].id);
+                            return LibraryTile(
+                              library: sortedLibraries[index],
+                              isFavorite: isFavorite,
+                              hasDivider: index != sortedLibraries.length - 1,
+                              hasLargeImage: sortedLibraries[index].images.isNotEmpty,
+                            );
+                          },
+                        );
+                      },
+                    );
+                  },
+                ),
                 const SizedBox(height: LmuSizes.size_96),
               ],
             ),

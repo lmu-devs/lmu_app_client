@@ -3,5 +3,8 @@
   "@@context": "Libraries",
   "pageTitle": "Bibliotheken",
   "library": "Bibliothek",
-  "allLibraries": "Alle Bibliotheken"
+  "allLibraries": "Alle Bibliotheken",
+  "seatBooking": "Platz Reservieren",
+  "equipment": "Ausstattung",
+  "subjectAreas": "Fachbereiche"
 }

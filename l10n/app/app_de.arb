@@ -51,5 +51,17 @@
   "prevSearch": "Zuletzt gesucht",
   "noResults": "Keine Ergebnisse",
   "favorites": "Favoriten",
-  "allClosed": "Alles geschlossen"
+  "allClosed": "Alles geschlossen",
+  "phone": "Telefon",
+  "callPhone": "Anrufen",
+  "copiedPhone": "Telefonnummer kopiert",
+  "errorLaunchWebsite": "Website konnte nicht geöffnet werden",
+  "errorOpenWebsite": "Website konnte nicht geladen werden",
+  "errorWebsiteException": "Fehler beim Öffnen der Website: {error}",
+  "errorNoEmailClient": "Kein E-Mail-Programm gefunden",
+  "errorOpenEmailClient": "E-Mail-Programm konnte nicht geöffnet werden",
+  "errorEmailException": "Fehler beim Öffnen des E-Mail-Programms: {error}",
+  "errorLaunchDialer": "Telefon-App konnte nicht gestartet werden",
+  "errorOpenDialer": "Telefon-App konnte nicht geöffnet werden",
+  "errorDialerException": "Fehler beim Starten der Telefon-App: {error}"
 }

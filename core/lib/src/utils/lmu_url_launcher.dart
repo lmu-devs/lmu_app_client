@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:core/components.dart';
+import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -17,6 +18,8 @@ enum LmuUrlLauncherMode {
 /// Service class for handling all external launching operations (URLs, emails, etc.)
 /// Provides consistent error handling and user feedback
 class LmuUrlLauncher {
+  LmuUrlLauncher._();
+
   static LaunchMode _convertLaunchMode(LmuUrlLauncherMode mode) {
     switch (mode) {
       case LmuUrlLauncherMode.platformDefault:
@@ -56,7 +59,7 @@ class LmuUrlLauncher {
         if (context.mounted) {
           _showErrorToast(
             context: context,
-            message: 'Could not launch website',
+            message: context.locals.app.errorLaunchWebsite,
           );
         }
         return false;
@@ -75,7 +78,7 @@ class LmuUrlLauncher {
       if (!launched && context.mounted) {
         _showErrorToast(
           context: context,
-          message: 'Failed to open website',
+          message: context.locals.app.errorOpenWebsite,
         );
         return false;
       }
@@ -85,7 +88,7 @@ class LmuUrlLauncher {
       if (context.mounted) {
         _showErrorToast(
           context: context,
-          message: 'Error launching website: $e',
+          message: context.locals.app.errorWebsiteException(e),
         );
       }
       return false;
@@ -109,7 +112,7 @@ class LmuUrlLauncher {
         if (context.mounted) {
           _showErrorToast(
             context: context,
-            message: 'No email client found',
+            message: context.locals.app.errorNoEmailClient,
           );
         }
         return false;
@@ -120,7 +123,7 @@ class LmuUrlLauncher {
       if (!launched && context.mounted) {
         _showErrorToast(
           context: context,
-          message: 'Failed to launch email client',
+          message: context.locals.app.errorOpenEmailClient,
         );
         return false;
       }
@@ -130,7 +133,46 @@ class LmuUrlLauncher {
       if (context.mounted) {
         _showErrorToast(
           context: context,
-          message: 'Error launching email client: $e',
+          message: context.locals.app.errorEmailException(e),
+        );
+      }
+      return false;
+    }
+  }
+
+  static Future<bool> launchPhone({
+    required String phoneNumber,
+    required BuildContext context,
+  }) async {
+    try {
+      final Uri phoneUri = Uri(scheme: 'tel', path: phoneNumber);
+
+      if (!await canLaunchUrl(phoneUri)) {
+        if (context.mounted) {
+          _showErrorToast(
+            context: context,
+            message: context.locals.app.errorLaunchDialer,
+          );
+        }
+        return false;
+      }
+
+      final launched = await launchUrl(phoneUri);
+
+      if (!launched && context.mounted) {
+        _showErrorToast(
+          context: context,
+          message: context.locals.app.errorOpenDialer,
+        );
+        return false;
+      }
+
+      return launched;
+    } catch (e) {
+      if (context.mounted) {
+        _showErrorToast(
+          context: context,
+          message: context.locals.app.errorDialerException(e),
         );
       }
       return false;

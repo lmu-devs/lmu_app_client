@@ -4,6 +4,7 @@ import 'package:shared_api/libraries.dart';
 
 import 'repository/api/api.dart';
 import 'repository/libraries_repository.dart';
+import 'services/libraries_search_service.dart';
 import 'services/libraries_user_preference_service.dart';
 import 'services/default_libraries_service.dart';
 import 'cubit/cubit.dart';
@@ -27,6 +28,7 @@ class LibrariesModule extends AppModule
 
     GetIt.I.registerSingleton<LibrariesCubit>(LibrariesCubit());
     GetIt.I.registerSingleton<LibrariesUserPreferenceService>(LibrariesUserPreferenceService());
+    GetIt.I.registerSingleton<LibrariesSearchService>(LibrariesSearchService(), dispose: (srv) => srv.dispose());
   }
 
   @override
