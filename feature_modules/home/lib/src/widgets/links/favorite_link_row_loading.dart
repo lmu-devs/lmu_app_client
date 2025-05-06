@@ -3,8 +3,8 @@ import 'package:core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+
 import '../../service/home_preferences_service.dart';
-import '../favicon_fallback.dart';
 
 class FavoriteLinkRowLoading extends StatelessWidget {
   const FavoriteLinkRowLoading({super.key});
@@ -25,7 +25,7 @@ class FavoriteLinkRowLoading extends StatelessWidget {
                     (index) => LmuButton(
                       emphasis: ButtonEmphasis.secondary,
                       title: BoneMock.words(1),
-                      leadingWidget: const FaviconFallback(size: LmuIconSizes.small),
+                      leadingWidget: const LmuFaviconFallback(size: LmuIconSizes.small),
                     ),
                   ),
                 ),

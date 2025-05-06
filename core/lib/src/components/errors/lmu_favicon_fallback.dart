@@ -3,11 +3,8 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
-class FaviconFallback extends StatelessWidget {
-  const FaviconFallback({
-    super.key,
-    this.size = LmuIconSizes.medium,
-  });
+class LmuFaviconFallback extends StatelessWidget {
+  const LmuFaviconFallback({super.key, this.size = LmuIconSizes.medium});
 
   final double size;
 

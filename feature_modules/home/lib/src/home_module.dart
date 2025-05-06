@@ -3,7 +3,6 @@ import 'package:core_routes/home.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/home.dart';
 
-import 'bloc/benefits/benefits.dart';
 import 'bloc/home_cubit.dart';
 import 'bloc/links/links.dart';
 import 'repository/api/home_api_client.dart';
@@ -26,7 +25,6 @@ class HomeModule extends AppModule
     GetIt.I.registerSingleton<HomeRepository>(HomeRepository(homeApiClient: HomeApiClient()));
     GetIt.I.registerSingleton<HomeCubit>(HomeCubit(homeRepository: GetIt.I.get<HomeRepository>()));
     GetIt.I.registerSingleton<LinksCubit>(LinksCubit());
-    GetIt.I.registerSingleton<BenefitsCubit>(BenefitsCubit());
     GetIt.I.registerSingleton<HomePreferencesService>(HomePreferencesService());
     GetIt.I.registerSingleton<LinksSearchService>(LinksSearchService());
   }

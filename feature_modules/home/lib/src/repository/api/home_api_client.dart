@@ -4,7 +4,6 @@ import 'package:core/api.dart';
 import 'package:get_it/get_it.dart';
 
 import 'home_api_endpoints.dart';
-import 'models/benefits/benefit_model.dart';
 import 'models/home/home_data.dart';
 import 'models/links/link_model.dart';
 
@@ -23,13 +22,6 @@ class HomeApiClient {
 
     final jsonList = json.decode(response.body) as List<dynamic>;
     return jsonList.map((json) => LinkModel.fromJson(json as Map<String, dynamic>)).toList();
-  }
-
-  Future<List<BenefitModel>> getBenefits() async {
-    final response = await _baseApiClient.get(HomeApiEndpoints.getBenefits());
-
-    final jsonList = json.decode(response.body) as List<dynamic>;
-    return jsonList.map((json) => BenefitModel.fromJson(json as Map<String, dynamic>)).toList();
   }
 }
 

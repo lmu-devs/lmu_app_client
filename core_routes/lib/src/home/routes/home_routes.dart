@@ -37,15 +37,6 @@ class LinksSearchRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) => _router.buildLinksSearch(context);
 }
 
-class BenefitsRoute extends GoRouteData {
-  const BenefitsRoute();
-
-  static const String path = 'benefits';
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) => _router.buildBenefits(context);
-}
-
 class AppUpdateRoute extends GoRouteData {
   const AppUpdateRoute();
 

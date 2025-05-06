@@ -1,0 +1,9 @@
+{
+  "@@locale": "en",
+  "@@context": "Benefits",
+  "benefitsTitle": "Benefits",
+  "benefitSuggestion": "Suggest a benefit",
+  "@benefitSuggestion": {
+    "description": "Suggest a benefit"
+  }
+}

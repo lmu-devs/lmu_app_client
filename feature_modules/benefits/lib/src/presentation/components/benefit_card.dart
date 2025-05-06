@@ -4,17 +4,16 @@ import 'package:core/localizations.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 
-import '../../repository/api/models/benefits/benefit_model.dart';
-import '../favicon_fallback.dart';
+import '../../domain/models/benefit.dart';
 
-class BenefitsCard extends StatelessWidget {
-  const BenefitsCard({super.key, required this.benefit});
+class BenefitCard extends StatelessWidget {
+  const BenefitCard({super.key, required this.benefit});
 
-  final BenefitModel benefit;
+  final Benefit benefit;
 
   void _handleTap(BuildContext context) => LmuUrlLauncher.launchWebsite(
-        url: benefit.url,
         context: context,
+        url: benefit.url,
         mode: LmuUrlLauncherMode.externalApplication,
       );
 
@@ -23,6 +22,9 @@ class BenefitsCard extends StatelessWidget {
         copiedText: benefit.url,
         message: context.locals.home.linkCopiedToClipboard,
       );
+
+  String? get imageUrl => benefit.imageUrl;
+  String? get faviconUrl => benefit.faviconUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class BenefitsCard extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             )
-          : const FaviconFallback(size: LmuIconSizes.mediumSmall),
+          : const LmuFaviconFallback(size: LmuIconSizes.mediumSmall),
       onTap: () => _handleTap(context),
       onLongPress: () => _handleLongPress(context),
     );

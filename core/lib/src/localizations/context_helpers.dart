@@ -1,18 +1,7 @@
-import 'package:core/src/localizations/generated/app_localizations.dart';
-import 'package:core/src/localizations/generated/explore_localizations.dart';
-import 'package:core/src/localizations/generated/sports_localizations.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../../localizations.dart';
-import 'generated/canteen_localizations.dart';
-import 'generated/cinema_localizations.dart';
-import 'generated/feedback_localizations.dart';
-import 'generated/home_localizations.dart';
-import 'generated/roomfinder_localizations.dart';
-import 'generated/settings_localizations.dart';
-import 'generated/timeline_localizations.dart';
-import 'generated/wishlist_localizations.dart';
 
 extension LocalizationExtension on BuildContext {
   LmuLocalizations get locals => LmuLocalizations(this);
@@ -35,6 +24,7 @@ class LmuLocalizations {
   TimelineLocatizations get timeline => TimelineLocatizations.of(_context)!;
   RoomfinderLocatizations get roomfinder => RoomfinderLocatizations.of(_context)!;
   LibrariesLocatizations get libraries => LibrariesLocatizations.of(_context)!;
+  BenefitsLocatizations get benefits => BenefitsLocatizations.of(_context)!;
   // Add other localizations
 
   /// List of all supported localizations delegates
@@ -51,6 +41,7 @@ class LmuLocalizations {
         TimelineLocatizations.delegate,
         RoomfinderLocatizations.delegate,
         LibrariesLocatizations.delegate,
+        BenefitsLocatizations.delegate,
         // Add other localizations delegates
 
         GlobalMaterialLocalizations.delegate,

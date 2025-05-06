@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../libraries.dart';
+import '../benefits/routes/benefits_routes.dart';
 import '../cinema/cinema.dart';
 import '../explore/explore.dart';
 import '../home/home.dart';
@@ -53,8 +54,13 @@ part 'shell_route_data.g.dart';
                 ),
               ],
             ),
-            TypedGoRoute<BenefitsRoute>(
-              path: BenefitsRoute.path,
+            TypedGoRoute<BenefitsMainRoute>(
+              path: BenefitsMainRoute.path,
+              routes: [
+                TypedGoRoute<BenefitsDetailsRoute>(
+                  path: BenefitsDetailsRoute.path,
+                ),
+              ],
             ),
             TypedGoRoute<RoomfinderMainRoute>(
               path: RoomfinderMainRoute.path,

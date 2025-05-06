@@ -40,6 +40,8 @@ dependencies:
     path: ./feature_modules/roomfinder
   libraries:
     path: ./feature_modules/libraries
+  benefits:
+    path: ./feature_modules/benefits
   shared_api:
     path: ./shared_api
 

@@ -63,7 +63,13 @@ RouteBase get $shellRouteData => StatefulShellRouteData.$route(
                 ),
                 GoRouteData.$route(
                   path: 'benefits',
-                  factory: $BenefitsRouteExtension._fromState,
+                  factory: $BenefitsMainRouteExtension._fromState,
+                  routes: [
+                    GoRouteData.$route(
+                      path: 'details',
+                      factory: $BenefitsDetailsRouteExtension._fromState,
+                    ),
+                  ],
                 ),
                 GoRouteData.$route(
                   path: 'roomfinder',
@@ -348,11 +354,27 @@ extension $LinksSearchRouteExtension on LinksSearchRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $BenefitsRouteExtension on BenefitsRoute {
-  static BenefitsRoute _fromState(GoRouterState state) => const BenefitsRoute();
+extension $BenefitsMainRouteExtension on BenefitsMainRoute {
+  static BenefitsMainRoute _fromState(GoRouterState state) => const BenefitsMainRoute();
 
   String get location => GoRouteData.$location(
         '/home/benefits',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $BenefitsDetailsRouteExtension on BenefitsDetailsRoute {
+  static BenefitsDetailsRoute _fromState(GoRouterState state) => const BenefitsDetailsRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/benefits/details',
       );
 
   void go(BuildContext context) => context.go(location);
