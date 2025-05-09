@@ -3,15 +3,15 @@ import 'package:core/constants.dart';
 import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:core_routes/explore.dart';
+import 'package:core_routes/libraries.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
-import 'package:shared_api/explore.dart';
 
 import '../repository/api/api.dart';
 import '../repository/api/enums/sort_options.dart';
-import '../routes/libraries_routes.dart';
 import '../services/libraries_user_preference_service.dart';
 
 class LibrariesOverviewButtonSection extends StatelessWidget {
@@ -31,7 +31,7 @@ class LibrariesOverviewButtonSection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const SizedBox(width: LmuSizes.size_16),
-          LmuMapImageButton(onTap: () => GetIt.I<ExploreService>().navigateToExplore(context)),
+          LmuMapImageButton(onTap: () => const ExploreMainRoute().go(context)),
           const SizedBox(width: LmuSizes.size_8),
           LmuIconButton(
             icon: LucideIcons.search,

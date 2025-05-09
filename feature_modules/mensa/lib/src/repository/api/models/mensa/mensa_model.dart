@@ -1,5 +1,5 @@
 import 'package:core/api.dart';
-import 'package:equatable/equatable.dart';
+import 'package:core_routes/mensa.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:shared_api/mensa.dart';
 
@@ -9,7 +9,7 @@ import 'mensa_status.dart';
 part 'mensa_model.g.dart';
 
 @JsonSerializable()
-class MensaModel extends Equatable {
+class MensaModel extends RMensaModel {
   @JsonKey(name: 'id')
   final String canteenId;
   final String name;

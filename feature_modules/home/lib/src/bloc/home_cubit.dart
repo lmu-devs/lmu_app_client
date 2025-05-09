@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:core/extensions.dart';
+import 'package:core/utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../repository/api/models/home/home_featured.dart';

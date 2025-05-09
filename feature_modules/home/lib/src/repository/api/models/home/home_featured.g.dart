@@ -9,7 +9,7 @@ part of 'home_featured.dart';
 HomeFeatured _$HomeFeaturedFromJson(Map<String, dynamic> json) => HomeFeatured(
       id: json['id'] as String,
       title: json['title'] as String,
-      priority: json['priority'] as int,
+      priority: (json['priority'] as num).toInt(),
       description: json['description'] as String?,
       imageUrl: json['imageUrl'] as String?,
       url: json['url'] as String?,
@@ -21,13 +21,13 @@ HomeFeatured _$HomeFeaturedFromJson(Map<String, dynamic> json) => HomeFeatured(
 Map<String, dynamic> _$HomeFeaturedToJson(HomeFeatured instance) => <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
-      'priority': instance.priority,
       'description': instance.description,
       'imageUrl': instance.imageUrl,
       'url': instance.url,
       'urlType': _$HomeUrlTypeEnumMap[instance.urlType],
       'startDate': instance.startDate?.toIso8601String(),
       'endDate': instance.endDate?.toIso8601String(),
+      'priority': instance.priority,
     };
 
 const _$HomeUrlTypeEnumMap = {

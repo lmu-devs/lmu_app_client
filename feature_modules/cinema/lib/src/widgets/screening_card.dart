@@ -2,10 +2,10 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:core_routes/cinema.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../pages/screening_details_page.dart';
 import '../repository/api/api.dart';
 import '../routes/screening_details_data.dart';
 import '../services/cinema_user_preference_service.dart';
@@ -31,17 +31,9 @@ class ScreeningCard extends StatelessWidget {
     final double cardHeight = 165 * MediaQuery.of(context).textScaler.textScaleFactor;
 
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => ScreeningDetailsPage(
-            screeningDetailsData: ScreeningDetailsData(
-              cinema: cinema,
-              screening: screening,
-              cinemaScreenings: cinemaScreenings,
-            ),
-          ),
-        ),
-      ),
+      onTap: () => ScreeningDetailsRoute(
+        ScreeningDetailsData(cinema: cinema, screening: screening, cinemaScreenings: cinemaScreenings),
+      ).push(context),
       child: Container(
         height: cardHeight,
         margin: EdgeInsets.only(

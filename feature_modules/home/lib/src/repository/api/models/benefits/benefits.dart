@@ -1,1 +1,1 @@
-export 'benefit_model.dart';
+export 'benefit_item.dart';

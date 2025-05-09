@@ -15,9 +15,11 @@ class SettingsApperancePage extends StatelessWidget {
     final themeProvider = GetIt.I.get<ThemeProvider>();
     final localization = context.locals.settings;
 
-    return LmuMasterAppBar(
-      largeTitle: localization.appearance,
-      leadingAction: LeadingAction.back,
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: localization.appearance,
+        leadingAction: LeadingAction.back,
+      ),
       body: Column(
         children: [
           Padding(

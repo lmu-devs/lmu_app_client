@@ -54,26 +54,28 @@ class _ScreeningsHistoryPageState extends State<ScreeningsHistoryPage> {
   Widget build(BuildContext context) {
     final localizations = context.locals.cinema;
 
-    return LmuMasterAppBar(
-      largeTitle: localizations.pastMoviesTitle,
-      leadingAction: LeadingAction.back,
-      largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
-      largeTitleTrailingWidget: cinemas.length == 1
-          ? Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: LmuSizes.size_4,
-                vertical: LmuSizes.size_2,
-              ),
-              decoration: BoxDecoration(
-                color: cinemas.first.type.getTextColor(context).withOpacity(0.1),
-                borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
-              ),
-              child: LmuText.bodySmall(
-                cinemas.first.type.getValue(),
-                color: cinemas.first.type.getTextColor(context),
-              ),
-            )
-          : null,
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: localizations.pastMoviesTitle,
+        leadingAction: LeadingAction.back,
+        largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
+        largeTitleTrailingWidget: cinemas.length == 1
+            ? Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: LmuSizes.size_4,
+                  vertical: LmuSizes.size_2,
+                ),
+                decoration: BoxDecoration(
+                  color: cinemas.first.type.getTextColor(context).withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
+                ),
+                child: LmuText.bodySmall(
+                  cinemas.first.type.getValue(),
+                  color: cinemas.first.type.getTextColor(context),
+                ),
+              )
+            : null,
+      ),
       body: screenings.isNotEmpty
           ? Padding(
               padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),

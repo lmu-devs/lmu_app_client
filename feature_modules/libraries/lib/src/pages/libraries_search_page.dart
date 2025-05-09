@@ -1,8 +1,8 @@
 import 'package:core/components.dart';
+import 'package:core_routes/libraries.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../libraries.dart';
 import '../services/libraries_search_service.dart';
 
 class LibrarySearchEntry extends SearchEntry {

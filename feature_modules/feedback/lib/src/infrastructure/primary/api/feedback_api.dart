@@ -1,0 +1,24 @@
+import 'package:core/components.dart';
+import '../../../application/usecases/open_store_listing_usecase.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_api/feedback.dart';
+
+import '../../../presentation/state/feedback_state.dart';
+import '../../../presentation/view/feedback_page.dart';
+
+class FeedbackApiImpl extends FeedbackApi {
+  FeedbackApiImpl(this._state, this._openStoreListingUsecase);
+
+  final FeedbackState _state;
+  final OpenStoreListingUsecase _openStoreListingUsecase;
+
+  @override
+  void showFeedback(BuildContext context, {required String origin, required FeedbackType type}) {
+    _state.origin = origin;
+    _state.type = type;
+    LmuBottomSheet.showExtended(context, content: FeedbackPage());
+  }
+
+  @override
+  Future<void> openStoreListing() => _openStoreListingUsecase.call();
+}

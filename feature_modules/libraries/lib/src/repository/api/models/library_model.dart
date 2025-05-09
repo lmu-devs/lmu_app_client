@@ -1,5 +1,5 @@
 import 'package:core/api.dart';
-import 'package:equatable/equatable.dart';
+import 'package:core_routes/libraries.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import './models.dart';
@@ -7,7 +7,7 @@ import './models.dart';
 part 'library_model.g.dart';
 
 @JsonSerializable()
-class LibraryModel extends Equatable {
+class LibraryModel extends RLibraryModel {
   const LibraryModel({
     required this.id,
     required this.name,

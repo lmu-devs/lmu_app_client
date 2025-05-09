@@ -12,9 +12,11 @@ class LibraryAreasPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
-      largeTitle: context.locals.libraries.areas,
-      leadingAction: LeadingAction.back,
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: context.locals.libraries.areas,
+        leadingAction: LeadingAction.back,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(

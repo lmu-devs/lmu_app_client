@@ -1,7 +1,6 @@
 import 'package:core/api.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:core/extensions.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
@@ -30,10 +29,14 @@ class WishlistDetailsPage extends StatelessWidget {
           context: context,
           mode: LmuUrlLauncherMode.inAppWebView,
         ).whenComplete(
-          () => GetIt.I.get<FeedbackService>().navigateToFeedback(
-                context,
-                'Wishlist Entry: ${wishlistModel.title}',
-              ),
+          () {
+            if (!context.mounted) return;
+            GetIt.I.get<FeedbackApi>().showFeedback(
+                  context,
+                  type: FeedbackType.general,
+                  origin: 'Wishlist Entry: ${wishlistModel.title}',
+                );
+          },
         );
       }
     } else {
@@ -49,89 +52,92 @@ class WishlistDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
-      largeTitle: wishlistModel.title,
-      leadingAction: LeadingAction.back,
-      largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
-      largeTitleTrailingWidget: wishlistModel.status != WishlistStatus.none
-          ? LmuInTextVisual.text(
-              title: wishlistModel.status.getValue(context),
-              textColor: context.colors.neutralColors.textColors.strongColors.base,
-              size: InTextVisualSize.large,
-            )
-          : null,
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-                child: Wrap(
-                  direction: Axis.horizontal,
-                  spacing: LmuSizes.size_8,
-                  children: [
-                    ValueListenableBuilder<List<String>>(
-                      valueListenable: GetIt.I<WishlistUserPreferenceService>().likedWishlistIdsNotifier,
-                      builder: (context, likedWishlistIds, child) {
-                        final isLiked = likedWishlistIds.contains(wishlistModel.id.toString());
-                        final calculatedLikes = wishlistModel.ratingModel.calculateLikeCount(isLiked);
-
-                        return LmuButton(
-                          leadingWidget: StarIcon(
-                            key: ValueKey(wishlistModel.id),
-                            isActive: isLiked,
-                            disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
-                          ),
-                          title: "$calculatedLikes Likes",
-                          emphasis: ButtonEmphasis.secondary,
-                          onTap: () async {
-                            await GetIt.I<WishlistUserPreferenceService>()
-                                .toggleLikedWishlistId(wishlistModel.id.toString());
-                            LmuVibrations.secondary();
-                          },
-                        );
-                      },
-                    ),
-                    LmuButton(
-                      title: context.locals.feedback.feedbackButton,
-                      emphasis: ButtonEmphasis.secondary,
-                      onTap: () => GetIt.I
-                          .get<FeedbackService>()
-                          .navigateToFeedback(context, 'Wishlist Entry: ${wishlistModel.title}'),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: LmuSizes.size_24),
-            Padding(
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: wishlistModel.title,
+        leadingAction: LeadingAction.back,
+        largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
+        largeTitleTrailingWidget: wishlistModel.status != WishlistStatus.none
+            ? LmuInTextVisual.text(
+                title: wishlistModel.status.getValue(context),
+                textColor: context.colors.neutralColors.textColors.strongColors.base,
+                size: InTextVisualSize.large,
+              )
+            : null,
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: LmuSizes.size_16),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-              child: LmuText.body(
-                wishlistModel.description,
-                color: context.colors.neutralColors.textColors.mediumColors.base,
+              child: Wrap(
+                direction: Axis.horizontal,
+                spacing: LmuSizes.size_8,
+                children: [
+                  ValueListenableBuilder<List<String>>(
+                    valueListenable: GetIt.I<WishlistUserPreferenceService>().likedWishlistIdsNotifier,
+                    builder: (context, likedWishlistIds, child) {
+                      final isLiked = likedWishlistIds.contains(wishlistModel.id.toString());
+                      final calculatedLikes = wishlistModel.ratingModel.calculateLikeCount(isLiked);
+
+                      return LmuButton(
+                        leadingWidget: StarIcon(
+                          key: ValueKey(wishlistModel.id),
+                          isActive: isLiked,
+                          disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
+                        ),
+                        title: "$calculatedLikes Likes",
+                        emphasis: ButtonEmphasis.secondary,
+                        onTap: () async {
+                          await GetIt.I<WishlistUserPreferenceService>()
+                              .toggleLikedWishlistId(wishlistModel.id.toString());
+                          LmuVibrations.secondary();
+                        },
+                      );
+                    },
+                  ),
+                  LmuButton(
+                    title: context.locals.feedback.feedbackButton,
+                    emphasis: ButtonEmphasis.secondary,
+                    onTap: () => GetIt.I.get<FeedbackApi>().showFeedback(
+                          context,
+                          type: FeedbackType.general,
+                          origin: 'Wishlist Entry: ${wishlistModel.title}',
+                        ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: LmuSizes.size_24),
-            ImageListSection(imageModels: wishlistModel.imageModels),
-            if (wishlistModel.prototypeUrl.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: LmuSizes.size_24,
-                  left: LmuSizes.size_16,
-                  right: LmuSizes.size_16,
-                ),
-                child: LmuButton(
-                  size: ButtonSize.large,
-                  showFullWidth: true,
-                  title: context.locals.wishlist.testPrototype,
-                  onTap: () => _launchPrototype(context),
-                ),
+          ),
+          const SizedBox(height: LmuSizes.size_24),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+            child: LmuText.body(
+              wishlistModel.description,
+              color: context.colors.neutralColors.textColors.mediumColors.base,
+            ),
+          ),
+          const SizedBox(height: LmuSizes.size_24),
+          ImageListSection(imageModels: wishlistModel.imageModels),
+          if (wishlistModel.prototypeUrl.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(
+                top: LmuSizes.size_24,
+                left: LmuSizes.size_16,
+                right: LmuSizes.size_16,
               ),
-            const SizedBox(height: LmuSizes.size_96),
-          ],
-        ),
+              child: LmuButton(
+                size: ButtonSize.large,
+                showFullWidth: true,
+                title: context.locals.wishlist.testPrototype,
+                onTap: () => _launchPrototype(context),
+              ),
+            ),
+          const SizedBox(height: LmuSizes.size_96),
+        ],
       ),
     );
   }

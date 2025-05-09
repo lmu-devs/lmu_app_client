@@ -1,12 +1,12 @@
 import 'package:core/components.dart';
 import 'package:core/core_services.dart';
-import 'package:core/extensions.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:core/utils.dart';
+import 'package:core_routes/libraries.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../libraries.dart';
 import '../repository/api/api.dart';
 import '../services/libraries_user_preference_service.dart';
 

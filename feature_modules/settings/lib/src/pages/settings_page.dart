@@ -1,8 +1,10 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
+import 'package:core_routes/settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
@@ -10,27 +12,31 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_api/feedback.dart';
 
 import '../extensions/enum_naming_extensions.dart';
-import '../routes/settings_routes.dart';
 
 class SettingsMainPage extends StatelessWidget {
   const SettingsMainPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final settingLocalizations = context.locals.settings;
 
     final linkIcon = Icon(
       LucideIcons.external_link,
       size: LmuSizes.size_20,
-      color: context.colors.neutralColors.textColors.weakColors.base,
+      color: colors.neutralColors.textColors.weakColors.base,
     );
 
     final themeMode = GetIt.I.get<ThemeProvider>();
     final languageMode = GetIt.I.get<LanguageProvider>();
+    final feedbackApi = GetIt.I.get<FeedbackApi>();
+    final systemInfo = GetIt.I.get<SystemInfoService>().systemInfo;
 
-    return LmuMasterAppBar(
-      largeTitle: settingLocalizations.settings,
-      leadingAction: LeadingAction.back,
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: settingLocalizations.settings,
+        leadingAction: LeadingAction.back,
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
         child: SingleChildScrollView(
@@ -90,7 +96,7 @@ class SettingsMainPage extends StatelessWidget {
                     trailingArea: Icon(
                       LucideIcons.mail,
                       size: LmuIconSizes.mediumSmall,
-                      color: context.colors.neutralColors.textColors.weakColors.base,
+                      color: colors.neutralColors.textColors.weakColors.base,
                     ),
                     onTap: () {
                       LmuUrlLauncher.launchEmail(
@@ -106,7 +112,7 @@ class SettingsMainPage extends StatelessWidget {
                     trailingArea: Icon(
                       LucideIcons.heart,
                       size: LmuIconSizes.mediumSmall,
-                      color: context.colors.neutralColors.textColors.weakColors.base,
+                      color: colors.neutralColors.textColors.weakColors.base,
                     ),
                     onTap: () {
                       LmuUrlLauncher.launchWebsite(
@@ -169,7 +175,7 @@ class SettingsMainPage extends StatelessWidget {
                     mainContentAlignment: MainContentAlignment.center,
                     leadingArea: const LeadingFancyIcons(icon: LucideIcons.plus),
                     onTap: () {
-                      GetIt.I.get<FeedbackService>().navigateToSuggestion(context, 'SettingsScreen');
+                      feedbackApi.showFeedback(context, type: FeedbackType.suggestion, origin: 'SettingsScreen');
                     },
                   ),
                   LmuListItem.base(
@@ -177,20 +183,20 @@ class SettingsMainPage extends StatelessWidget {
                     mainContentAlignment: MainContentAlignment.center,
                     leadingArea: const LeadingFancyIcons(icon: LucideIcons.bug),
                     onTap: () {
-                      GetIt.I.get<FeedbackService>().navigateToBugReport(context, 'SettingsScreen');
+                      feedbackApi.showFeedback(context, type: FeedbackType.bug, origin: 'SettingsScreen');
                     },
                   ),
                 ],
               ),
               const SizedBox(height: LmuSizes.size_32),
               LmuText.bodyXSmall(
-                '${GetIt.I<String>(instanceName: 'appName')} • ${GetIt.I<String>(instanceName: 'appVersion')}',
-                color: context.colors.neutralColors.textColors.mediumColors.base,
+                '${systemInfo.appName} • ${systemInfo.appVersion}',
+                color: colors.neutralColors.textColors.mediumColors.base,
               ),
               const SizedBox(height: LmuSizes.size_2),
               LmuText.bodyXSmall(
                 'Created by ${LmuDevStrings.devTeam}, ${DateTime.now().year} ©',
-                color: context.colors.neutralColors.textColors.mediumColors.base,
+                color: colors.neutralColors.textColors.mediumColors.base,
               ),
               const SizedBox(height: LmuSizes.size_96),
             ],

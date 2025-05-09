@@ -49,13 +49,13 @@ class _WishlistPageState extends State<WishlistPage> {
 
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
-      largeTitle: context.locals.wishlist.tabTitle,
+    return LmuScaffold(
+      appBar: LmuAppBarData(largeTitle: context.locals.wishlist.tabTitle),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: LmuSizes.size_12),
+            const SizedBox(height: LmuSizes.size_16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
               child: LmuText.body(
@@ -73,7 +73,7 @@ class _WishlistPageState extends State<WishlistPage> {
                 LmuButton(
                   title: context.locals.wishlist.rateApp,
                   emphasis: ButtonEmphasis.secondary,
-                  onTap: () => AppReviewUtil.openStoreListing(context, context.locals.wishlist.rateAppError),
+                  onTap: () => GetIt.I.get<FeedbackApi>().openStoreListing(),
                 ),
                 LmuButton(
                   title: LmuDevStrings.devTeam,
@@ -137,7 +137,11 @@ class _WishlistPageState extends State<WishlistPage> {
                         mainContentAlignment: MainContentAlignment.center,
                         leadingArea: const LeadingFancyIcons(icon: LucideIcons.plus),
                         onTap: () {
-                          GetIt.I.get<FeedbackService>().navigateToSuggestion(context, 'WishlistScreen');
+                          GetIt.I.get<FeedbackApi>().showFeedback(
+                                context,
+                                type: FeedbackType.suggestion,
+                                origin: 'WishlistScreen',
+                              );
                         },
                       ),
                       LmuListItem.base(
@@ -145,7 +149,11 @@ class _WishlistPageState extends State<WishlistPage> {
                         mainContentAlignment: MainContentAlignment.center,
                         leadingArea: const LeadingFancyIcons(icon: LucideIcons.bug),
                         onTap: () {
-                          GetIt.I.get<FeedbackService>().navigateToBugReport(context, 'WishlistScreen');
+                          GetIt.I.get<FeedbackApi>().showFeedback(
+                                context,
+                                type: FeedbackType.bug,
+                                origin: 'WishlistScreen',
+                              );
                         },
                       ),
                     ],

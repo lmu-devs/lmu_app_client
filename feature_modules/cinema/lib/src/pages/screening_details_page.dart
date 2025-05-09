@@ -3,6 +3,7 @@ import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
+import 'package:core_routes/cinema.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
@@ -17,7 +18,6 @@ import '../util/cinema_type.dart';
 import '../util/screening_time.dart';
 import '../widgets/screening_quick_fact_section.dart';
 import '../widgets/trailer_card.dart';
-import 'cinema_details_page.dart';
 
 class ScreeningDetailsPage extends StatelessWidget {
   const ScreeningDetailsPage({
@@ -33,29 +33,31 @@ class ScreeningDetailsPage extends StatelessWidget {
     ScreeningModel screening = screeningDetailsData.screening;
     List<ScreeningModel> cinemaScreenings = screeningDetailsData.cinemaScreenings;
 
-    return LmuMasterAppBar.custom(
-      collapsedTitle: screening.movie.title,
-      leadingAction: LeadingAction.back,
-      trailingWidgets: [
-        ValueListenableBuilder<List<String>>(
-          valueListenable: GetIt.I<CinemaUserPreferenceService>().likedScreeningsIdsNotifier,
-          builder: (context, likedScreeningIds, child) {
-            return GestureDetector(
-              onTap: () async {
-                await GetIt.I<CinemaUserPreferenceService>().toggleLikedScreeningId(screening.id);
-                LmuVibrations.secondary();
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(top: LmuSizes.size_4),
-                child: StarIcon(
-                  disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
-                  isActive: likedScreeningIds.contains(screening.id),
+    return LmuScaffold(
+      appBar: LmuAppBarData.custom(
+        collapsedTitle: screening.movie.title,
+        leadingAction: LeadingAction.back,
+        trailingWidgets: [
+          ValueListenableBuilder<List<String>>(
+            valueListenable: GetIt.I<CinemaUserPreferenceService>().likedScreeningsIdsNotifier,
+            builder: (context, likedScreeningIds, child) {
+              return GestureDetector(
+                onTap: () async {
+                  await GetIt.I<CinemaUserPreferenceService>().toggleLikedScreeningId(screening.id);
+                  LmuVibrations.secondary();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(top: LmuSizes.size_4),
+                  child: StarIcon(
+                    disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
+                    isActive: likedScreeningIds.contains(screening.id),
+                  ),
                 ),
-              ),
-            );
-          },
-        ),
-      ],
+              );
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -155,16 +157,9 @@ class ScreeningDetailsPage extends StatelessWidget {
                     actionType: LmuListItemAction.chevron,
                     hasHorizontalPadding: false,
                     hasDivider: true,
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => CinemaDetailsPage(
-                          cinemaDetailsData: CinemaDetailsData(
-                            cinema: cinema,
-                            screenings: cinemaScreenings,
-                          ),
-                        ),
-                      ),
-                    ),
+                    onTap: () => CinemaDetailsRoute(
+                      CinemaDetailsData(cinema: cinema, screenings: cinemaScreenings),
+                    ).push(context),
                   ),
                   LmuListItem.base(
                     subtitle: cinema.location.address,

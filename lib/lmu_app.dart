@@ -1,16 +1,18 @@
 import 'package:core/localizations.dart';
-import 'package:core/pages.dart';
 import 'package:core/themes.dart';
+import 'package:core/utils.dart';
+import 'package:core_routes/config.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 import 'nav_bar_color_setter.dart';
-import 'routing/shell_route_data.dart';
 
 class LmuApp extends StatelessWidget {
   LmuApp({super.key});
+
+  final GoRouter _router = GoRouter(routes: $appRoutes, initialLocation: '/home');
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class LmuApp extends StatelessWidget {
       builder: (context, _) => ListenableBuilder(
         listenable: themeProvider,
         builder: (context, _) {
-          AppUpdateNavigation.router = _router;
+          AppUpdateNavigator.router = _router;
           return MaterialApp.router(
             localizationsDelegates: LmuLocalizations.localizationsDelegates,
             supportedLocales: LmuLocalizations.supportedLocales,
@@ -48,15 +50,4 @@ class LmuApp extends StatelessWidget {
       ),
     );
   }
-
-  final GoRouter _router = GoRouter(
-    routes: [
-      $shellRouteData,
-      GoRoute(
-        path: '/app-update',
-        builder: (context, state) => const AppUpdatePage(),
-      ),
-    ],
-    initialLocation: '/home',
-  );
 }

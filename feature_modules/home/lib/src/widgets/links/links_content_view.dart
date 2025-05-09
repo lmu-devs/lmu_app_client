@@ -2,6 +2,7 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/feedback.dart';
 
@@ -27,9 +28,11 @@ class _LinksContentViewState extends State<LinksContentView> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        LmuMasterAppBar(
-          largeTitle: "Links",
-          leadingAction: LeadingAction.back,
+        LmuScaffold(
+          appBar: LmuAppBarData(
+            largeTitle: "Links",
+            leadingAction: LeadingAction.back,
+          ),
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
@@ -65,9 +68,20 @@ class _LinksContentViewState extends State<LinksContentView> {
                         ).toList(),
                       ),
                       const SizedBox(height: LmuSizes.size_6),
-                      GetIt.I<FeedbackService>().getMissingItemInput(
-                        context.locals.home.linkSuggestion,
-                        'LinksScreen',
+                      LmuTileHeadline.base(title: context.locals.feedback.missingItemInput),
+                      LmuContentTile(
+                        content: LmuListItem.base(
+                          title: context.locals.home.linkSuggestion,
+                          mainContentAlignment: MainContentAlignment.center,
+                          leadingArea: const LeadingFancyIcons(icon: LucideIcons.megaphone),
+                          onTap: () {
+                            GetIt.I.get<FeedbackApi>().showFeedback(
+                                  context,
+                                  type: FeedbackType.suggestion,
+                                  origin: 'LinksScreen',
+                                );
+                          },
+                        ),
                       ),
                       const SizedBox(height: LmuSizes.size_72 + LmuSizes.size_96),
                     ],

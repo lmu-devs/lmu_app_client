@@ -1,9 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:core/extensions.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -37,83 +37,90 @@ class DishDetailsPage extends StatelessWidget {
         .toList()
         .sortedBy((element) => element.enumName);
 
-    return LmuMasterAppBar.bottomSheet(
-      largeTitle: menuItemModel.title,
-      body: SingleChildScrollView(
-        child: Padding(
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: menuItemModel.title,
+        leadingAction: LeadingAction.close,
+      ),
+      isBottomSheet: true,
+      customScrollController: context.modalScrollController,
+      slivers: [
+        SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-          child: Column(
-            children: [
-              const SizedBox(height: LmuSizes.size_16),
-              Row(
-                children: [
-                  ValueListenableBuilder(
-                    valueListenable: userPreferenceService.favoriteDishIdsNotifier,
-                    builder: (context, favoriteDishIds, _) {
-                      final isFavorite = favoriteDishIds.contains(menuItemModel.id);
-                      return LmuButton(
-                        leadingWidget: StarIcon(
-                          isActive: isFavorite,
-                          disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
-                        ),
-                        title:
-                            "${menuItemModel.ratingModel.calculateLikeCount(isFavorite)} ${context.locals.app.likes}",
-                        emphasis: ButtonEmphasis.secondary,
-                        onTap: () => userPreferenceService.toggleFavoriteDishId(menuItemModel.id),
-                      );
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: LmuSizes.size_32),
-              if (labelItems.isNotEmpty)
-                Column(
+          sliver: SliverList(
+            delegate: SliverChildListDelegate.fixed(
+              [
+                const SizedBox(height: LmuSizes.size_16),
+                Row(
                   children: [
-                    LmuTileHeadline.base(title: context.locals.canteen.ingredients),
-                    LmuContentTile(
-                      contentList: labelItems.map(
-                        (labelItem) {
-                          return LmuListItem.base(
-                            leadingArea: LmuText.h1(
-                                labelItem.emojiAbbreviation?.isEmpty ?? false ? "🫙" : labelItem.emojiAbbreviation),
-                            title: labelItem.text,
-                          );
-                        },
-                      ).toList(),
+                    ValueListenableBuilder(
+                      valueListenable: userPreferenceService.favoriteDishIdsNotifier,
+                      builder: (context, favoriteDishIds, _) {
+                        final isFavorite = favoriteDishIds.contains(menuItemModel.id);
+                        return LmuButton(
+                          leadingWidget: StarIcon(
+                            isActive: isFavorite,
+                            disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
+                          ),
+                          title:
+                              "${menuItemModel.ratingModel.calculateLikeCount(isFavorite)} ${context.locals.app.likes}",
+                          emphasis: ButtonEmphasis.secondary,
+                          onTap: () => userPreferenceService.toggleFavoriteDishId(menuItemModel.id),
+                        );
+                      },
                     ),
-                    const SizedBox(height: LmuSizes.size_32),
                   ],
                 ),
-              LmuTileHeadline.base(title: context.locals.canteen.prices),
-              LmuContentTile(
-                contentList: [
-                  LmuListItem.base(
-                    subtitle: context.locals.canteen.simplePrice,
-                    trailingTitle: menuItemModel.priceSimple,
+                const SizedBox(height: LmuSizes.size_32),
+                if (labelItems.isNotEmpty)
+                  Column(
+                    children: [
+                      LmuTileHeadline.base(title: context.locals.canteen.ingredients),
+                      LmuContentTile(
+                        contentList: labelItems.map(
+                          (labelItem) {
+                            return LmuListItem.base(
+                              leadingArea: LmuText.h1(
+                                  labelItem.emojiAbbreviation?.isEmpty ?? false ? "🫙" : labelItem.emojiAbbreviation),
+                              title: labelItem.text,
+                            );
+                          },
+                        ).toList(),
+                      ),
+                      const SizedBox(height: LmuSizes.size_32),
+                    ],
                   ),
-                  if (_prices.first.basePrice > 0.0)
+                LmuTileHeadline.base(title: context.locals.canteen.prices),
+                LmuContentTile(
+                  contentList: [
                     LmuListItem.base(
-                      subtitle: context.locals.canteen.basePrice,
-                      trailingTitle: '${_prices.first.basePrice.toStringAsFixed(2)} €',
+                      subtitle: context.locals.canteen.simplePrice,
+                      trailingTitle: menuItemModel.priceSimple,
                     ),
-                  ..._prices.where((e) => e.pricePerUnit > 0.0).map(
-                    (e) {
-                      return LmuListItem.base(
-                        subtitle: e.category.name(context.locals.canteen),
-                        trailingTitle: context.locals.canteen.pricePerUnit(
-                          e.pricePerUnit.toStringAsFixed(2),
-                          e.unit,
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: LmuSizes.size_96),
-            ],
+                    if (_prices.first.basePrice > 0.0)
+                      LmuListItem.base(
+                        subtitle: context.locals.canteen.basePrice,
+                        trailingTitle: '${_prices.first.basePrice.toStringAsFixed(2)} €',
+                      ),
+                    ..._prices.where((e) => e.pricePerUnit > 0.0).map(
+                      (e) {
+                        return LmuListItem.base(
+                          subtitle: e.category.name(context.locals.canteen),
+                          trailingTitle: context.locals.canteen.pricePerUnit(
+                            e.pricePerUnit.toStringAsFixed(2),
+                            e.unit,
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: LmuSizes.size_96),
+              ],
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

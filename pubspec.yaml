@@ -14,6 +14,8 @@ dependencies:
   flutter_bloc: ^8.1.3
   core:
     path: ./core
+  core_routes:
+    path: ./core_routes
   home:
     path: ./feature_modules/home
   cinema:
@@ -38,8 +40,11 @@ dependencies:
     path: ./feature_modules/roomfinder
   libraries:
     path: ./feature_modules/libraries
+  benefits:
+    path: ./feature_modules/benefits
   shared_api:
     path: ./shared_api
+
   shared_preferences: ^2.0.7
   flutter_lucide: ^1.2.0
   collection: ^1.18.0
@@ -55,7 +60,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
-  go_router_builder: ^2.7.1
+  go_router_builder: ^2.9.0
   json_serializable: ^6.6.2
   build_runner: any
   build_verify: any

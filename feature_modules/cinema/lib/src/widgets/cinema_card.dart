@@ -1,8 +1,8 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
+import 'package:core_routes/cinema.dart';
 import 'package:flutter/material.dart';
 
-import '../pages/cinema_details_page.dart';
 import '../repository/api/api.dart';
 import '../routes/cinema_details_data.dart';
 import '../util/cinema_type.dart';
@@ -28,16 +28,7 @@ class CinemaCard extends StatelessWidget {
       customTagTextColor: cinema.type.getTextColor(context),
       subtitle: _getDateForNextMovie(context),
       hasDivider: true,
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => CinemaDetailsPage(
-            cinemaDetailsData: CinemaDetailsData(
-              cinema: cinema,
-              screenings: screenings,
-            ),
-          ),
-        ),
-      ),
+      onTap: () => CinemaDetailsRoute(CinemaDetailsData(cinema: cinema, screenings: screenings)).go(context),
     );
   }
 

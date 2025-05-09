@@ -1,6 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:core/extensions.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/mensa.dart';
@@ -72,24 +72,24 @@ class _MensaDetailsPageState extends State<MensaDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
-      largeTitle: _mensaModel.name,
-      imageUrls: _mensaModel.images.map((e) => e.url).toList(),
-      leadingAction: LeadingAction.back,
-      largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
-      trailingWidgets: [_trailingAppBarAction],
-      largeTitleTrailingWidget: MensaTag(type: _mensaModel.type),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(child: MensaDetailsInfoSection(mensaModel: _mensaModel)),
-          if (!(_isTemporarilyClosed || _isCafeBar))
-            MensaDetailsMenuSection(
-              canteenId: _mensaModel.canteenId,
-              mensaType: _mensaModel.type,
-            ),
-          if (_isCafeBar) const SliverToBoxAdapter(child: MenuCafeBarView()),
-        ],
+    return LmuScaffold(
+      appBar: LmuAppBarData.image(
+        largeTitle: _mensaModel.name,
+        imageUrls: _mensaModel.images.map((e) => e.url).toList(),
+        leadingAction: LeadingAction.back,
+        largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
+        trailingWidgets: [_trailingAppBarAction],
+        largeTitleTrailingWidget: MensaTag(type: _mensaModel.type),
       ),
+      slivers: [
+        SliverToBoxAdapter(child: MensaDetailsInfoSection(mensaModel: _mensaModel)),
+        if (!(_isTemporarilyClosed || _isCafeBar))
+          MensaDetailsMenuSection(
+            canteenId: _mensaModel.canteenId,
+            mensaType: _mensaModel.type,
+          ),
+        if (_isCafeBar) const SliverToBoxAdapter(child: MenuCafeBarView()),
+      ],
     );
   }
 }

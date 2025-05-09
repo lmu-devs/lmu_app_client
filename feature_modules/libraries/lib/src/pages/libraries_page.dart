@@ -27,14 +27,17 @@ class _LibrariesPageState extends State<LibrariesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
-      largeTitle: context.locals.libraries.pageTitle,
-      leadingAction: LeadingAction.back,
-      largeTitleTrailingWidget: LmuButton(
-        title: context.locals.libraries.seatBooking,
-        emphasis: ButtonEmphasis.secondary,
-        onTap: () => LmuUrlLauncher.launchWebsite(
-            url: "https://auth.anny.eu/start-session?entityId=https://lmuidp.lrz.de/idp/shibboleth", context: context),
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: context.locals.libraries.pageTitle,
+        leadingAction: LeadingAction.back,
+        largeTitleTrailingWidget: LmuButton(
+          title: context.locals.libraries.seatBooking,
+          emphasis: ButtonEmphasis.secondary,
+          onTap: () => LmuUrlLauncher.launchWebsite(
+              url: "https://auth.anny.eu/start-session?entityId=https://lmuidp.lrz.de/idp/shibboleth",
+              context: context),
+        ),
       ),
       body: BlocBuilder<LibrariesCubit, LibrariesState>(
         bloc: GetIt.I.get<LibrariesCubit>(),

@@ -1,10 +1,10 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core_routes/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
-import 'package:shared_api/settings.dart';
 
 import '../bloc/bloc.dart';
 import '../widgets/home/home_loading_view.dart';
@@ -15,11 +15,20 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
-      largeTitle: "Home",
-      largeTitleTrailingWidget: GestureDetector(
-        onTap: () => GetIt.I.get<SettingsService>().navigateToSettings(context),
-        child: const LmuIcon(icon: LucideIcons.settings, size: LmuIconSizes.medium),
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: "Home",
+        largeTitleTrailingWidget: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () => const SettingsMainRoute().go(context),
+          child: const Padding(
+            padding: EdgeInsets.only(left: LmuSizes.size_16),
+            child: SizedBox(
+              height: 40,
+              child: LmuIcon(icon: LucideIcons.settings, size: LmuIconSizes.medium),
+            ),
+          ),
+        ),
       ),
       body: BlocBuilder<HomeCubit, HomeState>(
         bloc: GetIt.I.get<HomeCubit>(),

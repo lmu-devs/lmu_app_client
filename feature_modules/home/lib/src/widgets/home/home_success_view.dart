@@ -4,19 +4,20 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:core_routes/benefits.dart';
+import 'package:core_routes/cinema.dart';
+import 'package:core_routes/home.dart';
+import 'package:core_routes/libraries.dart';
+import 'package:core_routes/mensa.dart';
+import 'package:core_routes/roomfinder.dart';
+import 'package:core_routes/sports.dart';
+import 'package:core_routes/timeline.dart';
+import 'package:core_routes/wishlist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get_it/get_it.dart';
-import 'package:shared_api/cinema.dart';
 import 'package:shared_api/feedback.dart';
-import 'package:shared_api/libraries.dart';
-import 'package:shared_api/mensa.dart';
-import 'package:shared_api/roomfinder.dart';
-import 'package:shared_api/sports.dart';
-import 'package:shared_api/timeline.dart';
-import 'package:shared_api/wishlist.dart';
 
-import '../../../home.dart';
 import '../../repository/api/models/home/home_featured.dart';
 import '../../repository/api/models/home/home_tile.dart';
 import '../../repository/api/models/home/home_tile_type.dart';
@@ -81,18 +82,19 @@ class HomeSuccessView extends StatelessWidget {
 extension HomeTileMapper on HomeTile {
   void Function() onTap(BuildContext context) {
     return switch (type) {
-      HomeTileType.benefits => () => const BenefitsRoute().go(context),
-      HomeTileType.cinemas => () => GetIt.I.get<CinemaService>().navigateToCinemaPage(context),
-      HomeTileType.feedback => () => GetIt.I.get<FeedbackService>().navigateToFeedback(context, 'Home General'),
-      HomeTileType.roomfinder => () => GetIt.I.get<RoomfinderService>().navigateToRoomfinder(context),
-      HomeTileType.sports => () => GetIt.I.get<SportsService>().navigateToSportsPage(context),
-      HomeTileType.timeline => () => GetIt.I.get<TimelineService>().navigateToTimelinePage(context),
-      HomeTileType.wishlist => () => GetIt.I.get<WishlistService>().navigateToWishlistPage(context),
+      HomeTileType.benefits => () => const BenefitsMainRoute().go(context),
+      HomeTileType.cinemas => () => const CinemaMainRoute().go(context),
+      HomeTileType.feedback => () =>
+          GetIt.I.get<FeedbackApi>().showFeedback(context, type: FeedbackType.general, origin: 'Home General'),
+      HomeTileType.roomfinder => () => const RoomfinderMainRoute().go(context),
+      HomeTileType.sports => () => const SportsMainRoute().go(context),
+      HomeTileType.timeline => () => const TimelineMainRoute().go(context),
+      HomeTileType.wishlist => () => const WishlistMainRoute().go(context),
       HomeTileType.links => () => const LinksRoute().go(context),
       HomeTileType.news => () => {_notYetImplemented(context)},
       HomeTileType.events => () => {_notYetImplemented(context)},
-      HomeTileType.mensa => () => {GetIt.I.get<MensaService>().navigateToMensaPage(context)},
-      HomeTileType.libraries => () => GetIt.I.get<LibrariesService>().navigateToLibrariesPage(context),
+      HomeTileType.mensa => () => const MensaMainRoute().go(context),
+      HomeTileType.libraries => () => const LibrariesMainRoute().go(context),
       HomeTileType.other => () => {_notYetImplemented(context)},
     };
   }

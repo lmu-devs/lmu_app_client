@@ -1,11 +1,11 @@
 import 'package:core/module.dart';
+import 'package:core_routes/timeline.dart';
 import 'package:get_it/get_it.dart';
-import 'package:shared_api/timeline.dart';
 
 import 'cubit/timeline_cubit/cubit.dart';
 import 'repository/api/timeline_api_client.dart';
 import 'repository/timeline_repository.dart';
-import 'services/default_timeline_service.dart';
+import 'routes/timeline_router.dart';
 
 class TimelineModule extends AppModule with LocalDependenciesProvidingAppModule, PublicApiProvidingAppModule {
   @override
@@ -13,7 +13,7 @@ class TimelineModule extends AppModule with LocalDependenciesProvidingAppModule,
 
   @override
   void providePublicApi() {
-    GetIt.I.registerSingleton<TimelineService>(DefaultTimelineService());
+    GetIt.I.registerSingleton<TimelineRouter>(TimelineRouterImpl());
   }
 
   @override

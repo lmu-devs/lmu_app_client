@@ -29,7 +29,6 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
     this.customLargeTitleWidget,
     required this.topPadding,
     required this.backgroundColor,
-    required this.scrollController,
     required this.scrollOffsetNotifier,
   });
 
@@ -47,7 +46,6 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   final void Function()? onLeadingActionTap;
   final List<Widget>? trailingWidgets;
   final List<String>? imageUrls;
-  final ScrollController scrollController;
   final ValueNotifier<double> scrollOffsetNotifier;
 
   final double topPadding;
@@ -211,7 +209,6 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
             !const IterableEquality().equals(oldDelegate.imageUrls, imageUrls) ||
             oldDelegate.topPadding != topPadding ||
             oldDelegate.backgroundColor != backgroundColor ||
-            oldDelegate.scrollController != scrollController ||
             oldDelegate.scrollOffsetNotifier != scrollOffsetNotifier);
   }
 }

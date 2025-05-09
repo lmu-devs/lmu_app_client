@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/home_api_client.dart';
-import 'api/models/benefits/benefit_model.dart';
 import 'api/models/home/home_data.dart';
 import 'api/models/links/link_model.dart';
 
@@ -19,9 +18,6 @@ class HomeRepository {
   final String _cachedLinksTimestampKey = 'cached_links_timestamp_key';
 
   final _recentLinkSearchesKey = 'links_recentSearches';
-
-  final String _cachedBenefitsKey = 'cached_benefits_key';
-  final String _cachedBenefitsTimestampKey = 'cached_benefits_timestamp_key';
 
   final _maxCacheTime = const Duration(days: 7);
 
@@ -107,36 +103,6 @@ class HomeRepository {
     return recentLinkSearches;
   }
 
-  Future<List<BenefitModel>?> getBenefits() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    try {
-      final benefits = await homeApiClient.getBenefits();
-      await prefs.setString(_cachedBenefitsKey, jsonEncode(benefits));
-      await prefs.setInt(_cachedBenefitsTimestampKey, DateTime.now().millisecondsSinceEpoch);
-      return benefits;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  Future<List<BenefitModel>?> getCachedBenefits() async {
-    final prefs = await SharedPreferences.getInstance();
-    final cachedData = prefs.getString(_cachedBenefitsKey);
-    final cachedTimeStamp = prefs.getInt(_cachedBenefitsTimestampKey);
-    final isCacheValid = cachedTimeStamp != null &&
-        DateTime.fromMillisecondsSinceEpoch(cachedTimeStamp).add(_maxCacheTime).isAfter(DateTime.now());
-    if (cachedData != null && isCacheValid) {
-      try {
-        return (jsonDecode(cachedData) as List).map((e) => BenefitModel.fromJson(e)).toList();
-      } catch (e) {
-        return null;
-      }
-    } else {
-      return null;
-    }
-  }
-
   Future<void> updateClosedFeaturedTiles(String id) async {
     final prefs = await SharedPreferences.getInstance();
     final closedTiles = prefs.getStringList(_featuredTilesClosedKey) ?? [];
@@ -159,8 +125,6 @@ class HomeRepository {
     await prefs.remove(_homeDataKey);
     await prefs.remove(_cachedLinksKey);
     await prefs.remove(_cachedLinksTimestampKey);
-    await prefs.remove(_cachedBenefitsKey);
-    await prefs.remove(_cachedBenefitsTimestampKey);
     await prefs.remove(_featuredTilesClosedKey);
   }
 }

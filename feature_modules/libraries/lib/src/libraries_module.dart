@@ -1,13 +1,15 @@
 import 'package:core/module.dart';
+import 'package:core_routes/libraries.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/libraries.dart';
 
+import 'cubit/cubit.dart';
 import 'repository/api/api.dart';
 import 'repository/libraries_repository.dart';
 import 'services/libraries_search_service.dart';
 import 'services/libraries_user_preference_service.dart';
+import 'routes/libraries_router.dart';
 import 'services/default_libraries_service.dart';
-import 'cubit/cubit.dart';
 
 class LibrariesModule extends AppModule
     with
@@ -39,6 +41,7 @@ class LibrariesModule extends AppModule
   @override
   void providePublicApi() {
     GetIt.I.registerSingleton<LibrariesService>(DefaultLibrariesService());
+    GetIt.I.registerSingleton<LibrariesRouter>(LibrariesRouterImpl());
   }
 
   @override

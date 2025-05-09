@@ -10,9 +10,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  go_router: ^14.3.0
   core:
     path: ../../core 
+  core_routes:
+    path: ../../core_routes 
   shared_api:
     path: ../../shared_api
   equatable: ^2.0.5
@@ -37,13 +38,13 @@ dependencies:
   scroll_to_index: ^3.0.1
   scrollview_observer: ^1.25.0
   sliver_tools: ^0.2.12
+  super_sliver_list: ^0.4.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
   json_serializable: ^6.6.2
-  go_router_builder: ^2.7.1
   build_runner: any
   build_verify: any
 

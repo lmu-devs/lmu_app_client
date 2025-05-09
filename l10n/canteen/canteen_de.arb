@@ -49,6 +49,7 @@
   "temoraryClosed": "Vorübergehend geschlossen",
   "servingOpenDetails": "Essensausgabe von {openingTime}-{closingTime} Uhr",
   "servingClosed": "Essensausgabe geschlossen",
+  "servingOpenUntil": "Essensausgabe geöffnet bis {time} Uhr",
   "servingOpeningSoon": "Essensausgabe öffnet um {time} Uhr",
   "servingClosingSoon": "Essensausgabe schließt um {time} Uhr",
   "ingredients": "Inhalte",

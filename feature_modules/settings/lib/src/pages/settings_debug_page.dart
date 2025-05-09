@@ -13,37 +13,39 @@ class SettingsDebugPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final appLogger = AppLogger();
 
-    return LmuMasterAppBar(
-      leadingAction: LeadingAction.back,
-      largeTitle: "Debug",
-      trailingWidgets: [
-        GestureDetector(
-          onTap: () {
-            Share.shareXFiles([XFile(appLogger.logFilePath)]);
-          },
-          child: const LmuIcon(
-            icon: LucideIcons.share,
-            size: LmuIconSizes.medium,
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        leadingAction: LeadingAction.back,
+        largeTitle: "Debug",
+        trailingWidgets: [
+          GestureDetector(
+            onTap: () {
+              Share.shareXFiles([XFile(appLogger.logFilePath)]);
+            },
+            child: const LmuIcon(
+              icon: LucideIcons.share,
+              size: LmuIconSizes.medium,
+            ),
           ),
-        ),
-        GestureDetector(
-          onTap: () async {
-            appLogger.clearLogs().then(
-                  (value) => LmuToast.show(
-                    context: context,
-                    message: "Logs cleared",
-                    type: ToastType.success,
-                  ),
-                );
-            LmuVibrations.success();
-          },
-          child: LmuIcon(
-            icon: LucideIcons.circle_x,
-            size: LmuIconSizes.medium,
-            color: context.colors.dangerColors.textColors.strongColors.active,
+          GestureDetector(
+            onTap: () async {
+              appLogger.clearLogs().then(
+                    (value) => LmuToast.show(
+                      context: context,
+                      message: "Logs cleared",
+                      type: ToastType.success,
+                    ),
+                  );
+              LmuVibrations.success();
+            },
+            child: LmuIcon(
+              icon: LucideIcons.circle_x,
+              size: LmuIconSizes.medium,
+              color: context.colors.dangerColors.textColors.strongColors.active,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
         child: ValueListenableBuilder(
@@ -52,6 +54,7 @@ class SettingsDebugPage extends StatelessWidget {
             return ListView.builder(
               padding: EdgeInsets.zero,
               itemCount: value.length,
+              shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) {
                 return Column(
                   mainAxisSize: MainAxisSize.min,

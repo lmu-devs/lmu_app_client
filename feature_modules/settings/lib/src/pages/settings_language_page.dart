@@ -15,9 +15,11 @@ class SettingsLanguagePage extends StatelessWidget {
     final languageProvider = GetIt.I.get<LanguageProvider>();
     final localization = context.locals.settings;
 
-    return LmuMasterAppBar(
-      largeTitle: localization.language,
-      leadingAction: LeadingAction.back,
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: localization.language,
+        leadingAction: LeadingAction.back,
+      ),
       body: Column(
         children: [
           Padding(

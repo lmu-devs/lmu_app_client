@@ -10,9 +10,11 @@ class SportsTicketsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
-      largeTitle: "Tickets (WIP)",
-      leadingAction: LeadingAction.back,
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: "Tickets (WIP)",
+        leadingAction: LeadingAction.back,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),

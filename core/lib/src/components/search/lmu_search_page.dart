@@ -110,103 +110,111 @@ class _LmuSearchPageState<T extends SearchEntry> extends State<LmuSearchPage<T>>
   @override
   Widget build(BuildContext context) {
     final appLocals = context.locals.app;
-    return LmuMasterAppBar.custom(
-      leadingAction: LeadingAction.back,
-      customLargeTitleWidget: SizedBox(
-        height: 40,
-        child: LmuSearchInputField(
-          controller: _searchController,
-          focusNode: _searchFocusNode,
-          onClearPressed: () {
-            _isSearchActiveNotifier.value = false;
-            _searchEntriesNotifier.value = [];
-          },
-          onChanged: (searchQuery) {
-            _isSearchActiveNotifier.value = searchQuery.isNotEmpty;
-            _search(searchQuery);
-          },
+    return LmuScaffold(
+      appBar: LmuAppBarData.custom(
+        leadingAction: LeadingAction.back,
+        customLargeTitleWidget: SizedBox(
+          height: 40,
+          child: LmuSearchInputField(
+            controller: _searchController,
+            focusNode: _searchFocusNode,
+            onClearPressed: () {
+              _isSearchActiveNotifier.value = false;
+              _searchEntriesNotifier.value = [];
+            },
+            onChanged: (searchQuery) {
+              _isSearchActiveNotifier.value = searchQuery.isNotEmpty;
+              _search(searchQuery);
+            },
+          ),
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-              child: ValueListenableBuilder(
-                valueListenable: _isSearchActiveNotifier,
-                builder: (context, isSearchActive, _) {
-                  return ValueListenableBuilder(
-                    valueListenable: _searchEntriesNotifier,
-                    builder: (context, searchEntries, child) {
-                      return AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 150),
-                        switchInCurve: Curves.easeInOut,
-                        child: searchEntries.isEmpty && !isSearchActive
-                            ? child!
-                            : searchEntries.isEmpty
-                                ? LmuIssueType(
-                                    key: const Key("search_empty"), message: appLocals.noResults, hasSpacing: false)
-                                : ListView(
-                                    key: const Key("search_entries"),
-                                    padding: const EdgeInsets.only(top: LmuSizes.size_16, bottom: LmuSizes.size_96),
-                                    children: [
-                                      LmuContentTile(
-                                        contentList:
-                                            searchEntries.map((input) => widget.searchEntryBuilder(input)).toList(),
+      slivers: [
+        SliverList(
+          delegate: SliverChildListDelegate.fixed(
+            [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+                child: ValueListenableBuilder(
+                  valueListenable: _isSearchActiveNotifier,
+                  builder: (context, isSearchActive, _) {
+                    return ValueListenableBuilder(
+                      valueListenable: _searchEntriesNotifier,
+                      builder: (context, searchEntries, child) {
+                        return AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 150),
+                          switchInCurve: Curves.easeInOut,
+                          child: searchEntries.isEmpty && !isSearchActive
+                              ? child!
+                              : searchEntries.isEmpty
+                                  ? LmuIssueType(
+                                      key: const Key("search_empty"), message: appLocals.noResults, hasSpacing: false)
+                                  : Padding(
+                                      padding: const EdgeInsets.only(top: LmuSizes.size_16, bottom: LmuSizes.size_96),
+                                      child: Column(
+                                        key: const Key("search_entries"),
+                                        children: [
+                                          LmuContentTile(
+                                            contentList:
+                                                searchEntries.map((input) => widget.searchEntryBuilder(input)).toList(),
+                                          ),
+                                        ],
                                       ),
-                                    ],
+                                    ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: LmuSizes.size_16, bottom: LmuSizes.size_96),
+                        child: Column(
+                          key: const Key("recent_searches"),
+                          children: [
+                            ValueListenableBuilder(
+                              valueListenable: _recentSearchEntriesNotifier,
+                              builder: (context, recentSearchEntries, child) {
+                                if (recentSearchEntries.isEmpty) return const SizedBox.shrink();
+                                return Column(
+                                  children: [
+                                    LmuTileHeadline.action(
+                                      title: appLocals.prevSearch,
+                                      actionTitle: appLocals.clear,
+                                      onActionTap: () {
+                                        widget.onRecentSearchesUpdated?.call([]);
+                                        _recentSearchEntriesNotifier.value = [];
+                                      },
+                                    ),
+                                    LmuContentTile(
+                                      contentList: recentSearchEntries
+                                          .map(
+                                            (input) => widget.searchEntryBuilder(input),
+                                          )
+                                          .toList(),
+                                    ),
+                                    const SizedBox(height: LmuSizes.size_32),
+                                  ],
+                                );
+                              },
+                            ),
+                            if (_emptySearchEntries != null && _emptySearchEntries!.isNotEmpty)
+                              Column(
+                                children: [
+                                  LmuTileHeadline.base(title: widget.emptySearchEntriesTitle!),
+                                  LmuContentTile(
+                                    contentList:
+                                        _emptySearchEntries!.map((input) => widget.searchEntryBuilder(input)).toList(),
                                   ),
-                      );
-                    },
-                    child: ListView(
-                      key: const Key("recent_searches"),
-                      padding: const EdgeInsets.only(top: LmuSizes.size_16, bottom: LmuSizes.size_96),
-                      children: [
-                        ValueListenableBuilder(
-                          valueListenable: _recentSearchEntriesNotifier,
-                          builder: (context, recentSearchEntries, child) {
-                            if (recentSearchEntries.isEmpty) return const SizedBox.shrink();
-                            return Column(
-                              children: [
-                                LmuTileHeadline.action(
-                                  title: appLocals.prevSearch,
-                                  actionTitle: appLocals.clear,
-                                  onActionTap: () {
-                                    widget.onRecentSearchesUpdated?.call([]);
-                                    _recentSearchEntriesNotifier.value = [];
-                                  },
-                                ),
-                                LmuContentTile(
-                                  contentList: recentSearchEntries
-                                      .map(
-                                        (input) => widget.searchEntryBuilder(input),
-                                      )
-                                      .toList(),
-                                ),
-                                const SizedBox(height: LmuSizes.size_32),
-                              ],
-                            );
-                          },
-                        ),
-                        if (_emptySearchEntries != null && _emptySearchEntries!.isNotEmpty)
-                          Column(
-                            children: [
-                              LmuTileHeadline.base(title: widget.emptySearchEntriesTitle!),
-                              LmuContentTile(
-                                contentList:
-                                    _emptySearchEntries!.map((input) => widget.searchEntryBuilder(input)).toList(),
+                                ],
                               ),
-                            ],
-                          ),
-                      ],
-                    ),
-                  );
-                },
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

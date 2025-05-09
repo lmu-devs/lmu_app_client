@@ -7,9 +7,11 @@ class SportsInfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LmuMasterAppBar(
-      largeTitle: "Wie funktioniert ZHS? (WIP)",
-      leadingAction: LeadingAction.back,
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: "Wie funktioniert ZHS? (WIP)",
+        leadingAction: LeadingAction.back,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(LmuSizes.size_16),

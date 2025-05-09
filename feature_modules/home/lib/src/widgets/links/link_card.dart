@@ -8,7 +8,6 @@ import 'package:get_it/get_it.dart';
 
 import '../../repository/api/models/links/link_model.dart';
 import '../../service/home_preferences_service.dart';
-import '../favicon_fallback.dart';
 
 class LinkCard extends StatelessWidget {
   const LinkCard({
@@ -39,7 +38,7 @@ class LinkCard extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               )
-            : const FaviconFallback(size: LmuIconSizes.mediumSmall),
+            : const LmuFaviconFallback(size: LmuIconSizes.mediumSmall),
       ),
       trailingArea: ValueListenableBuilder<List<String>>(
         valueListenable: GetIt.I<HomePreferencesService>().likedLinksNotifier,

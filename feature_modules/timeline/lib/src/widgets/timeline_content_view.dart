@@ -19,8 +19,8 @@ class TimelineContentView extends StatelessWidget {
 
     final grouped = groupEventsBySemesterAndMonth(context, data);
 
-    return CustomScrollView(
-      slivers: [
+    return MultiSliver(
+      children: [
         const SliverToBoxAdapter(child: SizedBox(height: LmuSizes.size_8)),
         MultiSliver(
           children: grouped.entries.map((semesterEntry) {
