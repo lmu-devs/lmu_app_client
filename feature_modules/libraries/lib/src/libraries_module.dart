@@ -28,7 +28,7 @@ class LibrariesModule extends AppModule
 
     GetIt.I.registerSingleton<LibrariesCubit>(LibrariesCubit());
     GetIt.I.registerSingleton<LibrariesUserPreferenceService>(LibrariesUserPreferenceService());
-    GetIt.I.registerSingleton<LibrariesSearchService>(LibrariesSearchService(), dispose: (srv) => srv.dispose());
+    GetIt.I.registerSingleton<LibrariesSearchService>(LibrariesSearchService(), dispose: (srv) => srv.dispose()).init();
   }
 
   @override

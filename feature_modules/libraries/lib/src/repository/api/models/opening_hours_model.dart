@@ -11,7 +11,7 @@ class OpeningHoursModel extends Equatable {
     required this.days,
   });
 
-  final List<OpeningDayModel> days;
+  final List<OpeningDayModel>? days;
 
   factory OpeningHoursModel.fromJson(Map<String, dynamic> json) => _$OpeningHoursModelFromJson(json);
 

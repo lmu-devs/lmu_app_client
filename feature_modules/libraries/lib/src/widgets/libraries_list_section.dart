@@ -36,27 +36,36 @@ class LibrariesListSection extends StatelessWidget {
               child: Column(
                 children: [
                   LmuTileHeadline.base(title: "$title • $count"),
-                  LmuContentTile(
-                    contentList: visibleItems,
-                    contentTileType: isExpandable && !showAll ? ContentTileType.top : ContentTileType.middle,
-                  ),
-                  if (isExpandable && !showAll)
-                    LmuContentTile(
-                      contentList: [
-                        GestureDetector(
-                          onTap: () => showAllNotifier.value = true,
-                          child: Center(
-                            child: LmuText.body(
-                              context.locals.app.showAll,
-                              weight: FontWeight.w600,
-                              color: context.colors.brandColors.textColors.strongColors.base,
+                  AnimatedSize(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                    child: Column(
+                      key: ValueKey("$showAll • $title"),
+                      children: [
+                        LmuContentTile(
+                          contentList: visibleItems,
+                          contentTileType: isExpandable && !showAll ? ContentTileType.top : ContentTileType.middle,
+                        ),
+                        if (isExpandable && !showAll)
+                          GestureDetector(
+                            onTap: () => showAllNotifier.value = true,
+                            child: LmuContentTile(
+                              contentList: [
+                                Center(
+                                  child: LmuText.body(
+                                    context.locals.app.showAll,
+                                    weight: FontWeight.w600,
+                                    color: context.colors.brandColors.textColors.strongColors.base,
+                                  ),
+                                ),
+                              ],
+                              padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_12),
+                              contentTileType: ContentTileType.bottom,
                             ),
                           ),
-                        ),
                       ],
-                      padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_12),
-                      contentTileType: ContentTileType.bottom,
                     ),
+                  ),
                 ],
               ),
             ),

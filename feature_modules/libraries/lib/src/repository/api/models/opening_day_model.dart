@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'time_range_model.dart';
+import 'timeframe_model.dart';
 
 part 'opening_day_model.g.dart';
 
@@ -9,18 +9,16 @@ part 'opening_day_model.g.dart';
 class OpeningDayModel extends Equatable {
   const OpeningDayModel({
     required this.day,
-    required this.timeRanges,
+    required this.timeframes,
   });
 
   final String day;
-
-  @JsonKey(name: 'time_ranges')
-  final List<TimeRangeModel> timeRanges;
+  final List<TimeframeModel> timeframes;
 
   factory OpeningDayModel.fromJson(Map<String, dynamic> json) => _$OpeningDayModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$OpeningDayModelToJson(this);
 
   @override
-  List<Object?> get props => [day, timeRanges];
+  List<Object?> get props => [day, timeframes];
 }

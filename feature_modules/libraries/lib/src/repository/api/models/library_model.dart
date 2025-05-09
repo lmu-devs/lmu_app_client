@@ -16,7 +16,7 @@ class LibraryModel extends Equatable {
     required this.images,
     required this.location,
     required this.phones,
-    //required this.openingHours,
+    required this.areas,
     required this.services,
     required this.equipment,
     required this.subjects,
@@ -36,8 +36,7 @@ class LibraryModel extends Equatable {
   final List<ImageModel> images;
   final LocationModel location;
   final List<PhoneModel>? phones;
-  //@JsonKey(name: 'opening_hours')
-  //final OpeningHoursModel? openingHours;
+  final List<AreaModel> areas;
   final List<ServiceModel> services;
   final List<EquipmentModel> equipment;
   @JsonKey(name: 'subject_areas')
@@ -59,7 +58,7 @@ class LibraryModel extends Equatable {
         images,
         location,
         phones,
-        //openingHours,
+        areas,
         services,
         equipment,
         subjects,

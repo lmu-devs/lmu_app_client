@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -29,6 +30,12 @@ class _LibrariesPageState extends State<LibrariesPage> {
     return LmuMasterAppBar(
       largeTitle: context.locals.libraries.pageTitle,
       leadingAction: LeadingAction.back,
+      largeTitleTrailingWidget: LmuButton(
+        title: context.locals.libraries.seatBooking,
+        emphasis: ButtonEmphasis.secondary,
+        onTap: () => LmuUrlLauncher.launchWebsite(
+            url: "https://auth.anny.eu/start-session?entityId=https://lmuidp.lrz.de/idp/shibboleth", context: context),
+      ),
       body: BlocBuilder<LibrariesCubit, LibrariesState>(
         bloc: GetIt.I.get<LibrariesCubit>(),
         builder: (context, state) {

@@ -19,6 +19,9 @@ LibraryModel _$LibraryModelFromJson(Map<String, dynamic> json) => LibraryModel(
       phones: (json['phones'] as List<dynamic>?)
           ?.map((e) => PhoneModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      areas: (json['areas'] as List<dynamic>)
+          .map((e) => AreaModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       services: (json['services'] as List<dynamic>)
           .map((e) => ServiceModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -44,6 +47,7 @@ Map<String, dynamic> _$LibraryModelToJson(LibraryModel instance) =>
       'images': instance.images,
       'location': instance.location,
       'phones': instance.phones,
+      'areas': instance.areas,
       'services': instance.services,
       'equipment': instance.equipment,
       'subject_areas': instance.subjects,

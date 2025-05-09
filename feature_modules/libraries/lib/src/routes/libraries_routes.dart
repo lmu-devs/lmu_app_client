@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
-import '../repository/api/models/library_model.dart';
+import '../repository/api/api.dart';
 import '../pages/pages.dart';
 
 part 'libraries_routes.g.dart';
@@ -11,12 +11,22 @@ part 'libraries_routes.g.dart';
   routes: <TypedGoRoute<GoRouteData>>[
     TypedGoRoute<LibraryDetailsRoute>(
       path: 'library_details',
+      routes: [
+        TypedGoRoute<LibraryAreasRoute>(
+          path: 'areas',
+        ),
+      ],
     ),
     TypedGoRoute<LibrariesSearchRoute>(
       path: 'search',
       routes: [
         TypedGoRoute<LibrarySearchDetailsRoute>(
           path: 'search_details',
+          routes: [
+            TypedGoRoute<LibrarySearchAreasRoute>(
+              path: 'search_areas',
+            ),
+          ],
         ),
       ],
     ),
@@ -42,6 +52,19 @@ class LibraryDetailsRoute extends GoRouteData {
       );
 }
 
+class LibraryAreasRoute extends GoRouteData {
+  const LibraryAreasRoute(
+      this.$extra,
+      );
+
+  final LibraryModel $extra;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => LibraryAreasPage(
+    library: $extra,
+  );
+}
+
 class LibrariesSearchRoute extends GoRouteData {
   const LibrariesSearchRoute();
 
@@ -56,4 +79,13 @@ class LibrarySearchDetailsRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => LibraryDetailsPage(library: $extra);
+}
+
+class LibrarySearchAreasRoute extends GoRouteData {
+  const LibrarySearchAreasRoute(this.$extra);
+
+  final LibraryModel $extra;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => LibraryAreasPage(library: $extra);
 }

@@ -8,8 +8,8 @@ part of 'opening_hours_model.dart';
 
 OpeningHoursModel _$OpeningHoursModelFromJson(Map<String, dynamic> json) =>
     OpeningHoursModel(
-      days: (json['days'] as List<dynamic>)
-          .map((e) => OpeningDayModel.fromJson(e as Map<String, dynamic>))
+      days: (json['days'] as List<dynamic>?)
+          ?.map((e) => OpeningDayModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

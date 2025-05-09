@@ -10,6 +10,7 @@ import 'package:get_it/get_it.dart';
 
 import '../extensions/equipment_icon_extension.dart';
 import '../repository/api/api.dart';
+import '../routes/libraries_routes.dart';
 import '../services/libraries_user_preference_service.dart';
 import '../widgets/libraries_list_section.dart';
 
@@ -63,21 +64,35 @@ class LibraryDetailsPage extends StatelessWidget {
         const SizedBox(height: LmuSizes.size_16),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-          child: LmuListItem.base(
-            subtitle: library.location.address,
-            trailingArea: Icon(
-              LucideIcons.map,
-              size: LmuIconSizes.mediumSmall,
-              color: context.colors.neutralColors.textColors.weakColors.base,
-            ),
-            hasHorizontalPadding: false,
-            hasDivider: true,
-            onTap: () {
-              LmuBottomSheet.show(
-                context,
-                content: NavigationSheet(location: library.location),
-              );
-            },
+          child: Column(
+            children: [
+              LmuListItem.base(
+                subtitle: library.location.address,
+                trailingArea: Icon(
+                  LucideIcons.map,
+                  size: LmuIconSizes.mediumSmall,
+                  color: context.colors.neutralColors.textColors.weakColors.base,
+                ),
+                hasHorizontalPadding: false,
+                hasDivider: true,
+                onTap: () {
+                  LmuBottomSheet.show(
+                    context,
+                    content: NavigationSheet(location: library.location),
+                  );
+                },
+              ),
+              if (library.areas.isNotEmpty)
+                library.areas.length == 1
+                    ? Container()
+                    : LmuListItem.action(
+                        subtitle: "${library.areas.length} ${context.locals.libraries.areas}",
+                        actionType: LmuListItemAction.chevron,
+                        hasHorizontalPadding: false,
+                        hasDivider: true,
+                        onTap: () => LibraryAreasRoute(library).go(context),
+                      ),
+            ],
           ),
         ),
         LibrariesListSection(

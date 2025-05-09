@@ -24,5 +24,9 @@
   "subjectAreas": "Subject Areas",
   "@subjectAreas": {
     "description": "Subject Areas Title"
+  },
+  "areas": "Areas",
+  "@areas": {
+    "description": "Areas"
   }
 }

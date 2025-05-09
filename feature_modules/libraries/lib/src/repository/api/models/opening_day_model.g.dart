@@ -9,13 +9,13 @@ part of 'opening_day_model.dart';
 OpeningDayModel _$OpeningDayModelFromJson(Map<String, dynamic> json) =>
     OpeningDayModel(
       day: json['day'] as String,
-      timeRanges: (json['time_ranges'] as List<dynamic>)
-          .map((e) => TimeRangeModel.fromJson(e as Map<String, dynamic>))
+      timeframes: (json['timeframes'] as List<dynamic>)
+          .map((e) => TimeframeModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
 Map<String, dynamic> _$OpeningDayModelToJson(OpeningDayModel instance) =>
     <String, dynamic>{
       'day': instance.day,
-      'time_ranges': instance.timeRanges,
+      'timeframes': instance.timeframes,
     };
