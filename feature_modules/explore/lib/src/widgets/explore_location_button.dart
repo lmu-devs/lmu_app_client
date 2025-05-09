@@ -34,13 +34,13 @@ class ExploreLocationButton extends StatelessWidget {
         onTap: () async {
           await PermissionsService.isLocationPermissionGranted().then(
             (isPermissionGranted) async {
-              if (!isPermissionGranted) {
+              if (!isPermissionGranted && context.mounted) {
                 await PermissionsService.showLocationPermissionDeniedDialog(context);
                 return;
               }
               await PermissionsService.isLocationServicesEnabled().then(
                 (isLocationServicesEnabled) async {
-                  if (!isLocationServicesEnabled) {
+                  if (!isLocationServicesEnabled && context.mounted) {
                     await PermissionsService.showLocationServiceDisabledDialog(context);
                     return;
                   }

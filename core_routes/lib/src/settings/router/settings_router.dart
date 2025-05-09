@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 abstract class SettingsRouter {
   Widget buildMain(BuildContext context);
 
-  Widget buildApperance(BuildContext context);
+  Widget buildAppearance(BuildContext context);
 
   Widget buildAccount(BuildContext context);
 

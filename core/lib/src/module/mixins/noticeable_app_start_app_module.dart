@@ -6,7 +6,7 @@ mixin NoticeableAppStartAppModule on AppModule {
   ///
   /// The app calls [onAppStartNotice] but does not wait for it to complete.
   ///
-  /// If you have fundamental app logic which should be completeted before the app is actually starting,
+  /// If you have fundamental app logic which should be completed before the app is actually starting,
   /// consider using [WaitingAppStartAppModule].
   void onAppStartNotice();
 }

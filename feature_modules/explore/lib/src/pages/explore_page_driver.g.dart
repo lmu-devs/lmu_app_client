@@ -12,22 +12,22 @@ part of 'explore_page_driver.dart';
 
 class _$TestExplorePageDriver extends TestDriver implements ExplorePageDriver {
   @override
-  MapController get mapController => _TestMapController();
+  MapController get mapController => const _TestMapController();
 
   @override
   List<ExploreLocation> get locations => [];
 
   @override
-  LatLng get initialCenter => LatLng(0, 0);
+  LatLng get initialCenter => const LatLng(0, 0);
 
   @override
   ZoomConfig get zoomConfig => (initialZoom: 0, minZoom: 0, maxZoom: 0);
 
   @override
-  CameraConstraint get cameraConstraint => CameraConstraint.unconstrained();
+  CameraConstraint get cameraConstraint => const CameraConstraint.unconstrained();
 
   @override
-  InteractionOptions get interactionOptions => InteractionOptions();
+  InteractionOptions get interactionOptions => const InteractionOptions();
 
   @override
   String get urlTemplate => "";

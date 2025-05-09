@@ -29,8 +29,8 @@ part 'shell_route_data.g.dart';
             TypedGoRoute<SettingsMainRoute>(
               path: SettingsMainRoute.path,
               routes: <TypedGoRoute<GoRouteData>>[
-                TypedGoRoute<SettingsApperanceRoute>(
-                  path: SettingsApperanceRoute.path,
+                TypedGoRoute<SettingsAppearanceRoute>(
+                  path: SettingsAppearanceRoute.path,
                 ),
                 TypedGoRoute<SettingsLanguageRoute>(
                   path: SettingsLanguageRoute.path,

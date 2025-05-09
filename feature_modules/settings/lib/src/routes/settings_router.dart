@@ -11,7 +11,7 @@ class SettingsRouterImpl extends SettingsRouter {
   Widget buildAccount(BuildContext context) => const SettingsAccountPage();
 
   @override
-  Widget buildApperance(BuildContext context) => const SettingsApperancePage();
+  Widget buildAppearance(BuildContext context) => const SettingsAppearancePage();
 
   @override
   Widget buildDebug(BuildContext context) => const SettingsDebugPage();

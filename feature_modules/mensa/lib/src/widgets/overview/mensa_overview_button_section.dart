@@ -113,13 +113,13 @@ class _SortOptionActionSheetContent extends StatelessWidget {
                           bool dontSort = false;
                           await PermissionsService.isLocationPermissionGranted().then(
                             (isPermissionGranted) async {
-                              if (!isPermissionGranted) {
+                              if (!isPermissionGranted && context.mounted) {
                                 dontSort = true;
                                 await PermissionsService.showLocationPermissionDeniedDialog(context);
                               }
                               await PermissionsService.isLocationServicesEnabled().then(
                                 (isLocationServicesEnabled) async {
-                                  if (!isLocationServicesEnabled) {
+                                  if (!isLocationServicesEnabled && context.mounted) {
                                     dontSort = true;
                                     await PermissionsService.showLocationServiceDisabledDialog(context);
                                   }
@@ -139,7 +139,9 @@ class _SortOptionActionSheetContent extends StatelessWidget {
                         Future.delayed(
                           const Duration(milliseconds: 100),
                           () {
-                            Navigator.of(context, rootNavigator: true).pop();
+                            if (context.mounted) {
+                              Navigator.of(context, rootNavigator: true).pop();
+                            }
                           },
                         );
                       },

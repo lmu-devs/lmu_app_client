@@ -102,7 +102,7 @@ class MensaDetailsInfoSection extends StatelessWidget {
     return LmuListDropdown(
       title: title,
       titleColor: titleColor,
-      hasDivier: true,
+      hasDivider: true,
       items: details.asMap().entries.map((entry) => _buildStatusItem(entry, appLocalizations)).toList(),
     );
   }

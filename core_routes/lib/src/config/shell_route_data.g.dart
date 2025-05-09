@@ -252,8 +252,8 @@ extension $SettingsMainRouteExtension on SettingsMainRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $SettingsApperanceRouteExtension on SettingsApperanceRoute {
-  static SettingsApperanceRoute _fromState(GoRouterState state) => const SettingsApperanceRoute();
+extension $SettingsApperanceRouteExtension on SettingsAppearanceRoute {
+  static SettingsAppearanceRoute _fromState(GoRouterState state) => const SettingsAppearanceRoute();
 
   String get location => GoRouteData.$location(
         '/home/settings/appearance',
