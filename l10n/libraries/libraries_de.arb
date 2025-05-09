@@ -7,5 +7,7 @@
   "seatBooking": "Platz Reservieren",
   "equipment": "Ausstattung",
   "subjectAreas": "Fachbereiche",
-  "areas": "Bereiche"
+  "areas": "Bereiche",
+  "emptyFavoritesBefore": "Füge Favoriten mit dem ",
+  "emptyFavoritesAfter": " Symbol hinzu"
 }

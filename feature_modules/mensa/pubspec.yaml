@@ -34,7 +34,6 @@ dependencies:
   expandable_page_view: ^1.0.17
   geolocator: ^14.0.0
   rxdart: ^0.28.0
-  animated_reorderable_list: ^1.1.5
   scroll_to_index: ^3.0.1
   scrollview_observer: ^1.25.0
   sliver_tools: ^0.2.12

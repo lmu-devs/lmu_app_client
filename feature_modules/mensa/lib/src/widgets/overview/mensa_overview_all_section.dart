@@ -47,7 +47,8 @@ class MensaOverviewAllSection extends StatelessWidget {
                 }
 
                 return LmuAnimatedListView(
-                  valueKey: filteredMensaModels.map((e) => e.canteenId).join(),
+                  valueKey:
+                      "${userPreferencesService.sortOptionNotifier.value} • ${filteredMensaModels.map((e) => e.canteenId).join()}",
                   itemCount: filteredMensaModels.length,
                   itemBuilder: (context, index) {
                     return ValueListenableBuilder(

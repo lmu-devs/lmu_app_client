@@ -28,5 +28,13 @@
   "areas": "Areas",
   "@areas": {
     "description": "Areas"
+  },
+  "emptyFavoritesBefore": "Tap the ",
+  "@emptyFavoritesBefore": {
+    "description": "Empty favorites text before star icon"
+  },
+  "emptyFavoritesAfter": " icon to add favorites here",
+  "@emptyFavoritesAfter": {
+    "description": "Empty favorites text after star icon"
   }
 }

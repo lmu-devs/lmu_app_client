@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../repository/api/models/library_model.dart';
 import '../services/libraries_user_preference_service.dart';
+import 'favorite_libraries_section.dart';
 import 'libraries_overview_button_section.dart';
 import 'library_tile.dart';
 
@@ -36,6 +37,7 @@ class _LibrariesContentViewState extends State<LibrariesContentView> {
             child: Column(
               children: [
                 LmuTileHeadline.base(title: context.locals.app.favorites, customBottomPadding: LmuSizes.size_6),
+                FavoriteLibrariesSection(libraries: _libraries),
               ],
             ),
           ),
@@ -54,7 +56,8 @@ class _LibrariesContentViewState extends State<LibrariesContentView> {
                   valueListenable: userPreferencesService.sortedLibrariesNotifier,
                   builder: (context, sortedLibraries, _) {
                     return LmuAnimatedListView(
-                      valueKey: "lib",
+                      valueKey:
+                          "${userPreferencesService.sortOptionNotifier.value} • ${sortedLibraries.map((library) => library.id).join()}",
                       itemCount: sortedLibraries.length,
                       itemBuilder: (context, index) {
                         return ValueListenableBuilder(
