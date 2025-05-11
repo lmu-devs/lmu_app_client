@@ -14,7 +14,7 @@ enum Status {
   closed,
 }
 
-extension LibraryOpeningStatusExtension on List<OpeningDayModel> {
+extension LibraryOpeningStatusExtension on List<OpeningHoursModel> {
   Status get status {
     final today = _todayOpening;
     if (today == null || today.timeframes.isEmpty) return Status.closed;
@@ -47,7 +47,7 @@ extension LibraryOpeningStatusExtension on List<OpeningDayModel> {
     return Status.closed;
   }
 
-  OpeningDayModel? get _todayOpening {
+  OpeningHoursModel? get _todayOpening {
     final now = DateTime.now();
     return firstWhereOrNull((e) => Weekday.values.indexOf(e.day) == now.weekday - 1);
   }
@@ -86,13 +86,13 @@ class _Timeframe {
 
 extension AreaStatusExtension on AreaModel {
   Status get currentStatus =>
-      openingHours?.days?.status ?? Status.closed;
+      openingHours?.status ?? Status.closed;
 
   String get openingTime =>
-      openingHours?.days?.openingTime ?? "";
+      openingHours?.openingTime ?? "";
 
   String get closingTime =>
-      openingHours?.days?.closingTime ?? "";
+      openingHours?.closingTime ?? "";
 
   ({Color color, String text}) getStyledStatusShort(BuildContext context) {
     final localizations = context.locals.libraries;

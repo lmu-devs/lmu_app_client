@@ -5,7 +5,7 @@ import 'package:core/localizations.dart';
 import '../repository/api/api.dart';
 
 LmuListItem buildLibraryStatusItem({
-  required MapEntry<int, OpeningDayModel> entry,
+  required MapEntry<int, OpeningHoursModel> entry,
   required AppLocalizations appLocalizations,
 }) {
   final index = entry.key;

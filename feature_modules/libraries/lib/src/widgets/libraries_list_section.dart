@@ -39,31 +39,45 @@ class LibrariesListSection extends StatelessWidget {
                   AnimatedSize(
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
-                    child: Column(
-                      key: ValueKey("$showAll • $title"),
-                      children: [
-                        LmuContentTile(
-                          contentList: visibleItems,
-                          contentTileType: isExpandable && !showAll ? ContentTileType.top : ContentTileType.middle,
-                        ),
-                        if (isExpandable && !showAll)
-                          GestureDetector(
-                            onTap: () => showAllNotifier.value = true,
-                            child: LmuContentTile(
-                              contentList: [
-                                Center(
-                                  child: LmuText.body(
-                                    context.locals.app.showAll,
-                                    weight: FontWeight.w600,
-                                    color: context.colors.brandColors.textColors.strongColors.base,
-                                  ),
-                                ),
-                              ],
-                              padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_12),
-                              contentTileType: ContentTileType.bottom,
-                            ),
+                    child: AnimatedSwitcher(
+                      transitionBuilder: (child, animation) {
+                        return FadeTransition(
+                          opacity: animation.drive(CurveTween(curve: Curves.easeInQuad)),
+                          child: SizeTransition(
+                            sizeFactor: animation,
+                            child: child,
                           ),
-                      ],
+                        );
+                      },
+                      switchInCurve: LmuAnimations.slowSmooth,
+                      switchOutCurve: LmuAnimations.slowSmooth.flipped,
+                      duration: const Duration(milliseconds: 300),
+                      child: Column(
+                        key: ValueKey("$showAll • $title"),
+                        children: [
+                          LmuContentTile(
+                            contentList: visibleItems,
+                            contentTileType: isExpandable && !showAll ? ContentTileType.top : ContentTileType.middle,
+                          ),
+                          if (isExpandable && !showAll)
+                            GestureDetector(
+                              onTap: () => showAllNotifier.value = true,
+                              child: LmuContentTile(
+                                contentList: [
+                                  Center(
+                                    child: LmuText.body(
+                                      context.locals.app.showAll,
+                                      weight: FontWeight.w600,
+                                      color: context.colors.brandColors.textColors.strongColors.base,
+                                    ),
+                                  ),
+                                ],
+                                padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_12),
+                                contentTileType: ContentTileType.bottom,
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

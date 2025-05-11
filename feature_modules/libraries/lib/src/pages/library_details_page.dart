@@ -90,7 +90,7 @@ class LibraryDetailsPage extends StatelessWidget {
                         listenable: GetIt.I<LibrariesStatusUpdateService>(),
                         builder: (context, child) {
                           final statusStyle = library.areas.first.getStyledStatus(context);
-                          final details = library.areas.first.openingHours?.days ?? [];
+                          final details = library.areas.first.openingHours ?? [];
 
                           return LmuListDropdown(
                             title: statusStyle.text,

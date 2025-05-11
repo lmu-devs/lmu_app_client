@@ -39,7 +39,7 @@ class LibraryAreasPage extends StatelessWidget {
                     final area = entry.value;
                     final isExpanded = expandedAreaIndex == index;
                     final status = area.getStyledStatus(context);
-                    final details = area.openingHours?.days ?? [];
+                    final details = area.openingHours ?? [];
 
                     return Padding(
                       padding: const EdgeInsets.only(top: LmuSizes.size_8),
