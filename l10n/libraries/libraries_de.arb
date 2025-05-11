@@ -9,5 +9,10 @@
   "subjectAreas": "Fachbereiche",
   "areas": "Bereiche",
   "emptyFavoritesBefore": "Füge Favoriten mit dem ",
-  "emptyFavoritesAfter": " Symbol hinzu"
+  "emptyFavoritesAfter": " Symbol hinzu",
+  "openNow": "Jetzt geöffnet",
+  "openUntil": "Geöffnet bis {time} Uhr",
+  "openingSoon": "Öffnet um {time} Uhr",
+  "onPause": "Pause bis {time} Uhr",
+  "closed": "Geschlossen"
 }

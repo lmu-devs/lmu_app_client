@@ -1,3 +1,4 @@
+import 'package:core/api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -12,7 +13,7 @@ class OpeningDayModel extends Equatable {
     required this.timeframes,
   });
 
-  final String day;
+  final Weekday day;
   final List<TimeframeModel> timeframes;
 
   factory OpeningDayModel.fromJson(Map<String, dynamic> json) => _$OpeningDayModelFromJson(json);

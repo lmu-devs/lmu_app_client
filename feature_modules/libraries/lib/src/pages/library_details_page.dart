@@ -9,9 +9,12 @@ import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 
 import '../extensions/equipment_icon_extension.dart';
+import '../extensions/opening_hours_extensions.dart';
 import '../repository/api/api.dart';
+import '../services/libraries_status_update_service.dart';
 import '../services/libraries_user_preference_service.dart';
 import '../widgets/libraries_list_section.dart';
+import '../widgets/library_status_item.dart';
 
 class LibraryDetailsPage extends StatelessWidget {
   const LibraryDetailsPage({
@@ -83,7 +86,29 @@ class LibraryDetailsPage extends StatelessWidget {
               ),
               if (library.areas.isNotEmpty)
                 library.areas.length == 1
-                    ? Container()
+                    ? ListenableBuilder(
+                        listenable: GetIt.I<LibrariesStatusUpdateService>(),
+                        builder: (context, child) {
+                          final statusStyle = library.areas.first.getStyledStatus(context);
+                          final details = library.areas.first.openingHours?.days ?? [];
+
+                          return LmuListDropdown(
+                            title: statusStyle.text,
+                            titleColor: statusStyle.color,
+                            hasDivider: true,
+                            items: details
+                                .asMap()
+                                .entries
+                                .map(
+                                  (entry) => buildLibraryStatusItem(
+                                    entry: entry,
+                                    appLocalizations: context.locals.app,
+                                  ),
+                                )
+                                .toList(),
+                          );
+                        },
+                      )
                     : LmuListItem.action(
                         subtitle: "${library.areas.length} ${context.locals.libraries.areas}",
                         actionType: LmuListItemAction.chevron,

@@ -36,5 +36,43 @@
   "emptyFavoritesAfter": " icon to add favorites here",
   "@emptyFavoritesAfter": {
     "description": "Empty favorites text after star icon"
+  },
+  "openNow": "Open now",
+  "@openNow": {
+    "description": "The state of being open"
+  },
+  "openUntil": "Open until {time}",
+  "@openUntil": {
+    "description": "The state of closing soon",
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "10 PM"
+      }
+    }
+  },
+  "openingSoon": "Open from {time}",
+  "@openingSoon": {
+    "description": "The state of opening soon",
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "10 PM"
+      }
+    }
+  },
+  "onPause": "On pause until {time}",
+  "@onPause": {
+    "description": "The state of being on pause",
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "10 PM"
+      }
+    }
+  },
+  "closed": "Closed",
+  "@closed": {
+    "description": "The state of being closed"
   }
 }
