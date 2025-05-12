@@ -3,7 +3,9 @@ import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import '../extensions/opening_hours_extensions.dart';
 import '../repository/api/models/library_model.dart';
+import '../services/libraries_status_update_service.dart';
 import '../services/libraries_user_preference_service.dart';
 import 'favorite_libraries_section.dart';
 import 'libraries_overview_button_section.dart';
@@ -55,20 +57,57 @@ class _LibrariesContentViewState extends State<LibrariesContentView> {
                 ValueListenableBuilder(
                   valueListenable: userPreferencesService.sortedLibrariesNotifier,
                   builder: (context, sortedLibraries, _) {
-                    return LmuAnimatedListView(
-                      valueKey:
-                          "${userPreferencesService.sortOptionNotifier.value} • ${sortedLibraries.map((library) => library.id).join()}",
-                      itemCount: sortedLibraries.length,
-                      itemBuilder: (context, index) {
+                    return ListenableBuilder(
+                      listenable: GetIt.I.get<LibrariesStatusUpdateService>(),
+                      builder: (context, _) {
                         return ValueListenableBuilder(
-                          valueListenable: userPreferencesService.favoriteLibraryIdsNotifier,
-                          builder: (context, favoriteLibraryIds, _) {
-                            final isFavorite = favoriteLibraryIds.contains(sortedLibraries[index].id);
-                            return LibraryTile(
-                              library: sortedLibraries[index],
-                              isFavorite: isFavorite,
-                              hasDivider: index != sortedLibraries.length - 1,
-                              hasLargeImage: sortedLibraries[index].images.isNotEmpty,
+                          valueListenable: userPreferencesService.isOpenNowFilterNotifier,
+                          builder: (context, isFilterActive, _) {
+                            final filteredLibraries = sortedLibraries.where(
+                              (library) {
+                                if (!isFilterActive) {
+                                  return true;
+                                }
+
+                                library.areas.any((area) {
+                                  final status = area.openingHours?.status;
+                                  return status != null &&
+                                      status != Status.closed &&
+                                      status != Status.openingSoon &&
+                                      status != Status.pause;
+                                });
+
+                                return false;
+                              },
+                            ).toList();
+
+                            if (filteredLibraries.isEmpty) {
+                              return Center(
+                                child: LmuIssueType(
+                                  message: context.locals.app.allClosed,
+                                  hasSpacing: false,
+                                ),
+                              );
+                            }
+
+                            return LmuAnimatedListView(
+                              valueKey:
+                                  "${userPreferencesService.sortOptionNotifier.value} • ${filteredLibraries.map((library) => library.id).join()}",
+                              itemCount: filteredLibraries.length,
+                              itemBuilder: (context, index) {
+                                return ValueListenableBuilder(
+                                  valueListenable: userPreferencesService.favoriteLibraryIdsNotifier,
+                                  builder: (context, favoriteLibraryIds, _) {
+                                    final isFavorite = favoriteLibraryIds.contains(filteredLibraries[index].id);
+                                    return LibraryTile(
+                                      library: filteredLibraries[index],
+                                      isFavorite: isFavorite,
+                                      hasDivider: index != filteredLibraries.length - 1,
+                                      hasLargeImage: filteredLibraries[index].images.isNotEmpty,
+                                    );
+                                  },
+                                );
+                              },
                             );
                           },
                         );

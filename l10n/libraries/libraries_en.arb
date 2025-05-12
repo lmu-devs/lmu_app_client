@@ -29,6 +29,10 @@
   "@areas": {
     "description": "Areas"
   },
+  "varyingOpeningHours": "with varying opening hours",
+  "@varyingOpeningHours": {
+    "description": "Varying opening hours"
+  },
   "emptyFavoritesBefore": "Tap the ",
   "@emptyFavoritesBefore": {
     "description": "Empty favorites text before star icon"

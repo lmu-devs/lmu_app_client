@@ -102,7 +102,7 @@ class LibraryDetailsPage extends StatelessWidget {
                                 .map(
                                   (entry) => buildLibraryStatusItem(
                                     entry: entry,
-                                    appLocalizations: context.locals.app,
+                                    context: context,
                                   ),
                                 )
                                 .toList(),
@@ -110,7 +110,8 @@ class LibraryDetailsPage extends StatelessWidget {
                         },
                       )
                     : LmuListItem.action(
-                        subtitle: "${library.areas.length} ${context.locals.libraries.areas}",
+                        subtitle:
+                            "${library.areas.length} ${context.locals.libraries.areas} ${context.locals.libraries.varyingOpeningHours}",
                         actionType: LmuListItemAction.chevron,
                         hasHorizontalPadding: false,
                         hasDivider: true,
@@ -128,6 +129,13 @@ class LibraryDetailsPage extends StatelessWidget {
                   title: equipment.title,
                   subtitle: equipment.description,
                   leadingArea: Icon(equipment.getIcon()),
+                  trailingArea: equipment.url != null && equipment.url!.isNotEmpty
+                      ? Icon(
+                          LucideIcons.external_link,
+                          color: context.colors.neutralColors.textColors.weakColors.base,
+                          size: LmuIconSizes.medium,
+                        )
+                      : null,
                   onTap: () => equipment.url != null && equipment.url!.isNotEmpty
                       ? LmuUrlLauncher.launchWebsite(url: equipment.url!, context: context)
                       : null,
