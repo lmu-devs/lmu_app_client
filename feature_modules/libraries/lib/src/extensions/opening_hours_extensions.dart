@@ -26,7 +26,6 @@ extension LibraryOpeningStatusExtension on List<OpeningHoursModel> {
       ..sort((a, b) => a.start.compareTo(b.start));
 
     for (final tf in timeframes) {
-      if (now.isBefore(tf.start)) return Status.openingSoon;
       if (now.isAfter(tf.start) && now.isBefore(tf.end.subtract(const Duration(minutes: 30)))) {
         return Status.open;
       }
@@ -35,13 +34,16 @@ extension LibraryOpeningStatusExtension on List<OpeningHoursModel> {
       }
     }
 
-    // Check for pause
     for (int i = 0; i < timeframes.length - 1; i++) {
       final tfCurrent = timeframes[i];
       final tfNext = timeframes[i + 1];
       if (now.isAfter(tfCurrent.end) && now.isBefore(tfNext.start)) {
         return Status.pause;
       }
+    }
+
+    if (now.isBefore(timeframes.first.start)) {
+      return Status.openingSoon;
     }
 
     return Status.closed;

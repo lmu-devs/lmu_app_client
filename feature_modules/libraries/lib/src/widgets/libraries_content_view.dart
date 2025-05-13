@@ -69,15 +69,13 @@ class _LibrariesContentViewState extends State<LibrariesContentView> {
                                   return true;
                                 }
 
-                                library.areas.any((area) {
+                                return library.areas.any((area) {
                                   final status = area.openingHours?.status;
                                   return status != null &&
                                       status != Status.closed &&
                                       status != Status.openingSoon &&
                                       status != Status.pause;
                                 });
-
-                                return false;
                               },
                             ).toList();
 
