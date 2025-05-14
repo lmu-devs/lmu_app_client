@@ -7,17 +7,15 @@ import 'package:flutter/cupertino.dart';
 import '../repository/api/api.dart';
 
 LmuListItem buildLibraryStatusItem({
-  required MapEntry<int, OpeningHoursModel> entry,
+  required OpeningHoursModel openingHours,
   required BuildContext context,
 }) {
-  final index = entry.key;
-  final day = entry.value;
-  final isToday = DateTime.now().weekday - 1 == index;
+  final isToday = openingHours.day == Weekday.values[DateTime.now().weekday - 1];
 
   final timesColumn = Column(
     crossAxisAlignment: CrossAxisAlignment.end,
     mainAxisSize: MainAxisSize.min,
-    children: day.timeframes.map((tf) {
+    children: openingHours.timeframes.map((tf) {
       final start = tf.start.substring(0, 5);
       final end = tf.end.substring(0, 5);
       return LmuText.body(
@@ -30,8 +28,8 @@ LmuListItem buildLibraryStatusItem({
   );
 
   return LmuListItem.base(
-    title: isToday ? day.day.localizedWeekday(context.locals.app) : null,
-    subtitle: !isToday ? day.day.localizedWeekday(context.locals.app) : null,
+    title: isToday ? openingHours.day.localizedWeekday(context.locals.app) : null,
+    subtitle: !isToday ? openingHours.day.localizedWeekday(context.locals.app) : null,
     trailingArea: timesColumn,
     hasHorizontalPadding: false,
     hasVerticalPadding: false,

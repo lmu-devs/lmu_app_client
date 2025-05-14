@@ -101,7 +101,7 @@ class LibraryDetailsPage extends StatelessWidget {
                                 .entries
                                 .map(
                                   (entry) => buildLibraryStatusItem(
-                                    entry: entry,
+                                    openingHours: entry.value,
                                     context: context,
                                   ),
                                 )

@@ -51,21 +51,53 @@ extension LibraryOpeningStatusExtension on List<OpeningHoursModel> {
 
   OpeningHoursModel? get _todayOpening {
     final now = DateTime.now();
-    return firstWhereOrNull((e) => Weekday.values.indexOf(e.day) == now.weekday - 1);
+    final todayWeekday = Weekday.values[now.weekday - 1];
+    return firstWhereOrNull((e) => e.day == todayWeekday);
   }
 
   String get openingTime {
-    final tf = _todayOpening?.timeframes.firstOrNull;
-    if (tf == null) return "";
-    final dt = _parseTime(tf.start, DateTime.now());
-    return _formatTime(dt);
+    final now = DateTime.now();
+    final today = _todayOpening;
+    if (today == null) return "";
+
+    final timeframes = today.timeframes
+        .map((tf) => _parseTimeframe(tf, now))
+        .toList()
+      ..sort((a, b) => a.start.compareTo(b.start));
+
+    switch (status) {
+      case Status.open:
+      case Status.closingSoon:
+        final current = timeframes.firstWhereOrNull(
+              (tf) => now.isAfter(tf.start) && now.isBefore(tf.end),
+        );
+        return current != null ? _formatTime(current.end) : "";
+      case Status.pause:
+      case Status.openingSoon:
+        final next = timeframes.firstWhereOrNull(
+              (tf) => now.isBefore(tf.start),
+        );
+        return next != null ? _formatTime(next.start) : "";
+      case Status.closed:
+        return "";
+    }
   }
 
   String get closingTime {
-    final tf = _todayOpening?.timeframes.lastOrNull;
-    if (tf == null) return "";
-    final dt = _parseTime(tf.end, DateTime.now());
-    return _formatTime(dt);
+    final now = DateTime.now();
+    final today = _todayOpening;
+    if (today == null) return "";
+
+    final timeframes = today.timeframes
+        .map((tf) => _parseTimeframe(tf, now))
+        .toList()
+      ..sort((a, b) => a.start.compareTo(b.start));
+
+    final current = timeframes.firstWhereOrNull(
+          (tf) => now.isAfter(tf.start) && now.isBefore(tf.end),
+    );
+
+    return current != null ? _formatTime(current.end) : "";
   }
 
   DateTime _parseTime(String time, DateTime reference) {
