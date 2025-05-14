@@ -26,7 +26,8 @@ class LibrariesListSection extends StatelessWidget {
       valueListenable: showAllNotifier,
       builder: (context, showAll, _) {
         final isExpandable = count > 4;
-        final visibleItems = !isExpandable || showAll ? items : items.take(3).toList();
+        final baseItems = items.take(isExpandable ? 3 : 4).toList();
+        final additionalItems = items.skip(isExpandable ? 3 : 4).toList();
 
         return Column(
           children: [
@@ -36,50 +37,49 @@ class LibrariesListSection extends StatelessWidget {
               child: Column(
                 children: [
                   LmuTileHeadline.base(title: "$title • $count"),
-                  AnimatedSize(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                    child: AnimatedSwitcher(
-                      transitionBuilder: (child, animation) {
-                        return FadeTransition(
-                          opacity: animation.drive(CurveTween(curve: Curves.easeInQuad)),
-                          child: SizeTransition(
-                            sizeFactor: animation,
-                            child: child,
+                  LmuContentTile(
+                    contentList: [
+                      Column(children: baseItems),
+                      if (isExpandable)
+                        AnimatedSize(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                          child: AnimatedSwitcher(
+                            transitionBuilder: (child, animation) {
+                              return FadeTransition(
+                                opacity: animation.drive(CurveTween(curve: Curves.easeInQuad)),
+                                child: SizeTransition(
+                                  sizeFactor: animation,
+                                  child: child,
+                                ),
+                              );
+                            },
+                            switchInCurve: LmuAnimations.slowSmooth,
+                            switchOutCurve: LmuAnimations.slowSmooth.flipped,
+                            duration: const Duration(milliseconds: 300),
+                            child: showAll ? Column(children: additionalItems) : const SizedBox.shrink(),
                           ),
-                        );
-                      },
-                      switchInCurve: LmuAnimations.slowSmooth,
-                      switchOutCurve: LmuAnimations.slowSmooth.flipped,
-                      duration: const Duration(milliseconds: 300),
-                      child: Column(
-                        key: ValueKey("$showAll • $title"),
-                        children: [
-                          LmuContentTile(
-                            contentList: visibleItems,
-                            contentTileType: isExpandable && !showAll ? ContentTileType.top : ContentTileType.middle,
-                          ),
-                          if (isExpandable && !showAll)
-                            GestureDetector(
-                              onTap: () => showAllNotifier.value = true,
-                              child: LmuContentTile(
-                                contentList: [
-                                  Center(
-                                    child: LmuText.body(
-                                      context.locals.app.showAll,
-                                      weight: FontWeight.w600,
-                                      color: context.colors.brandColors.textColors.strongColors.base,
-                                    ),
-                                  ),
-                                ],
-                                padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_12),
-                                contentTileType: ContentTileType.bottom,
-                              ),
+                        ),
+                    ],
+                    contentTileType: isExpandable && !showAll ? ContentTileType.top : ContentTileType.middle,
+                  ),
+                  if (isExpandable && !showAll)
+                    GestureDetector(
+                      onTap: () => showAllNotifier.value = true,
+                      child: LmuContentTile(
+                        contentList: [
+                          Center(
+                            child: LmuText.body(
+                              context.locals.app.showAll,
+                              weight: FontWeight.w600,
+                              color: context.colors.brandColors.textColors.strongColors.base,
                             ),
+                          ),
                         ],
+                        padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_12),
+                        contentTileType: ContentTileType.bottom,
                       ),
                     ),
-                  ),
                 ],
               ),
             ),

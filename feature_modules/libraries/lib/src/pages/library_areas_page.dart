@@ -1,6 +1,7 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
+import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -61,25 +62,45 @@ class LibraryAreasPage extends StatelessWidget {
                               );
                             },
                           ),
-                          if (isExpanded)
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: LmuSizes.size_12,
-                                vertical: LmuSizes.size_4,
-                              ),
-                              child: Column(
-                                children: details
-                                    .asMap()
-                                    .entries
-                                    .map(
-                                      (entry) => buildLibraryStatusItem(
-                                        entry: entry,
-                                        context: context,
+                          AnimatedSize(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                            child: AnimatedSwitcher(
+                              transitionBuilder: (child, animation) {
+                                return FadeTransition(
+                                  opacity: animation.drive(CurveTween(curve: Curves.easeInQuad)),
+                                  child: SizeTransition(
+                                    sizeFactor: animation,
+                                    child: child,
+                                  ),
+                                );
+                              },
+                              switchInCurve: LmuAnimations.slowSmooth,
+                              switchOutCurve: LmuAnimations.slowSmooth.flipped,
+                              duration: const Duration(milliseconds: 300),
+                              child: isExpanded
+                                  ? Padding(
+                                      key: ValueKey(isExpanded),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: LmuSizes.size_12,
+                                        vertical: LmuSizes.size_4,
+                                      ),
+                                      child: Column(
+                                        children: details
+                                            .asMap()
+                                            .entries
+                                            .map(
+                                              (entry) => buildLibraryStatusItem(
+                                                entry: entry,
+                                                context: context,
+                                              ),
+                                            )
+                                            .toList(),
                                       ),
                                     )
-                                    .toList(),
-                              ),
+                                  : SizedBox.shrink(key: ValueKey(isExpanded)),
                             ),
+                          ),
                         ],
                       ),
                     );
