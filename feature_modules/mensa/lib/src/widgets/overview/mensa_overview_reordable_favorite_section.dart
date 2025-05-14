@@ -1,4 +1,3 @@
-import 'package:animated_reorderable_list/animated_reorderable_list.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
@@ -29,68 +28,47 @@ class MensaOverviewReorderableFavoriteSection extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: userPreferencesService.favoriteMensaIdsNotifier,
       builder: (context, value, _) {
-        return Stack(
-          children: [
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 1000),
-              transitionBuilder: (child, animation) => FadeTransition(
-                opacity: animation,
-                child: child,
+        return LmuReorderableFavoriteList(
+          favoriteIds: value,
+          placeholder: Padding(
+            padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_4),
+            child: PlaceholderTile(
+              key: const ValueKey('placeholderTile'),
+              minHeight: 80,
+              content: [
+                LmuText.bodySmall(
+                  canteenLocals.emptyFavoritesBefore,
+                  color: placeholderTextColor,
+                ),
+                StarIcon(
+                  isActive: false,
+                  disabledColor: starColor,
+                  size: LmuSizes.size_16,
+                ),
+                LmuText.bodySmall(
+                  canteenLocals.emptyFavoritesAfter,
+                  color: placeholderTextColor,
+                ),
+              ],
+            ),
+          ),
+          onReorder: (oldIndex, newIndex) {
+            final order = List.of(value);
+            final item = order.removeAt(oldIndex);
+            order.insert(newIndex, item);
+            userPreferencesService.updateFavoriteMensaOrder(order);
+          },
+          itemBuilder: (context, index) {
+            final mensaModel = mensaModels.where((element) => element.canteenId == value[index]).first;
+            return Padding(
+              key: ValueKey(mensaModel.canteenId),
+              padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_6),
+              child: MensaOverviewTile(
+                mensaModel: mensaModel,
+                isFavorite: true,
               ),
-              child: value.isEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_4),
-                      child: PlaceholderTile(
-                        key: const ValueKey('placeholderTile'),
-                        minHeight: 80,
-                        content: [
-                          LmuText.bodySmall(
-                            canteenLocals.emptyFavoritesBefore,
-                            color: placeholderTextColor,
-                          ),
-                          StarIcon(
-                            isActive: false,
-                            disabledColor: starColor,
-                            size: LmuSizes.size_16,
-                          ),
-                          LmuText.bodySmall(
-                            canteenLocals.emptyFavoritesAfter,
-                            color: placeholderTextColor,
-                          ),
-                        ],
-                      ),
-                    )
-                  : null,
-            ),
-            AnimatedReorderableListView(
-              physics: const NeverScrollableScrollPhysics(),
-              longPressDraggable: false,
-              shrinkWrap: true,
-              items: value,
-              insertDuration: const Duration(milliseconds: 1200),
-              removeDuration: const Duration(milliseconds: 1000),
-              insertItemBuilder: (child, animation) => reorderableListAnimation(animation, child),
-              removeItemBuilder: (child, animation) => reorderableListAnimation(animation, child, isReverse: true),
-              onReorder: (oldIndex, newIndex) {
-                final order = List.of(value);
-                final item = order.removeAt(oldIndex);
-                order.insert(newIndex, item);
-                userPreferencesService.updateFavoriteMensaOrder(order);
-              },
-              isSameItem: (a, b) => a == b,
-              itemBuilder: (context, index) {
-                final mensaModel = mensaModels.where((element) => element.canteenId == value[index]).first;
-                return Padding(
-                  key: ValueKey(mensaModel.canteenId),
-                  padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_6),
-                  child: MensaOverviewTile(
-                    mensaModel: mensaModel,
-                    isFavorite: true,
-                  ),
-                );
-              },
-            ),
-          ],
+            );
+          },
         );
       },
     );

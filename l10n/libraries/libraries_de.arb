@@ -3,5 +3,17 @@
   "@@context": "Libraries",
   "pageTitle": "Bibliotheken",
   "library": "Bibliothek",
-  "allLibraries": "Alle Bibliotheken"
+  "allLibraries": "Alle Bibliotheken",
+  "seatBooking": "Platz Reservieren",
+  "equipment": "Ausstattung",
+  "subjectAreas": "Fachbereiche",
+  "areas": "Bereiche",
+  "varyingOpeningHours": "mit verschiedenen Öffnungszeiten",
+  "emptyFavoritesBefore": "Füge Favoriten mit dem ",
+  "emptyFavoritesAfter": " Symbol hinzu",
+  "openNow": "Jetzt geöffnet",
+  "openUntil": "Geöffnet bis {time} Uhr",
+  "openingSoon": "Öffnet um {time} Uhr",
+  "onPause": "Pause bis {time} Uhr",
+  "closed": "Geschlossen"
 }

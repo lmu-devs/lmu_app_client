@@ -1,7 +1,7 @@
 name: lmu_app
 description: "LMU Students - Your Companion for Study and Campus Life at LMU Munich"
 publish_to: "none"
-version: 1.0.3+14
+version: 1.1.0+14
 
 environment:
   sdk: ">=3.2.4 <4.0.0"

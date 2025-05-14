@@ -16,9 +16,12 @@ LibraryModel _$LibraryModelFromJson(Map<String, dynamic> json) => LibraryModel(
           .toList(),
       location:
           LocationModel.fromJson(json['location'] as Map<String, dynamic>),
-      contact: ContactModel.fromJson(json['contact'] as Map<String, dynamic>),
-      openingHours: OpeningHoursModel.fromJson(
-          json['opening_hours'] as Map<String, dynamic>),
+      phones: (json['phones'] as List<dynamic>?)
+          ?.map((e) => PhoneModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      areas: (json['areas'] as List<dynamic>)
+          .map((e) => AreaModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       services: (json['services'] as List<dynamic>)
           .map((e) => ServiceModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -29,6 +32,8 @@ LibraryModel _$LibraryModelFromJson(Map<String, dynamic> json) => LibraryModel(
           .map((e) => e as String)
           .toList(),
       rating: RatingModel.fromJson(json['rating'] as Map<String, dynamic>),
+      externalUrl: json['external_url'] as String?,
+      reservationUrl: json['reservation_url'] as String?,
     );
 
 Map<String, dynamic> _$LibraryModelToJson(LibraryModel instance) =>
@@ -37,10 +42,12 @@ Map<String, dynamic> _$LibraryModelToJson(LibraryModel instance) =>
       'name': instance.name,
       'hash': instance.hash,
       'url': instance.url,
+      'external_url': instance.externalUrl,
+      'reservation_url': instance.reservationUrl,
       'images': instance.images,
       'location': instance.location,
-      'contact': instance.contact,
-      'opening_hours': instance.openingHours,
+      'phones': instance.phones,
+      'areas': instance.areas,
       'services': instance.services,
       'equipment': instance.equipment,
       'subject_areas': instance.subjects,

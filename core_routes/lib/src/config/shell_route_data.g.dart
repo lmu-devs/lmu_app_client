@@ -134,6 +134,16 @@ RouteBase get $shellRouteData => StatefulShellRouteData.$route(
                     GoRouteData.$route(
                       path: 'details',
                       factory: $LibraryDetailsRouteExtension._fromState,
+                      routes: [
+                        GoRouteData.$route(
+                          path: 'areas',
+                          factory: $LibraryAreasRouteExtension._fromState,
+                        ),
+                      ],
+                    ),
+                    GoRouteData.$route(
+                      path: 'search',
+                      factory: $LibrariesSearchRouteExtension._fromState,
                     ),
                   ],
                 ),
@@ -242,8 +252,8 @@ extension $SettingsMainRouteExtension on SettingsMainRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $SettingsApperanceRouteExtension on SettingsApperanceRoute {
-  static SettingsApperanceRoute _fromState(GoRouterState state) => const SettingsApperanceRoute();
+extension $SettingsApperanceRouteExtension on SettingsAppearanceRoute {
+  static SettingsAppearanceRoute _fromState(GoRouterState state) => const SettingsAppearanceRoute();
 
   String get location => GoRouteData.$location(
         '/home/settings/appearance',
@@ -628,6 +638,40 @@ extension $LibraryDetailsRouteExtension on LibraryDetailsRoute {
   void pushReplacement(BuildContext context) => context.pushReplacement(location, extra: $extra);
 
   void replace(BuildContext context) => context.replace(location, extra: $extra);
+}
+
+extension $LibraryAreasRouteExtension on LibraryAreasRoute {
+  static LibraryAreasRoute _fromState(GoRouterState state) => LibraryAreasRoute(
+    state.extra as RLibraryModel,
+  );
+
+  String get location => GoRouteData.$location(
+    '/home/libraries/details/areas',
+  );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) => context.replace(location, extra: $extra);
+}
+
+extension $LibrariesSearchRouteExtension on LibrariesSearchRoute {
+  static LibrariesSearchRoute _fromState(GoRouterState state) => const LibrariesSearchRoute();
+
+  String get location => GoRouteData.$location(
+    '/home/libraries/search',
+  );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
 }
 
 extension $MensaMainRouteExtension on MensaMainRoute {

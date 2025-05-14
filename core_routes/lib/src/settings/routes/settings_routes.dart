@@ -15,13 +15,13 @@ class SettingsMainRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) => _router.buildMain(context);
 }
 
-class SettingsApperanceRoute extends GoRouteData {
-  const SettingsApperanceRoute();
+class SettingsAppearanceRoute extends GoRouteData {
+  const SettingsAppearanceRoute();
 
   static const String path = 'appearance';
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => _router.buildApperance(context);
+  Widget build(BuildContext context, GoRouterState state) => _router.buildAppearance(context);
 }
 
 class SettingsAccountRoute extends GoRouteData {

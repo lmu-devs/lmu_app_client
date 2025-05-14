@@ -23,7 +23,7 @@ class LmuApp extends StatelessWidget {
       builder: (context, _) => ListenableBuilder(
         listenable: themeProvider,
         builder: (context, _) {
-          AppUpdateNavigatior.router = _router;
+          AppUpdateNavigator.router = _router;
           return MaterialApp.router(
             localizationsDelegates: LmuLocalizations.localizationsDelegates,
             supportedLocales: LmuLocalizations.supportedLocales,

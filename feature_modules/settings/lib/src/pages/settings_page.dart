@@ -59,7 +59,7 @@ class SettingsMainPage extends StatelessWidget {
                       title: settingLocalizations.appearance,
                       actionType: LmuListItemAction.chevron,
                       trailingTitle: _getThemeModeString(themeMode.themeMode, settingLocalizations),
-                      onTap: () => const SettingsApperanceRoute().go(context),
+                      onTap: () => const SettingsAppearanceRoute().go(context),
                     ),
                   ),
                   ListenableBuilder(

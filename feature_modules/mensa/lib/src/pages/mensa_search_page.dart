@@ -46,7 +46,7 @@ class _MensaSearchPageState extends State<MensaSearchPage> {
   Widget build(BuildContext context) {
     return LmuSearchPage<MensaSearchEntry>(
       searchEntries: _searchEntries,
-      emptySearchEntriesTitle: "Popular",
+      emptySearchEntriesTitle: context.locals.roomfinder.popular,
       emptySearchEntries: _searchService.popularMensaModels
           .map((mensa) => MensaSearchEntry(title: "${mensa.name}${mensa.type.name}", id: mensa.canteenId))
           .toList(),

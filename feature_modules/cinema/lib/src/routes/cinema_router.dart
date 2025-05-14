@@ -1,5 +1,5 @@
 import 'package:core_routes/cinema.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 
 import '../pages/pages.dart';
 import 'cinema_details_data.dart';

@@ -9,6 +9,12 @@ class LibrariesRouterImpl extends LibrariesRouter {
   Widget buildMain(BuildContext context) => const LibrariesPage();
 
   @override
-  Widget buildDetails(BuildContext context, RLibraryModel libraryModel) =>
-      LibraryDetailsPage(library: libraryModel as LibraryModel);
+  Widget buildDetails(BuildContext context, RLibraryModel library) =>
+      LibraryDetailsPage(library: library as LibraryModel);
+
+  @override
+  Widget buildAreas(BuildContext context, RLibraryModel library) => LibraryAreasPage(library: library as LibraryModel);
+
+  @override
+  Widget buildSearch(BuildContext context) => const LibrariesSearchPage();
 }

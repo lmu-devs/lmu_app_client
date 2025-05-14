@@ -103,11 +103,10 @@ class LmuCard extends StatelessWidget {
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Flexible(
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Flexible(
                                         child: LmuText.body(

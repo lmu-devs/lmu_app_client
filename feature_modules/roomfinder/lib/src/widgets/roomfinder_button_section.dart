@@ -118,7 +118,9 @@ class _RoomfinderSortOptionSheet extends StatelessWidget {
                     Future.delayed(
                       const Duration(milliseconds: 100),
                       () {
-                        Navigator.of(context, rootNavigator: true).pop();
+                        if (context.mounted) {
+                          Navigator.of(context, rootNavigator: true).pop();
+                        }
                       },
                     );
                   },

@@ -10,7 +10,7 @@ class LmuListDropdown extends StatelessWidget {
     required this.items,
     this.initialValue = false,
     this.duration = const Duration(milliseconds: 300),
-    this.hasDivier = false,
+    this.hasDivider = false,
   }) : super(key: key);
 
   final String title;
@@ -18,7 +18,7 @@ class LmuListDropdown extends StatelessWidget {
   final List<LmuListItem> items;
   final bool initialValue;
   final Duration duration;
-  final bool hasDivier;
+  final bool hasDivider;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class LmuListDropdown extends StatelessWidget {
             ),
           ),
         ),
-        if (hasDivier) const LmuDivider(),
+        if (hasDivider) const LmuDivider(),
       ],
     );
   }

@@ -29,23 +29,23 @@ class SettingsAccountPage extends StatelessWidget {
                   trailingTitle: localization.accountStatusLocal,
                 ),
                 /**LmuListItem.base(
-                      subtitle: localization.accountMemberSince,
-                      trailingTitle: "5 days",
-                      ),**/
+                    subtitle: localization.accountMemberSince,
+                    trailingTitle: "5 days",
+                    ),**/
               ),
               /**const SizedBox(
-                height: LmuSizes.size_8,
-              ),
-              LmuButton(
-                title: localization.connectToAccount,
-                size: ButtonSize.large,
-                emphasis: ButtonEmphasis.secondary,
-                state: ButtonState.disabled,
-                showFullWidth: true,
-                onTap: () {
+                  height: LmuSizes.size_8,
+                  ),
+                  LmuButton(
+                  title: localization.connectToAccount,
+                  size: ButtonSize.large,
+                  emphasis: ButtonEmphasis.secondary,
+                  state: ButtonState.disabled,
+                  showFullWidth: true,
+                  onTap: () {
                   print("connect to dominik avatar style");
-                },
-              ),**/
+                  },
+                  ),**/
               const SizedBox(height: LmuSizes.size_16),
               LmuText.bodyXSmall(
                 localization.connectToAccountDescription,
@@ -107,6 +107,7 @@ class DeleteDataBottomSheet extends StatefulWidget {
 
 class _DeleteDataBottomSheetState extends State<DeleteDataBottomSheet> {
   bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     final settingsLocals = context.locals.settings;
@@ -153,41 +154,45 @@ class _DeleteDataBottomSheetState extends State<DeleteDataBottomSheet> {
           _isLoading = false;
         });
         if (success) {
-          Navigator.of(context).pop();
-          LmuDialog.show(
-            context: context,
-            title: settingsLocals.accountDeletedTitle,
-            description: settingsLocals.accountDeletionSuccess,
-            buttonActions: [
-              LmuDialogAction(
-                title: appLocals.ok,
-                onPressed: (dialogContext) => Navigator.of(dialogContext).pop(),
-              ),
-            ],
-          );
+          if (context.mounted) {
+            Navigator.of(context).pop();
+            LmuDialog.show(
+              context: context,
+              title: settingsLocals.accountDeletedTitle,
+              description: settingsLocals.accountDeletionSuccess,
+              buttonActions: [
+                LmuDialogAction(
+                  title: appLocals.ok,
+                  onPressed: (dialogContext) => Navigator.of(dialogContext).pop(),
+                ),
+              ],
+            );
+          }
         } else {
-          LmuDialog.show(
-            context: context,
-            title: appLocals.somethingWentWrong,
-            description: settingsLocals.accountDeletionFailed,
-            buttonActions: [
-              LmuDialogAction(
-                title: appLocals.cancel,
-                isSecondary: true,
-                onPressed: (dialogContext) {
-                  Navigator.of(dialogContext).pop();
-                  Navigator.of(context).pop();
-                },
-              ),
-              LmuDialogAction(
-                title: appLocals.tryAgain,
-                onPressed: (dialogContext) {
-                  Navigator.of(dialogContext).pop();
-                  _onDeleteTap(context);
-                },
-              ),
-            ],
-          );
+          if (context.mounted) {
+            LmuDialog.show(
+              context: context,
+              title: appLocals.somethingWentWrong,
+              description: settingsLocals.accountDeletionFailed,
+              buttonActions: [
+                LmuDialogAction(
+                  title: appLocals.cancel,
+                  isSecondary: true,
+                  onPressed: (dialogContext) {
+                    Navigator.of(dialogContext).pop();
+                    Navigator.of(context).pop();
+                  },
+                ),
+                LmuDialogAction(
+                  title: appLocals.tryAgain,
+                  onPressed: (dialogContext) {
+                    Navigator.of(dialogContext).pop();
+                    _onDeleteTap(context);
+                  },
+                ),
+              ],
+            );
+          }
         }
       },
     );

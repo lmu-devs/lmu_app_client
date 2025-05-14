@@ -31,13 +31,13 @@ class FeedbackModule extends AppModule with LocalDependenciesProvidingAppModule,
     GetIt.I.registerSingleton<FeedbackState>(feedbackState);
     GetIt.I.registerSingleton<SendFeedbackUsecase>(SendFeedbackUsecase(feedbackRepository));
     GetIt.I.registerSingleton<RequestAppReviewUseCase>(RequestAppReviewUseCase(appReviewRepository));
-    GetIt.I.registerSingleton<OpenStoreListingUsecase>(OpenStoreListingUsecase(appReviewRepository));
+    GetIt.I.registerSingleton<OpenStoreListingUseCase>(OpenStoreListingUseCase(appReviewRepository));
   }
 
   @override
   void providePublicApi() {
     final feedbackState = GetIt.I.get<FeedbackState>();
-    final openStoreListingUsecase = GetIt.I.get<OpenStoreListingUsecase>();
+    final openStoreListingUsecase = GetIt.I.get<OpenStoreListingUseCase>();
     GetIt.I.registerSingleton<FeedbackApi>(FeedbackApiImpl(feedbackState, openStoreListingUsecase));
   }
 }

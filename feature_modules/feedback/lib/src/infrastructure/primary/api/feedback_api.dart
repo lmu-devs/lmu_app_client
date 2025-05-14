@@ -10,7 +10,7 @@ class FeedbackApiImpl extends FeedbackApi {
   FeedbackApiImpl(this._state, this._openStoreListingUsecase);
 
   final FeedbackState _state;
-  final OpenStoreListingUsecase _openStoreListingUsecase;
+  final OpenStoreListingUseCase _openStoreListingUsecase;
 
   @override
   void showFeedback(BuildContext context, {required String origin, required FeedbackType type}) {

@@ -7,8 +7,8 @@ import 'package:get_it/get_it.dart';
 
 import '../extensions/enum_naming_extensions.dart';
 
-class SettingsApperancePage extends StatelessWidget {
-  const SettingsApperancePage({super.key});
+class SettingsAppearancePage extends StatelessWidget {
+  const SettingsAppearancePage({super.key});
 
   @override
   Widget build(BuildContext context) {

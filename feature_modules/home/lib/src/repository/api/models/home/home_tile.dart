@@ -56,6 +56,6 @@ const $HomeTileTypeEnumMap = {
   HomeTileType.news: 'NEWS',
   HomeTileType.events: 'EVENTS',
   HomeTileType.mensa: 'MENSA',
-  HomeTileType.libraries: 'LIBRARIES',
+  HomeTileType.libraries: 'LIBRARY',
   HomeTileType.other: 'OTHER',
 };

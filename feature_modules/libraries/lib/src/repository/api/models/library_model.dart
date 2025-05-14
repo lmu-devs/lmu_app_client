@@ -15,23 +15,28 @@ class LibraryModel extends RLibraryModel {
     required this.url,
     required this.images,
     required this.location,
-    required this.contact,
-    required this.openingHours,
+    required this.phones,
+    required this.areas,
     required this.services,
     required this.equipment,
     required this.subjects,
     required this.rating,
+    this.externalUrl,
+    this.reservationUrl,
   });
 
   final String id;
   final String name;
   final String hash;
   final String url;
+  @JsonKey(name: 'external_url')
+  final String? externalUrl;
+  @JsonKey(name: 'reservation_url')
+  final String? reservationUrl;
   final List<ImageModel> images;
   final LocationModel location;
-  final ContactModel contact;
-  @JsonKey(name: 'opening_hours')
-  final OpeningHoursModel openingHours;
+  final List<PhoneModel>? phones;
+  final List<AreaModel> areas;
   final List<ServiceModel> services;
   final List<EquipmentModel> equipment;
   @JsonKey(name: 'subject_areas')
@@ -48,10 +53,12 @@ class LibraryModel extends RLibraryModel {
         name,
         hash,
         url,
+        externalUrl,
+        reservationUrl,
         images,
         location,
-        contact,
-        openingHours,
+        phones,
+        areas,
         services,
         equipment,
         subjects,

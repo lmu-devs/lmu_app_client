@@ -13,7 +13,7 @@ class LinkCardLoading extends StatelessWidget {
       title: BoneMock.words(2),
       subtitle: BoneMock.words(4),
       leadingArea: const LmuFaviconFallback(size: LmuIconSizes.mediumSmall),
-      trailingArea: StarIcon(),
+      trailingArea: const StarIcon(),
     );
   }
 }

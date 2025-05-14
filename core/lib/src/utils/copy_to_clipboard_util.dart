@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 class CopyToClipboardUtil {
+  CopyToClipboardUtil._();
+
   static void copyToClipboard({
     required BuildContext context,
     required String copiedText,

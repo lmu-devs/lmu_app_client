@@ -108,7 +108,7 @@ class DefaultBaseApiClient extends BaseApiClient {
             "StatusCode: ${response.statusCode}, Body: $truncatedBody");
       } else if (response.statusCode == 426) {
         _appLogger.logMessage("[BaseApiClient][$method]: Update Required - StatusCode: ${response.statusCode}");
-        AppUpdateNavigatior.popAllAndNavigate();
+        AppUpdateNavigator.popAllAndNavigate();
       } else {
         _logError(method, constructedUrl, headers, response, stopwatch.elapsedMilliseconds);
       }

@@ -7,14 +7,6 @@ import '../router/libraries_router.dart';
 
 LibrariesRouter get _router => GetIt.I.get<LibrariesRouter>();
 
-@TypedGoRoute<LibrariesMainRoute>(
-  path: LibrariesMainRoute.path,
-  routes: <TypedGoRoute<GoRouteData>>[
-    TypedGoRoute<LibraryDetailsRoute>(
-      path: LibraryDetailsRoute.path,
-    ),
-  ],
-)
 class LibrariesMainRoute extends GoRouteData {
   const LibrariesMainRoute();
 
@@ -33,4 +25,24 @@ class LibraryDetailsRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => _router.buildDetails(context, $extra);
+}
+
+class LibraryAreasRoute extends GoRouteData {
+  const LibraryAreasRoute(this.$extra);
+
+  final RLibraryModel $extra;
+
+  static const String path = 'areas';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => _router.buildAreas(context, $extra);
+}
+
+class LibrariesSearchRoute extends GoRouteData {
+  const LibrariesSearchRoute();
+
+  static const String path = 'search';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => _router.buildSearch(context);
 }

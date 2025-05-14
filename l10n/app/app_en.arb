@@ -228,5 +228,53 @@
   "allClosed": "Everything is closed",
   "@allClosed": {
     "description": "All canteens or libraries are closed"
+  },
+  "phone": "Phone",
+  "@phone": {
+    "description": "Phone"
+  },
+  "callPhone": "Call Phone",
+  "@callPhone": {
+    "description": "Call Phone"
+  },
+  "copiedPhone": "Phone number copied to clipboard",
+  "@copiedPhone": {
+     "description": "Phone number copied to clipboard"
+  },
+  "errorLaunchWebsite": "Could not launch website",
+  "@errorLaunchWebsite": {
+    "description": "Shown when a website URL could not be launched"
+  },
+  "errorOpenWebsite": "Failed to open website",
+  "@errorOpenWebsite": {
+    "description": "Shown when launching the website failed after attempt"
+  },
+  "errorWebsiteException": "Error launching website: {error}",
+  "@errorWebsiteException": {
+    "description": "Exception message when launching a website fails"
+  },
+  "errorNoEmailClient": "No email client found",
+  "@errorNoEmailClient": {
+    "description": "Shown when there is no app to handle email sending"
+  },
+  "errorOpenEmailClient": "Failed to launch email client",
+  "@errorOpenEmailClient": {
+    "description": "Shown when launching the email client fails"
+  },
+  "errorEmailException": "Error launching email client: {error}",
+  "@errorEmailException": {
+    "description": "Exception message when launching the email client fails"
+  },
+  "errorLaunchDialer": "Could not launch phone dialer",
+  "@errorLaunchDialer": {
+    "description": "Shown when the phone dialer could not be opened"
+  },
+  "errorOpenDialer": "Failed to open phone dialer",
+  "@errorOpenDialer": {
+    "description": "Shown when an attempt to open the phone dialer fails"
+  },
+  "errorDialerException": "Error launching phone dialer: {error}",
+  "@errorDialerException": {
+    "description": "Exception message when launching the dialer fails"
   }
 }
