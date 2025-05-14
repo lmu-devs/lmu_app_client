@@ -1,2 +1,2 @@
 export 'models/models.dart';
-export 'services/services.dart';
+export 'api/{{feature_name.snakeCase()}}_api.dart';

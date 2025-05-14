@@ -3,7 +3,7 @@ description: A template for the shared_api of a feature.
 version: 1.0.0
 
 environment:
-  mason: ">=0.1.0-dev.53 <0.1.0"
+  mason: ">=0.1.1"
 
 vars:
   feature_name:
