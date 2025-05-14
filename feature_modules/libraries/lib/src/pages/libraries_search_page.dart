@@ -1,4 +1,5 @@
 import 'package:core/components.dart';
+import 'package:core/localizations.dart';
 import 'package:core_routes/libraries.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -42,7 +43,7 @@ class _LibrariesSearchPageState extends State<LibrariesSearchPage> {
   Widget build(BuildContext context) {
     return LmuSearchPage<LibrarySearchEntry>(
       searchEntries: _searchEntries,
-      emptySearchEntriesTitle: "Popular",
+      emptySearchEntriesTitle: context.locals.roomfinder.popular,
       emptySearchEntries: _searchService.popularLibraries
           .map((library) => LibrarySearchEntry(title: library.name, id: library.id))
           .toList(),
