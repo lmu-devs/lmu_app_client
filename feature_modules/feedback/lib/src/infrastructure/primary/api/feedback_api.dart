@@ -1,9 +1,9 @@
 import 'package:core/components.dart';
-import '../../../application/usecases/open_store_listing_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_api/feedback.dart';
 
-import '../../../presentation/state/feedback_state.dart';
+import '../../../application/state/feedback_state.dart';
+import '../../../application/usecases/open_store_listing_usecase.dart';
 import '../../../presentation/view/feedback_page.dart';
 
 class FeedbackApiImpl extends FeedbackApi {

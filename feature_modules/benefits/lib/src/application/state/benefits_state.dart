@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 
-import '../../application/usecases/get_benefits_usecase.dart';
-import '../../application/usecases/get_cached_benefits_usecase.dart';
 import '../../domain/models/benefit_category.dart';
+import '../usecases/get_benefits_usecase.dart';
+import '../usecases/get_cached_benefits_usecase.dart';
 
 enum BenefitsLoadState { initial, loading, success, error }
 

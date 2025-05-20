@@ -1,19 +1,19 @@
 import 'package:core/api.dart';
 import 'package:core/core_services.dart';
 import 'package:core/module.dart';
-import 'application/usecases/request_app_review_usecase.dart';
-import 'domain/interfaces/app_review_repository_interface.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/feedback.dart';
 
+import 'application/state/feedback_state.dart';
 import 'application/usecases/open_store_listing_usecase.dart';
+import 'application/usecases/request_app_review_usecase.dart';
 import 'application/usecases/send_feedback_usecase.dart';
+import 'domain/interfaces/app_review_repository_interface.dart';
 import 'domain/interfaces/feedback_repository_interface.dart';
 import 'infrastructure/primary/api/feedback_api.dart';
 import 'infrastructure/secondary/data/api/feedback_api_client.dart';
 import 'infrastructure/secondary/repositories/app_review_repository.dart';
 import 'infrastructure/secondary/repositories/feedback_repository.dart';
-import 'presentation/state/feedback_state.dart';
 
 class FeedbackModule extends AppModule with LocalDependenciesProvidingAppModule, PublicApiProvidingAppModule {
   @override

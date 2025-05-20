@@ -6,11 +6,11 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_api/feedback.dart';
 import 'package:widget_driver/widget_driver.dart';
 
+import '../../application/state/feedback_state.dart';
 import '../../application/usecases/request_app_review_usecase.dart';
 import '../../application/usecases/send_feedback_usecase.dart';
 import '../../domain/models/emoji_feedback.dart';
 import '../../domain/models/user_feedback.dart';
-import '../state/feedback_state.dart';
 
 part 'feedback_page_driver.g.dart';
 
