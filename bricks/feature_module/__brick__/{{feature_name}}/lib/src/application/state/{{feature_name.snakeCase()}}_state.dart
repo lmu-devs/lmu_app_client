@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
-import '../../application/usecase/get_cached_{{feature_name.snakeCase()}}_usecase.dart';
-import '../../application/usecase/get_{{feature_name.snakeCase()}}_usecase.dart';
+import '../usecase/get_cached_{{feature_name.snakeCase()}}_usecase.dart';
+import '../usecase/get_{{feature_name.snakeCase()}}_usecase.dart';
 import '../../domain/model/{{feature_name.snakeCase()}}.dart';
 
 enum {{feature_name.pascalCase()}}LoadState { initial, loading, loadingWithCache, success, error }

@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../domain/model/{{feature_name.snakeCase()}}.dart';
-import '../state/{{feature_name.snakeCase()}}_state.dart';
+import '../../application/state//{{feature_name.snakeCase()}}_state.dart';
 
 part '{{feature_name.snakeCase()}}_page_driver.g.dart';
 
