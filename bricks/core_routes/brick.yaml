@@ -1,0 +1,13 @@
+name: core_routes
+description: A template for the routes of a feature.
+version: 1.0.0
+
+environment:
+  mason: ">=0.1.1"
+
+vars:
+  feature_name:
+    type: string
+    description: feature_name
+    default: feature
+    prompt: What is the name of the core_routes feature?

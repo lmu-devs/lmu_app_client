@@ -1,4 +1,4 @@
-import '../model/{{feature_name.snakeCase()}}dart pub global activate mason_cli.dart';
+import '../model/{{feature_name.snakeCase()}}.dart';
 
 abstract class {{feature_name.pascalCase()}}RepositoryInterface {
   Future<{{feature_name.pascalCase()}}?> get{{feature_name.pascalCase()}}();

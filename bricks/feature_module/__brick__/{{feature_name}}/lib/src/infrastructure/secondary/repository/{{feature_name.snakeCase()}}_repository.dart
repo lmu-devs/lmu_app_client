@@ -10,7 +10,7 @@ class {{feature_name.pascalCase()}}Repository implements {{feature_name.pascalCa
   final {{feature_name.pascalCase()}}Storage _storage;
 
   @override
-  Future<{{feature_name.pascalCase()}}?> get{{feature_name.pascalCase()}}() async {
+  Future<{{feature_name.pascalCase()}}> get{{feature_name.pascalCase()}}() async {
     try {
       final retrived{{feature_name.snakeCase()}}Data = await _apiClient.get{{feature_name.pascalCase()}}();
       await _storage.save{{feature_name.pascalCase()}}(retrived{{feature_name.snakeCase()}}Data);
@@ -21,7 +21,7 @@ class {{feature_name.pascalCase()}}Repository implements {{feature_name.pascalCa
   }
 
   @override
-  Future<{{feature_name.pascalCase()}}?> getCached{{feature_name.pascalCase()}}() async {
+  Future<{{feature_name.pascalCase()}}> getCached{{feature_name.pascalCase()}}() async {
     final cached{{feature_name.pascalCase()}}Data = await _storage.get{{feature_name.pascalCase()}}();
     if (cached{{feature_name.pascalCase()}}Data == null) return null;
     try {

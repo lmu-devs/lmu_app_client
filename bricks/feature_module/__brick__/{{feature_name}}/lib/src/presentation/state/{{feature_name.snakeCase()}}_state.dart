@@ -4,35 +4,38 @@ import '../../application/usecase/get_cached_{{feature_name.snakeCase()}}_usecas
 import '../../application/usecase/get_{{feature_name.snakeCase()}}_usecase.dart';
 import '../../domain/model/{{feature_name.snakeCase()}}.dart';
 
-enum {{feature_name.pascalCase()}}LoadState { initial, loading, success, error }
+enum {{feature_name.pascalCase()}}LoadState { initial, loading, loadingWithCache, success, error }
 
-class {{feature_name.pascalCase()}}State {
-  {{feature_name.pascalCase()}}State(this._get{{feature_name.pascalCase()}}Usecase, this._getCached{{feature_name.pascalCase()}}Usecase);
+typedef {{feature_name.pascalCase()}}State = ({ {{feature_name.pascalCase()}}LoadState loadState, {{feature_name.pascalCase()}}? {{feature_name.snakeCase()}} });
+
+class {{feature_name.pascalCase()}}StateService {
+  {{feature_name.pascalCase()}}StateService(this._get{{feature_name.pascalCase()}}Usecase, this._getCached{{feature_name.pascalCase()}}Usecase);
 
   final Get{{feature_name.pascalCase()}}Usecase _get{{feature_name.pascalCase()}}Usecase;
   final GetCached{{feature_name.pascalCase()}}Usecase _getCached{{feature_name.pascalCase()}}Usecase;
 
-  final ValueNotifier<{{feature_name.pascalCase()}}LoadState> _stateNotifier = ValueNotifier({{feature_name.pascalCase()}}LoadState.initial);
-  {{feature_name.pascalCase()}}? _{{feature_name.snakeCase()}};
+  final ValueNotifier<{{feature_name.pascalCase()}}State> _stateNotifier = ValueNotifier<{{feature_name.pascalCase()}}State>(
+    (loadState: {{feature_name.pascalCase()}}LoadState.initial, {{feature_name.snakeCase()}}: null),
+  );
 
-  {{feature_name.pascalCase()}}? get {{feature_name.snakeCase()}} => _{{feature_name.snakeCase()}};
-  ValueListenable<{{feature_name.pascalCase()}}LoadState> get loadState => _stateNotifier;
+  ValueListenable<{{feature_name.pascalCase()}}State> get stateNotifier => _stateNotifier;
 
   Future<void> get{{feature_name.pascalCase()}}() async {
-    if (_stateNotifier.value == {{feature_name.pascalCase()}}LoadState.loading || _stateNotifier.value == {{feature_name.pascalCase()}}LoadState.success) return;
+    final currentState = _stateNotifier.value.loadState;
+    if (currentState == {{feature_name.pascalCase()}}LoadState.loading || currentState == {{feature_name.pascalCase()}}LoadState.success) return;
+
     final cached{{feature_name.pascalCase()}} = await _getCached{{feature_name.pascalCase()}}Usecase.call();
     if (cached{{feature_name.pascalCase()}} != null) {
-      _{{feature_name.snakeCase()}} = cached{{feature_name.pascalCase()}};
+      _stateNotifier.value = (loadState: {{feature_name.pascalCase()}}LoadState.loadingWithCache, {{feature_name.snakeCase()}}: cached{{feature_name.pascalCase()}});
+    } else {
+      _stateNotifier.value = (loadState: {{feature_name.pascalCase()}}LoadState.loading, {{feature_name.snakeCase()}}: null);
     }
-
-    _stateNotifier.value = {{feature_name.pascalCase()}}LoadState.loading;
 
     final {{feature_name.snakeCase()}} = await _get{{feature_name.pascalCase()}}Usecase.call();
-    if ({{feature_name.snakeCase()}} == null) {
-      _stateNotifier.value = {{feature_name.pascalCase()}}LoadState.error;
+    if ({{feature_name.snakeCase()}} != null) {
+      _stateNotifier.value = (loadState: {{feature_name.pascalCase()}}LoadState.success, {{feature_name.snakeCase()}}: {{feature_name.snakeCase()}});
       return;
     }
-    _{{feature_name.snakeCase()}} = {{feature_name.snakeCase()}};
-    _stateNotifier.value = {{feature_name.pascalCase()}}LoadState.success;
+    _stateNotifier.value = (loadState: {{feature_name.pascalCase()}}LoadState.error, {{feature_name.snakeCase()}}: null);
   }
 }
