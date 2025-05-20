@@ -25,10 +25,10 @@ class {{feature_name.pascalCase()}}Module extends AppModule with LocalDependenci
     final {{feature_name.snakeCase()}}Repository = {{feature_name.pascalCase()}}Repository({{feature_name.pascalCase()}}ApiClient(baseApiClient), {{feature_name.snakeCase()}}Storage);
     final get{{feature_name.pascalCase()}}UseCase = Get{{feature_name.pascalCase()}}Usecase({{feature_name.snakeCase()}}Repository);
     final getCached{{feature_name.pascalCase()}}UseCase = GetCached{{feature_name.pascalCase()}}Usecase({{feature_name.snakeCase()}}Repository);
-    final {{feature_name.snakeCase()}}State = {{feature_name.pascalCase()}}State(get{{feature_name.pascalCase()}}UseCase, getCached{{feature_name.pascalCase()}}UseCase);
+    final {{feature_name.snakeCase()}}StateService = {{feature_name.pascalCase()}}State(get{{feature_name.pascalCase()}}UseCase, getCached{{feature_name.pascalCase()}}UseCase);
 
     GetIt.I.registerSingleton<{{feature_name.pascalCase()}}RepositoryInterface>({{feature_name.snakeCase()}}Repository);
-    GetIt.I.registerSingleton<{{feature_name.pascalCase()}}State>({{feature_name.snakeCase()}}State);
+    GetIt.I.registerSingleton<{{feature_name.pascalCase()}}StateService>({{feature_name.snakeCase()}}StateService);
   }
 
   @override

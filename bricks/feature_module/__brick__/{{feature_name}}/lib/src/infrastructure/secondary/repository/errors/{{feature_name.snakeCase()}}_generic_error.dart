@@ -1,0 +1,1 @@
+class {{feature_name.pascalCase()}}GenericError extends 

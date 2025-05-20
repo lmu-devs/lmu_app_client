@@ -10,10 +10,11 @@ part '{{feature_name.snakeCase()}}_page_driver.g.dart';
 
 @GenerateTestDriver()
 class {{feature_name.pascalCase()}}PageDriver extends WidgetDriver {
-  final _{{feature_name.snakeCase()}}State = GetIt.I.get<{{feature_name.pascalCase()}}State>();
+  final _{{feature_name.snakeCase()}}StateService = GetIt.I.get<{{feature_name.pascalCase()}}StateService>();
 
   late AppLocalizations _appLocalizations;
   late LmuToast _toast;
+
   late {{feature_name.pascalCase()}}? _{{feature_name.snakeCase()}};
   late {{feature_name.pascalCase()}}LoadState _{{feature_name.snakeCase()}}LoadState;
 
@@ -21,12 +22,12 @@ class {{feature_name.pascalCase()}}PageDriver extends WidgetDriver {
 
   bool get isLoading => _{{feature_name.snakeCase()}}LoadState != {{feature_name.pascalCase()}}LoadState.success;
 
-  String get largeTitle => "{{feature_name.pascalCase()}}"; // create feature localizations
+  String get largeTitle => "{{feature_name.pascalCase()}}"; // TODO: Replace with localized title
 
   String get {{feature_name.snakeCase()}}Id => _{{feature_name.snakeCase()}}?.id ?? '';
 
   String get title => _{{feature_name.snakeCase()}}?.name ?? '';
-  
+
   String get description => _count.toString();
 
   void on{{feature_name.pascalCase()}}CardPressed() {
@@ -34,12 +35,13 @@ class {{feature_name.pascalCase()}}PageDriver extends WidgetDriver {
     notifyWidget();
   }
 
-  void _on{{feature_name.pascalCase()}}LoadStateChanged() {
-    _{{feature_name.snakeCase()}}LoadState = _{{feature_name.snakeCase()}}State.loadState.value;
-    _{{feature_name.snakeCase()}} = _{{feature_name.snakeCase()}}State.{{feature_name.snakeCase()}};
+  void _on{{feature_name.pascalCase()}}StateChanged() {
+    final state = _{{feature_name.snakeCase()}}StateService.stateNotifier.value;
+    _{{feature_name.snakeCase()}}LoadState = state.loadState;
+    _{{feature_name.snakeCase()}} = state.{{feature_name.snakeCase()}};
     notifyWidget();
 
-    if (_{{feature_name.snakeCase()}}LoadState ==  {{feature_name.pascalCase()}}LoadState.error) {
+    if (_{{feature_name.snakeCase()}}LoadState == {{feature_name.pascalCase()}}LoadState.error) {
       _showErrorToast();
     }
   }
@@ -49,17 +51,18 @@ class {{feature_name.pascalCase()}}PageDriver extends WidgetDriver {
       message: _appLocalizations.somethingWentWrong,
       type: ToastType.error,
       actionText: _appLocalizations.tryAgain,
-      onActionPressed: () => _{{feature_name.snakeCase()}}State.get{{feature_name.pascalCase()}}(),
+      onActionPressed: () => _{{feature_name.snakeCase()}}StateService.get{{feature_name.pascalCase()}}(),
     );
   }
 
   @override
   void didInitDriver() {
     super.didInitDriver();
-    _{{feature_name.snakeCase()}}LoadState = _{{feature_name.snakeCase()}}State.loadState.value;
-    _{{feature_name.snakeCase()}} = _{{feature_name.snakeCase()}}State.{{feature_name.snakeCase()}};
-    _{{feature_name.snakeCase()}}State.loadState.addListener(_on{{feature_name.pascalCase()}}LoadStateChanged);
-    _{{feature_name.snakeCase()}}State.get{{feature_name.pascalCase()}}();
+    final state = _{{feature_name.snakeCase()}}StateService.stateNotifier.value;
+    _{{feature_name.snakeCase()}}LoadState = state.loadState;
+    _{{feature_name.snakeCase()}} = state.{{feature_name.snakeCase()}};
+    _{{feature_name.snakeCase()}}StateService.stateNotifier.addListener(_on{{feature_name.pascalCase()}}StateChanged);
+    _{{feature_name.snakeCase()}}StateService.get{{feature_name.pascalCase()}}();
   }
 
   @override
@@ -71,7 +74,7 @@ class {{feature_name.pascalCase()}}PageDriver extends WidgetDriver {
 
   @override
   void dispose() {
-    _{{feature_name.snakeCase()}}State.loadState.removeListener(_on{{feature_name.pascalCase()}}LoadStateChanged);
+    _{{feature_name.snakeCase()}}StateService.stateNotifier.removeListener(_on{{feature_name.pascalCase()}}StateChanged);
     super.dispose();
   }
 }
