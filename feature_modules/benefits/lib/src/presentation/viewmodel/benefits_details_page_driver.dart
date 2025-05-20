@@ -2,8 +2,8 @@ import 'package:core/localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
+import '../../application/state/benefits_state.dart';
 import '../../domain/models/benefit.dart';
-import '../state/benefits_state.dart';
 
 part 'benefits_details_page_driver.g.dart';
 
