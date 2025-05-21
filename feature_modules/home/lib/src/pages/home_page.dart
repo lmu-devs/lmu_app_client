@@ -9,6 +9,7 @@ import 'package:get_it/get_it.dart';
 import '../bloc/bloc.dart';
 import '../widgets/home/home_loading_view.dart';
 import '../widgets/home/home_success_view.dart';
+import 'id_card_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -18,16 +19,38 @@ class HomePage extends StatelessWidget {
     return LmuScaffold(
       appBar: LmuAppBarData(
         largeTitle: "Home",
-        largeTitleTrailingWidget: GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: () => const SettingsMainRoute().go(context),
-          child: const Padding(
-            padding: EdgeInsets.only(left: LmuSizes.size_16),
-            child: SizedBox(
-              height: 40,
-              child: LmuIcon(icon: LucideIcons.settings, size: LmuIconSizes.medium),
+        largeTitleTrailingWidget: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const IdCardPage()),
+                );
+              },
+              child: const Padding(
+                padding: EdgeInsets.only(right: LmuSizes.size_16),
+                child: SizedBox(
+                  height: 40,
+                  child: LmuIcon(
+                      icon: LucideIcons.id_card, size: LmuIconSizes.medium),
+                ),
+              ),
             ),
-          ),
+            GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () => const SettingsMainRoute().go(context),
+              child: const Padding(
+                padding: EdgeInsets.only(left: LmuSizes.size_16),
+                child: SizedBox(
+                  height: 40,
+                  child: LmuIcon(
+                      icon: LucideIcons.settings, size: LmuIconSizes.medium),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
       body: BlocBuilder<HomeCubit, HomeState>(
@@ -36,9 +59,15 @@ class HomePage extends StatelessWidget {
           Widget child = const HomeLoadingView(key: ValueKey("homeLoading"));
 
           if (state is HomeLoadInProgress && state.tiles != null) {
-            child = HomeSuccessView(key: const ValueKey("homeContent"), tiles: state.tiles!, featured: state.featured);
+            child = HomeSuccessView(
+                key: const ValueKey("homeContent"),
+                tiles: state.tiles!,
+                featured: state.featured);
           } else if (state is HomeLoadSuccess) {
-            child = HomeSuccessView(key: const ValueKey("homeContent"), tiles: state.tiles, featured: state.featured);
+            child = HomeSuccessView(
+                key: const ValueKey("homeContent"),
+                tiles: state.tiles,
+                featured: state.featured);
           }
 
           return LmuPageAnimationWrapper(child: child);
