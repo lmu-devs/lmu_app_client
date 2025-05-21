@@ -49,7 +49,6 @@ class HolographicCard extends StatefulWidget {
   final String? logoAsset;
   final String? hologramAsset;
   final String? hologramAsset2;
-  final String? textureAsset;
 
   // Feature toggles
   final bool enableFlip;
@@ -131,10 +130,9 @@ class HolographicCard extends StatefulWidget {
     this.shadowIntensityMultiplier = 2.5,
 
     // Assets
-    this.logoAsset,
+    this.logoAsset = 'assets/logos/LMU-Logo.svg',
     this.hologramAsset = 'assets/holograms/LMU-Sigel.svg',
     this.hologramAsset2 = 'assets/holograms/LMUcard.svg',
-    this.textureAsset = 'assets/grain/grain1.jpeg',
 
     // Feature toggles
     this.enableFlip = true,
@@ -281,7 +279,7 @@ class _HolographicCardState extends State<HolographicCard>
 
     try {
       final program = await ui.FragmentProgram.fromAsset(
-        'assets/shaders/holographic_shader.frag.glsl',
+        'core/lib/src/components/student_id/shader/holographic_shader.frag.glsl',
       );
       if (mounted) {
         setState(() {
