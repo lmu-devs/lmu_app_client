@@ -1,0 +1,13 @@
+{
+  "@@locale": "en",
+  "@@context": "Launch Flow",
+  "welcome": "Welcome to the LMU Students App",
+  "fromStudents": "Built by Students for Students",
+  "campusCompanionTitle": "Your Campus Companion",
+  "campusCompanionDescription": "Everything you need in one place",
+  "developedByStudentsTitle": "Developed by students",
+  "developedByStudentsDescription": "Built with love by the LMU Developers Community",
+  "moreToComeTitle": "More to come",
+  "moreToComeDescription": "Help shape the app and submit your ideas to the wishlist",
+  "letsGo": "Let's go"
+}
