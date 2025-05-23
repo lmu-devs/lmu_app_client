@@ -25,6 +25,7 @@ class LmuLocalizations {
   RoomfinderLocatizations get roomfinder => RoomfinderLocatizations.of(_context)!;
   LibrariesLocatizations get libraries => LibrariesLocatizations.of(_context)!;
   BenefitsLocatizations get benefits => BenefitsLocatizations.of(_context)!;
+  LaunchFlowLocatizations get launchFlow => LaunchFlowLocatizations.of(_context)!;
   // Add other localizations
 
   /// List of all supported localizations delegates
@@ -42,6 +43,7 @@ class LmuLocalizations {
         RoomfinderLocatizations.delegate,
         LibrariesLocatizations.delegate,
         BenefitsLocatizations.delegate,
+        LaunchFlowLocatizations.delegate,
         // Add other localizations delegates
 
         GlobalMaterialLocalizations.delegate,
