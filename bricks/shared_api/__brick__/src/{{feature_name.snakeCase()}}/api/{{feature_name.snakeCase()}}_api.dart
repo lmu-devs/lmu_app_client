@@ -1,1 +1,1 @@
-abstract class {{feature_name.pascalCase()}}Apis {}
+abstract class {{feature_name.pascalCase()}}Api {}

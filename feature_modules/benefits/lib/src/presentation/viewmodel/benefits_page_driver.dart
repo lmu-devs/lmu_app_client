@@ -4,8 +4,8 @@ import 'package:core_routes/benefits.dart';
 import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
+import '../../application/state/benefits_state.dart';
 import '../../domain/models/benefit_category.dart';
-import '../state/benefits_state.dart';
 
 part 'benefits_page_driver.g.dart';
 
