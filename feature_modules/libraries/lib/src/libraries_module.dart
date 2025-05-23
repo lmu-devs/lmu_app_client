@@ -30,9 +30,14 @@ class LibrariesModule extends AppModule
     );
 
     GetIt.I.registerSingleton<LibrariesCubit>(LibrariesCubit());
-    GetIt.I.registerSingleton<LibrariesUserPreferenceService>(LibrariesUserPreferenceService());
-    GetIt.I.registerSingleton<LibrariesStatusUpdateService>(LibrariesStatusUpdateService());
-    GetIt.I.registerSingleton<LibrariesSearchService>(LibrariesSearchService(), dispose: (srv) => srv.dispose()).init();
+    GetIt.I.registerSingleton<LibrariesUserPreferenceService>(
+        LibrariesUserPreferenceService());
+    GetIt.I.registerSingleton<LibrariesStatusUpdateService>(
+        LibrariesStatusUpdateService());
+    GetIt.I
+        .registerSingleton<LibrariesSearchService>(LibrariesSearchService(),
+            dispose: (srv) => srv.dispose())
+        .init();
   }
 
   @override
