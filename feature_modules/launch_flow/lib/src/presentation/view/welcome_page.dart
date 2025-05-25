@@ -16,6 +16,11 @@ class WelcomePage extends DrivableWidget<WelcomePageDriver> {
     return Stack(
       children: [
         Scaffold(backgroundColor: colors.neutralColors.backgroundColors.base),
+                const Positioned.fill(
+          child: IgnorePointer(
+            child: AnimatedLightRays(),
+          ),
+        ),
         Scaffold(
           backgroundColor: Colors.transparent,
           body: SafeArea(
@@ -69,11 +74,7 @@ class WelcomePage extends DrivableWidget<WelcomePageDriver> {
             ),
           ),
         ),
-        const Positioned.fill(
-          child: IgnorePointer(
-            child: AnimatedLightRays(),
-          ),
-        ),
+
       ],
     );
   }

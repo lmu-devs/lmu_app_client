@@ -9,7 +9,8 @@ class AnimatedLightRays extends StatefulWidget {
   State<AnimatedLightRays> createState() => _AnimatedLightRaysState();
 }
 
-class _AnimatedLightRaysState extends State<AnimatedLightRays> with SingleTickerProviderStateMixin {
+class _AnimatedLightRaysState extends State<AnimatedLightRays>
+    with SingleTickerProviderStateMixin {
   late final Ticker _ticker;
   double _time = 0.0;
 
@@ -57,8 +58,7 @@ class _RaysPainter extends CustomPainter {
     shader.setFloatUniforms((uniforms) {
       uniforms
         ..setFloat(time) // iTime
-        ..setFloat(size.width)
-        ..setFloat(size.height)
+        ..setSize(size) // iResolution
 
         // Light ray 1
         ..setFloat(size.width * 0.45) // uRayPos1.x
@@ -76,7 +76,15 @@ class _RaysPainter extends CustomPainter {
         ..setFloat(0.241) // uRayRefDir2.y
         ..setFloat(22.39910) // uRaySeedA2
         ..setFloat(18.0234) // uRaySeedB2
-        ..setFloat(1.1); // uRaySpeed2
+        ..setFloat(1.1) // uRaySpeed2
+
+        // Set ray color (vec3)
+        ..setFloat(isDarkMode ? 0.5 : 0.1) // uRayColor.r
+        ..setFloat(isDarkMode ? 0.5 : 0.1) // uRayColor.g
+        ..setFloat(isDarkMode ? 0.5 : 0.1); // uRayColor.b
+
+      // Rays color
+      // ..setColor(isDarkMode ? Colors.white : Colors.black);
     });
 
     canvas.drawRect(
@@ -86,5 +94,6 @@ class _RaysPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _RaysPainter oldDelegate) => oldDelegate.time != time;
+  bool shouldRepaint(covariant _RaysPainter oldDelegate) =>
+      oldDelegate.time != time;
 }
