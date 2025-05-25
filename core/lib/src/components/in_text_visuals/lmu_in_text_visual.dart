@@ -100,18 +100,25 @@ class LmuInTextVisual extends StatelessWidget {
     final hasIcon = icon != null;
     final colors = context.colors;
 
-    final double height = size == InTextVisualSize.large ? (LmuSizes.size_4 * 7) : LmuSizes.size_20;
-    final double iconSize = size == InTextVisualSize.large ? LmuIconSizes.medium : LmuIconSizes.small;
-    final double padding = size == InTextVisualSize.large ? LmuSizes.size_4 : LmuSizes.size_2;
+    final double height = size == InTextVisualSize.large
+        ? (LmuSizes.size_4 * 7)
+        : LmuSizes.size_20;
+    final double iconSize = size == InTextVisualSize.large
+        ? LmuIconSizes.medium
+        : LmuIconSizes.small;
+    final double padding =
+        size == InTextVisualSize.large ? LmuSizes.size_4 : LmuSizes.size_2;
 
     return Container(
       height: height * MediaQuery.of(context).textScaler.textScaleFactor,
       width: hasIcon ? height : null,
       decoration: hasIconBox && hasIcon
           ? null
-          : BoxDecoration(
+          : ShapeDecoration(
               color: backgroundColor ?? actionType.backgroundColor(colors),
-              borderRadius: BorderRadius.circular(LmuSizes.size_4),
+              shape: RoundedSuperellipseBorder(
+                borderRadius: BorderRadius.circular(LmuSizes.size_4),
+              ),
             ),
       padding: EdgeInsets.symmetric(
         horizontal: hasIcon
@@ -155,16 +162,20 @@ class LmuInTextVisual extends StatelessWidget {
 extension _ActionTypeColorExtension on ActionType {
   Color backgroundColor(LmuColors colors) {
     return switch (this) {
-      ActionType.base => colors.neutralColors.backgroundColors.mediumColors.base,
-      ActionType.destructive => colors.dangerColors.backgroundColors.weakColors.base,
-      ActionType.success => colors.brandColors.backgroundColors.mediumColors.base,
+      ActionType.base =>
+        colors.neutralColors.backgroundColors.mediumColors.base,
+      ActionType.destructive =>
+        colors.dangerColors.backgroundColors.weakColors.base,
+      ActionType.success =>
+        colors.brandColors.backgroundColors.mediumColors.base,
     };
   }
 
   Color textColor(LmuColors colors) {
     return switch (this) {
       ActionType.base => colors.neutralColors.textColors.mediumColors.base,
-      ActionType.destructive => colors.dangerColors.textColors.strongColors.base,
+      ActionType.destructive =>
+        colors.dangerColors.textColors.strongColors.base,
       ActionType.success => colors.successColors.textColors.strongColors.base,
     };
   }

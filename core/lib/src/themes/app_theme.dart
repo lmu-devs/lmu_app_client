@@ -38,7 +38,7 @@ class AppTheme {
     ),
     scaffoldBackgroundColor: lmuColorsDark.neutralColors.backgroundColors.base,
     cardColor: lmuColorsDark.neutralColors.backgroundColors.base,
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: lmuColorsDark.neutralColors.backgroundColors.base,
     ),
     appBarTheme: AppBarTheme(

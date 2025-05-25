@@ -20,6 +20,6 @@ void main() async {
   final moduleRegistry = ModuleRegistry(modules: modules);
   await moduleRegistry.init();
 
-  runApp(LmuApp());
+  runApp(const LmuApp());
   FlutterNativeSplash.remove();
 }

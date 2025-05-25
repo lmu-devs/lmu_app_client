@@ -25,19 +25,20 @@ class LmuContentTile extends StatelessWidget {
     final colors = context.colors.neutralColors;
     return Container(
       padding: padding ?? const EdgeInsets.all(LmuSizes.size_4),
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: colors.backgroundColors.tile,
-        borderRadius: contentTileType.borderRadius,
-        border: contentTileType.hasBorder
-            ? Border(
-                bottom: BorderSide(
+        shape: RoundedSuperellipseBorder(
+          borderRadius: contentTileType.borderRadius,
+          side: contentTileType.hasBorder
+              ? BorderSide(
                   color: colors.borderColors.seperatorLight,
                   width: .5,
-                ),
-              )
-            : null,
+                )
+              : BorderSide.none,
+        ),
       ),
-      child: content ?? Column(mainAxisSize: MainAxisSize.min, children: contentList!),
+      child: content ??
+          Column(mainAxisSize: MainAxisSize.min, children: contentList!),
     );
   }
 }
@@ -45,9 +46,12 @@ class LmuContentTile extends StatelessWidget {
 extension _ContentTileTypeExtension on ContentTileType {
   BorderRadius get borderRadius {
     return switch (this) {
-      ContentTileType.top => const BorderRadius.vertical(top: Radius.circular(LmuRadiusSizes.mediumLarge)),
-      ContentTileType.middle => const BorderRadius.all(Radius.circular(LmuRadiusSizes.mediumLarge)),
-      ContentTileType.bottom => const BorderRadius.vertical(bottom: Radius.circular(LmuRadiusSizes.mediumLarge)),
+      ContentTileType.top => const BorderRadius.vertical(
+          top: Radius.circular(LmuRadiusSizes.mediumLarge)),
+      ContentTileType.middle =>
+        const BorderRadius.all(Radius.circular(LmuRadiusSizes.mediumLarge)),
+      ContentTileType.bottom => const BorderRadius.vertical(
+          bottom: Radius.circular(LmuRadiusSizes.mediumLarge)),
     };
   }
 

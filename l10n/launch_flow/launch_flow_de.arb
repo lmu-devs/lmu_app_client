@@ -1,0 +1,13 @@
+{
+  "@@locale": "de",
+  "@@context": "LaunchFlow",
+  "welcome": "Willkommen in der LMU Students App",
+  "fromStudents": "Von Studenten für Studenten",
+  "campusCompanionTitle": "Dein Campus Begleiter",
+  "campusCompanionDescription": "Alles, was du brauchst, an einem Ort",
+  "developedByStudentsTitle": "Von Studenten entwickelt",
+  "developedByStudentsDescription": "Mit Liebe von der LMU Developers Community gebaut",
+  "moreToComeTitle": "Freut euch auf mehr",
+  "moreToComeDescription": "Gestalte die App mit und reiche deine Ideen im Wunschkonzert ein",
+  "letsGo": "Los gehts"
+}

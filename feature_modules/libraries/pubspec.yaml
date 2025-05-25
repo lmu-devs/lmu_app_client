@@ -24,7 +24,7 @@ dependencies:
   flutter_lucide: ^1.2.0
   get_it: ^8.0.1
   intl: any
-  skeletonizer: ^1.4.2
+  skeletonizer: ^2.0.1
   collection: ^1.18.0
 
 dev_dependencies:

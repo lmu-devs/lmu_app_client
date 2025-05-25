@@ -6,6 +6,4 @@ abstract class HomeRouter {
   Widget buildLinks(BuildContext context);
 
   Widget buildLinksSearch(BuildContext context);
-
-  Widget buildAppUpdate(BuildContext context);
 }

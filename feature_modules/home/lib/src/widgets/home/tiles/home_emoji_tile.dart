@@ -14,43 +14,57 @@ class HomeEmojiTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = GetIt.I.get<ThemeProvider>();
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      clipBehavior: Clip.antiAlias,
-      child: Stack(
-        children: [
-          Positioned(
-            top: -32,
-            left: 8,
-            child: ImageFiltered(
-              imageFilter: ImageFilter.blur(sigmaX: 64.0, sigmaY: 64.0),
-              child: ListenableBuilder(
-                listenable: themeProvider,
-                builder: (context, _) => Text(
-                  firstEmoji,
-                  style: TextStyle(
-                    fontSize: 124,
-                    color: Colors.black
-                        .withOpacity(PlatformDispatcher.instance.platformBrightness == Brightness.light ? 0.3 : 0.2),
-                    letterSpacing: -64,
+    return Container(
+      decoration: ShapeDecoration(
+        shape: RoundedSuperellipseBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+      child: ClipPath(
+        clipper: ShapeBorderClipper(
+          shape: RoundedSuperellipseBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: Stack(
+          children: [
+            Positioned(
+              top: -32,
+              left: 8,
+              child: ImageFiltered(
+                imageFilter: ImageFilter.blur(sigmaX: 64.0, sigmaY: 64.0),
+                child: ListenableBuilder(
+                  listenable: themeProvider,
+                  builder: (context, _) => Text(
+                    firstEmoji,
+                    style: TextStyle(
+                      fontSize: 124,
+                      color: Colors.black.withOpacity(
+                          PlatformDispatcher.instance.platformBrightness ==
+                                  Brightness.light
+                              ? 0.3
+                              : 0.2),
+                      letterSpacing: -64,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            left: LmuSizes.size_24,
-            top: LmuSizes.size_16,
-            child: Text(
-              emoji,
-              style: const TextStyle(
-                fontSize: 44,
-                height: 1,
-                letterSpacing: -16,
+            Positioned(
+              left: LmuSizes.size_24,
+              top: LmuSizes.size_16,
+              child: Text(
+                emoji,
+                style: const TextStyle(
+                  fontSize: 44,
+                  height: 1,
+                  letterSpacing: -16,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
