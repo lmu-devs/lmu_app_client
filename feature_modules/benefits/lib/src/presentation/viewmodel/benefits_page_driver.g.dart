@@ -24,6 +24,12 @@ class _$TestBenefitsPageDriver extends TestDriver implements BenefitsPageDriver 
   List<BenefitCategory> get benefitsCategories => [];
 
   @override
+  void onAllBenefitsPressed() {}
+
+  @override
+  void onBenefitCategoryPressed(BenefitCategory benefitCategory) {}
+
+  @override
   void didInitDriver() {}
 
   @override
