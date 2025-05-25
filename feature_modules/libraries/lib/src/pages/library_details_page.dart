@@ -183,7 +183,6 @@ class LibraryDetailsPage extends StatelessWidget {
         largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
         largeTitleTrailingWidget: LmuInTextVisual.text(
           title: context.locals.libraries.library,
-          size: InTextVisualSize.large,
           textColor: context.colors.customColors.textColors.library,
           backgroundColor: context.colors.customColors.backgroundColors.library,
         ),

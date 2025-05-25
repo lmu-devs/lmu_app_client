@@ -57,7 +57,7 @@ class _LibrariesSearchPageState extends State<LibrariesSearchPage> {
           title: library.name,
           actionType: LmuListItemAction.chevron,
           onTap: () {
-            LibraryDetailsRoute(library).go(context);
+            LibraryDetailsRoute(library).push(context);
             Future.delayed(
               const Duration(milliseconds: 100),
               () => _recentSearchController.trigger(input),
