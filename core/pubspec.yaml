@@ -47,6 +47,7 @@ dependencies:
   in_app_review: ^2.0.10
   animated_reorderable_list: ^1.1.5
   sliver_tools: ^0.2.12
+  sensors_plus: ^4.0.0
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +61,11 @@ flutter:
   generate: true
   assets:
     - lib/assets/
+    - packages/core/assets/holograms/legal_logo.svg
+    - packages/core/assets/holograms/LMU-Sigel.svg
+    - packages/core/assets/holograms/LMUcard.svg
+  shaders:
+    - packages/core/assets/shader/holographic_shader.frag.glsl
   fonts:
     - family: Inter
       fonts:
