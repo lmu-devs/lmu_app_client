@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,20 +16,7 @@ class HomeMainRoute extends GoRouteData {
   static const String path = '/home';
 
   @override
-  CustomTransitionPage<void> buildPage(
-    BuildContext context,
-    GoRouterState state,
-  ) {
-    return CustomTransitionPage<void>(
-      key: state.pageKey,
-      name: state.name,
-      transitionDuration: const Duration(milliseconds: 600),
-      child: _router.buildMain(context),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(opacity: animation, child: child);
-      },
-    );
-  }
+  Widget build(BuildContext context, GoRouterState state) => _router.buildMain(context);
 }
 
 class LinksRoute extends GoRouteData {
