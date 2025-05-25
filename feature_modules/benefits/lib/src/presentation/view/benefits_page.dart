@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../components/benefit_suggestion_tile.dart';
@@ -23,7 +23,6 @@ class BenefitsPage extends DrivableWidget<BenefitsPageDriver> {
         padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
         child: LmuPageAnimationWrapper(
           child: Align(
-            key: ValueKey("benefits_page_${driver.isLoading}"),
             alignment: Alignment.topCenter,
             child: content,
           ),

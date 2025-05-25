@@ -4,14 +4,14 @@ import 'package:core_routes/benefits.dart';
 import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../../application/state/benefits_state.dart';
+import '../../application/state/benefits_state_service.dart';
 import '../../domain/models/benefit_category.dart';
 
 part 'benefits_page_driver.g.dart';
 
 @GenerateTestDriver()
 class BenefitsPageDriver extends WidgetDriver {
-  final _benefitsState = GetIt.I.get<BenefitsState>();
+  final _benefitsState = GetIt.I.get<BenefitsStateService>();
 
   late BuildContext _navigatorContext;
   late AppLocalizations _appLocalizations;
@@ -20,11 +20,12 @@ class BenefitsPageDriver extends WidgetDriver {
   late List<BenefitCategory> _benefitsCategories;
   late BenefitsLoadState _benefitsLoadState;
 
-  bool get isLoading => _benefitsLoadState != BenefitsLoadState.success;
+  bool get isLoading =>
+      _benefitsLoadState != BenefitsLoadState.success && _benefitsLoadState != BenefitsLoadState.loadingWithCache;
 
   String get allBenefitsTitle => _appLocalizations.showAll;
   String get allBenefitsCount =>
-      _benefitsCategories.expand((benefitCategory) => benefitCategory.benefits).length.toString();
+      _benefitsCategories.expand((benefitCategory) => benefitCategory.benefits).toSet().length.toString();
 
   List<BenefitCategory> get benefitsCategories => _benefitsCategories;
 
@@ -39,8 +40,10 @@ class BenefitsPageDriver extends WidgetDriver {
   }
 
   void _onBenefitsLoadStateChanged() {
-    _benefitsLoadState = _benefitsState.state.value;
-    _benefitsCategories = _benefitsState.benefitsCategories;
+    final newState = _benefitsState.state.value;
+    _benefitsLoadState = newState.loadState;
+    _benefitsCategories = _benefitsState.state.value.benefitCategories;
+
     notifyWidget();
 
     if (_benefitsLoadState == BenefitsLoadState.error) {
@@ -60,8 +63,9 @@ class BenefitsPageDriver extends WidgetDriver {
   @override
   void didInitDriver() {
     super.didInitDriver();
-    _benefitsLoadState = _benefitsState.state.value;
-    _benefitsCategories = _benefitsState.benefitsCategories;
+    final initialState = _benefitsState.state.value;
+    _benefitsLoadState = initialState.loadState;
+    _benefitsCategories = initialState.benefitCategories;
     _benefitsState.state.addListener(_onBenefitsLoadStateChanged);
 
     _benefitsState.getBenefits();
