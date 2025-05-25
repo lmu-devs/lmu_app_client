@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -15,21 +16,26 @@ class IdCardPage extends StatelessWidget {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(LmuSizes.size_16),
+          padding: const EdgeInsets.only(
+            top: LmuSizes.size_32,
+            left: LmuSizes.size_16,
+            right: LmuSizes.size_16,
+            bottom: LmuSizes.size_16,
+          ),
           child: HolographicCard(
             // User data
-            name: "John Doe",
-            email: "john.doe@example.com",
-            validUntil: "Valid until 2025-12-31",
+            name: "Raphael Wennmacher",
+            email: "r.wennmacher@campus.lmu.de",
+            validUntil: "Valid until 2026-12-31",
             matrikelnr: "1234567890",
-            lrzKennung: "jdoe123",
+            lrzKennung: "lrw29f",
             braille: "⠇⠍⠥",
 
             // Card dimensions
             width: 350,
             height: 220,
             borderRadius: 20,
-            borderWidth: 2,
+            borderWidth: 1,
 
             // Use theme colors consistently
             cardColor: LmuCardThemes.whiteTheme.cardColor,

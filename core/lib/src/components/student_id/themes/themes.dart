@@ -19,7 +19,7 @@ class LmuCardThemes {
     secondaryTextColor: Colors.white70,
     logoColor: Colors.white,
     hologramColor: Color.fromARGB(206, 255, 255, 255),
-    borderColor: Color.fromARGB(255, 10, 78, 0),
+    borderColor: Color.fromARGB(30, 10, 78, 0),
     name: 'Green',
   );
 
@@ -76,16 +76,16 @@ class LMUCardTheme {
   final String name;
 
   // Shadow configuration - keeping these constant across themes
-  static const double ambientShadowOpacity = 0.4;
+  static const double ambientShadowOpacity = 0.15;
   static const double ambientShadowBlur = 30.0;
   static const double ambientShadowYOffset = 8.0;
-  static const double primaryShadowOpacity = 0.30;
+  static const double primaryShadowOpacity = 0.15;
   static const double midShadowOpacity = 0.15;
   static const double distantShadowOpacity = 0.05;
 
   // Movement settings - keeping these constant across themes
   static const double gestureSensitivity = 0.5;
-  static const double gyroSensitivity = 0.5;
+  static const double gyroSensitivity = 0.8;
   static const double gyroSmoothing = 0.85;
   static const double hologramCenterMovement = 0.3;
   static const double shadowOffsetMultiplier = 25.0;

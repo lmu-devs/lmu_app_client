@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../launch_flow.dart';
 import '../../libraries.dart';
 import '../benefits/routes/benefits_routes.dart';
 import '../cinema/cinema.dart';
@@ -16,16 +19,30 @@ import 'scaffold_with_nav_bar.dart';
 
 part 'shell_route_data.g.dart';
 
-@TypedStatefulShellRoute<ShellRouteData>(
+@TypedShellRoute<LaunchFlowShellRoute>(
+  routes: [
+    TypedGoRoute<LaunchFlowWelcomeRoute>(path: LaunchFlowWelcomeRoute.path),
+    TypedGoRoute<LaunchFlowAppUpdateRoute>(path: LaunchFlowAppUpdateRoute.path),
+  ],
+)
+class LaunchFlowShellRoute extends ShellRouteData {
+  const LaunchFlowShellRoute();
+
+  static const String path = '/launch';
+
+  @override
+  Widget builder(BuildContext context, GoRouterState state, Widget navigator) {
+    return navigator;
+  }
+}
+
+@TypedStatefulShellRoute<MainShellRouteData>(
   branches: [
     TypedStatefulShellBranch<HomeRouteData>(
       routes: <TypedRoute<RouteData>>[
         TypedGoRoute<HomeMainRoute>(
           path: HomeMainRoute.path,
           routes: <TypedGoRoute<GoRouteData>>[
-            TypedGoRoute<AppUpdateRoute>(
-              path: AppUpdateRoute.path,
-            ),
             TypedGoRoute<SettingsMainRoute>(
               path: SettingsMainRoute.path,
               routes: <TypedGoRoute<GoRouteData>>[
@@ -167,8 +184,8 @@ part 'shell_route_data.g.dart';
     )
   ],
 )
-class ShellRouteData extends StatefulShellRouteData {
-  const ShellRouteData();
+class MainShellRouteData extends StatefulShellRouteData {
+  const MainShellRouteData();
 
   @override
   Widget builder(BuildContext context, GoRouterState state, StatefulNavigationShell navigationShell) => navigationShell;

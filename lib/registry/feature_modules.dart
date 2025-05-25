@@ -3,6 +3,7 @@ import 'package:cinema/cinema.dart';
 import 'package:explore/explore.dart';
 import 'package:feedback/feedback.dart';
 import 'package:home/home.dart';
+import 'package:launch_flow/launch_flow.dart';
 import 'package:libraries/libraries.dart';
 import 'package:mensa/mensa.dart';
 import 'package:roomfinder/roomfinder.dart';
@@ -26,4 +27,5 @@ final modules = [
   SportsModule(),
   TimelineModule(),
   BenefitsModule(),
+  LaunchFlowModule(),
 ];

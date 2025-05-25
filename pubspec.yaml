@@ -42,6 +42,8 @@ dependencies:
     path: ./feature_modules/libraries
   benefits:
     path: ./feature_modules/benefits
+  launch_flow:
+    path: ./feature_modules/launch_flow
   shared_api:
     path: ./shared_api
 
@@ -74,3 +76,5 @@ flutter:
     - core/lib/assets/
     - feature_modules/mensa/assets/
     - feature_modules/explore/assets/
+  shaders:
+    - assets/shader/light_rays.frag

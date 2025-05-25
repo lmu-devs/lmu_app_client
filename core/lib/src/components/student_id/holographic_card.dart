@@ -117,7 +117,7 @@ class HolographicCard extends StatefulWidget {
     this.borderCardColor = Colors.black,
 
     // Shadow properties
-    this.ambientShadowOpacity = 0.4,
+    this.ambientShadowOpacity = 0.2,
     this.ambientShadowBlur = 30,
     this.ambientShadowYOffset = 8,
     this.primaryShadowOpacity = 0.30,
@@ -435,9 +435,9 @@ class _HolographicCardState extends State<HolographicCard>
                       -combinedY * widget.shadowOffsetMultiplier;
 
                   // Shadow size increases with intensity
-                  final shadowSpreadBase = 0.2;
+                  final shadowSpreadBase = 0.1;
                   final shadowSpread =
-                      shadowSpreadBase + shadowIntensityLimited * 2.0;
+                      shadowSpreadBase + shadowIntensityLimited * 1.0;
 
                   // Shadow blur increases with distance from card
                   final shadowBlurBase = 6.0;

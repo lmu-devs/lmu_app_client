@@ -6,6 +6,7 @@ export 'generated/cinema_localizations.dart';
 export 'generated/explore_localizations.dart';
 export 'generated/feedback_localizations.dart';
 export 'generated/home_localizations.dart';
+export 'generated/launch_flow_localizations.dart';
 export 'generated/libraries_localizations.dart';
 export 'generated/roomfinder_localizations.dart';
 export 'generated/settings_localizations.dart';
