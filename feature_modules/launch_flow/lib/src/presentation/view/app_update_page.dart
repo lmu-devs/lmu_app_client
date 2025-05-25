@@ -13,51 +13,52 @@ class AppUpdatePage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(LmuSizes.size_32),
+          padding: const EdgeInsets.all(LmuSizes.size_16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Image.asset(
-                      getPngAssetTheme('lib/assets/app_icon'),
+                      getPngAssetTheme('assets/app_icon'),
                       package: 'home',
                       semanticLabel: 'App Icon',
                       height: LmuSizes.size_64,
                       width: LmuSizes.size_64,
                     ),
                     const SizedBox(height: LmuSizes.size_20),
-                    LmuText.h1(context.locals.app.appUpdateTitle),
-                    const SizedBox(height: LmuSizes.size_16),
+                    LmuText.h1(context.locals.app.appUpdateTitle, textAlign: TextAlign.center),
+                    const SizedBox(height: LmuSizes.size_8),
                     LmuText.body(
                       context.locals.app.appUpdateIntro,
                       color: context.colors.neutralColors.textColors.mediumColors.base,
+                      textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: LmuSizes.size_8),
+                    const SizedBox(height: LmuSizes.size_16),
                     LmuText.body(
                       context.locals.app.appUpdateDescription,
                       color: context.colors.neutralColors.textColors.mediumColors.base,
+                      textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: LmuSizes.size_64),
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: LmuButton(
-                  title: context.locals.app.appUpdateButton,
-                  showFullWidth: true,
-                  size: ButtonSize.large,
-                  onTap: () => LmuUrlLauncher.launchWebsite(
-                    url: LmuDevStrings.shareAppUrl,
-                    context: context,
-                    mode: LmuUrlLauncherMode.externalApplication,
-                  ),
+              const SizedBox(height: LmuSizes.size_16),
+              LmuButton(
+                title: context.locals.app.appUpdateButton,
+                showFullWidth: true,
+                size: ButtonSize.large,
+                onTap: () => LmuUrlLauncher.launchWebsite(
+                  url: LmuDevStrings.shareAppUrl,
+                  context: context,
+                  mode: LmuUrlLauncherMode.externalApplication,
                 ),
               ),
+              const SizedBox(height: LmuSizes.size_16),
             ],
           ),
         ),

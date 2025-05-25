@@ -8,7 +8,6 @@ class LaunchFlowRepository implements LaunchFlowRepositoryInterface {
 
   @override
   Future<bool> shouldShowWelcomePage() async {
-    return true;
     return await _storage.getShowWelcomePage() ?? true;
   }
 
