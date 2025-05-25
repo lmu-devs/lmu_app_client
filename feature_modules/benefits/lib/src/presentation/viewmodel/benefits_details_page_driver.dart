@@ -2,21 +2,18 @@ import 'package:core/localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../../application/state/benefits_state.dart';
+import '../../application/state/benefits_state_service.dart';
 import '../../domain/models/benefit.dart';
 
 part 'benefits_details_page_driver.g.dart';
 
 @GenerateTestDriver()
 class BenefitsDetailsPageDriver extends WidgetDriver {
-  final _benefitsState = GetIt.I.get<BenefitsState>();
+  final _benefitsState = GetIt.I.get<BenefitsStateService>();
 
   late String _allTitle;
   late final List<Benefit> _benefitItems;
   late final String? _categoryTitle;
-
-  List<Benefit> get _allBenefits =>
-      _benefitsState.benefitsCategories.expand((benefitCategory) => benefitCategory.benefits).toList();
 
   List<Benefit>? get _selectedBenefits => _benefitsState.selectedCategory?.benefits;
 
@@ -26,7 +23,8 @@ class BenefitsDetailsPageDriver extends WidgetDriver {
   @override
   void didInitDriver() {
     super.didInitDriver();
-    _benefitItems = _selectedBenefits ?? _allBenefits;
+    _benefitItems = _selectedBenefits ??
+        _benefitsState.state.value.benefitCategories.expand((category) => category.benefits).toSet().toList();
     _categoryTitle = _benefitsState.selectedCategory?.title;
   }
 

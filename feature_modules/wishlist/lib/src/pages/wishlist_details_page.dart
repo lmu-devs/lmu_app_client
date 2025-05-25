@@ -61,7 +61,6 @@ class WishlistDetailsPage extends StatelessWidget {
             ? LmuInTextVisual.text(
                 title: wishlistModel.status.getValue(context),
                 textColor: context.colors.neutralColors.textColors.strongColors.base,
-                size: InTextVisualSize.large,
               )
             : null,
       ),

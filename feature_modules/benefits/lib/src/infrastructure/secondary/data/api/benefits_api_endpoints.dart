@@ -1,3 +1,3 @@
 class BenefitsApiEndpoints {
-  static const String benefits = '/benefits';
+  static const String benefits = '/link/benefits';
 }

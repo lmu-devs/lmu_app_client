@@ -17,8 +17,6 @@ class LibraryAreasPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final expandedAreaIndexNotifier = ValueNotifier<int?>(null);
-
     return LmuScaffold(
       appBar: LmuAppBarData(
         largeTitle: context.locals.libraries.areas,
@@ -32,37 +30,34 @@ class LibraryAreasPage extends StatelessWidget {
             top: LmuSizes.size_8,
             bottom: LmuSizes.size_96,
           ),
-          child: ValueListenableBuilder<int?>(
-            valueListenable: expandedAreaIndexNotifier,
-            builder: (context, expandedAreaIndex, _) {
-              return Column(
-                children: library.areas.asMap().entries.map(
-                  (entry) {
-                    final index = entry.key;
-                    final area = entry.value;
-                    final isExpanded = expandedAreaIndex == index;
-                    final details = area.openingHours ?? [];
+          child: Column(
+            children: library.areas.map(
+              (area) {
+                final isAreaExpandedNotifier = ValueNotifier<bool>(false);
+                final details = area.openingHours ?? [];
 
-                    return Padding(
-                      padding: const EdgeInsets.only(top: LmuSizes.size_8),
-                      child: LmuContentTile(
-                        contentList: [
-                          ListenableBuilder(
-                            listenable: GetIt.I<LibrariesStatusUpdateService>(),
-                            builder: (context, child) {
-                              final statusStyle = library.areas.first.getStyledStatus(context);
+                return Padding(
+                  padding: const EdgeInsets.only(top: LmuSizes.size_8),
+                  child: LmuContentTile(
+                    contentList: [
+                      ListenableBuilder(
+                        listenable: GetIt.I<LibrariesStatusUpdateService>(),
+                        builder: (context, child) {
+                          final statusStyle = area.getStyledStatus(context);
 
-                              return LmuListItem.action(
-                                actionType: LmuListItemAction.dropdown,
-                                title: area.name,
-                                subtitle: statusStyle.text,
-                                subtitleTextColor: statusStyle.color,
-                                onTap: () => expandedAreaIndexNotifier.value =
-                                    expandedAreaIndexNotifier.value == index ? null : index,
-                              );
-                            },
-                          ),
-                          AnimatedSize(
+                          return LmuListItem.action(
+                            actionType: LmuListItemAction.dropdown,
+                            title: area.name,
+                            subtitle: statusStyle.text,
+                            subtitleTextColor: statusStyle.color,
+                            onTap: () => isAreaExpandedNotifier.value = !isAreaExpandedNotifier.value,
+                          );
+                        },
+                      ),
+                      ValueListenableBuilder<bool>(
+                        valueListenable: isAreaExpandedNotifier,
+                        builder: (context, isExpanded, _) {
+                          return AnimatedSize(
                             duration: const Duration(milliseconds: 300),
                             curve: Curves.easeInOut,
                             child: AnimatedSwitcher(
@@ -100,14 +95,14 @@ class LibraryAreasPage extends StatelessWidget {
                                     )
                                   : SizedBox.shrink(key: ValueKey(isExpanded)),
                             ),
-                          ),
-                        ],
+                          );
+                        },
                       ),
-                    );
-                  },
-                ).toList(),
-              );
-            },
+                    ],
+                  ),
+                );
+              },
+            ).toList(),
           ),
         ),
       ),
