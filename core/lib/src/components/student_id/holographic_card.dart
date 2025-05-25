@@ -8,6 +8,9 @@ import 'dart:developer' as developer;
 import 'package:flutter/services.dart';
 import 'card_components/holographic_watermarks.dart';
 import 'card_components/holographic_assets.dart';
+import 'dart:developer' as developer;
+import 'dart:async';
+import 'dart:developer' as developer;
 
 class HolographicCard extends StatefulWidget {
   // User data
@@ -49,7 +52,7 @@ class HolographicCard extends StatefulWidget {
   final String? logoAsset;
   final String? hologramAsset;
   final String? hologramAsset2;
-
+  final String? shaderpath;
   // Feature toggles
   final bool enableFlip;
   final bool enableGyro;
@@ -130,9 +133,11 @@ class HolographicCard extends StatefulWidget {
     this.shadowIntensityMultiplier = 2.5,
 
     // Assets
-    this.logoAsset = 'assets/logos/LMU-Logo.svg',
-    this.hologramAsset = 'assets/holograms/LMU-Sigel.svg',
-    this.hologramAsset2 = 'assets/holograms/LMUcard.svg',
+    this.logoAsset = 'packages/core/assets/holograms/legal_logo.svg',
+    this.hologramAsset = 'packages/core/assets/holograms/LMU-Sigel.svg',
+    this.hologramAsset2 = 'packages/core/assets/holograms/LMUcard.svg',
+    this.shaderpath =
+        'packages/core/assets/shader/holographic_shader.frag.glsl',
 
     // Feature toggles
     this.enableFlip = true,
@@ -224,8 +229,8 @@ class _HolographicCardState extends State<HolographicCard>
     if (widget.enableGyro) {
       _gyroscopeSubscription = gyroscopeEvents.listen(_handleGyroscopeEvent);
     }
-
-    _loadHolographicShader();
+    print(widget.shaderpath);
+    _loadHolographicShaderFromPath(widget.shaderpath);
   }
 
   void _handleGyroscopeEvent(GyroscopeEvent event) {
@@ -267,32 +272,36 @@ class _HolographicCardState extends State<HolographicCard>
     });
   }
 
-  Future<void> _loadHolographicShader() async {
-    if (!widget.enableShader) {
-      if (mounted) {
-        setState(() {
-          _holographicProgram = null;
-        });
-      }
+  Future<void> _loadHolographicShaderFromPath(String? path) async {
+    print('Shader loading initiated.');
+
+    if (!widget.enableShader || path == null) {
+      print(
+          'Shader loading skipped: ${path == null ? 'Path is null' : 'Shader disabled'}');
+      setState(() {
+        _holographicProgram = null;
+      });
       return;
     }
 
     try {
-      final program = await ui.FragmentProgram.fromAsset(
-        'core/lib/src/components/student_id/shader/holographic_shader.frag.glsl',
-      );
+      final stopwatch = Stopwatch()..start();
+      final program = await ui.FragmentProgram.fromAsset(path);
+      stopwatch.stop();
+
+      print('Shader loaded in ${stopwatch.elapsedMilliseconds}ms from "$path"');
+
       if (mounted) {
         setState(() {
           _holographicProgram = program;
         });
       }
-    } catch (error) {
-      print('Error loading shader: $error');
-      if (mounted) {
-        setState(() {
-          _holographicProgram = null;
-        });
-      }
+    } catch (e) {
+      print('Failed to load shader from "$path": $e');
+
+      setState(() {
+        _holographicProgram = null;
+      });
     }
   }
 
