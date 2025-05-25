@@ -7,13 +7,64 @@ part of 'shell_route_data.dart';
 // **************************************************************************
 
 List<RouteBase> get $appRoutes => [
-      $shellRouteData,
+      $launchFlowShellRoute,
+      $mainShellRouteData,
     ];
 
-RouteBase get $shellRouteData => StatefulShellRouteData.$route(
-      restorationScopeId: ShellRouteData.$restorationScopeId,
-      navigatorContainerBuilder: ShellRouteData.$navigatorContainerBuilder,
-      factory: $ShellRouteDataExtension._fromState,
+RouteBase get $launchFlowShellRoute => ShellRouteData.$route(
+      factory: $LaunchFlowShellRouteExtension._fromState,
+      routes: [
+        GoRouteData.$route(
+          path: '/welcome',
+          factory: $LaunchFlowWelcomeRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: '/app_update',
+          factory: $LaunchFlowAppUpdateRouteExtension._fromState,
+        ),
+      ],
+    );
+
+extension $LaunchFlowShellRouteExtension on LaunchFlowShellRoute {
+  static LaunchFlowShellRoute _fromState(GoRouterState state) => const LaunchFlowShellRoute();
+}
+
+extension $LaunchFlowWelcomeRouteExtension on LaunchFlowWelcomeRoute {
+  static LaunchFlowWelcomeRoute _fromState(GoRouterState state) => const LaunchFlowWelcomeRoute();
+
+  String get location => GoRouteData.$location(
+        '/welcome',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LaunchFlowAppUpdateRouteExtension on LaunchFlowAppUpdateRoute {
+  static LaunchFlowAppUpdateRoute _fromState(GoRouterState state) => const LaunchFlowAppUpdateRoute();
+
+  String get location => GoRouteData.$location(
+        '/app_update',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
+      restorationScopeId: MainShellRouteData.$restorationScopeId,
+      navigatorContainerBuilder: MainShellRouteData.$navigatorContainerBuilder,
+      factory: $MainShellRouteDataExtension._fromState,
       branches: [
         StatefulShellBranchData.$branch(
           routes: [
@@ -22,16 +73,12 @@ RouteBase get $shellRouteData => StatefulShellRouteData.$route(
               factory: $HomeMainRouteExtension._fromState,
               routes: [
                 GoRouteData.$route(
-                  path: 'app_update',
-                  factory: $AppUpdateRouteExtension._fromState,
-                ),
-                GoRouteData.$route(
                   path: 'settings',
                   factory: $SettingsMainRouteExtension._fromState,
                   routes: [
                     GoRouteData.$route(
                       path: 'appearance',
-                      factory: $SettingsApperanceRouteExtension._fromState,
+                      factory: $SettingsAppearanceRouteExtension._fromState,
                     ),
                     GoRouteData.$route(
                       path: 'language',
@@ -200,8 +247,8 @@ RouteBase get $shellRouteData => StatefulShellRouteData.$route(
       ],
     );
 
-extension $ShellRouteDataExtension on ShellRouteData {
-  static ShellRouteData _fromState(GoRouterState state) => const ShellRouteData();
+extension $MainShellRouteDataExtension on MainShellRouteData {
+  static MainShellRouteData _fromState(GoRouterState state) => const MainShellRouteData();
 }
 
 extension $HomeMainRouteExtension on HomeMainRoute {
@@ -209,22 +256,6 @@ extension $HomeMainRouteExtension on HomeMainRoute {
 
   String get location => GoRouteData.$location(
         '/home',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) => context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
-extension $AppUpdateRouteExtension on AppUpdateRoute {
-  static AppUpdateRoute _fromState(GoRouterState state) => const AppUpdateRoute();
-
-  String get location => GoRouteData.$location(
-        '/home/app_update',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -252,7 +283,7 @@ extension $SettingsMainRouteExtension on SettingsMainRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $SettingsApperanceRouteExtension on SettingsAppearanceRoute {
+extension $SettingsAppearanceRouteExtension on SettingsAppearanceRoute {
   static SettingsAppearanceRoute _fromState(GoRouterState state) => const SettingsAppearanceRoute();
 
   String get location => GoRouteData.$location(
@@ -642,12 +673,12 @@ extension $LibraryDetailsRouteExtension on LibraryDetailsRoute {
 
 extension $LibraryAreasRouteExtension on LibraryAreasRoute {
   static LibraryAreasRoute _fromState(GoRouterState state) => LibraryAreasRoute(
-    state.extra as RLibraryModel,
-  );
+        state.extra as RLibraryModel,
+      );
 
   String get location => GoRouteData.$location(
-    '/home/libraries/details/areas',
-  );
+        '/home/libraries/details/areas',
+      );
 
   void go(BuildContext context) => context.go(location, extra: $extra);
 
@@ -662,8 +693,8 @@ extension $LibrariesSearchRouteExtension on LibrariesSearchRoute {
   static LibrariesSearchRoute _fromState(GoRouterState state) => const LibrariesSearchRoute();
 
   String get location => GoRouteData.$location(
-    '/home/libraries/search',
-  );
+        '/home/libraries/search',
+      );
 
   void go(BuildContext context) => context.go(location);
 

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
@@ -35,13 +35,4 @@ class LinksSearchRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => _router.buildLinksSearch(context);
-}
-
-class AppUpdateRoute extends GoRouteData {
-  const AppUpdateRoute();
-
-  static const String path = 'app_update';
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) => _router.buildAppUpdate(context);
 }
