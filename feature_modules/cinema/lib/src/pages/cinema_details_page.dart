@@ -105,19 +105,10 @@ class CinemaDetailsPage extends StatelessWidget {
         leadingAction: LeadingAction.back,
         imageUrls: cinema.images != null ? cinema.images!.map((image) => image.url).toList() : [],
         largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
-        largeTitleTrailingWidget: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: LmuSizes.size_4,
-            vertical: LmuSizes.size_2,
-          ),
-          decoration: BoxDecoration(
-            color: cinema.type.getTextColor(context).withOpacity(0.1),
-            borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
-          ),
-          child: LmuText.bodySmall(
-            cinema.type.getValue(),
-            color: cinema.type.getTextColor(context),
-          ),
+        largeTitleTrailingWidget: LmuInTextVisual.text(
+          title: cinema.type.getValue(),
+          textColor: cinema.type.getTextColor(context),
+          backgroundColor: cinema.type.getBackgroundColor(context),
         ),
       ),
       body: SingleChildScrollView(child: content),

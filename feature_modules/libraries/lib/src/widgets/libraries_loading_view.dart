@@ -43,6 +43,7 @@ class LibrariesLoadingView extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(LmuSizes.size_16),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               LmuTileHeadline.base(title: context.locals.app.favorites, customBottomPadding: LmuSizes.size_6),
               ListView.builder(
