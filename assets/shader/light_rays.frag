@@ -35,7 +35,7 @@ float rayStrength(vec2 raySource, vec2 rayRefDirection, vec2 coord, float seedA,
 		// This makes rays stronger near their source and fade out.
 		// The iResolution.x here might be better as a dedicated falloff distance uniform.
 		// For now, keeping it similar to original.
-		clamp((iResolution.x - length(sourceToCoord)) / iResolution.x, 0.5, 1.0);
+		clamp((iResolution.x - length(sourceToCoord)) / iResolution.x, 0.12, 1.0);
 }
 
 void main()
@@ -57,7 +57,7 @@ void main()
 	// Attenuate brightness towards the bottom, simulating light-loss due to depth.
 	// Give the whole thing a blue-green tinge as well.
 	float brightness = 1.0 - (coord.y / iResolution.y); // coord.y is 0 at top, iResolution.y at bottom
-	fragColor.rgb *= (brightness * 0.8); // Modulates existing color
+	fragColor.rgb *= (brightness * 5.8); // Modulates existing color
     // fragColor.r *= (0.0 + brightness * 0.8); // Example: if you want to tint blue-green
 	// fragColor.g *= (0.2 + brightness * 0.8); // Apply more green
 	// fragColor.b *= (0.4 + brightness * 0.8); // Apply more blue
@@ -67,7 +67,7 @@ void main()
 	// fragColor.y *= 0.0 + (brightness * 0.8);
 	// fragColor.z *= 0.0 + (brightness * 0.8);
     // This is more of a tint:
-    vec3 tint = vec3(0.6, 0.8, 1.0); // A blue-greenish tint
-    fragColor.rgb *= mix(tint * 0.3, tint, brightness); // Darker tint at the bottom, brighter at top
+    vec3 tint = vec3(0.25, 0.28, 0.30); // A blue-greenish tint
+    fragColor.rgb *= mix(tint * 0.0, tint, brightness); // Darker tint at the bottom, brighter at top
     fragColor.a = clamp(fragColor.a, 0.0, 1.0); // Ensure alpha is valid
 }
