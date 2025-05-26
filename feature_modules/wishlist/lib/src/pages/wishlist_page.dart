@@ -63,7 +63,7 @@ class _WishlistPageState extends State<WishlistPage> {
                 color: context.colors.neutralColors.textColors.mediumColors.base,
               ),
             ),
-            const SizedBox(height: LmuSizes.size_32),
+            const SizedBox(height: LmuSizes.size_24),
             LmuButtonRow(
               buttons: [
                 LmuButton(
