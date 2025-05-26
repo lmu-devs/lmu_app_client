@@ -9,7 +9,6 @@ import 'package:get_it/get_it.dart';
 import '../bloc/bloc.dart';
 import '../widgets/home/home_loading_view.dart';
 import '../widgets/home/home_success_view.dart';
-import 'id_card_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

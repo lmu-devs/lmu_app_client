@@ -1,37 +1,41 @@
+import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
 class LmuCardThemes {
-  // LMU White theme
-  static const holographicTheme = LMUCardTheme(
-    cardColor: Color.fromARGB(255, 162, 162, 162),
-    textColor: Colors.black,
-    secondaryTextColor: Colors.black54,
-    logoColor: Colors.black,
-    hologramColor: Colors.white,
-    borderColor: Color.fromARGB(255, 255, 255, 255),
-    name: 'Prismatic',
+  final BuildContext context;
 
-    // Shader parameters
-    shaderWaveFrequency: 4.0,
-    shaderPointerInfluence: 7.0,
-    shaderColorAmplitude: 0.06,
-    shaderBaseAlpha: 0.05,
-  );
+  LmuCardThemes(this.context);
+
+  LMUCardTheme get holographicTheme => LMUCardTheme(
+        cardColor: Color.fromARGB(255, 162, 162, 162),
+        textColor: Colors.black,
+        secondaryTextColor: Colors.black54,
+        logoColor: Colors.black,
+        hologramColor: Colors.white,
+        borderColor: Colors.white24,
+        name: 'Prismatic',
+
+        // Shader parameters
+        shaderWaveFrequency: 4.0,
+        shaderPointerInfluence: 7.0,
+        shaderColorAmplitude: 0.05,
+        shaderBaseAlpha: 0.05,
+      );
 
   // LMU Dark theme
-  static const darkTheme = LMUCardTheme(
+  LMUCardTheme get darkTheme => LMUCardTheme(
     cardColor: Color.fromARGB(255, 0, 0, 0),
-    textColor: Colors.white,
-    secondaryTextColor: Color.fromARGB(255, 208, 208, 208),
-    logoColor: Colors.white,
+    textColor: context.colors.neutralColors.textColors.strongColors.base,
+    secondaryTextColor: context.colors.neutralColors.textColors.mediumColors.base,
+    logoColor: context.colors.neutralColors.textColors.mediumColors.base,
     hologramColor: Colors.white,
-    borderColor: Color.fromARGB(255, 10, 10, 10),
+        borderColor: Colors.white24,
     name: 'Midnight',
 
     // Shader parameters
     shaderWaveFrequency: 4.0,
     shaderPointerInfluence: 10.0,
-    shaderColorAmplitude: 0.01,
+    shaderColorAmplitude: 0.04,
     shaderBaseAlpha: 0.05,
   );
 
@@ -42,7 +46,7 @@ class LmuCardThemes {
     secondaryTextColor: Colors.white70,
     logoColor: Colors.white,
     hologramColor: Colors.white,
-    borderColor: Colors.white,
+        borderColor: Colors.white24,
     name: 'Pearl',
 
     // Shader parameters
@@ -59,7 +63,7 @@ class LmuCardThemes {
     secondaryTextColor: Colors.white70,
     logoColor: Colors.white,
     hologramColor: Color.fromARGB(206, 255, 255, 255),
-    borderColor: Color.fromARGB(255, 10, 78, 0),
+        borderColor: Colors.white24,
     name: 'Forest',
 
     // Shader parameters
@@ -71,18 +75,18 @@ class LmuCardThemes {
 
   // LMU Blue theme
   static const blueTheme = LMUCardTheme(
-    cardColor: Color.fromARGB(255, 0, 70, 128),
+    cardColor: Color.fromARGB(255, 0, 36, 104),
     textColor: Colors.white,
     secondaryTextColor: Color.fromARGB(255, 208, 208, 208),
     logoColor: Colors.white,
     hologramColor: Colors.white,
-    borderColor: Color.fromARGB(255, 0, 70, 128),
+        borderColor: Colors.white24,
     name: 'Ocean',
 
     // Shader parameters
     shaderWaveFrequency: 5.0,
     shaderPointerInfluence: 10.0,
-    shaderColorAmplitude: 0.03,
+    shaderColorAmplitude: 0.08,
     shaderBaseAlpha: 0.03,
   );
 
@@ -93,7 +97,7 @@ class LmuCardThemes {
     secondaryTextColor: Color.fromARGB(255, 208, 208, 208),
     logoColor: Colors.white,
     hologramColor: Colors.white,
-    borderColor: Color.fromARGB(255, 128, 0, 0),
+        borderColor: Colors.white24,
     name: 'Crimson',
 
     // Shader parameters
@@ -104,7 +108,7 @@ class LmuCardThemes {
   );
 
   // List of all available themes
-  static const List<LMUCardTheme> allThemes = [
+  List<LMUCardTheme> get allThemes => [
     holographicTheme,
     darkTheme,
     purpleTheme,
@@ -139,7 +143,7 @@ class LMUCardTheme {
 
   // Movement settings - keeping these constant across themes
   static const double gestureSensitivity = 0.4;
-  static const double gyroSensitivity = 0.4;
+  static const double gyroSensitivity = 0.7;
   static const double gyroSmoothing = 0.85;
   static const double hologramCenterMovement = 0.2;
   static const double shadowOffsetMultiplier = 10.0;

@@ -21,8 +21,8 @@ class StudiesPage extends DrivableWidget<StudiesPageDriver> {
           children: [
             const SizedBox(height: LmuSizes.size_16),
             StudentId(
-              id: "123456",
-              title: "John Doe",
+              id: "12680165",
+              title: "Raphael Wennmacher",
               description: "Computer Science Student",
               onTap: () {},
             ),

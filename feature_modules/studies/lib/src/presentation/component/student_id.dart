@@ -1,4 +1,6 @@
 import 'package:core/components.dart' hide LMUCardTheme, LmuCardThemes, HolographicCard;
+import 'package:core/constants.dart';
+import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'student_id/holographic_card.dart';
 import 'student_id/themes/themes.dart';
@@ -35,16 +37,16 @@ class _StudentIdState extends State<StudentId> {
     return HolographicCard(
       // User data
       name: widget.title,
-      email: "john.doe@example.com",
+      email: "r.wennmacher@campus.lmu.de",
       validUntil: "Valid until 30.06.2025",
-      matrikelnr: "1234567890",
-      lrzKennung: "jdoe123",
+      matrikelnr: "12680165",
+      lrzKennung: "72geqeb",
       braille: "⠇⠍⠥",
 
       // Card dimensions
       width: 350,
       height: 220,
-      borderRadius: 15,
+      borderRadius: LmuSizes.size_16,
       borderWidth: 1,
 
       // Use current theme colors
@@ -123,11 +125,13 @@ class _StudentIdState extends State<StudentId> {
       },
       onMatrikelnrCopy: (matrikelnr) {
         LmuToast.show(
-            context: context, message: "Matrikelnr copied: $matrikelnr");
+            context: context, message: "Copied Matrikelnr");
+            LmuVibrations.secondary();
       },
       onLrzKennungCopy: (lrzKennung) {
         LmuToast.show(
-            context: context, message: "LRZ Kennung copied: $lrzKennung");
+            context: context, message: "Copied LRZ Kennung");
+            LmuVibrations.secondary();
       },
     );
   }

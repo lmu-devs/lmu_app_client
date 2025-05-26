@@ -24,4 +24,3 @@ export 'texts/texts.dart';
 export 'tiles/dashed_container.dart';
 export 'tiles/tiles.dart';
 export 'toasts/toasts.dart';
-export 'student_id/student_id.dart';

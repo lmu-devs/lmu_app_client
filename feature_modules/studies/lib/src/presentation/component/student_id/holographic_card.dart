@@ -108,7 +108,7 @@ class HolographicCard extends StatefulWidget {
     this.width = 350,
     this.height = 220,
     this.borderRadius = 15,
-    this.borderWidth = 2.0,
+    this.borderWidth = 1.0,
 
     // Card colors
     this.cardColor = const Color(0xFFBEBEBE), // Light gray
@@ -128,7 +128,7 @@ class HolographicCard extends StatefulWidget {
 
     // Movement sensitivity
     this.gestureSensitivity = 0.3,
-    this.gyroSensitivity = 0.3,
+    this.gyroSensitivity = 0.25,
     this.gyroSmoothing = 0.85,
     this.hologramCenterMovement = 0.3,
     this.shadowOffsetMultiplier = 15,
@@ -411,7 +411,7 @@ class _HolographicCardState extends State<HolographicCard>
 
           return Transform(
             transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.0005) // Perspective for parallax
+              ..setEntry(3, 2, 0.0012) // Perspective for parallax
               ..rotateX(finalRotateX)
               ..rotateY(finalRotateY),
             alignment: FractionalOffset.center,
@@ -896,9 +896,10 @@ class _HolographicCardState extends State<HolographicCard>
                                                   itemBuilder:
                                                       (context, index) {
                                                     final themeIndex = index %
-                                                        LmuCardThemes
+                                                        LmuCardThemes(context)
                                                             .allThemes.length;
-                                                    final theme = LmuCardThemes
+                                                    final theme = LmuCardThemes(
+                                                            context)
                                                         .allThemes[themeIndex];
                                                     final isSelected = widget
                                                             .currentTheme
