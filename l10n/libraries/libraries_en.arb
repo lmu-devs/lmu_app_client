@@ -41,10 +41,6 @@
   "@emptyFavoritesAfter": {
     "description": "Empty favorites text after star icon"
   },
-  "openNow": "Open now",
-  "@openNow": {
-    "description": "The state of being open"
-  },
   "openUntil": "Open until {time}",
   "@openUntil": {
     "description": "The state of closing soon",
