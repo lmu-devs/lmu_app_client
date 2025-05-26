@@ -8,9 +8,6 @@ import 'dart:developer' as developer;
 import 'package:flutter/services.dart';
 import 'card_components/holographic_watermarks.dart';
 import 'card_components/holographic_assets.dart';
-import 'dart:developer' as developer;
-import 'dart:async';
-import 'dart:developer' as developer;
 
 class HolographicCard extends StatefulWidget {
   // User data
@@ -129,8 +126,8 @@ class HolographicCard extends StatefulWidget {
     this.gyroSensitivity = 0.3,
     this.gyroSmoothing = 0.85,
     this.hologramCenterMovement = 0.3,
-    this.shadowOffsetMultiplier = 25,
-    this.shadowIntensityMultiplier = 2.5,
+    this.shadowOffsetMultiplier = 15,
+    this.shadowIntensityMultiplier = 1,
 
     // Assets
     this.logoAsset = 'packages/core/assets/holograms/legal_logo.svg',

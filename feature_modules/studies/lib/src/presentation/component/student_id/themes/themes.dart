@@ -76,20 +76,20 @@ class LMUCardTheme {
   final String name;
 
   // Shadow configuration - keeping these constant across themes
-  static const double ambientShadowOpacity = 0.4;
-  static const double ambientShadowBlur = 30.0;
-  static const double ambientShadowYOffset = 8.0;
-  static const double primaryShadowOpacity = 0.30;
-  static const double midShadowOpacity = 0.15;
-  static const double distantShadowOpacity = 0.05;
+  static const double ambientShadowOpacity = 0.2;
+  static const double ambientShadowBlur = 20.0;
+  static const double ambientShadowYOffset = 3.0;
+  static const double primaryShadowOpacity = 0.1;
+  static const double midShadowOpacity = 0.05;
+  static const double distantShadowOpacity = 0.02;
 
   // Movement settings - keeping these constant across themes
   static const double gestureSensitivity = 0.5;
   static const double gyroSensitivity = 0.5;
   static const double gyroSmoothing = 0.85;
   static const double hologramCenterMovement = 0.3;
-  static const double shadowOffsetMultiplier = 25.0;
-  static const double shadowIntensityMultiplier = 2.5;
+  static const double shadowOffsetMultiplier = 10.0;
+  static const double shadowIntensityMultiplier = 1;
 
   // Feature toggles with defaults
   static const bool enableFlip = true;
