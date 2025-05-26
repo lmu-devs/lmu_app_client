@@ -22,10 +22,12 @@ class WishlistDetailsPage extends StatelessWidget {
   final WishlistModel wishlistModel;
 
   Future<void> _launchPrototype(BuildContext context) async {
-    if (await LmuUrlLauncher.canLaunch(url: wishlistModel.prototypeUrl)) {
+    final url = wishlistModel.prototypeUrl;
+    if (url == null || url.isEmpty) return;
+    if (await LmuUrlLauncher.canLaunch(url: url)) {
       if (context.mounted) {
         LmuUrlLauncher.launchWebsite(
-          url: wishlistModel.prototypeUrl,
+          url: url,
           context: context,
           mode: LmuUrlLauncherMode.inAppWebView,
         ).whenComplete(
@@ -115,13 +117,13 @@ class WishlistDetailsPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
             child: LmuText.body(
-              wishlistModel.description,
+              wishlistModel.content,
               color: context.colors.neutralColors.textColors.mediumColors.base,
             ),
           ),
           const SizedBox(height: LmuSizes.size_24),
           ImageListSection(imageModels: wishlistModel.imageModels),
-          if (wishlistModel.prototypeUrl.isNotEmpty)
+          if (wishlistModel.prototypeUrl?.isNotEmpty ?? false)
             Padding(
               padding: const EdgeInsets.only(
                 top: LmuSizes.size_24,

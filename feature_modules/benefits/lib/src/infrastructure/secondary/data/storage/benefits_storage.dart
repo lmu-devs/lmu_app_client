@@ -27,8 +27,12 @@ class BenefitsStorage {
       return null;
     }
 
-    final benefitsMap = jsonDecode(benefitsJson) as Map<String, dynamic>;
-    return BenefitsDto.fromJson(benefitsMap);
+    try {
+      final benefitsMap = jsonDecode(benefitsJson) as Map<String, dynamic>;
+      return BenefitsDto.fromJson(benefitsMap);
+    } catch (_) {
+      return null;
+    }
   }
 
   Future<void> deleteBenefits() async {
