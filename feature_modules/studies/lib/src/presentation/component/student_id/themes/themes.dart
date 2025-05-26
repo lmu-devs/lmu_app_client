@@ -10,6 +10,12 @@ class LmuCardThemes {
     hologramColor: Colors.white,
     borderColor: Color.fromARGB(255, 255, 255, 255),
     name: 'Holo',
+
+    // Shader parameters
+    shaderWaveFrequency: 5.0,
+    shaderPointerInfluence: 10.0,
+    shaderColorAmplitude: 0.03,
+    shaderBaseAlpha: 0.03,
   );
 
   // LMU Green theme
@@ -21,6 +27,12 @@ class LmuCardThemes {
     hologramColor: Color.fromARGB(206, 255, 255, 255),
     borderColor: Color.fromARGB(255, 10, 78, 0),
     name: 'Green',
+
+    // Shader parameters
+    shaderWaveFrequency: 5.0,
+    shaderPointerInfluence: 10.0,
+    shaderColorAmplitude: 0.03,
+    shaderBaseAlpha: 0.03,
   );
 
   // LMU Dark theme
@@ -32,6 +44,12 @@ class LmuCardThemes {
     hologramColor: Colors.white,
     borderColor: Color.fromARGB(255, 10, 10, 10),
     name: 'Dark',
+
+    // Shader parameters
+    shaderWaveFrequency: 5.0,
+    shaderPointerInfluence: 10.0,
+    shaderColorAmplitude: 0.03,
+    shaderBaseAlpha: 0.03,
   );
 
   // LMU Blue theme
@@ -43,6 +61,12 @@ class LmuCardThemes {
     hologramColor: Colors.white,
     borderColor: Color.fromARGB(255, 0, 70, 128),
     name: 'Blue',
+
+    // Shader parameters
+    shaderWaveFrequency: 5.0,
+    shaderPointerInfluence: 10.0,
+    shaderColorAmplitude: 0.03,
+    shaderBaseAlpha: 0.03,
   );
 
   // LMU Red theme
@@ -54,6 +78,12 @@ class LmuCardThemes {
     hologramColor: Colors.white,
     borderColor: Color.fromARGB(255, 128, 0, 0),
     name: 'Red',
+
+    // Shader parameters
+    shaderWaveFrequency: 5.0,
+    shaderPointerInfluence: 10.0,
+    shaderColorAmplitude: 0.03,
+    shaderBaseAlpha: 0.03,
   );
 
   // List of all available themes
@@ -74,6 +104,12 @@ class LMUCardTheme {
   final Color hologramColor;
   final Color borderColor;
   final String name;
+
+  // Shader parameters
+  final double shaderWaveFrequency;
+  final double shaderPointerInfluence;
+  final double shaderColorAmplitude;
+  final double shaderBaseAlpha;
 
   // Shadow configuration - keeping these constant across themes
   static const double ambientShadowOpacity = 0.2;
@@ -98,8 +134,8 @@ class LMUCardTheme {
   static const bool enableShader = true;
   static const bool enableHolographicEffects = true;
   static const bool enableShadows = true;
-  static const bool invertGyroY = false;
-  static const bool invertGyroX = false;
+  static const bool invertGyroY = true;
+  static const bool invertGyroX = true;
   static const bool invertGestureX = false;
   static const bool invertGestureY = false;
 
@@ -119,12 +155,6 @@ class LMUCardTheme {
   static const double hologram2Height = 100;
   static const Offset hologram2Position = Offset(-1, -0.5);
 
-  // Shader parameters
-  static const double shaderWaveFrequency = 5.0;
-  static const double shaderPointerInfluence = 5.0;
-  static const double shaderColorAmplitude = 0.03;
-  static const double shaderBaseAlpha = 0.5;
-
   const LMUCardTheme({
     required this.cardColor,
     required this.textColor,
@@ -133,5 +163,9 @@ class LMUCardTheme {
     required this.hologramColor,
     required this.borderColor,
     required this.name,
+    required this.shaderWaveFrequency,
+    required this.shaderPointerInfluence,
+    required this.shaderColorAmplitude,
+    required this.shaderBaseAlpha,
   });
 }

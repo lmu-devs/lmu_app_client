@@ -397,12 +397,12 @@ class _HolographicCardState extends State<HolographicCard>
         builder: (context, child) {
           final double flipValue = _flipController.value;
           final Matrix4 flipTransform = Matrix4.identity()
-            ..setEntry(3, 2, 0.001) // Perspective for flip
+            ..setEntry(3, 2, 0.0005) // Perspective for flip
             ..rotateY(math.pi * flipValue); // Rotate around Y-axis
 
           return Transform(
             transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.001) // Perspective for parallax
+              ..setEntry(3, 2, 0.0005) // Perspective for parallax
               ..rotateX(finalRotateX)
               ..rotateY(finalRotateY),
             alignment: FractionalOffset.center,

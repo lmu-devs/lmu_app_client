@@ -42,6 +42,11 @@ class StudentId extends StatelessWidget {
       hologramColor: LmuCardThemes.greenTheme.hologramColor,
       borderCardColor:
           LmuCardThemes.greenTheme.borderColor, // Use theme border color
+      // Shader parameters from theme
+      shaderWaveFrequency: LmuCardThemes.greenTheme.shaderWaveFrequency,
+      shaderPointerInfluence: LmuCardThemes.greenTheme.shaderPointerInfluence,
+      shaderColorAmplitude: LmuCardThemes.greenTheme.shaderColorAmplitude,
+      shaderBaseAlpha: LmuCardThemes.greenTheme.shaderBaseAlpha,
 
       // Assets
       logoAsset: 'packages/core/assets/holograms/legal_logo.svg',
@@ -91,12 +96,6 @@ class StudentId extends StatelessWidget {
       hologram2Width: LMUCardTheme.hologram2Width,
       hologram2Height: LMUCardTheme.hologram2Height,
       hologram2Position: LMUCardTheme.hologram2Position,
-
-      // Shader parameters from theme
-      shaderWaveFrequency: LMUCardTheme.shaderWaveFrequency,
-      shaderPointerInfluence: LMUCardTheme.shaderPointerInfluence,
-      shaderColorAmplitude: LMUCardTheme.shaderColorAmplitude,
-      shaderBaseAlpha: LMUCardTheme.shaderBaseAlpha,
 
       // Callback functions
       onCardTap: () {
