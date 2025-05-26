@@ -13,6 +13,7 @@ import 'package:studies/studies.dart';
 import 'package:timeline/timeline.dart';
 import 'package:user/user.dart';
 import 'package:wishlist/wishlist.dart';
+import 'package:people/people.dart';
 
 final modules = [
   UserModule(),
@@ -30,4 +31,5 @@ final modules = [
   BenefitsModule(),
   LaunchFlowModule(),
   StudiesModule(),
+  PeopleModule(),
 ];
