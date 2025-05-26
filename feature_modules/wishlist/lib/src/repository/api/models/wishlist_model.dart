@@ -8,36 +8,32 @@ part 'wishlist_model.g.dart';
 
 @JsonSerializable()
 class WishlistModel extends RWishlistModel {
-  final int id;
+  final String id;
   final String title;
   final String description;
-  @JsonKey(name: 'description_short')
-  final String descriptionShort;
+  final String content;
   final WishlistStatus status;
   @JsonKey(name: 'release_date')
-  final String releaseDate;
+  final String? releaseDate;
   @JsonKey(name: 'prototype_url')
-  final String prototypeUrl;
+  final String? prototypeUrl;
   @JsonKey(name: 'rating')
   final RatingModel ratingModel;
   @JsonKey(name: 'images')
   final List<ImageModel> imageModels;
-  @JsonKey(name: 'created_at')
-  final String createdAt;
-  @JsonKey(name: 'updated_at')
+  @JsonKey(name: 'date_updated')
   final String updatedAt;
 
   const WishlistModel({
     required this.id,
     required this.title,
     required this.description,
-    required this.descriptionShort,
+    required this.content,
     required this.status,
-    required this.releaseDate,
-    required this.prototypeUrl,
+    this.releaseDate,
+    this.prototypeUrl,
     required this.ratingModel,
     required this.imageModels,
-    required this.createdAt,
     required this.updatedAt,
   });
 
@@ -50,13 +46,12 @@ class WishlistModel extends RWishlistModel {
         id,
         title,
         description,
-        descriptionShort,
+        content,
         status,
         releaseDate,
         prototypeUrl,
         ratingModel,
         imageModels,
-        createdAt,
         updatedAt,
       ];
 }
