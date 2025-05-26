@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../launch_flow.dart';
 import '../../libraries.dart';
+import '../../studies.dart';
 import '../benefits/routes/benefits_routes.dart';
 import '../cinema/cinema.dart';
 import '../explore/explore.dart';
@@ -179,6 +180,13 @@ class LaunchFlowShellRoute extends ShellRouteData {
               path: WishlistDetailsRoute.path,
             ),
           ],
+        ),
+      ],
+    ),
+    TypedStatefulShellBranch<StudiesRouteData>(
+      routes: <TypedRoute<RouteData>>[
+        TypedGoRoute<StudiesMainRoute>(
+          path: StudiesMainRoute.path,
         ),
       ],
     )
