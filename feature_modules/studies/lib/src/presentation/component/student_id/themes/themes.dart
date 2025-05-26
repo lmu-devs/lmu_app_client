@@ -2,14 +2,48 @@ import 'package:flutter/material.dart';
 
 class LmuCardThemes {
   // LMU White theme
-  static const whiteTheme = LMUCardTheme(
+  static const holographicTheme = LMUCardTheme(
     cardColor: Color.fromARGB(255, 162, 162, 162),
     textColor: Colors.black,
     secondaryTextColor: Colors.black54,
     logoColor: Colors.black,
     hologramColor: Colors.white,
     borderColor: Color.fromARGB(255, 255, 255, 255),
-    name: 'Holo',
+    name: 'Prismatic',
+
+    // Shader parameters
+    shaderWaveFrequency: 4.0,
+    shaderPointerInfluence: 7.0,
+    shaderColorAmplitude: 0.06,
+    shaderBaseAlpha: 0.3,
+  );
+
+  // LMU Dark theme
+  static const darkTheme = LMUCardTheme(
+    cardColor: Color.fromARGB(255, 0, 0, 0),
+    textColor: Colors.white,
+    secondaryTextColor: Color.fromARGB(255, 208, 208, 208),
+    logoColor: Colors.white,
+    hologramColor: Colors.white,
+    borderColor: Color.fromARGB(255, 10, 10, 10),
+    name: 'Midnight',
+
+    // Shader parameters
+    shaderWaveFrequency: 5.0,
+    shaderPointerInfluence: 10.0,
+    shaderColorAmplitude: 0.01,
+    shaderBaseAlpha: 0.5,
+  );
+
+  // LMU White theme
+  static const whiteTheme = LMUCardTheme(
+    cardColor: Color.fromARGB(255, 218, 218, 218),
+    textColor: Colors.black,
+    secondaryTextColor: Colors.black54,
+    logoColor: Colors.black,
+    hologramColor: Colors.white,
+    borderColor: Colors.white,
+    name: 'Pearl',
 
     // Shader parameters
     shaderWaveFrequency: 5.0,
@@ -17,7 +51,6 @@ class LmuCardThemes {
     shaderColorAmplitude: 0.03,
     shaderBaseAlpha: 0.03,
   );
-
   // LMU Green theme
   static const greenTheme = LMUCardTheme(
     cardColor: Color.fromARGB(255, 10, 78, 0),
@@ -26,24 +59,7 @@ class LmuCardThemes {
     logoColor: Colors.white,
     hologramColor: Color.fromARGB(206, 255, 255, 255),
     borderColor: Color.fromARGB(255, 10, 78, 0),
-    name: 'Green',
-
-    // Shader parameters
-    shaderWaveFrequency: 5.0,
-    shaderPointerInfluence: 10.0,
-    shaderColorAmplitude: 0.03,
-    shaderBaseAlpha: 0.03,
-  );
-
-  // LMU Dark theme
-  static const darkTheme = LMUCardTheme(
-    cardColor: Color.fromARGB(255, 10, 10, 10),
-    textColor: Colors.white,
-    secondaryTextColor: Color.fromARGB(255, 208, 208, 208),
-    logoColor: Colors.white,
-    hologramColor: Colors.white,
-    borderColor: Color.fromARGB(255, 10, 10, 10),
-    name: 'Dark',
+    name: 'Forest',
 
     // Shader parameters
     shaderWaveFrequency: 5.0,
@@ -60,7 +76,7 @@ class LmuCardThemes {
     logoColor: Colors.white,
     hologramColor: Colors.white,
     borderColor: Color.fromARGB(255, 0, 70, 128),
-    name: 'Blue',
+    name: 'Ocean',
 
     // Shader parameters
     shaderWaveFrequency: 5.0,
@@ -77,7 +93,7 @@ class LmuCardThemes {
     logoColor: Colors.white,
     hologramColor: Colors.white,
     borderColor: Color.fromARGB(255, 128, 0, 0),
-    name: 'Red',
+    name: 'Crimson',
 
     // Shader parameters
     shaderWaveFrequency: 5.0,
@@ -88,9 +104,10 @@ class LmuCardThemes {
 
   // List of all available themes
   static const List<LMUCardTheme> allThemes = [
+    holographicTheme,
+    darkTheme,
     whiteTheme,
     greenTheme,
-    darkTheme,
     blueTheme,
     redTheme,
   ];

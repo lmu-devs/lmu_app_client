@@ -8,6 +8,7 @@ import 'dart:developer' as developer;
 import 'package:flutter/services.dart';
 import 'card_components/holographic_watermarks.dart';
 import 'card_components/holographic_assets.dart';
+import 'themes/themes.dart';
 
 class HolographicCard extends StatefulWidget {
   // User data
@@ -88,6 +89,10 @@ class HolographicCard extends StatefulWidget {
   final VoidCallback? onCardDoubleTap;
   final Function(String)? onMatrikelnrCopy;
   final Function(String)? onLrzKennungCopy;
+
+  // Theme selection
+  final Function(LMUCardTheme)? onThemeSelected;
+  final LMUCardTheme? currentTheme;
 
   const HolographicCard({
     super.key,
@@ -173,6 +178,10 @@ class HolographicCard extends StatefulWidget {
     this.onCardDoubleTap,
     this.onMatrikelnrCopy,
     this.onLrzKennungCopy,
+
+    // Theme selection
+    this.onThemeSelected,
+    this.currentTheme,
   });
 
   @override
@@ -503,378 +512,496 @@ class _HolographicCardState extends State<HolographicCard>
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(widget.borderRadius),
-                      child: Stack(
-                        children: [
-                          // Base card with holographic effects
-                          ShaderMask(
-                            shaderCallback: (Rect bounds) {
-                              if (_holographicProgram == null ||
-                                  !widget.enableShader) {
-                                return ui.Gradient.linear(
-                                  Offset.zero,
-                                  Offset(bounds.width, bounds.height),
-                                  [Colors.transparent, Colors.transparent],
-                                );
-                              }
+                      child: ShaderMask(
+                        shaderCallback: (Rect bounds) {
+                          if (_holographicProgram == null ||
+                              !widget.enableShader) {
+                            return ui.Gradient.linear(
+                              Offset.zero,
+                              Offset(bounds.width, bounds.height),
+                              [Colors.transparent, Colors.transparent],
+                            );
+                          }
 
-                              final shader =
-                                  _holographicProgram!.fragmentShader();
+                          final shader = _holographicProgram!.fragmentShader();
 
-                              // Combine touch and gyroscope effects
-                              final combinedX =
-                                  widget.enableGestures ? _offset.dx : 0.0;
-                              final combinedY =
-                                  widget.enableGestures ? _offset.dy : 0.0;
-                              final gyroX =
-                                  widget.enableGyro ? _gyroscopeOffset.dx : 0.0;
-                              final gyroY =
-                                  widget.enableGyro ? _gyroscopeOffset.dy : 0.0;
+                          // Combine touch and gyroscope effects
+                          final combinedX =
+                              widget.enableGestures ? _offset.dx : 0.0;
+                          final combinedY =
+                              widget.enableGestures ? _offset.dy : 0.0;
+                          final gyroX =
+                              widget.enableGyro ? _gyroscopeOffset.dx : 0.0;
+                          final gyroY =
+                              widget.enableGyro ? _gyroscopeOffset.dy : 0.0;
 
-                              final totalX = combinedX + gyroX;
-                              final totalY = combinedY + gyroY;
+                          final totalX = combinedX + gyroX;
+                          final totalY = combinedY + gyroY;
 
-                              // Mirror the effect when card is flipped
-                              final effectX = _flipController.value >= 0.5
-                                  ? -totalX
-                                  : totalX;
-                              final effectY = totalY;
+                          final effectX =
+                              _flipController.value >= 0.5 ? -totalX : totalX;
+                          final effectY = totalY;
 
-                              final centerX = 0.5 +
-                                  (-effectX * widget.hologramCenterMovement)
-                                      .clamp(-0.3, 0.3);
-                              final centerY = 0.5 +
-                                  (-effectY * widget.hologramCenterMovement)
-                                      .clamp(-0.3, 0.3);
+                          final centerX = 0.5 +
+                              (-effectX * widget.hologramCenterMovement)
+                                  .clamp(-0.3, 0.3);
+                          final centerY = 0.5 +
+                              (-effectY * widget.hologramCenterMovement)
+                                  .clamp(-0.3, 0.3);
 
-                              shader.setFloat(0, bounds.width);
-                              shader.setFloat(1, bounds.height);
-                              shader.setFloat(
-                                2,
-                                (effectX + 0.5).clamp(0.0, 1.0),
-                              );
-                              shader.setFloat(
-                                3,
-                                (effectY + 0.5).clamp(0.0, 1.0),
-                              );
-                              shader.setFloat(4, centerX);
-                              shader.setFloat(5, centerY);
-                              // Pass custom shader parameters
-                              shader.setFloat(6, widget.shaderWaveFrequency);
-                              shader.setFloat(7, widget.shaderPointerInfluence);
-                              shader.setFloat(8, widget.shaderColorAmplitude);
-                              shader.setFloat(9, widget.shaderBaseAlpha);
-                              return shader;
-                            },
-                            blendMode: BlendMode.srcOver,
-                            child: Container(
+                          shader.setFloat(0, bounds.width);
+                          shader.setFloat(1, bounds.height);
+                          shader.setFloat(2, (effectX + 0.5).clamp(0.0, 1.0));
+                          shader.setFloat(3, (effectY + 0.5).clamp(0.0, 1.0));
+                          shader.setFloat(4, centerX);
+                          shader.setFloat(5, centerY);
+                          shader.setFloat(6, widget.shaderWaveFrequency);
+                          shader.setFloat(7, widget.shaderPointerInfluence);
+                          shader.setFloat(8, widget.shaderColorAmplitude);
+                          shader.setFloat(9, widget.shaderBaseAlpha);
+
+                          return shader;
+                        },
+                        blendMode: BlendMode.srcOver,
+                        child: Stack(
+                          children: [
+                            // Base card background
+                            Container(
                               width: widget.width,
                               height: widget.height,
                               color: widget.cardColor,
                             ),
-                          ),
 
-                          // Holographic watermarks layer
-                          if (_flipController.value < 0.5) ...[
-                            HolographicWatermarks(
+                            // Holographic watermarks layer
+                            if (_flipController.value < 0.5) ...[
+                              HolographicWatermarks(
+                                width: widget.width,
+                                height: widget.height,
+                                name: widget.name,
+                                matrikelnr: widget.matrikelnr,
+                                hologramColor: widget.hologramColor,
+                                enableHolographicEffects:
+                                    widget.enableHolographicEffects,
+                                combinedX: combinedX,
+                                combinedY: combinedY,
+                              ),
+                              HolographicAssets(
+                                hologramAsset: widget.hologramAsset,
+                                hologramAsset2: widget.hologramAsset2,
+                                hologramColor: widget.hologramColor,
+                                enableHolographicEffects:
+                                    widget.enableHolographicEffects,
+                                combinedX: combinedX,
+                                combinedY: combinedY,
+                                hologram1Width: widget.hologram1Width,
+                                hologram1Height: widget.hologram1Height,
+                                hologram1Position: widget.hologram1Position,
+                                hologram2Width: widget.hologram2Width,
+                                hologram2Height: widget.hologram2Height,
+                                hologram2Position: widget.hologram2Position,
+                              ),
+                            ],
+
+                            // Content layer (front or back) with border
+                            Container(
                               width: widget.width,
                               height: widget.height,
-                              name: widget.name,
-                              matrikelnr: widget.matrikelnr,
-                              hologramColor: widget.hologramColor,
-                              enableHolographicEffects:
-                                  widget.enableHolographicEffects,
-                              combinedX: combinedX,
-                              combinedY: combinedY,
-                            ),
-                            HolographicAssets(
-                              hologramAsset: widget.hologramAsset,
-                              hologramAsset2: widget.hologramAsset2,
-                              hologramColor: widget.hologramColor,
-                              enableHolographicEffects:
-                                  widget.enableHolographicEffects,
-                              combinedX: combinedX,
-                              combinedY: combinedY,
-                              hologram1Width: widget.hologram1Width,
-                              hologram1Height: widget.hologram1Height,
-                              hologram1Position: widget.hologram1Position,
-                              hologram2Width: widget.hologram2Width,
-                              hologram2Height: widget.hologram2Height,
-                              hologram2Position: widget.hologram2Position,
-                            ),
-                          ],
-
-                          // Content layer (front or back)
-                          Container(
-                            width: widget.width,
-                            height: widget.height,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                widget.borderRadius,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(widget.borderRadius),
+                                border: Border.all(
+                                  color: widget.borderCardColor,
+                                  width: widget.borderWidth,
+                                ),
                               ),
-                              border: Border.all(
-                                color: widget.borderCardColor,
-                                width: widget.borderWidth,
-                              ),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                widget.borderRadius,
-                              ),
-                              child: Stack(
-                                children: [
-                                  if (_flipController.value < 0.5) ...[
-                                    // Front content
-                                    // LMU Logo
-                                    Positioned(
-                                      top: widget.logoPosition.dy,
-                                      left: widget.logoPosition.dx,
-                                      child: widget.logoAsset != null
-                                          ? SvgPicture.asset(
-                                              widget.logoAsset!,
-                                              width: widget.logoWidth,
-                                              height: widget.logoHeight,
-                                              colorFilter: ColorFilter.mode(
-                                                widget.logoColor,
-                                                BlendMode.srcIn,
-                                              ),
-                                            )
-                                          : Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  padding:
-                                                      const EdgeInsets.all(4),
-                                                  color: Colors.black,
-                                                  child: Text(
-                                                    'LMU',
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 16,
+                              child: ClipRRect(
+                                borderRadius:
+                                    BorderRadius.circular(widget.borderRadius),
+                                child: Stack(
+                                  children: [
+                                    if (_flipController.value < 0.5) ...[
+                                      // Front content
+                                      // LMU Logo
+                                      Positioned(
+                                        top: widget.logoPosition.dy,
+                                        left: widget.logoPosition.dx,
+                                        child: widget.logoAsset != null
+                                            ? SvgPicture.asset(
+                                                widget.logoAsset!,
+                                                width: widget.logoWidth,
+                                                height: widget.logoHeight,
+                                                colorFilter: ColorFilter.mode(
+                                                  widget.logoColor,
+                                                  BlendMode.srcIn,
+                                                ),
+                                              )
+                                            : Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    padding:
+                                                        const EdgeInsets.all(4),
+                                                    color: Colors.black,
+                                                    child: Text(
+                                                      'LMU',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 16,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
+                                                  Text(
+                                                    'LUDWIG-\nMAXIMILIANS-\nUNIVERSITÄT\nMÜNCHEN',
+                                                    style: TextStyle(
+                                                      color: widget.textColor,
+                                                      fontSize: 5,
+                                                      height: 1.2,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                      ),
+
+                                      // Name
+                                      Positioned(
+                                        top: 70,
+                                        left: 20,
+                                        child: Text(
+                                          widget.name,
+                                          style: TextStyle(
+                                            color: widget.textColor,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+
+                                      // Email
+                                      Positioned(
+                                        top: 95,
+                                        left: 20,
+                                        child: Text(
+                                          widget.email,
+                                          style: TextStyle(
+                                            color: widget.secondaryTextColor,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+
+                                      // Valid until
+                                      Positioned(
+                                        top: 115,
+                                        left: 20,
+                                        child: Text(
+                                          widget.validUntil,
+                                          style: TextStyle(
+                                            color: widget.textColor,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+
+                                      // Matrikelnr
+                                      Positioned(
+                                        bottom: 20,
+                                        left: 20,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Matrikelnr',
+                                              style: TextStyle(
+                                                color:
+                                                    widget.secondaryTextColor,
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Row(
+                                              children: [
                                                 Text(
-                                                  'LUDWIG-\nMAXIMILIANS-\nUNIVERSITÄT\nMÜNCHEN',
+                                                  widget.matrikelnr,
                                                   style: TextStyle(
                                                     color: widget.textColor,
-                                                    fontSize: 5,
-                                                    height: 1.2,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 5),
+                                                GestureDetector(
+                                                  onTap:
+                                                      widget.onMatrikelnrCopy !=
+                                                              null
+                                                          ? () {
+                                                              developer.log(
+                                                                'Copying Matrikelnr: ${widget.matrikelnr}',
+                                                                name:
+                                                                    'HolographicCard',
+                                                              );
+                                                              Clipboard.setData(
+                                                                ClipboardData(
+                                                                  text: widget
+                                                                      .matrikelnr,
+                                                                ),
+                                                              );
+                                                              widget
+                                                                  .onMatrikelnrCopy!(
+                                                                widget
+                                                                    .matrikelnr,
+                                                              );
+                                                            }
+                                                          : null,
+                                                  child: Icon(
+                                                    Icons.copy,
+                                                    color: widget
+                                                        .secondaryTextColor,
+                                                    size: 16,
                                                   ),
                                                 ),
                                               ],
                                             ),
-                                    ),
-
-                                    // Name
-                                    Positioned(
-                                      top: 70,
-                                      left: 20,
-                                      child: Text(
-                                        widget.name,
-                                        style: TextStyle(
-                                          color: widget.textColor,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
+                                          ],
                                         ),
                                       ),
-                                    ),
 
-                                    // Email
-                                    Positioned(
-                                      top: 95,
-                                      left: 20,
-                                      child: Text(
-                                        widget.email,
-                                        style: TextStyle(
-                                          color: widget.secondaryTextColor,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
-
-                                    // Valid until
-                                    Positioned(
-                                      top: 115,
-                                      left: 20,
-                                      child: Text(
-                                        widget.validUntil,
-                                        style: TextStyle(
-                                          color: widget.textColor,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
-
-                                    // Matrikelnr
-                                    Positioned(
-                                      bottom: 20,
-                                      left: 20,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Matrikelnr',
-                                            style: TextStyle(
-                                              color: widget.secondaryTextColor,
-                                              fontSize: 12,
+                                      // LRZ Kennung
+                                      Positioned(
+                                        bottom: 20,
+                                        right: 20,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                              'LRZ Kennung',
+                                              style: TextStyle(
+                                                color:
+                                                    widget.secondaryTextColor,
+                                                fontSize: 12,
+                                              ),
                                             ),
-                                          ),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                widget.matrikelnr,
-                                                style: TextStyle(
-                                                  color: widget.textColor,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  widget.lrzKennung,
+                                                  style: TextStyle(
+                                                    color: widget.textColor,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                 ),
-                                              ),
-                                              const SizedBox(width: 5),
-                                              GestureDetector(
-                                                onTap:
-                                                    widget.onMatrikelnrCopy !=
-                                                            null
-                                                        ? () {
-                                                            developer.log(
-                                                              'Copying Matrikelnr: ${widget.matrikelnr}',
-                                                              name:
-                                                                  'HolographicCard',
-                                                            );
-                                                            Clipboard.setData(
-                                                              ClipboardData(
-                                                                text: widget
-                                                                    .matrikelnr,
-                                                              ),
-                                                            );
-                                                            widget
-                                                                .onMatrikelnrCopy!(
-                                                              widget.matrikelnr,
-                                                            );
-                                                          }
-                                                        : null,
-                                                child: Icon(
-                                                  Icons.copy,
-                                                  color:
-                                                      widget.secondaryTextColor,
-                                                  size: 16,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                    // LRZ Kennung
-                                    Positioned(
-                                      bottom: 20,
-                                      right: 20,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            'LRZ Kennung',
-                                            style: TextStyle(
-                                              color: widget.secondaryTextColor,
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                widget.lrzKennung,
-                                                style: TextStyle(
-                                                  color: widget.textColor,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              const SizedBox(width: 5),
-                                              GestureDetector(
-                                                onTap:
-                                                    widget.onLrzKennungCopy !=
-                                                            null
-                                                        ? () {
-                                                            developer.log(
-                                                              'Copying LRZ Kennung: ${widget.lrzKennung}',
-                                                              name:
-                                                                  'HolographicCard',
-                                                            );
-                                                            Clipboard.setData(
-                                                              ClipboardData(
-                                                                text: widget
+                                                const SizedBox(width: 5),
+                                                GestureDetector(
+                                                  onTap:
+                                                      widget.onLrzKennungCopy !=
+                                                              null
+                                                          ? () {
+                                                              developer.log(
+                                                                'Copying LRZ Kennung: ${widget.lrzKennung}',
+                                                                name:
+                                                                    'HolographicCard',
+                                                              );
+                                                              Clipboard.setData(
+                                                                ClipboardData(
+                                                                  text: widget
+                                                                      .lrzKennung,
+                                                                ),
+                                                              );
+                                                              widget
+                                                                  .onLrzKennungCopy!(
+                                                                widget
                                                                     .lrzKennung,
-                                                              ),
-                                                            );
-                                                            widget
-                                                                .onLrzKennungCopy!(
-                                                              widget.lrzKennung,
-                                                            );
-                                                          }
-                                                        : null,
-                                                child: Icon(
-                                                  Icons.copy,
-                                                  color:
-                                                      widget.secondaryTextColor,
-                                                  size: 16,
+                                                              );
+                                                            }
+                                                          : null,
+                                                  child: Icon(
+                                                    Icons.copy,
+                                                    color: widget
+                                                        .secondaryTextColor,
+                                                    size: 16,
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                    // Braille
-                                    Positioned(
-                                      top: 30,
-                                      right: 30,
-                                      child: Transform(
-                                        alignment: Alignment.center,
-                                        transform: Matrix4.identity()
-                                          ..scale(-1.0, 1.0),
-                                        child: Text(
-                                          widget.braille,
-                                          style: TextStyle(
-                                            color: widget.textColor.withOpacity(
-                                              0.3,
+                                              ],
                                             ),
-                                            fontSize: 24,
-                                            letterSpacing: 0,
-                                            fontWeight: FontWeight.bold,
-                                            height: 1,
+                                          ],
+                                        ),
+                                      ),
+
+                                      // Braille
+                                      Positioned(
+                                        top: 30,
+                                        right: 30,
+                                        child: Transform(
+                                          alignment: Alignment.center,
+                                          transform: Matrix4.identity()
+                                            ..scale(-1.0, 1.0),
+                                          child: Text(
+                                            widget.braille,
+                                            style: TextStyle(
+                                              color:
+                                                  widget.textColor.withOpacity(
+                                                0.3,
+                                              ),
+                                              fontSize: 24,
+                                              letterSpacing: 0,
+                                              fontWeight: FontWeight.bold,
+                                              height: 1,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ] else ...[
-                                    // Back content
-                                    Center(
-                                      child: Transform(
+                                    ] else ...[
+                                      // Back content - Theme Selection
+                                      Transform(
                                         alignment: Alignment.center,
                                         transform: Matrix4.identity()
                                           ..rotateY(math.pi),
-                                        child: Text(
-                                          'Card Back',
-                                          style: TextStyle(
-                                            color: widget.textColor,
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(20.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              // Title
+                                              Text(
+                                                'Choose Theme',
+                                                style: TextStyle(
+                                                  color: widget.textColor,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                  height: 10), // Fixed spacing
+
+                                              // Use Expanded to let GridView fill remaining space
+                                              Expanded(
+                                                child: GridView.builder(
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
+                                                  padding: EdgeInsets
+                                                      .zero, // Avoid extra padding
+                                                  gridDelegate:
+                                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                                    crossAxisCount: 3,
+                                                    crossAxisSpacing: 12,
+                                                    mainAxisSpacing: 12,
+                                                    childAspectRatio: 1.5,
+                                                  ),
+                                                  itemCount: 6,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    final themeIndex = index %
+                                                        LmuCardThemes
+                                                            .allThemes.length;
+                                                    final theme = LmuCardThemes
+                                                        .allThemes[themeIndex];
+                                                    final isSelected = widget
+                                                            .currentTheme
+                                                            ?.name ==
+                                                        theme.name;
+
+                                                    return GestureDetector(
+                                                      onTap: () {
+                                                        if (widget
+                                                                .onThemeSelected !=
+                                                            null) {
+                                                          widget.onThemeSelected!(
+                                                              theme);
+                                                        }
+                                                      },
+                                                      child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color:
+                                                              theme.cardColor,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(15),
+                                                          border: Border.all(
+                                                            color: isSelected
+                                                                ? widget
+                                                                    .textColor
+                                                                : theme
+                                                                    .borderColor,
+                                                            width: isSelected
+                                                                ? 2
+                                                                : 1,
+                                                          ),
+                                                        ),
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Container(
+                                                              width: 24,
+                                                              height: 18,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: theme
+                                                                    .cardColor,
+                                                                shape: BoxShape
+                                                                    .circle,
+                                                                border:
+                                                                    Border.all(
+                                                                  color: theme
+                                                                      .textColor
+                                                                      .withOpacity(
+                                                                          0.3),
+                                                                  width: 1,
+                                                                ),
+                                                              ),
+                                                              child: isSelected
+                                                                  ? Icon(
+                                                                      Icons
+                                                                          .check,
+                                                                      color: theme
+                                                                          .textColor,
+                                                                      size: 18,
+                                                                    )
+                                                                  : null,
+                                                            ),
+                                                            const SizedBox(
+                                                                height: 8),
+                                                            Text(
+                                                              theme.name,
+                                                              style: TextStyle(
+                                                                color: theme
+                                                                    .textColor,
+                                                                fontSize: 12,
+                                                                fontWeight: isSelected
+                                                                    ? FontWeight
+                                                                        .bold
+                                                                    : FontWeight
+                                                                        .normal,
+                                                              ),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),
-                                    ),
+                                    ],
                                   ],
-                                ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   );

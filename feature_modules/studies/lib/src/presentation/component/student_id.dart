@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'student_id/holographic_card.dart';
 import 'student_id/themes/themes.dart';
 
-class StudentId extends StatelessWidget {
+class StudentId extends StatefulWidget {
   const StudentId({
     super.key,
     required this.id,
@@ -18,10 +18,23 @@ class StudentId extends StatelessWidget {
   final void Function() onTap;
 
   @override
+  State<StudentId> createState() => _StudentIdState();
+}
+
+class _StudentIdState extends State<StudentId> {
+  LMUCardTheme _currentTheme = LmuCardThemes.greenTheme;
+
+  void _onThemeSelected(LMUCardTheme theme) {
+    setState(() {
+      _currentTheme = theme;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return HolographicCard(
       // User data
-      name: title,
+      name: widget.title,
       email: "john.doe@example.com",
       validUntil: "Valid until 30.06.2025",
       matrikelnr: "1234567890",
@@ -34,19 +47,23 @@ class StudentId extends StatelessWidget {
       borderRadius: 15,
       borderWidth: 1,
 
-      // Use theme colors consistently
-      cardColor: LmuCardThemes.greenTheme.cardColor,
-      textColor: LmuCardThemes.greenTheme.textColor,
-      secondaryTextColor: LmuCardThemes.greenTheme.secondaryTextColor,
-      logoColor: LmuCardThemes.greenTheme.logoColor,
-      hologramColor: LmuCardThemes.greenTheme.hologramColor,
-      borderCardColor:
-          LmuCardThemes.greenTheme.borderColor, // Use theme border color
-      // Shader parameters from theme
-      shaderWaveFrequency: LmuCardThemes.greenTheme.shaderWaveFrequency,
-      shaderPointerInfluence: LmuCardThemes.greenTheme.shaderPointerInfluence,
-      shaderColorAmplitude: LmuCardThemes.greenTheme.shaderColorAmplitude,
-      shaderBaseAlpha: LmuCardThemes.greenTheme.shaderBaseAlpha,
+      // Use current theme colors
+      cardColor: _currentTheme.cardColor,
+      textColor: _currentTheme.textColor,
+      secondaryTextColor: _currentTheme.secondaryTextColor,
+      logoColor: _currentTheme.logoColor,
+      hologramColor: _currentTheme.hologramColor,
+      borderCardColor: _currentTheme.borderColor,
+
+      // Shader parameters from current theme
+      shaderWaveFrequency: _currentTheme.shaderWaveFrequency,
+      shaderPointerInfluence: _currentTheme.shaderPointerInfluence,
+      shaderColorAmplitude: _currentTheme.shaderColorAmplitude,
+      shaderBaseAlpha: _currentTheme.shaderBaseAlpha,
+
+      // Theme selection
+      currentTheme: _currentTheme,
+      onThemeSelected: _onThemeSelected,
 
       // Assets
       logoAsset: 'packages/core/assets/holograms/legal_logo.svg',
@@ -99,20 +116,16 @@ class StudentId extends StatelessWidget {
 
       // Callback functions
       onCardTap: () {
-        // Handle card tap
         print('Card tapped!');
       },
       onCardDoubleTap: () {
-        // Handle double tap (triggers flip)
         print('Card double tapped!');
       },
       onMatrikelnrCopy: (matrikelnr) {
-        // Show success message
         LmuToast.show(
             context: context, message: "Matrikelnr copied: $matrikelnr");
       },
       onLrzKennungCopy: (lrzKennung) {
-        // Show success message
         LmuToast.show(
             context: context, message: "LRZ Kennung copied: $lrzKennung");
       },
