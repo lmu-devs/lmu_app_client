@@ -15,7 +15,7 @@ class LmuCardThemes {
     shaderWaveFrequency: 4.0,
     shaderPointerInfluence: 7.0,
     shaderColorAmplitude: 0.06,
-    shaderBaseAlpha: 0.3,
+    shaderBaseAlpha: 0.05,
   );
 
   // LMU Dark theme
@@ -29,18 +29,18 @@ class LmuCardThemes {
     name: 'Midnight',
 
     // Shader parameters
-    shaderWaveFrequency: 5.0,
+    shaderWaveFrequency: 4.0,
     shaderPointerInfluence: 10.0,
     shaderColorAmplitude: 0.01,
-    shaderBaseAlpha: 0.5,
+    shaderBaseAlpha: 0.05,
   );
 
   // LMU White theme
-  static const whiteTheme = LMUCardTheme(
-    cardColor: Color.fromARGB(255, 218, 218, 218),
-    textColor: Colors.black,
-    secondaryTextColor: Colors.black54,
-    logoColor: Colors.black,
+  static const purpleTheme = LMUCardTheme(
+    cardColor: Color.fromARGB(167, 93, 0, 200),
+    textColor: Colors.white,
+    secondaryTextColor: Colors.white70,
+    logoColor: Colors.white,
     hologramColor: Colors.white,
     borderColor: Colors.white,
     name: 'Pearl',
@@ -48,12 +48,13 @@ class LmuCardThemes {
     // Shader parameters
     shaderWaveFrequency: 5.0,
     shaderPointerInfluence: 10.0,
-    shaderColorAmplitude: 0.03,
+    shaderColorAmplitude: 0.1,
     shaderBaseAlpha: 0.03,
   );
+
   // LMU Green theme
   static const greenTheme = LMUCardTheme(
-    cardColor: Color.fromARGB(255, 10, 78, 0),
+    cardColor: Color.fromARGB(255, 12, 87, 0),
     textColor: Colors.white,
     secondaryTextColor: Colors.white70,
     logoColor: Colors.white,
@@ -106,7 +107,7 @@ class LmuCardThemes {
   static const List<LMUCardTheme> allThemes = [
     holographicTheme,
     darkTheme,
-    whiteTheme,
+    purpleTheme,
     greenTheme,
     blueTheme,
     redTheme,
@@ -137,10 +138,10 @@ class LMUCardTheme {
   static const double distantShadowOpacity = 0.02;
 
   // Movement settings - keeping these constant across themes
-  static const double gestureSensitivity = 0.5;
-  static const double gyroSensitivity = 0.5;
+  static const double gestureSensitivity = 0.4;
+  static const double gyroSensitivity = 0.4;
   static const double gyroSmoothing = 0.85;
-  static const double hologramCenterMovement = 0.3;
+  static const double hologramCenterMovement = 0.2;
   static const double shadowOffsetMultiplier = 10.0;
   static const double shadowIntensityMultiplier = 1;
 
@@ -170,7 +171,7 @@ class LMUCardTheme {
   ); // -1 means bottom right
   static const double hologram2Width = 400; // Use width of the card
   static const double hologram2Height = 100;
-  static const Offset hologram2Position = Offset(-1, -0.5);
+  static const Offset hologram2Position = Offset(0, -25);
 
   const LMUCardTheme({
     required this.cardColor,

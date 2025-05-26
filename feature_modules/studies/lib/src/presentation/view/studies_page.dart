@@ -34,5 +34,6 @@ class StudiesPage extends DrivableWidget<StudiesPageDriver> {
   }
 
   @override
-  WidgetDriverProvider<StudiesPageDriver> get driverProvider => $StudiesPageDriverProvider();
+  WidgetDriverProvider<StudiesPageDriver> get driverProvider =>
+      $StudiesPageDriverProvider();
 }
