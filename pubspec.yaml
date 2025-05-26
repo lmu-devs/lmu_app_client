@@ -44,6 +44,8 @@ dependencies:
     path: ./feature_modules/benefits
   launch_flow:
     path: ./feature_modules/launch_flow
+  studies:
+    path: ./feature_modules/studies
   shared_api:
     path: ./shared_api
 
