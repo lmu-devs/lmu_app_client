@@ -26,8 +26,10 @@ class StudiesPage extends DrivableWidget<StudiesPageDriver> {
               description: "Computer Science Student",
               onTap: () {},
             ),
+            LmuListItem.action(actionType: LmuListItemAction.chevron, title: "People", onTap: driver.onPeoplePressed),
             const SizedBox(height: LmuSizes.size_96),
           ],
+          
         ),
       ),
     );
