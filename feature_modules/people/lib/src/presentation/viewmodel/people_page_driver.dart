@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../domain/model/people.dart';
-import '../../application/state//people_state.dart';
+import '../../application/state/people_state.dart';
 
 part 'people_page_driver.g.dart';
 
