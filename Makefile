@@ -13,6 +13,7 @@ localizations:
 	flutter gen-l10n --arb-dir ./l10n/libraries --output-dir ./core/lib/src/localizations/generated --template-arb-file libraries_en.arb --output-localization-file libraries_localizations.dart --output-class LibrariesLocatizations --no-synthetic-package
 	flutter gen-l10n --arb-dir ./l10n/benefits --output-dir ./core/lib/src/localizations/generated --template-arb-file benefits_en.arb --output-localization-file benefits_localizations.dart --output-class BenefitsLocatizations --no-synthetic-package
 	flutter gen-l10n --arb-dir ./l10n/launch_flow --output-dir ./core/lib/src/localizations/generated --template-arb-file launch_flow_en.arb --output-localization-file launch_flow_localizations.dart --output-class LaunchFlowLocatizations --no-synthetic-package
+	flutter gen-l10n --arb-dir ./l10n/studies --output-dir ./core/lib/src/localizations/generated --template-arb-file studies_en.arb --output-localization-file studies_localizations.dart --output-class StudiesLocatizations --no-synthetic-package
 
 run_generator:
 	dart run build_runner build --delete-conflicting-outputs

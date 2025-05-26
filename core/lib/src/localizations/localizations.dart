@@ -11,5 +11,6 @@ export 'generated/libraries_localizations.dart';
 export 'generated/roomfinder_localizations.dart';
 export 'generated/settings_localizations.dart';
 export 'generated/sports_localizations.dart';
+export 'generated/studies_localizations.dart';
 export 'generated/timeline_localizations.dart';
 export 'generated/wishlist_localizations.dart';

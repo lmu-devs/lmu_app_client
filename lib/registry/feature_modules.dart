@@ -9,6 +9,7 @@ import 'package:mensa/mensa.dart';
 import 'package:roomfinder/roomfinder.dart';
 import 'package:settings/settings.dart';
 import 'package:sports/sports.dart';
+import 'package:studies/studies.dart';
 import 'package:timeline/timeline.dart';
 import 'package:user/user.dart';
 import 'package:wishlist/wishlist.dart';
@@ -28,4 +29,5 @@ final modules = [
   TimelineModule(),
   BenefitsModule(),
   LaunchFlowModule(),
+  StudiesModule(),
 ];
