@@ -55,7 +55,7 @@ class WishlistEntrySection extends StatelessWidget {
                       titleInTextVisuals: wishlistModel.status.getValue(context).isNotEmpty
                           ? [LmuInTextVisual.text(title: wishlistModel.status.getValue(context))]
                           : [],
-                      subtitle: wishlistModel.descriptionShort,
+                      subtitle: wishlistModel.description,
                       trailingTitle: wishlistModel.ratingModel.calculateLikeCount(
                         likedWishlistIds.contains(wishlistModel.id.toString()),
                       ),

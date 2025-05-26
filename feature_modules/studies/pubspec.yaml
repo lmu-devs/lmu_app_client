@@ -1,0 +1,25 @@
+name: "studies"
+description: "The studies package"
+version: 0.0.1
+publish_to: "none"
+
+environment:
+  sdk: ">=3.2.4 <4.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  core:
+    path: ../../core
+  core_routes:
+    path: ../../core_routes
+  get_it: ^8.0.1
+  widget_driver: ^1.0.10
+
+dev_dependencies:
+  json_serializable: ^6.6.2
+  build_runner: ^2.4.9
+  build_verify: ^3.1.0
+  widget_driver_generator: ^1.3.3
+

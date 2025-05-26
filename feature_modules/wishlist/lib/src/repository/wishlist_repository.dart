@@ -6,13 +6,13 @@ import 'api/models/wishlist_model.dart';
 import 'api/wishlist_api_client.dart';
 
 abstract class WishlistRepository {
-  Future<List<WishlistModel>?> getWishlistEntries({int? id});
+  Future<List<WishlistModel>?> getWishlistEntries();
 
-  Future<List<WishlistModel>?> getCachedWishlistEntries({int? id});
+  Future<List<WishlistModel>?> getCachedWishlistEntries({String? id});
 
   Future<List<String>?> getLikedWishlistIds();
 
-  Future<bool> toggleWishlistLike(int id);
+  Future<bool> toggleWishlistLike(String id);
 
   Future<void> saveLikedWishlistIds(List<String> ids);
 
@@ -34,10 +34,10 @@ class ConnectedWishlistRepository implements WishlistRepository {
   static const String _likedWishlistIdsKey = 'liked_wishlist_ids_key';
 
   @override
-  Future<List<WishlistModel>?> getWishlistEntries({int? id}) async {
+  Future<List<WishlistModel>?> getWishlistEntries() async {
     final prefs = await SharedPreferences.getInstance();
     try {
-      final wishlistEntries = await wishlistApiClient.getWishlistModels(id: id);
+      final wishlistEntries = await wishlistApiClient.getWishlistModels(id: null);
       await prefs.setString(_cachedWishlistEntriesKey, jsonEncode(wishlistEntries.map((e) => e.toJson()).toList()));
       await prefs.setInt(_cachedWihshlistEntriesTimestampKey, DateTime.now().millisecondsSinceEpoch);
       return wishlistEntries;
@@ -47,7 +47,7 @@ class ConnectedWishlistRepository implements WishlistRepository {
   }
 
   @override
-  Future<List<WishlistModel>?> getCachedWishlistEntries({int? id}) async {
+  Future<List<WishlistModel>?> getCachedWishlistEntries({String? id}) async {
     final prefs = await SharedPreferences.getInstance();
     final cachedData = prefs.getString(_cachedWishlistEntriesKey);
     final cachedTimeStamp = prefs.getInt(_cachedWihshlistEntriesTimestampKey);
@@ -59,6 +59,7 @@ class ConnectedWishlistRepository implements WishlistRepository {
         final List<dynamic> jsonList = jsonDecode(cachedData);
         return jsonList.map((e) => WishlistModel.fromJson(e as Map<String, dynamic>)).toList();
       } catch (e) {
+        prefs.remove(_cachedWishlistEntriesKey);
         return null;
       }
     }
@@ -74,7 +75,7 @@ class ConnectedWishlistRepository implements WishlistRepository {
   }
 
   @override
-  Future<bool> toggleWishlistLike(int id) async {
+  Future<bool> toggleWishlistLike(String id) async {
     return await wishlistApiClient.toggleWishlistLike(id: id);
   }
 

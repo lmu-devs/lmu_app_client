@@ -24,22 +24,6 @@ class HomePage extends StatelessWidget {
           children: [
             GestureDetector(
               behavior: HitTestBehavior.translucent,
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const IdCardPage()),
-                );
-              },
-              child: const Padding(
-                padding: EdgeInsets.only(right: LmuSizes.size_16),
-                child: SizedBox(
-                  height: 40,
-                  child: LmuIcon(
-                      icon: LucideIcons.id_card, size: LmuIconSizes.medium),
-                ),
-              ),
-            ),
-            GestureDetector(
-              behavior: HitTestBehavior.translucent,
               onTap: () => const SettingsMainRoute().go(context),
               child: const Padding(
                 padding: EdgeInsets.only(left: LmuSizes.size_16),
