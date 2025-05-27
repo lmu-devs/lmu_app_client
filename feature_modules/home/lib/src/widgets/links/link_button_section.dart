@@ -1,5 +1,4 @@
 import 'package:core/components.dart';
-import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core_routes/home.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,22 +24,22 @@ class LinkButtonSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         LmuTileHeadline.base(title: context.locals.home.allLinksTitle),
-        Row(
-          children: [
+        LmuButtonRow(
+          hasHorizontalPadding: false,
+          buttons: [
             LmuIconButton(
               icon: LucideIcons.search,
               onPressed: () => const LinksSearchRoute().go(context),
             ),
-            const SizedBox(width: LmuSizes.size_8),
             LmuButton(
               title: context.locals.home.linksFilterInternal,
               emphasis: activeFilter == LinkFilterKeys.internal ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
               action: activeFilter == LinkFilterKeys.internal ? ButtonAction.contrast : ButtonAction.base,
               onTap: () => _onButtonTap(LinkFilterKeys.internal),
             ),
-            const SizedBox(width: LmuSizes.size_8),
             LmuButton(
               title: context.locals.home.linksFilterExternal,
               emphasis: activeFilter == LinkFilterKeys.external ? ButtonEmphasis.primary : ButtonEmphasis.secondary,

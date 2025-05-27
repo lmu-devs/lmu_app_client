@@ -24,11 +24,9 @@ class RoomfinderBuildingButtonSection extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.only(bottom: LmuSizes.size_16),
-        child: Row(
-          children: [
-            const SizedBox(width: LmuSizes.size_16),
+        child: LmuButtonRow(
+          buttons: [
             if (withMapButton) LmuMapImageButton(onTap: () => const ExploreMainRoute().go(context)),
-            if (withMapButton) const SizedBox(width: LmuSizes.size_8),
             LmuIconButton(
               icon: LucideIcons.search,
               onPressed: () async {
@@ -47,7 +45,6 @@ class RoomfinderBuildingButtonSection extends StatelessWidget {
                 }
               },
             ),
-            const SizedBox(width: LmuSizes.size_16),
           ],
         ),
       ),

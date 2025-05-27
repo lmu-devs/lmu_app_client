@@ -1,4 +1,3 @@
-import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:flutter/widgets.dart';
 
@@ -9,7 +8,7 @@ class LmuButtonRow extends StatelessWidget {
     this.hasHorizontalPadding = true,
   });
 
-  final List<LmuButton> buttons;
+  final List<Widget> buttons;
   final bool hasHorizontalPadding;
 
   @override

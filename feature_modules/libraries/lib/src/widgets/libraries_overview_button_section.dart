@@ -27,17 +27,13 @@ class LibrariesOverviewButtonSection extends StatelessWidget {
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const SizedBox(width: LmuSizes.size_16),
+      child: LmuButtonRow(
+        buttons: [
           LmuMapImageButton(onTap: () => const ExploreMainRoute().go(context)),
-          const SizedBox(width: LmuSizes.size_8),
           LmuIconButton(
             icon: LucideIcons.search,
             onPressed: () => const LibrariesSearchRoute().go(context),
           ),
-          const SizedBox(width: LmuSizes.size_8),
           ValueListenableBuilder(
             valueListenable: userPreferencesService.sortOptionNotifier,
             builder: (context, activeSortOption, _) {
@@ -49,7 +45,6 @@ class LibrariesOverviewButtonSection extends StatelessWidget {
               );
             },
           ),
-          const SizedBox(width: LmuSizes.size_8),
           ValueListenableBuilder(
             valueListenable: isOpenNowFilterNotifier,
             builder: (context, isOpenNowFilterActive, _) {
@@ -61,7 +56,6 @@ class LibrariesOverviewButtonSection extends StatelessWidget {
               );
             },
           ),
-          const SizedBox(width: LmuSizes.size_16),
         ],
       ),
     );
