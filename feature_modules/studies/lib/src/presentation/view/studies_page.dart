@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:flutter/widgets.dart';
@@ -26,6 +28,19 @@ class StudiesPage extends DrivableWidget<StudiesPageDriver> {
               description: "Computer Science Student",
               onTap: () {},
             ),
+            const SizedBox(height: LmuSizes.size_32),
+            LmuButton(
+              title: Platform.isIOS ? "Add to Apple Wallet" : "Add to Google Wallet",
+              action: ButtonAction.contrast,
+              size: ButtonSize.large,
+              leadingWidget: Image.asset(
+                Platform.isIOS ? 'assets/apple_wallet.png' : 'assets/google_wallet.png',
+                package: "studies",
+                width: LmuIconSizes.medium,
+                height: LmuIconSizes.medium,
+              ),
+              onTap: () => LmuToast.show(context: context, message: "Added to Wallet", type: ToastType.success),
+            ),
             const SizedBox(height: LmuSizes.size_96),
           ],
         ),
@@ -34,6 +49,5 @@ class StudiesPage extends DrivableWidget<StudiesPageDriver> {
   }
 
   @override
-  WidgetDriverProvider<StudiesPageDriver> get driverProvider =>
-      $StudiesPageDriverProvider();
+  WidgetDriverProvider<StudiesPageDriver> get driverProvider => $StudiesPageDriverProvider();
 }
