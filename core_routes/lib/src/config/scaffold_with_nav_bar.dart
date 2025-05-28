@@ -17,6 +17,7 @@ class ScaffoldWithNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locals = context.locals;
     return Scaffold(
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
       body: AnimatedBranchContainer(
@@ -51,11 +52,11 @@ class ScaffoldWithNavBar extends StatelessWidget {
             selectedFontSize: 12,
             unselectedFontSize: 12,
             items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(icon: const Icon(LucideIcons.house), label: context.locals.home.tabTitle),
-              BottomNavigationBarItem(icon: const Icon(LucideIcons.utensils), label: context.locals.canteen.tabTitle),
-              BottomNavigationBarItem(icon: const Icon(LucideIcons.map), label: context.locals.explore.tabTitle),
-              BottomNavigationBarItem(
-                  icon: const Icon(LucideIcons.party_popper), label: context.locals.wishlist.tabTitle),
+              BottomNavigationBarItem(icon: const Icon(LucideIcons.house), label: locals.home.tabTitle),
+              BottomNavigationBarItem(icon: const Icon(LucideIcons.utensils), label: locals.canteen.tabTitle),
+              BottomNavigationBarItem(icon: const Icon(LucideIcons.map), label: locals.explore.tabTitle),
+              BottomNavigationBarItem(icon: const Icon(LucideIcons.party_popper), label: locals.wishlist.tabTitle),
+              BottomNavigationBarItem(icon: const Icon(LucideIcons.graduation_cap), label: locals.studies.studiesTitle),
             ],
             currentIndex: navigationShell.currentIndex,
             onTap: (int index) => _onTap(context, index),

@@ -40,7 +40,6 @@ class _SportsPageState extends State<SportsPage> {
         bloc: GetIt.I.get<SportsCubit>(),
         builder: (context, state) {
           Widget child = const SportsLoadingView(key: ValueKey("sportsLoading"));
-
           if (state is SportsLoadInProgress && state.sports != null) {
             child = SportsContentView(key: const ValueKey("sportsContent"), sports: state.sports!);
           } else if (state is SportsLoadSuccess) {

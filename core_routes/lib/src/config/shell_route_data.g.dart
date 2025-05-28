@@ -244,6 +244,14 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
             ),
           ],
         ),
+        StatefulShellBranchData.$branch(
+          routes: [
+            GoRouteData.$route(
+              path: '/studies',
+              factory: $StudiesMainRouteExtension._fromState,
+            ),
+          ],
+        ),
       ],
     );
 
@@ -819,4 +827,20 @@ extension $WishlistDetailsRouteExtension on WishlistDetailsRoute {
   void pushReplacement(BuildContext context) => context.pushReplacement(location, extra: $extra);
 
   void replace(BuildContext context) => context.replace(location, extra: $extra);
+}
+
+extension $StudiesMainRouteExtension on StudiesMainRoute {
+  static StudiesMainRoute _fromState(GoRouterState state) => const StudiesMainRoute();
+
+  String get location => GoRouteData.$location(
+        '/studies',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
 }
