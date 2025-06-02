@@ -7,7 +7,7 @@ part 'people_dto.g.dart';
 
 // data transfer object (DTO) für datentransferierung
 @JsonSerializable()
-class PeopleDto extends Equatable{
+class PeopleDto extends Equatable {
   const PeopleDto({
     required this.id,
     required this.name,
@@ -16,10 +16,7 @@ class PeopleDto extends Equatable{
   final String id;
   final String name;
 
-  People toDomain() => People(
-        id: id,
-        name: name,
-      );
+  People toDomain() => People(id: id, name: name);
 
   factory PeopleDto.fromJson(Map<String, dynamic> json) => _$PeopleDtoFromJson(json);
 

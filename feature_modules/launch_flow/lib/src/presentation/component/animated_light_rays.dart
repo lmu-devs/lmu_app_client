@@ -9,8 +9,7 @@ class AnimatedLightRays extends StatefulWidget {
   State<AnimatedLightRays> createState() => _AnimatedLightRaysState();
 }
 
-class _AnimatedLightRaysState extends State<AnimatedLightRays>
-    with SingleTickerProviderStateMixin {
+class _AnimatedLightRaysState extends State<AnimatedLightRays> with SingleTickerProviderStateMixin {
   late final Ticker _ticker;
   double _time = 0.0;
 
@@ -94,6 +93,5 @@ class _RaysPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _RaysPainter oldDelegate) =>
-      oldDelegate.time != time;
+  bool shouldRepaint(covariant _RaysPainter oldDelegate) => oldDelegate.time != time;
 }

@@ -17,8 +17,7 @@ class EquipmentModel extends Equatable {
   final String type;
   final String? description;
 
-  factory EquipmentModel.fromJson(Map<String, dynamic> json) =>
-      _$EquipmentModelFromJson(json);
+  factory EquipmentModel.fromJson(Map<String, dynamic> json) => _$EquipmentModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$EquipmentModelToJson(this);
 

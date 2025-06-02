@@ -9,20 +9,12 @@ class ImageModel extends Equatable {
   final String? name;
   final String? blurHash;
 
-  const ImageModel({
-    required this.url,
-    required this.name,
-    required this.blurHash
-  });
+  const ImageModel({required this.url, required this.name, required this.blurHash});
 
   factory ImageModel.fromJson(Map<String, dynamic> json) => _$ImageModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ImageModelToJson(this);
 
   @override
-  List<Object?> get props => [
-        url,
-        name,
-        blurHash
-      ];
+  List<Object?> get props => [url, name, blurHash];
 }

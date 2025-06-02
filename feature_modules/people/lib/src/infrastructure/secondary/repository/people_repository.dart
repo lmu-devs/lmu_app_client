@@ -33,7 +33,7 @@ class PeopleRepository implements PeopleRepositoryInterface {
   }
 
   @override
-  Future<void> deletePeople() async {
-    await _storage.deletePeople();
+  Future<void> favorPeople() async {
+    await _storage.favorPeople();
   }
 }

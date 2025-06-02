@@ -20,7 +20,7 @@ class PeopleStorage {
     return PeopleDto.fromJson(peopleMap);
   }
 
-  Future<void> deletePeople() async {
+  Future<void> favorPeople() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(_peopleKey);
   }

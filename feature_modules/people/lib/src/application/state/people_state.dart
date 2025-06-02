@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 
+import '../../domain/model/people.dart';
 import '../usecase/get_cached_people_usecase.dart';
 import '../usecase/get_people_usecase.dart';
-import '../../domain/model/people.dart';
 
 enum PeopleLoadState { initial, loading, loadingWithCache, success, error }
 
-typedef PeopleState = ({ PeopleLoadState loadState, People? people });
+typedef PeopleState = ({PeopleLoadState loadState, People? people});
 
 class PeopleStateService {
   PeopleStateService(this._getPeopleUsecase, this._getCachedPeopleUsecase);
@@ -39,6 +39,6 @@ class PeopleStateService {
       return;
     }
     _stateNotifier.value = (loadState: PeopleLoadState.error, people: null);
-    // TODO: Wenn Laden fehlschlägt, gecachte Daten anzeigen lassen (siehe Benefits State Service) 
+    // TODO: Wenn Laden fehlschlägt, gecachte Daten anzeigen lassen (siehe Benefits State Service)
   }
 }

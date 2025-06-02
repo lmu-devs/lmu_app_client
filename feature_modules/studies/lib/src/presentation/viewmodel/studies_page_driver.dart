@@ -13,6 +13,7 @@ class StudiesPageDriver extends WidgetDriver {
   void onPeoplePressed() {
     const PeopleMainRoute().go(_navigatorContext);
   }
+
   @override
   void didUpdateBuildContext(BuildContext context) {
     super.didUpdateBuildContext(context);

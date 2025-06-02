@@ -1,10 +1,11 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../../domain/model/people.dart';
 import '../../application/state/people_state.dart';
+import '../../domain/model/people.dart';
 
 part 'people_page_driver.g.dart';
 
@@ -30,9 +31,22 @@ class PeoplePageDriver extends WidgetDriver {
 
   String get description => _count.toString();
 
-  void onPeopleCardPressed() {
-    _count += 1;
-    notifyWidget();
+  List<bool> favoriteStates = [false, false];
+
+  void toggleFavorite(int index) {
+    favoriteStates[index] = !favoriteStates[index];
+    notifyWidget(); // ✔️ Hier ist notifyWidget erlaubt
+  }
+
+  void onPeopleCardPressed(BuildContext context, String id, String title, String description) {
+    GoRouter.of(context).push(
+      '/people/details',
+      extra: {
+        'id': id,
+        'title': title,
+        'description': description,
+      },
+    );
   }
 
   void _onPeopleStateChanged() {

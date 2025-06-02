@@ -1,3 +1,3 @@
-class PeopleApiEndpoints{
+class PeopleApiEndpoints {
   static const people = '/people';
 }
