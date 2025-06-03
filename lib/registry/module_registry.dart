@@ -1,9 +1,10 @@
 import 'package:core/api.dart';
-import 'package:core/core_services.dart';
 import 'package:core/module.dart';
 import 'package:core/themes.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/user.dart';
+
+import 'global_registry_manager.dart';
 
 class ModuleRegistry {
   const ModuleRegistry({required this.modules});
@@ -11,17 +12,7 @@ class ModuleRegistry {
   final List<AppModule> modules;
 
   Future<void> init() async {
-    final systemInfoService = GetIt.I.registerSingleton<SystemInfoService>(SystemInfoService());
-    await systemInfoService.init();
-
-    GetIt.I.registerSingleton<ThemeProvider>(ThemeProvider());
-
-    final baseApiClient = GetIt.I.registerSingleton<BaseApiClient>(DefaultBaseApiClient());
-    final languageProvider = GetIt.I.registerSingleton<LanguageProvider>(LanguageProvider());
-    GetIt.I.registerSingleton<LocationService>(LocationService(), dispose: (srv) => srv.dispose());
-
-    await languageProvider.init();
-    baseApiClient.locale = languageProvider.locale;
+    await GlobalRegistryManager.register();
 
     final priorityDependenciesModule = modules.whereType<PriorityDependenciesProvidingAppModule>();
     for (final priorityDependencyModule in priorityDependenciesModule) {
@@ -56,10 +47,11 @@ class ModuleRegistry {
       }
     });
 
+    final languageProvider = GetIt.I.get<LanguageProvider>();
     languageProvider.addListener(() {
       for (final localizedDataContainingModule in modules.whereType<LocalizedDataContainigAppModule>()) {
         localizedDataContainingModule.onLocaleChange();
-        baseApiClient.locale = languageProvider.locale;
+        GetIt.I.get<BaseApiClient>().locale = languageProvider.locale;
       }
     });
   }
