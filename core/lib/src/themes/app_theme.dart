@@ -11,7 +11,8 @@ class AppTheme {
     ),
     extensions: const <ThemeExtension<dynamic>>[lmuColorsLight],
     colorScheme: const ColorScheme.light().copyWith(
-      primary: lmuColorsLight.brandColors.backgroundColors.nonInvertableColors.base,
+      primary:
+          lmuColorsLight.brandColors.backgroundColors.nonInvertableColors.base,
     ),
     scaffoldBackgroundColor: lmuColorsLight.neutralColors.backgroundColors.base,
     cardColor: lmuColorsLight.neutralColors.backgroundColors.base,
@@ -22,8 +23,10 @@ class AppTheme {
     ),
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: lmuColorsLight.brandColors.textColors.strongColors.base,
-      selectionHandleColor: lmuColorsLight.brandColors.textColors.strongColors.base,
-      selectionColor: lmuColorsLight.neutralColors.backgroundColors.mediumColors.base,
+      selectionHandleColor:
+          lmuColorsLight.brandColors.textColors.strongColors.base,
+      selectionColor:
+          lmuColorsLight.neutralColors.backgroundColors.mediumColors.base,
     ),
   );
 
@@ -34,11 +37,12 @@ class AppTheme {
     ),
     extensions: const <ThemeExtension<dynamic>>[lmuColorsDark],
     colorScheme: const ColorScheme.dark().copyWith(
-      primary: lmuColorsDark.brandColors.backgroundColors.nonInvertableColors.base,
+      primary:
+          lmuColorsDark.brandColors.backgroundColors.nonInvertableColors.base,
     ),
     scaffoldBackgroundColor: lmuColorsDark.neutralColors.backgroundColors.base,
     cardColor: lmuColorsDark.neutralColors.backgroundColors.base,
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: lmuColorsDark.neutralColors.backgroundColors.base,
     ),
     appBarTheme: AppBarTheme(
@@ -48,8 +52,10 @@ class AppTheme {
     ),
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: lmuColorsDark.brandColors.textColors.strongColors.base,
-      selectionHandleColor: lmuColorsDark.brandColors.textColors.strongColors.base,
-      selectionColor: lmuColorsDark.neutralColors.backgroundColors.mediumColors.base,
+      selectionHandleColor:
+          lmuColorsDark.brandColors.textColors.strongColors.base,
+      selectionColor:
+          lmuColorsDark.neutralColors.backgroundColors.mediumColors.base,
     ),
   );
 }

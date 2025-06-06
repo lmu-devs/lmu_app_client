@@ -107,6 +107,41 @@ Follow these steps to set up your development environment:
 
 </br>
 
+6. **Using Flutter Version Management (FVM) - optional Step**
+This project uses [FVM (Flutter Version Management)](https://fvm.app/) to ensure a consistent Flutter SDK version across all team members and environments.
+FVM allows us to configure and isolate the Flutter SDK version per project, which is especially useful when working on multiple projects (on your computer) that may require different Flutter or Dart versions.
+If you do not have multible Flutter projects on your Computer or all are using the same Flutter SDk Version all the time you might not need FVM.
+
+Why use FVM?
+- Guarantees everyone uses the same SDK version defined in .fvmrc.
+- Avoids conflicts switching between projects with different Flutter versions.
+- Keeps your global system clean — no need to constantly upgrade/downgrade your system-wide Flutter installation.
+
+Do I need it?
+- No, but we strongly recommend using it, to reduce problems with package compatibility and other bugs.
+
+To get started:
+For different IDEs and Systems if you have a problem look here: (Official Medium Blog article)[https://medium.com/@ahmedawwan/flutter-version-management-a-guide-to-using-fvm-dbe1d269f565]
+
+```sh
+# Install FVM (if not yet installed)
+dart pub global activate fvm
+
+# Install the Flutter version defined in this project
+fvm install
+
+# Use the Flutter SDK for this project
+fvm flutter pub get
+
+# EXAMPLE: So everytime you want to execute anything regarding Flutter/ Dart add fvm in fron of the command like this 
+fvm flutter run 
+fvm dart pub get 
+
+```
+
+To make it default, you can alias `fvm flutter` as `flutter` in your shell (globaly), so you don’t have to type `fvm` every time. Another option - recommended only for unix based systems - would be [direnv](https://direnv.net/).
+
+
 ### Running the App
 
 To run the app on an emulator or physical device:
