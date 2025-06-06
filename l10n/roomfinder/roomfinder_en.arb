@@ -2,7 +2,6 @@
   "@@locale": "en",
   "@@context": "Roomfinder",
   "title": "Roomfinder",
-  "popular": "Popular",
   "allBuildings": "All buildings",
   "alphabetical": "Alphabetically",
   "distance": "Distance",

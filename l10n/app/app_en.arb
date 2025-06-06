@@ -73,6 +73,10 @@
   "@searchEmpty": {
     "description": "Search empty state"
   },
+  "popular": "Popular",
+  "@popular": {
+    "description": "Popular"
+  },
   "locationServiceDialogTitle": "Location Services Disabled",
   "@locationServiceDialogTitle": {
     "description": "Dialog title if location services are off"
