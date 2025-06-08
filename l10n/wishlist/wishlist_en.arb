@@ -47,6 +47,10 @@
   "@wishlistStatusBeta": {
     "description": "Beta"
   },
+  "wishlistStatusVoting": "Up for Voting",
+  "@wishlistStatusVoting": {
+    "description": "Up for Voting"
+  },
   "wishlistStatusDone": "Done",
   "@wishlistStatusDone": {
     "description": "Done"

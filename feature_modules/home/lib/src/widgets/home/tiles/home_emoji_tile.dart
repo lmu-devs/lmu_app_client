@@ -17,13 +17,13 @@ class HomeEmojiTile extends StatelessWidget {
     return Container(
       decoration: ShapeDecoration(
         shape: RoundedSuperellipseBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(LmuRadiusSizes.medium),
         ),
       ),
       child: ClipPath(
         clipper: ShapeBorderClipper(
           shape: RoundedSuperellipseBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(LmuRadiusSizes.medium),
           ),
         ),
         clipBehavior: Clip.antiAlias,

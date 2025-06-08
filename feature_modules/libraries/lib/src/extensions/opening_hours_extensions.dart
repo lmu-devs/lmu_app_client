@@ -128,7 +128,7 @@ extension AreaStatusExtension on AreaModel {
   String get closingTime =>
       openingHours?.closingTime ?? "";
 
-  ({Color color, String text}) getStyledStatusShort(BuildContext context) {
+  ({Color color, String text}) getStyledStatus(BuildContext context) {
     final localizations = context.locals.libraries;
     final colors = context.colors;
 
@@ -160,37 +160,40 @@ extension AreaStatusExtension on AreaModel {
         );
     }
   }
+}
 
-  ({Color color, String text}) getStyledStatus(BuildContext context) {
-    final localizations = context.locals.libraries;
-    final colors = context.colors;
-
-    switch (currentStatus) {
-      case Status.open:
-        return (
-        color: colors.successColors.textColors.strongColors.base,
-        text: localizations.openNow,
-        );
-      case Status.closingSoon:
-        return (
-        color: colors.warningColors.textColors.strongColors.base,
-        text: localizations.openUntil(closingTime),
-        );
-      case Status.openingSoon:
-        return (
-        color: colors.neutralColors.textColors.mediumColors.base,
-        text: localizations.openingSoon(openingTime),
-        );
-      case Status.pause:
-        return (
-        color: colors.neutralColors.textColors.mediumColors.base,
-        text: localizations.onPause(openingTime),
-        );
-      case Status.closed:
-        return (
-        color: colors.neutralColors.textColors.mediumColors.base,
-        text: localizations.closed,
-        );
+extension LibraryOverallStatusExtension on LibraryModel {
+  ({Color? color, String? text}) getDominantStyledStatus(BuildContext context) {
+    if (areas.isEmpty) {
+      return (color: null, text: null);
     }
+
+    if (areas.length == 1) {
+      return areas.first.getStyledStatus(context);
+    }
+
+    AreaModel? representativeArea;
+
+    representativeArea = areas.firstWhereOrNull((area) => area.currentStatus == Status.open);
+    if (representativeArea != null) {
+      return representativeArea.getStyledStatus(context);
+    }
+
+    representativeArea = areas.firstWhereOrNull((area) => area.currentStatus == Status.pause);
+    if (representativeArea != null) {
+      return representativeArea.getStyledStatus(context);
+    }
+
+    representativeArea = areas.firstWhereOrNull((area) => area.currentStatus == Status.closingSoon);
+    if (representativeArea != null) {
+      return representativeArea.getStyledStatus(context);
+    }
+
+    representativeArea = areas.firstWhereOrNull((area) => area.currentStatus == Status.openingSoon);
+    if (representativeArea != null) {
+      return representativeArea.getStyledStatus(context);
+    }
+
+    return areas.first.getStyledStatus(context);
   }
 }

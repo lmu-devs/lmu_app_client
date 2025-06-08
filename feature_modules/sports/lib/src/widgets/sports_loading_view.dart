@@ -61,28 +61,28 @@ class SportsLoadingView extends StatelessWidget {
             ),
           ),
           const SizedBox(height: LmuSizes.size_16),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-            child: Column(
-              children: [
-                const LmuTileHeadlineLoading(titleLength: 2),
-                Row(
-                  children: [
-                    LmuIconButton(
-                      icon: LucideIcons.search,
-                      isDisabled: true,
-                      onPressed: () {},
-                    ),
-                    const SizedBox(width: LmuSizes.size_8),
-                    LmuButton(
-                      title: context.locals.app.available,
-                      emphasis: ButtonEmphasis.secondary,
-                      state: ButtonState.disabled,
-                    ),
-                  ],
-                ),
-              ],
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+                child: LmuTileHeadlineLoading(titleLength: 2),
+              ),
+              LmuButtonRow(
+                buttons: [
+                  LmuIconButton(
+                    icon: LucideIcons.search,
+                    isDisabled: true,
+                    onPressed: () {},
+                  ),
+                  LmuButton(
+                    title: context.locals.app.available,
+                    emphasis: ButtonEmphasis.secondary,
+                    state: ButtonState.disabled,
+                  ),
+                ],
+              ),
+            ],
           ),
           Padding(
             padding: const EdgeInsets.all(LmuSizes.size_16),

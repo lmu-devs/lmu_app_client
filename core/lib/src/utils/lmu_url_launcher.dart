@@ -75,14 +75,15 @@ class LmuUrlLauncher {
         ),
       );
 
-      if (!launched && context.mounted) {
-        _showErrorToast(
-          context: context,
-          message: context.locals.app.errorOpenWebsite,
-        );
+      if (!launched) {
+        if (mode != LmuUrlLauncherMode.inAppWebView && context.mounted) {
+          _showErrorToast(
+            context: context,
+            message: context.locals.app.errorOpenWebsite,
+          );
+        }
         return false;
       }
-
       return launched;
     } catch (e) {
       if (context.mounted) {

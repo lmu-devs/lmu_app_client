@@ -7,7 +7,9 @@ import 'package:core_routes/libraries.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
+import '../extensions/extensions.dart';
 import '../repository/api/api.dart';
+import '../services/libraries_status_update_service.dart';
 import '../services/libraries_user_preference_service.dart';
 
 class LibraryTile extends StatelessWidget {
@@ -26,51 +28,63 @@ class LibraryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final statusUpdateService = GetIt.I.get<LibrariesStatusUpdateService>();
     final distanceService = GetIt.I.get<LocationService>();
 
     return ListenableBuilder(
-      listenable: distanceService,
-      builder: (context, _) {
-        final mensaLocation = library.location;
-        final distance = distanceService.getDistance(lat: mensaLocation.latitude, long: mensaLocation.longitude);
+      listenable: statusUpdateService,
+      builder: (context, child) {
+        final libraryStatusStyle = library.getDominantStyledStatus(context);
 
-        return LmuCard(
-          title: library.name,
-          customSubtitle: LibraryStatusRow(distance: distance),
-          imageUrl: (hasLargeImage && library.images.isNotEmpty) ? library.images.first.url : null,
-          hasLargeImage: hasLargeImage,
-          hasDivider: hasDivider,
-          hasFavoriteStar: true,
-          isFavorite: isFavorite,
-          favoriteCount: library.rating.calculateLikeCount(isFavorite),
-          onFavoriteTap: () {
-            final userPreferencesService = GetIt.I.get<LibrariesUserPreferenceService>();
-            final id = library.id;
-            final favoriteIndex = userPreferencesService.favoriteLibraryIdsNotifier.value.indexOf(id);
+        return ListenableBuilder(
+          listenable: distanceService,
+          builder: (context, _) {
+            final libraryLocation = library.location;
+            final distance = distanceService.getDistance(lat: libraryLocation.latitude, long: libraryLocation.longitude);
 
-            LmuVibrations.secondary();
+            return LmuCard(
+              title: library.name,
+              customSubtitle: LibraryStatusRow(
+                openingStatusText: libraryStatusStyle.text,
+                openingStatusColor: libraryStatusStyle.color,
+                distance: distance,
+              ),
+              imageUrl: (hasLargeImage && library.images.isNotEmpty) ? library.images.first.url : null,
+              hasLargeImage: hasLargeImage,
+              hasDivider: hasDivider,
+              hasFavoriteStar: true,
+              isFavorite: isFavorite,
+              favoriteCount: library.rating.calculateLikeCount(isFavorite),
+              onFavoriteTap: () {
+                final userPreferencesService = GetIt.I.get<LibrariesUserPreferenceService>();
+                final id = library.id;
+                final favoriteIndex = userPreferencesService.favoriteLibraryIdsNotifier.value.indexOf(id);
 
-            if (isFavorite) {
-              LmuToast.show(
-                context: context,
-                type: ToastType.success,
-                message: context.locals.app.favoriteRemoved,
-                actionText: context.locals.app.undo,
-                onActionPressed: () {
-                  userPreferencesService.toggleFavoriteLibraryId(id, insertIndex: favoriteIndex);
-                },
-              );
-            } else {
-              LmuToast.show(
-                context: context,
-                type: ToastType.success,
-                message: context.locals.app.favoriteAdded,
-              );
-            }
+                LmuVibrations.secondary();
 
-            userPreferencesService.toggleFavoriteLibraryId(id);
+                if (isFavorite) {
+                  LmuToast.show(
+                    context: context,
+                    type: ToastType.success,
+                    message: context.locals.app.favoriteRemoved,
+                    actionText: context.locals.app.undo,
+                    onActionPressed: () {
+                      userPreferencesService.toggleFavoriteLibraryId(id, insertIndex: favoriteIndex);
+                    },
+                  );
+                } else {
+                  LmuToast.show(
+                    context: context,
+                    type: ToastType.success,
+                    message: context.locals.app.favoriteAdded,
+                  );
+                }
+
+                userPreferencesService.toggleFavoriteLibraryId(id);
+              },
+              onTap: () => LibraryDetailsRoute(library).go(context),
+            );
           },
-          onTap: () => LibraryDetailsRoute(library).go(context),
         );
       },
     );
@@ -80,9 +94,13 @@ class LibraryTile extends StatelessWidget {
 class LibraryStatusRow extends StatelessWidget {
   const LibraryStatusRow({
     super.key,
+    this.openingStatusText,
+    this.openingStatusColor,
     this.distance,
   });
 
+  final String? openingStatusText;
+  final Color? openingStatusColor;
   final double? distance;
 
   @override
@@ -90,6 +108,16 @@ class LibraryStatusRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        if (openingStatusText != null && openingStatusColor != null)
+          LmuText.body(
+            openingStatusText,
+            color: openingStatusColor,
+          ),
+        if (openingStatusText != null && openingStatusColor != null && distance != null)
+          LmuText.body(
+            " • ",
+            color: context.colors.neutralColors.textColors.mediumColors.base,
+          ),
         if (distance != null)
           LmuText.body(
             distance!.formatDistance(),

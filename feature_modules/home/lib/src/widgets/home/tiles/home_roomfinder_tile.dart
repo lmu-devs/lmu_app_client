@@ -28,10 +28,10 @@ class HomeRoomfinderTile extends StatelessWidget {
             height: 44,
             decoration: BoxDecoration(
               color: colors.neutralColors.backgroundColors.strongColors.base,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(LmuRadiusSizes.medium),
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(LmuRadiusSizes.medium),
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 14.0, sigmaY: 14.0),
                 child: Center(

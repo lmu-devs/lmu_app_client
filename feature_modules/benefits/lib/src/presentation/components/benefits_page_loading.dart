@@ -8,7 +8,7 @@ import 'benefit_suggestion_tile.dart';
 class BenefitsPageLoading extends StatelessWidget {
   const BenefitsPageLoading({super.key});
 
-  final _categoryLoadingCount = 4;
+  final _categoryLoadingCount = 6;
 
   @override
   Widget build(BuildContext context) {

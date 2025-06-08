@@ -2,21 +2,21 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../dto/benefit_category_dto.dart';
+import '../dto/benefits_dto.dart';
 
 class BenefitsStorage {
   final _benefitsCacheKey = 'benefits_cache';
   final _benefitsCacheTimeKey = 'benefits_cache_time';
-  final _benefitsCacheTime = const Duration(days: 7);
+  final _benefitsCacheTime = const Duration(days: 14);
 
-  Future<void> saveBenefits(List<BenefitCategoryDto> benefits) async {
+  Future<void> saveBenefits(BenefitsDto benefits) async {
     final prefs = await SharedPreferences.getInstance();
-    final benefitsJson = jsonEncode(benefits.map((e) => e.toJson()).toList());
+    final benefitsJson = jsonEncode(benefits.toJson());
     await prefs.setString(_benefitsCacheKey, benefitsJson);
     await prefs.setInt(_benefitsCacheTimeKey, DateTime.now().millisecondsSinceEpoch);
   }
 
-  Future<List<BenefitCategoryDto>?> getBenefits() async {
+  Future<BenefitsDto?> getBenefits() async {
     final prefs = await SharedPreferences.getInstance();
     final benefitsJson = prefs.getString(_benefitsCacheKey);
     if (benefitsJson == null) return null;
@@ -27,8 +27,12 @@ class BenefitsStorage {
       return null;
     }
 
-    final List<dynamic> decodedList = jsonDecode(benefitsJson);
-    return decodedList.map((e) => BenefitCategoryDto.fromJson(e)).toList();
+    try {
+      final benefitsMap = jsonDecode(benefitsJson) as Map<String, dynamic>;
+      return BenefitsDto.fromJson(benefitsMap);
+    } catch (_) {
+      return null;
+    }
   }
 
   Future<void> deleteBenefits() async {

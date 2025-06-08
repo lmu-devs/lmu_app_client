@@ -9,8 +9,8 @@ import 'wishlist_api_endpoints.dart';
 class WishlistApiClient {
   final _baseApiClient = GetIt.I.get<BaseApiClient>();
 
-  Future<List<WishlistModel>> getWishlistModels({int? id}) async {
-    final response = await _baseApiClient.get(WishlistApiEndpoints.getWishlistModels(id: id));
+  Future<List<WishlistModel>> getWishlistModels({String? id}) async {
+    final response = await _baseApiClient.get(WishlistApiEndpoints.getWishlistModels(id: id), version: 2);
 
     if (response.statusCode == 200) {
       final jsonList = json.decode(response.body) as List<dynamic>;
@@ -22,8 +22,8 @@ class WishlistApiClient {
     }
   }
 
-  Future<bool> toggleWishlistLike({required int id}) async {
-    final response = await _baseApiClient.post(WishlistApiEndpoints.toggleWishlistLike(id));
+  Future<bool> toggleWishlistLike({required String id}) async {
+    final response = await _baseApiClient.post(WishlistApiEndpoints.toggleWishlistLike(id), version: 2);
 
     if (response.statusCode == 200) {
       return response.body == 'true';

@@ -7,19 +7,19 @@ part of 'benefit_dto.dart';
 // **************************************************************************
 
 BenefitDto _$BenefitDtoFromJson(Map<String, dynamic> json) => BenefitDto(
+      id: json['id'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
       url: json['url'] as String,
-      aliases: (json['aliases'] as List<dynamic>).map((e) => e as String).toList(),
-      faviconUrl: json['favicon_url'] as String?,
-      imageUrl: json['image_url'] as String?,
+      faviconUrl: json['favicon_url'] as String,
+      image: json['image'] == null ? null : ImageDto.fromJson(json['image'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$BenefitDtoToJson(BenefitDto instance) => <String, dynamic>{
+      'id': instance.id,
       'title': instance.title,
       'description': instance.description,
       'url': instance.url,
-      'aliases': instance.aliases,
       'favicon_url': instance.faviconUrl,
-      'image_url': instance.imageUrl,
+      'image': instance.image?.toJson(),
     };
