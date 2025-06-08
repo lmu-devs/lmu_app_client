@@ -18,7 +18,6 @@ Supported Platforms: Android, iOS
 
 ## Table of Contents
 
-- [Table of Contents](#table-of-contents)
 - [About](#about)
 - [Features](#features)
 - [Development](#development)
