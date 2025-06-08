@@ -18,16 +18,15 @@ Supported Platforms: Android, iOS
 
 ## Table of Contents
 
-- [LMU Students App](#lmu-students-app)
-  - [Table of Contents](#table-of-contents)
-  - [About](#about)
-  - [Features](#features)
-  - [Development](#development)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
-    - [Running the App](#running-the-app)
-  - [Project Structure](#project-structure)
-  - [License](#license)
+- [Table of Contents](#table-of-contents)
+- [About](#about)
+- [Features](#features)
+- [Development](#development)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Running the App](#running-the-app)
+- [Project Structure](#project-structure)
+- [License](#license)
 
 </br>
 
