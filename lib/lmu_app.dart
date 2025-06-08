@@ -10,6 +10,8 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_api/launch_flow.dart';
 
+import 'nav_bar_color_setter.dart';
+
 class LmuApp extends StatelessWidget {
   const LmuApp({super.key});
 
@@ -50,7 +52,12 @@ class LmuApp extends StatelessWidget {
 
               return FToastBuilder()(
                 context,
-                child ?? const SizedBox.shrink(),
+                Stack(
+                  children: [
+                    child ?? const SizedBox.shrink(),
+                    const NavigationBarColorSetter(),
+                  ],
+                ),
               );
             },
           );

@@ -27,17 +27,17 @@ class LmuContentTile extends StatelessWidget {
     final colors = context.colors.neutralColors;
     return Container(
       padding: padding ?? const EdgeInsets.all(LmuSizes.size_4),
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: colors.backgroundColors.tile,
-        borderRadius: contentTileType.borderRadius,
-        border: contentTileType.hasBorder
-            ? Border(
-                bottom: BorderSide(
+        shape: RoundedSuperellipseBorder(
+          borderRadius: contentTileType.borderRadius,
+          side: contentTileType.hasBorder
+              ? BorderSide(
                   color: colors.borderColors.seperatorLight,
                   width: .5,
-                ),
-              )
-            : null,
+                )
+              : BorderSide.none,
+        ),
       ),
       child: content ??
           Column(
