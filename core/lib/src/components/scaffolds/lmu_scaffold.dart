@@ -12,6 +12,7 @@ class LmuScaffold extends StatefulWidget {
     super.key,
     required this.appBar,
     this.body,
+    this.floatingActionButton,
     this.slivers,
     this.customScrollController,
     this.onPopInvoked,
@@ -20,6 +21,7 @@ class LmuScaffold extends StatefulWidget {
 
   final LmuAppBarData appBar;
   final Widget? body;
+  final Widget? floatingActionButton;
   final List<Widget>? slivers;
   final ScrollController? customScrollController;
   final Future<bool> Function()? onPopInvoked;
@@ -107,6 +109,7 @@ class _LmuScaffoldState extends State<LmuScaffold> {
               ],
             ),
           ),
+          floatingActionButton: widget.floatingActionButton,
         ),
       ),
     );

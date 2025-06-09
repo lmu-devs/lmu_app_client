@@ -1,10 +1,10 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../viewmodel/calendar_page_driver.dart';
 import '../component/calendar_card.dart';
+import '../viewmodel/calendar_page_driver.dart';
 
 class CalendarPage extends DrivableWidget<CalendarPageDriver> {
   CalendarPage({super.key});
@@ -26,6 +26,11 @@ class CalendarPage extends DrivableWidget<CalendarPageDriver> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text('Add Event'),
+        icon: const Icon(Icons.add),
+        onPressed: () => driver.onCalendarCardPressed(),
+      ),
     );
   }
 
@@ -41,6 +46,7 @@ class CalendarPage extends DrivableWidget<CalendarPageDriver> {
           description: driver.description,
           onTap: driver.onCalendarCardPressed,
         ),
+        const SizedBox(height: LmuSizes.size_32),
       ],
     );
   }
