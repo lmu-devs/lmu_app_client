@@ -6,9 +6,10 @@ enum ContentTileType { top, middle, bottom }
 
 class LmuContentTile extends StatelessWidget {
   const LmuContentTile({
+    super.key,
     this.content,
     this.contentList,
-    super.key,
+    this.crossAxisAlignment = CrossAxisAlignment.center,
     this.contentTileType = ContentTileType.middle,
     this.padding,
     this.useListView = false,
@@ -16,6 +17,7 @@ class LmuContentTile extends StatelessWidget {
 
   final Widget? content;
   final List<Widget>? contentList;
+  final CrossAxisAlignment crossAxisAlignment;
   final ContentTileType contentTileType;
   final EdgeInsets? padding;
   final bool useListView;
@@ -25,19 +27,24 @@ class LmuContentTile extends StatelessWidget {
     final colors = context.colors.neutralColors;
     return Container(
       padding: padding ?? const EdgeInsets.all(LmuSizes.size_4),
-      decoration: BoxDecoration(
+      decoration: ShapeDecoration(
         color: colors.backgroundColors.tile,
-        borderRadius: contentTileType.borderRadius,
-        border: contentTileType.hasBorder
-            ? Border(
-                bottom: BorderSide(
+        shape: RoundedSuperellipseBorder(
+          borderRadius: contentTileType.borderRadius,
+          side: contentTileType.hasBorder
+              ? BorderSide(
                   color: colors.borderColors.seperatorLight,
                   width: .5,
-                ),
-              )
-            : null,
+                )
+              : BorderSide.none,
+        ),
       ),
-      child: content ?? Column(mainAxisSize: MainAxisSize.min, children: contentList!),
+      child: content ??
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: crossAxisAlignment,
+            children: contentList!,
+          ),
     );
   }
 }

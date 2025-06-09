@@ -21,6 +21,9 @@ Supported Platforms: Android, iOS
 - [About](#about)
 - [Features](#features)
 - [Development](#development)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Running the App](#running-the-app)
 - [Project Structure](#project-structure)
 - [License](#license)
 
@@ -52,8 +55,8 @@ The app is developed and managed by LMU Developers, an official student organiza
 
 Before you can start with Flutter, ensure you have the following installed:
 
-1. **Flutter SDK 3.29.3**: Download and install Flutter from the official [Flutter website](https://flutter.dev/docs/get-started/install).
-[Download MacOS ARM](https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_arm64_3.22.3-stable.zip), [Download Windows x64](https://storage.googleapis.com/flutter_infra_release/releases/stable/windows/flutter_windows_3.22.3-stable.zip)
+1. **Flutter SDK 3.32.0**: Download and install Flutter from the official [Flutter website](https://flutter.dev/docs/get-started/install).
+[Download MacOS ARM](https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_arm64_3.32.0-stable.zip), [Download Windows x64](https://storage.googleapis.com/flutter_infra_release/releases/stable/windows/flutter_windows_3.32.0-stable.zip)
 2. **Dart SDK**: This comes bundled with the Flutter SDK.
 3. **Android Studio** or **Visual Studio Code**: These are the recommended IDEs for Flutter development.
 4. **Android SDK**: Necessary for building and running Android apps.
@@ -106,6 +109,41 @@ Follow these steps to set up your development environment:
    ```
 
 </br>
+
+6. **Using Flutter Version Management (FVM) - optional Step**
+This project uses [FVM (Flutter Version Management)](https://fvm.app/) to ensure a consistent Flutter SDK version across all team members and environments.
+FVM allows us to configure and isolate the Flutter SDK version per project, which is especially useful when working on multiple projects (on your computer) that may require different Flutter or Dart versions.
+If you do not have multible Flutter projects on your Computer or all are using the same Flutter SDk Version all the time you might not need FVM.
+
+Why use FVM?
+- Guarantees everyone uses the same SDK version defined in .fvmrc.
+- Avoids conflicts switching between projects with different Flutter versions.
+- Keeps your global system clean — no need to constantly upgrade/downgrade your system-wide Flutter installation.
+
+Do I need it?
+- No, but we strongly recommend using it, to reduce problems with package compatibility and other bugs.
+
+To get started:
+For different IDEs and Systems if you have a problem look here: (Official Medium Blog article)[https://medium.com/@ahmedawwan/flutter-version-management-a-guide-to-using-fvm-dbe1d269f565]
+
+```sh
+# Install FVM (if not yet installed)
+dart pub global activate fvm
+
+# Install the Flutter version defined in this project
+fvm install
+
+# Use the Flutter SDK for this project
+fvm flutter pub get
+
+# EXAMPLE: So everytime you want to execute anything regarding Flutter/ Dart add fvm in fron of the command like this 
+fvm flutter run 
+fvm dart pub get 
+
+```
+
+To make it default, you can alias `fvm flutter` as `flutter` in your shell (globaly), so you don’t have to type `fvm` every time. Another option - recommended only for unix based systems - would be [direnv](https://direnv.net/).
+
 
 ### Running the App
 

@@ -77,9 +77,6 @@ class _LmuScaffoldState extends State<LmuScaffold> {
           bottomNavigationBar: widget.bottomNavigationBar,
           backgroundColor: backgroundColor,
           body: CupertinoScrollbar(
-            thickness: 0, // Scrollbar temporary disabled
-            thicknessWhileDragging: 0,
-            thumbVisibility: false,
             controller: _scrollController,
             mainAxisMargin: widget.isBottomSheet ? _bottomeSheetCollapsedTitleHeight : 3,
             child: CustomScrollView(

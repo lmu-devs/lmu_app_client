@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:core_routes/wishlist.dart';
 import 'package:flutter/material.dart';
@@ -48,23 +49,29 @@ class WishlistEntrySection extends StatelessWidget {
 
           tiles.add(
             LmuContentTile(
-              contentList: wishlistEntries
-                  .map(
-                    (wishlistModel) => LmuListItem.action(
-                      title: wishlistModel.title,
-                      titleInTextVisuals: wishlistModel.status.getValue(context).isNotEmpty
-                          ? [LmuInTextVisual.text(title: wishlistModel.status.getValue(context))]
-                          : [],
-                      subtitle: wishlistModel.description,
-                      trailingTitle: wishlistModel.ratingModel.calculateLikeCount(
-                        likedWishlistIds.contains(wishlistModel.id.toString()),
-                      ),
-                      maximizeLeadingTitleArea: true,
-                      actionType: LmuListItemAction.chevron,
-                      onTap: () => WishlistDetailsRoute(wishlistModel).go(context),
-                    ),
-                  )
-                  .toList(),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              contentList: [
+                Padding(
+                  padding: const EdgeInsets.only(top: LmuSizes.size_8, left: LmuSizes.size_12),
+                  child: LmuText.bodyXSmall(status.getValue(context)),
+                ),
+                Column(
+                  children: wishlistEntries
+                      .map(
+                        (wishlistModel) => LmuListItem.action(
+                          title: wishlistModel.title,
+                          subtitle: wishlistModel.description,
+                          trailingTitle: wishlistModel.ratingModel.calculateLikeCount(
+                            likedWishlistIds.contains(wishlistModel.id.toString()),
+                          ),
+                          maximizeLeadingTitleArea: true,
+                          actionType: LmuListItemAction.chevron,
+                          onTap: () => WishlistDetailsRoute(wishlistModel).go(context),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ],
             ),
           );
 

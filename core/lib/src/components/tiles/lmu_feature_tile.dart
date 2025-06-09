@@ -32,24 +32,30 @@ class LmuFeatureTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: colors.neutralColors.borderColors.tile, width: 1),
-        borderRadius: const BorderRadius.all(Radius.circular(LmuRadiusSizes.mediumLarge + 1)),
+      decoration: ShapeDecoration(
+        shape: RoundedSuperellipseBorder(
+          borderRadius: const BorderRadius.all(
+              Radius.circular(LmuRadiusSizes.mediumLarge + 1)),
+          side: BorderSide(
+              color: colors.neutralColors.borderColors.tile, width: 1),
+        ),
       ),
       child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(LmuRadiusSizes.mediumLarge)),
+        borderRadius:
+            const BorderRadius.all(Radius.circular(LmuRadiusSizes.mediumLarge)),
         child: GestureDetector(
           onTap: onTap,
           child: Container(
-            decoration: BoxDecoration(
+            decoration: ShapeDecoration(
               color: colors.neutralColors.backgroundColors.tile,
-              border: hasBorder
-                  ? Border.all(
-                      strokeAlign: BorderSide.strokeAlignOutside,
-                      color: colors.neutralColors.borderColors.seperatorLight,
-                      width: 1,
-                    )
-                  : null,
+              shape: RoundedSuperellipseBorder(
+                side: hasBorder
+                    ? BorderSide(
+                        color: colors.neutralColors.borderColors.seperatorLight,
+                        width: 1,
+                      )
+                    : BorderSide.none,
+              ),
             ),
             child: Stack(
               children: [
@@ -103,7 +109,8 @@ class LmuFeatureTile extends StatelessWidget {
                         if (subtitle != null)
                           LmuText.body(
                             subtitle,
-                            color: colors.neutralColors.textColors.mediumColors.base,
+                            color: colors
+                                .neutralColors.textColors.mediumColors.base,
                           ),
                       ],
                     ),

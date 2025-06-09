@@ -13,6 +13,7 @@
   "wishlistStatusHidden": "Versteckt",
   "wishlistStatusDevelopment": "In Entwicklung",
   "wishlistStatusBeta": "Beta",
+  "wishlistStatusVoting": "In Abstimmung",
   "wishlistStatusDone": "Fertig",
   "testPrototype": "Jetzt als Prototyp testen",
   "prototypeError": "Prototyp konnte nicht geöffnet werden",
