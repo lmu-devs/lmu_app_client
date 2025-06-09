@@ -35,8 +35,7 @@ class WishlistDetailsPage extends StatelessWidget {
             if (!context.mounted) return;
             GetIt.I.get<FeedbackApi>().showFeedback(
                   context,
-                  type: FeedbackType.general,
-                  origin: 'Wishlist Entry: ${wishlistModel.title}',
+                  args: FeedbackArgs(type: FeedbackType.general, origin: 'Wishlist Entry: ${wishlistModel.title}'),
                 );
           },
         );
@@ -105,8 +104,10 @@ class WishlistDetailsPage extends StatelessWidget {
                     emphasis: ButtonEmphasis.secondary,
                     onTap: () => GetIt.I.get<FeedbackApi>().showFeedback(
                           context,
-                          type: FeedbackType.general,
-                          origin: 'Wishlist Entry: ${wishlistModel.title}',
+                          args: FeedbackArgs(
+                            type: FeedbackType.general,
+                            origin: 'Wishlist Entry: ${wishlistModel.title}',
+                          ),
                         ),
                   ),
                 ],

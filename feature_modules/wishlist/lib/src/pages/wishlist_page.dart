@@ -23,6 +23,7 @@ class WishlistPage extends StatefulWidget {
 }
 
 class _WishlistPageState extends State<WishlistPage> {
+  final _feedbackApi = GetIt.I.get<FeedbackApi>();
   @override
   void initState() {
     final wishlistCubit = GetIt.I.get<WishlistCubit>();
@@ -136,25 +137,19 @@ class _WishlistPageState extends State<WishlistPage> {
                         title: context.locals.app.suggestFeature,
                         mainContentAlignment: MainContentAlignment.center,
                         leadingArea: const LeadingFancyIcons(icon: LucideIcons.plus),
-                        onTap: () {
-                          GetIt.I.get<FeedbackApi>().showFeedback(
-                                context,
-                                type: FeedbackType.suggestion,
-                                origin: 'WishlistScreen',
-                              );
-                        },
+                        onTap: () => _feedbackApi.showFeedback(
+                          context,
+                          args: const FeedbackArgs(type: FeedbackType.suggestion, origin: 'WishlistScreen'),
+                        ),
                       ),
                       LmuListItem.base(
                         title: context.locals.app.reportBug,
                         mainContentAlignment: MainContentAlignment.center,
                         leadingArea: const LeadingFancyIcons(icon: LucideIcons.bug),
-                        onTap: () {
-                          GetIt.I.get<FeedbackApi>().showFeedback(
-                                context,
-                                type: FeedbackType.bug,
-                                origin: 'WishlistScreen',
-                              );
-                        },
+                        onTap: () => _feedbackApi.showFeedback(
+                          context,
+                          args: const FeedbackArgs(type: FeedbackType.bug, origin: 'WishlistScreen'),
+                        ),
                       ),
                     ],
                   ),

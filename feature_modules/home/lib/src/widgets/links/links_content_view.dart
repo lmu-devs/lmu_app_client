@@ -77,8 +77,10 @@ class _LinksContentViewState extends State<LinksContentView> {
                           onTap: () {
                             GetIt.I.get<FeedbackApi>().showFeedback(
                                   context,
-                                  type: FeedbackType.suggestion,
-                                  origin: 'LinksScreen',
+                                  args: const FeedbackArgs(
+                                    type: FeedbackType.suggestion,
+                                    origin: 'LinksScreen',
+                                  ),
                                 );
                           },
                         ),

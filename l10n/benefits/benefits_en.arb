@@ -5,5 +5,9 @@
   "benefitSuggestion": "Suggest a benefit",
   "@benefitSuggestion": {
     "description": "Suggest a benefit"
+  },
+  "benefitSuggestionDesciption": "Suggest a benefit that you would like to see in the app.",
+  "@benefitSuggestionDesciption": {
+    "description": "Description for the benefit suggestion modal"
   }
 }

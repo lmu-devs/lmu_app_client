@@ -16,6 +16,7 @@ class LmuScaffold extends StatefulWidget {
     this.customScrollController,
     this.onPopInvoked,
     this.isBottomSheet = false,
+    this.bottomNavigationBar,
   });
 
   final LmuAppBarData appBar;
@@ -24,6 +25,7 @@ class LmuScaffold extends StatefulWidget {
   final ScrollController? customScrollController;
   final Future<bool> Function()? onPopInvoked;
   final bool isBottomSheet;
+  final Widget? bottomNavigationBar;
 
   @override
   State<LmuScaffold> createState() => _LmuScaffoldState();
@@ -72,6 +74,7 @@ class _LmuScaffoldState extends State<LmuScaffold> {
       child: WillPopScope(
         onWillPop: widget.onPopInvoked,
         child: Scaffold(
+          bottomNavigationBar: widget.bottomNavigationBar,
           backgroundColor: backgroundColor,
           body: CupertinoScrollbar(
             thickness: 0, // Scrollbar temporary disabled

@@ -22,8 +22,8 @@ class FeedbackPageDriver extends WidgetDriver {
   final _requestAppReviewUsecase = GetIt.I.get<RequestAppReviewUseCase>();
 
   late final TextEditingController _textEditingController;
-  late final String _origin;
-  late final FeedbackType _type;
+  late final FeedbackArgs _args;
+
   late FeedbackLocalizations _localizations;
   late NavigatorState _navigatorState;
   late LmuToast _toast;
@@ -31,11 +31,13 @@ class FeedbackPageDriver extends WidgetDriver {
   bool _isLoading = false;
   EmojiFeedback? _selectedFeedback;
 
+  FeedbackType get _type => _args.type;
+
   @TestDriverDefaultValue(_TestTextEditingController())
   TextEditingController get textEditingController => _textEditingController;
 
-  String get largeTitle => _type.title(_localizations);
-  String get description => _type.description(_localizations);
+  String get largeTitle => _args.title ?? _type.title(_localizations);
+  String get description => _args.description ?? _type.description(_localizations);
   String get inputHint => _type.inputHint(_localizations);
 
   bool get showEmojiPicker => _type == FeedbackType.general;
@@ -59,7 +61,7 @@ class FeedbackPageDriver extends WidgetDriver {
       await _sendFeedbackUsecase.call(
         UserFeedback(
           type: _type,
-          screen: _origin,
+          screen: _args.origin,
           rating: _selectedFeedback,
           message: _textEditingController.text,
         ),
@@ -93,8 +95,7 @@ class FeedbackPageDriver extends WidgetDriver {
     _textEditingController.addListener(_onTextEditingControllerChanged);
 
     final feedbackState = GetIt.I.get<FeedbackState>();
-    _origin = feedbackState.origin!;
-    _type = feedbackState.type!;
+    _args = feedbackState.args!;
   }
 
   @override
