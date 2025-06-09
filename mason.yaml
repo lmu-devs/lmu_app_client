@@ -1,8 +1,7 @@
 bricks:
   feature_module:
-    path: bricks/feature_module
+    path: "bricks\\feature_module"
   shared_api:
-    path: bricks/shared_api
+    path: "bricks\\shared_api"
   core_routes:
-    path: bricks/core_routes
-
+    path: "bricks\\core_routes"
