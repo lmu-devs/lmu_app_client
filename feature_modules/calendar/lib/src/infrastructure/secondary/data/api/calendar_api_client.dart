@@ -8,7 +8,7 @@ class CalendarApiClient {
   final BaseApiClient _baseApiClient;
 
   Future<CalendarDto> getCalendar() async {
-    return const CalendarDto(id: 'test-id-123', name: 'TestCalenderEintrag');
+    return const CalendarDto(id: 'test-id-123', name: 'TestCalendarEintrag');
     // final response = await _baseApiClient.get(CalendarApiEndpoints.calendar);
     // return CalendarDto.fromJson(jsonDecode(response.body));
   }
