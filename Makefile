@@ -13,7 +13,7 @@ USE_FVM ?= $(FVM_EXISTS)
 
 # If USE_FVM is '1', commands will be prefixed with 'fvm'.
 # Otherwise, no prefix is used (default Flutter/Dart from PATH).
-FVM_PREFIX := $(if $(USE_FVM),fvm ,) # Note the space after 'fvm'
+FVM_PREFIX := $(if $(USE_FVM),fvm ,)
 FVM_FLUTTER := $(FVM_PREFIX)flutter
 FVM_DART := $(FVM_PREFIX)dart
 
