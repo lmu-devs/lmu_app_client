@@ -110,9 +110,9 @@ Follow these steps to set up your development environment:
 
 </br>
 
-6. **Using Flutter Version Management (FVM) - optional Step**
+6. **Using Flutter Version Management - FVM (Optional):**
 This project uses [FVM (Flutter Version Management)](https://fvm.app/) to ensure a consistent Flutter SDK version across all team members and environments.
-FVM allows us to configure and isolate the Flutter SDK version per project, which is especially useful when working on multiple projects (on your computer) that may require different Flutter or Dart versions.
+FVM allows us to configure and isolate the Flutter SDK version per project, which is especially useful when working on multiple projects (on your computer) that may require different Flutter   or Dart versions.
 If you do not have multible Flutter projects on your Computer or all are using the same Flutter SDk Version all the time you might not need FVM.
 
 Why use FVM?
@@ -136,7 +136,7 @@ fvm install
 # Use the Flutter SDK for this project
 fvm flutter pub get
 
-# EXAMPLE: So everytime you want to execute anything regarding Flutter/ Dart add fvm in fron of the command like this 
+# EXAMPLE: So everytime you want to execute anything regarding Flutter/Dart add fvm in fron of the command like this 
 fvm flutter run 
 fvm dart pub get 
 
@@ -144,6 +144,7 @@ fvm dart pub get
 
 To make it default, you can alias `fvm flutter` as `flutter` in your shell (globaly), so you don’t have to type `fvm` every time. Another option - recommended only for unix based systems - would be [direnv](https://direnv.net/).
 
+</br>
 
 ### Running the App
 
