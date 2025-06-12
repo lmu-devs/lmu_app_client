@@ -46,6 +46,8 @@ dependencies:
     path: ./feature_modules/launch_flow
   studies:
     path: ./feature_modules/studies
+  calendar:
+    path: ./feature_modules/calendar
   shared_api:
     path: ./shared_api
 

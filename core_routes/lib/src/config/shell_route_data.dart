@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../calendar.dart';
 import '../../launch_flow.dart';
 import '../../libraries.dart';
 import '../../studies.dart';
@@ -187,6 +188,11 @@ class LaunchFlowShellRoute extends ShellRouteData {
       routes: <TypedRoute<RouteData>>[
         TypedGoRoute<StudiesMainRoute>(
           path: StudiesMainRoute.path,
+          routes: <TypedGoRoute<GoRouteData>>[
+            TypedGoRoute<CalendarMainRoute>(
+              path: CalendarMainRoute.path,
+            ),
+          ],
         ),
       ],
     )
