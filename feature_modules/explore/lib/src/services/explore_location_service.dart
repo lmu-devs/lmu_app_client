@@ -37,6 +37,11 @@ class ExploreLocationService {
     }
   }
 
+  void applyInitialFilter(ExploreFilterType type) {
+    _filterNotifier.value = [type];
+    _updateFilteredExploreLocations();
+  }
+
   void updateFilter(ExploreFilterType type) {
     final currentFilters = List.of(_filterNotifier.value);
     if (currentFilters.contains(type)) {

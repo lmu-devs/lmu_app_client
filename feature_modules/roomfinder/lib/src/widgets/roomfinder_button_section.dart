@@ -37,7 +37,7 @@ class _RoomfinderButtonSectionState extends State<RoomfinderButtonSection> {
         LmuTileHeadline.base(title: context.locals.roomfinder.allBuildings),
         Row(
           children: [
-            LmuMapImageButton(onTap: () => const ExploreMainRoute().go(context)),
+            LmuMapImageButton(onTap: () => const ExploreMainRoute(filter: 'building').go(context)),
             const SizedBox(width: LmuSizes.size_8),
             LmuIconButton(
               icon: LucideIcons.search,
