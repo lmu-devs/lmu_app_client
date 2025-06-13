@@ -6,8 +6,6 @@ import 'package:shared_api/libraries.dart';
 import 'package:shared_api/mensa.dart';
 import 'package:shared_api/roomfinder.dart';
 
-enum ExploreFilterType { mensa, building, library, cinema }
-
 class ExploreLocationService {
   final ValueNotifier<List<ExploreLocation>> _locationsNotifier = ValueNotifier([]);
   final ValueNotifier<List<ExploreLocation>> _filteredLocationsNotifier = ValueNotifier([]);

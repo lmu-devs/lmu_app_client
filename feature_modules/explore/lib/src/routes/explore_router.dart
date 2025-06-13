@@ -1,6 +1,7 @@
 import 'package:core_routes/explore.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/explore.dart';
 
 import '../pages/explore_page.dart';
 import '../pages/explore_search_page.dart';
