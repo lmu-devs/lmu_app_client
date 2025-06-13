@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/explore.dart';
 
 import '../../repository/api/models/mensa/mensa_model.dart';
 import '../../repository/api/models/user_preferences/sort_option.dart';
@@ -27,7 +28,7 @@ class MensaOverviewButtonSection extends StatelessWidget {
 
     return LmuButtonRow(
       buttons: [
-        LmuMapImageButton(onTap: () => const ExploreMainRoute().go(context)),
+        LmuMapImageButton(onTap: () => ExploreMainRoute(filter: ExploreFilterType.mensa.name).go(context)),
         LmuIconButton(
           icon: LucideIcons.search,
           onPressed: () => const MensaSearchRoute().go(context),

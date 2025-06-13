@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/explore.dart';
 
 import '../repository/api/api.dart';
 import '../repository/api/enums/sort_options.dart';
@@ -29,7 +30,7 @@ class LibrariesOverviewButtonSection extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: LmuButtonRow(
         buttons: [
-          LmuMapImageButton(onTap: () => const ExploreMainRoute().go(context)),
+          LmuMapImageButton(onTap: () => ExploreMainRoute(filter: ExploreFilterType.library.name).go(context)),
           LmuIconButton(
             icon: LucideIcons.search,
             onPressed: () => const LibrariesSearchRoute().go(context),

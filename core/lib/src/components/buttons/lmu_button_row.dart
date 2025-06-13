@@ -5,15 +5,18 @@ class LmuButtonRow extends StatelessWidget {
   const LmuButtonRow({
     super.key,
     required this.buttons,
+    this.controller,
     this.hasHorizontalPadding = true,
   });
 
   final List<Widget> buttons;
+  final ScrollController? controller;
   final bool hasHorizontalPadding;
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      controller: controller,
       scrollDirection: Axis.horizontal,
       child: Padding(
         padding: EdgeInsets.symmetric(

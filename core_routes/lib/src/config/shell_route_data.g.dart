@@ -764,11 +764,16 @@ extension $MensaSearchRouteExtension on MensaSearchRoute {
 }
 
 extension $ExploreMainRouteExtension on ExploreMainRoute {
-  static ExploreMainRoute _fromState(GoRouterState state) => const ExploreMainRoute();
+  static ExploreMainRoute _fromState(GoRouterState state) => ExploreMainRoute(
+    filter: state.uri.queryParameters['filter'],
+  );
 
   String get location => GoRouteData.$location(
-        '/explore',
-      );
+    '/explore',
+    queryParams: {
+      if (filter != null) 'filter': filter,
+    },
+  );
 
   void go(BuildContext context) => context.go(location);
 
