@@ -1,5 +1,5 @@
 import '../../domain/interface/people_repository_interface.dart';
-import '../../domain/model/people.dart';
+import '../../domain/model/people_category.dart';
 
 class GetPeopleUsecase {
   const GetPeopleUsecase(this.repository);
@@ -7,5 +7,5 @@ class GetPeopleUsecase {
 // Repository stellt die Daten bereit oder übergibt Daten an Repository
   final PeopleRepositoryInterface repository;
 
-  Future<People?> call() => repository.getPeople();
+  Future<List<PeopleCategory>?> call() => repository.getPeople();
 }

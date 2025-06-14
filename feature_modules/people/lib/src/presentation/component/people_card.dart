@@ -1,46 +1,48 @@
 import 'package:core/components.dart';
+import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 
-class PeopleCard extends StatelessWidget {
-  const PeopleCard({
-    super.key,
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.onTap,
-    required this.hasFavoriteStar,
-    required this.onFavoriteTap,
-  });
+import '../../domain/model/people.dart';
 
-  final String id;
-  final String title;
-  final String description;
-  final void Function() onTap;
-  final bool hasFavoriteStar;
-  final void Function() onFavoriteTap;
+class PeopleCard extends StatelessWidget {
+  const PeopleCard({super.key, required this.people});
+
+  final People people;
+
+  void _handleTap(BuildContext context) => LmuUrlLauncher.launchWebsite(
+        context: context,
+        url: people.url,
+        mode: LmuUrlLauncherMode.externalApplication,
+      );
+
+  void _handleLongPress(BuildContext context) => CopyToClipboardUtil.copyToClipboard(
+        context: context,
+        copiedText: people.url,
+        message: context.locals.home.linkCopiedToClipboard,
+      );
+
+  String? get faviconUrl => people.faviconUrl;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        LmuCard(
-          title: title,
-          subtitle: description,
-          leadingIcon: const LmuInListBlurEmoji(emoji: " 👤 "),
-          onTap: onTap,
-        ),
-        Positioned(
-          top: 8,
-          right: 8,
-          child: IconButton(
-            icon: Icon(
-              hasFavoriteStar ? Icons.star : Icons.star_border,
-              color: hasFavoriteStar ? Colors.amber : Colors.grey,
-            ),
-            onPressed: onFavoriteTap,
-          ),
-        ),
-      ],
+    return LmuCard(
+      title: people.name,
+      subtitle: people.description,
+      leadingIcon: people.faviconUrl != null
+          ? ClipRRect(
+              borderRadius: BorderRadius.circular(LmuRadiusSizes.xsmall),
+              child: LmuCachedNetworkImage(
+                imageUrl: people.faviconUrl!,
+                height: LmuIconSizes.mediumSmall,
+                width: LmuIconSizes.mediumSmall,
+                fit: BoxFit.cover,
+              ),
+            )
+          : const LmuFaviconFallback(size: LmuIconSizes.mediumSmall),
+      onTap: () => _handleTap(context),
+      onLongPress: () => _handleLongPress(context),
     );
   }
 }

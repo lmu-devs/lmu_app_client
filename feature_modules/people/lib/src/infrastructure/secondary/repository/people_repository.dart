@@ -1,6 +1,7 @@
 import '../../../domain/interface/people_repository_interface.dart';
-import '../../../domain/model/people.dart';
+import '../../../domain/model/people_category.dart';
 import '../data/api/people_api_client.dart';
+import '../data/dto/people_mapper.dart';
 import '../data/storage/people_storage.dart';
 
 // Daten aus verschiedenen Quellen (API, Cache) holen und in Domain-Modelle umwandeln
@@ -11,29 +12,31 @@ class PeopleRepository implements PeopleRepositoryInterface {
   final PeopleStorage _storage; // Lokaler Speicher, der die Daten zwischenspeichert
 
   @override
-  Future<People?> getPeople() async {
+  Future<List<PeopleCategory>?> getPeople() async {
     try {
-      final retrivedPeopleData = await _apiClient.getPeople();
-      await _storage.savePeople(retrivedPeopleData);
-      return retrivedPeopleData.toDomain();
+      final response = await _apiClient.getPeople();
+      _storage.savePeople(response);
+      return PeopleMapper.mapToDomain(response);
     } catch (e) {
       return null;
     }
   }
 
   @override
-  Future<People?> getCachedPeople() async {
+  Future<List<PeopleCategory>?> getCachedPeople() async {
     final cachedPeopleData = await _storage.getPeople();
+    print("Get Cached People: $cachedPeopleData");
     if (cachedPeopleData == null) return null;
     try {
-      return cachedPeopleData.toDomain();
+      return PeopleMapper.mapToDomain(cachedPeopleData);
     } catch (e) {
+      deleteCachedPeople();
       return null;
     }
   }
 
   @override
-  Future<void> favorPeople() async {
-    await _storage.favorPeople();
+  Future<void> deleteCachedPeople() async {
+    await _storage.deletePeople();
   }
 }

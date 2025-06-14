@@ -16,19 +16,10 @@ class PeopleMainRoute extends GoRouteData {
 }
 
 class PeopleDetailsRoute extends GoRouteData {
-  const PeopleDetailsRoute({
-    required this.id,
-    required this.title,
-    required this.description,
-  });
+  const PeopleDetailsRoute();
 
-  final String id;
-  final String title;
-  final String description;
-
-  static const String path = 'people/details';
+  static const String path = 'details';
 
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      _router.buildDetails(context, id: id, title: title, description: description);
+  Widget build(BuildContext context, GoRouterState state) => _router.buildDetails(context);
 }

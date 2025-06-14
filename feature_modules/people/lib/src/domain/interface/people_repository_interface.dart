@@ -1,9 +1,9 @@
-import '../model/people.dart';
+import '../model/people_category.dart';
 
 abstract class PeopleRepositoryInterface {
-  Future<People?> getPeople();
+  Future<List<PeopleCategory>?> getPeople();
 
-  Future<People?> getCachedPeople();
+  Future<List<PeopleCategory>?> getCachedPeople();
 
-  Future<void> favorPeople();
+  Future<void> deleteCachedPeople();
 }

@@ -12,28 +12,22 @@ part of 'people_page_driver.dart';
 
 class _$TestPeoplePageDriver extends TestDriver implements PeoplePageDriver {
   @override
-  List<bool> favoriteStates = [];
-
-  @override
   bool get isLoading => false;
 
   @override
-  String get largeTitle => ' ';
+  String get allPeopleTitle => ' ';
 
   @override
-  String get peopleId => ' ';
+  String get allPeopleCount => ' ';
 
   @override
-  String get title => ' ';
+  List<PeopleCategory> get peopleCategories => [];
 
   @override
-  String get description => ' ';
+  void onAllPeoplePressed() {}
 
   @override
-  void toggleFavorite(int index) {}
-
-  @override
-  void onPeopleCardPressed(BuildContext context, String id, String title, String description) {}
+  void onPeopleCardPressed(PeopleCategory peopleCategory) {}
 
   @override
   void didInitDriver() {}

@@ -1,3 +1,3 @@
 class PeopleApiEndpoints {
-  static const people = '/people';
+  static const String people = '/people';
 }

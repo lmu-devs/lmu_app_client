@@ -1,9 +1,11 @@
+import 'package:collection/collection.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../component/people_card.dart';
+import '../component/people_page_loading.dart';
+import '../component/people_suggestion_tile.dart';
 import '../viewmodel/people_page_driver.dart';
 
 class PeoplePage extends DrivableWidget<PeoplePageDriver> {
@@ -13,57 +15,56 @@ class PeoplePage extends DrivableWidget<PeoplePageDriver> {
   Widget build(BuildContext context) {
     return LmuScaffold(
       appBar: LmuAppBarData(
-        largeTitle: driver.largeTitle,
+        largeTitle: "People",
         leadingAction: LeadingAction.back,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
         child: LmuPageAnimationWrapper(
           child: Align(
-            key: ValueKey("people_page_${driver.isLoading}"),
+            //key: ValueKey("people_page_${driver.isLoading}"),
             alignment: Alignment.topCenter,
-            child: content(context),
+            child: content,
           ),
         ),
       ),
     );
   }
 
-  Widget content(BuildContext context) {
-    if (driver.isLoading) return const SizedBox.shrink(); // replace with skeleton loading
+  Widget get content {
+    if (driver.isLoading) return const PeoplePageLoading(); // replace with skeleton loading
 
     return Column(
       children: [
         const SizedBox(height: LmuSizes.size_16),
-        LmuTileHeadline.base(title: "Faculty 1: Mathematics and Statictics"),
-        PeopleCard(
-          id: driver.peopleId,
-          title: driver.title,
-          description: driver.description,
-          hasFavoriteStar: driver.favoriteStates[0],
-          onTap: () => driver.onPeopleCardPressed(context, driver.peopleId, driver.title, driver.description),
-          onFavoriteTap: () => driver.toggleFavorite(0), // <--- Stern-Klick
+        LmuContentTile(
+          content: LmuListItem.action(
+            title: driver.allPeopleTitle,
+            trailingTitle: driver.allPeopleCount,
+            actionType: LmuListItemAction.chevron,
+            onTap: driver.onAllPeoplePressed,
+          ),
         ),
         const SizedBox(height: LmuSizes.size_16),
-        PeopleCard(
-          id: driver.peopleId,
-          title: driver.title,
-          description: driver.description,
-          onTap: () => driver.onPeopleCardPressed(context, driver.peopleId, driver.title, driver.description),
-          hasFavoriteStar: true,
-          onFavoriteTap: () => driver.toggleFavorite(1),
+        LmuContentTile(
+          contentList: driver.peopleCategories
+              .mapIndexed(
+                (index, people) => LmuListItem.action(
+                  key: Key("people_category_${people.hashCode}"),
+                  title: people.name,
+                  subtitle: people.description,
+                  leadingArea: LmuInListBlurEmoji(emoji: people.emoji),
+                  trailingTitle: people.peoples.length.toString(),
+                  hasDivider: index != driver.peopleCategories.length - 1,
+                  actionType: LmuListItemAction.chevron,
+                  onTap: () => driver.onPeopleCardPressed(people),
+                ),
+              )
+              .toList(),
         ),
-        const SizedBox(height: LmuSizes.size_16),
-        LmuTileHeadline.base(title: "Faculty 2: Chemistry"),
-        PeopleCard(
-          id: driver.peopleId,
-          title: driver.title,
-          description: driver.description,
-          onTap: () => driver.onPeopleCardPressed(context, driver.peopleId, driver.title, driver.description),
-          hasFavoriteStar: true,
-          onFavoriteTap: () => driver.toggleFavorite(0),
-        ),
-        const SizedBox(height: LmuSizes.size_16),
+        const SizedBox(height: LmuSizes.size_32),
+        const PeopleSuggestionTile(),
+        const SizedBox(height: LmuSizes.size_96),
       ],
     );
   }

@@ -27,6 +27,7 @@ class LmuLocalizations {
   BenefitsLocatizations get benefits => BenefitsLocatizations.of(_context)!;
   LaunchFlowLocatizations get launchFlow => LaunchFlowLocatizations.of(_context)!;
   StudiesLocatizations get studies => StudiesLocatizations.of(_context)!;
+  PeopleLocatizations get peoples => PeopleLocatizations.of(_context)!;
   // Add other localizations
 
   /// List of all supported localizations delegates
@@ -46,6 +47,7 @@ class LmuLocalizations {
         BenefitsLocatizations.delegate,
         LaunchFlowLocatizations.delegate,
         StudiesLocatizations.delegate,
+        PeopleLocatizations.delegate,
         // Add other localizations delegates
 
         GlobalMaterialLocalizations.delegate,

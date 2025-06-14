@@ -1,58 +1,50 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
+import 'package:core_routes/people.dart';
 import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../application/state/people_state.dart';
-import '../../domain/model/people.dart';
+import '../../domain/model/people_category.dart';
 
 part 'people_page_driver.g.dart';
 
 @GenerateTestDriver()
 class PeoplePageDriver extends WidgetDriver {
-  final _peopleStateService = GetIt.I.get<PeopleStateService>();
+  final _peopleState = GetIt.I.get<PeopleStateService>();
 
+  late BuildContext _navigatorContext;
   late AppLocalizations _appLocalizations;
   late LmuToast _toast;
 
-  late People? _people;
+  late List<PeopleCategory> _peopleCategories;
+  //late People? _people;
   late PeopleLoadState _peopleLoadState;
 
-  int _count = 0;
+  bool get isLoading =>
+      _peopleLoadState != PeopleLoadState.success && _peopleLoadState != PeopleLoadState.loadingWithCache;
 
-  bool get isLoading => _peopleLoadState != PeopleLoadState.success;
+  String get allPeopleTitle => _appLocalizations.showAll;
+  String get allPeopleCount =>
+      _peopleCategories.expand((peopleCategory) => peopleCategory.peoples).toSet().length.toString();
 
-  String get largeTitle => "People"; // TODO: Replace with localized title
+  List<PeopleCategory> get peopleCategories => _peopleCategories;
 
-  String get peopleId => _people?.id ?? '';
-
-  String get title => _people?.name ?? '';
-
-  String get description => _count.toString();
-
-  List<bool> favoriteStates = [false, false];
-
-  void toggleFavorite(int index) {
-    favoriteStates[index] = !favoriteStates[index];
-    notifyWidget(); // ✔️ Hier ist notifyWidget erlaubt
+  void onAllPeoplePressed() {
+    _peopleState.selectedCategory = null;
+    const PeopleDetailsRoute().go(_navigatorContext);
   }
 
-  void onPeopleCardPressed(BuildContext context, String id, String title, String description) {
-    GoRouter.of(context).push(
-      '/people/details',
-      extra: {
-        'id': id,
-        'title': title,
-        'description': description,
-      },
-    );
+  void onPeopleCardPressed(PeopleCategory peopleCategory) {
+    _peopleState.selectedCategory = peopleCategory;
+    const PeopleDetailsRoute().go(_navigatorContext);
   }
 
   void _onPeopleStateChanged() {
-    final state = _peopleStateService.stateNotifier.value;
-    _peopleLoadState = state.loadState;
-    _people = state.people;
+    final newState = _peopleState.state.value;
+    _peopleLoadState = newState.loadState;
+    _peopleCategories = _peopleState.state.value.peopleCategories;
+
     notifyWidget();
 
     if (_peopleLoadState == PeopleLoadState.error) {
@@ -65,30 +57,31 @@ class PeoplePageDriver extends WidgetDriver {
       message: _appLocalizations.somethingWentWrong,
       type: ToastType.error,
       actionText: _appLocalizations.tryAgain,
-      onActionPressed: () => _peopleStateService.getPeople(),
+      onActionPressed: () => _peopleState.getPeople(),
     );
   }
 
   @override
   void didInitDriver() {
     super.didInitDriver();
-    final state = _peopleStateService.stateNotifier.value;
-    _peopleLoadState = state.loadState;
-    _people = state.people;
-    _peopleStateService.stateNotifier.addListener(_onPeopleStateChanged);
-    _peopleStateService.getPeople();
+    final initialState = _peopleState.state.value;
+    _peopleLoadState = initialState.loadState;
+    _peopleCategories = initialState.peopleCategories;
+    _peopleState.state.addListener(_onPeopleStateChanged);
+    _peopleState.getPeople();
   }
 
   @override
   void didUpdateBuildContext(BuildContext context) {
     super.didUpdateBuildContext(context);
     _appLocalizations = context.locals.app;
+    _navigatorContext = context;
     _toast = LmuToast.of(context);
   }
 
   @override
   void dispose() {
-    _peopleStateService.stateNotifier.removeListener(_onPeopleStateChanged);
+    _peopleState.state.removeListener(_onPeopleStateChanged);
     super.dispose();
   }
 }

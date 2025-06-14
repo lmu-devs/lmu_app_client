@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../../domain/model/people.dart';
-
 part 'people_dto.g.dart';
 
 // data transfer object (DTO) für datentransferierung
@@ -11,17 +9,22 @@ class PeopleDto extends Equatable {
   const PeopleDto({
     required this.id,
     required this.name,
+    required this.description,
+    required this.url,
+    required this.faviconUrl,
   });
 
   final String id;
   final String name;
-
-  People toDomain() => People(id: id, name: name);
+  final String description;
+  final String url;
+  @JsonKey(name: 'favicon_url')
+  final String faviconUrl;
 
   factory PeopleDto.fromJson(Map<String, dynamic> json) => _$PeopleDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$PeopleDtoToJson(this);
 
   @override
-  List<Object?> get props => [id, name];
+  List<Object?> get props => [id, name, description, url, faviconUrl];
 }
