@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../calendar.dart';
 import '../../launch_flow.dart';
+import '../../lectures.dart';
 import '../../libraries.dart';
 import '../../studies.dart';
 import '../benefits/benefits.dart';
@@ -191,6 +192,9 @@ class LaunchFlowShellRoute extends ShellRouteData {
           routes: <TypedGoRoute<GoRouteData>>[
             TypedGoRoute<CalendarMainRoute>(
               path: CalendarMainRoute.path,
+            ),
+            TypedGoRoute<LecturesMainRoute>(
+              path: LecturesMainRoute.path,
             ),
           ],
         ),

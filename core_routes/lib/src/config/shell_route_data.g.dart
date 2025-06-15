@@ -254,6 +254,10 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                   path: 'calendar',
                   factory: $CalendarMainRouteExtension._fromState,
                 ),
+                GoRouteData.$route(
+                  path: 'lectures',
+                  factory: $LecturesMainRouteExtension._fromState,
+                ),
               ],
             ),
           ],
@@ -863,6 +867,22 @@ extension $CalendarMainRouteExtension on CalendarMainRoute {
 
   String get location => GoRouteData.$location(
         '/studies/calendar',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LecturesMainRouteExtension on LecturesMainRoute {
+  static LecturesMainRoute _fromState(GoRouterState state) => const LecturesMainRoute();
+
+  String get location => GoRouteData.$location(
+        '/studies/lectures',
       );
 
   void go(BuildContext context) => context.go(location);
