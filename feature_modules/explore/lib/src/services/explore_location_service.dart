@@ -10,6 +10,7 @@ class ExploreLocationService {
   final ValueNotifier<List<ExploreLocation>> _locationsNotifier = ValueNotifier([]);
   final ValueNotifier<List<ExploreLocation>> _filteredLocationsNotifier = ValueNotifier([]);
   final ValueNotifier<List<ExploreFilterType>> _filterNotifier = ValueNotifier([]);
+  final ValueNotifier<ExploreFilterType?> initialScrollRequestNotifier = ValueNotifier(null);
 
   ValueNotifier<List<ExploreLocation>> get exploreLocationsNotifier => _locationsNotifier;
   ValueNotifier<List<ExploreLocation>> get filteredLocationsNotifier => _filteredLocationsNotifier;
@@ -38,6 +39,7 @@ class ExploreLocationService {
   void applyInitialFilter(ExploreFilterType type) {
     _filterNotifier.value = [type];
     _updateFilteredExploreLocations();
+    initialScrollRequestNotifier.value = type;
   }
 
   void updateFilter(ExploreFilterType type) {
@@ -49,6 +51,10 @@ class ExploreLocationService {
     }
     _filterNotifier.value = currentFilters;
     _updateFilteredExploreLocations();
+  }
+
+  void clearScrollRequest() {
+    initialScrollRequestNotifier.value = null;
   }
 
   void _loadExploreLocations() {

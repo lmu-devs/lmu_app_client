@@ -281,8 +281,8 @@
   "@errorDialerException": {
     "description": "Exception message when launching the dialer fails"
   },
-  "to": "to",
-  "@to": {
-    "description": "To"
+  "on": "on",
+  "@on": {
+    "description": "on"
   }
 }

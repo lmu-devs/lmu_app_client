@@ -65,5 +65,5 @@
   "@previewImageCount": {
     "description": "Text that is between the index of the current preview image and the amount of all preview images e.g [1 of 4]."
   },
-  "wishlistFeedbackDescription": "How do you like the idea? What do you like, what dont you like?"
+  "wishlistFeedbackDescription": "How do you like the idea? What do you like, what don't you like?"
 }

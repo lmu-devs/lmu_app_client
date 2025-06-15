@@ -82,7 +82,7 @@ class _LinksContentViewState extends State<LinksContentView> {
                                     type: FeedbackType.suggestion,
                                     origin: 'LinksScreen',
                                     title: locals.home.linkSuggestion,
-                                    description: locals.home.linkSuggestionDesciption,
+                                    description: locals.home.linkSuggestionDescription,
                                     inputHint: locals.home.linkSuggestionHint,
                                   ),
                                 );
