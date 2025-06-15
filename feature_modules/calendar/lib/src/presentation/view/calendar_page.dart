@@ -1,12 +1,13 @@
+import 'package:core/api.dart';
 import 'package:core/components.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../../domain/model/calendar_view_mode.dart';
-import '../component/calendar_entry_card.dart';
-import '../component/loading_components/calendar_card_loading.dart';
-import '../component/week_selector.dart';
+import '../../domain/model/calendar_event.dart';
+import '../component/calendar_card.dart';
+import '../component/calendar_event_contentsheet.dart';
+import '../component/date_lable.dart';
 import '../viewmodel/calendar_page_driver.dart';
 
 class CalendarPage extends DrivableWidget<CalendarPageDriver> {
@@ -14,20 +15,55 @@ class CalendarPage extends DrivableWidget<CalendarPageDriver> {
 
   @override
   Widget build(BuildContext context) {
+    CalendarEvent event = CalendarEvent(
+      id: 'event_123',
+      title: 'UX Workshop',
+      type: CalendarType.event,
+      color: Colors.blue,
+      startDate: DateTime(2023, 10, 15),
+      endDate: DateTime(2023, 10, 15),
+      location: const LocationModel(address: 'Ludwigstraße 1, München', latitude: 48.1500, longitude: 11.5800),
+      description: 'A practical workshop on UX patterns and psychology.',
+    );
+    CalendarEvent event2 = CalendarEvent(
+      id: 'event_456',
+      title: 'Flutter Workshop',
+      type: CalendarType.exam,
+      color: Colors.green,
+      startDate: DateTime(2023, 10, 15),
+      endDate: DateTime(2023, 10, 15),
+      location: const LocationModel(address: 'Ludwigstraße 1, München', latitude: 48.1500, longitude: 11.5800),
+      description: 'A  comprehensive workshop on Flutter development.',
+    );
+
     return LmuScaffold(
       appBar: LmuAppBarData(
         largeTitle: driver.largeTitle,
         leadingAction: LeadingAction.back,
       ),
-      body: SizedBox(
-        height: 700,
-        child: Column(
-          children: [
-            _buildViewSelector(),
-            // if (driver.viewMode == CalendarViewMode.day) _buildDateSelector(),
-            if (driver.viewMode == CalendarViewMode.day) _buildWeekPicker(),
-            Expanded(child: _buildEventList()),
-          ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+        child: LmuPageAnimationWrapper(
+          child: Align(
+            key: ValueKey("calendar_page_${driver.isLoading}"),
+            alignment: Alignment.topCenter,
+            child: Column(
+              children: [
+                CalendarCard(
+                  event: event,
+                  onTap: () {
+                    openCalendarEventContentSheet(context, event: event);
+                  },
+                ),
+                CalendarCard(
+                  event: event2,
+                  onTap: () {
+                    openCalendarEventContentSheet(context, event: event2);
+                  },
+                ),
+              ],
+            ),
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -42,17 +78,8 @@ class CalendarPage extends DrivableWidget<CalendarPageDriver> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ChoiceChip(
-          label: const Text('List View'),
-          selected: driver.viewMode == CalendarViewMode.list,
-          onSelected: (_) => driver.onViewModeChanged(CalendarViewMode.list),
-        ),
-        const SizedBox(width: 8),
-        ChoiceChip(
-          label: const Text('Day View'),
-          selected: driver.viewMode == CalendarViewMode.day,
-          onSelected: (_) => driver.onViewModeChanged(CalendarViewMode.day),
-        ),
+        LmuDateLabel(date: DateTime.now()), // today
+        const SizedBox(height: LmuSizes.size_16),
       ],
     );
   }
