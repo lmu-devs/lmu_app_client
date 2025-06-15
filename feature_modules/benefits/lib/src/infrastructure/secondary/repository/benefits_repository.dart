@@ -1,3 +1,4 @@
+import '../../../domain/exception/benefits_generic_exception.dart';
 import '../../../domain/interface/benefits_repository_interface.dart';
 import '../../../domain/models/benefit_category.dart';
 import '../data/api/benefits_api_client.dart';
@@ -10,13 +11,13 @@ class BenefitsRepository implements BenefitsRepositoryInterface {
   final BenefitsStorage _storage;
 
   @override
-  Future<List<BenefitCategory>?> getBenefits() async {
+  Future<List<BenefitCategory>> getBenefits() async {
     try {
       final response = await _apiClient.getBenefits();
       _storage.saveBenefits(response);
       return BenefitsMapper.mapToDomain(response);
     } catch (e) {
-      return null;
+      throw const BenefitsGenericException();
     }
   }
 

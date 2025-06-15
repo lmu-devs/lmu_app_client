@@ -426,19 +426,21 @@ extension $BenefitsMainRouteExtension on BenefitsMainRoute {
 }
 
 extension $BenefitsDetailsRouteExtension on BenefitsDetailsRoute {
-  static BenefitsDetailsRoute _fromState(GoRouterState state) => const BenefitsDetailsRoute();
+  static BenefitsDetailsRoute _fromState(GoRouterState state) => BenefitsDetailsRoute(
+        state.extra as RBenefitCategory?,
+      );
 
   String get location => GoRouteData.$location(
         '/home/benefits/details',
       );
 
-  void go(BuildContext context) => context.go(location);
+  void go(BuildContext context) => context.go(location, extra: $extra);
 
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location, extra: $extra);
 
-  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location, extra: $extra);
 
-  void replace(BuildContext context) => context.replace(location);
+  void replace(BuildContext context) => context.replace(location, extra: $extra);
 }
 
 extension $RoomfinderMainRouteExtension on RoomfinderMainRoute {
@@ -771,15 +773,15 @@ extension $MensaSearchRouteExtension on MensaSearchRoute {
 
 extension $ExploreMainRouteExtension on ExploreMainRoute {
   static ExploreMainRoute _fromState(GoRouterState state) => ExploreMainRoute(
-    filter: state.uri.queryParameters['filter'],
-  );
+        filter: state.uri.queryParameters['filter'],
+      );
 
   String get location => GoRouteData.$location(
-    '/explore',
-    queryParams: {
-      if (filter != null) 'filter': filter,
-    },
-  );
+        '/explore',
+        queryParams: {
+          if (filter != null) 'filter': filter,
+        },
+      );
 
   void go(BuildContext context) => context.go(location);
 
