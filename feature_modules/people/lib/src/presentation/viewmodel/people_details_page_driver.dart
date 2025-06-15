@@ -3,7 +3,6 @@ import 'package:widget_driver/widget_driver.dart';
 
 import '../../application/state/people_state.dart';
 import '../../domain/model/people.dart';
-import '../view/people_details_page.dart';
 
 part 'people_details_page_driver.g.dart';
 
@@ -35,7 +34,7 @@ class PeopleDetailsPageDriver extends WidgetDriver {
   @override
   void didUpdateBuildContext(BuildContext context) {
     super.didUpdateBuildContext(context);
-    _id = (context.widget as PeopleDetailsPage).id;
+    //_allTitle = "${context.locals.app.all} ${context.locals.peoples.title}";
   }
 
   String get name => person.name;

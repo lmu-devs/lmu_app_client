@@ -58,7 +58,7 @@ class PeoplePage extends DrivableWidget<PeoplePageDriver> {
                   trailingTitle: people.peoples.length.toString(),
                   hasDivider: index != driver.peopleCategories.length - 1,
                   actionType: LmuListItemAction.chevron,
-                  onTap: () => driver.onPeopleCardPressed(people.hashCode.toString()),
+                  onTap: () => driver.onPeopleCardPressed(),
                 ),
               )
               .toList(),

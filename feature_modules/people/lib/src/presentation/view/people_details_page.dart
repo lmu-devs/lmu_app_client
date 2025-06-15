@@ -6,9 +6,7 @@ import 'package:widget_driver/widget_driver.dart';
 import '../viewmodel/people_details_page_driver.dart';
 
 class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
-  PeopleDetailsPage({super.key, required this.id});
-
-  final String id;
+  PeopleDetailsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +59,5 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
   }
 
   @override
-  WidgetDriverProvider<PeopleDetailsPageDriver> get driverProvider =>
-      $PeopleDetailsPageDriverProvider();
+  WidgetDriverProvider<PeopleDetailsPageDriver> get driverProvider => $PeopleDetailsPageDriverProvider();
 }

@@ -27,7 +27,7 @@ class _$TestPeoplePageDriver extends TestDriver implements PeoplePageDriver {
   void onAllPeoplePressed() {}
 
   @override
-  void onPeopleCardPressed(String id) {}
+  void onPeopleCardPressed() {}
 
   @override
   void didInitDriver() {}

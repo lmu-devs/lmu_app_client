@@ -15,5 +15,5 @@ class PeopleRouterImpl extends PeopleRouter {
   Widget buildAll(BuildContext context) => AllPeoplePage();
 
   @override
-  Widget buildDetails(BuildContext context, {required String id}) => PeopleDetailsPage(id: id);
+  Widget buildDetails(BuildContext context) => PeopleDetailsPage();
 }
