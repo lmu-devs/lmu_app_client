@@ -6,16 +6,13 @@ part of 'opening_hours_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-OpeningHoursModel _$OpeningHoursModelFromJson(Map<String, dynamic> json) =>
-    OpeningHoursModel(
+OpeningHoursModel _$OpeningHoursModelFromJson(Map<String, dynamic> json) => OpeningHoursModel(
       day: $enumDecode(_$WeekdayEnumMap, json['day']),
-      timeframes: (json['timeframes'] as List<dynamic>)
-          .map((e) => TimeframeModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      timeframes:
+          (json['timeframes'] as List<dynamic>).map((e) => TimeframeModel.fromJson(e as Map<String, dynamic>)).toList(),
     );
 
-Map<String, dynamic> _$OpeningHoursModelToJson(OpeningHoursModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$OpeningHoursModelToJson(OpeningHoursModel instance) => <String, dynamic>{
       'day': _$WeekdayEnumMap[instance.day]!,
       'timeframes': instance.timeframes,
     };

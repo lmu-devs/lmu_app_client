@@ -51,8 +51,7 @@ class LmuCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-          bottom: hasDivider ? LmuSizes.size_12 : LmuSizes.none),
+      padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.size_12 : LmuSizes.none),
       child: GestureDetector(
         onTap: onTap,
         onLongPress: onLongPress,
@@ -67,8 +66,7 @@ class LmuCard extends StatelessWidget {
                 decoration: ShapeDecoration(
                   color: hasImage
                       ? context.colors.neutralColors.backgroundColors.tile
-                      : context.colors.neutralColors.backgroundColors
-                          .mediumColors.pressed,
+                      : context.colors.neutralColors.backgroundColors.mediumColors.pressed,
                   shape: const RoundedSuperellipseBorder(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(LmuRadiusSizes.mediumLarge),
@@ -87,8 +85,7 @@ class LmuCard extends StatelessWidget {
                     : Icon(
                         LucideIcons.image,
                         size: LmuIconSizes.large,
-                        color: context
-                            .colors.neutralColors.textColors.mediumColors.base,
+                        color: context.colors.neutralColors.textColors.mediumColors.base,
                       ),
               ),
             Stack(
@@ -133,21 +130,17 @@ class LmuCard extends StatelessWidget {
                                 ),
                                 if (favoriteCount != null)
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: LmuSizes.size_2),
+                                    padding: const EdgeInsets.only(top: LmuSizes.size_2),
                                     child: Row(
                                       children: [
                                         const SizedBox(width: LmuSizes.size_8),
                                         LmuText.bodyXSmall(
                                           favoriteCount,
                                           weight: FontWeight.w400,
-                                          color: context.colors.neutralColors
-                                              .textColors.weakColors.base,
+                                          color: context.colors.neutralColors.textColors.weakColors.base,
                                         ),
                                         const SizedBox(width: LmuSizes.size_4),
-                                        const SizedBox(
-                                            width: LmuSizes
-                                                .size_20), //placeholder for star
+                                        const SizedBox(width: LmuSizes.size_20), //placeholder for star
                                       ],
                                     ),
                                   )
@@ -156,8 +149,7 @@ class LmuCard extends StatelessWidget {
                             if (subtitle != null)
                               LmuText.body(
                                 subtitle!,
-                                color: context.colors.neutralColors.textColors
-                                    .mediumColors.base,
+                                color: context.colors.neutralColors.textColors.mediumColors.base,
                               ),
                             if (customSubtitle != null) customSubtitle!,
                           ],

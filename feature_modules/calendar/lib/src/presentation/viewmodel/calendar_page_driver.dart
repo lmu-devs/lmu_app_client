@@ -3,14 +3,14 @@ import 'package:core/localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../../application/state/calendar_state.dart';
+import '../../application/usecase/get_calendar_usecase.dart';
 import '../../domain/model/calendar.dart';
 
 part 'calendar_page_driver.g.dart';
 
 @GenerateTestDriver()
 class CalendarPageDriver extends WidgetDriver {
-  final _calendarStateService = GetIt.I.get<CalendarStateService>();
+  final _getCalendarUsecase = GetIt.I.get<GetCalendarUsecase>();
 
   late AppLocalizations _appLocalizations;
   late LmuToast _toast;
@@ -36,9 +36,8 @@ class CalendarPageDriver extends WidgetDriver {
   }
 
   void _onCalendarStateChanged() {
-    final state = _calendarStateService.stateNotifier.value;
-    _calendarLoadState = state.loadState;
-    _calendar = state.calendar;
+    _calendarLoadState = _getCalendarUsecase.loadState;
+    _calendar = _getCalendarUsecase.data;
     notifyWidget();
 
     if (_calendarLoadState == CalendarLoadState.error) {
@@ -51,18 +50,17 @@ class CalendarPageDriver extends WidgetDriver {
       message: _appLocalizations.somethingWentWrong,
       type: ToastType.error,
       actionText: _appLocalizations.tryAgain,
-      onActionPressed: () => _calendarStateService.getCalendar(),
+      onActionPressed: () => _getCalendarUsecase.load(),
     );
   }
 
   @override
   void didInitDriver() {
     super.didInitDriver();
-    final state = _calendarStateService.stateNotifier.value;
-    _calendarLoadState = state.loadState;
-    _calendar = state.calendar;
-    _calendarStateService.stateNotifier.addListener(_onCalendarStateChanged);
-    _calendarStateService.getCalendar();
+    _calendarLoadState = _getCalendarUsecase.loadState;
+    _calendar = _getCalendarUsecase.data;
+    _getCalendarUsecase.addListener(_onCalendarStateChanged);
+    _getCalendarUsecase.load();
   }
 
   @override
@@ -74,7 +72,7 @@ class CalendarPageDriver extends WidgetDriver {
 
   @override
   void dispose() {
-    _calendarStateService.stateNotifier.removeListener(_onCalendarStateChanged);
+    _getCalendarUsecase.removeListener(_onCalendarStateChanged);
     super.dispose();
   }
 }

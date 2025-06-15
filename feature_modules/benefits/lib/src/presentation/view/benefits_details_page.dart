@@ -3,11 +3,14 @@ import 'package:core/constants.dart';
 import 'package:flutter/widgets.dart';
 import 'package:widget_driver/widget_driver.dart';
 
+import '../../domain/models/benefit_category.dart';
 import '../components/benefit_card.dart';
 import '../viewmodel/benefits_details_page_driver.dart';
 
 class BenefitsDetailsPage extends DrivableWidget<BenefitsDetailsPageDriver> {
-  BenefitsDetailsPage({super.key});
+  BenefitsDetailsPage({super.key, required this.category});
+
+  final BenefitCategory? category;
 
   @override
   Widget build(BuildContext context) {
@@ -39,5 +42,7 @@ class BenefitsDetailsPage extends DrivableWidget<BenefitsDetailsPageDriver> {
   }
 
   @override
-  WidgetDriverProvider<BenefitsDetailsPageDriver> get driverProvider => $BenefitsDetailsPageDriverProvider();
+  WidgetDriverProvider<BenefitsDetailsPageDriver> get driverProvider => $BenefitsDetailsPageDriverProvider(
+        selectedCategory: category,
+      );
 }

@@ -15,9 +15,9 @@ class DescriptionModel extends Equatable {
 
   @override
   List<Object> get props => [
-    emoji,
-    description,
-  ];
+        emoji,
+        description,
+      ];
 
   factory DescriptionModel.fromJson(Map<String, dynamic> json) => _$DescriptionModelFromJson(json);
 

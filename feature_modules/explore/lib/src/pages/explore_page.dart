@@ -72,11 +72,7 @@ class ExplorePage extends DrivableWidget<ExplorePageDriver> {
                 tileProvider: driver.tileProvider,
               ),
               const CurrentLocationLayer(),
-              MarkerLayer(
-                  rotate: true,
-                  markers: driver.locations
-                      .map((location) => location.toMarker)
-                      .toList()),
+              MarkerLayer(rotate: true, markers: driver.locations.map((location) => location.toMarker).toList()),
               Positioned(
                 bottom: 0,
                 width: screenWidth,

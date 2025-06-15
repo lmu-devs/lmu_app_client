@@ -4,8 +4,6 @@ import 'package:core_routes/calendar.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/calendar.dart';
 
-import 'application/state/calendar_state.dart';
-import 'application/usecase/get_cached_calendar_usecase.dart';
 import 'application/usecase/get_calendar_usecase.dart';
 import 'domain/interface/calendar_repository_interface.dart';
 import 'infrastructure/primary/api/calendar_api.dart';
@@ -24,11 +22,9 @@ class CalendarModule extends AppModule with LocalDependenciesProvidingAppModule,
     final calendarStorage = CalendarStorage();
     final calendarRepository = CalendarRepository(CalendarApiClient(baseApiClient), calendarStorage);
     final getCalendarUseCase = GetCalendarUsecase(calendarRepository);
-    final getCachedCalendarUseCase = GetCachedCalendarUsecase(calendarRepository);
-    final calendarStateService = CalendarStateService(getCalendarUseCase, getCachedCalendarUseCase);
 
     GetIt.I.registerSingleton<CalendarRepositoryInterface>(calendarRepository);
-    GetIt.I.registerSingleton<CalendarStateService>(calendarStateService);
+    GetIt.I.registerSingleton<GetCalendarUsecase>(getCalendarUseCase);
   }
 
   @override

@@ -4,14 +4,14 @@ import 'package:core_routes/benefits.dart';
 import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../../application/state/benefits_state_service.dart';
+import '../../application/usecases/get_benefits_usecase.dart';
 import '../../domain/models/benefit_category.dart';
 
 part 'benefits_page_driver.g.dart';
 
 @GenerateTestDriver()
 class BenefitsPageDriver extends WidgetDriver {
-  final _benefitsState = GetIt.I.get<BenefitsStateService>();
+  final _getBenefitsUsecase = GetIt.I.get<GetBenefitsUsecase>();
 
   late BuildContext _navigatorContext;
   late AppLocalizations _appLocalizations;
@@ -30,19 +30,16 @@ class BenefitsPageDriver extends WidgetDriver {
   List<BenefitCategory> get benefitsCategories => _benefitsCategories;
 
   void onAllBenefitsPressed() {
-    _benefitsState.selectedCategory = null;
-    const BenefitsDetailsRoute().go(_navigatorContext);
+    const BenefitsDetailsRoute(null).go(_navigatorContext);
   }
 
   void onBenefitCategoryPressed(BenefitCategory benefitCategory) {
-    _benefitsState.selectedCategory = benefitCategory;
-    const BenefitsDetailsRoute().go(_navigatorContext);
+    BenefitsDetailsRoute(benefitCategory).go(_navigatorContext);
   }
 
-  void _onBenefitsLoadStateChanged() {
-    final newState = _benefitsState.state.value;
-    _benefitsLoadState = newState.loadState;
-    _benefitsCategories = _benefitsState.state.value.benefitCategories;
+  void _onGetBenefitsChanged() {
+    _benefitsLoadState = _getBenefitsUsecase.loadState;
+    _benefitsCategories = _getBenefitsUsecase.benefitCategories;
 
     notifyWidget();
 
@@ -56,19 +53,18 @@ class BenefitsPageDriver extends WidgetDriver {
       message: _appLocalizations.somethingWentWrong,
       type: ToastType.error,
       actionText: _appLocalizations.tryAgain,
-      onActionPressed: () => _benefitsState.getBenefits(),
+      onActionPressed: () => _getBenefitsUsecase.load(),
     );
   }
 
   @override
   void didInitDriver() {
     super.didInitDriver();
-    final initialState = _benefitsState.state.value;
-    _benefitsLoadState = initialState.loadState;
-    _benefitsCategories = initialState.benefitCategories;
-    _benefitsState.state.addListener(_onBenefitsLoadStateChanged);
+    _benefitsLoadState = _getBenefitsUsecase.loadState;
+    _benefitsCategories = _getBenefitsUsecase.benefitCategories;
+    _getBenefitsUsecase.addListener(_onGetBenefitsChanged);
 
-    _benefitsState.getBenefits();
+    _getBenefitsUsecase.load();
   }
 
   @override
@@ -81,7 +77,7 @@ class BenefitsPageDriver extends WidgetDriver {
 
   @override
   void dispose() {
-    _benefitsState.state.removeListener(_onBenefitsLoadStateChanged);
+    _getBenefitsUsecase.removeListener(_onGetBenefitsChanged);
 
     super.dispose();
   }

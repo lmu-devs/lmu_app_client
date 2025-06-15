@@ -17,8 +17,7 @@ class ExploreMainRoute extends GoRouteData {
   static const String path = '/explore';
 
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      _router.buildMain(context, filter: filter);
+  Widget build(BuildContext context, GoRouterState state) => _router.buildMain(context, filter: filter);
 }
 
 class ExploreSearchRoute extends GoRouteData {
@@ -27,6 +26,5 @@ class ExploreSearchRoute extends GoRouteData {
   static const String path = 'search';
 
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      _router.buildSearch(context);
+  Widget build(BuildContext context, GoRouterState state) => _router.buildSearch(context);
 }

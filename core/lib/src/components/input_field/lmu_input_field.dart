@@ -112,8 +112,7 @@ class _LmuInputFieldState extends State<LmuInputField> {
       if (widget.controller.text.isEmpty) {
         _inputState = _focusNode.hasFocus ? InputState.active : InputState.base;
       } else {
-        _inputState =
-            _focusNode.hasFocus ? InputState.typing : InputState.filled;
+        _inputState = _focusNode.hasFocus ? InputState.typing : InputState.filled;
       }
     });
   }

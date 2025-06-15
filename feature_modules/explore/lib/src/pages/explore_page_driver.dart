@@ -89,7 +89,6 @@ class ExplorePageDriver extends WidgetDriver {
     final initialFilters = _locationService.filterNotifier.value;
 
     if (initialFilters.isNotEmpty && initialFilters.first == ExploreFilterType.library) {
-
       if (filterScrollController.hasClients) {
         final maxScroll = filterScrollController.position.maxScrollExtent;
 

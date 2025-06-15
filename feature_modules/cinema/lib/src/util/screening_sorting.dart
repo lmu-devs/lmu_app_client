@@ -36,8 +36,7 @@ extension SortOptionExtension on SortOption {
   List<ScreeningModel> sort(List<ScreeningModel> screenings) {
     switch (this) {
       case SortOption.alphabetically:
-        return List.from(screenings)
-          ..sort((a, b) => a.movie.title.compareTo(b.movie.title));
+        return List.from(screenings)..sort((a, b) => a.movie.title.compareTo(b.movie.title));
       case SortOption.recentFirst:
         return List.from(screenings)
           ..sort((a, b) => DateTime.parse(a.entryTime).isAfter(DateTime.parse(b.entryTime)) ? -1 : 1);

@@ -6,7 +6,7 @@ import '../../../../domain/model/calendar.dart';
 part 'calendar_dto.g.dart';
 
 @JsonSerializable()
-class CalendarDto extends Equatable{
+class CalendarDto extends Equatable {
   const CalendarDto({
     required this.id,
     required this.name,

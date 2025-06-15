@@ -8,7 +8,7 @@ import 'models/cinema/cinema_model.dart';
 import 'models/screening/screening_model.dart';
 
 class CinemaApiClient {
-  final _baseApiClient = GetIt.I.get<BaseApiClient>(); 
+  final _baseApiClient = GetIt.I.get<BaseApiClient>();
 
   Future<List<CinemaModel>> getCinemas({int? id}) async {
     final response = await _baseApiClient.get(CinemaApiEndpoints.getCinemas(id: id));

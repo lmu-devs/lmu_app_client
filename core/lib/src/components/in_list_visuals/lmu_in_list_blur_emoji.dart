@@ -33,8 +33,7 @@ class LmuInListBlurEmoji extends StatelessWidget {
           children: [
             Center(
               child: ImageFiltered(
-                imageFilter: ImageFilter.blur(
-                    sigmaX: LmuSizes.size_16, sigmaY: LmuSizes.size_16),
+                imageFilter: ImageFilter.blur(sigmaX: LmuSizes.size_16, sigmaY: LmuSizes.size_16),
                 child: ListenableBuilder(
                   listenable: themeProvider,
                   builder: (context, _) => Text(
