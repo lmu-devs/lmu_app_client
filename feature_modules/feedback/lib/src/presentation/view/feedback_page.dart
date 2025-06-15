@@ -3,6 +3,7 @@ import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../components/feedback_emoji_selector.dart';
@@ -22,45 +23,53 @@ class FeedbackPage extends DrivableWidget<FeedbackPageDriver> {
         leadingAction: LeadingAction.close,
         largeTitleTrailingWidgetAlignment: MainAxisAlignment.center,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-        child: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(height: LmuSizes.size_4),
-                LmuText.body(
-                  driver.description,
-                  color: colors.neutralColors.textColors.mediumColors.base,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: LmuSizes.size_16),
-                if (driver.showEmojiPicker) FeedbackEmojiSelector(onFeedbackSelected: driver.onEmojiSelected),
-                const SizedBox(height: LmuSizes.size_16),
-                LmuInputField(
-                  hintText: driver.inputHint,
-                  isMultiline: true,
-                  isAutofocus: true,
-                  controller: driver.textEditingController,
-                  isAutocorrect: true,
-                ),
-              ],
-            ),
-            Positioned(
-              child: SafeArea(
-                child: LmuButton(
-                  title: driver.buttonTitle,
-                  size: ButtonSize.large,
-                  showFullWidth: true,
-                  state: driver.buttonState,
-                  onTap: driver.onSendFeedbackButtonTap,
+      slivers: [
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+          sliver: SliverStack(
+            children: [
+              SliverFillRemaining(
+                fillOverscroll: true,
+                hasScrollBody: false,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: LmuSizes.size_4),
+                    LmuText.body(
+                      driver.description,
+                      color: colors.neutralColors.textColors.mediumColors.base,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: LmuSizes.size_16),
+                    if (driver.showEmojiPicker) FeedbackEmojiSelector(onFeedbackSelected: driver.onEmojiSelected),
+                    const SizedBox(height: LmuSizes.size_16),
+                    LmuInputField(
+                      hintText: driver.inputHint,
+                      isMultiline: true,
+                      controller: driver.textEditingController,
+                      isAutocorrect: true,
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
+              SliverPositioned(
+                bottom: LmuSizes.size_16,
+                left: 0,
+                right: 0,
+                child: SafeArea(
+                  child: LmuButton(
+                    title: driver.buttonTitle,
+                    size: ButtonSize.large,
+                    showFullWidth: true,
+                    state: driver.buttonState,
+                    onTap: driver.onSendFeedbackButtonTap,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
+      ],
     );
   }
 

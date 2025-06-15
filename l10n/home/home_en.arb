@@ -141,5 +141,13 @@
   "linkSuggestion": "Suggest a link",
   "@linkSuggestion": {
     "description": "Suggest a link"
+  },
+  "linkSuggestionDesciption": "Suggest a link that you would like to share with other students.",
+  "@linkSuggestionDesciption": {
+    "description": "Description for the link suggestion modal"
+  },
+  "linkSuggestionHint": "Describe your suggestion",
+  "@linkSuggestionHint": {
+    "description": "Hint for the link suggestion modal"
   }
 }

@@ -53,6 +53,7 @@ class WishlistDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locals = context.locals;
     return LmuScaffold(
       appBar: LmuAppBarData(
         largeTitle: wishlistModel.title,
@@ -107,6 +108,8 @@ class WishlistDetailsPage extends StatelessWidget {
                           args: FeedbackArgs(
                             type: FeedbackType.general,
                             origin: 'Wishlist Entry: ${wishlistModel.title}',
+                            title: "${locals.feedback.feedbackTitle} ${locals.app.to} ${wishlistModel.title}",
+                            description: locals.wishlist.wishlistFeedbackDescription,
                           ),
                         ),
                   ),

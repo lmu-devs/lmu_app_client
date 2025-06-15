@@ -26,6 +26,7 @@ class _LinksContentViewState extends State<LinksContentView> {
 
   @override
   Widget build(BuildContext context) {
+    final locals = context.locals;
     return Stack(
       children: [
         LmuScaffold(
@@ -68,18 +69,21 @@ class _LinksContentViewState extends State<LinksContentView> {
                         ).toList(),
                       ),
                       const SizedBox(height: LmuSizes.size_6),
-                      LmuTileHeadline.base(title: context.locals.feedback.missingItemInput),
+                      LmuTileHeadline.base(title: locals.feedback.missingItemInput),
                       LmuContentTile(
                         content: LmuListItem.base(
-                          title: context.locals.home.linkSuggestion,
+                          title: locals.home.linkSuggestion,
                           mainContentAlignment: MainContentAlignment.center,
                           leadingArea: const LeadingFancyIcons(icon: LucideIcons.megaphone),
                           onTap: () {
                             GetIt.I.get<FeedbackApi>().showFeedback(
                                   context,
-                                  args: const FeedbackArgs(
+                                  args: FeedbackArgs(
                                     type: FeedbackType.suggestion,
                                     origin: 'LinksScreen',
+                                    title: locals.home.linkSuggestion,
+                                    description: locals.home.linkSuggestionDesciption,
+                                    inputHint: locals.home.linkSuggestionHint,
                                   ),
                                 );
                           },

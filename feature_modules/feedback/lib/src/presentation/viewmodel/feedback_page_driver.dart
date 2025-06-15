@@ -38,7 +38,7 @@ class FeedbackPageDriver extends WidgetDriver {
 
   String get largeTitle => _args.title ?? _type.title(_localizations);
   String get description => _args.description ?? _type.description(_localizations);
-  String get inputHint => _type.inputHint(_localizations);
+  String get inputHint => _args.inputHint ?? _type.inputHint(_localizations);
 
   bool get showEmojiPicker => _type == FeedbackType.general;
   void onEmojiSelected(EmojiFeedback feedback) {

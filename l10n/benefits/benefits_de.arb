@@ -3,5 +3,6 @@
   "@@context": "Benefits",
   "benefitsTitle": "Vorteile",
   "benefitSuggestion": "Schlage einen Benefit vor",
-  "benefitSuggestionDesciption": "Schlage einen Benefit vor, den du in der App sehen möchtest."
+  "benefitSuggestionDesciption": "Schlage einen Benefiit vor, den du mit anderen Studierenden teilen möchtest.",
+  "benefitSuggestionHint": "Beschreibe deinen Vorschlag"
 }

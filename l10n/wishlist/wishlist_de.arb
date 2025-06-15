@@ -1,7 +1,6 @@
 {
   "@@locale": "de",
   "@@context": "Wishlist",
-  
   "tabTitle": "Wunschkonzert",
   "wishlistIntro": "Die App ist noch lange nicht am Ziel. Gute Dinge brauchen Zeit und durchdachte Entscheidungen. Helft uns herauszufinden, welche Funktionen euch am meisten fehlen.",
   "shareApp": "App teilen",
@@ -17,5 +16,6 @@
   "wishlistStatusDone": "Fertig",
   "testPrototype": "Jetzt als Prototyp testen",
   "prototypeError": "Prototyp konnte nicht geöffnet werden",
-  "previewImageCount" : "von"
+  "previewImageCount": "von",
+  "wishlistFeedbackDescription": "Wie gefällt dir die Idee? Was gefällt dir daran? Was fehlt dir?"
 }
