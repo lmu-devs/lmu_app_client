@@ -32,8 +32,7 @@ class PeoplePage extends DrivableWidget<PeoplePageDriver> {
   }
 
   Widget get content {
-    if (driver.isLoading)
-      return const PeoplePageLoading(); // replace with skeleton loading
+    if (driver.isLoading) return const PeoplePageLoading(); // replace with skeleton loading
 
     return Column(
       children: [
@@ -59,7 +58,7 @@ class PeoplePage extends DrivableWidget<PeoplePageDriver> {
                   trailingTitle: people.peoples.length.toString(),
                   hasDivider: index != driver.peopleCategories.length - 1,
                   actionType: LmuListItemAction.chevron,
-                  onTap: () => driver.onPeopleCardPressed(people.id),
+                  onTap: () => driver.onPeopleCardPressed(people.name),
                 ),
               )
               .toList(),
@@ -72,6 +71,5 @@ class PeoplePage extends DrivableWidget<PeoplePageDriver> {
   }
 
   @override
-  WidgetDriverProvider<PeoplePageDriver> get driverProvider =>
-      $PeoplePageDriverProvider();
+  WidgetDriverProvider<PeoplePageDriver> get driverProvider => $PeoplePageDriverProvider();
 }

@@ -24,7 +24,7 @@ class BenefitSuggestionTile extends StatelessWidget {
                   context,
                   args: FeedbackArgs(
                     title: benefitLocals.benefitSuggestion,
-                    description: benefitLocals.benefitSuggestionDesciption,
+                    description: benefitLocals.benefitSuggestion,
                     inputHint: benefitLocals.benefitSuggestionHint,
                     type: FeedbackType.suggestion,
                     origin: 'BenefitsScreen',
