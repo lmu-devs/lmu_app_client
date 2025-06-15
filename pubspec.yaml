@@ -48,6 +48,8 @@ dependencies:
     path: ./feature_modules/studies
   calendar:
     path: ./feature_modules/calendar
+  lectures:
+    path: ./feature_modules/lectures
   shared_api:
     path: ./shared_api
 
