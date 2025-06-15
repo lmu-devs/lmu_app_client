@@ -1,43 +1,73 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../component/people_card.dart';
 import '../viewmodel/people_details_page_driver.dart';
 
 class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
-  PeopleDetailsPage({super.key});
+  const PeopleDetailsPage({super.key, required this.id});
+
+  final String id;
 
   @override
   Widget build(BuildContext context) {
     return LmuScaffold(
       appBar: LmuAppBarData(
-        largeTitle: driver.title,
+        largeTitle: driver.name,
         leadingAction: LeadingAction.back,
       ),
-      body: ListView.separated(
-        physics: const NeverScrollableScrollPhysics(),
-        padding: const EdgeInsets.only(
-          left: LmuSizes.size_16,
-          right: LmuSizes.size_16,
-          top: LmuSizes.size_16,
-          bottom: LmuSizes.size_96,
+      body: Padding(
+        padding: const EdgeInsets.all(LmuSizes.size_16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            LmuTileHeadline.base(title: "Fakultät & Lehrstuhl"),
+            LmuContentTile(
+              contentList: [
+                LmuListItem.base(title: "Fakultät", subtitle: driver.faculty),
+                LmuListItem.base(title: "Lehrstuhl", subtitle: driver.chair),
+              ],
+            ),
+            const SizedBox(height: LmuSizes.size_16),
+            LmuTileHeadline.base(title: "Kontakt"),
+            LmuContentTile(
+              contentList: [
+                LmuListItem.base(title: "Email", subtitle: driver.email),
+                LmuListItem.base(title: "Telefon", subtitle: driver.phone),
+                LmuListItem.action(
+                  title: "Raum: ${driver.room}",
+                  onTap: () => driver.onRoomTap(context),
+                  actionType: LmuListItemAction.chevron,
+                ),
+              ],
+            ),
+            const SizedBox(height: LmuSizes.size_16),
+            LmuTileHeadline.base(title: "Web"),
+            LmuContentTile(
+              contentList: [
+                LmuListItem.action(
+                  title: "Zur Website",
+                  onTap: driver.onWebsiteTap,
+                  actionType: LmuListItemAction.chevron,
+                ),
+              ],
+            ),
+            const SizedBox(height: LmuSizes.size_16),
+            LmuTileHeadline.base(title: "Forschung & Abschlussarbeiten"),
+            LmuContentTile(
+              contentList: [
+                LmuListItem.base(title: "Forschungsgebiete", subtitle: driver.researchInterests),
+                LmuListItem.base(title: "Offene Abschlussarbeiten", subtitle: driver.openTheses),
+              ],
+            ),
+          ],
         ),
-        separatorBuilder: (context, index) => const SizedBox(height: LmuSizes.size_12),
-        itemCount: driver.peoples.length,
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          final peopleItem = driver.peoples[index];
-          return PeopleCard(
-            key: Key("people_card_${peopleItem.hashCode}"),
-            people: peopleItem,
-          ); //PeopleCard
-        },
       ),
     );
   }
 
   @override
-  WidgetDriverProvider<PeopleDetailsPageDriver> get driverProvider => $PeopleDetailsPageDriverProvider();
+  WidgetDriverProvider<PeopleDetailsPageDriver> get driverProvider =>
+      WidgetDriverProvider(() => PeopleDetailsPageDriver());
 }

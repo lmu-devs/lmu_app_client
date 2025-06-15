@@ -36,8 +36,9 @@ class PeoplePageDriver extends WidgetDriver {
     //const PeopleDetailsRoute().go(_navigatorContext);
   }
 
-  void onPeopleCardPressed(BuildContext context, String id) {
-    const DetailsPeopleRoute(context, id).go(_navigatorContext);
+  void onPeopleCardPressed(String id) {
+    //final person = _peopleCategories.expand((cat) => cat.peoples).firstWhere((p) => p.id == id);
+    PeopleDetailsRoute(id: id).go(_navigatorContext);
   }
 
   void _onPeopleStateChanged() {

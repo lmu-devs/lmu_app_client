@@ -11,6 +11,9 @@ class PeopleDto extends Equatable {
     required this.name,
     required this.description,
     required this.url,
+    required this.email,
+    required this.office,
+    required this.phone,
     required this.faviconUrl,
   });
 
@@ -18,6 +21,9 @@ class PeopleDto extends Equatable {
   final String name;
   final String description;
   final String url;
+  final String email;
+  final String phone;
+  final String office;
   @JsonKey(name: 'favicon_url')
   final String faviconUrl;
 
