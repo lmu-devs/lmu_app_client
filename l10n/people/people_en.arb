@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "@@context": "People",
+  "title": "People",
+  "popular": "Popular",
+  "findPeople": "Find People",
+  "peopleSuggestion": "Suggest a contact",
+  "distance": "Distance",
+  "building": "Building",
+  "buildings": "Buildings"
+}

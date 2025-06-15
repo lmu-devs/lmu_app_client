@@ -16,7 +16,7 @@ import 'infrastructure/secondary/repository/people_repository.dart';
 class PeopleModule extends AppModule
     with LocalDependenciesProvidingAppModule, PublicApiProvidingAppModule, LocalizedDataContainigAppModule {
   @override
-  String get moduleName => 'FeedbackModule';
+  String get moduleName => 'PeopleModule';
   //@override
   //String get moduleName => 'PeopleModule';
 

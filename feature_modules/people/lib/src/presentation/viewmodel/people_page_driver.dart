@@ -32,12 +32,12 @@ class PeoplePageDriver extends WidgetDriver {
 
   void onAllPeoplePressed() {
     _peopleState.selectedCategory = null;
-    const PeopleDetailsRoute().go(_navigatorContext);
+    const AllPeopleRoute().go(_navigatorContext);
+    //const PeopleDetailsRoute().go(_navigatorContext);
   }
 
-  void onPeopleCardPressed(PeopleCategory peopleCategory) {
-    _peopleState.selectedCategory = peopleCategory;
-    const PeopleDetailsRoute().go(_navigatorContext);
+  void onPeopleCardPressed(BuildContext context, String id) {
+    const DetailsPeopleRoute(context, id).go(_navigatorContext);
   }
 
   void _onPeopleStateChanged() {

@@ -15,11 +15,20 @@ class PeopleMainRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) => _router.buildMain(context);
 }
 
-class PeopleDetailsRoute extends GoRouteData {
-  const PeopleDetailsRoute();
+class AllPeopleRoute extends GoRouteData {
+  const AllPeopleRoute();
 
-  static const String path = 'details';
+  static const String path = 'all';
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => _router.buildDetails(context);
+  Widget build(BuildContext context, GoRouterState state) => _router.buildAll(context);
+}
+
+class PeopleRoute extends GoRouteData {
+  const AllPeopleRoute();
+
+  static const String path = 'all';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => _router.buildAll(context);
 }

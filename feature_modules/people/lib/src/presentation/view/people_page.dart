@@ -46,6 +46,7 @@ class PeoplePage extends DrivableWidget<PeoplePageDriver> {
           ),
         ),
         const SizedBox(height: LmuSizes.size_16),
+        LmuTileHeadline.base(title: "Faultiere"),
         LmuContentTile(
           contentList: driver.peopleCategories
               .mapIndexed(
@@ -57,7 +58,7 @@ class PeoplePage extends DrivableWidget<PeoplePageDriver> {
                   trailingTitle: people.peoples.length.toString(),
                   hasDivider: index != driver.peopleCategories.length - 1,
                   actionType: LmuListItemAction.chevron,
-                  onTap: () => driver.onPeopleCardPressed(people),
+                  onTap: () => driver.onPeopleCardPressed(context, people.id),
                 ),
               )
               .toList(),
