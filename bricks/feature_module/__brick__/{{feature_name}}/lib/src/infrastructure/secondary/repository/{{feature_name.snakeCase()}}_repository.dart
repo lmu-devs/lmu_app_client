@@ -28,7 +28,7 @@ class {{feature_name.pascalCase()}}Repository implements {{feature_name.pascalCa
     try {
       return cached{{feature_name.pascalCase()}}Data.toDomain();
     } catch (e) {
-      deleteCachedBenefits();
+      delete{{feature_name.pascalCase()}}();
       return null;
     }
   }
