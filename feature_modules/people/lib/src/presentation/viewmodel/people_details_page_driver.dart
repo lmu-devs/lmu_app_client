@@ -27,13 +27,20 @@ class PeopleDetailsPageDriver extends WidgetDriver {
   ))
   late final People person;
 
+  late String _id;
+
   @override
   void didInitDriver() {
     super.didInitDriver();
-    final id = (widget as PeopleDetailsPage).id;
     person = _peopleStateService.state.value.peopleCategories
         .expand((cat) => cat.peoples)
-        .firstWhere((p) => p.id == id);
+        .firstWhere((p) => p.id == _id);
+  }
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {
+    super.didUpdateBuildContext(context);
+    _id = (context.widget as PeopleDetailsPage).id;
   }
 
   String get name => person.name;
