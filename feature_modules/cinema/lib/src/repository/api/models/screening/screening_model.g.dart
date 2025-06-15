@@ -6,8 +6,7 @@ part of 'screening_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ScreeningModel _$ScreeningModelFromJson(Map<String, dynamic> json) =>
-    ScreeningModel(
+ScreeningModel _$ScreeningModelFromJson(Map<String, dynamic> json) => ScreeningModel(
       id: json['id'] as String,
       cinemaId: json['cinema_id'] as String,
       universityId: json['university_id'] as String,
@@ -22,8 +21,7 @@ ScreeningModel _$ScreeningModelFromJson(Map<String, dynamic> json) =>
       movie: MovieModel.fromJson(json['movie'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$ScreeningModelToJson(ScreeningModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ScreeningModelToJson(ScreeningModel instance) => <String, dynamic>{
       'id': instance.id,
       'cinema_id': instance.cinemaId,
       'university_id': instance.universityId,

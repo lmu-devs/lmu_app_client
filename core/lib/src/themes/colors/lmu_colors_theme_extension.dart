@@ -51,7 +51,7 @@ class LmuColors extends ThemeExtension<LmuColors> {
       dangerColors: dangerColors ?? this.dangerColors,
       warningColors: warningColors ?? this.warningColors,
       gradientColors: gradientColors ?? this.gradientColors,
-      universityColors:  universityColors ?? this.universityColors,
+      universityColors: universityColors ?? this.universityColors,
     );
   }
 

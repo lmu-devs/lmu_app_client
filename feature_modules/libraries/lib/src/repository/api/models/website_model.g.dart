@@ -11,8 +11,7 @@ WebsiteModel _$WebsiteModelFromJson(Map<String, dynamic> json) => WebsiteModel(
       url: json['url'] as String,
     );
 
-Map<String, dynamic> _$WebsiteModelToJson(WebsiteModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$WebsiteModelToJson(WebsiteModel instance) => <String, dynamic>{
       'title': instance.title,
       'url': instance.url,
     };

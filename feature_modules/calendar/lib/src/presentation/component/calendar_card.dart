@@ -2,7 +2,8 @@ import 'package:core/components.dart';
 import 'package:flutter/material.dart';
 
 class CalendarCard extends StatelessWidget {
-  const CalendarCard({super.key, 
+  const CalendarCard({
+    super.key,
     required this.id,
     required this.title,
     required this.description,

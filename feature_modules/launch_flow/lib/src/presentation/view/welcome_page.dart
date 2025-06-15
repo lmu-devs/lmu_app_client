@@ -16,7 +16,7 @@ class WelcomePage extends DrivableWidget<WelcomePageDriver> {
     return Stack(
       children: [
         Scaffold(backgroundColor: colors.neutralColors.backgroundColors.base),
-                const Positioned.fill(
+        const Positioned.fill(
           child: IgnorePointer(
             child: AnimatedLightRays(),
           ),
@@ -33,14 +33,12 @@ class WelcomePage extends DrivableWidget<WelcomePageDriver> {
                       child: Column(
                         children: [
                           const SizedBox(height: LmuSizes.size_48),
-                          LmuText.h1(driver.welcomeTitle,
-                              textAlign: TextAlign.center),
+                          LmuText.h1(driver.welcomeTitle, textAlign: TextAlign.center),
                           const SizedBox(height: LmuSizes.size_12),
                           LmuText.body(
                             driver.welcomeSubtitle,
                             textAlign: TextAlign.center,
-                            color: colors
-                                .neutralColors.textColors.mediumColors.base,
+                            color: colors.neutralColors.textColors.mediumColors.base,
                           ),
                           const SizedBox(height: LmuSizes.size_48),
                           LmuContentTile(
@@ -49,10 +47,8 @@ class WelcomePage extends DrivableWidget<WelcomePageDriver> {
                                   (entry) => LmuListItem.base(
                                     title: entry.title,
                                     subtitle: entry.description,
-                                    mainContentAlignment:
-                                        MainContentAlignment.top,
-                                    leadingArea:
-                                        LmuInListBlurEmoji(emoji: entry.emoji),
+                                    mainContentAlignment: MainContentAlignment.top,
+                                    leadingArea: LmuInListBlurEmoji(emoji: entry.emoji),
                                   ),
                                 )
                                 .toList(),
@@ -74,12 +70,10 @@ class WelcomePage extends DrivableWidget<WelcomePageDriver> {
             ),
           ),
         ),
-
       ],
     );
   }
 
   @override
-  WidgetDriverProvider<WelcomePageDriver> get driverProvider =>
-      $WelcomePageDriverProvider();
+  WidgetDriverProvider<WelcomePageDriver> get driverProvider => $WelcomePageDriverProvider();
 }
