@@ -1,5 +1,6 @@
 import '../../../domain/interface/{{feature_name.snakeCase()}}_repository_interface.dart';
 import '../../../domain/model/{{feature_name.snakeCase()}}.dart';
+import '../../../domain/exception/{{feature_name.snakeCase()}}_generic_exception.dart';
 import '../data/api/{{feature_name.snakeCase()}}_api_client.dart';
 import '../data/storage/{{feature_name.snakeCase()}}_storage.dart';
 
@@ -10,13 +11,13 @@ class {{feature_name.pascalCase()}}Repository implements {{feature_name.pascalCa
   final {{feature_name.pascalCase()}}Storage _storage;
 
   @override
-  Future<{{feature_name.pascalCase()}}?> get{{feature_name.pascalCase()}}() async {
+  Future<{{feature_name.pascalCase()}}> get{{feature_name.pascalCase()}}() async {
     try {
-      final retrived{{feature_name.pascalCase()}}Data = await _apiClient.get{{feature_name.pascalCase()}}();
-      await _storage.save{{feature_name.pascalCase()}}(retrived{{feature_name.snakeCase()}}Data);
-      return retrived{{feature_name.snakeCase()}}Data.toDomain();
+      final retrieved{{feature_name.pascalCase()}}Data = await _apiClient.get{{feature_name.pascalCase()}}();
+      await _storage.save{{feature_name.pascalCase()}}(retrieved{{feature_name.pascalCase()}}Data);
+      return retrieved{{feature_name.pascalCase()}}Data.toDomain();
     } catch (e) {
-      return null;
+      throw const {{feature_name.pascalCase()}}GenericException();
     }
   }
 
@@ -27,6 +28,7 @@ class {{feature_name.pascalCase()}}Repository implements {{feature_name.pascalCa
     try {
       return cached{{feature_name.pascalCase()}}Data.toDomain();
     } catch (e) {
+      deleteCachedBenefits();
       return null;
     }
   }
