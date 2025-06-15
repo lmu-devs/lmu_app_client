@@ -6,7 +6,7 @@ import 'package:widget_driver/widget_driver.dart';
 import '../viewmodel/people_details_page_driver.dart';
 
 class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
-  const PeopleDetailsPage({super.key, required this.id});
+  PeopleDetailsPage({super.key, required this.id});
 
   final String id;
 
@@ -54,13 +54,6 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
               ],
             ),
             const SizedBox(height: LmuSizes.size_16),
-            LmuTileHeadline.base(title: "Forschung & Abschlussarbeiten"),
-            LmuContentTile(
-              contentList: [
-                LmuListItem.base(title: "Forschungsgebiete", subtitle: driver.researchInterests),
-                LmuListItem.base(title: "Offene Abschlussarbeiten", subtitle: driver.openTheses),
-              ],
-            ),
           ],
         ),
       ),
@@ -69,5 +62,5 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
 
   @override
   WidgetDriverProvider<PeopleDetailsPageDriver> get driverProvider =>
-      WidgetDriverProvider(() => PeopleDetailsPageDriver());
+      $PeopleDetailsPageDriverProvider();
 }

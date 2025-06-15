@@ -8,9 +8,10 @@ part of 'all_people_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.3.3"
+// This file was generated with widget_driver_generator version "1.3.5"
 
-class _$TestAllPeoplePageDriver extends TestDriver implements AllPeoplePageDriver {
+class _$TestAllPeoplePageDriver extends TestDriver
+    implements AllPeoplePageDriver {
   @override
   String get title => ' ';
 
@@ -27,7 +28,8 @@ class _$TestAllPeoplePageDriver extends TestDriver implements AllPeoplePageDrive
   void dispose() {}
 }
 
-class $AllPeoplePageDriverProvider extends WidgetDriverProvider<AllPeoplePageDriver> {
+class $AllPeoplePageDriverProvider
+    extends WidgetDriverProvider<AllPeoplePageDriver> {
   @override
   AllPeoplePageDriver buildDriver() {
     return AllPeoplePageDriver();

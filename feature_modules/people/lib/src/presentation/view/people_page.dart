@@ -32,7 +32,8 @@ class PeoplePage extends DrivableWidget<PeoplePageDriver> {
   }
 
   Widget get content {
-    if (driver.isLoading) return const PeoplePageLoading(); // replace with skeleton loading
+    if (driver.isLoading)
+      return const PeoplePageLoading(); // replace with skeleton loading
 
     return Column(
       children: [
@@ -71,5 +72,6 @@ class PeoplePage extends DrivableWidget<PeoplePageDriver> {
   }
 
   @override
-  WidgetDriverProvider<PeoplePageDriver> get driverProvider => $PeoplePageDriverProvider();
+  WidgetDriverProvider<PeoplePageDriver> get driverProvider =>
+      $PeoplePageDriverProvider();
 }

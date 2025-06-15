@@ -8,7 +8,7 @@ part of 'people_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.3.3"
+// This file was generated with widget_driver_generator version "1.3.5"
 
 class _$TestPeoplePageDriver extends TestDriver implements PeoplePageDriver {
   @override
@@ -27,7 +27,7 @@ class _$TestPeoplePageDriver extends TestDriver implements PeoplePageDriver {
   void onAllPeoplePressed() {}
 
   @override
-  void onPeopleCardPressed() {}
+  void onPeopleCardPressed(String id) {}
 
   @override
   void didInitDriver() {}

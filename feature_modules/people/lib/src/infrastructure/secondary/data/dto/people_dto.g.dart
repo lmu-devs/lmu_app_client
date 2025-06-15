@@ -11,6 +11,9 @@ PeopleDto _$PeopleDtoFromJson(Map<String, dynamic> json) => PeopleDto(
       name: json['name'] as String,
       description: json['description'] as String,
       url: json['url'] as String,
+      email: json['email'] as String,
+      office: json['office'] as String,
+      phone: json['phone'] as String,
       faviconUrl: json['favicon_url'] as String,
     );
 
@@ -19,5 +22,8 @@ Map<String, dynamic> _$PeopleDtoToJson(PeopleDto instance) => <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
       'url': instance.url,
+      'email': instance.email,
+      'phone': instance.phone,
+      'office': instance.office,
       'favicon_url': instance.faviconUrl,
     };
