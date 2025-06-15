@@ -84,8 +84,10 @@ extension HomeTileMapper on HomeTile {
     return switch (type) {
       HomeTileType.benefits => () => const BenefitsMainRoute().go(context),
       HomeTileType.cinemas => () => const CinemaMainRoute().go(context),
-      HomeTileType.feedback => () =>
-          GetIt.I.get<FeedbackApi>().showFeedback(context, type: FeedbackType.general, origin: 'Home General'),
+      HomeTileType.feedback => () => GetIt.I.get<FeedbackApi>().showFeedback(
+            context,
+            args: const FeedbackArgs(type: FeedbackType.general, origin: 'Home General'),
+          ),
       HomeTileType.roomfinder => () => const RoomfinderMainRoute().go(context),
       HomeTileType.sports => () => const SportsMainRoute().go(context),
       HomeTileType.timeline => () => const TimelineMainRoute().go(context),

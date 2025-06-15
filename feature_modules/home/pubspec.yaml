@@ -23,9 +23,9 @@ dependencies:
   shared_api:
     path: ../../shared_api
   json_annotation: ^4.8.1
-  flutter_sticky_header: ^0.7.0
+  flutter_sticky_header: ^0.8.0
   animated_reorderable_list: ^1.1.5
-  skeletonizer: ^1.4.2
+  skeletonizer: ^2.0.1
   intl: any
 
   http: any
@@ -43,5 +43,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  assets:
-    - assets/

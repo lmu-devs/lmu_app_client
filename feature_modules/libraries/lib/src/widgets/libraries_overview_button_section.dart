@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/explore.dart';
 
 import '../repository/api/api.dart';
 import '../repository/api/enums/sort_options.dart';
@@ -27,17 +28,13 @@ class LibrariesOverviewButtonSection extends StatelessWidget {
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const SizedBox(width: LmuSizes.size_16),
-          LmuMapImageButton(onTap: () => const ExploreMainRoute().go(context)),
-          const SizedBox(width: LmuSizes.size_8),
+      child: LmuButtonRow(
+        buttons: [
+          LmuMapImageButton(onTap: () => ExploreMainRoute(filter: ExploreFilterType.library.name).go(context)),
           LmuIconButton(
             icon: LucideIcons.search,
             onPressed: () => const LibrariesSearchRoute().go(context),
           ),
-          const SizedBox(width: LmuSizes.size_8),
           ValueListenableBuilder(
             valueListenable: userPreferencesService.sortOptionNotifier,
             builder: (context, activeSortOption, _) {
@@ -49,7 +46,6 @@ class LibrariesOverviewButtonSection extends StatelessWidget {
               );
             },
           ),
-          const SizedBox(width: LmuSizes.size_8),
           ValueListenableBuilder(
             valueListenable: isOpenNowFilterNotifier,
             builder: (context, isOpenNowFilterActive, _) {
@@ -61,7 +57,6 @@ class LibrariesOverviewButtonSection extends StatelessWidget {
               );
             },
           ),
-          const SizedBox(width: LmuSizes.size_16),
         ],
       ),
     );

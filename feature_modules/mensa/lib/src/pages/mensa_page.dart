@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../bloc/bloc.dart';
-import '../widgets/overview/mensa_overview_loading_view.dart';
 import '../widgets/overview/mensa_overview_content_view.dart';
+import '../widgets/overview/mensa_overview_loading_view.dart';
 import 'taste_profile_page.dart';
 
 class MensaPage extends StatefulWidget {

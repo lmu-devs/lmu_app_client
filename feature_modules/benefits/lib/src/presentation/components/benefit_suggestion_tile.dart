@@ -10,17 +10,26 @@ class BenefitSuggestionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locals = context.locals;
+    final benefitLocals = locals.benefits;
     return Column(
       children: [
-        LmuTileHeadline.base(title: context.locals.feedback.missingItemInput),
+        LmuTileHeadline.base(title: locals.feedback.missingItemInput),
         LmuContentTile(
           content: LmuListItem.base(
             title: context.locals.benefits.benefitSuggestion,
             mainContentAlignment: MainContentAlignment.center,
             leadingArea: const LeadingFancyIcons(icon: LucideIcons.megaphone),
-            onTap: () {
-              GetIt.I.get<FeedbackApi>().showFeedback(context, type: FeedbackType.suggestion, origin: 'BenefitsScreen');
-            },
+            onTap: () => GetIt.I.get<FeedbackApi>().showFeedback(
+                  context,
+                  args: FeedbackArgs(
+                    title: benefitLocals.benefitSuggestion,
+                    description: benefitLocals.benefitSuggestion,
+                    inputHint: benefitLocals.benefitSuggestionHint,
+                    type: FeedbackType.suggestion,
+                    origin: 'BenefitsScreen',
+                  ),
+                ),
           ),
         ),
       ],

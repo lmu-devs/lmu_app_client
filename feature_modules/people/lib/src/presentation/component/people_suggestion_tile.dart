@@ -2,8 +2,6 @@ import 'package:core/components.dart';
 import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
-import 'package:get_it/get_it.dart';
-import 'package:shared_api/feedback.dart';
 
 class PeopleSuggestionTile extends StatelessWidget {
   const PeopleSuggestionTile({super.key});
@@ -19,7 +17,7 @@ class PeopleSuggestionTile extends StatelessWidget {
             mainContentAlignment: MainContentAlignment.center,
             leadingArea: const LeadingFancyIcons(icon: LucideIcons.megaphone),
             onTap: () {
-              GetIt.I.get<FeedbackApi>().showFeedback(context, type: FeedbackType.suggestion, origin: 'PeopleScreen');
+              // GetIt.I.get<FeedbackApi>().showFeedback(context, type: FeedbackType.suggestion, origin: 'PeopleScreen');
             },
           ),
         ),

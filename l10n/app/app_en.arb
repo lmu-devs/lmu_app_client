@@ -73,6 +73,10 @@
   "@searchEmpty": {
     "description": "Search empty state"
   },
+  "popular": "Popular",
+  "@popular": {
+    "description": "Popular"
+  },
   "locationServiceDialogTitle": "Location Services Disabled",
   "@locationServiceDialogTitle": {
     "description": "Dialog title if location services are off"
@@ -239,7 +243,7 @@
   },
   "copiedPhone": "Phone number copied to clipboard",
   "@copiedPhone": {
-     "description": "Phone number copied to clipboard"
+    "description": "Phone number copied to clipboard"
   },
   "errorLaunchWebsite": "Could not launch website",
   "@errorLaunchWebsite": {
@@ -276,5 +280,9 @@
   "errorDialerException": "Error launching phone dialer: {error}",
   "@errorDialerException": {
     "description": "Exception message when launching the dialer fails"
+  },
+  "to": "to",
+  "@to": {
+    "description": "To"
   }
 }

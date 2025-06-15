@@ -3,6 +3,7 @@ import 'package:core/constants.dart';
 import 'package:flutter/widgets.dart';
 import 'package:widget_driver/widget_driver.dart';
 
+import '../component/calendar_entry_point.dart';
 import '../component/student_id.dart';
 import '../component/studies_people_entry_point.dart';
 import '../viewmodel/studies_page_driver.dart';
@@ -29,6 +30,8 @@ class StudiesPage extends DrivableWidget<StudiesPageDriver> {
             ),
             const SizedBox(height: LmuSizes.size_16),
             StudiesPeopleEntryPoint(),
+            const SizedBox(height: LmuSizes.size_32),
+            const CelanderEntryPoint(),
             const SizedBox(height: LmuSizes.size_96),
           ],
         ),
