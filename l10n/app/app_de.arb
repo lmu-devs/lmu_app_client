@@ -19,6 +19,7 @@
   "tomorrow": "Morgen",
   "search": "Suchen",
   "searchEmpty": "Die Suche hat keine Ergebnisse gefunden",
+  "popular": "Beliebt",
   "locationServiceDialogTitle": "Standortdienste deaktiviert",
   "locationServiceDialogText": "Um alle Funktionen der App nutzen zu können, aktiviere bitte deine Standortdienste. So können wir dir personalisierte und genauere Informationen bieten.",
   "ok": "OK",
@@ -63,5 +64,6 @@
   "errorEmailException": "Fehler beim Öffnen des E-Mail-Programms: {error}",
   "errorLaunchDialer": "Telefon-App konnte nicht gestartet werden",
   "errorOpenDialer": "Telefon-App konnte nicht geöffnet werden",
-  "errorDialerException": "Fehler beim Starten der Telefon-App: {error}"
+  "errorDialerException": "Fehler beim Starten der Telefon-App: {error}",
+  "to": "zu"
 }

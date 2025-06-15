@@ -16,7 +16,20 @@ class HomeMainRoute extends GoRouteData {
   static const String path = '/home';
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => _router.buildMain(context);
+  CustomTransitionPage<void> buildPage(
+    BuildContext context,
+    GoRouterState state,
+  ) {
+    return CustomTransitionPage<void>(
+      key: state.pageKey,
+      name: state.name,
+      transitionDuration: const Duration(milliseconds: 600),
+      child: _router.buildMain(context),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(opacity: animation, child: child);
+      },
+    );
+  }
 }
 
 class LinksRoute extends GoRouteData {

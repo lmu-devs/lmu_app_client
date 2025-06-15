@@ -15,7 +15,9 @@ import '../services/explore_map_service.dart';
 import 'explore_map_dot.dart';
 
 class ExploreActionRow extends StatelessWidget {
-  const ExploreActionRow({super.key});
+  const ExploreActionRow({super.key, required this.filterScrollController});
+
+  final ScrollController filterScrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class ExploreActionRow extends StatelessWidget {
         valueListenable: locationService.filterNotifier,
         builder: (context, activeFilters, child) {
           return LmuButtonRow(
+            controller: filterScrollController,
             buttons: [
               LmuButton(
                 title: context.locals.app.search,

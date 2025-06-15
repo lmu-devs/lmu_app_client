@@ -24,7 +24,7 @@ class AppUpdatePage extends StatelessWidget {
                   children: [
                     Image.asset(
                       getPngAssetTheme('assets/app_icon'),
-                      package: 'home',
+                      package: 'launch_flow',
                       semanticLabel: 'App Icon',
                       height: LmuSizes.size_64,
                       width: LmuSizes.size_64,

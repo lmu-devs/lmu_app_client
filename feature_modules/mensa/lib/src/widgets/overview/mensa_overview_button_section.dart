@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/explore.dart';
 
 import '../../repository/api/models/mensa/mensa_model.dart';
 import '../../repository/api/models/user_preferences/sort_option.dart';
@@ -25,45 +26,36 @@ class MensaOverviewButtonSection extends StatelessWidget {
     final userPreferencesService = GetIt.I.get<MensaUserPreferencesService>();
     final isOpenNowFilterNotifier = userPreferencesService.isOpenNowFilterNotifier;
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const SizedBox(width: LmuSizes.size_16),
-          LmuMapImageButton(onTap: () => const ExploreMainRoute().go(context)),
-          const SizedBox(width: LmuSizes.size_8),
-          LmuIconButton(
-            icon: LucideIcons.search,
-            onPressed: () => const MensaSearchRoute().go(context),
-          ),
-          const SizedBox(width: LmuSizes.size_8),
-          ValueListenableBuilder(
-            valueListenable: userPreferencesService.sortOptionNotifier,
-            builder: (context, activeSortOption, _) {
-              return LmuButton(
-                title: SortOption.values.firstWhere((option) => option == activeSortOption).title(localizations),
-                emphasis: ButtonEmphasis.secondary,
-                trailingIcon: LucideIcons.chevron_down,
-                onTap: () => _showSortOptionActionSheet(context),
-              );
-            },
-          ),
-          const SizedBox(width: LmuSizes.size_8),
-          ValueListenableBuilder(
-            valueListenable: isOpenNowFilterNotifier,
-            builder: (context, isOpenNowFilterActive, _) {
-              return LmuButton(
-                title: localizations.openNow,
-                emphasis: isOpenNowFilterActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
-                action: isOpenNowFilterActive ? ButtonAction.contrast : ButtonAction.base,
-                onTap: () => isOpenNowFilterNotifier.value = !isOpenNowFilterNotifier.value,
-              );
-            },
-          ),
-          const SizedBox(width: LmuSizes.size_16),
-        ],
-      ),
+    return LmuButtonRow(
+      buttons: [
+        LmuMapImageButton(onTap: () => ExploreMainRoute(filter: ExploreFilterType.mensa.name).go(context)),
+        LmuIconButton(
+          icon: LucideIcons.search,
+          onPressed: () => const MensaSearchRoute().go(context),
+        ),
+        ValueListenableBuilder(
+          valueListenable: userPreferencesService.sortOptionNotifier,
+          builder: (context, activeSortOption, _) {
+            return LmuButton(
+              title: SortOption.values.firstWhere((option) => option == activeSortOption).title(localizations),
+              emphasis: ButtonEmphasis.secondary,
+              trailingIcon: LucideIcons.chevron_down,
+              onTap: () => _showSortOptionActionSheet(context),
+            );
+          },
+        ),
+        ValueListenableBuilder(
+          valueListenable: isOpenNowFilterNotifier,
+          builder: (context, isOpenNowFilterActive, _) {
+            return LmuButton(
+              title: localizations.openNow,
+              emphasis: isOpenNowFilterActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
+              action: isOpenNowFilterActive ? ButtonAction.contrast : ButtonAction.base,
+              onTap: () => isOpenNowFilterNotifier.value = !isOpenNowFilterNotifier.value,
+            );
+          },
+        ),
+      ],
     );
   }
 

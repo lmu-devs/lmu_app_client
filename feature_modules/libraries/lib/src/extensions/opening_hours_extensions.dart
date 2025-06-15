@@ -126,7 +126,7 @@ extension AreaStatusExtension on AreaModel {
       case Status.open:
         return (
           color: colors.successColors.textColors.strongColors.base,
-          text: localizations.openNow,
+          text: localizations.openUntil(closingTime),
         );
       case Status.closingSoon:
         return (

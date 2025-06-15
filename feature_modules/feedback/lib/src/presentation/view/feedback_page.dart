@@ -38,8 +38,9 @@ class FeedbackPage extends DrivableWidget<FeedbackPageDriver> {
                     LmuText.body(
                       driver.description,
                       color: colors.neutralColors.textColors.mediumColors.base,
+                      textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: LmuSizes.size_32),
+                    const SizedBox(height: LmuSizes.size_16),
                     if (driver.showEmojiPicker) FeedbackEmojiSelector(onFeedbackSelected: driver.onEmojiSelected),
                     const SizedBox(height: LmuSizes.size_16),
                     LmuInputField(

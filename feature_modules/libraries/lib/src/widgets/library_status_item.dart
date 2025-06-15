@@ -22,7 +22,9 @@ LmuListItem buildLibraryStatusItem({
         '$start - $end',
         textAlign: TextAlign.end,
         weight: isToday ? FontWeight.w600 : FontWeight.w400,
-        color: context.colors.neutralColors.textColors.mediumColors.base,
+        color: isToday
+            ? context.colors.neutralColors.textColors.strongColors.base
+            : context.colors.neutralColors.textColors.mediumColors.base,
       );
     }).toList(),
   );
