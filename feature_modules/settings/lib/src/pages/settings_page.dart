@@ -175,7 +175,10 @@ class SettingsMainPage extends StatelessWidget {
                     mainContentAlignment: MainContentAlignment.center,
                     leadingArea: const LeadingFancyIcons(icon: LucideIcons.plus),
                     onTap: () {
-                      feedbackApi.showFeedback(context, type: FeedbackType.suggestion, origin: 'SettingsScreen');
+                      feedbackApi.showFeedback(
+                        context,
+                        args: const FeedbackArgs(type: FeedbackType.suggestion, origin: 'SettingsScreen'),
+                      );
                     },
                   ),
                   LmuListItem.base(
@@ -183,7 +186,10 @@ class SettingsMainPage extends StatelessWidget {
                     mainContentAlignment: MainContentAlignment.center,
                     leadingArea: const LeadingFancyIcons(icon: LucideIcons.bug),
                     onTap: () {
-                      feedbackApi.showFeedback(context, type: FeedbackType.bug, origin: 'SettingsScreen');
+                      feedbackApi.showFeedback(
+                        context,
+                        args: const FeedbackArgs(type: FeedbackType.bug, origin: 'SettingsScreen'),
+                      );
                     },
                   ),
                 ],

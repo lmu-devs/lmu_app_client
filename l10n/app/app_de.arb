@@ -64,5 +64,6 @@
   "errorEmailException": "Fehler beim Öffnen des E-Mail-Programms: {error}",
   "errorLaunchDialer": "Telefon-App konnte nicht gestartet werden",
   "errorOpenDialer": "Telefon-App konnte nicht geöffnet werden",
-  "errorDialerException": "Fehler beim Starten der Telefon-App: {error}"
+  "errorDialerException": "Fehler beim Starten der Telefon-App: {error}",
+  "to": "zu"
 }

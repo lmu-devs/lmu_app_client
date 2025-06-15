@@ -1,6 +1,5 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:core_routes/wishlist.dart';
 import 'package:flutter/material.dart';

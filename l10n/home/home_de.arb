@@ -38,5 +38,7 @@
   "linksFilterInternal": "Intern",
   "linksFilterExternal": "Extern",
   "linkCopiedToClipboard": "Link kopiert",
-  "linkSuggestion": "Schlage einen Link vor"
+  "linkSuggestion": "Schlage einen Link vor",
+  "linkSuggestionDesciption": "Schlage einen Link vor, den du mit anderen Studierenden teilen möchtest.",
+  "linkSuggestionHint": "Beschreibe deinen Vorschlag"
 }

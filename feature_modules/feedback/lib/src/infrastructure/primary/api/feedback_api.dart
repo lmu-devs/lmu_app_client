@@ -13,9 +13,8 @@ class FeedbackApiImpl extends FeedbackApi {
   final OpenStoreListingUseCase _openStoreListingUsecase;
 
   @override
-  void showFeedback(BuildContext context, {required String origin, required FeedbackType type}) {
-    _state.origin = origin;
-    _state.type = type;
+  void showFeedback(BuildContext context, {required FeedbackArgs args}) {
+    _state.args = args;
     LmuBottomSheet.showExtended(context, content: FeedbackPage());
   }
 
