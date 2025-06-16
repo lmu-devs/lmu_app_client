@@ -14,7 +14,7 @@ class _$TestPeopleDetailsPageDriver extends TestDriver
     implements PeopleDetailsPageDriver {
   @override
   People person = People(
-      id: 'test-id',
+      id: '3',
       name: 'Test Person',
       description: 'Test Description',
       email: 'test@example.com',
@@ -46,6 +46,9 @@ class _$TestPeopleDetailsPageDriver extends TestDriver
 
   @override
   void didInitDriver() {}
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {}
 
   @override
   void onRoomTap(BuildContext context) {}

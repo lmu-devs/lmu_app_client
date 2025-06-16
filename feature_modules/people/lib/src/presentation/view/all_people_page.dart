@@ -3,7 +3,6 @@ import 'package:core/constants.dart';
 import 'package:flutter/widgets.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../component/people_card.dart';
 import '../component/people_suggestion_tile.dart';
 import '../viewmodel/all_people_page_driver.dart';
 
@@ -28,15 +27,22 @@ class AllPeoplePage extends DrivableWidget<AllPeoplePageDriver> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Deine Listeneinträge als Widgets
-            ...driver.peoples.map(
-              (peopleItem) => Padding(
-                padding: const EdgeInsets.only(bottom: LmuSizes.size_12),
-                child: PeopleCard(
-                  key: Key("people_card_${peopleItem.hashCode}"),
-                  people: peopleItem,
-                ),
-              ),
+            LmuTileHeadline.base(title: "Faultiere"),
+            LmuContentTile(
+              contentList: driver.peoples
+                  .map(
+                    (people) => LmuListItem.action(
+                      key: Key("all_people_list_item_${people.hashCode}"),
+                      title: people.name,
+                      subtitle: people.description,
+                      //leadingArea: LmuInListBlurEmoji(emoji: people.emoji),
+                      actionType: LmuListItemAction.chevron,
+                      onTap: () => driver.onPeopleCardPressed(people),
+                    ),
+                  )
+                  .toList(),
             ),
+
             const SizedBox(height: LmuSizes.size_32),
             const PeopleSuggestionTile(),
           ],

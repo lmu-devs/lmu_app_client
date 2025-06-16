@@ -1,5 +1,6 @@
 import 'package:core/localizations.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../application/state/people_state.dart';
@@ -14,6 +15,7 @@ class AllPeoplePageDriver extends WidgetDriver {
   late String _allTitle;
   List<People> _peopleItems = [];
   String? _categoryTitle;
+  late BuildContext _navigatorContext;
 
   List<People>? get _selectedPeople => _peopleState.selectedCategory?.peoples;
 
@@ -27,6 +29,13 @@ class AllPeoplePageDriver extends WidgetDriver {
     _categoryTitle = _peopleState.selectedCategory?.name;
 
     notifyWidget();
+  }
+
+  void onPeopleCardPressed(People people) {
+    print("onPeopleCardPressed wurde aufgerufen mit: ${people.name} (${people.id})");
+    _peopleState.selectedCategory = null;
+    _peopleState.selectedPersonId = people.id;
+    _navigatorContext.go('/studies/people/details/${people.id}');
   }
 
   @override
@@ -44,6 +53,7 @@ class AllPeoplePageDriver extends WidgetDriver {
   @override
   void didUpdateBuildContext(BuildContext context) {
     super.didUpdateBuildContext(context);
+    _navigatorContext = context; // Initialisierung des Navigator-Kontexts
     _allTitle = "${context.locals.app.all} ${context.locals.peoples.title}";
   }
 

@@ -63,7 +63,7 @@ class PeopleApiClient {
             'url': 'https://example.com',
             'email': 'max.mustermann@example.com',
             'phone': '+49 123 456789',
-            'office': 'Raum 101',
+            'office': '101',
             'favicon_url': 'https://example.com/favicon.ico'
           },
           {
@@ -73,7 +73,7 @@ class PeopleApiClient {
             'url': 'https://example.com',
             'email': 'anna.schmidt@example.com',
             'phone': '+49 123 456789',
-            'office': 'Raum 102',
+            'office': '102',
             'favicon_url': 'https://example.com/favicon.ico'
           },
           {
@@ -83,7 +83,7 @@ class PeopleApiClient {
             'url': 'https://example.com',
             'email': 'thomas.weber@example.com',
             'phone': '+49 123 456789',
-            'office': 'Raum 201',
+            'office': '201',
             'favicon_url': 'https://example.com/favicon.ico'
           },
           {
@@ -93,7 +93,7 @@ class PeopleApiClient {
             'url': 'https://example.com',
             'email': 'maria.mueller@example.com',
             'phone': '+49 123 456789',
-            'office': 'Raum 202',
+            'office': '202',
             'favicon_url': 'https://example.com/favicon.ico'
           }
         ]

@@ -19,6 +19,9 @@ class _$TestAllPeoplePageDriver extends TestDriver
   List<People> get peoples => [];
 
   @override
+  void onPeopleCardPressed(People people) {}
+
+  @override
   void didInitDriver() {}
 
   @override
