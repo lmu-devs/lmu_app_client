@@ -11,7 +11,8 @@ FeatureFlag _$FeatureFlagFromJson(Map<String, dynamic> json) => FeatureFlag(
       isActive: json['enabled'] as bool,
     );
 
-Map<String, dynamic> _$FeatureFlagToJson(FeatureFlag instance) => <String, dynamic>{
+Map<String, dynamic> _$FeatureFlagToJson(FeatureFlag instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'enabled': instance.isActive,
     };

@@ -68,7 +68,7 @@ class AllPeoplePageDriver extends WidgetDriver {
     _peopleState.selectedCategory = null;
   }
 
-  void onPeopleCardPressed(String personId) {
-    _navigatorContext.go('/studies/people/details?id=$personId');
-  }
+  // void onPeopleCardPressed(String personId) {
+  //   _navigatorContext.go('/studies/people/details?id=$personId');
+  // }
 }

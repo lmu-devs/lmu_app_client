@@ -30,6 +30,9 @@ class _$TestPeoplePageDriver extends TestDriver implements PeoplePageDriver {
   void onPeopleCardPressed(String personId) {}
 
   @override
+  void onFacultyPressed(PeopleCategory faculty) {}
+
+  @override
   void didInitDriver() {}
 
   @override

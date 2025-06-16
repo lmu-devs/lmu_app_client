@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:go_router/go_router.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../application/state/people_state.dart';
@@ -28,43 +27,23 @@ class PeopleDetailsPageDriver extends WidgetDriver {
   late final People person;
 
   late String _id;
-  late BuildContext _navigatorContext;
-  String? _id;
-  BuildContext? _context;
+  late BuildContext _context;
 
   @override
   void didInitDriver() {
     super.didInitDriver();
-    // ID aus dem Zustand auslesen
     _peopleStateService.state.addListener(_onPeopleStateChanged);
   }
 
   @override
   void didUpdateBuildContext(BuildContext context) {
     super.didUpdateBuildContext(context);
-    _navigatorContext = context;
+    _context = context;
 
     final idFromRoute = GoRouterState.of(context).pathParameters['id'];
-    print('Extrahierte ID aus Route: $idFromRoute');
     _id = idFromRoute ?? 'unknown';
 
-    // Wenn Person noch nicht geladen wurde
-    person = _peopleStateService.state.value.peopleCategories.expand((cat) => cat.peoples).firstWhere(
-          (p) => p.id == _id,
-          orElse: () => People(
-            id: 'unknown',
-            name: 'Unbekannt',
-            description: 'Keine Beschreibung verfügbar',
-            email: '',
-            phone: '',
-            office: '',
-            url: '',
-            aliases: const [],
-          ),
-        );
-
-    print('Geladene Person aus Route: ${person.name}');
-    notifyWidget();
+    _initializePerson();
   }
 
   bool isFavorite = false; // Status der Favorisierung
@@ -73,7 +52,7 @@ class PeopleDetailsPageDriver extends WidgetDriver {
     isFavorite = !isFavorite; // Favorisierungsstatus umschalten
     print('Favorisierungsstatus geändert: $isFavorite');
     notifyWidget(); // UI aktualisieren
-    _context = context;
+    _context = _context;
     _initializePerson();
   }
 
@@ -84,14 +63,8 @@ class PeopleDetailsPageDriver extends WidgetDriver {
   }
 
   void _initializePerson() {
-    if (_context == null) return;
-
-    // Get the ID from the route parameters
-    final params = GoRouterState.of(_context!).uri.queryParameters;
-    _id = params['id'];
-
-    if (_id == null || _id!.isEmpty) {
-      throw Exception('No person ID provided in route parameters');
+    if (_id.isEmpty || _id == 'unknown') {
+      return;
     }
 
     try {

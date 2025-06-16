@@ -22,6 +22,9 @@ class _$TestAllPeoplePageDriver extends TestDriver
   bool get isLoading => false;
 
   @override
+  void onPeopleCardPressed(People people) {}
+
+  @override
   void didInitDriver() {}
 
   @override
@@ -29,9 +32,6 @@ class _$TestAllPeoplePageDriver extends TestDriver
 
   @override
   void dispose() {}
-
-  @override
-  void onPeopleCardPressed(String personId) {}
 }
 
 class $AllPeoplePageDriverProvider

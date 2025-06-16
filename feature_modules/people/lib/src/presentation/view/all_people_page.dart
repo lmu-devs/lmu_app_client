@@ -114,7 +114,7 @@ class AllPeoplePage extends DrivableWidget<AllPeoplePageDriver> {
                         subtitle: people.roles.isNotEmpty ? people.roles.first.role : null,
                         hasDivider: false,
                         actionType: LmuListItemAction.chevron,
-                        onTap: () => driver.onPeopleCardPressed(people.id),
+                        onTap: () => driver.onPeopleCardPressed(people),
                       );
                     }).toList(),
                   ),

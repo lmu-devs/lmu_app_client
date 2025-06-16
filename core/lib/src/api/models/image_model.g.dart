@@ -12,7 +12,8 @@ ImageModel _$ImageModelFromJson(Map<String, dynamic> json) => ImageModel(
       blurHash: json['blurHash'] as String?,
     );
 
-Map<String, dynamic> _$ImageModelToJson(ImageModel instance) => <String, dynamic>{
+Map<String, dynamic> _$ImageModelToJson(ImageModel instance) =>
+    <String, dynamic>{
       'url': instance.url,
       'name': instance.name,
       'blurHash': instance.blurHash,

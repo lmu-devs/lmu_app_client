@@ -24,6 +24,9 @@ class _$TestPeopleDetailsPageDriver extends TestDriver
       courses: []);
 
   @override
+  bool isFavorite = false;
+
+  @override
   String get name => ' ';
 
   @override
@@ -55,6 +58,9 @@ class _$TestPeopleDetailsPageDriver extends TestDriver
 
   @override
   void didUpdateBuildContext(BuildContext context) {}
+
+  @override
+  void toggleFavorite() {}
 
   @override
   void onRoomTap(BuildContext context) {}

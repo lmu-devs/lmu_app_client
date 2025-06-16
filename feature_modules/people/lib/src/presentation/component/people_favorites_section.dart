@@ -48,7 +48,7 @@ class PeopleFavoritesSection extends StatelessWidget {
               (person) {
                 return LmuListItem.action(
                   title: person.name,
-                  subtitle: person.description,
+                  subtitle: person.faculty,
                   actionType: LmuListItemAction.chevron,
                   onTap: () {
                     context.go('/studies/people/details/${person.id}');
