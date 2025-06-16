@@ -12,7 +12,7 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
   Widget build(BuildContext context) {
     return LmuScaffold(
       appBar: LmuAppBarData(
-        largeTitle: driver.name,
+        largeTitle: driver.academicDegree.isNotEmpty ? "${driver.academicDegree} ${driver.name}" : driver.name,
         leadingAction: LeadingAction.back,
         largeTitleTrailingWidget: IconButton(
           icon: Icon(
