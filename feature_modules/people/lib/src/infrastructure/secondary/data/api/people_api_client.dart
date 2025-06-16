@@ -58,31 +58,43 @@ class PeopleApiClient {
         'peoples': [
           {
             'id': '1',
-            'name': 'Prof. Dr. John Doe',
-            'description': 'Computer Science',
-            'url': 'https://example.com/prof1',
-            'favicon_url': 'https://example.com/favicon1.png'
+            'name': 'Prof. Dr. Max Mustermann',
+            'description': 'Professor für Theologie',
+            'url': 'https://example.com',
+            'email': 'max.mustermann@example.com',
+            'phone': '+49 123 456789',
+            'office': 'Raum 101',
+            'favicon_url': 'https://example.com/favicon.ico'
           },
           {
             'id': '2',
-            'name': 'Prof. Dr. Jane Smith',
-            'description': 'Mathematics',
-            'url': 'https://example.com/prof2',
-            'favicon_url': 'https://example.com/favicon2.png'
+            'name': 'Dr. Anna Schmidt',
+            'description': 'Dozentin für Theologie',
+            'url': 'https://example.com',
+            'email': 'anna.schmidt@example.com',
+            'phone': '+49 123 456789',
+            'office': 'Raum 102',
+            'favicon_url': 'https://example.com/favicon.ico'
           },
           {
             'id': '3',
-            'name': 'Max Student',
-            'description': 'Student Council',
-            'url': 'https://example.com/student1',
-            'favicon_url': 'https://example.com/favicon3.png'
+            'name': 'Prof. Dr. Thomas Weber',
+            'description': 'Professor für Jura',
+            'url': 'https://example.com',
+            'email': 'thomas.weber@example.com',
+            'phone': '+49 123 456789',
+            'office': 'Raum 201',
+            'favicon_url': 'https://example.com/favicon.ico'
           },
           {
             'id': '4',
-            'name': 'Anna Student',
-            'description': 'Student Council',
-            'url': 'https://example.com/student2',
-            'favicon_url': 'https://example.com/favicon4.png'
+            'name': 'Dr. Maria Müller',
+            'description': 'Dozentin für BWL',
+            'url': 'https://example.com',
+            'email': 'maria.mueller@example.com',
+            'phone': '+49 123 456789',
+            'office': 'Raum 202',
+            'favicon_url': 'https://example.com/favicon.ico'
           }
         ]
       };

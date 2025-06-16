@@ -15,7 +15,7 @@ class StudiesPeopleEntryPoint extends StatelessWidget {
             title: "People",
             leadingArea: const LmuInListBlurEmoji(emoji: "👥"),
             //onTap: () => const PeopleMainRoute().go(context),
-            onTap: () => context.go('/studies/people/all'),
+            onTap: () => context.go('/studies/people'),
           ),
         ),
       ],
