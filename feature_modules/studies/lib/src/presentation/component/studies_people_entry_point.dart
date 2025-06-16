@@ -9,11 +9,11 @@ class StudiesPeopleEntryPoint extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        LmuTileHeadline.base(title: "People"),
         LmuContentTile(
           content: LmuListItem.action(
             actionType: LmuListItemAction.chevron,
-            title: "Find People",
+            title: "People",
+            leadingArea: const LmuInListBlurEmoji(emoji: "👥"),
             onTap: () => const PeopleMainRoute().go(context),
           ),
         ),
