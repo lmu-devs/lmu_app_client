@@ -18,6 +18,8 @@ class LmuScaffold extends StatefulWidget {
     this.onPopInvoked,
     this.isBottomSheet = false,
     this.bottomNavigationBar,
+    this.fixedOverlay,
+    this.showScrollbar = true,
   });
 
   final LmuAppBarData appBar;
@@ -28,6 +30,8 @@ class LmuScaffold extends StatefulWidget {
   final Future<bool> Function()? onPopInvoked;
   final bool isBottomSheet;
   final Widget? bottomNavigationBar;
+  final Widget? fixedOverlay;
+  final bool showScrollbar;
 
   @override
   State<LmuScaffold> createState() => _LmuScaffoldState();
@@ -72,45 +76,55 @@ class _LmuScaffoldState extends State<LmuScaffold> {
     final largeTitleMaxLines = _calculateTitleMaxLines(_largeTitle, largeTitleTextTheme, mediaQuery.size.width);
     final calculatedLargeTitleHeight = largeTitleMaxLines * _largeTitleLineHeight + LmuSizes.size_16;
 
+    final scrollableContent = CustomScrollView(
+      controller: _scrollController,
+      physics: const AlwaysScrollableScrollPhysics(),
+      slivers: [
+        SliverPersistentHeader(
+          pinned: true,
+          delegate: SliverAppBarDelegate(
+            largeTitle: _largeTitle,
+            largeTitleTextStyle: largeTitleTextTheme,
+            largeTitleMaxLines: largeTitleMaxLines,
+            largeTitleHeight: calculatedLargeTitleHeight,
+            customLargeTitleWidget: _appBar.customLargeTitleWidget,
+            collapsedTitle: _appBar.collapsedTitle ?? _largeTitle,
+            collapsedTitleTextStyle: collapsedTitleTextStyle,
+            collapsedTitleHeight: _collapsedTitleHeight,
+            topPadding: mediaQuery.padding.top,
+            backgroundColor: backgroundColor,
+            largeTitleTrailingWidget: _appBar.largeTitleTrailingWidget,
+            largeTitleTrailingWidgetAlignment: _appBar.largeTitleTrailingWidgetAlignment,
+            leadingAction: _appBar.leadingAction,
+            onLeadingActionTap: _appBar.onLeadingActionTap,
+            trailingWidgets: _appBar.trailingWidgets,
+            imageUrls: _appBar.imageUrls,
+            scrollOffsetNotifier: _scrollOffsetNotifier,
+          ),
+        ),
+        if (widget.slivers != null) ...widget.slivers!,
+        if (widget.body != null) SliverToBoxAdapter(child: widget.body),
+      ],
+    );
+
     return Material(
       child: WillPopScope(
         onWillPop: widget.onPopInvoked,
         child: Scaffold(
           bottomNavigationBar: widget.bottomNavigationBar,
           backgroundColor: backgroundColor,
-          body: CupertinoScrollbar(
-            controller: _scrollController,
-            mainAxisMargin: widget.isBottomSheet ? _bottomeSheetCollapsedTitleHeight : 3,
-            child: CustomScrollView(
-              controller: _scrollController,
-              physics: const AlwaysScrollableScrollPhysics(),
-              slivers: [
-                SliverPersistentHeader(
-                  pinned: true,
-                  delegate: SliverAppBarDelegate(
-                    largeTitle: _largeTitle,
-                    largeTitleTextStyle: largeTitleTextTheme,
-                    largeTitleMaxLines: largeTitleMaxLines,
-                    largeTitleHeight: calculatedLargeTitleHeight,
-                    customLargeTitleWidget: _appBar.customLargeTitleWidget,
-                    collapsedTitle: _appBar.collapsedTitle ?? _largeTitle,
-                    collapsedTitleTextStyle: collapsedTitleTextStyle,
-                    collapsedTitleHeight: _collapsedTitleHeight,
-                    topPadding: mediaQuery.padding.top,
-                    backgroundColor: backgroundColor,
-                    largeTitleTrailingWidget: _appBar.largeTitleTrailingWidget,
-                    largeTitleTrailingWidgetAlignment: _appBar.largeTitleTrailingWidgetAlignment,
-                    leadingAction: _appBar.leadingAction,
-                    onLeadingActionTap: _appBar.onLeadingActionTap,
-                    trailingWidgets: _appBar.trailingWidgets,
-                    imageUrls: _appBar.imageUrls,
-                    scrollOffsetNotifier: _scrollOffsetNotifier,
-                  ),
-                ),
-                if (widget.slivers != null) ...widget.slivers!,
-                if (widget.body != null) SliverToBoxAdapter(child: widget.body),
-              ],
-            ),
+          body: Stack(
+            children: [
+              if (widget.showScrollbar)
+                CupertinoScrollbar(
+                  controller: _scrollController,
+                  mainAxisMargin: widget.isBottomSheet ? _bottomeSheetCollapsedTitleHeight : 3,
+                  child: scrollableContent,
+                )
+              else
+                scrollableContent,
+              if (widget.fixedOverlay != null) widget.fixedOverlay!,
+            ],
           ),
           floatingActionButton: widget.floatingActionButton,
         ),

@@ -4,7 +4,7 @@ import 'package:core_routes/people.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 
-import 'application/state/people_state.dart';
+import 'application/state/people_state.dart' as state;
 import 'application/usecase/delete_cached_people_usecase.dart';
 import 'application/usecase/get_cached_people_usecase.dart';
 import 'application/usecase/get_people_usecase.dart';
@@ -13,15 +13,13 @@ import 'infrastructure/primary/router/people_router.dart';
 import 'infrastructure/secondary/data/api/people_api_client.dart';
 import 'infrastructure/secondary/data/storage/people_storage.dart';
 import 'infrastructure/secondary/repository/people_repository.dart';
+import 'services/people_state_service.dart' as filter;
 
 class PeopleModule extends AppModule
     with LocalDependenciesProvidingAppModule, PublicApiProvidingAppModule, LocalizedDataContainigAppModule {
   @override
   String get moduleName => 'PeopleModule';
-  //@override
-  //String get moduleName => 'PeopleModule';
 
-  // Instanzen erstellen und registrieren
   @override
   void provideLocalDependencies() {
     final baseApiClient = GetIt.I.get<BaseApiClient>();
@@ -36,11 +34,13 @@ class PeopleModule extends AppModule
     final getPeopleUseCase = GetPeopleUsecase(peopleRepository);
     final getCachedPeopleUseCase = GetCachedPeopleUsecase(peopleRepository);
     final deleteCachedPeopleUsecase = DeleteCachedPeopleUsecase(peopleRepository);
-    final peopleState = PeopleStateService(getPeopleUseCase, getCachedPeopleUseCase);
+    final peopleState = state.PeopleStateService(getPeopleUseCase, getCachedPeopleUseCase);
+    final peopleFilterState = filter.PeopleStateService();
 
     GetIt.I.registerSingleton<PeopleRepositoryInterface>(peopleRepository);
-    GetIt.I.registerSingleton<PeopleStateService>(peopleState);
+    GetIt.I.registerSingleton<state.PeopleStateService>(peopleState);
     GetIt.I.registerSingleton<DeleteCachedPeopleUsecase>(deleteCachedPeopleUsecase);
+    GetIt.I.registerSingleton<filter.PeopleStateService>(peopleFilterState, instanceName: 'filter');
   }
 
   @override
