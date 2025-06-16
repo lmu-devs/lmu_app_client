@@ -1,5 +1,6 @@
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+
+import '../../../themes.dart';
 
 LmuTextTheme getBaseTextTheme(
   String fontFamily,

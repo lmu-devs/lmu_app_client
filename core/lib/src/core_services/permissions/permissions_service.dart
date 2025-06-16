@@ -1,8 +1,9 @@
-import 'package:core/components.dart';
-import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../../../components.dart';
+import '../../../localizations.dart';
 
 class PermissionsService {
   static Future<bool> isLocationPermissionGranted() async => await Permission.location.isGranted;

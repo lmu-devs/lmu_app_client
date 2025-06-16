@@ -1,14 +1,12 @@
-import 'package:core/components.dart';
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
+import '../../../components.dart';
+import '../../../constants.dart';
+import '../../../themes.dart';
+
 class LmuChevronAction extends StatelessWidget {
-  const LmuChevronAction({
-    Key? key,
-    this.chevronTitle,
-  }) : super(key: key);
+  const LmuChevronAction({super.key, this.chevronTitle});
 
   final String? chevronTitle;
 

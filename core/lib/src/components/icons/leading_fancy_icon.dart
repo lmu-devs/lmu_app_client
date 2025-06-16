@@ -1,8 +1,8 @@
-import 'package:core/src/core.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../components.dart';
 import '../../../constants.dart';
+import '../../core.dart';
 
 class LeadingFancyIcons extends StatelessWidget {
   const LeadingFancyIcons({super.key, required this.icon});

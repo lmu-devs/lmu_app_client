@@ -1,17 +1,18 @@
-import 'package:core/constants.dart';
-import 'package:core/localizations.dart';
-import 'package:core/src/constants/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../constants.dart';
+import '../../../localizations.dart';
+import '../../../themes.dart';
+import '../../constants/constants.dart';
+
 class StarIcon extends StatelessWidget {
   const StarIcon({
-    Key? key,
+    super.key,
     this.isActive = false,
     this.disabledColor,
     this.size = LmuIconSizes.mediumSmall,
-  }) : super(key: key);
+  });
 
   final bool isActive;
   final Color? disabledColor;

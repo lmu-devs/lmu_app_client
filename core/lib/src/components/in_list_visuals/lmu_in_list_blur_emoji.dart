@@ -1,9 +1,10 @@
 import 'dart:ui';
 
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+
+import '../../../constants.dart';
+import '../../../themes.dart';
 
 class LmuInListBlurEmoji extends StatelessWidget {
   const LmuInListBlurEmoji({super.key, required this.emoji});
