@@ -9,6 +9,7 @@ class People extends Equatable {
     required this.faculty,
     required this.roles,
     required this.courses,
+    this.isFavorite = false, // Standardmäßig nicht favorisiert
   });
 
   final String id;
@@ -18,6 +19,7 @@ class People extends Equatable {
   final String faculty;
   final List<Role> roles;
   final List<dynamic> courses;
+  final bool isFavorite;
 
   @override
   List<Object?> get props => [id];

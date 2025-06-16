@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../application/state/people_state.dart';
+import '../../domain/model/people.dart';
 import '../../domain/model/people_category.dart';
 
 part 'people_page_driver.g.dart';
@@ -21,6 +22,9 @@ class PeoplePageDriver extends WidgetDriver {
   late List<PeopleCategory> _peopleCategories;
   //late People? _people;
   late PeopleLoadState _peopleLoadState;
+
+  List<People> get favorites =>
+      _peopleCategories.expand((category) => category.peoples).where((person) => person.isFavorite).toList();
 
   bool get isLoading =>
       _peopleLoadState != PeopleLoadState.success && _peopleLoadState != PeopleLoadState.loadingWithCache;

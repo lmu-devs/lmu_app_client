@@ -31,12 +31,10 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
               LmuTileHeadline.base(title: "Fakultät & Rolle"),
               LmuContentTile(
                 contentList: [
-                  LmuListItem.base(title: "Fakultät", subtitle: driver.faculty),
-                  LmuListItem.base(title: "Rolle", subtitle: driver.role),
-                  if (driver.academicDegree.isNotEmpty)
-                    LmuListItem.base(title: "Akademischer Grad", subtitle: driver.academicDegree),
-                  if (driver.employmentStatus.isNotEmpty)
-                    LmuListItem.base(title: "Beschäftigungsstatus", subtitle: driver.employmentStatus),
+                  LmuListItem.base(title: driver.faculty),
+                  LmuListItem.base(
+                    title: "${driver.role} ${driver.room}".trim(),
+                  ) // Kombiniert beide Werte),
                 ],
               ),
               const SizedBox(height: LmuSizes.size_16),
