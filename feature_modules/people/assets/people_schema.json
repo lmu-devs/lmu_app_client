@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "profile_url": {
+          "type": "string"
+        },
+        "basic_info": {
+          "type": "object",
+          "properties": {
+            "last_name": {
+              "type": "string"
+            },
+            "gender": {
+              "type": "string"
+            },
+            "first_name": {
+              "type": "string"
+            },
+            "office_hours": {
+              "type": "string"
+            },
+            "name_suffix": {
+              "type": "string"
+            },
+            "employment_status": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "note": {
+              "type": "string"
+            },
+            "academic_degree": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            }
+          }
+        },
+        "faculty": {
+          "type": "string"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "institution": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              },
+              "institution_url": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "courses": {
+          "type": "array",
+          "items": {}
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

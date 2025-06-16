@@ -18,13 +18,15 @@ class PeoplePage extends DrivableWidget<PeoplePageDriver> {
         largeTitle: "People",
         leadingAction: LeadingAction.back,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-        child: LmuPageAnimationWrapper(
-          child: Align(
-            //key: ValueKey("people_page_${driver.isLoading}"),
-            alignment: Alignment.topCenter,
-            child: content,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+          child: LmuPageAnimationWrapper(
+            child: Align(
+              //key: ValueKey("people_page_${driver.isLoading}"),
+              alignment: Alignment.topCenter,
+              child: content,
+            ),
           ),
         ),
       ),
@@ -35,6 +37,7 @@ class PeoplePage extends DrivableWidget<PeoplePageDriver> {
     if (driver.isLoading) return const PeoplePageLoading(); // replace with skeleton loading
 
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         const SizedBox(height: LmuSizes.size_16),
         LmuContentTile(
@@ -50,15 +53,15 @@ class PeoplePage extends DrivableWidget<PeoplePageDriver> {
         LmuContentTile(
           contentList: driver.peopleCategories
               .mapIndexed(
-                (index, people) => LmuListItem.action(
-                  key: Key("people_category_${people.hashCode}"),
-                  title: people.name,
-                  subtitle: people.description,
-                  leadingArea: LmuInListBlurEmoji(emoji: people.emoji),
-                  trailingTitle: people.peoples.length.toString(),
+                (index, faculty) => LmuListItem.action(
+                  key: Key("people_category_${faculty.hashCode}"),
+                  title: faculty.name,
+                  subtitle: faculty.description,
+                  leadingArea: LmuInListBlurEmoji(emoji: faculty.emoji),
+                  trailingTitle: faculty.peoples.length.toString(),
                   hasDivider: index != driver.peopleCategories.length - 1,
                   actionType: LmuListItemAction.chevron,
-                  onTap: () => driver.onPeopleCardPressed(),
+                  onTap: () => driver.onFacultyPressed(faculty),
                 ),
               )
               .toList(),

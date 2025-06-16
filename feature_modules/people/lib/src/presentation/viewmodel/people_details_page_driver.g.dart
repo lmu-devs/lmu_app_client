@@ -16,12 +16,12 @@ class _$TestPeopleDetailsPageDriver extends TestDriver
   People person = People(
       id: 'test-id',
       name: 'Test Person',
-      description: 'Test Description',
-      email: 'test@example.com',
-      phone: '123456789',
-      office: 'Test Office',
-      url: 'https://example.com',
-      aliases: const []);
+      profileUrl: 'https://example.com',
+      basicInfo:
+          BasicInfo(lastName: 'Test', gender: 'male', firstName: 'Person'),
+      faculty: 'Test Faculty',
+      roles: [],
+      courses: []);
 
   @override
   String get name => ' ';
@@ -30,7 +30,7 @@ class _$TestPeopleDetailsPageDriver extends TestDriver
   String get faculty => ' ';
 
   @override
-  String get chair => ' ';
+  String get role => ' ';
 
   @override
   String get email => ' ';
@@ -45,13 +45,25 @@ class _$TestPeopleDetailsPageDriver extends TestDriver
   String get website => ' ';
 
   @override
+  String get academicDegree => ' ';
+
+  @override
+  String get employmentStatus => ' ';
+
+  @override
   void didInitDriver() {}
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {}
 
   @override
   void onRoomTap(BuildContext context) {}
 
   @override
   void onWebsiteTap() {}
+
+  @override
+  void dispose() {}
 }
 
 class $PeopleDetailsPageDriverProvider

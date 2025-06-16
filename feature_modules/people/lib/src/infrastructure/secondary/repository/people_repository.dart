@@ -14,29 +14,33 @@ class PeopleRepository implements PeopleRepositoryInterface {
   @override
   Future<List<PeopleCategory>?> getPeople() async {
     try {
-      final response = await _apiClient.getPeople();
-      _storage.savePeople(response);
-      return PeopleMapper.mapToDomain(response);
+      final categories = await _apiClient.getPeople();
+      return PeopleMapper.mapToDomain(categories);
     } catch (e) {
-      return null;
+      print('❌ Error in getPeople: $e');
+      rethrow;
     }
   }
 
   @override
   Future<List<PeopleCategory>?> getCachedPeople() async {
-    final cachedPeopleData = await _storage.getPeople();
-    print("Get Cached People: $cachedPeopleData");
-    if (cachedPeopleData == null) return null;
     try {
-      return PeopleMapper.mapToDomain(cachedPeopleData);
+      final categories = await _storage.getPeople();
+      if (categories == null) return null;
+      return PeopleMapper.mapToDomain(categories);
     } catch (e) {
-      deleteCachedPeople();
+      print('❌ Error in getCachedPeople: $e');
       return null;
     }
   }
 
   @override
   Future<void> deleteCachedPeople() async {
-    await _storage.deletePeople();
+    try {
+      await _storage.deletePeople();
+    } catch (e) {
+      print('❌ Error in deleteCachedPeople: $e');
+      rethrow;
+    }
   }
 }

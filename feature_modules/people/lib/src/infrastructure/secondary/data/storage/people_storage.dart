@@ -2,21 +2,21 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../dto/peoples_dto.dart';
+import '../dto/people_category_dto.dart';
 
 class PeopleStorage {
   final _peopleKey = 'people_data_key';
   final _peopleCacheTimeKey = 'benefits_cache_time';
   final _peopleCacheTime = const Duration(days: 14);
 
-  Future<void> savePeople(PeoplesDto people) async {
+  Future<void> savePeople(List<PeopleCategoryDto> people) async {
     final prefs = await SharedPreferences.getInstance();
-    final peopleJson = jsonEncode(people.toJson());
+    final peopleJson = jsonEncode(people.map((e) => e.toJson()).toList());
     await prefs.setString(_peopleKey, peopleJson);
     await prefs.setInt(_peopleCacheTimeKey, DateTime.now().millisecondsSinceEpoch);
   }
 
-  Future<PeoplesDto?> getPeople() async {
+  Future<List<PeopleCategoryDto>?> getPeople() async {
     final prefs = await SharedPreferences.getInstance();
     final peopleJson = prefs.getString(_peopleKey);
     if (peopleJson == null) return null;
@@ -28,8 +28,10 @@ class PeopleStorage {
     }
 
     try {
-      final peopleMap = jsonDecode(peopleJson) as Map<String, dynamic>;
-      return PeoplesDto.fromJson(peopleMap);
+      final peopleList = jsonDecode(peopleJson) as List;
+      return peopleList
+          .map((e) => PeopleCategoryDto.fromJsonEntry(MapEntry((e as Map<String, dynamic>)['name'], e['people'])))
+          .toList();
     } catch (_) {
       return null;
     }

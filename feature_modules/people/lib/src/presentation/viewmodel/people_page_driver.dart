@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
 import 'package:get_it/get_it.dart';
@@ -28,24 +29,44 @@ class PeoplePageDriver extends WidgetDriver {
   String get allPeopleCount =>
       _peopleCategories.expand((peopleCategory) => peopleCategory.peoples).toSet().length.toString();
 
-  List<PeopleCategory> get peopleCategories => _peopleCategories;
+  List<PeopleCategory> get peopleCategories {
+    // Group people by faculty
+    final facultyGroups = _peopleCategories
+        .expand((category) => category.peoples)
+        .where((person) => person.faculty.isNotEmpty)
+        .groupListsBy((person) => person.faculty);
+
+    return facultyGroups.entries.map((entry) {
+      return PeopleCategory(
+        name: entry.key,
+        description: '${entry.value.length} people',
+        emoji: '🎓',
+        peoples: entry.value,
+      );
+    }).toList()
+      ..sort((a, b) => a.name.compareTo(b.name));
+  }
 
   void onAllPeoplePressed() {
     _peopleState.selectedCategory = null;
-    //const AllPeopleRoute().go(_navigatorContext);
     _navigatorContext.go('/studies/people/all');
   }
 
-  void onPeopleCardPressed() {
+  void onPeopleCardPressed(String personId) {
     _peopleState.selectedCategory = null;
-    _navigatorContext.go('/studies/people/details');
+    _navigatorContext.go('/studies/people/details?id=$personId');
     //const PeopleDetailsRoute().go(_navigatorContext);
+  }
+
+  void onFacultyPressed(PeopleCategory faculty) {
+    _peopleState.selectedCategory = faculty;
+    _navigatorContext.go('/studies/people/all');
   }
 
   void _onPeopleStateChanged() {
     final newState = _peopleState.state.value;
     _peopleLoadState = newState.loadState;
-    _peopleCategories = _peopleState.state.value.peopleCategories;
+    _peopleCategories = newState.peopleCategories;
 
     notifyWidget();
 

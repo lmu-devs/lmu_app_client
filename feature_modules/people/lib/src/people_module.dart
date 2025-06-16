@@ -2,6 +2,7 @@ import 'package:core/api.dart';
 import 'package:core/module.dart';
 import 'package:core_routes/people.dart';
 import 'package:get_it/get_it.dart';
+import 'package:http/http.dart' as http;
 
 import 'application/state/people_state.dart';
 import 'application/usecase/delete_cached_people_usecase.dart';
@@ -25,7 +26,13 @@ class PeopleModule extends AppModule
   void provideLocalDependencies() {
     final baseApiClient = GetIt.I.get<BaseApiClient>();
     final peopleStorage = PeopleStorage();
-    final peopleRepository = PeopleRepository(PeopleApiClient(baseApiClient), peopleStorage);
+    final peopleRepository = PeopleRepository(
+      PeopleApiClient(
+        client: http.Client(),
+        baseUrl: '',
+      ),
+      peopleStorage,
+    );
     final getPeopleUseCase = GetPeopleUsecase(peopleRepository);
     final getCachedPeopleUseCase = GetCachedPeopleUsecase(peopleRepository);
     final deleteCachedPeopleUsecase = DeleteCachedPeopleUsecase(peopleRepository);

@@ -1,34 +1,42 @@
 import '../../../../domain/model/people.dart';
 import '../../../../domain/model/people_category.dart';
-import 'peoples_dto.dart';
+import 'people_category_dto.dart';
 
 class PeopleMapper {
-  static List<PeopleCategory> mapToDomain(PeoplesDto dto) {
-    final peopleMap = {
-      for (final people in dto.peoples) people.id: people,
-    };
-
-    return dto.peopleTypes.map((typeDto) {
-      final peoples = typeDto.peopleIds
-          .map((id) => peopleMap[id])
-          .where((b) => b != null)
-          .map((people) => People(
-                id: people!.id,
-                name: people.name,
-                description: people.description,
-                email: people.email,
-                phone: people.phone,
-                office: people.office,
-                url: people.url,
-                faviconUrl: people.faviconUrl,
-                aliases: const [],
+  static List<PeopleCategory> mapToDomain(List<PeopleCategoryDto> dtos) {
+    return dtos.map((categoryDto) {
+      final peoples = categoryDto.people
+          .map((peopleDto) => People(
+                id: peopleDto.id,
+                name: peopleDto.name,
+                profileUrl: peopleDto.profileUrl,
+                basicInfo: BasicInfo(
+                  lastName: peopleDto.basicInfo.lastName,
+                  gender: peopleDto.basicInfo.gender,
+                  firstName: peopleDto.basicInfo.firstName,
+                  officeHours: peopleDto.basicInfo.officeHours,
+                  nameSuffix: peopleDto.basicInfo.nameSuffix,
+                  employmentStatus: peopleDto.basicInfo.employmentStatus,
+                  title: peopleDto.basicInfo.title,
+                  note: peopleDto.basicInfo.note,
+                  academicDegree: peopleDto.basicInfo.academicDegree,
+                  status: peopleDto.basicInfo.status,
+                ),
+                faculty: peopleDto.faculty,
+                roles: peopleDto.roles
+                    .map((roleDto) => Role(
+                          institution: roleDto.institution,
+                          role: roleDto.role,
+                          institutionUrl: roleDto.institutionUrl,
+                        ))
+                    .toList(),
+                courses: peopleDto.courses,
               ))
           .toList();
-
       return PeopleCategory(
-        name: typeDto.name,
-        description: typeDto.description,
-        emoji: typeDto.emoji,
+        name: categoryDto.name,
+        description: '',
+        emoji: '👥',
         peoples: peoples,
       );
     }).toList();

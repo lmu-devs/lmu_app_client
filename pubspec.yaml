@@ -83,5 +83,6 @@ flutter:
     - core/lib/assets/
     - feature_modules/mensa/assets/
     - feature_modules/explore/assets/
+    - feature_modules/people/assets/
   shaders:
     - assets/shader/light_rays.frag

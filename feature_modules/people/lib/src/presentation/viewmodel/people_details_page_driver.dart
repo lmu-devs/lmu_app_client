@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../application/state/people_state.dart';
@@ -13,37 +14,73 @@ class PeopleDetailsPageDriver extends WidgetDriver {
   @TestDriverDefaultValue(People(
     id: 'test-id',
     name: 'Test Person',
-    description: 'Test Description',
-    email: 'test@example.com',
-    phone: '123456789',
-    office: 'Test Office',
-    url: 'https://example.com',
-    aliases: const [],
+    profileUrl: 'https://example.com',
+    basicInfo: BasicInfo(
+      lastName: 'Test',
+      gender: 'male',
+      firstName: 'Person',
+    ),
+    faculty: 'Test Faculty',
+    roles: [],
+    courses: [],
   ))
   late final People person;
 
-  late String _id;
+  String? _id;
+  BuildContext? _context;
 
   @override
   void didInitDriver() {
     super.didInitDriver();
-    person =
-        _peopleStateService.state.value.peopleCategories.expand((cat) => cat.peoples).firstWhere((p) => p.id == _id);
+    _peopleStateService.state.addListener(_onPeopleStateChanged);
   }
 
   @override
   void didUpdateBuildContext(BuildContext context) {
     super.didUpdateBuildContext(context);
-    //_allTitle = "${context.locals.app.all} ${context.locals.peoples.title}";
+    _context = context;
+    _initializePerson();
   }
 
-  String get name => person.name;
-  String get faculty => person.description;
-  String get chair => person.description;
-  String get email => person.email ?? 'Nicht verfügbar';
-  String get phone => person.phone ?? 'Nicht verfügbar';
-  String get room => person.office ?? 'Nicht angegeben';
-  String get website => person.url ?? '';
+  void _onPeopleStateChanged() {
+    if (_context != null) {
+      _initializePerson();
+    }
+  }
+
+  void _initializePerson() {
+    if (_context == null) return;
+
+    // Get the ID from the route parameters
+    final params = GoRouterState.of(_context!).uri.queryParameters;
+    _id = params['id'];
+
+    if (_id == null || _id!.isEmpty) {
+      throw Exception('No person ID provided in route parameters');
+    }
+
+    try {
+      final foundPerson =
+          _peopleStateService.state.value.peopleCategories.expand((cat) => cat.peoples).firstWhere((p) => p.id == _id);
+
+      person = foundPerson;
+      notifyWidget();
+    } catch (e) {
+      print('Error finding person with ID $_id: $e');
+    }
+  }
+
+  String get name =>
+      '${person.basicInfo.title ?? ''} ${person.basicInfo.firstName} ${person.basicInfo.lastName} ${person.basicInfo.nameSuffix ?? ''}'
+          .trim();
+  String get faculty => person.faculty;
+  String get role => person.roles.isNotEmpty ? person.roles.first.role : '';
+  String get email => person.basicInfo.note ?? '';
+  String get phone => person.basicInfo.officeHours ?? '';
+  String get room => person.basicInfo.status ?? '';
+  String get website => person.profileUrl;
+  String get academicDegree => person.basicInfo.academicDegree ?? '';
+  String get employmentStatus => person.basicInfo.employmentStatus ?? '';
 
   void onRoomTap(BuildContext context) {
     print("Room tapped: $room");
@@ -51,5 +88,11 @@ class PeopleDetailsPageDriver extends WidgetDriver {
 
   void onWebsiteTap() {
     print("Website tapped: $website");
+  }
+
+  @override
+  void dispose() {
+    _peopleStateService.state.removeListener(_onPeopleStateChanged);
+    super.dispose();
   }
 }

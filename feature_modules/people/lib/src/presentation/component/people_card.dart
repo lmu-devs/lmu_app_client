@@ -1,5 +1,4 @@
 import 'package:core/components.dart';
-import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
@@ -13,34 +12,34 @@ class PeopleCard extends StatelessWidget {
 
   void _handleTap(BuildContext context) => LmuUrlLauncher.launchWebsite(
         context: context,
-        url: people.url,
+        url: people.profileUrl,
         mode: LmuUrlLauncherMode.externalApplication,
       );
 
   void _handleLongPress(BuildContext context) => CopyToClipboardUtil.copyToClipboard(
         context: context,
-        copiedText: people.url,
+        copiedText: people.profileUrl,
         message: context.locals.home.linkCopiedToClipboard,
       );
 
-  String? get faviconUrl => people.faviconUrl;
+  String get _displayName {
+    final lastName = people.basicInfo.lastName;
+    final firstName = people.basicInfo.firstName;
+    final academicDegree = people.basicInfo.academicDegree;
+    String name = lastName;
+    if (firstName.isNotEmpty) {
+      name += ' $firstName';
+    }
+    if (academicDegree != null && academicDegree.isNotEmpty) {
+      name += ' $academicDegree';
+    }
+    return name;
+  }
 
   @override
   Widget build(BuildContext context) {
     return LmuCard(
-      title: people.name,
-      subtitle: people.description,
-      leadingIcon: people.faviconUrl != null
-          ? ClipRRect(
-              borderRadius: BorderRadius.circular(LmuRadiusSizes.xsmall),
-              child: LmuCachedNetworkImage(
-                imageUrl: people.faviconUrl!,
-                height: LmuIconSizes.mediumSmall,
-                width: LmuIconSizes.mediumSmall,
-                fit: BoxFit.cover,
-              ),
-            )
-          : const LmuFaviconFallback(size: LmuIconSizes.mediumSmall),
+      title: _displayName,
       onTap: () => _handleTap(context),
       onLongPress: () => _handleLongPress(context),
     );
