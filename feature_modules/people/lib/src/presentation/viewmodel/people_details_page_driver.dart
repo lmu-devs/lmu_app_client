@@ -60,19 +60,25 @@ class PeopleDetailsPageDriver extends WidgetDriver {
     notifyWidget();
   }
 
+  bool isFavorite = false; // Status der Favorisierung
+
+  void toggleFavorite() {
+    isFavorite = !isFavorite; // Favorisierungsstatus umschalten
+    print('Favorisierungsstatus geändert: $isFavorite');
+    notifyWidget(); // UI aktualisieren
+  }
+
   String get name => person.name;
   String get faculty => person.description;
-  String get chair => person.description;
-  String get email => person.email ?? 'Nicht verfügbar';
-  String get phone => person.phone ?? 'Nicht verfügbar';
-  String get room => person.office ?? 'Nicht angegeben';
-  String get website => person.url ?? '';
-
+  String get chair => person.office;
+  String get email => person.email;
+  String get phone => person.phone;
+  String get room => person.office;
   void onRoomTap(BuildContext context) {
-    print("Room tapped: $room");
+    print('Raum angeklickt');
   }
 
   void onWebsiteTap() {
-    print("Website tapped: $website");
+    print('Website angeklickt');
   }
 }
