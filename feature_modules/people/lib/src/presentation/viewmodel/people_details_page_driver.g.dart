@@ -14,7 +14,7 @@ class _$TestPeopleDetailsPageDriver extends TestDriver
     implements PeopleDetailsPageDriver {
   @override
   People person = People(
-      id: 'test-id',
+      id: '3',
       name: 'Test Person',
       profileUrl: 'https://example.com',
       basicInfo:

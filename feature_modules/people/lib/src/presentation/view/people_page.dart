@@ -4,6 +4,7 @@ import 'package:core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
+import '../component/people_favorites_section.dart';
 import '../component/people_page_loading.dart';
 import '../component/people_suggestion_tile.dart';
 import '../viewmodel/people_page_driver.dart';
@@ -48,6 +49,7 @@ class PeoplePage extends DrivableWidget<PeoplePageDriver> {
             onTap: driver.onAllPeoplePressed,
           ),
         ),
+        PeopleFavoritesSection(people.favorites),
         const SizedBox(height: LmuSizes.size_16),
         LmuTileHeadline.base(title: "Faultiere"),
         LmuContentTile(

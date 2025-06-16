@@ -14,6 +14,13 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
       appBar: LmuAppBarData(
         largeTitle: driver.name,
         leadingAction: LeadingAction.back,
+        largeTitleTrailingWidget: IconButton(
+          icon: Icon(
+            driver.isFavorite ? Icons.star : Icons.star_border, // Stern gefüllt oder leer
+            color: driver.isFavorite ? Colors.yellow : Colors.grey, // Farbe abhängig vom Status
+          ),
+          onPressed: () => driver.toggleFavorite(), // Funktion zum Favorisieren
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(

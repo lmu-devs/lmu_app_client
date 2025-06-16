@@ -34,6 +34,13 @@ class AllPeoplePageDriver extends WidgetDriver {
     notifyWidget();
   }
 
+  void onPeopleCardPressed(People people) {
+    print("onPeopleCardPressed wurde aufgerufen mit: ${people.name} (${people.id})");
+    _peopleState.selectedCategory = null;
+    _peopleState.selectedPersonId = people.id;
+    _navigatorContext.go('/studies/people/details/${people.id}');
+  }
+
   @override
   void didInitDriver() {
     super.didInitDriver();

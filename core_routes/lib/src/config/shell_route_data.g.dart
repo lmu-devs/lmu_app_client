@@ -270,7 +270,7 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                       factory: $AllPeopleRouteExtension._fromState,
                     ),
                     GoRouteData.$route(
-                      path: 'details',
+                      path: 'details/:id',
                       factory: $PeopleDetailsRouteExtension._fromState,
                     ),
                   ],
@@ -1016,10 +1016,12 @@ extension $AllPeopleRouteExtension on AllPeopleRoute {
 
 extension $PeopleDetailsRouteExtension on PeopleDetailsRoute {
   static PeopleDetailsRoute _fromState(GoRouterState state) =>
-      const PeopleDetailsRoute();
+      PeopleDetailsRoute(
+        state.pathParameters['id']!,
+      );
 
   String get location => GoRouteData.$location(
-        '/studies/people/details',
+        '/studies/people/details/${Uri.encodeComponent(id)}',
       );
 
   void go(BuildContext context) => context.go(location);

@@ -7,5 +7,13 @@
   "peopleSuggestion": "Suggest a contact",
   "distance": "Distance",
   "building": "Building",
-  "buildings": "Buildings"
+  "buildings": "Buildings",
+  "emptyFavoritesBefore": "Tap the ",
+  "@emptyFavoritesBefore": {
+    "description": "Empty favorites text before star icon"
+  },
+  "emptyFavoritesAfter": " icon to add favorites here",
+  "@emptyFavoritesAfter": {
+    "description": "Empty favorites text after star icon"
+  }
 }

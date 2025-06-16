@@ -22,6 +22,7 @@ class PeopleStateService {
   ValueListenable<PeopleState> get state => _stateNotifier;
 
   PeopleCategory? selectedCategory;
+  String? selectedPersonId;
 
 //Schnittstelle zu Backend-Daten
   Future<void> getPeople() async {
