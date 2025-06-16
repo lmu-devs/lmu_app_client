@@ -10,12 +10,13 @@ class RoomfinderRoom extends Equatable {
     required this.name,
   });
 
+  factory RoomfinderRoom.fromJson(Map<String, dynamic> json) => _$RoomfinderRoomFromJson(json);
+
   final String id;
   final String name;
 
   @override
   List<Object?> get props => [id, name];
 
-  factory RoomfinderRoom.fromJson(Map<String, dynamic> json) => _$RoomfinderRoomFromJson(json);
   Map<String, dynamic> toJson() => _$RoomfinderRoomToJson(this);
 }

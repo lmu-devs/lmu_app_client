@@ -10,18 +10,6 @@ part 'mensa_model.g.dart';
 
 @JsonSerializable()
 class MensaModel extends RMensaModel {
-  @JsonKey(name: 'id')
-  final String canteenId;
-  final String name;
-  final LocationModel location;
-  @JsonKey(name: 'rating')
-  final RatingModel ratingModel;
-  @JsonKey(name: 'opening_hours')
-  final MensaOpeningHours openingHours;
-  final List<ImageModel> images;
-  final MensaType type;
-  final MensaStatus status;
-
   const MensaModel({
     required this.canteenId,
     required this.name,
@@ -55,6 +43,18 @@ class MensaModel extends RMensaModel {
       );
 
   factory MensaModel.fromJson(Map<String, dynamic> json) => _$MensaModelFromJson(json);
+
+  @JsonKey(name: 'id')
+  final String canteenId;
+  final String name;
+  final LocationModel location;
+  @JsonKey(name: 'rating')
+  final RatingModel ratingModel;
+  @JsonKey(name: 'opening_hours')
+  final MensaOpeningHours openingHours;
+  final List<ImageModel> images;
+  final MensaType type;
+  final MensaStatus status;
 
   Map<String, dynamic> toJson() => _$MensaModelToJson(this);
 

@@ -13,14 +13,14 @@ class SportsModel extends Equatable {
     required this.sportTypes,
   });
 
+  factory SportsModel.fromJson(Map<String, dynamic> json) => _$SportsModelFromJson(json);
+
   @JsonKey(name: 'base_url')
   final String baseUrl;
   @JsonKey(name: 'basic_ticket')
   final SportsType basicTicket;
   @JsonKey(name: 'sport_types')
   final List<SportsType> sportTypes;
-
-  factory SportsModel.fromJson(Map<String, dynamic> json) => _$SportsModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$SportsModelToJson(this);
 

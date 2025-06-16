@@ -7,10 +7,10 @@ import '../util/screening_filter_keys.dart';
 
 class CinemaFilterButtonRow extends StatelessWidget {
   const CinemaFilterButtonRow({
-    Key? key,
+    super.key,
     required this.activeFilter,
     required this.onFilterSelected,
-  }) : super(key: key);
+  });
 
   final String? activeFilter;
   final ValueChanged<String?> onFilterSelected;
