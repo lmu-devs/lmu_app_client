@@ -1,6 +1,6 @@
 import 'package:core/components.dart';
-import 'package:core_routes/people.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class StudiesPeopleEntryPoint extends StatelessWidget {
   const StudiesPeopleEntryPoint({super.key});
@@ -14,7 +14,8 @@ class StudiesPeopleEntryPoint extends StatelessWidget {
             actionType: LmuListItemAction.chevron,
             title: "People",
             leadingArea: const LmuInListBlurEmoji(emoji: "👥"),
-            onTap: () => const PeopleMainRoute().go(context),
+            //onTap: () => const PeopleMainRoute().go(context),
+            onTap: () => context.go('/studies/people/all'),
           ),
         ),
       ],

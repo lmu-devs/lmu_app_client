@@ -1,7 +1,7 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
-import 'package:core_routes/people.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../application/state/people_state.dart';
@@ -32,13 +32,13 @@ class PeoplePageDriver extends WidgetDriver {
 
   void onAllPeoplePressed() {
     _peopleState.selectedCategory = null;
-    const AllPeopleRoute().go(_navigatorContext);
-    //const PeopleDetailsRoute().go(_navigatorContext);
+    //const AllPeopleRoute().go(_navigatorContext);
+    _navigatorContext.go('/studies/people/all');
   }
 
   void onPeopleCardPressed() {
     _peopleState.selectedCategory = null;
-    //final person = _peopleCategories.expand((cat) => cat.peoples).firstWhere((p) => p.id == id);
+    _navigatorContext.go('/studies/people/details');
     //const PeopleDetailsRoute().go(_navigatorContext);
   }
 

@@ -2,8 +2,6 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:core_routes/config.dart';
-import 'package:core_routes/home.dart';
-import 'package:core_routes/launch_flow.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
@@ -23,11 +21,13 @@ class LmuApp extends StatelessWidget {
 
     final routerConfig = GoRouter(
       routes: $appRoutes,
-      initialLocation: const HomeMainRoute().location,
+      //initialLocation: const HomeMainRoute().location,
+      initialLocation: '/home', // hardcoded path
       refreshListenable: shouldShowWelcomePageNotifier,
       redirect: (context, state) async {
         if (shouldShowWelcomePageNotifier.value == true) {
-          return const LaunchFlowWelcomeRoute().location;
+          return '/welcome'; // hardcoded fallback path
+          //return const LaunchFlowWelcomeRoute().location;
         }
         return null;
       },
