@@ -195,9 +195,12 @@ class LaunchFlowShellRoute extends ShellRouteData {
             ),
             TypedGoRoute<PeopleMainRoute>(
               path: PeopleMainRoute.path,
-              routes: [
+              routes: <TypedGoRoute<GoRouteData>>[
                 TypedGoRoute<AllPeopleRoute>(
                   path: AllPeopleRoute.path,
+                ),
+                TypedGoRoute<PeopleDetailsRoute>(
+                  path: PeopleDetailsRoute.path,
                 ),
               ],
             ),

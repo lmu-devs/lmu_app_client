@@ -269,6 +269,10 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                       path: 'all',
                       factory: $AllPeopleRouteExtension._fromState,
                     ),
+                    GoRouteData.$route(
+                      path: 'details',
+                      factory: $PeopleDetailsRouteExtension._fromState,
+                    ),
                   ],
                 ),
               ],
@@ -998,6 +1002,24 @@ extension $AllPeopleRouteExtension on AllPeopleRoute {
 
   String get location => GoRouteData.$location(
         '/studies/people/all',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $PeopleDetailsRouteExtension on PeopleDetailsRoute {
+  static PeopleDetailsRoute _fromState(GoRouterState state) =>
+      const PeopleDetailsRoute();
+
+  String get location => GoRouteData.$location(
+        '/studies/people/details',
       );
 
   void go(BuildContext context) => context.go(location);
