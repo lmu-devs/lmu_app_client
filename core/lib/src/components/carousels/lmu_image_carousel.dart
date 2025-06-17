@@ -1,18 +1,18 @@
-import 'package:core/components.dart';
-import 'package:core/constants.dart';
-import 'package:core/src/core.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
-class LmuImageCarousel extends StatefulWidget {
-  final List<String> imageUrls;
-  final double height;
+import '../../../components.dart';
+import '../../../constants.dart';
+import '../../../themes.dart';
+import '../../core.dart';
 
+class LmuImageCarousel extends StatefulWidget {
   const LmuImageCarousel({
     super.key,
     required this.imageUrls,
     this.height = 250,
   });
+  final List<String> imageUrls;
+  final double height;
 
   @override
   State<LmuImageCarousel> createState() => _LmuImageCarouselState();

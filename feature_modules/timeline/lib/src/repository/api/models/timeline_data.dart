@@ -9,9 +9,10 @@ part 'timeline_data.g.dart';
 class TimelineData {
   const TimelineData({required this.semesters, required this.events});
 
+  factory TimelineData.fromJson(Map<String, dynamic> json) => _$TimelineDataFromJson(json);
+
   final List<TimelineSemester> semesters;
   final List<TimelineEvent> events;
 
-  factory TimelineData.fromJson(Map<String, dynamic> json) => _$TimelineDataFromJson(json);
   Map<String, dynamic> toJson() => _$TimelineDataToJson(this);
 }

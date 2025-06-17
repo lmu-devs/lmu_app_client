@@ -10,10 +10,10 @@ import '../util/screening_time.dart';
 
 class CinemaCard extends StatelessWidget {
   const CinemaCard({
-    Key? key,
+    super.key,
     required this.cinema,
     required this.screenings,
-  }) : super(key: key);
+  });
 
   final CinemaModel cinema;
   final List<ScreeningModel> screenings;

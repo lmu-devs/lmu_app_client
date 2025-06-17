@@ -66,7 +66,7 @@ class _ScreeningsHistoryPageState extends State<ScreeningsHistoryPage> {
                   vertical: LmuSizes.size_2,
                 ),
                 decoration: BoxDecoration(
-                  color: cinemas.first.type.getTextColor(context).withOpacity(0.1),
+                  color: cinemas.first.type.getTextColor(context).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
                 ),
                 child: LmuText.bodySmall(

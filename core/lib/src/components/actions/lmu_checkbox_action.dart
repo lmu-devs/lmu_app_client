@@ -1,13 +1,11 @@
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_svg/lucide_icons_svg.dart';
 
+import '../../../constants.dart';
+import '../../../themes.dart';
+
 class LmuCheckboxAction extends StatelessWidget {
-  const LmuCheckboxAction({
-    Key? key,
-    required this.isActive,
-  }) : super(key: key);
+  const LmuCheckboxAction({super.key, required this.isActive});
 
   final bool isActive;
 

@@ -5,11 +5,6 @@ part 'rating_model.g.dart';
 
 @JsonSerializable()
 class RatingModel extends Equatable {
-  @JsonKey(name: 'like_count')
-  final int likeCount;
-  @JsonKey(name: 'is_liked')
-  final bool isLiked;
-
   const RatingModel({
     required this.likeCount,
     this.isLiked = false,
@@ -18,6 +13,11 @@ class RatingModel extends Equatable {
   factory RatingModel.placeholder() => const RatingModel(likeCount: -1);
 
   factory RatingModel.fromJson(Map<String, dynamic> json) => _$RatingModelFromJson(json);
+
+  @JsonKey(name: 'like_count')
+  final int likeCount;
+  @JsonKey(name: 'is_liked')
+  final bool isLiked;
 
   Map<String, dynamic> toJson() => _$RatingModelToJson(this);
 

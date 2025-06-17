@@ -13,10 +13,10 @@ import '../../widgets.dart';
 
 class MenuDayEntry extends StatelessWidget {
   const MenuDayEntry({
-    Key? key,
+    super.key,
     required this.mensaMenuModel,
     required this.mensaType,
-  }) : super(key: key);
+  });
 
   final MenuDayModel mensaMenuModel;
   final MensaType mensaType;

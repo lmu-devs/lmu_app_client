@@ -10,10 +10,10 @@ class PhoneModel extends Equatable {
     this.recipient,
   });
 
+  factory PhoneModel.fromJson(Map<String, dynamic> json) => _$PhoneModelFromJson(json);
+
   final String number;
   final String? recipient;
-
-  factory PhoneModel.fromJson(Map<String, dynamic> json) => _$PhoneModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$PhoneModelToJson(this);
 

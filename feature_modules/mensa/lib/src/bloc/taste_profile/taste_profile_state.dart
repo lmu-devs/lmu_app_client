@@ -15,9 +15,9 @@ class TasteProfileLoadInProgress extends TasteProfileState {
 }
 
 class TasteProfileLoadSuccess extends TasteProfileState {
-  final TasteProfileModel tasteProfile;
 
   TasteProfileLoadSuccess(this.tasteProfile);
+  final TasteProfileModel tasteProfile;
 
   @override
   List<Object> get props => [tasteProfile];

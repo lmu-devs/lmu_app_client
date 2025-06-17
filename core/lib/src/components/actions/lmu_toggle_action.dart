@@ -1,12 +1,10 @@
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
+import '../../../constants.dart';
+import '../../../themes.dart';
+
 class LmuToggleAction extends StatelessWidget {
-  const LmuToggleAction({
-    Key? key,
-    required this.isActive,
-  }) : super(key: key);
+  const LmuToggleAction({super.key, required this.isActive});
 
   final bool isActive;
 

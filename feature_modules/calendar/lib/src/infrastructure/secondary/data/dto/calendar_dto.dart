@@ -12,6 +12,8 @@ class CalendarDto extends Equatable {
     required this.name,
   });
 
+  factory CalendarDto.fromJson(Map<String, dynamic> json) => _$CalendarDtoFromJson(json);
+
   final String id;
   final String name;
 
@@ -19,8 +21,6 @@ class CalendarDto extends Equatable {
         id: id,
         name: name,
       );
-
-  factory CalendarDto.fromJson(Map<String, dynamic> json) => _$CalendarDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$CalendarDtoToJson(this);
 

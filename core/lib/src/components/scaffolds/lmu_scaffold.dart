@@ -1,11 +1,12 @@
 import 'dart:math';
 
-import 'package:core/constants.dart';
-import 'package:core/src/components/components.dart';
-import 'package:core/src/components/scaffolds/sliver_app_bar_delegate.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../../../constants.dart';
+import '../../../themes.dart';
+import '../components.dart';
+import 'sliver_app_bar_delegate.dart';
 
 class LmuScaffold extends StatefulWidget {
   const LmuScaffold({

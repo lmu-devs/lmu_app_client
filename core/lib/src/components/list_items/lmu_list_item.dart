@@ -1,68 +1,12 @@
-import 'package:core/components.dart';
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+
+import '../../../components.dart';
+import '../../../constants.dart';
+import '../../../themes.dart';
 
 enum MainContentAlignment { top, center }
 
 class LmuListItem extends StatelessWidget {
-  const LmuListItem._({
-    Key? key,
-    this.title,
-    this.titleColor,
-    this.titleInTextVisuals,
-    this.mainContentAlignment = MainContentAlignment.center,
-    this.subtitle,
-    this.subtitleColor,
-    this.subtitleInTextVisuals,
-    this.trailingTitle,
-    this.trailingTitleColor,
-    this.trailingTitleInTextVisuals,
-    this.trailingSubtitle,
-    this.trailingSubtitleColor,
-    this.trailingSubtitleInTextVisuals,
-    this.leadingArea,
-    this.trailingArea,
-    this.actionType,
-    this.onActionValueChanged,
-    this.shouldChangeActionValue,
-    this.actionValueNotifier,
-    this.hasVerticalPadding = true,
-    this.hasHorizontalPadding = true,
-    this.onTap,
-    this.onLongPress,
-    this.hasDivider = false,
-    this.maximizeLeadingTitleArea = false,
-    this.maximizeTrailingTitleArea = false,
-  }) : super(key: key);
-
-  final String? title;
-  final Color? titleColor;
-  final List<LmuInTextVisual>? titleInTextVisuals;
-  final MainContentAlignment mainContentAlignment;
-  final String? subtitle;
-  final Color? subtitleColor;
-  final List<LmuInTextVisual>? subtitleInTextVisuals;
-  final String? trailingTitle;
-  final Color? trailingTitleColor;
-  final List<LmuInTextVisual>? trailingTitleInTextVisuals;
-  final String? trailingSubtitle;
-  final Color? trailingSubtitleColor;
-  final List<LmuInTextVisual>? trailingSubtitleInTextVisuals;
-  final Widget? leadingArea;
-  final Widget? trailingArea;
-  final LmuListItemAction? actionType;
-  final void Function(bool)? onActionValueChanged;
-  final bool Function(bool)? shouldChangeActionValue;
-  final ValueNotifier<bool>? actionValueNotifier;
-  final void Function()? onTap;
-  final void Function()? onLongPress;
-  final bool hasVerticalPadding;
-  final bool hasHorizontalPadding;
-  final bool hasDivider;
-  final bool maximizeLeadingTitleArea;
-  final bool maximizeTrailingTitleArea;
-
   factory LmuListItem.base({
     Key? key,
     String? title,
@@ -173,6 +117,62 @@ class LmuListItem extends StatelessWidget {
       maximizeTrailingTitleArea: maximizeTrailingTitleArea ?? false,
     );
   }
+  const LmuListItem._({
+    super.key,
+    this.title,
+    this.titleColor,
+    this.titleInTextVisuals,
+    this.mainContentAlignment = MainContentAlignment.center,
+    this.subtitle,
+    this.subtitleColor,
+    this.subtitleInTextVisuals,
+    this.trailingTitle,
+    this.trailingTitleColor,
+    this.trailingTitleInTextVisuals,
+    this.trailingSubtitle,
+    this.trailingSubtitleColor,
+    this.trailingSubtitleInTextVisuals,
+    this.leadingArea,
+    this.trailingArea,
+    this.actionType,
+    this.onActionValueChanged,
+    this.shouldChangeActionValue,
+    this.actionValueNotifier,
+    this.hasVerticalPadding = true,
+    this.hasHorizontalPadding = true,
+    this.onTap,
+    this.onLongPress,
+    this.hasDivider = false,
+    this.maximizeLeadingTitleArea = false,
+    this.maximizeTrailingTitleArea = false,
+  });
+
+  final String? title;
+  final Color? titleColor;
+  final List<LmuInTextVisual>? titleInTextVisuals;
+  final MainContentAlignment mainContentAlignment;
+  final String? subtitle;
+  final Color? subtitleColor;
+  final List<LmuInTextVisual>? subtitleInTextVisuals;
+  final String? trailingTitle;
+  final Color? trailingTitleColor;
+  final List<LmuInTextVisual>? trailingTitleInTextVisuals;
+  final String? trailingSubtitle;
+  final Color? trailingSubtitleColor;
+  final List<LmuInTextVisual>? trailingSubtitleInTextVisuals;
+  final Widget? leadingArea;
+  final Widget? trailingArea;
+  final LmuListItemAction? actionType;
+  final void Function(bool)? onActionValueChanged;
+  final bool Function(bool)? shouldChangeActionValue;
+  final ValueNotifier<bool>? actionValueNotifier;
+  final void Function()? onTap;
+  final void Function()? onLongPress;
+  final bool hasVerticalPadding;
+  final bool hasHorizontalPadding;
+  final bool hasDivider;
+  final bool maximizeLeadingTitleArea;
+  final bool maximizeTrailingTitleArea;
 
   // Helpers
   bool get _hasTitle => title != null;

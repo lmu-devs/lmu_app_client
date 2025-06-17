@@ -5,6 +5,15 @@ part 'taste_profile_save_model.g.dart';
 
 @JsonSerializable()
 class TasteProfileStateModel extends Equatable {
+  factory TasteProfileStateModel.empty() => const TasteProfileStateModel(
+        isActive: false,
+        selectedAllergiesPresets: {},
+        selectedPreferencePreset: null,
+        excludedLabels: {},
+      );
+
+  factory TasteProfileStateModel.fromJson(Map<String, dynamic> json) => _$TasteProfileStateModelFromJson(json);
+
   const TasteProfileStateModel({
     required this.isActive,
     required this.selectedAllergiesPresets,
@@ -17,17 +26,8 @@ class TasteProfileStateModel extends Equatable {
   final String? selectedPreferencePreset;
   final Set<String> excludedLabels;
 
-  factory TasteProfileStateModel.empty() => const TasteProfileStateModel(
-        isActive: false,
-        selectedAllergiesPresets: {},
-        selectedPreferencePreset: null,
-        excludedLabels: {},
-      );
-
   @override
   List<Object?> get props => [isActive, selectedAllergiesPresets, excludedLabels];
-
-  factory TasteProfileStateModel.fromJson(Map<String, dynamic> json) => _$TasteProfileStateModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$TasteProfileStateModelToJson(this);
 

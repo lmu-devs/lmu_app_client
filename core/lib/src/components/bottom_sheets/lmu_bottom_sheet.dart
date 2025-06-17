@@ -1,7 +1,8 @@
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+
+import '../../../constants.dart';
+import '../../../themes.dart';
 
 class LmuBottomSheet {
   static void show(
@@ -21,7 +22,7 @@ class LmuBottomSheet {
           topRight: Radius.circular(LmuSizes.size_24),
         ),
       ),
-      barrierColor: barrierColor ?? Colors.black.withOpacity(0.6),
+      barrierColor: barrierColor ?? Colors.black.withValues(alpha: 0.6),
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
       builder: (_) => Padding(
         padding: const EdgeInsets.only(
