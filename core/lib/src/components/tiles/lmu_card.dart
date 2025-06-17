@@ -6,7 +6,7 @@ import 'package:flutter_lucide/flutter_lucide.dart';
 
 class LmuCard extends StatelessWidget {
   const LmuCard({
-    Key? key,
+    super.key,
     required this.title,
     this.tag,
     this.tagType = ActionType.base,
@@ -15,6 +15,7 @@ class LmuCard extends StatelessWidget {
     this.subtitle,
     this.customSubtitle,
     this.leadingIcon,
+    this.leadingIconAlignment = CrossAxisAlignment.center,
     this.hasFavoriteStar = false,
     this.favoriteCount,
     this.isFavorite = false,
@@ -25,7 +26,7 @@ class LmuCard extends StatelessWidget {
     this.contentTileType = ContentTileType.middle,
     this.onTap,
     this.onLongPress,
-  }) : super(key: key);
+  });
 
   final String title;
   final String? tag;
@@ -35,6 +36,7 @@ class LmuCard extends StatelessWidget {
   final String? subtitle;
   final Widget? customSubtitle;
   final Widget? leadingIcon;
+  final CrossAxisAlignment leadingIconAlignment;
   final bool hasFavoriteStar;
   final String? favoriteCount;
   final bool isFavorite;
@@ -93,7 +95,7 @@ class LmuCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(LmuSizes.size_16),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: leadingIconAlignment,
                     children: [
                       if (leadingIcon != null) ...[
                         leadingIcon!,
