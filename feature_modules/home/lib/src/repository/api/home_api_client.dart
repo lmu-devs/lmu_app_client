@@ -18,7 +18,7 @@ class HomeApiClient {
   }
 
   Future<List<LinkModel>> getLinks() async {
-    final response = await _baseApiClient.get(HomeApiEndpoints.getLinks());
+    final response = await _baseApiClient.get(HomeApiEndpoints.getLinks(), version: 2);
 
     final jsonList = json.decode(response.body) as List<dynamic>;
     return jsonList.map((json) => LinkModel.fromJson(json as Map<String, dynamic>)).toList();
