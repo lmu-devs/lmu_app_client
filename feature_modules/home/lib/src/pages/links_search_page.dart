@@ -82,7 +82,7 @@ class _LinksSearchPageState extends State<LinksSearchPage> {
       recentSearchEntries: _recentSearchEntries,
       recentSearchController: _recentSearchController,
       onRecentSearchesUpdated: (recentSearchEntries) => _searchService
-          .updateRecentSearch(recentSearchEntries.map((e) => e.title).toList()),
+          .updateRecentSearch(recentSearchEntries.map((e) => e.id).toList()),
       searchEntryBuilder: (LinksSearchEntry input) => LinkCard(
         link: LinkModel(
           id: input.id,

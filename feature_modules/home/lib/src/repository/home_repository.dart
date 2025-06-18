@@ -86,6 +86,10 @@ class HomeRepository {
     return favoriteLinks;
   }
 
+  Future<bool> toggleFavoriteLinks(String id) async {
+    return await homeApiClient.toggleFavoriteLink(id);
+  }
+
   Future<void> saveLikedLinks(List<String> ids) async {
     final prefs = await SharedPreferences.getInstance();
 

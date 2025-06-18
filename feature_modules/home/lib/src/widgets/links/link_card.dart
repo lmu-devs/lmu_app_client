@@ -26,7 +26,7 @@ class LinkCard extends StatelessWidget {
     return ValueListenableBuilder<List<String>>(
       valueListenable: GetIt.I<HomePreferencesService>().likedLinksNotifier,
       builder: (context, likedLinkTitles, child) {
-        final isFavorite = likedLinkTitles.contains(link.title);
+        final isFavorite = likedLinkTitles.contains(link.id);
         return LmuCard(
           title: link.title,
           subtitle: link.description,
@@ -47,8 +47,9 @@ class LinkCard extends StatelessWidget {
           ),
           hasFavoriteStar: true,
           isFavorite: isFavorite,
+          favoriteCount: link.rating.calculateLikeCount(isFavorite),
           onFavoriteTap: () async {
-            GetIt.I<HomePreferencesService>().toggleLikedLinks(link.title);
+            GetIt.I<HomePreferencesService>().toggleLikedLinks(link.id);
             if (isFavorite) {
               LmuToast.show(
                 context: context,
@@ -57,7 +58,7 @@ class LinkCard extends StatelessWidget {
                 actionText: appLocals.undo,
                 onActionPressed: () {
                   GetIt.I<HomePreferencesService>()
-                      .toggleLikedLinks(link.title);
+                      .toggleLikedLinks(link.id);
                 },
               );
             } else {
