@@ -11,6 +11,8 @@ class PosterModel extends Equatable {
     required this.blurHash,
   });
 
+  factory PosterModel.fromJson(Map<String, dynamic> json) => _$PosterModelFromJson(json);
+
   final String url;
   final String name;
   @JsonKey(name: 'blurhash')
@@ -22,8 +24,6 @@ class PosterModel extends Equatable {
         name,
         blurHash,
       ];
-
-  factory PosterModel.fromJson(Map<String, dynamic> json) => _$PosterModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$PosterModelToJson(this);
 }

@@ -1,6 +1,7 @@
-import 'package:core/components.dart';
 import 'package:flutter/material.dart';
-import 'package:core/themes.dart';
+
+import '../../../../components.dart';
+import '../../../../themes.dart';
 
 class InputFieldColorHelper {
   static Color getFillColor(BuildContext context, InputState state) {

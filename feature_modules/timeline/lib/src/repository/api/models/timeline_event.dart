@@ -15,6 +15,8 @@ class TimelineEvent {
     this.url,
   });
 
+  factory TimelineEvent.fromJson(Map<String, dynamic> json) => _$TimelineEventFromJson(json);
+
   final String title;
   final String type;
   final TimelineTimeframe timeframe;
@@ -22,6 +24,5 @@ class TimelineEvent {
   final String? location;
   final String? url;
 
-  factory TimelineEvent.fromJson(Map<String, dynamic> json) => _$TimelineEventFromJson(json);
   Map<String, dynamic> toJson() => _$TimelineEventToJson(this);
 }

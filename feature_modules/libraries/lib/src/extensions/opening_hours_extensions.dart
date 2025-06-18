@@ -106,9 +106,10 @@ extension LibraryOpeningStatusExtension on List<OpeningHoursModel> {
 }
 
 class _Timeframe {
+  _Timeframe({required this.start, required this.end});
+
   final DateTime start;
   final DateTime end;
-  _Timeframe({required this.start, required this.end});
 }
 
 extension AreaStatusExtension on AreaModel {

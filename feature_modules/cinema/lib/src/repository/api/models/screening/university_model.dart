@@ -10,6 +10,8 @@ class UniversityModel extends Equatable {
     required this.title,
   });
 
+  factory UniversityModel.fromJson(Map<String, dynamic> json) => _$UniversityModelFromJson(json);
+
   final String id;
   final String title;
 
@@ -18,8 +20,6 @@ class UniversityModel extends Equatable {
         id,
         title,
       ];
-
-  factory UniversityModel.fromJson(Map<String, dynamic> json) => _$UniversityModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$UniversityModelToJson(this);
 }

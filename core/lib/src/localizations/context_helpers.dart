@@ -8,9 +8,8 @@ extension LocalizationExtension on BuildContext {
 }
 
 class LmuLocalizations {
-  final BuildContext _context;
-
   const LmuLocalizations(this._context);
+  final BuildContext _context;
 
   AppLocalizations get app => AppLocalizations.of(_context)!;
   CanteenLocalizations get canteen => CanteenLocalizations.of(_context)!;

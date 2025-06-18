@@ -16,6 +16,8 @@ class TrailerModel extends Equatable {
     required this.site,
   });
 
+  factory TrailerModel.fromJson(Map<String, dynamic> json) => _$TrailerModelFromJson(json);
+
   final String id;
   final String title;
   @JsonKey(name: 'published_at')
@@ -33,8 +35,6 @@ class TrailerModel extends Equatable {
         thumbnail,
         site,
       ];
-
-  factory TrailerModel.fromJson(Map<String, dynamic> json) => _$TrailerModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$TrailerModelToJson(this);
 }

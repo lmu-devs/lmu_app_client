@@ -9,19 +9,6 @@ part 'menu_item_model.g.dart';
 
 @JsonSerializable()
 class MenuItemModel extends Equatable {
-  final String id;
-  final String title;
-  @JsonKey(name: 'dish_type')
-  final String dishType;
-  @JsonKey(name: 'dish_category')
-  final DishCategory dishCategory;
-  @JsonKey(name: 'rating')
-  final RatingModel ratingModel;
-  @JsonKey(name: 'price_simple')
-  final String priceSimple;
-  final List<String> labels;
-  final List<PriceModel> prices;
-
   const MenuItemModel({
     required this.id,
     required this.title,
@@ -45,6 +32,19 @@ class MenuItemModel extends Equatable {
       );
 
   factory MenuItemModel.fromJson(Map<String, dynamic> json) => _$MenuItemModelFromJson(json);
+
+  final String id;
+  final String title;
+  @JsonKey(name: 'dish_type')
+  final String dishType;
+  @JsonKey(name: 'dish_category')
+  final DishCategory dishCategory;
+  @JsonKey(name: 'rating')
+  final RatingModel ratingModel;
+  @JsonKey(name: 'price_simple')
+  final String priceSimple;
+  final List<String> labels;
+  final List<PriceModel> prices;
 
   Map<String, dynamic> toJson() => _$MenuItemModelToJson(this);
 

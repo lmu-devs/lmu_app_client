@@ -13,10 +13,10 @@ class OpeningHoursModel extends Equatable {
     required this.timeframes,
   });
 
+  factory OpeningHoursModel.fromJson(Map<String, dynamic> json) => _$OpeningHoursModelFromJson(json);
+
   final Weekday day;
   final List<TimeframeModel> timeframes;
-
-  factory OpeningHoursModel.fromJson(Map<String, dynamic> json) => _$OpeningHoursModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$OpeningHoursModelToJson(this);
 

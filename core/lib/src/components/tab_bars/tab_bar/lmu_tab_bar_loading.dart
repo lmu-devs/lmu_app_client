@@ -1,6 +1,7 @@
-import 'package:core/components.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+
+import '../../../../components.dart';
 
 class LmuTabBarLoading extends StatelessWidget {
   const LmuTabBarLoading({super.key, this.hasDivider = false});

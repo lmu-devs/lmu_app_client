@@ -1,9 +1,9 @@
-import 'package:core/components.dart';
-import 'package:core/constants.dart';
-import 'package:core/localizations.dart';
-import 'package:core/src/constants/constants.dart';
-import 'package:core/themes.dart';
-import 'package:core/utils.dart';
+import '../../../components.dart';
+import '../../../constants.dart';
+import '../../../localizations.dart';
+import '../../constants/constants.dart';
+import '../../../themes.dart';
+import '../../../utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../api.dart';

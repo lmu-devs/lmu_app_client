@@ -1,7 +1,8 @@
-import 'package:core/components.dart';
-import 'package:core/constants.dart';
-import 'package:core/src/api/api.dart';
 import 'package:flutter/widgets.dart';
+
+import '../../../components.dart';
+import '../../../constants.dart';
+import '../../api/api.dart';
 
 class LmuDynamicImageGallery extends StatelessWidget {
   const LmuDynamicImageGallery({

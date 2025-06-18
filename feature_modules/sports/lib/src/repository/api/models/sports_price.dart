@@ -11,14 +11,14 @@ class SportsPrice extends Equatable {
     required this.externalPrice,
   });
 
+  factory SportsPrice.fromJson(Map<String, dynamic> json) => _$SportsPriceFromJson(json);
+
   @JsonKey(name: 'student_price')
   final double studentPrice;
   @JsonKey(name: 'employee_price')
   final double employeePrice;
   @JsonKey(name: 'external_price')
   final double externalPrice;
-
-  factory SportsPrice.fromJson(Map<String, dynamic> json) => _$SportsPriceFromJson(json);
 
   Map<String, dynamic> toJson() => _$SportsPriceToJson(this);
 

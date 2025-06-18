@@ -19,6 +19,8 @@ class CinemaModel extends Equatable {
     required this.location,
   });
 
+  factory CinemaModel.fromJson(Map<String, dynamic> json) => _$CinemaModelFromJson(json);
+
   final String id;
   final String title;
   final List<ImageModel>? images;
@@ -43,8 +45,6 @@ class CinemaModel extends Equatable {
         instagramLink,
         location,
       ];
-
-  factory CinemaModel.fromJson(Map<String, dynamic> json) => _$CinemaModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$CinemaModelToJson(this);
 }

@@ -12,6 +12,7 @@ class LecturesApiClient {
 
   Future<LecturesDto> getLectures() async {
     return const LecturesDto(id: "1234234", name: "Natural Computing");
+    // ignore: dead_code
     final response = await _baseApiClient.get(LecturesApiEndpoints.lectures);
     return LecturesDto.fromJson(jsonDecode(response.body));
   }

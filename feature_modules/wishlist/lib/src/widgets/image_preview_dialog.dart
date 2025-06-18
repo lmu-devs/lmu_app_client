@@ -7,16 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
 class ImagePreviewDialog extends StatelessWidget {
-  final List<ImageModel> imageModels;
-  final ValueNotifier<int> currentIndexNotifier;
-  final PageController pageController;
-
   const ImagePreviewDialog({
     super.key,
     required this.imageModels,
     required this.currentIndexNotifier,
     required this.pageController,
   });
+
+  final List<ImageModel> imageModels;
+  final ValueNotifier<int> currentIndexNotifier;
+  final PageController pageController;
 
   @override
   Widget build(BuildContext context) {

@@ -25,6 +25,23 @@ class UserFeedbackDto {
     this.systemVersion,
   });
 
+  factory UserFeedbackDto.from(
+    UserFeedback feedback,
+    String appVersion,
+    String systemVersion,
+  ) =>
+      UserFeedbackDto(
+        type: feedback.type.name.toUpperCase(),
+        screen: feedback.screen,
+        rating: feedback.rating?.name.toUpperCase(),
+        message: feedback.message,
+        tags: [],
+        appVersion: appVersion,
+        systemVersion: systemVersion,
+      );
+
+  factory UserFeedbackDto.fromJson(Map<String, dynamic> json) => _$UserFeedbackDtoFromJson(json);
+
   final String type;
   final String screen;
   final String? rating;
@@ -34,24 +51,6 @@ class UserFeedbackDto {
   final String? appVersion;
   @JsonKey(name: 'system_version')
   final String? systemVersion;
-
-  factory UserFeedbackDto.from(
-    UserFeedback feedback,
-    String appVersion,
-    String systemVersion,
-  ) {
-    return UserFeedbackDto(
-      type: feedback.type.name.toUpperCase(),
-      screen: feedback.screen,
-      rating: feedback.rating?.name.toUpperCase(),
-      message: feedback.message,
-      tags: [],
-      appVersion: appVersion,
-      systemVersion: systemVersion,
-    );
-  }
-
-  factory UserFeedbackDto.fromJson(Map<String, dynamic> json) => _$UserFeedbackDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserFeedbackDtoToJson(this);
 

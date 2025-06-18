@@ -2,6 +2,8 @@ include: package:flutter_lints/flutter.yaml
 linter:
   rules:
     prefer_relative_imports: true
+    sort_constructors_first: true
+    depend_on_referenced_packages: true
 
 analyzer:
   exclude:

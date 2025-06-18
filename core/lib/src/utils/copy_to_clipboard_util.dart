@@ -1,7 +1,8 @@
-import 'package:core/components.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+
+import '../../components.dart';
+import '../../themes.dart';
 
 class CopyToClipboardUtil {
   CopyToClipboardUtil._();

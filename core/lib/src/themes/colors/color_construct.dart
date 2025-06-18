@@ -16,68 +16,44 @@ abstract class BaseColor {
 
 class StrongColors extends BaseColor {
   const StrongColors({
-    required Color base,
-    required Color pressed,
-    required Color active,
-    required Color disabled,
-  }) : super(
-          base: base,
-          pressed: pressed,
-          active: active,
-          disabled: disabled,
-        );
+    required super.base,
+    required Color super.pressed,
+    required Color super.active,
+    required Color super.disabled,
+  });
 }
 
 class MediumColors extends BaseColor {
   const MediumColors({
-    required Color base,
-    required Color pressed,
-    required Color active,
-    required Color disabled,
-  }) : super(
-          base: base,
-          pressed: pressed,
-          active: active,
-          disabled: disabled,
-        );
+    required super.base,
+    required Color super.pressed,
+    required Color super.active,
+    required Color super.disabled,
+  });
 }
 
 class WeakColors extends BaseColor {
   const WeakColors({
-    required Color base,
-    required Color pressed,
-    required Color active,
-    required Color disabled,
-  }) : super(
-          base: base,
-          pressed: pressed,
-          active: active,
-          disabled: disabled,
-        );
+    required super.base,
+    required Color super.pressed,
+    required Color super.active,
+    required Color super.disabled,
+  });
 }
 
 class NonInvertableColors extends BaseColor {
   const NonInvertableColors({
-    required Color base,
-    required Color pressed,
-    required Color disabled,
-    required Color active,
-  }) : super(
-          base: base,
-          pressed: pressed,
-          disabled: disabled,
-          active: active,
-        );
+    required super.base,
+    required Color super.pressed,
+    required Color super.disabled,
+    required Color super.active,
+  });
 }
 
 class FlippedColors extends BaseColor {
   const FlippedColors({
-    required Color base,
-    required Color pressed,
-    required Color disabled,
-  }) : super(
-          base: base,
-          pressed: pressed,
-          disabled: disabled,
-        );
+    required super.base,
+    required Color super.pressed,
+    required Color super.disabled,
+  });
 }

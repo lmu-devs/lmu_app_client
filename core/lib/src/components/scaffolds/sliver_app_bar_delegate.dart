@@ -1,13 +1,13 @@
 import 'dart:ui';
 
 import 'package:collection/collection.dart';
-import 'package:core/components.dart';
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
+import '../../../components.dart';
+import '../../../constants.dart';
+import '../../../themes.dart';
 import '../carousels/lmu_image_carousel.dart';
 import 'leading_action.dart';
 
@@ -100,14 +100,6 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
                 hasImage: _hasImage,
                 backgroundColor: backgroundColor,
                 trailingWidgets: trailingWidgets,
-              ),
-            ),
-            Positioned(
-              top: topPadding + collapsedTitleHeight,
-              left: 0,
-              right: 0,
-              child: _PullToRefresh(
-                scrollOffsetNotifier: scrollOffsetNotifier,
               ),
             ),
             Positioned(
@@ -210,19 +202,6 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
             oldDelegate.topPadding != topPadding ||
             oldDelegate.backgroundColor != backgroundColor ||
             oldDelegate.scrollOffsetNotifier != scrollOffsetNotifier);
-  }
-}
-
-class _PullToRefresh extends StatelessWidget {
-  const _PullToRefresh({
-    required this.scrollOffsetNotifier,
-  });
-
-  final ValueNotifier<double> scrollOffsetNotifier;
-
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox.shrink(); //TODO
   }
 }
 
