@@ -40,8 +40,8 @@ class _RoomfinderButtonSectionState extends State<RoomfinderButtonSection> {
           children: [
             LmuMapImageButton(
               onTap: () {
-                GetIt.I<ExploreApi>().applyFilter(ExploreFilterType.building);
                 const ExploreMainRoute().go(context);
+                GetIt.I<ExploreApi>().applyFilter(ExploreFilterType.building);
               },
             ),
             const SizedBox(width: LmuSizes.size_8),

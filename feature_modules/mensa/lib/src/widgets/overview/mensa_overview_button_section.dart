@@ -30,8 +30,8 @@ class MensaOverviewButtonSection extends StatelessWidget {
       buttons: [
         LmuMapImageButton(
           onTap: () {
-            GetIt.I<ExploreApi>().applyFilter(ExploreFilterType.mensa);
             const ExploreMainRoute().go(context);
+            GetIt.I<ExploreApi>().applyFilter(ExploreFilterType.mensa);
           },
         ),
         LmuIconButton(

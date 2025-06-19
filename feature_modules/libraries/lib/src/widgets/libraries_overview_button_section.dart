@@ -32,8 +32,8 @@ class LibrariesOverviewButtonSection extends StatelessWidget {
         buttons: [
           LmuMapImageButton(
             onTap: () {
-              GetIt.I<ExploreApi>().applyFilter(ExploreFilterType.library);
               const ExploreMainRoute().go(context);
+              GetIt.I<ExploreApi>().applyFilter(ExploreFilterType.library);
             },
           ),
           LmuIconButton(
