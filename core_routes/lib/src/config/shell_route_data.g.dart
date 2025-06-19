@@ -776,22 +776,19 @@ extension $MensaSearchRouteExtension on MensaSearchRoute {
 }
 
 extension $ExploreMainRouteExtension on ExploreMainRoute {
-  static ExploreMainRoute _fromState(GoRouterState state) => ExploreMainRoute(
-        filter: state.uri.queryParameters['filter'],
-      );
+  static ExploreMainRoute _fromState(GoRouterState state) =>
+      const ExploreMainRoute();
 
   String get location => GoRouteData.$location(
-        '/explore',
-        queryParams: {
-          if (filter != null) 'filter': filter,
-        },
-      );
+    '/explore',
+  );
 
   void go(BuildContext context) => context.go(location);
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }

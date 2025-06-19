@@ -11,13 +11,12 @@ class ExploreData extends StatefulShellBranchData {
 }
 
 class ExploreMainRoute extends GoRouteData {
-  const ExploreMainRoute({this.filter});
+  const ExploreMainRoute();
 
-  final String? filter;
   static const String path = '/explore';
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => _router.buildMain(context, filter: filter);
+  Widget build(BuildContext context, GoRouterState state) => _router.buildMain(context);
 }
 
 class ExploreSearchRoute extends GoRouteData {

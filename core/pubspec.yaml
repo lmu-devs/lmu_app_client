@@ -47,6 +47,10 @@ dependencies:
   in_app_review: ^2.0.10
   animated_reorderable_list: ^1.1.5
   sliver_tools: ^0.2.12
+  shared_api:
+    path: ../shared_api
+  core_routes:
+    path: ../core_routes
 
 dev_dependencies:
   flutter_test:

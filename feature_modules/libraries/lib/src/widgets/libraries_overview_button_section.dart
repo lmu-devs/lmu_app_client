@@ -30,7 +30,12 @@ class LibrariesOverviewButtonSection extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: LmuButtonRow(
         buttons: [
-          LmuMapImageButton(onTap: () => ExploreMainRoute(filter: ExploreFilterType.library.name).go(context)),
+          LmuMapImageButton(
+            onTap: () {
+              const ExploreMainRoute().go(context);
+              GetIt.I<ExploreApi>().applyFilter(ExploreFilterType.library);
+            },
+          ),
           LmuIconButton(
             icon: LucideIcons.search,
             onPressed: () => const LibrariesSearchRoute().go(context),

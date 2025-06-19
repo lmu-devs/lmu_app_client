@@ -2,6 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
+import 'package:shared_api/explore.dart';
+import 'package:core_routes/explore.dart';
 
 import '../../../api.dart';
 import '../../../components.dart';
@@ -12,8 +16,9 @@ import '../../../utils.dart';
 import '../../constants/constants.dart';
 
 class NavigationSheet extends StatelessWidget {
-  const NavigationSheet({super.key, required this.location});
+  const NavigationSheet({super.key, required this.id, required this.location});
 
+  final String id;
   final LocationModel location;
 
   void _openExternalApplication({
@@ -23,12 +28,14 @@ class NavigationSheet extends StatelessWidget {
     required bool isApple,
   }) async {
     final String appleMapsUrl = 'maps:0,0?q=$latitude,$longitude';
-    final String googleMapsUrlAndroid = 'google.navigation:q=$latitude,$longitude';
+    final String googleMapsUrlAndroid =
+        'google.navigation:q=$latitude,$longitude';
     final String googleMapsUrlIOS = 'comgooglemaps://?q=$latitude,$longitude';
-    final String googleMapsUrlWeb = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+    final String googleMapsUrlWeb =
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
 
-    final bool isGoogleMapsInstalled =
-        await LmuUrlLauncher.canLaunch(url: Platform.isIOS ? googleMapsUrlIOS : googleMapsUrlAndroid);
+    final bool isGoogleMapsInstalled = await LmuUrlLauncher.canLaunch(
+        url: Platform.isIOS ? googleMapsUrlIOS : googleMapsUrlAndroid);
 
     final String urlToLaunch = isApple
         ? appleMapsUrl
@@ -47,6 +54,10 @@ class NavigationSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String currentRoutePath = GoRouter.of(context).state.fullPath ?? '';
+    const String exploreRoutePath = ExploreMainRoute.path;
+    final bool isAlreadyOnExplorePage = currentRoutePath == exploreRoutePath;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,6 +73,21 @@ class NavigationSheet extends StatelessWidget {
             color: context.colors.neutralColors.textColors.mediumColors.base,
           ),
         ),
+        if (!isAlreadyOnExplorePage)
+          LmuListItem.base(
+            title: context.locals.explore.inAppMaps,
+            leadingArea: Image.asset(
+              getPngAssetTheme('assets/app_icon'),
+              package: 'launch_flow',
+              height: LmuIconSizes.large,
+              width: LmuIconSizes.large,
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              const ExploreMainRoute().go(context);
+              GetIt.I<ExploreApi>().selectLocation(id);
+            },
+          ),
         if (Platform.isIOS)
           LmuListItem.base(
             title: context.locals.explore.appleMaps,
