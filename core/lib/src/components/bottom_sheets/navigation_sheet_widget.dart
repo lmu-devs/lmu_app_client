@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:get_it/get_it.dart';
+import 'package:shared_api/explore.dart';
+import 'package:core_routes/explore.dart';
 
 import '../../../api.dart';
 import '../../../components.dart';
@@ -12,8 +15,9 @@ import '../../../utils.dart';
 import '../../constants/constants.dart';
 
 class NavigationSheet extends StatelessWidget {
-  const NavigationSheet({super.key, required this.location});
+  const NavigationSheet({super.key, required this.location, required this.locationId});
 
+  final String locationId;
   final LocationModel location;
 
   void _openExternalApplication({
@@ -61,6 +65,20 @@ class NavigationSheet extends StatelessWidget {
             context.locals.explore.openWith,
             color: context.colors.neutralColors.textColors.mediumColors.base,
           ),
+        ),
+        LmuListItem.base(
+          title: "LMU Students",
+          leadingArea: Image.asset(
+            getPngAssetTheme('assets/app_icon'),
+            package: 'launch_flow',
+            height: LmuIconSizes.large,
+            width: LmuIconSizes.large,
+          ),
+          onTap: () {
+            GetIt.I<ExploreApi>().selectLocation(locationId);
+            Navigator.pop(context);
+            const ExploreMainRoute().go(context);
+          },
         ),
         if (Platform.isIOS)
           LmuListItem.base(

@@ -22,7 +22,13 @@ class ExplorePublicApi implements ExploreApi {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       try {
         final mapService = GetIt.I<ExploreMapService>();
+        final locationService = GetIt.I<ExploreLocationService>();
+        final location = locationService.getLocationById(locationId);
+
         mapService.selectedMarkerNotifier.value = locationId;
+        mapService.focusMarker(location);
+        locationService.bringToFront(locationId);
+        locationService.ensureLocationVisible(location);
       } catch (e) {
         throw Exception("Location [$locationId] could not be applied: $e");
       }

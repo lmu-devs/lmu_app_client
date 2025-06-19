@@ -172,7 +172,7 @@ class ScreeningDetailsPage extends StatelessWidget {
                     ),
                     onTap: () => LmuBottomSheet.show(
                       context,
-                      content: NavigationSheet(location: cinema.location),
+                      content: NavigationSheet(locationId: cinema.id, location: cinema.location),
                     ),
                   ),
                   const SizedBox(height: LmuSizes.size_24),

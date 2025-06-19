@@ -80,7 +80,7 @@ class LibraryDetailsPage extends StatelessWidget {
                 onTap: () {
                   LmuBottomSheet.show(
                     context,
-                    content: NavigationSheet(location: library.location),
+                    content: NavigationSheet(locationId: library.id, location: library.location),
                   );
                 },
               ),

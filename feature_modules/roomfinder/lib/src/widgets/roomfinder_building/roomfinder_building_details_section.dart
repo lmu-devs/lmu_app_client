@@ -35,7 +35,7 @@ class RoomfinderBuildingDetailsSection extends StatelessWidget {
                 onTap: () {
                   LmuBottomSheet.show(
                     context,
-                    content: NavigationSheet(location: _building.location),
+                    content: NavigationSheet(locationId: _building.buildingPartId, location: _building.location),
                   );
                 },
               ),
