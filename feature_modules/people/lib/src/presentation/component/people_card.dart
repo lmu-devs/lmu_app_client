@@ -23,12 +23,12 @@ class PeopleCard extends StatelessWidget {
       );
 
   String get _displayName {
-    final lastName = people.basicInfo.lastName;
     final firstName = people.basicInfo.firstName;
+    final lastName = people.basicInfo.lastName;
     final academicDegree = people.basicInfo.academicDegree;
-    String name = lastName;
-    if (firstName.isNotEmpty) {
-      name += ' $firstName';
+    String name = firstName;
+    if (lastName.isNotEmpty) {
+      name += ' $lastName';
     }
     if (academicDegree != null && academicDegree.isNotEmpty) {
       name += ' $academicDegree';

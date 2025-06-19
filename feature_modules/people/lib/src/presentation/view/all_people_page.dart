@@ -107,8 +107,8 @@ class AllPeoplePage extends DrivableWidget<AllPeoplePageDriver> {
                       return LmuListItem.action(
                         key: Key('person_${people.id}_${entry.key}_${indexed.key}'),
                         title: [
-                          people.basicInfo.lastName,
                           people.basicInfo.firstName,
+                          people.basicInfo.lastName,
                           if (people.basicInfo.academicDegree?.isNotEmpty ?? false) people.basicInfo.academicDegree!
                         ].where((s) => s.isNotEmpty).join(' '),
                         subtitle: people.roles.isNotEmpty ? people.roles.first.role : null,

@@ -20,7 +20,6 @@ class PeoplePageDriver extends WidgetDriver {
   late LmuToast _toast;
 
   late List<PeopleCategory> _peopleCategories;
-  //late People? _people;
   late PeopleLoadState _peopleLoadState;
 
   List<People> get favorites =>
@@ -30,25 +29,81 @@ class PeoplePageDriver extends WidgetDriver {
       _peopleLoadState != PeopleLoadState.success && _peopleLoadState != PeopleLoadState.loadingWithCache;
 
   String get allPeopleTitle => _appLocalizations.showAll;
-  String get allPeopleCount =>
-      _peopleCategories.expand((peopleCategory) => peopleCategory.peoples).toSet().length.toString();
+  String get allPeopleCount => _peopleCategories.expand((category) => category.peoples).toSet().length.toString();
 
   List<PeopleCategory> get peopleCategories {
-    // Group people by faculty
     final facultyGroups = _peopleCategories
         .expand((category) => category.peoples)
         .where((person) => person.faculty.isNotEmpty)
         .groupListsBy((person) => person.faculty);
 
-    return facultyGroups.entries.map((entry) {
-      return PeopleCategory(
-        name: entry.key,
-        description: '${entry.value.length} people',
+    final List<PeopleCategory> regularFaculties = [];
+    PeopleCategory? crossFaculty;
+    int index = 1;
+
+    final sortedEntries = facultyGroups.entries.toList()
+      ..sort((a, b) => _cleanFacultyName(a.key).compareTo(_cleanFacultyName(b.key)));
+
+    for (final entry in sortedEntries) {
+      final originalName = entry.key;
+      final isCrossFaculty = originalName.toLowerCase().contains('fakultätsübergreifend');
+      final cleanedName = _cleanFacultyName(originalName);
+
+      final category = PeopleCategory(
+        name: cleanedName,
+        description: isCrossFaculty ? 'Fakultätsübergreifend' : 'Fakultät ${index++}',
         emoji: '🎓',
         peoples: entry.value,
       );
-    }).toList()
-      ..sort((a, b) => a.name.compareTo(b.name));
+
+      if (isCrossFaculty) {
+        crossFaculty = category;
+      } else {
+        regularFaculties.add(category);
+      }
+    }
+
+    if (crossFaculty != null) {
+      regularFaculties.add(crossFaculty); // am Ende anhängen
+    }
+
+    return regularFaculties;
+  }
+
+  String _cleanFacultyName(String name) {
+    final lower = name.toLowerCase().trim();
+    String cleaned = name.trim();
+
+    // Prefixe entfernen
+    const prefixPatterns = [
+      'fakultät für ',
+      'fakultät ',
+      'faculty of ',
+      'faculty',
+      'fakultätsübergreifende',
+    ];
+
+    for (final pattern in prefixPatterns) {
+      if (lower.startsWith(pattern)) {
+        cleaned = cleaned.substring(pattern.length).trim();
+        break;
+      }
+    }
+
+    // Suffixe entfernen
+    const suffixPatterns = [
+      ' fakultät',
+      ' faculty',
+    ];
+
+    for (final pattern in suffixPatterns) {
+      if (cleaned.toLowerCase().endsWith(pattern)) {
+        cleaned = cleaned.substring(0, cleaned.length - pattern.length).trim();
+        break;
+      }
+    }
+
+    return cleaned;
   }
 
   void onAllPeoplePressed() {
@@ -59,7 +114,6 @@ class PeoplePageDriver extends WidgetDriver {
   void onPeopleCardPressed(String personId) {
     _peopleState.selectedCategory = null;
     _navigatorContext.go('/studies/people/details/$personId');
-    //const PeopleDetailsRoute().go(_navigatorContext);
   }
 
   void onFacultyPressed(PeopleCategory faculty) {
