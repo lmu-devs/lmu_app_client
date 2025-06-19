@@ -68,7 +68,7 @@ class CinemaDetailsPage extends StatelessWidget {
                 hasDivider: true,
                 onTap: () => LmuBottomSheet.show(
                   context,
-                  content: NavigationSheet(locationId: cinema.id, location: cinema.location),
+                  content: NavigationSheet(id: cinema.id, location: cinema.location),
                 ),
               ),
               ...List.generate(

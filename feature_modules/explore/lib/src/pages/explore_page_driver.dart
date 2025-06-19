@@ -108,10 +108,10 @@ class ExplorePageDriver extends WidgetDriver {
   @override
   void didInitDriver() async {
     super.didInitDriver();
+    filterScrollController = ScrollController();
+
     _mapService.init();
     _locationService.init();
-
-    filterScrollController = ScrollController();
 
     _filteredLocationsNotifier = _locationService.filteredLocationsNotifier;
     _filteredLocationsNotifier.addListener(_onExploreLocationsChanged);

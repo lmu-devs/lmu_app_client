@@ -7,9 +7,10 @@ import '../services/services.dart';
 class ExplorePublicApi implements ExploreApi {
   @override
   void applyFilter(ExploreFilterType filter) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       try {
         final locationService = GetIt.I<ExploreLocationService>();
+        await locationService.onInitialLoad;
         locationService.applyInitialFilter(filter);
       } catch (e) {
         throw Exception("Filter [$filter] could not be applied: $e");
@@ -19,10 +20,12 @@ class ExplorePublicApi implements ExploreApi {
 
   @override
   void selectLocation(String locationId) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       try {
         final mapService = GetIt.I<ExploreMapService>();
         final locationService = GetIt.I<ExploreLocationService>();
+
+        await locationService.onInitialLoad;
         final location = locationService.getLocationById(locationId);
 
         mapService.selectedMarkerNotifier.value = locationId;

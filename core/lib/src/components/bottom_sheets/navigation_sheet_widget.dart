@@ -15,9 +15,9 @@ import '../../../utils.dart';
 import '../../constants/constants.dart';
 
 class NavigationSheet extends StatelessWidget {
-  const NavigationSheet({super.key, required this.location, required this.locationId});
+  const NavigationSheet({super.key, required this.id, required this.location});
 
-  final String locationId;
+  final String id;
   final LocationModel location;
 
   void _openExternalApplication({
@@ -67,7 +67,7 @@ class NavigationSheet extends StatelessWidget {
           ),
         ),
         LmuListItem.base(
-          title: "LMU Students",
+          title: context.locals.explore.inAppMaps,
           leadingArea: Image.asset(
             getPngAssetTheme('assets/app_icon'),
             package: 'launch_flow',
@@ -75,9 +75,9 @@ class NavigationSheet extends StatelessWidget {
             width: LmuIconSizes.large,
           ),
           onTap: () {
-            GetIt.I<ExploreApi>().selectLocation(locationId);
             Navigator.pop(context);
             const ExploreMainRoute().go(context);
+            GetIt.I<ExploreApi>().selectLocation(id);
           },
         ),
         if (Platform.isIOS)

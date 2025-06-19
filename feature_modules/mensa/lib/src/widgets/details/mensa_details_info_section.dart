@@ -42,7 +42,7 @@ class MensaDetailsInfoSection extends StatelessWidget {
             onTap: () {
               LmuBottomSheet.show(
                 context,
-                content: NavigationSheet(locationId: mensaModel.canteenId, location: mensaModel.location),
+                content: NavigationSheet(id: mensaModel.canteenId, location: mensaModel.location),
               );
             },
           ),
