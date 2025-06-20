@@ -1,4 +1,5 @@
 import 'package:core/components.dart';
+import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,7 +42,11 @@ class _MensaPageState extends State<MensaPage> {
         largeTitleTrailingWidget: LmuButton(
           title: context.locals.canteen.myTaste,
           emphasis: ButtonEmphasis.secondary,
-          onTap: () => LmuBottomSheet.showExtended(context, content: const TasteProfilePage()),
+          onTap: () {
+            final BaseAnalyticsClient analytics = GetIt.I<BaseAnalyticsClient>();
+            analytics.logClick(element: "taste_profile");
+            LmuBottomSheet.showExtended(context, content: const TasteProfilePage());
+          },
         ),
       ),
       body: BlocBuilder<MensaCubit, MensaState>(
