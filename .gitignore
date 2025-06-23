@@ -36,6 +36,7 @@ core/lib/src/localizations/generated
 /build/
 .mason/
 pubspec.lock
+/devtools_options.yaml
 
 # Symbolication related
 app.*.symbols

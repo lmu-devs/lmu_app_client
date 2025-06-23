@@ -10,34 +10,38 @@ typedef WelcomePageEntry = ({String emoji, String title, String description});
 
 @GenerateTestDriver()
 class WelcomePageDriver extends WidgetDriver {
-  late LaunchFlowLocatizations _flowLocatizations;
+  late LaunchFlowLocatizations _flowLocalizations;
   late BuildContext _navigatorContext;
 
   List<WelcomePageEntry> get _entries => <WelcomePageEntry>[
         (
           emoji: '🤝',
-          title: _flowLocatizations.campusCompanionTitle,
-          description: _flowLocatizations.campusCompanionDescription,
+          title: _flowLocalizations.campusCompanionTitle,
+          description: _flowLocalizations.campusCompanionDescription,
         ),
         (
           emoji: '🧑‍💻',
-          title: _flowLocatizations.developedByStudentsTitle,
-          description: _flowLocatizations.developedByStudentsDescription,
+          title: _flowLocalizations.developedByStudentsTitle,
+          description: _flowLocalizations.developedByStudentsDescription,
         ),
         (
           emoji: '🎉',
-          title: _flowLocatizations.moreToComeTitle,
-          description: _flowLocatizations.moreToComeDescription,
+          title: _flowLocalizations.moreToComeTitle,
+          description: _flowLocalizations.moreToComeDescription,
         ),
       ];
 
-  String get welcomeTitle => _flowLocatizations.welcome;
+  String get welcomeTitle => _flowLocalizations.welcome;
 
-  String get welcomeSubtitle => _flowLocatizations.fromStudents;
+  String get welcomeSubtitle => _flowLocalizations.fromStudents;
 
   List<WelcomePageEntry> get entries => _entries;
 
-  String get buttonText => _flowLocatizations.letsGo;
+  String get dataPrivacyIntro => _flowLocalizations.dataPrivacyIntro;
+
+  String get dataPrivacyLabel => _flowLocalizations.dataPrivacyLabel;
+
+  String get buttonText => _flowLocalizations.letsGo;
 
   void onButtonPressed() {
     GetIt.I.get<LaunchFlowApi>().showedWelcomePage();
@@ -47,7 +51,7 @@ class WelcomePageDriver extends WidgetDriver {
   @override
   void didUpdateBuildContext(BuildContext context) {
     super.didUpdateBuildContext(context);
-    _flowLocatizations = context.locals.launchFlow;
+    _flowLocalizations = context.locals.launchFlow;
     _navigatorContext = context;
   }
 }

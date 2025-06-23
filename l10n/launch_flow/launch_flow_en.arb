@@ -9,5 +9,7 @@
   "developedByStudentsDescription": "Built with love by the LMU Developers student organization",
   "moreToComeTitle": "More to come",
   "moreToComeDescription": "Help us shape the app and submit your ideas to the wishlist",
+  "dataPrivacyIntro": "By continuing, you agree to our ",
+  "dataPrivacyLabel": "Privacy Policy",
   "letsGo": "Let's go"
 }
