@@ -22,8 +22,10 @@ class PeoplePageDriver extends WidgetDriver {
   late List<PeopleCategory> _peopleCategories;
   late PeopleLoadState _peopleLoadState;
 
-  List<People> get favorites =>
-      _peopleCategories.expand((category) => category.peoples).where((person) => person.isFavorite).toList();
+  List<People> get favorites => _peopleState.state.value.peopleCategories
+      .expand((category) => category.peoples)
+      .where((person) => person.isFavorite)
+      .toList();
 
   bool get isLoading =>
       _peopleLoadState != PeopleLoadState.success && _peopleLoadState != PeopleLoadState.loadingWithCache;

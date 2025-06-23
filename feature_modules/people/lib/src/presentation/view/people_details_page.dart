@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
@@ -10,16 +11,18 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
 
   @override
   Widget build(BuildContext context) {
+    final starColor = context.colors.neutralColors.textColors.weakColors.base;
     return LmuScaffold(
       appBar: LmuAppBarData(
         largeTitle: driver.academicDegree.isNotEmpty ? "${driver.academicDegree} ${driver.name}" : driver.name,
         leadingAction: LeadingAction.back,
-        largeTitleTrailingWidget: IconButton(
-          icon: Icon(
-            driver.isFavorite ? Icons.star : Icons.star_border, // Stern gefüllt oder leer
-            color: driver.isFavorite ? Colors.yellow : Colors.grey, // Farbe abhängig vom Status
+        largeTitleTrailingWidget: GestureDetector(
+          onTap: () => driver.toggleFavorite(),
+          child: StarIcon(
+            isActive: driver.isFavorite,
+            size: LmuIconSizes.small,
+            disabledColor: starColor,
           ),
-          onPressed: () => driver.toggleFavorite(), // Funktion zum Favorisieren
         ),
       ),
       body: SingleChildScrollView(
@@ -41,8 +44,18 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
               LmuTileHeadline.base(title: "Kontakt"),
               LmuContentTile(
                 contentList: [
-                  if (driver.email.isNotEmpty) LmuListItem.base(title: "Email", subtitle: driver.email),
-                  if (driver.phone.isNotEmpty) LmuListItem.base(title: "Telefon", subtitle: driver.phone),
+                  //if (driver.email.isNotEmpty)
+                  LmuListItem.action(
+                    title: "Email: mail ", //${driver.email}",
+                    onTap: () => driver.onRoomTap(context),
+                    actionType: LmuListItemAction.chevron,
+                  ),
+                  //if (driver.phone.isNotEmpty)
+                  LmuListItem.action(
+                    title: "Telefon: phone ", //${driver.email}",
+                    onTap: () => driver.onRoomTap(context),
+                    actionType: LmuListItemAction.chevron,
+                  ),
                   if (driver.room.isNotEmpty)
                     LmuListItem.action(
                       title: "Raum: ${driver.room}",

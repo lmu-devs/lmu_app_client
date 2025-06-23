@@ -12,6 +12,9 @@ part of 'people_page_driver.dart';
 
 class _$TestPeoplePageDriver extends TestDriver implements PeoplePageDriver {
   @override
+  List<People> get favorites => [];
+
+  @override
   bool get isLoading => false;
 
   @override

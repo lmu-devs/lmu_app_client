@@ -21,6 +21,19 @@ class People extends Equatable {
   final List<dynamic> courses;
   final bool isFavorite;
 
+  People copyWith({bool? isFavorite}) {
+    return People(
+      id: id,
+      name: name,
+      profileUrl: profileUrl,
+      basicInfo: basicInfo,
+      faculty: faculty,
+      roles: roles,
+      courses: courses,
+      isFavorite: isFavorite ?? this.isFavorite,
+    );
+  }
+
   @override
   List<Object?> get props => [id];
 }

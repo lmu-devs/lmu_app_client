@@ -34,7 +34,7 @@ class PeopleFavoritesSection extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+      padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -46,13 +46,20 @@ class PeopleFavoritesSection extends StatelessWidget {
           LmuContentTile(
             contentList: people.map(
               (person) {
-                return LmuListItem.action(
-                  title: person.name,
-                  subtitle: person.faculty,
-                  actionType: LmuListItemAction.chevron,
-                  onTap: () {
-                    context.go('/studies/people/details/${person.id}');
-                  },
+                return SizedBox(
+                  width: double.infinity, // <-- sorgt für volle Breite
+                  child: LmuListItem.action(
+                    title: person.name,
+                    actionType: LmuListItemAction.chevron,
+                    trailingArea: StarIcon(
+                      isActive: person.isFavorite,
+                      size: LmuIconSizes.small,
+                      disabledColor: context.colors.neutralColors.borderColors.seperatorLight,
+                    ),
+                    onTap: () {
+                      context.go('/studies/people/details/${person.id}');
+                    },
+                  ),
                 );
               },
             ).toList(),

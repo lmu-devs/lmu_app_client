@@ -48,4 +48,21 @@ class PeopleStateService {
     _stateNotifier.value = (loadState: PeopleLoadState.success, peopleCategories: people ?? cachedPeople!);
     // TODO: Wenn Laden fehlschlägt, gecachte Daten anzeigen lassen (siehe Benefits State Service)
   }
+
+  void toggleFavorite(String personId) {
+    final updatedCategories = _stateNotifier.value.peopleCategories.map((category) {
+      final updatedPeoples = category.peoples.map((person) {
+        if (person.id == personId) {
+          return person.copyWith(isFavorite: !person.isFavorite); // Favorisierungsstatus umschalten
+        }
+        return person;
+      }).toList();
+      return category.copyWith(peoples: updatedPeoples);
+    }).toList();
+
+    _stateNotifier.value = (
+      loadState: _stateNotifier.value.loadState,
+      peopleCategories: updatedCategories,
+    );
+  }
 }

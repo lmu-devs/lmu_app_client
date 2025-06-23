@@ -20,4 +20,15 @@ class PeopleCategoryDto {
       );
 
   Map<String, dynamic> toJson() => _$PeopleCategoryDtoToJson(this);
+
+  // Hinzufügen der copyWith-Methode
+  PeopleCategoryDto copyWith({
+    String? name,
+    List<PeopleDto>? people,
+  }) {
+    return PeopleCategoryDto(
+      name: name ?? this.name,
+      people: people ?? this.people,
+    );
+  }
 }

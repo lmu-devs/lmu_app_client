@@ -24,7 +24,7 @@ class PeopleDetailsPageDriver extends WidgetDriver {
     roles: [],
     courses: [],
   ))
-  late final People person;
+  late People person;
 
   late String _id;
   late BuildContext _context;
@@ -46,14 +46,14 @@ class PeopleDetailsPageDriver extends WidgetDriver {
     _initializePerson();
   }
 
-  bool isFavorite = false; // Status der Favorisierung
+  // Entferne: bool isFavorite = false;
+  bool get isFavorite => person.isFavorite; // Status der Favorisierung
 
   void toggleFavorite() {
-    isFavorite = !isFavorite; // Favorisierungsstatus umschalten
-    print('Favorisierungsstatus geändert: $isFavorite');
+    final updatedPerson = person.copyWith(isFavorite: !person.isFavorite); // Favorisierungsstatus umschalten
+    _peopleStateService.toggleFavorite(updatedPerson.id); // Favorisierungsstatus im Zustand speichern
+    person = updatedPerson; // Lokale Person aktualisieren
     notifyWidget(); // UI aktualisieren
-    _context = _context;
-    _initializePerson();
   }
 
   void _onPeopleStateChanged() {
