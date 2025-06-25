@@ -3,8 +3,11 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'analytics.dart';
 
 class DefaultAnalyticsClient extends AnalyticsClient {
-
   final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
+
+  @override
+  Future<void> toggleAnalyticsCollection({required bool isEnabled}) async =>
+      await _analytics.setAnalyticsCollectionEnabled(isEnabled);
 
   @override
   Future<void> init({

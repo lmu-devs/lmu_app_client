@@ -1,6 +1,8 @@
 abstract class AnalyticsClient {
   AnalyticsClient();
 
+  Future<void> toggleAnalyticsCollection({required bool isEnabled});
+
   Future<void> init({
     required String osVersion,
     required String appVersion,

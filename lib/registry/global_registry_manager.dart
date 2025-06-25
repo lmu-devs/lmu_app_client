@@ -25,6 +25,9 @@ class GlobalRegistryManager {
       theme: themeProvider.themeMode.name,
     );
 
+    final analyticsUserPreferenceService = await AnalyticsUserPreferenceService.create();
+    GetIt.I.registerSingleton<AnalyticsUserPreferenceService>(analyticsUserPreferenceService);
+
     final featureToggleService = DefaultFeatureToggleService(baseApiClient, systemInfoService.systemInfo.appVersion);
     GetIt.I.registerSingleton<FeatureToggleService>(featureToggleService);
     await featureToggleService.init();
