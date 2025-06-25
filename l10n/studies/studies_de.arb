@@ -1,5 +1,6 @@
 {
   "@@locale": "de",
   "@@context": "Studies",
-  "studiesTitle": "Studium"
+  "studiesTitle": "Studium",
+  "facultiesTitle": "Fakultäten"
 }

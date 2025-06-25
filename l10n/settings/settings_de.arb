@@ -37,5 +37,6 @@
   "german": "Deutsch",
   "english": "Englisch",
   "accountDeletionSuccess": "Dein Account und alle zugehörigen Daten wurden erfolgreich gelöscht.",
-  "accountDeletionFailed": "Beim Löschen deines Accounts ist ein Fehler aufgetreten. Bitte versuche es erneut."
+  "accountDeletionFailed": "Beim Löschen deines Accounts ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+  "changeFaculty": "Fakultät ändern"
 }
