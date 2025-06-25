@@ -96,6 +96,10 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                       path: 'debug',
                       factory: $SettingsDebugRouteExtension._fromState,
                     ),
+                    GoRouteData.$route(
+                      path: 'faculites',
+                      factory: $FaculitesMainRouteExtension._fromState,
+                    ),
                   ],
                 ),
                 GoRouteData.$route(
@@ -370,6 +374,22 @@ extension $SettingsDebugRouteExtension on SettingsDebugRoute {
 
   String get location => GoRouteData.$location(
         '/home/settings/debug',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $FaculitesMainRouteExtension on FaculitesMainRoute {
+  static FaculitesMainRoute _fromState(GoRouterState state) => const FaculitesMainRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/settings/faculites',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -776,19 +796,17 @@ extension $MensaSearchRouteExtension on MensaSearchRoute {
 }
 
 extension $ExploreMainRouteExtension on ExploreMainRoute {
-  static ExploreMainRoute _fromState(GoRouterState state) =>
-      const ExploreMainRoute();
+  static ExploreMainRoute _fromState(GoRouterState state) => const ExploreMainRoute();
 
   String get location => GoRouteData.$location(
-    '/explore',
-  );
+        '/explore',
+      );
 
   void go(BuildContext context) => context.go(location);
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }
