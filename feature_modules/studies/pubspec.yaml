@@ -14,8 +14,11 @@ dependencies:
     path: ../../core
   core_routes:
     path: ../../core_routes
+  shared_api:
+    path: ../../shared_api
   get_it: ^8.0.1
   widget_driver: ^1.0.10
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   json_serializable: ^6.6.2

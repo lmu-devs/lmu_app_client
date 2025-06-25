@@ -16,6 +16,7 @@ import '../mensa/mensa.dart';
 import '../roomfinder/roomfinder.dart';
 import '../settings/settings.dart';
 import '../sports/sports.dart';
+import '../studies/studies.dart';
 import '../timeline/timeline.dart';
 import '../wishlist/wishlist.dart';
 import 'scaffold_with_nav_bar.dart';
@@ -63,6 +64,9 @@ class LaunchFlowShellRoute extends ShellRouteData {
                 ),
                 TypedGoRoute<SettingsDebugRoute>(
                   path: SettingsDebugRoute.path,
+                ),
+                TypedGoRoute<FaculitesMainRoute>(
+                  path: FaculitesMainRoute.path,
                 ),
               ],
             ),
