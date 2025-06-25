@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core_routes/benefits.dart';
@@ -81,23 +82,33 @@ class HomeSuccessView extends StatelessWidget {
 
 extension HomeTileMapper on HomeTile {
   void Function() onTap(BuildContext context) {
-    return switch (type) {
+    final void Function() tileNavigation = switch (type) {
       HomeTileType.benefits => () => const BenefitsMainRoute().go(context),
       HomeTileType.cinemas => () => const CinemaMainRoute().go(context),
       HomeTileType.feedback => () => GetIt.I.get<FeedbackApi>().showFeedback(
-            context,
-            args: const FeedbackArgs(type: FeedbackType.general, origin: 'Home General'),
-          ),
+        context,
+        args: const FeedbackArgs(type: FeedbackType.general, origin: 'Home General'),
+      ),
       HomeTileType.roomfinder => () => const RoomfinderMainRoute().go(context),
       HomeTileType.sports => () => const SportsMainRoute().go(context),
       HomeTileType.timeline => () => const TimelineMainRoute().go(context),
       HomeTileType.wishlist => () => const WishlistMainRoute().go(context),
       HomeTileType.links => () => const LinksRoute().go(context),
-      HomeTileType.news => () => {_notYetImplemented(context)},
-      HomeTileType.events => () => {_notYetImplemented(context)},
+      HomeTileType.news => () => _notYetImplemented(context),
+      HomeTileType.events => () => _notYetImplemented(context),
       HomeTileType.mensa => () => const MensaMainRoute().go(context),
       HomeTileType.libraries => () => const LibrariesMainRoute().go(context),
-      HomeTileType.other => () => {_notYetImplemented(context)},
+      HomeTileType.other => () => _notYetImplemented(context),
+    };
+
+    return () {
+      final AnalyticsClient analytics = GetIt.I<AnalyticsClient>();
+      analytics.logClick(
+        eventName: "home_tile_opened",
+        parameters: {"tile": type.name},
+      );
+
+      tileNavigation();
     };
   }
 

@@ -2,7 +2,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 
 import 'analytics.dart';
 
-class DefaultBaseAnalyticsClient extends BaseAnalyticsClient {
+class DefaultAnalyticsClient extends AnalyticsClient {
 
   final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
 
@@ -31,13 +31,12 @@ class DefaultBaseAnalyticsClient extends BaseAnalyticsClient {
 
   @override
   Future<void> logClick({
-    required String element,
+    required String eventName,
     Map<String, Object>? parameters,
   }) async {
     await _analytics.logEvent(
-      name: 'element_clicked',
+      name: eventName,
       parameters: {
-        'element': element,
         ...?parameters,
       },
     );

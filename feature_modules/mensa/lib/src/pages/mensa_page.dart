@@ -43,8 +43,8 @@ class _MensaPageState extends State<MensaPage> {
           title: context.locals.canteen.myTaste,
           emphasis: ButtonEmphasis.secondary,
           onTap: () {
-            final BaseAnalyticsClient analytics = GetIt.I<BaseAnalyticsClient>();
-            analytics.logClick(element: "taste_profile");
+            final AnalyticsClient analytics = GetIt.I<AnalyticsClient>();
+            analytics.logClick(eventName: "taste_profile_opened", parameters: {"origin": "mensa_page"});
             LmuBottomSheet.showExtended(context, content: const TasteProfilePage());
           },
         ),

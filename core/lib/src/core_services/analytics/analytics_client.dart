@@ -1,5 +1,5 @@
-abstract class BaseAnalyticsClient {
-  BaseAnalyticsClient();
+abstract class AnalyticsClient {
+  AnalyticsClient();
 
   Future<void> init({
     required String osVersion,
@@ -14,7 +14,7 @@ abstract class BaseAnalyticsClient {
   });
 
   Future<void> logClick({
-    required String element,
+    required String eventName,
     Map<String, Object>? parameters,
   });
 
