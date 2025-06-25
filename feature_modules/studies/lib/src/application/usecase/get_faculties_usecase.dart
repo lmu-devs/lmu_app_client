@@ -23,7 +23,7 @@ class GetFacultiesUsecase extends ChangeNotifier {
 
   Future<void> initFaculites() async {
     try {
-      final faculties = await _repository.getFaculties(forceRefresh: true);
+      final faculties = await _repository.getFaculties();
       _faculties = faculties;
 
       final selectedFaculties = await _repository.getSelectedFacultyIds();
