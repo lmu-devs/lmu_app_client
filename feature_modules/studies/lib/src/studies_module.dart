@@ -26,10 +26,10 @@ class StudiesModule extends AppModule
   void provideLocalDependencies() {
     final baseApiClient = GetIt.I.get<BaseApiClient>();
     final studiesStorage = StudiesStorage();
-    final benefitsRepository = StudiesRepository(StudiesApiClient(baseApiClient), studiesStorage);
-    final getFacultiesUsecase = GetFacultiesUsecase(benefitsRepository);
+    final studiesRepository = StudiesRepository(StudiesApiClient(baseApiClient), studiesStorage);
+    final getFacultiesUsecase = GetFacultiesUsecase(studiesRepository);
 
-    GetIt.I.registerSingleton<StudiesRepositoryInterface>(benefitsRepository);
+    GetIt.I.registerSingleton<StudiesRepositoryInterface>(studiesRepository);
     GetIt.I.registerSingleton<GetFacultiesUsecase>(getFacultiesUsecase);
   }
 
