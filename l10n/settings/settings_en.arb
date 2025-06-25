@@ -148,5 +148,9 @@
   "accountDeletionFailed": "An error occurred while deleting your account. Please try again.",
   "@accountDeletionFailed": {
     "description": "Account deletion failure message"
+  },
+  "changeFaculty": "Change Faculty",
+  "@changeFaculty": {
+    "description": "Change Faculty"
   }
 }
