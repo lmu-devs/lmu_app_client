@@ -36,8 +36,6 @@ class SettingsAnalyticsPage extends StatelessWidget {
                   initialValue: isEnabled,
                   onChange: (value) {
                     LmuVibrations.secondary();
-                    final analytics = GetIt.I<AnalyticsClient>();
-                    analytics.toggleAnalyticsCollection(isEnabled: value);
                     analyticsUserPreferenceService.toggleAnalytics(value);
                   },
                 ),

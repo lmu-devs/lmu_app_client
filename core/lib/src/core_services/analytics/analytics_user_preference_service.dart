@@ -21,7 +21,7 @@ class AnalyticsUserPreferenceService {
   Future<void> _init() async {
     _prefs = await SharedPreferences.getInstance();
 
-    final currentPref = _prefs.getBool(_analyticsKey) ?? true;
+    final currentPref = _prefs.getBool(_analyticsKey) ?? false;
     isAnalyticsEnabled.value = currentPref;
 
     _applyAnalyticsSetting(currentPref);

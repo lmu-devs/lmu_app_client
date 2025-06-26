@@ -1,3 +1,4 @@
+import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
 import 'package:core_routes/home.dart';
 import 'package:get_it/get_it.dart';
@@ -44,6 +45,8 @@ class WelcomePageDriver extends WidgetDriver {
   String get buttonText => _flowLocalizations.letsGo;
 
   void onButtonPressed() {
+    final analyticsUserPreferenceService = GetIt.I<AnalyticsUserPreferenceService>();
+    analyticsUserPreferenceService.toggleAnalytics(true);
     GetIt.I.get<LaunchFlowApi>().showedWelcomePage();
     const HomeMainRoute().pushReplacement(_navigatorContext);
   }
