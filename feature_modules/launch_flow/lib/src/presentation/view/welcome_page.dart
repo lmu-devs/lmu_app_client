@@ -1,6 +1,5 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/gestures.dart';
@@ -56,44 +55,44 @@ class WelcomePage extends DrivableWidget<WelcomePageDriver> {
                                 )
                                 .toList(),
                           ),
-                          const SizedBox(height: LmuSizes.size_48),
-                          Text.rich(
-                            TextSpan(
-                              text: driver.dataPrivacyIntro,
-                              style: LmuText.bodySmall('')
-                                  .getTextStyle(context)
-                                  .copyWith(
-                                    color: context.colors.neutralColors
-                                        .textColors.mediumColors.base,
-                                  ),
-                              children: [
-                                TextSpan(
-                                  text: driver.dataPrivacyLabel,
-                                  style: LmuText.bodySmall('')
-                                      .getTextStyle(context)
-                                      .copyWith(
-                                        color: context.colors.neutralColors
-                                            .textColors.strongColors.base,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      LmuUrlLauncher.launchWebsite(
-                                        url: LmuDevStrings.lmuDevDataPrivacy,
-                                        context: context,
-                                      );
-                                    },
-                                ),
-                                const TextSpan(text: '.'),
-                              ],
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
                         ],
                       ),
                     ),
                   ),
-                  const SizedBox(height: LmuSizes.size_16),
+                  const SizedBox(height: LmuSizes.size_24),
+                  Text.rich(
+                    TextSpan(
+                      text: driver.dataPrivacyIntro,
+                      style: LmuText.bodySmall('')
+                          .getTextStyle(context)
+                          .copyWith(
+                        color: context.colors.neutralColors
+                            .textColors.mediumColors.base,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: driver.dataPrivacyLabel,
+                          style: LmuText.bodySmall('')
+                              .getTextStyle(context)
+                              .copyWith(
+                            color: context.colors.neutralColors
+                                .textColors.strongColors.base,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              LmuUrlLauncher.launchWebsite(
+                                url: LmuDevStrings.lmuDevDataPrivacy,
+                                context: context,
+                              );
+                            },
+                        ),
+                        const TextSpan(text: '.'),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: LmuSizes.size_24),
                   LmuButton(
                     title: driver.buttonText,
                     showFullWidth: true,
