@@ -51,6 +51,7 @@ dependencies:
     path: ../shared_api
   core_routes:
     path: ../core_routes
+  firebase_analytics: ^11.5.0
 
 dev_dependencies:
   flutter_test:

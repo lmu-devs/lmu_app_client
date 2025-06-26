@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
@@ -54,6 +55,11 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
 
     _activeIndexNotifier = ValueNotifier<int>(0);
     _listController = ListController();
+
+    if (_selectedPreferencePresetsNotifier.value != null && _selectedPreferencePresetsNotifier.value!.isNotEmpty) {
+      final AnalyticsClient analytics = GetIt.I<AnalyticsClient>();
+      analytics.logSelection(contentType: "taste_profile_preset", itemId: _selectedPreferencePresetsNotifier.value!);
+    }
 
     if (_tasteProfileCubit.state is! TasteProfileLoadSuccess) {
       _tasteProfileCubit.loadTasteProfile();

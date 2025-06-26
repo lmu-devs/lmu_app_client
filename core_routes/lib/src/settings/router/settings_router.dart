@@ -9,6 +9,8 @@ abstract class SettingsRouter {
 
   Widget buildLanguage(BuildContext context);
 
+  Widget buildAnalytics(BuildContext context);
+
   Widget buildLicense(BuildContext context);
 
   Widget buildDebug(BuildContext context);

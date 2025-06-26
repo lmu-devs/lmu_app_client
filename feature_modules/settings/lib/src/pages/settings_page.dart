@@ -152,10 +152,15 @@ class SettingsMainPage extends StatelessWidget {
                     onTap: () {
                       LmuUrlLauncher.launchWebsite(
                         context: context,
-                        url: LmuDevStrings.lmuDevImprint,
+                        url: LmuDevStrings.lmuDevLegalNotice,
                         mode: LmuUrlLauncherMode.inAppWebView,
                       );
                     },
+                  ),
+                  LmuListItem.action(
+                    title: "Analytics",
+                    actionType: LmuListItemAction.chevron,
+                    onTap: () => const SettingsAnalyticsRoute().go(context),
                   ),
                   LmuListItem.action(
                     title: settingLocalizations.licenses,

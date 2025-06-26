@@ -85,6 +85,10 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                       factory: $SettingsLanguageRouteExtension._fromState,
                     ),
                     GoRouteData.$route(
+                      path: 'analytics',
+                      factory: $SettingsAnalyticsRouteExtension._fromState,
+                    ),
+                    GoRouteData.$route(
                       path: 'license',
                       factory: $SettingsLicenceRouteExtension._fromState,
                     ),
@@ -326,6 +330,23 @@ extension $SettingsLanguageRouteExtension on SettingsLanguageRoute {
 
   String get location => GoRouteData.$location(
         '/home/settings/language',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $SettingsAnalyticsRouteExtension on SettingsAnalyticsRoute {
+  static SettingsAnalyticsRoute _fromState(GoRouterState state) => const SettingsAnalyticsRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/settings/analytics',
       );
 
   void go(BuildContext context) => context.go(location);

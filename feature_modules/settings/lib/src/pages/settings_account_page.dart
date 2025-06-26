@@ -47,10 +47,14 @@ class SettingsAccountPage extends StatelessWidget {
                   },
                   ),**/
               const SizedBox(height: LmuSizes.size_16),
-              LmuText.bodyXSmall(
-                localization.connectToAccountDescription,
-                color: context.colors.neutralColors.textColors.weakColors.base,
-                textAlign: TextAlign.center,
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+                child: LmuText.bodyXSmall(
+                  localization.connectToAccountDescription,
+                  color:
+                      context.colors.neutralColors.textColors.weakColors.base,
+                ),
               ),
               const SizedBox(height: LmuSizes.size_32),
               LmuTileHeadline.base(
@@ -69,10 +73,14 @@ class SettingsAccountPage extends StatelessWidget {
                 },
               ),
               const SizedBox(height: LmuSizes.size_16),
-              LmuText.bodyXSmall(
-                localization.deleteDataDescription,
-                color: context.colors.neutralColors.textColors.weakColors.base,
-                textAlign: TextAlign.center,
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+                child: LmuText.bodyXSmall(
+                  localization.deleteDataDescription,
+                  color:
+                      context.colors.neutralColors.textColors.weakColors.base,
+                ),
               ),
               const SizedBox(height: LmuSizes.size_32),
               /**LmuTileHeadline.base(
