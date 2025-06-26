@@ -101,13 +101,11 @@ class LmuInTextVisual extends StatelessWidget {
     final hasIcon = icon != null;
     final colors = context.colors;
 
-    final double height = size == InTextVisualSize.large ? (LmuSizes.size_4 * 7) : LmuSizes.size_20;
     final double iconSize = size == InTextVisualSize.large ? LmuIconSizes.medium : LmuIconSizes.small;
-    final double padding = size == InTextVisualSize.large ? LmuSizes.size_4 : LmuSizes.size_2;
+    final horizontalPadding = hasIcon ? LmuSizes.size_4 : size == InTextVisualSize.medium ? LmuSizes.size_4 : LmuSizes.size_6;
+    final verticalPadding = size == InTextVisualSize.large ? LmuSizes.size_4 : LmuSizes.size_2;
 
     return Container(
-      height: height * MediaQuery.of(context).textScaler.textScaleFactor,
-      width: hasIcon ? height : null,
       decoration: hasIconBox && hasIcon
           ? null
           : ShapeDecoration(
@@ -117,12 +115,8 @@ class LmuInTextVisual extends StatelessWidget {
               ),
             ),
       padding: EdgeInsets.symmetric(
-        horizontal: hasIcon
-            ? LmuSizes.none
-            : size == InTextVisualSize.medium
-                ? LmuSizes.size_4
-                : LmuSizes.size_6,
-        vertical: padding,
+        horizontal: horizontalPadding,
+        vertical: verticalPadding,
       ),
       child: _buildChild(textColor ?? actionType.textColor(colors), iconSize),
     );
@@ -142,12 +136,10 @@ class LmuInTextVisual extends StatelessWidget {
         );
       }
     } else if (icon != null) {
-      return Center(
-        child: LmuIcon(
-          icon: icon!,
-          size: iconSize,
-          color: textColor,
-        ),
+      return LmuIcon(
+        icon: icon!,
+        size: iconSize,
+        color: textColor,
       );
     } else {
       return const SizedBox.shrink();
