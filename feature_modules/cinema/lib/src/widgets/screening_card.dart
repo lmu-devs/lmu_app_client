@@ -158,11 +158,11 @@ class ScreeningCard extends StatelessWidget {
                       spacing: LmuSizes.size_2,
                       runSpacing: LmuSizes.size_2,
                       children: [
-                        LmuInTextVisual.text(title: cinema.type.getValue()),
+                        LmuTextBadge(title: cinema.type.getValue()),
                         if (screening.movie.budget != null)
-                          LmuInTextVisual.text(title: '${screening.price.toStringAsFixed(2)} €'),
+                          LmuTextBadge(title: '${screening.price.toStringAsFixed(2)} €'),
                         if (screening.movie.ratings.isNotEmpty)
-                          LmuInTextVisual.text(title: screening.movie.ratings.first.rawRating),
+                          LmuTextBadge(title: screening.movie.ratings.first.rawRating),
                       ],
                     ),
                   ],

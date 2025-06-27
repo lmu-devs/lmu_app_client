@@ -34,6 +34,16 @@ extension DishAssetMapperExtension on MenuItemModel {
   String _buildAssetPath(String iconName) {
     return 'feature_modules/mensa/assets/category_$iconName.png';
   }
+
+  String getCategoryName() {
+    if (_ignoredCategories.contains(dishType)) return "";
+
+    if (labels.contains("MEAT")) return "🥩 Meat";
+    if (labels.contains("FISH")) return "🐟 Fish";
+    if (labels.contains("VEGETARIAN")) return "🥕 Vegetarian";
+    if (labels.contains("VEGAN")) return "🌱 Vegan";
+    else return "";
+  }
 }
 
 final Map<String, String> _defaultDishCategoryIcons = {
@@ -45,3 +55,13 @@ final Map<String, String> _defaultDishCategoryIcons = {
   'Vegan': 'vegan',
   'Vegetarisch/fleischlos': 'vegetarian',
 };
+
+final List<String> _ignoredCategories = [
+  'Pizza',
+  'Dessert (Glas)',
+  'Studitopf',
+  'Süßspeise',
+  'Tagessupe, Brot, Obst',
+  'Vegan',
+  'Vegetarisch/fleischlos',
+];

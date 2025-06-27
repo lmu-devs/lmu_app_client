@@ -65,7 +65,7 @@ class WishlistDetailsPage extends StatelessWidget {
         leadingAction: LeadingAction.back,
         largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
         largeTitleTrailingWidget: wishlistModel.status != WishlistStatus.none
-            ? LmuInTextVisual.text(
+            ? LmuTextBadge(
                 title: wishlistModel.status.getValue(context),
                 textColor:
                     context.colors.neutralColors.textColors.strongColors.base,

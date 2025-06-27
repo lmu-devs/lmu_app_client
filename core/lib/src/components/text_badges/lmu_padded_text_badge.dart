@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 import '../../constants/lmu_sizes.dart';
-import 'lmu_in_text_visual.dart';
+import 'lmu_text_badge.dart';
 
-class LmuPaddedInTextVisuals extends StatelessWidget {
-  const LmuPaddedInTextVisuals({
+class LmuPaddedTextBadge extends StatelessWidget {
+  const LmuPaddedTextBadge({
     required this.inTextVisuals,
     this.noPaddingOnFirstElement = false,
     this.hasPaddingOnRight = false,
     super.key,
   });
 
-  final List<LmuInTextVisual> inTextVisuals;
+  final List<LmuTextBadge> inTextVisuals;
   final bool noPaddingOnFirstElement;
   final bool hasPaddingOnRight;
 

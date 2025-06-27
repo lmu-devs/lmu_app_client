@@ -177,7 +177,7 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
                                   crossAxisAlignment: WrapCrossAlignment.center,
                                   children: [
                                     LmuText.h1(_selectedLocation!.name),
-                                    LmuInTextVisual.text(
+                                    LmuTextBadge(
                                       title: _selectedLocation!.type.localizedName(context.locals),
                                       textColor: _selectedLocation!.type.markerColor(colors),
                                       backgroundColor:

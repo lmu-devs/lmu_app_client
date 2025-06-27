@@ -22,7 +22,7 @@ class RoomfinderRoomDetailsPage extends StatelessWidget {
         leadingAction: LeadingAction.back,
         largeTitle: room.name,
         largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
-        largeTitleTrailingWidget: LmuInTextVisual.text(
+        largeTitleTrailingWidget: LmuTextBadge(
           title: "Room",
           textColor: colors.warningColors.textColors.strongColors.base,
           backgroundColor: colors.customColors.backgroundColors.stuCafe,

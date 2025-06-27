@@ -17,7 +17,7 @@ class MensaTag extends StatelessWidget {
     final localizations = context.locals.canteen;
 
     final tagData = type.getTagData(colors, localizations);
-    return LmuInTextVisual.text(
+    return LmuTextBadge(
       title: tagData.text,
       backgroundColor: tagData.backgroundColor,
       textColor: tagData.textColor,

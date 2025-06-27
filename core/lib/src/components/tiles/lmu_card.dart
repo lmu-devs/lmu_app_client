@@ -9,8 +9,9 @@ class LmuCard extends StatelessWidget {
   const LmuCard({
     super.key,
     required this.title,
-    this.tag,
-    this.tagType = ActionType.base,
+    this.titleWeight,
+    this.tagText,
+    this.badgeType = BadgeType.base,
     this.customTagColor,
     this.customTagTextColor,
     this.subtitle,
@@ -29,8 +30,9 @@ class LmuCard extends StatelessWidget {
   });
 
   final String title;
-  final String? tag;
-  final ActionType tagType;
+  final FontWeight? titleWeight;
+  final String? tagText;
+  final BadgeType badgeType;
   final Color? customTagColor;
   final Color? customTagTextColor;
   final String? subtitle;
@@ -114,14 +116,14 @@ class LmuCard extends StatelessWidget {
                                       Flexible(
                                         child: LmuText.body(
                                           title,
-                                          weight: FontWeight.w600,
+                                          weight: titleWeight ?? FontWeight.w600,
                                         ),
                                       ),
-                                      if (tag != null) ...[
+                                      if (tagText != null) ...[
                                         const SizedBox(width: LmuSizes.size_8),
-                                        LmuInTextVisual.text(
-                                          title: tag!,
-                                          actionType: tagType,
+                                        LmuTextBadge(
+                                          title: tagText!,
+                                          badgeType: badgeType,
                                           textColor: customTagTextColor,
                                           backgroundColor: customTagColor,
                                         ),
@@ -129,6 +131,7 @@ class LmuCard extends StatelessWidget {
                                     ],
                                   ),
                                 ),
+                                const SizedBox(width: LmuSizes.size_4),
                                 if (favoriteCount != null)
                                   Padding(
                                     padding: const EdgeInsets.only(top: LmuSizes.size_2),

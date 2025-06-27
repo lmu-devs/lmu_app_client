@@ -47,7 +47,7 @@ class _RoomfinderBuildingDetailsPageState extends State<RoomfinderBuildingDetail
         largeTitle: _building.title,
         largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
         trailingWidgets: [_trailingAppBarAction],
-        largeTitleTrailingWidget: LmuInTextVisual.text(
+        largeTitleTrailingWidget: LmuTextBadge(
           title: context.locals.roomfinder.building,
           textColor: buildingColor,
           backgroundColor: buildingColor.withValues(alpha: 0.14),

@@ -11,17 +11,17 @@ class LmuListItem extends StatelessWidget {
     Key? key,
     String? title,
     Color? titleColor,
-    List<LmuInTextVisual>? titleInTextVisuals,
+    List<LmuTextBadge>? titleInTextVisuals,
     MainContentAlignment? mainContentAlignment,
     String? subtitle,
     Color? subtitleTextColor,
-    List<LmuInTextVisual>? subtitleInTextVisuals,
+    List<LmuTextBadge>? subtitleInTextVisuals,
     String? trailingTitle,
     Color? trailingTitleColor,
-    List<LmuInTextVisual>? trailingTitleInTextVisuals,
+    List<LmuTextBadge>? trailingTitleInTextVisuals,
     String? trailingSubtitle,
     Color? trailingSubtitleColor,
-    List<LmuInTextVisual>? trailingSubtitleInTextVisuals,
+    List<LmuTextBadge>? trailingSubtitleInTextVisuals,
     Widget? leadingArea,
     Widget? trailingArea,
     void Function()? onTap,
@@ -66,17 +66,17 @@ class LmuListItem extends StatelessWidget {
     Key? key,
     String? title,
     Color? titleColor,
-    List<LmuInTextVisual>? titleInTextVisuals,
+    List<LmuTextBadge>? titleInTextVisuals,
     MainContentAlignment? mainContentAlignment,
     String? subtitle,
     Color? subtitleTextColor,
-    List<LmuInTextVisual>? subtitleInTextVisuals,
+    List<LmuTextBadge>? subtitleInTextVisuals,
     String? trailingTitle,
     Color? trailingTitleColor,
-    List<LmuInTextVisual>? trailingTitleInTextVisuals,
+    List<LmuTextBadge>? trailingTitleInTextVisuals,
     String? trailingSubtitle,
     Color? trailingSubtitleColor,
-    List<LmuInTextVisual>? trailingSubtitleInTextVisuals,
+    List<LmuTextBadge>? trailingSubtitleInTextVisuals,
     Widget? leadingArea,
     Widget? trailingArea,
     void Function()? onTap,
@@ -149,17 +149,17 @@ class LmuListItem extends StatelessWidget {
 
   final String? title;
   final Color? titleColor;
-  final List<LmuInTextVisual>? titleInTextVisuals;
+  final List<LmuTextBadge>? titleInTextVisuals;
   final MainContentAlignment mainContentAlignment;
   final String? subtitle;
   final Color? subtitleColor;
-  final List<LmuInTextVisual>? subtitleInTextVisuals;
+  final List<LmuTextBadge>? subtitleInTextVisuals;
   final String? trailingTitle;
   final Color? trailingTitleColor;
-  final List<LmuInTextVisual>? trailingTitleInTextVisuals;
+  final List<LmuTextBadge>? trailingTitleInTextVisuals;
   final String? trailingSubtitle;
   final Color? trailingSubtitleColor;
-  final List<LmuInTextVisual>? trailingSubtitleInTextVisuals;
+  final List<LmuTextBadge>? trailingSubtitleInTextVisuals;
   final Widget? leadingArea;
   final Widget? trailingArea;
   final LmuListItemAction? actionType;
@@ -257,7 +257,7 @@ class LmuListItem extends StatelessWidget {
                                             ),
                                           ),
                                         if (_hasTitleInTextVisuals)
-                                          LmuPaddedInTextVisuals(
+                                          LmuPaddedTextBadge(
                                             inTextVisuals: titleInTextVisuals!,
                                             noPaddingOnFirstElement: title == null,
                                           ),
@@ -278,7 +278,7 @@ class LmuListItem extends StatelessWidget {
                                             ),
                                           ),
                                         if (_hasSubtitleInTextVisuals)
-                                          LmuPaddedInTextVisuals(
+                                          LmuPaddedTextBadge(
                                             inTextVisuals: subtitleInTextVisuals!,
                                             noPaddingOnFirstElement: subtitle == null,
                                           ),
@@ -303,7 +303,7 @@ class LmuListItem extends StatelessWidget {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         if (_hasTrailingTitleInTextVisuals)
-                                          LmuPaddedInTextVisuals(
+                                          LmuPaddedTextBadge(
                                             inTextVisuals: trailingTitleInTextVisuals!,
                                             noPaddingOnFirstElement: trailingTitle == null,
                                             hasPaddingOnRight: true,
@@ -327,7 +327,7 @@ class LmuListItem extends StatelessWidget {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         if (_hasTrailingSubtitleInTextVisuals)
-                                          LmuPaddedInTextVisuals(
+                                          LmuPaddedTextBadge(
                                             inTextVisuals: trailingSubtitleInTextVisuals!,
                                             noPaddingOnFirstElement: trailingSubtitle == null,
                                             hasPaddingOnRight: true,

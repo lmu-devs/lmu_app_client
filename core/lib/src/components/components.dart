@@ -9,7 +9,7 @@ export 'errors/errors.dart';
 export 'icons/icons.dart';
 export 'images/images.dart';
 export 'in_list_visuals/in_list_visuals.dart';
-export 'in_text_visuals/in_text_visuals.dart';
+export 'text_badges/text_badges.dart';
 export 'input_field/input_fields.dart';
 export 'list_items/list_items.dart';
 export 'list_views/list_views.dart';

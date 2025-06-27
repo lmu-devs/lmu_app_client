@@ -61,7 +61,7 @@ class _MensaSearchPageState extends State<MensaSearchPage> {
           title: mensa.name,
           actionType: LmuListItemAction.chevron,
           titleInTextVisuals: [
-            LmuInTextVisual.text(
+            LmuTextBadge(
               title: tagData.text,
               backgroundColor: tagData.backgroundColor,
               textColor: tagData.textColor,

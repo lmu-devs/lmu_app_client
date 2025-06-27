@@ -181,7 +181,7 @@ class LibraryDetailsPage extends StatelessWidget {
         ],
         imageUrls: library.images.isNotEmpty ? library.images.map((image) => image.url).toList() : [],
         largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
-        largeTitleTrailingWidget: LmuInTextVisual.text(
+        largeTitleTrailingWidget: LmuTextBadge(
           title: context.locals.libraries.library,
           textColor: context.colors.customColors.textColors.library,
           backgroundColor: context.colors.customColors.backgroundColors.library,

@@ -62,17 +62,17 @@ class SportsCourseTile extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 2.0),
-                    child: LmuInTextVisual.text(
+                    child: LmuTextBadge(
                       title: isCourseInPast
                           ? sportsLocals.past
                           : course.isAvailable
                               ? appLocals.available
                               : sportsLocals.fullyBooked,
-                      actionType: isCourseInPast
-                          ? ActionType.base
+                      badgeType: isCourseInPast
+                          ? BadgeType.base
                           : course.isAvailable
-                              ? ActionType.success
-                              : ActionType.destructive,
+                              ? BadgeType.success
+                              : BadgeType.destructive,
                     ),
                   ),
                   const SizedBox(height: LmuSizes.size_8),

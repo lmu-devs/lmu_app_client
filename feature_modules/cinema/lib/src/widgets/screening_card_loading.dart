@@ -63,9 +63,9 @@ class ScreeningCardLoading extends StatelessWidget {
                       spacing: LmuSizes.size_4,
                       runSpacing: LmuSizes.size_4,
                       children: [
-                        LmuInTextVisual.text(title: BoneMock.words(1)),
-                        LmuInTextVisual.text(title: BoneMock.words(1)),
-                        LmuInTextVisual.text(title: BoneMock.words(1)),
+                        LmuTextBadge(title: BoneMock.words(1)),
+                        LmuTextBadge(title: BoneMock.words(1)),
+                        LmuTextBadge(title: BoneMock.words(1)),
                       ],
                     ),
                   ],

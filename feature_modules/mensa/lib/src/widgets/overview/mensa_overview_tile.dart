@@ -52,7 +52,7 @@ class MensaOverviewTile extends StatelessWidget {
 
             return LmuCard(
               title: mensaModel.name,
-              tag: tagData.text,
+              tagText: tagData.text,
               customTagColor: tagData.backgroundColor,
               customTagTextColor: tagData.textColor,
               customSubtitle: MensaStatusRow(

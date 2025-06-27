@@ -105,7 +105,7 @@ class CinemaDetailsPage extends StatelessWidget {
         leadingAction: LeadingAction.back,
         imageUrls: cinema.images != null ? cinema.images!.map((image) => image.url).toList() : [],
         largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
-        largeTitleTrailingWidget: LmuInTextVisual.text(
+        largeTitleTrailingWidget: LmuTextBadge(
           title: cinema.type.getValue(),
           textColor: cinema.type.getTextColor(context),
           backgroundColor: cinema.type.getBackgroundColor(context),

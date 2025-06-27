@@ -22,8 +22,7 @@ class CinemaCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return LmuCard(
       title: cinema.title,
-      tag: cinema.type.getValue(),
-      tagType: ActionType.base,
+      tagText: cinema.type.getValue(),
       customTagColor: cinema.type.getBackgroundColor(context),
       customTagTextColor: cinema.type.getTextColor(context),
       subtitle: _getDateForNextMovie(context),

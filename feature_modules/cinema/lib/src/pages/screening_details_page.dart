@@ -148,7 +148,7 @@ class ScreeningDetailsPage extends StatelessWidget {
                     subtitle: cinema.title,
                     subtitleTextColor: context.colors.neutralColors.textColors.mediumColors.base,
                     subtitleInTextVisuals: [
-                      LmuInTextVisual.text(
+                      LmuTextBadge(
                         title: cinema.type.getValue(),
                         textColor: cinema.type.getTextColor(context),
                         backgroundColor: cinema.type.getBackgroundColor(context),
