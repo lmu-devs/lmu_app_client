@@ -31,7 +31,7 @@ class PeopleCard extends StatelessWidget {
       name += ' $lastName';
     }
     if (academicDegree != null && academicDegree.isNotEmpty) {
-      name += ' $academicDegree';
+      name += ', $academicDegree';
     }
     return name;
   }

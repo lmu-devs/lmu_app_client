@@ -2,12 +2,9 @@
   "@@locale": "en",
   "@@context": "People",
   "title": "People",
-  "popular": "Popular",
-  "findPeople": "Find People",
+  "faculty": "Faculty",
+  "people": "People",
   "peopleSuggestion": "Suggest a contact",
-  "distance": "Distance",
-  "building": "Building",
-  "buildings": "Buildings",
   "emptyFavoritesBefore": "Tap the ",
   "@emptyFavoritesBefore": {
     "description": "Empty favorites text before star icon"

@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
@@ -12,11 +13,14 @@ import '../viewmodel/people_page_driver.dart';
 class PeoplePage extends DrivableWidget<PeoplePageDriver> {
   PeoplePage({super.key});
 
+  late BuildContext _context;
+
   @override
   Widget build(BuildContext context) {
+    _context = context;
     return LmuScaffold(
       appBar: LmuAppBarData(
-        largeTitle: "People",
+        largeTitle: context.locals.peoples.people,
         leadingAction: LeadingAction.back,
       ),
       body: SingleChildScrollView(
@@ -40,7 +44,22 @@ class PeoplePage extends DrivableWidget<PeoplePageDriver> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        /*const SizedBox(height: LmuSizes.size_16),
+        // --- Suchfeld mit Lupe ---
+        TextField(
+          decoration: InputDecoration(
+            hintText: 'Suchen' ?? 'Person suchen',
+            prefixIcon: const Icon(Icons.search),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 12),
+          ),
+          onChanged: driver.onSearchChanged,
+        ),*/
         const SizedBox(height: LmuSizes.size_16),
+        // --- Rest wie gehabt ---
+
         LmuContentTile(
           content: LmuListItem.action(
             title: driver.allPeopleTitle,
@@ -52,7 +71,9 @@ class PeoplePage extends DrivableWidget<PeoplePageDriver> {
         const SizedBox(height: LmuSizes.size_16),
         PeopleFavoritesSection(people: driver.favorites),
         const SizedBox(height: LmuSizes.size_16),
-        LmuTileHeadline.base(title: "Faultiere"),
+        LmuTileHeadline.base(
+          title: _context.locals.peoples.faculty,
+        ),
         LmuContentTile(
           contentList: driver.peopleCategories
               .mapIndexed(

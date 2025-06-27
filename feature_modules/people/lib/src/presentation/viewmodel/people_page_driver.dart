@@ -32,6 +32,7 @@ class PeoplePageDriver extends WidgetDriver {
 
   String get allPeopleTitle => _appLocalizations.showAll;
   String get allPeopleCount => _peopleCategories.expand((category) => category.peoples).toSet().length.toString();
+  String _searchQuery = '';
 
   List<PeopleCategory> get peopleCategories {
     final facultyGroups = _peopleCategories
@@ -134,6 +135,18 @@ class PeoplePageDriver extends WidgetDriver {
       _showErrorToast();
     }
   }
+
+  /*void onSearchChanged(String value) {
+    _searchQuery = value;
+    _filterPeople();
+    notifyWidget();
+  }
+
+  void _filterPeople() {
+    // Filtere die Listen nach _searchQuery
+    // Beispiel: favorites = alleFavoriten.where((p) => p.name.contains(_searchQuery)).toList();
+    // und analog für peopleCategories
+  }*/
 
   void _showErrorToast() {
     _toast.showToast(
