@@ -54,12 +54,9 @@ dependencies:
   firebase_analytics: ^11.5.0
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
   flutter_lints: ^2.0.0
   json_serializable: ^6.6.2
   build_runner: any
-  build_verify: any
 
 flutter:
   generate: true

@@ -67,13 +67,10 @@ dependencies:
   firebase_core: ^3.14.0
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
   flutter_lints: ^4.0.0
   go_router_builder: ^2.9.0
   json_serializable: ^6.6.2
   build_runner: any
-  build_verify: any
   husky: ^0.1.7
 
 flutter:
