@@ -9,6 +9,7 @@ export 'generated/home_localizations.dart';
 export 'generated/launch_flow_localizations.dart';
 export 'generated/lectures_localizations.dart';
 export 'generated/libraries_localizations.dart';
+export 'generated/people_localizations.dart';
 export 'generated/roomfinder_localizations.dart';
 export 'generated/settings_localizations.dart';
 export 'generated/sports_localizations.dart';
