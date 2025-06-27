@@ -266,6 +266,10 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                   path: 'lectures',
                   factory: $LecturesMainRouteExtension._fromState,
                 ),
+                GoRouteData.$route(
+                  path: 'people',
+                  factory: $PeopleMainRouteExtension._fromState,
+                ),
               ],
             ),
           ],
@@ -336,8 +340,7 @@ extension $SettingsLanguageRouteExtension on SettingsLanguageRoute {
 
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }
@@ -919,6 +922,22 @@ extension $LecturesMainRouteExtension on LecturesMainRoute {
 
   String get location => GoRouteData.$location(
         '/studies/lectures',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $PeopleMainRouteExtension on PeopleMainRoute {
+  static PeopleMainRoute _fromState(GoRouterState state) => const PeopleMainRoute();
+
+  String get location => GoRouteData.$location(
+        '/studies/people',
       );
 
   void go(BuildContext context) => context.go(location);
