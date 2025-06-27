@@ -27,9 +27,6 @@ dependencies:
   intl: any
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
   flutter_lints: ^2.0.0
   json_serializable: ^6.6.2
   build_runner: any
-  build_verify: any
