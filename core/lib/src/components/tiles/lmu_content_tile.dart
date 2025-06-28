@@ -1,6 +1,7 @@
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+
+import '../../../constants.dart';
+import '../../../themes.dart';
 
 enum ContentTileType { top, middle, bottom }
 

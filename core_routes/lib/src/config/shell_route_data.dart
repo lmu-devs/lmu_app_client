@@ -5,16 +5,19 @@ import 'package:go_router/go_router.dart';
 
 import '../../calendar.dart';
 import '../../launch_flow.dart';
+import '../../lectures.dart';
 import '../../libraries.dart';
 import '../../studies.dart';
-import '../benefits/routes/benefits_routes.dart';
+import '../benefits/benefits.dart';
 import '../cinema/cinema.dart';
 import '../explore/explore.dart';
 import '../home/home.dart';
 import '../mensa/mensa.dart';
+import '../people/people.dart';
 import '../roomfinder/roomfinder.dart';
 import '../settings/settings.dart';
 import '../sports/sports.dart';
+import '../studies/studies.dart';
 import '../timeline/timeline.dart';
 import '../wishlist/wishlist.dart';
 import 'scaffold_with_nav_bar.dart';
@@ -54,6 +57,9 @@ class LaunchFlowShellRoute extends ShellRouteData {
                 TypedGoRoute<SettingsLanguageRoute>(
                   path: SettingsLanguageRoute.path,
                 ),
+                TypedGoRoute<SettingsAnalyticsRoute>(
+                  path: SettingsAnalyticsRoute.path,
+                ),
                 TypedGoRoute<SettingsLicenceRoute>(
                   path: SettingsLicenceRoute.path,
                 ),
@@ -62,6 +68,9 @@ class LaunchFlowShellRoute extends ShellRouteData {
                 ),
                 TypedGoRoute<SettingsDebugRoute>(
                   path: SettingsDebugRoute.path,
+                ),
+                TypedGoRoute<FaculitesMainRoute>(
+                  path: FaculitesMainRoute.path,
                 ),
               ],
             ),
@@ -191,6 +200,12 @@ class LaunchFlowShellRoute extends ShellRouteData {
           routes: <TypedGoRoute<GoRouteData>>[
             TypedGoRoute<CalendarMainRoute>(
               path: CalendarMainRoute.path,
+            ),
+            TypedGoRoute<LecturesMainRoute>(
+              path: LecturesMainRoute.path,
+            ),
+            TypedGoRoute<PeopleMainRoute>(
+              path: PeopleMainRoute.path,
             ),
           ],
         ),

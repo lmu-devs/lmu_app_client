@@ -35,7 +35,12 @@ class WishlistDetailsPage extends StatelessWidget {
             if (!context.mounted) return;
             GetIt.I.get<FeedbackApi>().showFeedback(
                   context,
-                  args: FeedbackArgs(type: FeedbackType.general, origin: 'Wishlist Entry: ${wishlistModel.title}'),
+                  args: FeedbackArgs(
+                    type: FeedbackType.general,
+                    origin: 'Wishlist Entry: ${wishlistModel.title}',
+                    title: "${context.locals.feedback.feedbackTitle} ${context.locals.app.on} ${wishlistModel.title}",
+                    description: context.locals.wishlist.wishlistFeedbackDescription,
+                  ),
                 );
           },
         );
@@ -62,7 +67,8 @@ class WishlistDetailsPage extends StatelessWidget {
         largeTitleTrailingWidget: wishlistModel.status != WishlistStatus.none
             ? LmuInTextVisual.text(
                 title: wishlistModel.status.getValue(context),
-                textColor: context.colors.neutralColors.textColors.strongColors.base,
+                textColor:
+                    context.colors.neutralColors.textColors.strongColors.base,
               )
             : null,
       ),
@@ -79,23 +85,28 @@ class WishlistDetailsPage extends StatelessWidget {
                 spacing: LmuSizes.size_8,
                 children: [
                   ValueListenableBuilder<List<String>>(
-                    valueListenable: GetIt.I<WishlistUserPreferenceService>().likedWishlistIdsNotifier,
+                    valueListenable: GetIt.I<WishlistUserPreferenceService>()
+                        .likedWishlistIdsNotifier,
                     builder: (context, likedWishlistIds, child) {
-                      final isLiked = likedWishlistIds.contains(wishlistModel.id.toString());
-                      final calculatedLikes = wishlistModel.ratingModel.calculateLikeCount(isLiked);
+                      final isLiked = likedWishlistIds
+                          .contains(wishlistModel.id.toString());
+                      final calculatedLikes =
+                          wishlistModel.ratingModel.calculateLikeCount(isLiked);
 
                       return LmuButton(
                         leadingWidget: StarIcon(
                           key: ValueKey(wishlistModel.id),
                           isActive: isLiked,
-                          disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
+                          disabledColor: context.colors.neutralColors
+                              .backgroundColors.mediumColors.active,
                         ),
                         title: "$calculatedLikes Likes",
                         emphasis: ButtonEmphasis.secondary,
                         onTap: () async {
-                          await GetIt.I<WishlistUserPreferenceService>()
-                              .toggleLikedWishlistId(wishlistModel.id.toString());
                           LmuVibrations.secondary();
+                          await GetIt.I<WishlistUserPreferenceService>()
+                              .toggleLikedWishlistId(
+                                  wishlistModel.id.toString());
                         },
                       );
                     },
@@ -108,8 +119,10 @@ class WishlistDetailsPage extends StatelessWidget {
                           args: FeedbackArgs(
                             type: FeedbackType.general,
                             origin: 'Wishlist Entry: ${wishlistModel.title}',
-                            title: "${locals.feedback.feedbackTitle} ${locals.app.to} ${wishlistModel.title}",
-                            description: locals.wishlist.wishlistFeedbackDescription,
+                            title:
+                                "${locals.feedback.feedbackTitle} ${locals.app.on} ${wishlistModel.title}",
+                            description:
+                                locals.wishlist.wishlistFeedbackDescription,
                           ),
                         ),
                   ),
@@ -155,7 +168,8 @@ class ImageListSection extends StatelessWidget {
 
   void _showImageView(BuildContext context, int clickedIndex) {
     ValueNotifier<int> currentIndexNotifier = ValueNotifier<int>(clickedIndex);
-    PageController pageController = PageController(viewportFraction: 0.85, initialPage: clickedIndex);
+    PageController pageController =
+        PageController(viewportFraction: 0.85, initialPage: clickedIndex);
 
     showDialog(
       context: context,
@@ -182,14 +196,17 @@ class ImageListSection extends StatelessWidget {
           return Padding(
             padding: EdgeInsets.only(
               left: index == 0 ? LmuSizes.size_16 : LmuSizes.none,
-              right: index == (imageModels.length - 1) ? LmuSizes.size_16 : LmuSizes.size_8,
+              right: index == (imageModels.length - 1)
+                  ? LmuSizes.size_16
+                  : LmuSizes.size_8,
             ),
             child: GestureDetector(
               onTap: () => _showImageView(context, index),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(LmuRadiusSizes.mediumLarge),
                 child: FutureBuilder(
-                  future: precacheImage(NetworkImage(imageModels[index].url), context),
+                  future: precacheImage(
+                      NetworkImage(imageModels[index].url), context),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       return Image.network(

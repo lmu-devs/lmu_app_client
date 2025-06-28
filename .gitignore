@@ -36,6 +36,7 @@ core/lib/src/localizations/generated
 /build/
 .mason/
 pubspec.lock
+/devtools_options.yaml
 
 # Symbolication related
 app.*.symbols
@@ -55,3 +56,7 @@ app.*.map.json
 
 # FVM Version Cache
 .fvm/
+
+# Firebase
+/firebase.json
+/lib/firebase_options.dart

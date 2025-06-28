@@ -14,12 +14,12 @@ import '../util/screening_time.dart';
 
 class ScreeningCard extends StatelessWidget {
   const ScreeningCard({
-    Key? key,
+    super.key,
     required this.cinema,
     required this.screening,
     required this.cinemaScreenings,
     required this.isLastItem,
-  }) : super(key: key);
+  });
 
   final CinemaModel cinema;
   final ScreeningModel screening;

@@ -5,17 +5,28 @@ import 'package:get_it/get_it.dart';
 
 class GlobalRegistryManager {
   static Future<void> register() async {
-    GetIt.I.registerSingleton<ThemeProvider>(ThemeProvider());
     GetIt.I.registerSingleton<LocationService>(LocationService());
 
     final systemInfoService = GetIt.I.registerSingleton<SystemInfoService>(SystemInfoService());
     await systemInfoService.init();
 
+    final themeProvider = GetIt.I.registerSingleton<ThemeProvider>(ThemeProvider());
     final languageProvider = GetIt.I.registerSingleton<LanguageProvider>(LanguageProvider());
     await languageProvider.init();
 
     final baseApiClient = GetIt.I.registerSingleton<BaseApiClient>(DefaultBaseApiClient());
     baseApiClient.locale = languageProvider.locale;
+
+    final analyticsClient = GetIt.I.registerSingleton<AnalyticsClient>(DefaultAnalyticsClient());
+    analyticsClient.init(
+      osVersion: systemInfoService.systemInfo.systemVersion,
+      appVersion: systemInfoService.systemInfo.appVersion,
+      locale: languageProvider.locale.languageCode,
+      theme: themeProvider.themeMode.name,
+    );
+
+    final analyticsUserPreferenceService = await AnalyticsUserPreferenceService.create();
+    GetIt.I.registerSingleton<AnalyticsUserPreferenceService>(analyticsUserPreferenceService);
 
     final featureToggleService = DefaultFeatureToggleService(baseApiClient, systemInfoService.systemInfo.appVersion);
     GetIt.I.registerSingleton<FeatureToggleService>(featureToggleService);

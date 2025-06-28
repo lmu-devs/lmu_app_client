@@ -40,7 +40,8 @@ class LibraryTile extends StatelessWidget {
           listenable: distanceService,
           builder: (context, _) {
             final libraryLocation = library.location;
-            final distance = distanceService.getDistance(lat: libraryLocation.latitude, long: libraryLocation.longitude);
+            final distance =
+                distanceService.getDistance(lat: libraryLocation.latitude, long: libraryLocation.longitude);
 
             return LmuCard(
               title: library.name,

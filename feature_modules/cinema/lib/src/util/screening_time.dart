@@ -28,7 +28,9 @@ String getScreeningTime({
     return '${context.locals.cinema.yesterdayScreening} • ${DateFormat('HH:mm').format(parsedTime)}';
   }
 
-  if (parsedTime.isAfter(now) && parsedTime.isAfter(startOfWeek) && parsedTime.isBefore(endOfWeek.add(const Duration(days: 1)))) {
+  if (parsedTime.isAfter(now) &&
+      parsedTime.isAfter(startOfWeek) &&
+      parsedTime.isBefore(endOfWeek.add(const Duration(days: 1)))) {
     final Weekday weekday = Weekday.values[parsedTime.weekday - 1];
     return '${weekday.localizedWeekday(context.locals.app)} • ${DateFormat('HH:mm').format(parsedTime)}';
   }

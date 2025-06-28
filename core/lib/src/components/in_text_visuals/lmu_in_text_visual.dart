@@ -1,8 +1,9 @@
-import 'package:core/components.dart';
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+import '../../../components.dart';
+import '../../../constants.dart';
+import '../../../themes.dart';
 
 enum ActionType {
   base,
@@ -16,17 +17,8 @@ enum InTextVisualSize {
 }
 
 class LmuInTextVisual extends StatelessWidget {
-  final String? title;
-  final IconData? icon;
-  final bool hasIconBox;
-  final bool destructive;
-  final ActionType actionType;
-  final Color? textColor;
-  final Color? backgroundColor;
-  final InTextVisualSize size;
-
   const LmuInTextVisual._({
-    Key? key,
+    super.key,
     this.title,
     this.icon,
     this.hasIconBox = false,
@@ -35,7 +27,7 @@ class LmuInTextVisual extends StatelessWidget {
     this.backgroundColor,
     required this.actionType,
     this.size = InTextVisualSize.medium,
-  }) : super(key: key);
+  });
 
   factory LmuInTextVisual.text({
     Key? key,
@@ -94,6 +86,15 @@ class LmuInTextVisual extends StatelessWidget {
         backgroundColor: backgroundColor,
         size: size,
       );
+
+  final String? title;
+  final IconData? icon;
+  final bool hasIconBox;
+  final bool destructive;
+  final ActionType actionType;
+  final Color? textColor;
+  final Color? backgroundColor;
+  final InTextVisualSize size;
 
   @override
   Widget build(BuildContext context) {

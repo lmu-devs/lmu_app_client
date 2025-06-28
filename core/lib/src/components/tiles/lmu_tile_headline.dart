@@ -1,16 +1,10 @@
-import 'package:core/components.dart';
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
-class LmuTileHeadline extends StatelessWidget {
-  final String title;
-  final String? trailingTitle;
-  final String? actionTitle;
-  final void Function()? onActionTap;
-  final Widget? bottomWidget;
-  final double? customBottomPadding;
+import '../../../components.dart';
+import '../../../constants.dart';
+import '../../../themes.dart';
 
+class LmuTileHeadline extends StatelessWidget {
   const LmuTileHeadline._internal({
     super.key,
     required this.title,
@@ -52,6 +46,12 @@ class LmuTileHeadline extends StatelessWidget {
         bottomWidget: bottomWidget,
         customBottomPadding: customBottomPadding,
       );
+  final String title;
+  final String? trailingTitle;
+  final String? actionTitle;
+  final void Function()? onActionTap;
+  final Widget? bottomWidget;
+  final double? customBottomPadding;
 
   @override
   Widget build(BuildContext context) {

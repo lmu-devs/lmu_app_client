@@ -13,13 +13,12 @@ class AreaModel extends Equatable {
     required this.openingHours,
   });
 
+  factory AreaModel.fromJson(Map<String, dynamic> json) => _$AreaModelFromJson(json);
+
   final int id;
   final String name;
   @JsonKey(name: 'opening_hours')
   final List<OpeningHoursModel>? openingHours;
-
-  factory AreaModel.fromJson(Map<String, dynamic> json) =>
-      _$AreaModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$AreaModelToJson(this);
 

@@ -1,5 +1,6 @@
-import 'package:core/localizations.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../../../localizations.dart';
 
 enum Weekday {
   @JsonValue('MONDAY')

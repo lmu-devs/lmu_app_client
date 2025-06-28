@@ -22,6 +22,8 @@ class SportsCourse extends Equatable {
     this.location,
   });
 
+  factory SportsCourse.fromJson(Map<String, dynamic> json) => _$SportsCourseFromJson(json);
+
   final String id;
   final String title;
   @JsonKey(name: 'is_available')
@@ -35,8 +37,6 @@ class SportsCourse extends Equatable {
   final List<SportsTimeSlot> timeSlots;
   final SportsPrice price;
   final SportsLocation? location;
-
-  factory SportsCourse.fromJson(Map<String, dynamic> json) => _$SportsCourseFromJson(json);
 
   Map<String, dynamic> toJson() => _$SportsCourseToJson(this);
 

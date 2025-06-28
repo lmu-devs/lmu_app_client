@@ -1,15 +1,12 @@
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
+import '../../../constants.dart';
+import '../../../themes.dart';
 import '../icons/lmu_icon.dart';
 
 class LmuDropDownAction extends StatefulWidget {
-  const LmuDropDownAction({
-    Key? key,
-    required this.isActive,
-  }) : super(key: key);
+  const LmuDropDownAction({super.key, required this.isActive});
 
   final bool isActive;
 

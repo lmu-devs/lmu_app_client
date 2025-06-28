@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
+import '../models/router_benefit_category.dart';
 import '../router/benefits_router.dart';
 
 BenefitsRouter get _router => GetIt.I.get<BenefitsRouter>();
@@ -16,10 +17,12 @@ class BenefitsMainRoute extends GoRouteData {
 }
 
 class BenefitsDetailsRoute extends GoRouteData {
-  const BenefitsDetailsRoute();
+  const BenefitsDetailsRoute(this.$extra);
+
+  final RBenefitCategory? $extra;
 
   static const String path = 'details';
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => _router.buildDetails(context);
+  Widget build(BuildContext context, GoRouterState state) => _router.buildDetails(context, category: $extra);
 }

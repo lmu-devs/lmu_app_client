@@ -1,17 +1,18 @@
-import 'package:core/components.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+
+import '../../../components.dart';
+import '../../../themes.dart';
 
 class LmuListDropdown extends StatelessWidget {
   const LmuListDropdown({
-    Key? key,
+    super.key,
     required this.title,
     this.titleColor,
     required this.items,
     this.initialValue = false,
     this.duration = const Duration(milliseconds: 300),
     this.hasDivider = false,
-  }) : super(key: key);
+  });
 
   final String title;
   final Color? titleColor;

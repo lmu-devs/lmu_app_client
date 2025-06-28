@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:core/api.dart';
-import 'package:core/src/core_services/feature_toggle/feature_flag.dart';
-import 'package:core/src/logs/app_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../api.dart';
+import '../../logs/app_logger.dart';
+import 'feature_flag.dart';
 import 'feature_toggle_service.dart';
 
 class DefaultFeatureToggleService extends FeatureToggleService {

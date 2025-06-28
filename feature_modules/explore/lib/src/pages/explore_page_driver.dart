@@ -47,7 +47,7 @@ class ExplorePageDriver extends WidgetDriver {
   CameraConstraint get cameraConstraint => CameraConstraint.contain(bounds: _mapService.mapBounds);
 
   @TestDriverDefaultValue(InteractionOptions())
-  InteractionOptions get interactionOptions => const InteractionOptions(rotationThreshold: 40);
+  InteractionOptions get interactionOptions => const InteractionOptions(rotationThreshold: 80, pinchMoveThreshold: 60);
 
   @TestDriverDefaultValue("")
   String get urlTemplate => _brightness == Brightness.light
@@ -85,36 +85,39 @@ class ExplorePageDriver extends WidgetDriver {
     );
   }
 
-  void _scrollToInitialFilter() {
-    final initialFilters = _locationService.filterNotifier.value;
+  void _onScrollRequest() {
+    final filterToScrollTo = _locationService.initialScrollRequestNotifier.value;
 
-    if (initialFilters.isNotEmpty && initialFilters.first == ExploreFilterType.library) {
-
-      if (filterScrollController.hasClients) {
-        final maxScroll = filterScrollController.position.maxScrollExtent;
-
-        filterScrollController.animateTo(
-          maxScroll,
-          duration: const Duration(milliseconds: 400),
-          curve: Curves.easeInOut,
-        );
-      }
+    if (filterToScrollTo == null) return;
+    if (filterToScrollTo == ExploreFilterType.library) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (filterScrollController.hasClients) {
+          final maxScroll = filterScrollController.position.maxScrollExtent;
+          filterScrollController.animateTo(
+            maxScroll,
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.easeInOut,
+          );
+        }
+      });
     }
+
+    _locationService.clearScrollRequest();
   }
 
   @override
   void didInitDriver() async {
     super.didInitDriver();
+    filterScrollController = ScrollController();
+
     _mapService.init();
     _locationService.init();
-
-    filterScrollController = ScrollController();
 
     _filteredLocationsNotifier = _locationService.filteredLocationsNotifier;
     _filteredLocationsNotifier.addListener(_onExploreLocationsChanged);
     _tileProvider = await _initTileProvider();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToInitialFilter());
+    _locationService.initialScrollRequestNotifier.addListener(_onScrollRequest);
   }
 
   @override
@@ -125,8 +128,9 @@ class ExplorePageDriver extends WidgetDriver {
 
   @override
   void dispose() {
-    _filteredLocationsNotifier.removeListener(_onExploreLocationsChanged);
     filterScrollController.dispose();
+    _locationService.initialScrollRequestNotifier.removeListener(_onScrollRequest);
+    _filteredLocationsNotifier.removeListener(_onExploreLocationsChanged);
     super.dispose();
   }
 }

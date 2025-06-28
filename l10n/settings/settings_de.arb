@@ -1,7 +1,6 @@
 {
   "@@locale": "de",
   "@@context": "Settings",
-  "tabTitle": "Mehr",
   "settings": "Einstellungen",
   "appearance": "Erscheinungsbild",
   "darkMode": "Dunkel",
@@ -37,5 +36,9 @@
   "german": "Deutsch",
   "english": "Englisch",
   "accountDeletionSuccess": "Dein Account und alle zugehörigen Daten wurden erfolgreich gelöscht.",
-  "accountDeletionFailed": "Beim Löschen deines Accounts ist ein Fehler aufgetreten. Bitte versuche es erneut."
+  "accountDeletionFailed": "Beim Löschen deines Accounts ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+  "changeFaculty": "Fakultät ändern",
+  "analyticsSwitch": "Analytics erlauben",
+  "analyticsDescription": "Hilf uns, die App zu verbessern, indem du anonyme Nutzungsdaten teilst. Dazu gehören Informationen darüber, welche Funktionen du am häufigsten verwendest und wo Probleme auftreten.",
+  "analyticsLink": "Für mehr Informationen besuch unsere "
 }

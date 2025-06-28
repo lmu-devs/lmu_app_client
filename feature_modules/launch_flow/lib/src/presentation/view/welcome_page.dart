@@ -1,6 +1,8 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
+import 'package:core/utils.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
@@ -16,7 +18,7 @@ class WelcomePage extends DrivableWidget<WelcomePageDriver> {
     return Stack(
       children: [
         Scaffold(backgroundColor: colors.neutralColors.backgroundColors.base),
-                const Positioned.fill(
+        const Positioned.fill(
           child: IgnorePointer(
             child: AnimatedLightRays(),
           ),
@@ -33,14 +35,12 @@ class WelcomePage extends DrivableWidget<WelcomePageDriver> {
                       child: Column(
                         children: [
                           const SizedBox(height: LmuSizes.size_48),
-                          LmuText.h1(driver.welcomeTitle,
-                              textAlign: TextAlign.center),
+                          LmuText.h1(driver.welcomeTitle, textAlign: TextAlign.center),
                           const SizedBox(height: LmuSizes.size_12),
                           LmuText.body(
                             driver.welcomeSubtitle,
                             textAlign: TextAlign.center,
-                            color: colors
-                                .neutralColors.textColors.mediumColors.base,
+                            color: colors.neutralColors.textColors.mediumColors.base,
                           ),
                           const SizedBox(height: LmuSizes.size_48),
                           LmuContentTile(
@@ -49,10 +49,8 @@ class WelcomePage extends DrivableWidget<WelcomePageDriver> {
                                   (entry) => LmuListItem.base(
                                     title: entry.title,
                                     subtitle: entry.description,
-                                    mainContentAlignment:
-                                        MainContentAlignment.top,
-                                    leadingArea:
-                                        LmuInListBlurEmoji(emoji: entry.emoji),
+                                    mainContentAlignment: MainContentAlignment.top,
+                                    leadingArea: LmuInListBlurEmoji(emoji: entry.emoji),
                                   ),
                                 )
                                 .toList(),
@@ -61,7 +59,40 @@ class WelcomePage extends DrivableWidget<WelcomePageDriver> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: LmuSizes.size_16),
+                  const SizedBox(height: LmuSizes.size_24),
+                  Text.rich(
+                    TextSpan(
+                      text: driver.dataPrivacyIntro,
+                      style: LmuText.bodySmall('')
+                          .getTextStyle(context)
+                          .copyWith(
+                        color: context.colors.neutralColors
+                            .textColors.mediumColors.base,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: driver.dataPrivacyLabel,
+                          style: LmuText.bodySmall('')
+                              .getTextStyle(context)
+                              .copyWith(
+                            color: context.colors.neutralColors
+                                .textColors.strongColors.base,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              LmuUrlLauncher.launchWebsite(
+                                url: LmuDevStrings.lmuDevDataPrivacy,
+                                context: context,
+                              );
+                            },
+                        ),
+                        const TextSpan(text: '.'),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: LmuSizes.size_24),
                   LmuButton(
                     title: driver.buttonText,
                     showFullWidth: true,
@@ -74,12 +105,10 @@ class WelcomePage extends DrivableWidget<WelcomePageDriver> {
             ),
           ),
         ),
-
       ],
     );
   }
 
   @override
-  WidgetDriverProvider<WelcomePageDriver> get driverProvider =>
-      $WelcomePageDriverProvider();
+  WidgetDriverProvider<WelcomePageDriver> get driverProvider => $WelcomePageDriverProvider();
 }

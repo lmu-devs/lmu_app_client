@@ -1,7 +1,8 @@
-import 'package:core/components.dart';
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../components.dart';
+import '../../../../constants.dart';
+import '../../../../themes.dart';
 
 class LmuTabBarItemData {
   const LmuTabBarItemData({
@@ -35,15 +36,12 @@ class LmuTabBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultColor =
-        context.colors.neutralColors.textColors.mediumColors.base;
-    final activeColor =
-        context.colors.neutralColors.textColors.strongColors.base;
+    final defaultColor = context.colors.neutralColors.textColors.mediumColors.base;
+    final activeColor = context.colors.neutralColors.textColors.strongColors.base;
 
     final textTheme = context.textTheme;
 
-    final titleWidth = calculateTextWidth(
-        title, textTheme.bodySmall.copyWith(fontWeight: FontWeight.w600));
+    final titleWidth = calculateTextWidth(title, textTheme.bodySmall.copyWith(fontWeight: FontWeight.w600));
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
@@ -54,9 +52,7 @@ class LmuTabBarItem extends StatelessWidget {
         height: 36.0 * MediaQuery.of(context).textScaler.textScaleFactor,
         padding: const EdgeInsets.all(LmuSizes.size_8),
         decoration: ShapeDecoration(
-          color: isActive
-              ? context.colors.neutralColors.backgroundColors.mediumColors.base
-              : Colors.transparent,
+          color: isActive ? context.colors.neutralColors.backgroundColors.mediumColors.base : Colors.transparent,
           shape: RoundedSuperellipseBorder(
             borderRadius: BorderRadius.circular(LmuSizes.size_8),
           ),

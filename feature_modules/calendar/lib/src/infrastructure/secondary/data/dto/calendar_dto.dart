@@ -6,11 +6,13 @@ import '../../../../domain/model/calendar.dart';
 part 'calendar_dto.g.dart';
 
 @JsonSerializable()
-class CalendarDto extends Equatable{
+class CalendarDto extends Equatable {
   const CalendarDto({
     required this.id,
     required this.name,
   });
+
+  factory CalendarDto.fromJson(Map<String, dynamic> json) => _$CalendarDtoFromJson(json);
 
   final String id;
   final String name;
@@ -19,8 +21,6 @@ class CalendarDto extends Equatable{
         id: id,
         name: name,
       );
-
-  factory CalendarDto.fromJson(Map<String, dynamic> json) => _$CalendarDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$CalendarDtoToJson(this);
 

@@ -11,18 +11,18 @@ class LocationModel extends Equatable {
     required this.longitude,
   });
 
+  factory LocationModel.fromJson(Map<String, dynamic> json) => _$LocationModelFromJson(json);
+
   final String address;
   final double latitude;
   final double longitude;
 
   @override
   List<Object> get props => [
-    address,
-    latitude,
-    longitude,
-  ];
-
-  factory LocationModel.fromJson(Map<String, dynamic> json) => _$LocationModelFromJson(json);
+        address,
+        latitude,
+        longitude,
+      ];
 
   Map<String, dynamic> toJson() => _$LocationModelToJson(this);
 }

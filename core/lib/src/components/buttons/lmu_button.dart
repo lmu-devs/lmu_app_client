@@ -1,8 +1,9 @@
-import 'package:core/components.dart';
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
+
+import '../../../components.dart';
+import '../../../constants.dart';
+import '../../../themes.dart';
 
 part 'button_colors_helper.dart';
 
@@ -48,10 +49,7 @@ class LmuButton extends StatelessWidget {
     this.showFullWidth = false,
     this.increaseTouchTarget = false,
     this.textScaleFactorEnabled = true,
-  }) : assert(title != null ||
-            leadingWidget != null ||
-            leadingIcon != null ||
-            trailingIcon != null);
+  }) : assert(title != null || leadingWidget != null || leadingIcon != null || trailingIcon != null);
 
   final ButtonSize size;
   final ButtonAction action;
@@ -70,14 +68,11 @@ class LmuButton extends StatelessWidget {
 
   bool get _hasTitle => title != null && !_isLoading;
 
-  bool get _hasLeading =>
-      (leadingIcon != null || leadingWidget != null) && !_isLoading;
+  bool get _hasLeading => (leadingIcon != null || leadingWidget != null) && !_isLoading;
 
-  bool get _hasTrailing =>
-      (trailingIcon != null || trailingWidget != null) && !_isLoading;
+  bool get _hasTrailing => (trailingIcon != null || trailingWidget != null) && !_isLoading;
 
-  bool get _hasTextOnly =>
-      emphasis == ButtonEmphasis.link || emphasis == ButtonEmphasis.tertiary;
+  bool get _hasTextOnly => emphasis == ButtonEmphasis.link || emphasis == ButtonEmphasis.tertiary;
 
   bool get _isLoading => state == ButtonState.loading;
 
@@ -97,17 +92,11 @@ class LmuButton extends StatelessWidget {
 
   EdgeInsetsGeometry? get _padding {
     if (_hasTextOnly) {
-      return increaseTouchTarget
-          ? EdgeInsets.symmetric(vertical: size.verticalPadding)
-          : null;
+      return increaseTouchTarget ? EdgeInsets.symmetric(vertical: size.verticalPadding) : null;
     }
     return EdgeInsets.only(
-      left: _hasLeading
-          ? size.smallerVerticalPadding
-          : size.defaultVerticalPadding,
-      right: _hasTrailing || (!_hasTitle && !_isLoading)
-          ? size.smallerVerticalPadding
-          : size.defaultVerticalPadding,
+      left: _hasLeading ? size.smallerVerticalPadding : size.defaultVerticalPadding,
+      right: _hasTrailing || (!_hasTitle && !_isLoading) ? size.smallerVerticalPadding : size.defaultVerticalPadding,
       top: size.verticalPadding,
       bottom: size.verticalPadding,
     );
@@ -144,9 +133,7 @@ class LmuButton extends StatelessWidget {
       enabled: _isButtonEnabled,
       label: customSemanticsLabel ?? title,
       child: GestureDetector(
-        behavior: increaseTouchTarget
-            ? HitTestBehavior.opaque
-            : HitTestBehavior.deferToChild,
+        behavior: increaseTouchTarget ? HitTestBehavior.opaque : HitTestBehavior.deferToChild,
         onTap: _isButtonEnabled ? onTap : null,
         child: Container(
           width: _width,
@@ -172,8 +159,7 @@ class LmuButton extends StatelessWidget {
                       ),
                   ],
                 ),
-              if (_hasTitle)
-                size.textWidget(title!, textScaleFactorEnabled, textColor),
+              if (_hasTitle) size.textWidget(title!, textScaleFactorEnabled, textColor),
               if (_isLoading)
                 SizedBox(
                   width: size.loadingIndicatorSize,

@@ -13,14 +13,14 @@ class BenefitTypeDto extends Equatable {
     required this.benefitIds,
   });
 
+  factory BenefitTypeDto.fromJson(Map<String, dynamic> json) => _$BenefitTypeDtoFromJson(json);
+
   final String id;
   final String title;
   final String? description;
   final String emoji;
   @JsonKey(name: 'benefit_ids')
   final List<String> benefitIds;
-
-  factory BenefitTypeDto.fromJson(Map<String, dynamic> json) => _$BenefitTypeDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$BenefitTypeDtoToJson(this);
 

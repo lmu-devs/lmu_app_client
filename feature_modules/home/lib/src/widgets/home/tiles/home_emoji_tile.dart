@@ -40,11 +40,8 @@ class HomeEmojiTile extends StatelessWidget {
                     firstEmoji,
                     style: TextStyle(
                       fontSize: 124,
-                      color: Colors.black.withOpacity(
-                          PlatformDispatcher.instance.platformBrightness ==
-                                  Brightness.light
-                              ? 0.3
-                              : 0.2),
+                      color: Colors.black.withValues(
+                          alpha: PlatformDispatcher.instance.platformBrightness == Brightness.light ? 0.3 : 0.2),
                       letterSpacing: -64,
                     ),
                   ),

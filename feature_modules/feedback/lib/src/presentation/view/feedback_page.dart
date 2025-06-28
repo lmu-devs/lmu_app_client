@@ -3,6 +3,7 @@ import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:shared_api/feedback.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:widget_driver/widget_driver.dart';
 
@@ -10,7 +11,9 @@ import '../components/feedback_emoji_selector.dart';
 import '../viewmodel/feedback_page_driver.dart';
 
 class FeedbackPage extends DrivableWidget<FeedbackPageDriver> {
-  FeedbackPage({super.key});
+  FeedbackPage({super.key, required this.args});
+
+  final FeedbackArgs args;
 
   @override
   Widget build(BuildContext context) {
@@ -74,5 +77,5 @@ class FeedbackPage extends DrivableWidget<FeedbackPageDriver> {
   }
 
   @override
-  WidgetDriverProvider<FeedbackPageDriver> get driverProvider => $FeedbackPageDriverProvider();
+  WidgetDriverProvider<FeedbackPageDriver> get driverProvider => $FeedbackPageDriverProvider(args: args);
 }

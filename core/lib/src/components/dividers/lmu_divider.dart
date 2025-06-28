@@ -1,5 +1,6 @@
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+
+import '../../../themes.dart';
 
 class LmuDivider extends StatelessWidget {
   const LmuDivider({super.key, this.height = 1.0});

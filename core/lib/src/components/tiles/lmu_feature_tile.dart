@@ -1,8 +1,9 @@
-import 'package:core/components.dart';
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
+
+import '../../../components.dart';
+import '../../../constants.dart';
+import '../../../themes.dart';
 
 class LmuFeatureTile extends StatelessWidget {
   const LmuFeatureTile({
@@ -34,15 +35,12 @@ class LmuFeatureTile extends StatelessWidget {
     return Container(
       decoration: ShapeDecoration(
         shape: RoundedSuperellipseBorder(
-          borderRadius: const BorderRadius.all(
-              Radius.circular(LmuRadiusSizes.mediumLarge + 1)),
-          side: BorderSide(
-              color: colors.neutralColors.borderColors.tile, width: 1),
+          borderRadius: const BorderRadius.all(Radius.circular(LmuRadiusSizes.mediumLarge + 1)),
+          side: BorderSide(color: colors.neutralColors.borderColors.tile, width: 1),
         ),
       ),
       child: ClipRRect(
-        borderRadius:
-            const BorderRadius.all(Radius.circular(LmuRadiusSizes.mediumLarge)),
+        borderRadius: const BorderRadius.all(Radius.circular(LmuRadiusSizes.mediumLarge)),
         child: GestureDetector(
           onTap: onTap,
           child: Container(
@@ -109,8 +107,7 @@ class LmuFeatureTile extends StatelessWidget {
                         if (subtitle != null)
                           LmuText.body(
                             subtitle,
-                            color: colors
-                                .neutralColors.textColors.mediumColors.base,
+                            color: colors.neutralColors.textColors.mediumColors.base,
                           ),
                       ],
                     ),

@@ -1,15 +1,9 @@
-import 'package:core/components.dart';
 import 'package:flutter/widgets.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../../components.dart';
+
 class LmuTextLoading extends StatelessWidget {
-  const LmuTextLoading({
-    super.key,
-    required this.text,
-  });
-
-  final Widget text;
-
   factory LmuTextLoading.body({
     required int charNo,
   }) =>
@@ -24,6 +18,12 @@ class LmuTextLoading extends StatelessWidget {
     required int charNo,
   }) =>
       LmuTextLoading(text: LmuText.h3(BoneMock.chars(charNo)));
+  const LmuTextLoading({
+    super.key,
+    required this.text,
+  });
+
+  final Widget text;
 
   @override
   Widget build(BuildContext context) {

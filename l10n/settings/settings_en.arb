@@ -1,7 +1,6 @@
 {
   "@@locale": "en",
   "@@context": "Settings",
-  "tabTitle": "More",
   "@tabTitle": {
     "description": "The title of the Settings tab"
   },
@@ -148,5 +147,21 @@
   "accountDeletionFailed": "An error occurred while deleting your account. Please try again.",
   "@accountDeletionFailed": {
     "description": "Account deletion failure message"
+  },
+  "changeFaculty": "Change Faculty",
+  "@changeFaculty": {
+    "description": "Change Faculty"
+  },
+  "analyticsSwitch": "Allow Analytics",
+  "@analyticsSwitch": {
+    "description": "Text before the analytics switch"
+  },
+  "analyticsDescription": "Help us improve the app by sharing anonymous usage data. This includes information like which features you use most and where you encounter issues.",
+  "@analyticsDescription": {
+    "description": "Description for analytics"
+  },
+  "analyticsLink": "For more information visit our ",
+  "@analyticsLink": {
+    "description": "Text before the privacy policy link"
   }
 }

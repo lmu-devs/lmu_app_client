@@ -6,7 +6,6 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_api/feedback.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../../application/state/feedback_state.dart';
 import '../../application/usecases/request_app_review_usecase.dart';
 import '../../application/usecases/send_feedback_usecase.dart';
 import '../../domain/models/emoji_feedback.dart';
@@ -17,7 +16,11 @@ part 'feedback_page_driver.g.dart';
 typedef FeedbackModalString = ({String title, String description, String inputHint});
 
 @GenerateTestDriver()
-class FeedbackPageDriver extends WidgetDriver {
+class FeedbackPageDriver extends WidgetDriver implements _$DriverProvidedProperties {
+  FeedbackPageDriver({
+    @driverProvidableProperty required FeedbackArgs args,
+  }) : _args = args;
+
   final _sendFeedbackUsecase = GetIt.I.get<SendFeedbackUsecase>();
   final _requestAppReviewUsecase = GetIt.I.get<RequestAppReviewUseCase>();
 
@@ -93,9 +96,13 @@ class FeedbackPageDriver extends WidgetDriver {
     super.didInitDriver();
     _textEditingController = TextEditingController();
     _textEditingController.addListener(_onTextEditingControllerChanged);
+  }
 
-    final feedbackState = GetIt.I.get<FeedbackState>();
-    _args = feedbackState.args!;
+  @override
+  void didUpdateProvidedProperties({
+    required FeedbackArgs newArgs,
+  }) {
+    _args = newArgs;
   }
 
   @override

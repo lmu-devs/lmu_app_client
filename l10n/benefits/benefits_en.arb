@@ -6,9 +6,9 @@
   "@benefitSuggestion": {
     "description": "Suggest a benefit"
   },
-  "benefitSuggestionDesciption": "Suggest a benefit that you would like to share with other students.",
-  "@benefitSuggestionDesciption": {
+  "benefitSuggestionDescription": "Is there a benefit you enjoy that other students here should know about?",
+  "@benefitSuggestionDescription": {
     "description": "Description for the benefit suggestion modal"
   },
-  "benefitSuggestionHint": "Describe your suggestion"
+  "benefitSuggestionHint": "Paste a link or describe your suggestion ..."
 }

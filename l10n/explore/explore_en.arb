@@ -13,12 +13,16 @@
   "@tabTitle": {
     "description": "Open with"
   },
+  "inAppMaps": "In-App Map",
+  "@inAppMaps": {
+    "description": "Navigation option with in-app map"
+  },
   "appleMaps": "Apple Maps",
-  "@tabTitle": {
+  "@appleMaps": {
     "description": "Navigation option with Apple Maps"
   },
   "googleMaps": "Google Maps",
-  "@tabTitle": {
+  "@googleMaps": {
     "description": "Navigation option with Google Maps"
   },
   "copyToClipboard": "Copy Address",

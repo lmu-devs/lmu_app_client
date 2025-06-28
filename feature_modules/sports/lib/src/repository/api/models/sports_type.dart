@@ -12,10 +12,10 @@ class SportsType extends RSportsType {
     required this.courses,
   });
 
+  factory SportsType.fromJson(Map<String, dynamic> json) => _$SportsTypeFromJson(json);
+
   final String title;
   final List<SportsCourse> courses;
-
-  factory SportsType.fromJson(Map<String, dynamic> json) => _$SportsTypeFromJson(json);
 
   Map<String, dynamic> toJson() => _$SportsTypeToJson(this);
 

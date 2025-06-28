@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:core/core_services.dart';
-import 'package:core/logging.dart';
-import 'package:core/utils.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../core_services.dart';
+import '../../../logging.dart';
+import '../../../utils.dart';
 import '../env/env_config.dart';
 import 'base_api_client.dart';
 

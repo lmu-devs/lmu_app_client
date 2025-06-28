@@ -15,7 +15,13 @@ enum CalendarType {
 class CalendarCard extends StatelessWidget {
   const CalendarCard({
     super.key,
+<<<<<<< HEAD
     required this.event,
+=======
+    required this.id,
+    required this.title,
+    required this.description,
+>>>>>>> origin/main
     required this.onTap,
     this.isHalfWidth = false,
   });

@@ -42,6 +42,15 @@ class SettingsLanguageRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) => _router.buildLanguage(context);
 }
 
+class SettingsAnalyticsRoute extends GoRouteData {
+  const SettingsAnalyticsRoute();
+
+  static const String path = 'analytics';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => _router.buildAnalytics(context);
+}
+
 class SettingsLicenceRoute extends GoRouteData {
   const SettingsLicenceRoute();
 

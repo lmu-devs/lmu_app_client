@@ -1,9 +1,10 @@
 import 'dart:ui';
 
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+
+import '../../../constants.dart';
+import '../../../themes.dart';
 
 class LmuInListBlurEmoji extends StatelessWidget {
   const LmuInListBlurEmoji({super.key, required this.emoji});
@@ -33,8 +34,7 @@ class LmuInListBlurEmoji extends StatelessWidget {
           children: [
             Center(
               child: ImageFiltered(
-                imageFilter: ImageFilter.blur(
-                    sigmaX: LmuSizes.size_16, sigmaY: LmuSizes.size_16),
+                imageFilter: ImageFilter.blur(sigmaX: LmuSizes.size_16, sigmaY: LmuSizes.size_16),
                 child: ListenableBuilder(
                   listenable: themeProvider,
                   builder: (context, _) => Text(

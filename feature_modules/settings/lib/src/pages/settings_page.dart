@@ -5,6 +5,7 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:core_routes/settings.dart';
+import 'package:core_routes/studies.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
@@ -44,11 +45,18 @@ class SettingsMainPage extends StatelessWidget {
             children: [
               const SizedBox(height: LmuSizes.size_16),
               LmuContentTile(
-                content: LmuListItem.action(
-                  title: settingLocalizations.account,
-                  actionType: LmuListItemAction.chevron,
-                  onTap: () => const SettingsAccountRoute().go(context),
-                ),
+                contentList: [
+                  LmuListItem.action(
+                    title: settingLocalizations.account,
+                    actionType: LmuListItemAction.chevron,
+                    onTap: () => const SettingsAccountRoute().go(context),
+                  ),
+                  LmuListItem.action(
+                    title: settingLocalizations.changeFaculty,
+                    actionType: LmuListItemAction.chevron,
+                    onTap: () => const FaculitesMainRoute().go(context),
+                  ),
+                ],
               ),
               const SizedBox(height: LmuSizes.size_16),
               LmuContentTile(
@@ -144,10 +152,15 @@ class SettingsMainPage extends StatelessWidget {
                     onTap: () {
                       LmuUrlLauncher.launchWebsite(
                         context: context,
-                        url: LmuDevStrings.lmuDevImprint,
+                        url: LmuDevStrings.lmuDevLegalNotice,
                         mode: LmuUrlLauncherMode.inAppWebView,
                       );
                     },
+                  ),
+                  LmuListItem.action(
+                    title: "Analytics",
+                    actionType: LmuListItemAction.chevron,
+                    onTap: () => const SettingsAnalyticsRoute().go(context),
                   ),
                   LmuListItem.action(
                     title: settingLocalizations.licenses,

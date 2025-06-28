@@ -14,6 +14,8 @@ class LinkModel extends Equatable {
     required this.aliases,
   });
 
+  factory LinkModel.fromJson(Map<String, dynamic> json) => _$LinkModelFromJson(json);
+
   final String title;
   final String description;
   final String url;
@@ -21,8 +23,6 @@ class LinkModel extends Equatable {
   final String? faviconUrl;
   final List<String> types;
   final List<String> aliases;
-
-  factory LinkModel.fromJson(Map<String, dynamic> json) => _$LinkModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$LinkModelToJson(this);
 

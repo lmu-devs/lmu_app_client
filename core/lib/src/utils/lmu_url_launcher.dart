@@ -2,10 +2,11 @@
 
 import 'dart:io';
 
-import 'package:core/components.dart';
-import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../components.dart';
+import '../../localizations.dart';
 
 /// Custom enum for URL launch modes without exposing url_launcher dependency
 enum LmuUrlLauncherMode {

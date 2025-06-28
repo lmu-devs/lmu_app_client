@@ -61,15 +61,15 @@ class LibrariesUserPreferenceService {
       } else if (state is LibrariesLoadSuccess) {
         sortLibraries(state.libraries);
         final retrievedFavoriteLibraryIds =
-        state.libraries.where((library) => library.rating.isLiked).map((library) => library.id).toList();
-        _appLogger
-            .logMessage('[LibrariesUserPreferencesService]: Retrieved favorite library ids: $retrievedFavoriteLibraryIds');
+            state.libraries.where((library) => library.rating.isLiked).map((library) => library.id).toList();
+        _appLogger.logMessage(
+            '[LibrariesUserPreferencesService]: Retrieved favorite library ids: $retrievedFavoriteLibraryIds');
 
         final unsyncedFavoriteLibraryIds =
-        favoriteLibraryIds.where((id) => !retrievedFavoriteLibraryIds.contains(id)).toList();
+            favoriteLibraryIds.where((id) => !retrievedFavoriteLibraryIds.contains(id)).toList();
 
         final unsyncedUnfavoriteLibraryIds =
-        retrievedFavoriteLibraryIds.where((id) => !favoriteLibraryIds.contains(id)).toList();
+            retrievedFavoriteLibraryIds.where((id) => !favoriteLibraryIds.contains(id)).toList();
 
         final missingSyncLibraryIds = unsyncedFavoriteLibraryIds + unsyncedUnfavoriteLibraryIds;
         for (final missingSyncLibraryId in missingSyncLibraryIds) {
