@@ -18,7 +18,7 @@ class AlphabetScrollbar extends StatefulWidget {
 }
 
 class _AlphabetScrollbarState extends State<AlphabetScrollbar> {
-  late final List<String> alphabet;
+  late List<String> alphabet;
   final GlobalKey _containerKey = GlobalKey();
   String? _activeLetter;
   Timer? _highlightTimer;
