@@ -8,35 +8,17 @@ part of 'people_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.3.3"
+// This file was generated with widget_driver_generator version "1.3.5"
 
 class _$TestPeoplePageDriver extends TestDriver implements PeoplePageDriver {
   @override
-  bool get isLoading => false;
+  String get facultyTitle => ' ';
 
   @override
-  String get largeTitle => ' ';
+  Map<String, List<PersonMock>> get groupedPeople => {};
 
   @override
-  String get peopleId => ' ';
-
-  @override
-  String get title => ' ';
-
-  @override
-  String get description => ' ';
-
-  @override
-  void onPeopleCardPressed() {}
-
-  @override
-  void didInitDriver() {}
-
-  @override
-  void didUpdateBuildContext(BuildContext context) {}
-
-  @override
-  void dispose() {}
+  void onPeopleCardPressed(PersonMock person) {}
 }
 
 class $PeoplePageDriverProvider extends WidgetDriverProvider<PeoplePageDriver> {

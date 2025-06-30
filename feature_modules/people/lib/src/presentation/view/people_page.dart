@@ -1,47 +1,88 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
+import '../component/alphabetic_scrollbar.dart';
 import '../viewmodel/people_page_driver.dart';
-import '../component/people_card.dart';
 
 class PeoplePage extends DrivableWidget<PeoplePageDriver> {
   PeoplePage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return LmuScaffold(
-      appBar: LmuAppBarData(
-        largeTitle: driver.largeTitle,
-        leadingAction: LeadingAction.back,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-        child: LmuPageAnimationWrapper(
-          child: Align(
-            key: ValueKey("people_page_${driver.isLoading}"),
-            alignment: Alignment.topCenter,
-            child: content,
-          ),
-        ),
-      ),
-    );
+  final Map<String, GlobalKey> _groupKeys = {};
+  final ScrollController _scrollController = ScrollController();
+
+  void _scrollToKey(String letter) {
+    final key = _groupKeys[letter];
+    if (key?.currentContext != null) {
+      Scrollable.ensureVisible(
+        key!.currentContext!,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
-  Widget get content {
-    if (driver.isLoading) return const SizedBox.shrink(); // replace with skeleton loading
+  @override
+  Widget build(BuildContext context) {
+    final groupedPeople = driver.groupedPeople;
+    final groupEntries = groupedPeople.entries.toList()..sort((a, b) => a.key.compareTo(b.key));
 
-    return Column(
-      children: [
-        const SizedBox(height: LmuSizes.size_16),
-        PeopleCard(
-          id: driver.peopleId,
-          title: driver.title,
-          description: driver.description,
-          onTap: driver.onPeopleCardPressed,
-        ),
-      ],
+    for (final entry in groupEntries) {
+      _groupKeys.putIfAbsent(entry.key, () => GlobalKey());
+    }
+
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: driver.facultyTitle,
+        leadingAction: LeadingAction.back,
+      ),
+      customScrollController: _scrollController,
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              LmuSizes.size_16,
+              0,
+              LmuSizes.size_48,
+              LmuSizes.size_96,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (final entry in groupEntries) ...[
+                  LmuTileHeadline.base(
+                    key: _groupKeys[entry.key],
+                    title: entry.key,
+                  ),
+                  LmuContentTile(
+                    contentList: entry.value.map((person) {
+                      return LmuListItem.action(
+                        title:
+                            '${person.academicDegree != null && person.academicDegree!.isNotEmpty ? person.academicDegree! + ' ' : ''}${person.name} ${person.surname}',
+                        subtitle: person.role,
+                        actionType: LmuListItemAction.chevron,
+                        onTap: () => driver.onPeopleCardPressed(person),
+                      );
+                    }).toList(),
+                  ),
+                  if (entry.key != groupEntries.last.key) const SizedBox(height: LmuSizes.size_32),
+                ],
+              ],
+            ),
+          ),
+          if (groupEntries.isNotEmpty)
+            Positioned(
+              right: 0,
+              top: 0,
+              bottom: 0,
+              child: AlphabetScrollbar(
+                letters: groupEntries.map((e) => e.key).toList(),
+                onLetterSelected: _scrollToKey,
+              ),
+            ),
+        ],
+      ),
     );
   }
 
