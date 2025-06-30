@@ -27,7 +27,7 @@ class PeopleEntryPoint extends StatelessWidget {
         title: context.locals.people.peopleTitle,
         leadingArea: const LmuInListBlurEmoji(emoji: "👥"),
         onTap: () {
-          if (selectedFaculties.length == 1) {
+          if (selectedFaculties.length == 0) {
             const PeopleMainRoute().go(context);
           } else {
             Navigator.of(context).push(
