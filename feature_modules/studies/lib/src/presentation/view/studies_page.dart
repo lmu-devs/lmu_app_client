@@ -30,7 +30,11 @@ class StudiesPage extends DrivableWidget<StudiesPageDriver> {
               onTap: () {},
             ),
             const SizedBox(height: LmuSizes.size_32),
+<<<<<<< HEAD
             const CelanderEntryPoint(),
+=======
+            const CalanderEntryPoint.CalanderEntryPoint(),
+>>>>>>> 5243a7f9 (added all classes and dto based on api, connection to api-endpoint, usecase for switching between calendar views)
             // const CalanderEntryPoint(),
             const SizedBox(height: LmuSizes.size_32),
             const LecturesEntryPoint(),

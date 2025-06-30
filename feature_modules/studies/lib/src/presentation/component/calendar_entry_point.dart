@@ -4,8 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/launch_flow.dart';
 
-class CelanderEntryPoint extends StatelessWidget {
-  const CelanderEntryPoint({super.key});
+class CalanderEntryPoint extends StatelessWidget {
+  const CalanderEntryPoint.CalanderEntryPoint({super.key});
 
   @override
   Widget build(BuildContext context) {

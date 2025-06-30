@@ -6,24 +6,33 @@ part of 'calendar_entry_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CalendarEntryDto _$CalendarEntryDtoFromJson(Map<String, dynamic> json) => CalendarEntryDto(
+CalendarEntryDto _$CalendarEntryDtoFromJson(Map<String, dynamic> json) =>
+    CalendarEntryDto(
       id: json['id'] as String,
       title: json['title'] as String,
       type: $enumDecode(_$EventTypeEnumMap, json['type']),
       startDate: DateTime.parse(json['startDate'] as String),
       endDate: DateTime.parse(json['endDate'] as String),
       color: const ColorConverter().fromJson((json['color'] as num).toInt()),
-      location: LocationModel.fromJson(json['location'] as Map<String, dynamic>),
+      location:
+          LocationModel.fromJson(json['location'] as Map<String, dynamic>),
       allDay: json['allDay'] as bool,
       description: json['description'] as String?,
       address: json['address'] as String?,
-      rule: json['rule'] == null ? null : CalendarRuleDto.fromJson(json['rule'] as Map<String, dynamic>),
+      rule: json['rule'] == null
+          ? null
+          : CalendarRuleDto.fromJson(json['rule'] as Map<String, dynamic>),
       recurrenceId: (json['recurrenceId'] as num?)?.toInt(),
-      createdAt: json['createdAt'] == null ? null : DateTime.parse(json['createdAt'] as String),
-      updatedAt: json['updatedAt'] == null ? null : DateTime.parse(json['updatedAt'] as String),
+      createdAt: json['createdAt'] == null
+          ? null
+          : DateTime.parse(json['createdAt'] as String),
+      updatedAt: json['updatedAt'] == null
+          ? null
+          : DateTime.parse(json['updatedAt'] as String),
     );
 
-Map<String, dynamic> _$CalendarEntryDtoToJson(CalendarEntryDto instance) => <String, dynamic>{
+Map<String, dynamic> _$CalendarEntryDtoToJson(CalendarEntryDto instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'type': _$EventTypeEnumMap[instance.type]!,

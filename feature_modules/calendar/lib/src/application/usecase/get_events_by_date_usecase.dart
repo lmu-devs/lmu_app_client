@@ -1,13 +1,10 @@
-import 'package:core/logging.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../domain/exception/calendar_events_generic_exception.dart';
 import '../../domain/interface/calendar_repository_interface.dart';
 import '../../domain/model/calendar_entry.dart';
 
 enum CalendarEntriesLoadState { initial, loading, loadingWithCache, success, error }
-
-final _appLogger = AppLogger();
 
 class GetCalendarEntriesByDateUsecase extends ChangeNotifier {
   GetCalendarEntriesByDateUsecase(this._repository);
@@ -20,7 +17,7 @@ class GetCalendarEntriesByDateUsecase extends ChangeNotifier {
   CalendarEntriesLoadState get loadState => _loadState;
   List<CalendarEntry>? get data => _data;
 
-  Future<void> load({DateTimeRange? dateRange}) async {
+  Future<void> load() async {
     if (_loadState == CalendarEntriesLoadState.loading ||
         _loadState == CalendarEntriesLoadState.loadingWithCache ||
         _loadState == CalendarEntriesLoadState.success) {
@@ -30,7 +27,7 @@ class GetCalendarEntriesByDateUsecase extends ChangeNotifier {
     final cached = await _repository.getCachedCalendarEntries();
     if (cached != null) {
       _loadState = CalendarEntriesLoadState.loadingWithCache;
-      _data = dateRange == null ? cached : cached.where((e) => e.overlapsWithRange(dateRange)).toList();
+      _data = cached;
       notifyListeners();
     } else {
       _loadState = CalendarEntriesLoadState.loading;
@@ -40,21 +37,38 @@ class GetCalendarEntriesByDateUsecase extends ChangeNotifier {
 
     try {
       final result = await _repository.getCalendarEvents();
+      // final result = await _repository.getCalendar();
       _loadState = CalendarEntriesLoadState.success;
-      _data = dateRange == null ? result : result.where((e) => e.overlapsWithRange(dateRange)).toList();
-      notifyListeners();
+      _data = result;
     } on CalendarEntriesGenericException {
       if (cached != null) {
         _loadState = CalendarEntriesLoadState.success;
-        _data = dateRange == null ? cached : cached.where((e) => e.overlapsWithRange(dateRange)).toList();
-        notifyListeners();
+        _data = cached;
       } else {
         _loadState = CalendarEntriesLoadState.error;
         _data = null;
-        notifyListeners();
       }
     }
+  }
 
-    _appLogger.logMessage('--> Loaded ${_data?.length ?? 0} calendar entries for date range: $dateRange');
+  // Future<List<CalendarEvent>> call({DateTime? date}) async {
+  //   final allEvents = await _repository.getCalendarEvents();
+  //   if (date == null) return allEvents;
+  //   return allEvents.where((e) => e.occursOn(date)).toList();
+  // }
+
+  // Future<List<CalendarEvent>> call({DateTime? date}) async {
+  //   final allEvents = await _repository.getCalendarEvents();
+  //   print("Returned ${allEvents.length} events");
+  //   return allEvents; // temporär: kein Filter
+  // }
+
+  Future<List<CalendarEntry>> call({DateTime? date}) async {
+    final allEvents = await _repository.getCalendarEvents();
+    print("Returned ${allEvents.length} events");
+
+    if (date == null) return allEvents;
+
+    return allEvents.where((event) => event.occursOn(date)).toList();
   }
 }
