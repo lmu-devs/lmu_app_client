@@ -1,6 +1,7 @@
 import '../../../domain/exception/calendar_generic_exception.dart';
 import '../../../domain/interface/calendar_repository_interface.dart';
 import '../../../domain/model/calendar.dart';
+import '../../../domain/model/calendar_entry.dart';
 import '../data/api/calendar_api_client.dart';
 import '../data/storage/calendar_storage.dart';
 
@@ -27,6 +28,27 @@ class CalendarRepository implements CalendarRepositoryInterface {
     if (cachedCalendarData == null) return null;
     try {
       return cachedCalendarData.toDomain();
+    } catch (e) {
+      return null;
+    }
+  }
+
+  @override
+  Future<List<CalendarEntry>> getCalendarEvents() async {
+    final fetchedEventDtos = await _apiClient.getCalendarEntries();
+    final List<CalendarEntry> fetchedEventData = fetchedEventDtos.map((e) => e.toDomain()).toList();
+    if (fetchedEventData.isEmpty) {
+      return [];
+    }
+    return fetchedEventData;
+  }
+
+  @override
+  Future<List<CalendarEntry>?> getCachedCalendarEntries() async {
+    final cachedCalendarEntriesData = await _storage.getCalendarEntries();
+    if (cachedCalendarEntriesData == null) return null;
+    try {
+      return cachedCalendarEntriesData.map((e) => e.toDomain()).toList();
     } catch (e) {
       return null;
     }

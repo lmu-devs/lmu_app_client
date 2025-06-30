@@ -2,12 +2,12 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:flutter/material.dart';
 
-import '../../domain/model/calendar_event.dart';
-import 'calendar_card.dart';
+import '../../domain/model/calendar_entry.dart';
+import '../component/date_range.dart';
 
 void openCalendarEventContentSheet(
   BuildContext context, {
-  required CalendarEvent event,
+  required CalendarEntry event,
 }) {
   LmuBottomSheet.show(
     context,
@@ -16,17 +16,15 @@ void openCalendarEventContentSheet(
 }
 
 class CalendarEventBottomSheet extends StatelessWidget {
-  final CalendarEvent event;
-
   const CalendarEventBottomSheet({
     super.key,
     required this.event,
   });
 
+  final CalendarEntry event;
+
   @override
   Widget build(BuildContext context) {
-    final startDate = LmuText(event.startDate.toString());
-    final endDate = LmuText(event.endDate.toString());
     final location = LmuText(event.location.address);
     final description = event.description != null ? LmuText.body(event.description!) : const SizedBox.shrink();
 
@@ -39,7 +37,7 @@ class CalendarEventBottomSheet extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               LmuInTextVisual.text(
-                title: _calendarTypeToText(event.type),
+                title: (event.type.name),
                 size: InTextVisualSize.large,
               ),
               const SizedBox(height: LmuSizes.size_8),
@@ -58,9 +56,11 @@ class CalendarEventBottomSheet extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: LmuSizes.size_8),
-              startDate,
-              const SizedBox(height: LmuSizes.size_8),
-              endDate,
+              DateRangeDisplay(
+                start: event.startDate,
+                end: event.endDate,
+                allDay: event.allDay,
+              ),
               const SizedBox(height: LmuSizes.size_8),
               location,
               const SizedBox(height: LmuSizes.size_16),
@@ -70,18 +70,5 @@ class CalendarEventBottomSheet extends StatelessWidget {
         ),
       ],
     );
-  }
-}
-
-String _calendarTypeToText(CalendarType type) {
-  switch (type) {
-    case CalendarType.lecture:
-      return 'Vorlesung';
-    case CalendarType.meeting:
-      return 'Meeting';
-    case CalendarType.event:
-      return 'Event';
-    case CalendarType.exam:
-      return 'Klausur';
   }
 }

@@ -2,58 +2,49 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../domain/model/calendar_entry.dart';
-import '../../domain/model/event_type.dart';
-import '../../domain/model/helper/date_time_formatter.dart';
-
-class CalendarCard extends StatelessWidget {
-  const CalendarCard({
+class CalendarCardLoading extends StatelessWidget {
+  const CalendarCardLoading({
     super.key,
-    required this.event,
-    required this.onTap,
     this.isHalfWidth = false,
+    this.hasColorBar = true,
   });
 
-  final CalendarEntry event;
-  final void Function() onTap;
   final bool isHalfWidth;
+  final bool hasColorBar; // To simulate the color bar's presence
 
   @override
   Widget build(BuildContext context) {
     final cardWidth = isHalfWidth ? (MediaQuery.of(context).size.width - 40) / 2 : double.infinity;
 
-    return GestureDetector(
-      onTap: () => onTap(),
+    return LmuSkeleton(
       child: Container(
-        height: 150,
-        // constraints: const BoxConstraints(
-        //   maxHeight: 150,
-        // ),
         width: cardWidth,
         margin: const EdgeInsets.only(bottom: LmuSizes.size_12),
         decoration: BoxDecoration(
           color: context.colors.neutralColors.backgroundColors.tile,
           borderRadius: BorderRadius.circular(LmuRadiusSizes.mediumLarge),
-          border: Border.all(
-              color: event.type == EventType.exam ? event.color : context.colors.neutralColors.backgroundColors.tile,
-              width: 2,
-              strokeAlign: BorderSide.strokeAlignInside),
+          // border: Border.all(
+          //   color: context.colors.neutralColors.backgroundColors.tile,
+          //   width: 2,
+          //   strokeAlign: BorderSide.strokeAlignInside,
+          // ),
         ),
         child: IntrinsicHeight(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              /// Farbbalken über die ganze Höhe
-              event.type != EventType.exam
+              /// Color bar placeholder
+              hasColorBar
                   ? Padding(
                       padding: const EdgeInsets.only(
                           left: LmuSizes.size_16, top: LmuSizes.size_16, bottom: LmuSizes.size_16),
                       child: Container(
                         width: 4,
-                        decoration: BoxDecoration(
-                          color: event.color,
-                          borderRadius: const BorderRadius.all(
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(32, 0, 0, 0), // Placeholder color
+                          borderRadius: BorderRadius.all(
                             Radius.circular(LmuRadiusSizes.mediumLarge),
                           ),
                         ),
@@ -61,57 +52,51 @@ class CalendarCard extends StatelessWidget {
                     )
                   : const SizedBox.shrink(),
 
-              /// Abstand + Inhalt
+              /// Content placeholder
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(LmuSizes.size_16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      /// Titelzeile mit Tag daneben
+                      /// Title and Tag row placeholder
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          /// Titel (maximaler Platz, aber nicht unendlich)
                           Flexible(
                             fit: FlexFit.loose,
                             child: LmuText.h3(
-                              event.title,
+                              BoneMock.title, // Placeholder for title
                               maxLines: 1,
                               customOverFlow: TextOverflow.ellipsis,
                             ),
                           ),
-
                           const SizedBox(width: LmuSizes.size_8),
-
-                          /// Tag (immer sichtbar, direkt nach dem Titel)
                           LmuInTextVisual.text(
-                            title: event.type.name,
+                            title: BoneMock.words(1), // Placeholder for tag
                           ),
                         ],
                       ),
-
                       const SizedBox(height: LmuSizes.size_4),
 
-                      /// Zeit
+                      /// Time placeholder
                       LmuText.bodySmall(
-                        _formatDateTimeRange(event.startDate, event.endDate),
+                        BoneMock.words(2), // Placeholder for time range
                         color: context.colors.neutralColors.textColors.mediumColors.base,
                       ),
-
                       const SizedBox(height: LmuSizes.size_4),
 
-                      /// Ort (Adresse + optional Raum)
+                      /// Date placeholder
                       LmuText.bodySmall(
-                        DateTimeFormatter.formatShortDate(event.startDate, context),
+                        BoneMock.words(3), // Placeholder for short date
                         color: context.colors.neutralColors.textColors.mediumColors.base,
                         maxLines: 2,
                         customOverFlow: TextOverflow.ellipsis,
                       ),
 
-                      /// Ort (Adresse + optional Raum)
+                      /// Location placeholder
                       LmuText.bodySmall(
-                        event.location.address,
+                        BoneMock.words(4), // Placeholder for address
                         color: context.colors.neutralColors.textColors.mediumColors.base,
                         maxLines: 2,
                         customOverFlow: TextOverflow.ellipsis,
@@ -125,11 +110,5 @@ class CalendarCard extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String _formatDateTimeRange(DateTime start, DateTime end) {
-    final startTime = '${start.hour.toString().padLeft(2, '0')}:${start.minute.toString().padLeft(2, '0')}';
-    final endTime = '${end.hour.toString().padLeft(2, '0')}:${end.minute.toString().padLeft(2, '0')}';
-    return '$startTime - $endTime';
   }
 }

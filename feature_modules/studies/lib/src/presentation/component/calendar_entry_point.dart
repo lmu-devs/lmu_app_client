@@ -4,15 +4,15 @@ import 'package:core_routes/calendar.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 
-class CelanderEntryPoint extends StatelessWidget {
-  const CelanderEntryPoint({super.key});
+class CalanderEntryPoint extends StatelessWidget {
+  const CalanderEntryPoint.CalanderEntryPoint({super.key});
 
   @override
   Widget build(BuildContext context) {
     final isCalendarActive = GetIt.I.get<FeatureToggleService>().isEnabled('CALENDAR');
-    if (!isCalendarActive) {
-      return const SizedBox.shrink();
-    }
+    // if (!isCalendarActive) {
+    //   return const SizedBox.shrink();
+    // }
     return LmuContentTile(
       content: LmuListItem.action(
         actionType: LmuListItemAction.chevron,
