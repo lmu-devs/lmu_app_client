@@ -18,7 +18,7 @@ class _$TestPeoplePageDriver extends TestDriver implements PeoplePageDriver {
   Map<String, List<PersonMock>> get groupedPeople => {};
 
   @override
-  void onPeopleCardPressed(PersonMock person) {}
+  void onPeopleCardPressed(BuildContext context, PersonMock person) {}
 }
 
 class $PeoplePageDriverProvider extends WidgetDriverProvider<PeoplePageDriver> {

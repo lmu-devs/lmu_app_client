@@ -62,7 +62,7 @@ class PeoplePage extends DrivableWidget<PeoplePageDriver> {
                             '${person.academicDegree != null && person.academicDegree!.isNotEmpty ? person.academicDegree! + ' ' : ''}${person.name} ${person.surname}',
                         subtitle: person.role,
                         actionType: LmuListItemAction.chevron,
-                        onTap: () => driver.onPeopleCardPressed(person),
+                        onTap: () => driver.onPeopleCardPressed(context, person),
                       );
                     }).toList(),
                   ),

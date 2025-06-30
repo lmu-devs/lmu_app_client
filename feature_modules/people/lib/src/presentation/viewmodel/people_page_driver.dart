@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 part 'people_page_driver.g.dart';
@@ -78,8 +79,9 @@ class PeoplePageDriver extends WidgetDriver {
     return map;
   }
 
-  void onPeopleCardPressed(PersonMock person) {
+  void onPeopleCardPressed(BuildContext context, PersonMock person) {
     // Navigation oder Detailanzeige
+    context.go('/studies/people/details', extra: person);
     print('Person tapped: ${person.name} ${person.surname}');
   }
 }
