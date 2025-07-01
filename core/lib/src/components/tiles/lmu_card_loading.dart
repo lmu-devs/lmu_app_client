@@ -32,7 +32,7 @@ class LmuCardLoading extends StatelessWidget {
     return LmuSkeleton(
       child: LmuCard(
         title: BoneMock.title,
-        tagText: hasTag ? BoneMock.words(1) : null,
+        tag: hasTag ? BoneMock.words(1) : null,
         subtitle: hasSubtitle ? BoneMock.words(subtitleLength) : null,
         leadingIcon: leadingIcon,
         hasLargeImage: hasLargeImage,

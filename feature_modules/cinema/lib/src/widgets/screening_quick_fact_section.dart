@@ -22,17 +22,17 @@ class ScreeningQuickFactsSection extends StatelessWidget {
         if (screening.movie.budget != null)
           LmuTextBadge(
             title: '${screening.price.toStringAsFixed(2)} €',
-            size: InTextVisualSize.large,
+            size: BadgeSize.large,
           ),
         if (screening.isOv != null)
           LmuTextBadge(
             title: screening.isOv! ? context.locals.cinema.ov : context.locals.cinema.germanTranslation,
-            size: InTextVisualSize.large,
+            size: BadgeSize.large,
           ),
         if (screening.movie.releaseYear != null)
           LmuTextBadge(
             title: DateTime.parse(screening.movie.releaseYear!).year.toString(),
-            size: InTextVisualSize.large,
+            size: BadgeSize.large,
           ),
         if (screening.movie.ratings.isNotEmpty)
           Wrap(
@@ -41,7 +41,7 @@ class ScreeningQuickFactsSection extends StatelessWidget {
             children: screening.movie.ratings.map((rating) {
               return LmuTextBadge(
                 title: '${_normalizeRatingSource(rating.source)} ${rating.rawRating.toString()}',
-                size: InTextVisualSize.large,
+                size: BadgeSize.large,
               );
             }).toList(),
           ),

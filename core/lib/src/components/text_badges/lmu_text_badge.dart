@@ -11,7 +11,7 @@ enum BadgeType {
   success,
 }
 
-enum InTextVisualSize {
+enum BadgeSize {
   medium,
   large,
 }
@@ -24,7 +24,7 @@ class LmuTextBadge extends StatelessWidget {
     this.textColor,
     this.backgroundColor,
     this.badgeType = BadgeType.base,
-    this.size = InTextVisualSize.medium,
+    this.size = BadgeSize.medium,
   });
 
   final String? title;
@@ -32,16 +32,16 @@ class LmuTextBadge extends StatelessWidget {
   final Color? textColor;
   final Color? backgroundColor;
   final BadgeType badgeType;
-  final InTextVisualSize size;
+  final BadgeSize size;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final textColor = this.textColor ?? badgeType.textColor(colors);
 
-    final double iconSize = size == InTextVisualSize.large ? LmuIconSizes.medium : LmuIconSizes.small;
-    final horizontalPadding = size == InTextVisualSize.large ? LmuSizes.size_8 : LmuSizes.size_4;
-    final verticalPadding = size == InTextVisualSize.large ? LmuSizes.size_4 : LmuSizes.size_2;
+    final double iconSize = size == BadgeSize.large ? LmuIconSizes.medium : LmuIconSizes.small;
+    final horizontalPadding = size == BadgeSize.large ? LmuSizes.size_8 : LmuSizes.size_4;
+    final verticalPadding = size == BadgeSize.large ? LmuSizes.size_4 : LmuSizes.size_2;
 
     return Container(
       decoration: ShapeDecoration(
@@ -66,7 +66,7 @@ class LmuTextBadge extends StatelessWidget {
             SizedBox(width: horizontalPadding),
           ],
           if (title != null)
-            size == InTextVisualSize.medium ? LmuText.caption(
+            size == BadgeSize.medium ? LmuText.caption(
               title!,
               color: textColor,
             ) : LmuText.bodyXSmall(

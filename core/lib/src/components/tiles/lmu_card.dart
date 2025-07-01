@@ -10,8 +10,8 @@ class LmuCard extends StatelessWidget {
     super.key,
     required this.title,
     this.titleWeight,
-    this.tagText,
-    this.badgeType = BadgeType.base,
+    this.tag,
+    this.tagType = BadgeType.base,
     this.customTagColor,
     this.customTagTextColor,
     this.subtitle,
@@ -31,8 +31,8 @@ class LmuCard extends StatelessWidget {
 
   final String title;
   final FontWeight? titleWeight;
-  final String? tagText;
-  final BadgeType badgeType;
+  final String? tag;
+  final BadgeType tagType;
   final Color? customTagColor;
   final Color? customTagTextColor;
   final String? subtitle;
@@ -119,11 +119,11 @@ class LmuCard extends StatelessWidget {
                                           weight: titleWeight ?? FontWeight.w600,
                                         ),
                                       ),
-                                      if (tagText != null) ...[
+                                      if (tag != null) ...[
                                         const SizedBox(width: LmuSizes.size_8),
                                         LmuTextBadge(
-                                          title: tagText!,
-                                          badgeType: badgeType,
+                                          title: tag!,
+                                          badgeType: tagType,
                                           textColor: customTagTextColor,
                                           backgroundColor: customTagColor,
                                         ),

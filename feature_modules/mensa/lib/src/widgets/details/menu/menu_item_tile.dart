@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:core/api.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/core_services.dart';
@@ -27,8 +26,6 @@ class MenuItemTile extends StatelessWidget {
   final bool hasDivider;
   final bool isFavorite;
   final List<String>? excludedLabelItemsName;
-
-  RatingModel get _ratingModel => menuItemModel.ratingModel;
 
   @override
   Widget build(BuildContext context) {
