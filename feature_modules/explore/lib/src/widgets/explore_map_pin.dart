@@ -72,14 +72,14 @@ class _MarkerPainter extends CustomPainter {
   }
 
   Color _blendColors(Color backgroundColor, Color foregroundColor) {
-    final bgR = backgroundColor.red;
-    final bgG = backgroundColor.green;
-    final bgB = backgroundColor.blue;
+    final bgR = backgroundColor.r;
+    final bgG = backgroundColor.g;
+    final bgB = backgroundColor.b;
 
-    final fgR = foregroundColor.red;
-    final fgG = foregroundColor.green;
-    final fgB = foregroundColor.blue;
-    final fgA = foregroundColor.opacity;
+    final fgR = foregroundColor.r;
+    final fgG = foregroundColor.g;
+    final fgB = foregroundColor.b;
+    final fgA = foregroundColor.a;
 
     final resultR = (fgR * fgA) + (bgR * (1 - fgA));
     final resultG = (fgG * fgA) + (bgG * (1 - fgA));

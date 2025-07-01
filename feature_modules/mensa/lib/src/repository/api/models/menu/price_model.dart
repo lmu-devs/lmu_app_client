@@ -7,13 +7,6 @@ part 'price_model.g.dart';
 
 @JsonSerializable()
 class PriceModel extends Equatable {
-  final PriceCategory category;
-  @JsonKey(name: 'base_price')
-  final double basePrice;
-  @JsonKey(name: 'price_per_unit')
-  final double pricePerUnit;
-  final String unit;
-
   const PriceModel({
     required this.category,
     required this.basePrice,
@@ -22,6 +15,13 @@ class PriceModel extends Equatable {
   });
 
   factory PriceModel.fromJson(Map<String, dynamic> json) => _$PriceModelFromJson(json);
+
+  final PriceCategory category;
+  @JsonKey(name: 'base_price')
+  final double basePrice;
+  @JsonKey(name: 'price_per_unit')
+  final double pricePerUnit;
+  final String unit;
 
   Map<String, dynamic> toJson() => _$PriceModelToJson(this);
 

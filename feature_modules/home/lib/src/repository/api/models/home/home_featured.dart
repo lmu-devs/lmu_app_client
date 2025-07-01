@@ -24,6 +24,8 @@ class HomeFeatured extends Equatable {
     this.endDate,
   });
 
+  factory HomeFeatured.fromJson(Map<String, dynamic> json) => _$HomeFeaturedFromJson(json);
+
   final String id;
   final String title;
   final String? description;
@@ -33,8 +35,6 @@ class HomeFeatured extends Equatable {
   final DateTime? startDate;
   final DateTime? endDate;
   final int priority;
-
-  factory HomeFeatured.fromJson(Map<String, dynamic> json) => _$HomeFeaturedFromJson(json);
 
   Map<String, dynamic> toJson() => _$HomeFeaturedToJson(this);
 

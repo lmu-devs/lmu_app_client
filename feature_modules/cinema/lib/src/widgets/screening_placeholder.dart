@@ -8,9 +8,9 @@ import '../util/screening_filter_keys.dart';
 
 class ScreeningPlaceholder extends StatelessWidget {
   const ScreeningPlaceholder({
-    Key? key,
+    super.key,
     required this.activeFilter,
-  }) : super(key: key);
+  });
 
   final String? activeFilter;
 

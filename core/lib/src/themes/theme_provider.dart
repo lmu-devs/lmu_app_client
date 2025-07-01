@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeProvider with ChangeNotifier {
+  // Constructor to load theme mode from shared preferences
+  ThemeProvider() {
+    _loadThemeMode();
+  }
   // Initialize with system theme
   ThemeMode _themeMode = ThemeMode.system;
 
@@ -13,11 +17,6 @@ class ThemeProvider with ChangeNotifier {
     // Save the theme mode to persistent storage
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('themeMode', mode.toString());
-  }
-
-  // Constructor to load theme mode from shared preferences
-  ThemeProvider() {
-    _loadThemeMode();
   }
 
   Future<void> _loadThemeMode() async {

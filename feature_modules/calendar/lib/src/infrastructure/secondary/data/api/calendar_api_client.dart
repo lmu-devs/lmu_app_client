@@ -5,6 +5,7 @@ import '../dto/calendar_dto.dart';
 class CalendarApiClient {
   const CalendarApiClient(this._baseApiClient);
 
+  // ignore: unused_field
   final BaseApiClient _baseApiClient;
 
   Future<CalendarDto> getCalendar() async {

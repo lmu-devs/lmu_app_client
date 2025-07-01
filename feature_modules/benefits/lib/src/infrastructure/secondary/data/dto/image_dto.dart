@@ -10,10 +10,10 @@ class ImageDto extends Equatable {
     required this.title,
   });
 
+  factory ImageDto.fromJson(Map<String, dynamic> json) => _$ImageDtoFromJson(json);
+
   final String url;
   final String title;
-
-  factory ImageDto.fromJson(Map<String, dynamic> json) => _$ImageDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$ImageDtoToJson(this);
 

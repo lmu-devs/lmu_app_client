@@ -10,6 +10,8 @@ class DescriptionModel extends Equatable {
     required this.description,
   });
 
+  factory DescriptionModel.fromJson(Map<String, dynamic> json) => _$DescriptionModelFromJson(json);
+
   final String emoji;
   final String description;
 
@@ -18,8 +20,6 @@ class DescriptionModel extends Equatable {
         emoji,
         description,
       ];
-
-  factory DescriptionModel.fromJson(Map<String, dynamic> json) => _$DescriptionModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$DescriptionModelToJson(this);
 }

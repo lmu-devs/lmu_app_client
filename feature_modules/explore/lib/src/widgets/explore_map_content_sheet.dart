@@ -130,8 +130,8 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
                 ),
               ),
               boxShadow: [
-                BoxShadow(color: Colors.black.withOpacity(0.10), blurRadius: LmuSizes.size_24),
-                BoxShadow(color: Colors.black.withOpacity(0.10), blurRadius: LmuSizes.size_64),
+                BoxShadow(color: Colors.black.withValues(alpha: 0.10), blurRadius: LmuSizes.size_24),
+                BoxShadow(color: Colors.black.withValues(alpha: 0.10), blurRadius: LmuSizes.size_64),
               ],
             ),
             child: CustomScrollView(
@@ -180,7 +180,8 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
                                     LmuInTextVisual.text(
                                       title: _selectedLocation!.type.localizedName(context.locals),
                                       textColor: _selectedLocation!.type.markerColor(colors),
-                                      backgroundColor: _selectedLocation!.type.markerColor(colors).withOpacity(0.14),
+                                      backgroundColor:
+                                          _selectedLocation!.type.markerColor(colors).withValues(alpha: 0.14),
                                     ),
                                   ],
                                 ),

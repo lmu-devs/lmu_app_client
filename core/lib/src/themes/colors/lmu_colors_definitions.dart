@@ -1,15 +1,15 @@
-import 'package:core/src/themes/colors/brand_colors.dart';
-import 'package:core/src/themes/colors/danger_colors.dart';
-import 'package:core/src/themes/colors/gradient_colors.dart';
-import 'package:core/src/themes/colors/success_colors.dart';
-import 'package:core/src/themes/colors/university_colors.dart';
 import 'package:flutter/material.dart';
 
+import 'brand_colors.dart';
 import 'color_construct.dart';
 import 'color_primitives.dart';
-import 'lmu_colors_theme_extension.dart';
 import 'custom_colors.dart';
+import 'danger_colors.dart';
+import 'gradient_colors.dart';
+import 'lmu_colors_theme_extension.dart';
 import 'neutral_colors.dart';
+import 'success_colors.dart';
+import 'university_colors.dart';
 import 'warning_colors.dart';
 
 const lmuColorsDark = LmuColors(

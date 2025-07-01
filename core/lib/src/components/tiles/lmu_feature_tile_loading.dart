@@ -1,6 +1,7 @@
-import 'package:core/components.dart';
 import 'package:flutter/widgets.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+
+import '../../../components.dart';
 
 class LmuFeatureTileLoading extends StatelessWidget {
   const LmuFeatureTileLoading({super.key});

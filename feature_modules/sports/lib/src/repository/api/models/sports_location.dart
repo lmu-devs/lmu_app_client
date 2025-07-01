@@ -11,11 +11,11 @@ class SportsLocation extends Equatable {
     required this.longitude,
   });
 
+  factory SportsLocation.fromJson(Map<String, dynamic> json) => _$SportsLocationFromJson(json);
+
   final String address;
   final double latitude;
   final double longitude;
-
-  factory SportsLocation.fromJson(Map<String, dynamic> json) => _$SportsLocationFromJson(json);
 
   Map<String, dynamic> toJson() => _$SportsLocationToJson(this);
 

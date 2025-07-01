@@ -12,6 +12,8 @@ class LecturesDto extends Equatable {
     required this.name,
   });
 
+  factory LecturesDto.fromJson(Map<String, dynamic> json) => _$LecturesDtoFromJson(json);
+
   final String id;
   final String name;
 
@@ -19,8 +21,6 @@ class LecturesDto extends Equatable {
         id: id,
         name: name,
       );
-
-  factory LecturesDto.fromJson(Map<String, dynamic> json) => _$LecturesDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$LecturesDtoToJson(this);
 

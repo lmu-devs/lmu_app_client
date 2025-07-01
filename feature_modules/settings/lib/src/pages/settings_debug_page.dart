@@ -29,13 +29,9 @@ class SettingsDebugPage extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () async {
-              appLogger.clearLogs().then(
-                    (value) => LmuToast.show(
-                      context: context,
-                      message: "Logs cleared",
-                      type: ToastType.success,
-                    ),
-                  );
+              final lmuToast = LmuToast.of(context);
+              await appLogger.clearLogs();
+              lmuToast.showToast(message: "Logs cleared");
               LmuVibrations.success();
             },
             child: LmuIcon(

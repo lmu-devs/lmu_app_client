@@ -6,10 +6,10 @@ part 'user_model.g.dart';
 class UserModel {
   const UserModel({required this.apiKey});
 
+  factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
+
   @JsonKey(name: 'api_key')
   final String apiKey;
-
-  factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
 }

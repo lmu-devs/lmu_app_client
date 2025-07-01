@@ -47,7 +47,7 @@ Why is this change necessary?
 <!--
 If your PR includes UI changes, please provide screenshots or a short video/GIF. 
 Before/after is nice for visual changes.
-Drag and drop images here or use Markdown: ![Alt Text](url)
+Drag and drop images here or use Markdown: <img src="" alt="" width="250">
 -->
 ...
 

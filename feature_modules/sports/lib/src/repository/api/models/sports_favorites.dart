@@ -7,10 +7,10 @@ part 'sports_favorites.g.dart';
 class SportsFavorites extends Equatable {
   const SportsFavorites({required this.category, required this.favorites});
 
+  factory SportsFavorites.fromJson(Map<String, dynamic> json) => _$SportsFavoritesFromJson(json);
+
   final String category;
   final List<String> favorites;
-
-  factory SportsFavorites.fromJson(Map<String, dynamic> json) => _$SportsFavoritesFromJson(json);
 
   Map<String, dynamic> toJson() => _$SportsFavoritesToJson(this);
 

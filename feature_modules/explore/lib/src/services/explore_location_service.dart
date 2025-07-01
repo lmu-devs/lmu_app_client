@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:core/logging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/cinema.dart';
@@ -7,6 +10,10 @@ import 'package:shared_api/mensa.dart';
 import 'package:shared_api/roomfinder.dart';
 
 class ExploreLocationService {
+  final Completer<void> _initialLoadCompleter = Completer<void>();
+  late final Future<void> onInitialLoad;
+  bool _isInitialized = false;
+
   final ValueNotifier<List<ExploreLocation>> _locationsNotifier = ValueNotifier([]);
   final ValueNotifier<List<ExploreLocation>> _filteredLocationsNotifier = ValueNotifier([]);
   final ValueNotifier<List<ExploreFilterType>> _filterNotifier = ValueNotifier([]);
@@ -16,7 +23,13 @@ class ExploreLocationService {
   ValueNotifier<List<ExploreLocation>> get filteredLocationsNotifier => _filteredLocationsNotifier;
   ValueNotifier<List<ExploreFilterType>> get filterNotifier => _filterNotifier;
 
-  void init() => _loadExploreLocations();
+  void init() {
+    if (_isInitialized) return;
+
+    onInitialLoad = _initialLoadCompleter.future;
+    _loadExploreLocations();
+    _isInitialized = true;
+  }
 
   ExploreLocation getLocationById(String id) => _locationsNotifier.value.firstWhere((location) => location.id == id);
 
@@ -58,35 +71,44 @@ class ExploreLocationService {
   }
 
   void _loadExploreLocations() {
-    final mensaService = GetIt.I<MensaService>();
-    mensaService.mensaExploreLocationsStream.listen((locations) {
-      final currentLocations = List.of(_locationsNotifier.value);
-      final updatedLocations = currentLocations..addAll(locations);
-      _locationsNotifier.value = updatedLocations;
-      _updateFilteredExploreLocations();
-    });
+    final allSourceStreams = <Stream<List<ExploreLocation>>>[
+      GetIt.I<MensaService>().mensaExploreLocationsStream,
+      GetIt.I<CinemaService>().cinemaExploreLocationsStream,
+      GetIt.I<RoomfinderService>().roomfinderExploreLocationsStream,
+      GetIt.I<LibrariesService>().librariesExploreLocationsStream,
+    ];
 
-    final cinemaService = GetIt.I<CinemaService>();
-    cinemaService.cinemaExploreLocationsStream.listen((locations) {
-      final currentLocations = List.of(exploreLocationsNotifier.value);
-      final updatedLocations = currentLocations..addAll(locations);
-      exploreLocationsNotifier.value = updatedLocations;
-      _updateFilteredExploreLocations();
-    });
-    final roomfinderService = GetIt.I<RoomfinderService>();
-    roomfinderService.roomfinderExploreLocationsStream.listen((locations) {
-      final currentLocations = List.of(exploreLocationsNotifier.value);
-      final updatedLocations = currentLocations..addAll(locations);
-      exploreLocationsNotifier.value = updatedLocations;
-      _updateFilteredExploreLocations();
-    });
-    final librariesService = GetIt.I<LibrariesService>();
-    librariesService.librariesExploreLocationsStream.listen((locations) {
-      final currentLocations = List.of(exploreLocationsNotifier.value);
-      final updatedLocations = currentLocations..addAll(locations);
-      exploreLocationsNotifier.value = updatedLocations;
-      _updateFilteredExploreLocations();
-    });
+    final deliveredStreams = <Stream>{};
+
+    for (final stream in allSourceStreams) {
+      stream.listen(
+            (locations) {
+          if (!deliveredStreams.contains(stream)) {
+            deliveredStreams.add(stream);
+            if (deliveredStreams.length == allSourceStreams.length) {
+              if (!_initialLoadCompleter.isCompleted) {
+                _initialLoadCompleter.complete();
+              }
+            }
+          }
+
+          final currentLocations = List.of(_locationsNotifier.value);
+          final currentIds = currentLocations.map((l) => l.id).toSet();
+          final uniqueNewLocations = locations.where((l) => !currentIds.contains(l.id));
+
+          if (uniqueNewLocations.isNotEmpty) {
+            _locationsNotifier.value = [...currentLocations, ...uniqueNewLocations];
+            _updateFilteredExploreLocations();
+          }
+        },
+        onError: (error) {
+          if (!_initialLoadCompleter.isCompleted) {
+            _initialLoadCompleter.completeError(error);
+            AppLogger().logMessage("ExploreLocationService: A stream failed. Error: $error");
+          }
+        },
+      );
+    }
   }
 
   void _updateFilteredExploreLocations() {
