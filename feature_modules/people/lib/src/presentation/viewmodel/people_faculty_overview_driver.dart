@@ -16,7 +16,6 @@ class PeopleFacultyOverviewDriver extends WidgetDriver {
 
   late AppLocalizations _appLocalizations;
   late LmuToast _toast;
-  late BuildContext _context;
 
   List<Faculty> get selectedFaculties => _facultiesApi.selectedFaculties;
   List<Faculty> get allFaculties => _facultiesApi.allFaculties;
@@ -25,12 +24,11 @@ class PeopleFacultyOverviewDriver extends WidgetDriver {
 
   String get largeTitle => "Kontakte";
 
-  void onFacultyPressed(Faculty faculty) {
-    // Beispielnavigation oder Action:
+  void onFacultyPressed(BuildContext context, Faculty faculty) {
     _toast.showToast(
       message: "Fakultät ${faculty.name} (ID: ${faculty.id}) ausgewählt.",
     );
-    const PeopleOverviewRoute().go(_context);
+    const PeopleOverviewRoute().go(context);
   }
 
   void _onStateChanged() {

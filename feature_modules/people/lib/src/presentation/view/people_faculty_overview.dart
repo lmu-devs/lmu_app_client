@@ -61,7 +61,7 @@ class PeopleFacultyOverview extends DrivableWidget<PeopleFacultyOverviewDriver> 
               padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_4),
               child: FacultyCard(
                 title: faculty.name,
-                onTap: () => driver.onFacultyPressed(faculty),
+                onTap: () => driver.onFacultyPressed(context, faculty),
               ),
             );
           }),
@@ -76,7 +76,7 @@ class PeopleFacultyOverview extends DrivableWidget<PeopleFacultyOverviewDriver> 
             padding: const EdgeInsets.symmetric(vertical: LmuSizes.size_4),
             child: FacultyCard(
               title: faculty.name,
-              onTap: () => driver.onFacultyPressed(faculty),
+              onTap: () => driver.onFacultyPressed(context, faculty),
             ),
           );
         }).toList(),
