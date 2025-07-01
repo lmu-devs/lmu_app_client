@@ -19,7 +19,8 @@ class LecturesPageDriver extends WidgetDriver {
 
   bool get isLoading => _usecase.loadState != LecturesLoadState.success;
 
-  String get largeTitle => _lecturesLocatizations.lecturesTitle;
+  //String get largeTitle => _lecturesLocatizations.lecturesTitle;
+  String get largeTitle => 'Faculties';
 
   String get lecturesId => _usecase.data?.id ?? '';
 
