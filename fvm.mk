@@ -32,5 +32,4 @@ else
 	@echo "If you intend to use FVM, ensure '.fvm' is present or run 'make USE_FVM=1 <target>'."
 endif
 	$(eval PRINTED_FVM_INFO := true)
-	@echo "PRINTED_FVM_INFO is set to true to avoid printing this message again. ${PRINTED_FVM_INFO}"
 endif
