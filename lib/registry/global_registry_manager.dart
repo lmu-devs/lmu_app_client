@@ -17,6 +17,9 @@ class GlobalRegistryManager {
     final baseApiClient = GetIt.I.registerSingleton<BaseApiClient>(DefaultBaseApiClient());
     baseApiClient.locale = languageProvider.locale;
 
+    final pushNotificationsClient = GetIt.I.registerSingleton<PushNotificationsClient>(DefaultPushNotificationsClient());
+    pushNotificationsClient.init();
+
     final analyticsClient = GetIt.I.registerSingleton<AnalyticsClient>(DefaultAnalyticsClient());
     analyticsClient.init(
       osVersion: systemInfoService.systemInfo.systemVersion,
