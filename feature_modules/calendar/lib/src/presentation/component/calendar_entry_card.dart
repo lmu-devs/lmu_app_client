@@ -7,8 +7,8 @@ import '../../domain/model/calendar_entry.dart';
 import '../../domain/model/event_type.dart';
 import '../../domain/model/helper/date_time_formatter.dart';
 
-class CalendarCard extends StatelessWidget {
-  const CalendarCard({
+class CalendarEntryCard extends StatelessWidget {
+  const CalendarEntryCard({
     super.key,
     required this.event,
     required this.onTap,

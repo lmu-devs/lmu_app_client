@@ -1,7 +1,7 @@
-import 'dart:ui';
-
 import 'package:core/api.dart';
+import 'package:core/utils.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 import 'calendar_rule.dart';
 import 'event_type.dart';
@@ -62,6 +62,17 @@ class CalendarEntry extends Equatable {
   bool occursOn(DateTime date) {
     // This logic might need refinement depending on how allDay and timezones are handled
     return startDate.year == date.year && startDate.month == date.month && startDate.day == date.day;
+  }
+
+  /// Checks if the event overlaps with the given DateTimeRange.
+  /// An event overlaps with a range if its start or end date falls within the range.
+  bool overlapsWithRange(DateTimeRange range) {
+    return endDate.isBetween(range.start, range.end) || startDate.isBetween(range.start, range.end);
+  }
+
+  /// Checks if the event occurs within the given DateTimeRange.
+  bool isWithinRange(DateTimeRange range) {
+    return startDate.isBeforeOrEqualTo(range.end) && endDate.isAfterOrEqualTo(range.start);
   }
 
   /// Returns the duration of the event.
