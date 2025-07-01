@@ -6,11 +6,20 @@ import '../router/people_router.dart';
 
 PeopleRouter get _router => GetIt.I.get<PeopleRouter>();
 
-class PeopleMainRoute extends GoRouteData {
-  const PeopleMainRoute();
+class PeopleOverviewRoute extends GoRouteData {
+  const PeopleOverviewRoute();
 
   static const String path = 'people';
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => _router.buildMain(context);
+  Widget build(BuildContext context, GoRouterState state) => _router.buildOverview(context);
+}
+
+class PeopleFacultyOverviewRoute extends GoRouteData {
+  const PeopleFacultyOverviewRoute();
+
+  static const String path = 'faculties';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => _router.buildFacultyOverview(context);
 }

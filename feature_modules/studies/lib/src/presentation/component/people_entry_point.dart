@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../application/usecase/get_faculties_usecase.dart'; // <-- Usecase importieren
-import '../view/faculites_page.dart';
 
 class PeopleEntryPoint extends StatelessWidget {
   const PeopleEntryPoint({super.key});
@@ -27,12 +26,11 @@ class PeopleEntryPoint extends StatelessWidget {
         title: context.locals.people.peopleTitle,
         leadingArea: const LmuInListBlurEmoji(emoji: "👥"),
         onTap: () {
-          if (selectedFaculties.length == 1) {
-            const PeopleMainRoute().go(context);
+          if (selectedFaculties.length == 0) {
+            const PeopleOverviewRoute().go(context);
           } else {
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => FaculitesPage()),
-            );
+            // Wenn Fakultäten ausgewählt sind, gehe zur Fakultäten-Seite
+            const PeopleFacultyOverviewRoute().go(context);
           }
         },
       ),

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'people_page_driver.dart';
+part of 'people_overview_driver.dart';
 
 // **************************************************************************
 // WidgetDriverGenerator
