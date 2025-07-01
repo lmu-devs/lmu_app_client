@@ -7,13 +7,8 @@ import '../../domain/model/calendar_entry.dart';
 import '../../domain/model/event_type.dart';
 import '../../domain/model/helper/date_time_formatter.dart';
 
-<<<<<<< HEAD:feature_modules/calendar/lib/src/presentation/component/calendar_entry_card.dart
 class CalendarEntryCard extends StatelessWidget {
   const CalendarEntryCard({
-=======
-class CalendarCard extends StatelessWidget {
-  const CalendarCard({
->>>>>>> 5243a7f9 (added all classes and dto based on api, connection to api-endpoint, usecase for switching between calendar views):feature_modules/calendar/lib/src/presentation/component/calendar_card.dart
     super.key,
     required this.event,
     required this.onTap,
@@ -33,12 +28,6 @@ class CalendarCard extends StatelessWidget {
       onTap: () => onTap(),
       child: Container(
         height: 150,
-<<<<<<< HEAD:feature_modules/calendar/lib/src/presentation/component/calendar_entry_card.dart
-=======
-        // constraints: const BoxConstraints(
-        //   maxHeight: 150,
-        // ),
->>>>>>> 5243a7f9 (added all classes and dto based on api, connection to api-endpoint, usecase for switching between calendar views):feature_modules/calendar/lib/src/presentation/component/calendar_card.dart
         width: cardWidth,
         margin: const EdgeInsets.only(bottom: LmuSizes.size_12),
         decoration: BoxDecoration(
@@ -112,11 +101,7 @@ class CalendarCard extends StatelessWidget {
 
                       /// Ort (Adresse + optional Raum)
                       LmuText.bodySmall(
-<<<<<<< HEAD:feature_modules/calendar/lib/src/presentation/component/calendar_entry_card.dart
-                        DateTimeFormatter.formatShortDate(event.startDate),
-=======
                         DateTimeFormatter.formatShortDate(event.startDate, context),
->>>>>>> 5243a7f9 (added all classes and dto based on api, connection to api-endpoint, usecase for switching between calendar views):feature_modules/calendar/lib/src/presentation/component/calendar_card.dart
                         color: context.colors.neutralColors.textColors.mediumColors.base,
                         maxLines: 2,
                         customOverFlow: TextOverflow.ellipsis,

@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../themes/language_provider.dart';
 
-String get _currentLocale => GetIt.I<LanguageProvider>().locale.toString();
+String get currentLocale => GetIt.I<LanguageProvider>().locale.toString();
 
 extension DateTimeExtension on DateTime {
   /// Calculates week number from a date as per https://en.wikipedia.org/wiki/ISO_week_date#Calculation
@@ -14,11 +14,11 @@ extension DateTimeExtension on DateTime {
   }
 
   String get monthName {
-    return DateFormat.MMMM(_currentLocale).format(this);
+    return DateFormat.MMMM(currentLocale).format(this);
   }
 
   String get weekdayName {
-    return DateFormat.EEEE(_currentLocale).format(this);
+    return DateFormat.EEEE(currentLocale).format(this);
   }
 
   DateTime get startOfDay {
@@ -112,10 +112,24 @@ extension DateTimeExtension on DateTime {
   }
 
   DateTime addMonth() {
+    // int newMonth = month + 1;
+    // int newYear = year;
+    // if (newMonth > 12) {
+    //   newMonth = 1;
+    //   newYear = year + 1;
+    // }
+
     return DateTime(year, month + 1, day, hour, minute, second, millisecond, microsecond);
   }
 
   DateTime subtractMonth() {
+    // int newMonth = month - 1;
+    // int newYear = year;
+    // if (newMonth == 0) {
+    //   newMonth = 12;
+    //   newYear = year - 1;
+    // }
+
     return DateTime(year, month - 1, day, hour, minute, second, millisecond, microsecond);
   }
 

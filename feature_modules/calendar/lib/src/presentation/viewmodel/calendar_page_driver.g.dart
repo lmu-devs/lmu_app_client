@@ -13,9 +13,6 @@ part of 'calendar_page_driver.dart';
 
 class _$TestCalendarPageDriver extends TestDriver implements CalendarPageDriver {
   @override
-  bool get isLoading => false;
-
-  @override
   bool get isLoadingEvents => false;
 
   @override
@@ -25,7 +22,7 @@ class _$TestCalendarPageDriver extends TestDriver implements CalendarPageDriver 
   CalendarViewMode get viewMode => CalendarViewMode.values[0];
 
   @override
-  DateTime get selectedDate => DateTime.now();
+  DateTimeRange<DateTime> get selectedDate => DateTime.now().dateTimeRangeFromDateTime;
 
   @override
   List<CalendarEntry>? get calendarEntries => [];
@@ -39,7 +36,7 @@ class _$TestCalendarPageDriver extends TestDriver implements CalendarPageDriver 
   void onViewModeChanged(CalendarViewMode mode) {}
 
   @override
-  void onDateSelected(DateTime date) {}
+  void onDateSelected(DateTimeRange<DateTime> dateRange) {}
 
   @override
   void onEventTap(CalendarEntry event, BuildContext context) {}
