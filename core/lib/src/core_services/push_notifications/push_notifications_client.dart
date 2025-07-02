@@ -11,7 +11,7 @@ abstract class PushNotificationsClient {
     required int id,
     required String title,
     required String body,
-    String? payload,
+    Map<String, dynamic>? payload,
   });
 
   Future<void> scheduleNotification({
@@ -19,7 +19,7 @@ abstract class PushNotificationsClient {
     required String title,
     required String body,
     required DateTime scheduledDate,
-    String? payload,
+    Map<String, dynamic>? payload,
   });
 
   Future<void> cancelNotification(int id);

@@ -100,7 +100,7 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
           id: 1,
           title: notification.title ?? '',
           body: notification.body ?? '',
-          payload: jsonEncode(message.data),
+          payload: message.data,
         );
       }
     });
@@ -153,14 +153,14 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
     required int id,
     required String title,
     required String body,
-    String? payload,
+    Map<String, dynamic>? payload,
   }) async {
     await _localNotifications.show(
       id,
       title,
       body,
       _notificationDetails(),
-      payload: payload,
+      payload: payload != null ? jsonEncode(payload) : null,
     );
   }
 
@@ -170,7 +170,7 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
     required String title,
     required String body,
     required DateTime scheduledDate,
-    String? payload,
+    Map<String, dynamic>? payload,
   }) async {
     await _localNotifications.zonedSchedule(
       id,
@@ -179,7 +179,7 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
       tz.TZDateTime.from(scheduledDate, tz.local),
       _notificationDetails(),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      payload: payload,
+      payload: payload != null ? jsonEncode(payload) : null,
     );
   }
 

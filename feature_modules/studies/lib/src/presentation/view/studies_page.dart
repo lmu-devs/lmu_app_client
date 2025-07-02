@@ -34,7 +34,7 @@ class StudiesPage extends DrivableWidget<StudiesPageDriver> {
                   id: 1,
                   title: 'Deadline Rückmeldung',
                   body: 'Verpasse nicht rechtzeitig den Semesterbeitrag vor dem 14.07 zu zahlen',
-                  payload: 'instant_payload',
+                  payload: {'destination': '/home/roomfinder/details?building-id=bt2971'},
                 );
               },
             ),
