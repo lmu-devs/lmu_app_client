@@ -1,0 +1,1 @@
+class FeatureToggleGenericError implements Exception {}
