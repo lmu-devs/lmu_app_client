@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:core/core_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
 
 import 'router_config.dart';
 
