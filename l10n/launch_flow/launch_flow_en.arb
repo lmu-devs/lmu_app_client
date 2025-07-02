@@ -11,5 +11,24 @@
   "moreToComeDescription": "Help us shape the app and submit your ideas to the wishlist",
   "dataPrivacyIntro": "By continuing, you agree to our ",
   "dataPrivacyLabel": "Privacy Policy",
-  "letsGo": "Let's go"
+  "letsGo": "Let's go",
+  "releaseNotesTitle": "What's new?",
+  "version": "Version {appVersion}",
+  "@version": {
+    "description": "The version of the app",
+    "placeholders": {
+      "appVersion": {
+        "type": "String",
+        "example": "1.1.1"
+      }
+    }
+  },
+  "facultySelectionTitle": "Select your faculty",
+  "@facultySelectionTitle": {
+    "description": "Title for the faculty selection screen"
+  },
+  "facultySelectionDescription": "to see personalized content",
+  "@facultySelectionDescription": {
+    "description": "Description for the faculty selection screen"
+  }
 }

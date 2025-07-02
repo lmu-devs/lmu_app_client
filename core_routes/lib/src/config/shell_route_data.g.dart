@@ -22,6 +22,14 @@ RouteBase get $launchFlowShellRoute => ShellRouteData.$route(
           path: '/app_update',
           factory: $LaunchFlowAppUpdateRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: '/release-notes',
+          factory: $LaunchFlowReleaseNotesRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: '/faculty-selection',
+          factory: $LaunchFlowFacultySelectionRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -50,6 +58,38 @@ extension $LaunchFlowAppUpdateRouteExtension on LaunchFlowAppUpdateRoute {
 
   String get location => GoRouteData.$location(
         '/app_update',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LaunchFlowReleaseNotesRouteExtension on LaunchFlowReleaseNotesRoute {
+  static LaunchFlowReleaseNotesRoute _fromState(GoRouterState state) => const LaunchFlowReleaseNotesRoute();
+
+  String get location => GoRouteData.$location(
+        '/release-notes',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LaunchFlowFacultySelectionRouteExtension on LaunchFlowFacultySelectionRoute {
+  static LaunchFlowFacultySelectionRoute _fromState(GoRouterState state) => const LaunchFlowFacultySelectionRoute();
+
+  String get location => GoRouteData.$location(
+        '/faculty-selection',
       );
 
   void go(BuildContext context) => context.go(location);
