@@ -1,27 +1,33 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'push_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tz;
 
+class _AndroidNotificationConstants {
+  static const channelId = 'default_channel';
+  static const channelName = 'General Notifications';
+  static const channelDescription =
+      'This channel is used for general notifications.';
+  static const androidIcon = '@drawable/ic_notification';
+}
+
 class DefaultPushNotificationsClient implements PushNotificationsClient {
-  DefaultPushNotificationsClient._internal();
+  DefaultPushNotificationsClient();
 
-  factory DefaultPushNotificationsClient() => _instance;
+  final _localNotifications = FlutterLocalNotificationsPlugin();
+  final _firebaseMessaging = FirebaseMessaging.instance;
 
-  static final DefaultPushNotificationsClient _instance =
-      DefaultPushNotificationsClient._internal();
-
-  final FlutterLocalNotificationsPlugin _plugin =
-      FlutterLocalNotificationsPlugin();
   final StreamController<String?> _onClickController =
       StreamController.broadcast();
 
-  final AndroidNotificationChannel _androidChannel =
-      const AndroidNotificationChannel(
-    'default_channel',
-    'General Notifications',
-    description: 'This channel is used for general notifications.',
+  final AndroidNotificationChannel _androidChannel = const AndroidNotificationChannel(
+    _AndroidNotificationConstants.channelId,
+    _AndroidNotificationConstants.channelName,
+    description: _AndroidNotificationConstants.channelDescription,
     importance: Importance.max,
   );
 
@@ -29,38 +35,99 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
   Stream<String?> get onNotificationClick => _onClickController.stream;
 
   @override
+  Future<String?> getFcmToken() async {
+    try {
+      return await _firebaseMessaging.getToken();
+    } catch (e) {
+      throw Exception("Failed to retrieve Firebase Cloud Messaging token - $e");
+    }
+  }
+
+  @override
   Future<void> init() async {
-    tz.initializeTimeZones();
+    try {
+      tz.initializeTimeZones();
 
-    await _plugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(_androidChannel);
-    await _plugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.requestNotificationsPermission();
+      await requestPermission();
 
+      if (defaultTargetPlatform == TargetPlatform.android) {
+        await _localNotifications
+            .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+            ?.createNotificationChannel(_androidChannel);
+      }
+
+      await _initLocalNotifications();
+      await _initFirebase();
+      print("FCM TOKEN: ${await getFcmToken()}");
+    } catch (e) {
+      throw Exception("Failed to initialize push notifications - $e");
+    }
+  }
+
+  Future<void> _initLocalNotifications() async {
     const AndroidInitializationSettings androidSettings =
-        AndroidInitializationSettings('@drawable/ic_notification');
+        AndroidInitializationSettings(_AndroidNotificationConstants.androidIcon);
+
     const DarwinInitializationSettings iosSettings =
-        DarwinInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
-    );
+        DarwinInitializationSettings();
 
     const InitializationSettings initSettings =
         InitializationSettings(android: androidSettings, iOS: iosSettings);
 
-    await _plugin.initialize(
+    await _localNotifications.initialize(
       initSettings,
       onDidReceiveNotificationResponse: (response) {
-        if (response.payload != null) {
+        if (response.payload != null && response.payload!.isNotEmpty) {
           _onClickController.add(response.payload);
         }
       },
     );
+  }
+
+  Future<void> _initFirebase() async {
+    await _firebaseMessaging.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      final notification = message.notification;
+
+      if (notification != null) {
+        showNotification(
+          id: 1,
+          title: notification.title ?? '',
+          body: notification.body ?? '',
+          payload: jsonEncode(message.data),
+        );
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      _onClickController.add(jsonEncode(message.data));
+    });
+
+    final initialMessage = await _firebaseMessaging.getInitialMessage();
+    if (initialMessage != null) {
+      _onClickController.add(jsonEncode(initialMessage.data));
+    }
+  }
+
+  @override
+  Future<bool> requestPermission() async {
+    final permission = await _firebaseMessaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
+    return permission.authorizationStatus == AuthorizationStatus.authorized;
   }
 
   NotificationDetails _notificationDetails() {
@@ -69,11 +136,15 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
         _androidChannel.id,
         _androidChannel.name,
         channelDescription: _androidChannel.description,
-        icon: '@drawable/ic_notification',
+        icon: _AndroidNotificationConstants.androidIcon,
         importance: Importance.max,
         priority: Priority.high,
       ),
-      iOS: const DarwinNotificationDetails(),
+      iOS: const DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+      ),
     );
   }
 
@@ -84,7 +155,7 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
     required String body,
     String? payload,
   }) async {
-    await _plugin.show(
+    await _localNotifications.show(
       id,
       title,
       body,
@@ -101,7 +172,7 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
     required DateTime scheduledDate,
     String? payload,
   }) async {
-    await _plugin.zonedSchedule(
+    await _localNotifications.zonedSchedule(
       id,
       title,
       body,
@@ -114,12 +185,12 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
 
   @override
   Future<void> cancelNotification(int id) async {
-    await _plugin.cancel(id);
+    await _localNotifications.cancel(id);
   }
 
   @override
   Future<void> cancelAllNotifications() async {
-    await _plugin.cancelAll();
+    await _localNotifications.cancelAll();
   }
 
   @override
