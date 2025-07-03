@@ -89,6 +89,10 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                       factory: $SettingsAnalyticsRouteExtension._fromState,
                     ),
                     GoRouteData.$route(
+                      path: 'notifications',
+                      factory: $SettingsNotificationsRouteExtension._fromState,
+                    ),
+                    GoRouteData.$route(
                       path: 'license',
                       factory: $SettingsLicenceRouteExtension._fromState,
                     ),
@@ -351,6 +355,22 @@ extension $SettingsAnalyticsRouteExtension on SettingsAnalyticsRoute {
   String get location => GoRouteData.$location(
         '/home/settings/analytics',
       );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $SettingsNotificationsRouteExtension on SettingsNotificationsRoute {
+  static SettingsNotificationsRoute _fromState(GoRouterState state) => const SettingsNotificationsRoute();
+
+  String get location => GoRouteData.$location(
+    '/home/settings/notifications',
+  );
 
   void go(BuildContext context) => context.go(location);
 

@@ -1,8 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:core/core_services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../component/calendar_entry_point.dart';
@@ -29,14 +27,7 @@ class StudiesPage extends DrivableWidget<StudiesPageDriver> {
               id: "123456",
               title: "John Doe",
               description: "Computer Science Student",
-              onTap: () {
-                GetIt.I<PushNotificationsClient>().showNotification(
-                  id: 1,
-                  title: 'Deadline Rückmeldung',
-                  body: 'Verpasse nicht rechtzeitig den Semesterbeitrag vor dem 14.07 zu zahlen',
-                  payload: {'destination': '/home/roomfinder/details?building-id=bt2971'},
-                );
-              },
+              onTap: () {},
             ),
             const SizedBox(height: LmuSizes.size_32),
             const CelanderEntryPoint(),

@@ -31,6 +31,7 @@
     </array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+	    <string>app-settings</string>
 		<string>http</string>
 		<string>https</string>
 		<string>maps</string>

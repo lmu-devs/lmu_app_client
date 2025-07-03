@@ -60,6 +60,9 @@ class LaunchFlowShellRoute extends ShellRouteData {
                 TypedGoRoute<SettingsAnalyticsRoute>(
                   path: SettingsAnalyticsRoute.path,
                 ),
+                TypedGoRoute<SettingsNotificationsRoute>(
+                  path: SettingsNotificationsRoute.path,
+                ),
                 TypedGoRoute<SettingsLicenceRoute>(
                   path: SettingsLicenceRoute.path,
                 ),

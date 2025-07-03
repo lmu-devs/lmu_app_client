@@ -66,7 +66,8 @@ class SettingsMainPage extends StatelessWidget {
                     builder: (context, _) => LmuListItem.action(
                       title: settingLocalizations.appearance,
                       actionType: LmuListItemAction.chevron,
-                      trailingTitle: _getThemeModeString(themeMode.themeMode, settingLocalizations),
+                      trailingTitle: _getThemeModeString(
+                          themeMode.themeMode, settingLocalizations),
                       onTap: () => const SettingsAppearanceRoute().go(context),
                     ),
                   ),
@@ -78,10 +79,26 @@ class SettingsMainPage extends StatelessWidget {
                         actionType: LmuListItemAction.chevron,
                         trailingTitle: languageMode.isAutomatic
                             ? settingLocalizations.systemMode
-                            : languageMode.locale.localizedName(settingLocalizations),
+                            : languageMode.locale
+                                .localizedName(settingLocalizations),
                         onTap: () => const SettingsLanguageRoute().go(context),
                       );
                     },
+                  ),
+                ],
+              ),
+              const SizedBox(height: LmuSizes.size_16),
+              LmuContentTile(
+                contentList: [
+                  LmuListItem.action(
+                    title: "Analytics",
+                    actionType: LmuListItemAction.chevron,
+                    onTap: () => const SettingsAnalyticsRoute().go(context),
+                  ),
+                  LmuListItem.action(
+                    title: settingLocalizations.notificationsTitle,
+                    actionType: LmuListItemAction.chevron,
+                    onTap: () => const SettingsNotificationsRoute().go(context),
                   ),
                 ],
               ),
@@ -158,11 +175,6 @@ class SettingsMainPage extends StatelessWidget {
                     },
                   ),
                   LmuListItem.action(
-                    title: "Analytics",
-                    actionType: LmuListItemAction.chevron,
-                    onTap: () => const SettingsAnalyticsRoute().go(context),
-                  ),
-                  LmuListItem.action(
                     title: settingLocalizations.licenses,
                     actionType: LmuListItemAction.chevron,
                     onTap: () => const SettingsLicenceRoute().go(context),
@@ -180,17 +192,21 @@ class SettingsMainPage extends StatelessWidget {
                       ),
                     )
                   : const SizedBox.shrink(),
-              const SizedBox(height: kDebugMode ? LmuSizes.size_16 : LmuSizes.none),
+              const SizedBox(
+                  height: kDebugMode ? LmuSizes.size_16 : LmuSizes.none),
               LmuContentTile(
                 contentList: [
                   LmuListItem.base(
                     title: context.locals.app.suggestFeature,
                     mainContentAlignment: MainContentAlignment.center,
-                    leadingArea: const LeadingFancyIcons(icon: LucideIcons.plus),
+                    leadingArea:
+                        const LeadingFancyIcons(icon: LucideIcons.plus),
                     onTap: () {
                       feedbackApi.showFeedback(
                         context,
-                        args: const FeedbackArgs(type: FeedbackType.suggestion, origin: 'SettingsScreen'),
+                        args: const FeedbackArgs(
+                            type: FeedbackType.suggestion,
+                            origin: 'SettingsScreen'),
                       );
                     },
                   ),
@@ -201,7 +217,8 @@ class SettingsMainPage extends StatelessWidget {
                     onTap: () {
                       feedbackApi.showFeedback(
                         context,
-                        args: const FeedbackArgs(type: FeedbackType.bug, origin: 'SettingsScreen'),
+                        args: const FeedbackArgs(
+                            type: FeedbackType.bug, origin: 'SettingsScreen'),
                       );
                     },
                   ),
@@ -226,7 +243,8 @@ class SettingsMainPage extends StatelessWidget {
   }
 }
 
-String _getThemeModeString(ThemeMode themeMode, SettingsLocalizations localizations) {
+String _getThemeModeString(
+    ThemeMode themeMode, SettingsLocalizations localizations) {
   return switch (themeMode) {
     ThemeMode.system => localizations.systemMode,
     ThemeMode.dark => localizations.darkMode,

@@ -1,17 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import '../../../logging.dart';
 import 'push_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tz;
 
 class _AndroidNotificationConstants {
-  static const channelId = 'default_channel';
-  static const channelName = 'General Notifications';
-  static const channelDescription =
-      'This channel is used for general notifications.';
+  static const channelId = 'default_notifications';
+  static const channelName = 'Default Notifications';
+  static const channelDescription = 'This channel is used for default notifications.';
   static const androidIcon = '@drawable/ic_notification';
 }
 
@@ -24,7 +25,8 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
   final StreamController<String?> _onClickController =
       StreamController.broadcast();
 
-  final AndroidNotificationChannel _androidChannel = const AndroidNotificationChannel(
+  final AndroidNotificationChannel _androidChannel =
+      const AndroidNotificationChannel(
     _AndroidNotificationConstants.channelId,
     _AndroidNotificationConstants.channelName,
     description: _AndroidNotificationConstants.channelDescription,
@@ -53,13 +55,14 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
       if (defaultTargetPlatform == TargetPlatform.android) {
         await _localNotifications
             .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
+                AndroidFlutterLocalNotificationsPlugin>()
             ?.createNotificationChannel(_androidChannel);
       }
 
       await _initLocalNotifications();
       await _initFirebase();
-      print("FCM TOKEN: ${await getFcmToken()}");
+
+      AppLogger().logMessage("FCM TOKEN: ${await getFcmToken()}");
     } catch (e) {
       throw Exception("Failed to initialize push notifications - $e");
     }
@@ -67,7 +70,8 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
 
   Future<void> _initLocalNotifications() async {
     const AndroidInitializationSettings androidSettings =
-        AndroidInitializationSettings(_AndroidNotificationConstants.androidIcon);
+        AndroidInitializationSettings(
+            _AndroidNotificationConstants.androidIcon);
 
     const DarwinInitializationSettings iosSettings =
         DarwinInitializationSettings();
@@ -96,8 +100,21 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
       final notification = message.notification;
 
       if (notification != null) {
+        int notificationId;
+        final messageData = message.data;
+
+        if (messageData['id'] != null) {
+          try {
+            notificationId = int.parse(messageData['id'].toString());
+          } catch (e) {
+            notificationId = Random().nextInt(1000000);
+          }
+        } else {
+          notificationId = Random().nextInt(1000000);
+        }
+
         showNotification(
-          id: 1,
+          id: notificationId,
           title: notification.title ?? '',
           body: notification.body ?? '',
           payload: message.data,
