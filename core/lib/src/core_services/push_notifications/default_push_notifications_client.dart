@@ -91,7 +91,7 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
 
   Future<void> _initFirebase() async {
     await _firebaseMessaging.setForegroundNotificationPresentationOptions(
-      alert: true,
+      alert: false,
       badge: true,
       sound: true,
     );
