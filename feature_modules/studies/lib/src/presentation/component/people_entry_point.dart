@@ -26,8 +26,8 @@ class PeopleEntryPoint extends StatelessWidget {
         title: context.locals.people.peopleTitle,
         leadingArea: const LmuInListBlurEmoji(emoji: "👥"),
         onTap: () {
-          if (selectedFaculties.length == 0) {
-            const PeopleOverviewRoute().go(context);
+          if (selectedFaculties.length == 1) {
+            PeopleOverviewRoute(facultyId: selectedFaculties.first.id).go(context);
           } else {
             // Wenn Fakultäten ausgewählt sind, gehe zur Fakultäten-Seite
             const PeopleFacultyOverviewRoute().go(context);

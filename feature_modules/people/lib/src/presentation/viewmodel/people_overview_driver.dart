@@ -30,12 +30,14 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
 
   bool get isLoading => _usecase.loadState != PeopleLoadState.success;
 
-  String get largeTitle {
-      final faculty = allFaculties.firstWhere(
-        (faculty) => faculty.id == facultyId,
-      );
+    String get largeTitle {
+    if (facultyId == null) return "People";
+    try {
+      final faculty = allFaculties.firstWhere((f) => f.id == facultyId);
       return faculty.name;
-    
+    } catch (e) {
+      return "People";
+    }
   }
 
   String get peopleId => _usecase.data?.id ?? '';
