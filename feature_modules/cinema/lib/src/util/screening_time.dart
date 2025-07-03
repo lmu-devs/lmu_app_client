@@ -32,7 +32,7 @@ String getScreeningTime({
       parsedTime.isAfter(startOfWeek) &&
       parsedTime.isBefore(endOfWeek.add(const Duration(days: 1)))) {
     final Weekday weekday = Weekday.values[parsedTime.weekday - 1];
-    return '${weekday.localizedWeekday(context.locals.app)} • ${DateFormat('HH:mm').format(parsedTime)}';
+    return '${weekday.name} • ${DateFormat('HH:mm').format(parsedTime)}';
   }
 
   return DateFormat('dd.MM.yyyy • HH:mm').format(parsedTime);
