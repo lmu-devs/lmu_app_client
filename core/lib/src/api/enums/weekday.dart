@@ -26,7 +26,7 @@ enum Weekday {
   final int value;
 
   /// Returns the localized full name of the weekday (e.g., "Monday", "Montag", "Lunedi",...).
-  /// But now just calling Weekday.monday.name will return the localized name.,
+  /// But now just calling Weekday.monday or .toString() will return the localized name.,
   /// This is the same as [name] but uses the current locale.
   @override
   String toString() => name;
