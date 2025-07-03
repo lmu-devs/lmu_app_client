@@ -18,6 +18,7 @@ class PeopleFacultyOverviewDriver extends WidgetDriver {
   late LmuToast _toast;
 
   List<Faculty> get selectedFaculties => _facultiesApi.selectedFaculties;
+
   List<Faculty> get allFaculties => _facultiesApi.allFaculties;
 
   bool get isLoading => _usecase.loadState != PeopleLoadState.success;
@@ -28,7 +29,7 @@ class PeopleFacultyOverviewDriver extends WidgetDriver {
     _toast.showToast(
       message: "Fakultät ${faculty.name} (ID: ${faculty.id}) ausgewählt.",
     );
-    const PeopleOverviewRoute().go(context);
+    PeopleOverviewRoute(faculty: faculty).go(context);
   }
 
   void _onStateChanged() {

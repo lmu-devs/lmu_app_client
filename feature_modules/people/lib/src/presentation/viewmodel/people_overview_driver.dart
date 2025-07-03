@@ -10,6 +10,9 @@ part 'people_overview_driver.g.dart';
 
 @GenerateTestDriver()
 class PeopleOverviewDriver extends WidgetDriver {
+  final Faculty? faculty;
+  PeopleOverviewDriver({this.faculty});
+
   final _usecase = GetIt.I.get<GetPeopleUsecase>();
   final _facultiesApi = GetIt.I.get<FacultiesApi>();
 
@@ -23,7 +26,8 @@ class PeopleOverviewDriver extends WidgetDriver {
 
   bool get isLoading => _usecase.loadState != PeopleLoadState.success;
 
-  String get largeTitle => "People"; // TODO: Lokalisierung möglich
+  String get largeTitle => faculty?.name ?? "People";
+
   String get peopleId => _usecase.data?.id ?? '';
   String get title => _usecase.data?.name ?? '';
   String get description => _count.toString();

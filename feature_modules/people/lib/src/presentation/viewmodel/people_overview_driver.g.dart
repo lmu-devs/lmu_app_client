@@ -10,8 +10,10 @@ part of 'people_overview_driver.dart';
 
 // This file was generated with widget_driver_generator version "1.3.5"
 
-class _$TestPeopleOverviewDriver extends TestDriver
-    implements PeopleOverviewDriver {
+class _$TestPeopleOverviewDriver extends TestDriver implements PeopleOverviewDriver {
+  @override
+  Faculty? faculty;
+
   @override
   List<Faculty> get selectedFaculties => [];
 
@@ -46,11 +48,14 @@ class _$TestPeopleOverviewDriver extends TestDriver
   void dispose() {}
 }
 
-class $PeopleOverviewDriverProvider
-    extends WidgetDriverProvider<PeopleOverviewDriver> {
+class $PeopleOverviewDriverProvider extends WidgetDriverProvider<PeopleOverviewDriver> {
+  final Faculty? faculty;
+
+  $PeopleOverviewDriverProvider({this.faculty});
+
   @override
   PeopleOverviewDriver buildDriver() {
-    return PeopleOverviewDriver();
+    return PeopleOverviewDriver(faculty: faculty);
   }
 
   @override

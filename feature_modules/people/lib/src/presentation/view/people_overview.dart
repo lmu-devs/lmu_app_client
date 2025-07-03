@@ -1,13 +1,16 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_api/studies.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../component/people_card.dart';
 import '../viewmodel/people_overview_driver.dart';
 
 class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
-  PeopleOverview({super.key});
+  PeopleOverview({super.key, this.faculty});
+
+  final Faculty? faculty;
 
   @override
   Widget build(BuildContext context) {
@@ -46,5 +49,5 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
   }
 
   @override
-  WidgetDriverProvider<PeopleOverviewDriver> get driverProvider => $PeopleOverviewDriverProvider();
+  WidgetDriverProvider<PeopleOverviewDriver> get driverProvider => $PeopleOverviewDriverProvider(faculty: faculty);
 }
