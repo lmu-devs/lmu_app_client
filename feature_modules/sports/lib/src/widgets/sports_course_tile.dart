@@ -164,7 +164,7 @@ String formatSportsTimeSlots(AppLocalizations locals, List<SportsTimeSlot> slots
     days.sort((a, b) => a.index.compareTo(b.index));
 
     if (days.length == 1) {
-      return days.first.localizedWeekday(locals);
+      return days.first.name;
     }
 
     final List<List<Weekday>> groupedRanges = [];
@@ -182,8 +182,8 @@ String formatSportsTimeSlots(AppLocalizations locals, List<SportsTimeSlot> slots
 
     return groupedRanges
         .map((group) => group.length > 1
-            ? '${group.first.localizedWeekday(locals)} - ${group.last.localizedWeekday(locals)}' // "Wednesday - Friday"
-            : group.first.localizedWeekday(locals))
+            ? '${group.first.name} - ${group.last.name(locals)}' // "Wednesday - Friday"
+            : group.first.name)
         .join(', ');
   }
 
