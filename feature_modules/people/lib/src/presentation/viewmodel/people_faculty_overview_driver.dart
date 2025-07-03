@@ -26,10 +26,7 @@ class PeopleFacultyOverviewDriver extends WidgetDriver {
   String get largeTitle => "Kontakte";
 
   void onFacultyPressed(BuildContext context, Faculty faculty) {
-    _toast.showToast(
-      message: "Fakultät ${faculty.name} (ID: ${faculty.id}) ausgewählt.",
-    );
-    PeopleOverviewRoute(faculty: faculty).go(context);
+    PeopleOverviewRoute(facultyId: faculty.id).go(context);
   }
 
   void _onStateChanged() {

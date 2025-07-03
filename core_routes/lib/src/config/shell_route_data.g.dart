@@ -1042,10 +1042,16 @@ extension $LecturesMainRouteExtension on LecturesMainRoute {
 
 extension $PeopleOverviewRouteExtension on PeopleOverviewRoute {
   static PeopleOverviewRoute _fromState(GoRouterState state) =>
-      const PeopleOverviewRoute();
+      PeopleOverviewRoute(
+        facultyId: _$convertMapValue(
+            'faculty-id', state.uri.queryParameters, int.tryParse),
+      );
 
   String get location => GoRouteData.$location(
         '/studies/people',
+        queryParams: {
+          if (facultyId != null) 'faculty-id': facultyId!.toString(),
+        },
       );
 
   void go(BuildContext context) => context.go(location);
@@ -1074,4 +1080,13 @@ extension $PeopleFacultyOverviewRouteExtension on PeopleFacultyOverviewRoute {
       context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
+}
+
+T? _$convertMapValue<T>(
+  String key,
+  Map<String, String> map,
+  T? Function(String) converter,
+) {
+  final value = map[key];
+  return value == null ? null : converter(value);
 }
