@@ -8,17 +8,17 @@ abstract class PushNotificationsClient {
   Future<bool> requestPermission();
 
   Future<void> showNotification({
-    required int id,
     required String title,
     required String body,
+    int? id,
     Map<String, dynamic>? payload,
   });
 
   Future<void> scheduleNotification({
-    required int id,
     required String title,
     required String body,
     required DateTime scheduledDate,
+    int? id,
     Map<String, dynamic>? payload,
   });
 

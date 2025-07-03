@@ -167,11 +167,13 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
 
   @override
   Future<void> showNotification({
-    required int id,
     required String title,
     required String body,
+    int? id,
     Map<String, dynamic>? payload,
   }) async {
+    id ??= Random().nextInt(1000000);
+
     await _localNotifications.show(
       id,
       title,
@@ -183,12 +185,14 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
 
   @override
   Future<void> scheduleNotification({
-    required int id,
     required String title,
     required String body,
     required DateTime scheduledDate,
+    int? id,
     Map<String, dynamic>? payload,
   }) async {
+    id ??= Random().nextInt(1000000);
+
     await _localNotifications.zonedSchedule(
       id,
       title,
