@@ -1,9 +1,10 @@
 import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
-import 'package:core_routes/home.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/launch_flow.dart';
 import 'package:widget_driver/widget_driver.dart';
+
+import '../../domain/interface/launch_flow_repository_interface.dart';
 
 part 'welcome_page_driver.g.dart';
 
@@ -12,6 +13,7 @@ typedef WelcomePageEntry = ({String emoji, String title, String description});
 @GenerateTestDriver()
 class WelcomePageDriver extends WidgetDriver {
   late LaunchFlowLocatizations _flowLocalizations;
+  late AppLocalizations _appLocalizations;
   late BuildContext _navigatorContext;
 
   List<WelcomePageEntry> get _entries => <WelcomePageEntry>[
@@ -42,19 +44,21 @@ class WelcomePageDriver extends WidgetDriver {
 
   String get dataPrivacyLabel => _flowLocalizations.dataPrivacyLabel;
 
-  String get buttonText => _flowLocalizations.letsGo;
+  String get buttonText => _appLocalizations.continueAction;
 
   void onButtonPressed() {
     final analyticsUserPreferenceService = GetIt.I<AnalyticsUserPreferenceService>();
     analyticsUserPreferenceService.toggleAnalytics(true);
-    GetIt.I.get<LaunchFlowApi>().showedWelcomePage();
-    const HomeMainRoute().pushReplacement(_navigatorContext);
+    GetIt.I.get<LaunchFlowRepositoryInterface>().showedWelcomePage();
+    final launchFlowApi = GetIt.I.get<LaunchFlowApi>();
+    launchFlowApi.continueFlow(_navigatorContext);
   }
 
   @override
   void didUpdateBuildContext(BuildContext context) {
     super.didUpdateBuildContext(context);
     _flowLocalizations = context.locals.launchFlow;
+    _appLocalizations = context.locals.app;
     _navigatorContext = context;
   }
 }

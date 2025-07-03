@@ -1,6 +1,6 @@
-import 'feature_flag.dart';
+import '../models/feature_flag.dart';
 
-abstract class FeatureToggleService {
+abstract class FeatureToggleApi {
   /// Checks if a feature is enabled.
   ///
   /// Returns `true` if the feature is enabled, otherwise `false`.
@@ -10,11 +10,4 @@ abstract class FeatureToggleService {
   ///
   /// Returns a list of feature names.
   List<FeatureFlag> get availableFeatures;
-
-  /// Gets a stream of available features, updates when features change.
-  Stream<List<FeatureFlag>> getFeatureFlagsStream();
-
-  bool get areFeatureFlagsLoaded;
-
-  void reloadFeatures();
 }

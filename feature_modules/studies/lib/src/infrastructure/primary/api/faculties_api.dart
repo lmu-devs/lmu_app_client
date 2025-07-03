@@ -21,6 +21,11 @@ class FacultiesApiImpl implements FacultiesApi {
   @override
   Stream<List<Faculty>> get selectedFacultiesStream => _selectedFacultiesController.stream;
 
+  @override
+  void selectFaculties(List<Faculty> faculties) {
+    _getFacultiesUsecase.selectFaculties(faculties);
+  }
+
   void _onChange() {
     _selectedFacultiesController.add(_getFacultiesUsecase.selectedFaculties);
   }
