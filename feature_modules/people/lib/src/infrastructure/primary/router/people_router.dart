@@ -6,7 +6,7 @@ import '../../../presentation/view/people_overview.dart';
 
 class PeopleRouterImpl extends PeopleRouter {
   @override
-  Widget buildOverview(BuildContext context, {required int? facultyId}) => PeopleOverview(
+  Widget buildOverview(BuildContext context, {required int facultyId}) => PeopleOverview(
         facultyId: facultyId,
       );
   @override

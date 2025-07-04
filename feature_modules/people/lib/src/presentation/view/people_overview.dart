@@ -8,9 +8,9 @@ import '../component/person_list_item.dart';
 import '../viewmodel/people_overview_driver.dart';
 
 class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
-  PeopleOverview({super.key, this.facultyId});
+  PeopleOverview({super.key, required this.facultyId});
 
-  final int? facultyId;
+  final int facultyId;
 
   @override
   Widget build(BuildContext context) {

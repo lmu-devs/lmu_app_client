@@ -1,9 +1,11 @@
 import 'package:core/components.dart';
-import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
 import 'package:core_routes/people.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/launch_flow.dart';
+
+import '../../application/usecase/get_faculties_usecase.dart'; // <-- Usecase importieren
 
 import '../../application/usecase/get_faculties_usecase.dart'; // <-- Usecase importieren
 
@@ -12,7 +14,7 @@ class PeopleEntryPoint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isPeopleActive = GetIt.I.get<FeatureToggleService>().isEnabled('PEOPLE');
+    final isPeopleActive = GetIt.I.get<FeatureToggleApi>().isEnabled('PEOPLE');
     if (!isPeopleActive) {
       return const SizedBox.shrink();
     }

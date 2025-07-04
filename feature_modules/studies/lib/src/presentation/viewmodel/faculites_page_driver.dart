@@ -43,7 +43,7 @@ class FaculitesPageDriver extends WidgetDriver {
 
   @override
   void dispose() {
-    _getFacultiesUseCase.selectFaculites(_selectedFaculites);
+    _getFacultiesUseCase.selectFaculties(_selectedFaculites);
     super.dispose();
   }
 }

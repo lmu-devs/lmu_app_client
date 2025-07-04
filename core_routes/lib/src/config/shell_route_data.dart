@@ -26,6 +26,8 @@ part 'shell_route_data.g.dart';
   routes: [
     TypedGoRoute<LaunchFlowWelcomeRoute>(path: LaunchFlowWelcomeRoute.path),
     TypedGoRoute<LaunchFlowAppUpdateRoute>(path: LaunchFlowAppUpdateRoute.path),
+    TypedGoRoute<LaunchFlowReleaseNotesRoute>(path: LaunchFlowReleaseNotesRoute.path),
+    TypedGoRoute<LaunchFlowFacultySelectionRoute>(path: LaunchFlowFacultySelectionRoute.path),
   ],
 )
 class LaunchFlowShellRoute extends ShellRouteData {
@@ -204,11 +206,9 @@ class LaunchFlowShellRoute extends ShellRouteData {
             ),
             TypedGoRoute<PeopleOverviewRoute>(
               path: PeopleOverviewRoute.path,
-              routes: <TypedGoRoute<GoRouteData>>[
-                TypedGoRoute<PeopleFacultyOverviewRoute>(
-                  path: PeopleFacultyOverviewRoute.path,
-                ),
-              ],
+            ),
+            TypedGoRoute<PeopleFacultyOverviewRoute>(
+              path: PeopleFacultyOverviewRoute.path,
             ),
           ],
         ),

@@ -3,7 +3,6 @@ import 'package:calendar/calendar.dart';
 import 'package:cinema/cinema.dart';
 import 'package:explore/explore.dart';
 import 'package:feedback/feedback.dart';
-import 'package:flutter/material.dart';
 import 'package:home/home.dart';
 import 'package:launch_flow/launch_flow.dart';
 import 'package:lectures/lectures.dart';
@@ -32,8 +31,8 @@ final modules = [
   SportsModule(),
   TimelineModule(),
   BenefitsModule(),
-  LaunchFlowModule(),
   StudiesModule(),
+  LaunchFlowModule(),
   CalendarModule(),
   LecturesModule(),
   PeopleModule(),

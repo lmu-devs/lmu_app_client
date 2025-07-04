@@ -6,7 +6,7 @@ import '../../../../domain/model/people.dart';
 part 'people_dto.g.dart';
 
 @JsonSerializable()
-class PeopleDto extends Equatable{
+class PeopleDto extends Equatable {
   const PeopleDto({
     required this.id,
     required this.name,

@@ -284,5 +284,13 @@
   "on": "on",
   "@on": {
     "description": "on"
+  },
+  "done": "Done",
+  "@done": {
+    "description": "Done"
+  },
+  "setUpLater": "Set up later",
+  "@setUpLater": {
+    "description": "Set up later"
   }
 }

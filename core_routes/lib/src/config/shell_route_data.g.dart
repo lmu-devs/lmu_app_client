@@ -22,6 +22,14 @@ RouteBase get $launchFlowShellRoute => ShellRouteData.$route(
           path: '/app_update',
           factory: $LaunchFlowAppUpdateRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: '/release-notes',
+          factory: $LaunchFlowReleaseNotesRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: '/faculty-selection',
+          factory: $LaunchFlowFacultySelectionRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -62,6 +70,70 @@ extension $LaunchFlowAppUpdateRouteExtension on LaunchFlowAppUpdateRoute {
 
   void pushReplacement(BuildContext context) =>
       context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LaunchFlowReleaseNotesRouteExtension on LaunchFlowReleaseNotesRoute {
+  static LaunchFlowReleaseNotesRoute _fromState(GoRouterState state) => const LaunchFlowReleaseNotesRoute();
+
+  String get location => GoRouteData.$location(
+        '/release-notes',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LaunchFlowFacultySelectionRouteExtension on LaunchFlowFacultySelectionRoute {
+  static LaunchFlowFacultySelectionRoute _fromState(GoRouterState state) => const LaunchFlowFacultySelectionRoute();
+
+  String get location => GoRouteData.$location(
+        '/faculty-selection',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LaunchFlowReleaseNotesRouteExtension on LaunchFlowReleaseNotesRoute {
+  static LaunchFlowReleaseNotesRoute _fromState(GoRouterState state) => const LaunchFlowReleaseNotesRoute();
+
+  String get location => GoRouteData.$location(
+        '/release-notes',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LaunchFlowFacultySelectionRouteExtension on LaunchFlowFacultySelectionRoute {
+  static LaunchFlowFacultySelectionRoute _fromState(GoRouterState state) => const LaunchFlowFacultySelectionRoute();
+
+  String get location => GoRouteData.$location(
+        '/faculty-selection',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }
@@ -276,12 +348,10 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                 GoRouteData.$route(
                   path: 'people',
                   factory: $PeopleOverviewRouteExtension._fromState,
-                  routes: [
-                    GoRouteData.$route(
-                      path: 'faculties',
-                      factory: $PeopleFacultyOverviewRouteExtension._fromState,
-                    ),
-                  ],
+                ),
+                GoRouteData.$route(
+                  path: 'people-faculties',
+                  factory: $PeopleFacultyOverviewRouteExtension._fromState,
                 ),
               ],
             ),
@@ -1041,17 +1111,31 @@ extension $LecturesMainRouteExtension on LecturesMainRoute {
 }
 
 extension $PeopleOverviewRouteExtension on PeopleOverviewRoute {
-  static PeopleOverviewRoute _fromState(GoRouterState state) =>
-      PeopleOverviewRoute(
-        facultyId: _$convertMapValue(
-            'faculty-id', state.uri.queryParameters, int.tryParse),
+  static PeopleOverviewRoute _fromState(GoRouterState state) => PeopleOverviewRoute(
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
       );
 
   String get location => GoRouteData.$location(
         '/studies/people',
         queryParams: {
-          if (facultyId != null) 'faculty-id': facultyId!.toString(),
+          'faculty-id': facultyId.toString(),
         },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $PeopleFacultyOverviewRouteExtension on PeopleFacultyOverviewRoute {
+  static PeopleFacultyOverviewRoute _fromState(GoRouterState state) => const PeopleFacultyOverviewRoute();
+
+  String get location => GoRouteData.$location(
+        '/studies/people-faculties',
       );
 
   void go(BuildContext context) => context.go(location);

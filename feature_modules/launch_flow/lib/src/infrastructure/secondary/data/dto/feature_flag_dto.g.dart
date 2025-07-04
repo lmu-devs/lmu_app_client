@@ -1,17 +1,17 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'feature_flag.dart';
+part of 'feature_flag_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-FeatureFlag _$FeatureFlagFromJson(Map<String, dynamic> json) => FeatureFlag(
+FeatureFlagDto _$FeatureFlagDtoFromJson(Map<String, dynamic> json) => FeatureFlagDto(
       id: json['id'] as String,
       isActive: json['enabled'] as bool,
     );
 
-Map<String, dynamic> _$FeatureFlagToJson(FeatureFlag instance) => <String, dynamic>{
+Map<String, dynamic> _$FeatureFlagDtoToJson(FeatureFlagDto instance) => <String, dynamic>{
       'id': instance.id,
       'enabled': instance.isActive,
     };
