@@ -208,7 +208,6 @@ class LaunchFlowShellRoute extends ShellRouteData {
              TypedGoRoute<PeopleFacultyOverviewRoute>(
                 path: PeopleFacultyOverviewRoute.path,
               ),
-            ),
           ],
         ),
       ],

@@ -276,12 +276,10 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                 GoRouteData.$route(
                   path: 'people',
                   factory: $PeopleOverviewRouteExtension._fromState,
-                  routes: [
-                    GoRouteData.$route(
-                      path: 'faculties',
-                      factory: $PeopleFacultyOverviewRouteExtension._fromState,
-                    ),
-                  ],
+                ),
+                GoRouteData.$route(
+                  path: 'people-faculties',
+                  factory: $PeopleFacultyOverviewRouteExtension._fromState,
                 ),
               ],
             ),
@@ -1043,14 +1041,13 @@ extension $LecturesMainRouteExtension on LecturesMainRoute {
 extension $PeopleOverviewRouteExtension on PeopleOverviewRoute {
   static PeopleOverviewRoute _fromState(GoRouterState state) =>
       PeopleOverviewRoute(
-        facultyId: _$convertMapValue(
-            'faculty-id', state.uri.queryParameters, int.tryParse),
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
       );
 
   String get location => GoRouteData.$location(
         '/studies/people',
         queryParams: {
-          if (facultyId != null) 'faculty-id': facultyId!.toString(),
+          'faculty-id': facultyId.toString(),
         },
       );
 
@@ -1069,7 +1066,7 @@ extension $PeopleFacultyOverviewRouteExtension on PeopleFacultyOverviewRoute {
       const PeopleFacultyOverviewRoute();
 
   String get location => GoRouteData.$location(
-        '/studies/people/faculties',
+        '/studies/people-faculties',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -1080,13 +1077,4 @@ extension $PeopleFacultyOverviewRouteExtension on PeopleFacultyOverviewRoute {
       context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
-}
-
-T? _$convertMapValue<T>(
-  String key,
-  Map<String, String> map,
-  T? Function(String) converter,
-) {
-  final value = map[key];
-  return value == null ? null : converter(value);
 }
