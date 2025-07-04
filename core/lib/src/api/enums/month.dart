@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 import '../../../themes.dart';
 
-String get currentLocale => GetIt.I<LanguageProvider>().locale.toString();
+String get _currentLocale => GetIt.I<LanguageProvider>().locale.toString();
 
 enum Month {
   @JsonValue('JANUARY')
@@ -51,14 +51,14 @@ extension MonthToString on Month {
 
   /// Returns the localized full name of the month (e.g., "January", "Januar", "Gennaio",...).
   String get name {
-    final fullName = DateFormat.MMMM(currentLocale).format(_getDateTimeForMonth());
+    final fullName = DateFormat.MMMM(_currentLocale).format(_getDateTimeForMonth());
     if (fullName.isEmpty) return fullName;
     return '${fullName[0].toUpperCase()}${fullName.substring(1)}';
   }
 
   /// Returns the localized short name of the month (e.g., "Jan", "Jan", "Gen",...).
   String get nameShort {
-    final shortName = DateFormat.MMM(currentLocale).format(_getDateTimeForMonth());
+    final shortName = DateFormat.MMM(_currentLocale).format(_getDateTimeForMonth());
     if (shortName.isEmpty) return shortName;
     return '${shortName[0].toUpperCase()}${shortName.substring(1)}';
   }
