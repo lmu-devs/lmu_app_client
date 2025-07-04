@@ -32,7 +32,6 @@ class PeopleFacultyOverview extends DrivableWidget<PeopleFacultyOverviewDriver> 
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: LmuSizes.size_16),
-
         if (driver.selectedFaculties.isNotEmpty) ...[
           LmuTileHeadline.base(title: "Meine Fakultäten"),
           const SizedBox(height: LmuSizes.size_2),
@@ -50,7 +49,6 @@ class PeopleFacultyOverview extends DrivableWidget<PeopleFacultyOverviewDriver> 
           ),
           const SizedBox(height: LmuSizes.size_24),
         ],
-
         LmuTileHeadline.base(title: "Alle Fakultäten"),
         const SizedBox(height: LmuSizes.size_2),
         LmuContentTile(
@@ -65,7 +63,6 @@ class PeopleFacultyOverview extends DrivableWidget<PeopleFacultyOverviewDriver> 
               )
               .toList(),
         ),
-
         const SizedBox(height: LmuSizes.size_96),
       ],
     );
