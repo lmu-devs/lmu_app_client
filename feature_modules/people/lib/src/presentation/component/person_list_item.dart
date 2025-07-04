@@ -13,6 +13,16 @@ class PersonListItem extends StatelessWidget {
   final People person;
   final VoidCallback onTap;
 
+  String _getLastName(String fullName) {
+    final parts = fullName.trim().split(' ');
+    return parts.last;
+  }
+
+  String _getLastNameInitial(String fullName) {
+    final lastName = _getLastName(fullName);
+    return lastName[0].toUpperCase();
+  }
+
   @override
   Widget build(BuildContext context) {
     return LmuListItem.action(
@@ -22,4 +32,4 @@ class PersonListItem extends StatelessWidget {
       onTap: onTap,
     );
   }
-} 
+}

@@ -1,6 +1,9 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
+import 'package:core_routes/people.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shared_api/studies.dart';
 import 'package:widget_driver/widget_driver.dart';
 
@@ -29,41 +32,58 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
 
   bool get isLoading => _usecase.loadState != PeopleLoadState.success;
 
-    String get largeTitle {
+  String get largeTitle {
     final faculty = allFaculties.firstWhere((f) => f.id == facultyId);
     return faculty.name;
   }
 
   List<People> get people => _usecase.data;
-  
-  // Filer und Sortierung
+
+  // Helper to extract last name from full name
+  String _getLastName(String fullName) {
+    final parts = fullName.trim().split(' ');
+    return parts.isNotEmpty ? parts.last : fullName;
+  }
+
+  // Filter und Sortierung nach Nachnamen
   List<People> get filteredPeople {
     var filtered = people;
-    
-    // Alphabetisch sortieren
-    filtered.sort((a, b) => a.name.compareTo(b.name));
-    
+
+    // Alphabetisch nach Nachnamen sortieren
+    filtered.sort((a, b) => _getLastName(a.name).compareTo(_getLastName(b.name)));
+
     return filtered;
   }
-  
-  // Gruppierung nach Alphabet
+
+  // Gruppierung nach Nachnamen-Anfangsbuchstaben
   Map<String, List<People>> get groupedPeople {
     final grouped = <String, List<People>>{};
-    
+
     for (final person in filteredPeople) {
-      final firstLetter = person.name.isNotEmpty ? person.name[0].toUpperCase() : '#';
+      final lastName = _getLastName(person.name);
+      final firstLetter = lastName.isNotEmpty ? lastName[0].toUpperCase() : '#';
       if (!grouped.containsKey(firstLetter)) {
         grouped[firstLetter] = [];
       }
       grouped[firstLetter]!.add(person);
     }
-    
-    return grouped;
+
+    // Sortiere die Buchstaben alphabetisch
+    final sortedKeys = grouped.keys.toList()..sort();
+    final sortedGrouped = <String, List<People>>{};
+    for (final key in sortedKeys) {
+      sortedGrouped[key] = grouped[key]!;
+    }
+
+    return sortedGrouped;
   }
 
-  void onPersonPressed(People person) {
-    // TODO: Navigate to person details or implement person interaction
-    print('Person pressed: ${person.name}');
+  void onPersonPressed(BuildContext context, People person) {
+    PeopleDetailsRoute(facultyId: facultyId, personId: person.id).go(context);
+  }
+
+  void onShowAllFacultiesPressed(BuildContext context) {
+    const PeopleFacultyOverviewRoute().go(context);
   }
 
   void _onStateChanged() {
