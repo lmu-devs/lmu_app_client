@@ -22,7 +22,7 @@ class PeopleOverviewRoute extends GoRouteData {
 class PeopleFacultyOverviewRoute extends GoRouteData {
   const PeopleFacultyOverviewRoute();
 
-  static const String path = 'faculties';
+  static const String path = 'people-faculties';
 
   @override
   Widget build(BuildContext context, GoRouterState state) => _router.buildFacultyOverview(context);
