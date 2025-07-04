@@ -16,7 +16,7 @@ class GetFacultiesUsecase extends ChangeNotifier {
   List<Faculty> get allFaculites => _faculties;
   List<Faculty> get selectedFaculties => _selectedFaculties;
 
-  void selectFaculites(List<Faculty> faculites) {
+  void selectFaculties(List<Faculty> faculites) {
     _selectedFaculties = faculites;
     _repository.saveSelectedFacultyIds(faculites.map((f) => f.id).toList());
   }

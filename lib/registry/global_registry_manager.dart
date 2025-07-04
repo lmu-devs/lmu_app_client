@@ -35,9 +35,5 @@ class GlobalRegistryManager {
     final analyticsUserPreferenceService = AnalyticsUserPreferenceService();
     await analyticsUserPreferenceService.init();
     GetIt.I.registerSingleton<AnalyticsUserPreferenceService>(analyticsUserPreferenceService);
-
-    final featureToggleService = DefaultFeatureToggleService(baseApiClient, systemInfoService.systemInfo.appVersion);
-    GetIt.I.registerSingleton<FeatureToggleService>(featureToggleService);
-    await featureToggleService.init();
   }
 }

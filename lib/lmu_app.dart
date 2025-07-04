@@ -1,10 +1,8 @@
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
-import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
-
 import 'nav_bar_color_setter.dart';
 import 'notification_handler.dart';
 import 'router_config.dart';
@@ -32,21 +30,17 @@ class LmuApp extends StatelessWidget {
             theme: AppTheme.light,
             darkTheme: AppTheme.dark,
             themeMode: themeProvider.themeMode,
-            builder: (context, child) {
-              AppUpdateNavigator.router = LmuRouterConfig.router;
-
-              return NotificationsHandler(
-                child: FToastBuilder()(
-                  context,
-                  Stack(
-                    children: [
-                      child ?? const SizedBox.shrink(),
-                      const NavigationBarColorSetter(),
-                    ],
-                  ),
+            builder: (context, child) => NotificationsHandler(
+              child: FToastBuilder()(
+                context,
+                Stack(
+                  children: [
+                    child ?? const SizedBox.shrink(),
+                    const NavigationBarColorSetter(),
+                  ],
                 ),
-              );
-            },
+              ),
+            ),
           );
         },
       ),

@@ -1,4 +1,3 @@
-export 'feature_toggle/feature_toggle.dart';
 export 'analytics/analytics.dart';
 export 'push_notifications/push_notifications.dart';
 export 'location/location.dart';
