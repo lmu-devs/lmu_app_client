@@ -13,7 +13,7 @@ class FacultyNumberWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String formattedNumber = facultyId.toString().padLeft(2, '0');
-    
+
     return Container(
       width: LmuSizes.size_48,
       height: LmuSizes.size_48,
@@ -35,4 +35,4 @@ class FacultyNumberWidget extends StatelessWidget {
       ),
     );
   }
-} 
+}
