@@ -39,7 +39,7 @@ class PeopleFacultyOverview extends DrivableWidget<PeopleFacultyOverviewDriver> 
             contentList: driver.selectedFaculties
                 .map(
                   (faculty) => LmuListItem.action(
-                    leadingArea: LmuText.h2(faculty.id.toString()),
+                    leadingArea: LmuInListBlurEmoji(emoji: faculty.id.toString()),
                     actionType: LmuListItemAction.chevron,
                     title: faculty.name,
                     onTap: () => driver.onFacultyPressed(context, faculty),
