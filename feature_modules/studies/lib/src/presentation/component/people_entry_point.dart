@@ -31,7 +31,6 @@ class PeopleEntryPoint extends StatelessWidget {
           if (selectedFaculties.length == 2) {
             PeopleOverviewRoute(facultyId: selectedFaculties.first.id).go(context);
           } else {
-
             const PeopleFacultyOverviewRoute().go(context);
           }
         },
