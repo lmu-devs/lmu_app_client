@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 import '../../../themes.dart';
 
-String get currentLocale => GetIt.I<LanguageProvider>().locale.toString();
+String get _currentLocale => GetIt.I<LanguageProvider>().locale.toString();
 
 enum Weekday {
   @JsonValue('MONDAY')
@@ -26,7 +26,7 @@ enum Weekday {
   final int value;
 
   /// Returns the localized full name of the weekday (e.g., "Monday", "Montag", "Lunedi",...).
-  /// But now just calling Weekday.monday.name will return the localized name.,
+  /// But now just calling Weekday.monday or .toString() will return the localized name.,
   /// This is the same as [name] but uses the current locale.
   @override
   String toString() => name;
@@ -48,14 +48,14 @@ extension WeekdayToString on Weekday {
 
   /// Returns the localized full name of the weekday (e.g., "Monday", "Montag", "Lunedi",...).
   get name {
-    final fullName = DateFormat.EEEE(currentLocale).format(_getDateTimeForWeekday());
+    final fullName = DateFormat.EEEE(_currentLocale).format(_getDateTimeForWeekday());
     if (fullName.isEmpty) return fullName;
     return '${fullName[0].toUpperCase()}${fullName.substring(1)}';
   }
 
   /// Returns the localized short name of the weekday (e.g., "Mon", "Mo", "Lu", ...).
   get nameShort {
-    final shortName = DateFormat.E(currentLocale).format(_getDateTimeForWeekday());
+    final shortName = DateFormat.E(_currentLocale).format(_getDateTimeForWeekday());
     if (shortName.isEmpty) return shortName;
     return '${shortName[0].toUpperCase()}${shortName.substring(1)}';
   }
