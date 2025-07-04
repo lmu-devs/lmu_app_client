@@ -23,12 +23,16 @@ RouteBase get $launchFlowShellRoute => ShellRouteData.$route(
           factory: $LaunchFlowAppUpdateRouteExtension._fromState,
         ),
         GoRouteData.$route(
-          path: '/release-notes',
+          path: '/release_notes',
           factory: $LaunchFlowReleaseNotesRouteExtension._fromState,
         ),
         GoRouteData.$route(
-          path: '/faculty-selection',
+          path: '/faculty_selection',
           factory: $LaunchFlowFacultySelectionRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: '/permissions_onboarding',
+          factory: $LaunchFlowPermissionsOnboardingRouteExtension._fromState,
         ),
       ],
     );
@@ -73,7 +77,7 @@ extension $LaunchFlowReleaseNotesRouteExtension on LaunchFlowReleaseNotesRoute {
   static LaunchFlowReleaseNotesRoute _fromState(GoRouterState state) => const LaunchFlowReleaseNotesRoute();
 
   String get location => GoRouteData.$location(
-        '/release-notes',
+        '/release_notes',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -89,8 +93,24 @@ extension $LaunchFlowFacultySelectionRouteExtension on LaunchFlowFacultySelectio
   static LaunchFlowFacultySelectionRoute _fromState(GoRouterState state) => const LaunchFlowFacultySelectionRoute();
 
   String get location => GoRouteData.$location(
-        '/faculty-selection',
+        '/faculty_selection',
       );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LaunchFlowPermissionsOnboardingRouteExtension on LaunchFlowPermissionsOnboardingRoute {
+  static LaunchFlowPermissionsOnboardingRoute _fromState(GoRouterState state) => const LaunchFlowPermissionsOnboardingRoute();
+
+  String get location => GoRouteData.$location(
+    '/permissions_onboarding',
+  );
 
   void go(BuildContext context) => context.go(location);
 

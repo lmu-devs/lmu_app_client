@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import '../../../logging.dart';
 import 'push_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tz;
@@ -22,11 +21,9 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
   final _localNotifications = FlutterLocalNotificationsPlugin();
   final _firebaseMessaging = FirebaseMessaging.instance;
 
-  final StreamController<String?> _onClickController =
-      StreamController.broadcast();
+  final StreamController<String?> _onClickController = StreamController.broadcast();
 
-  final AndroidNotificationChannel _androidChannel =
-      const AndroidNotificationChannel(
+  final AndroidNotificationChannel _androidChannel = const AndroidNotificationChannel(
     _AndroidNotificationConstants.channelId,
     _AndroidNotificationConstants.channelName,
     description: _AndroidNotificationConstants.channelDescription,
@@ -50,8 +47,6 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
     try {
       tz.initializeTimeZones();
 
-      await requestPermission();
-
       if (defaultTargetPlatform == TargetPlatform.android) {
         await _localNotifications
             .resolvePlatformSpecificImplementation<
@@ -62,7 +57,6 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
       await _initLocalNotifications();
       await _initFirebase();
 
-      AppLogger().logMessage("FCM TOKEN: ${await getFcmToken()}");
     } catch (e) {
       throw Exception("Failed to initialize push notifications - $e");
     }
@@ -74,7 +68,13 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
             _AndroidNotificationConstants.androidIcon);
 
     const DarwinInitializationSettings iosSettings =
-        DarwinInitializationSettings();
+        DarwinInitializationSettings(
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestCriticalPermission: false,
+      requestProvisionalPermission: false,
+      requestSoundPermission: false,
+    );
 
     const InitializationSettings initSettings =
         InitializationSettings(android: androidSettings, iOS: iosSettings);

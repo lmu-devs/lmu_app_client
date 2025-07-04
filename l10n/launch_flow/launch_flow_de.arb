@@ -21,5 +21,9 @@
   "facultySelectionDescription": "um personalisierte Inhalte zu sehen",
   "@facultySelectionDescription": {
     "description": "Beschreibung für den Fakultätsauswahl-Screen"
-  }
+  },
+  "permissionsOnboardingTitle": "Benachrichtigungen",
+  "permissionsOnboardingDescription": "Bleibe über aktuelle Informationen wie Fristen, Veranstaltungen und Neuigkeiten auf dem Laufenden",
+  "permissionsOnboardingButton": "Erlauben",
+  "permissionsOnboardingSkip": "Später festlegen"
 }

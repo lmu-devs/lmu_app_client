@@ -4,12 +4,12 @@ import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../component/data_privacy_disclaimer.dart';
 import '../component/launch_flow_page_header.dart';
-import '../viewmodel/release_notes_page_driver.dart';
+import '../viewmodel/permissions_onboarding_page_driver.dart';
 
-class ReleaseNotesPage extends DrivableWidget<ReleaseNotesPageDriver> {
-  ReleaseNotesPage({super.key});
+class PermissionsOnboardingPage
+    extends DrivableWidget<PermissionsOnboardingPageDriver> {
+  PermissionsOnboardingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +21,19 @@ class ReleaseNotesPage extends DrivableWidget<ReleaseNotesPageDriver> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (driver.showPrivacyPolicy) const DataPrivacyDisclaimer(),
-              if (driver.showPrivacyPolicy)
-                const SizedBox(height: LmuSizes.size_16),
               LmuButton(
-                title: driver.buttonText,
+                title: driver.doneButtonText,
                 showFullWidth: true,
                 size: ButtonSize.large,
-                onTap: driver.onButtonPressed,
+                onTap: driver.onDonePressed,
+              ),
+              const SizedBox(height: LmuSizes.size_12),
+              LmuButton(
+                emphasis: ButtonEmphasis.tertiary,
+                title: driver.skipButtonText,
+                showFullWidth: true,
+                size: ButtonSize.large,
+                onTap: driver.onSkipPressed,
               ),
             ],
           ),
@@ -43,20 +48,13 @@ class ReleaseNotesPage extends DrivableWidget<ReleaseNotesPageDriver> {
               child: Column(
                 children: [
                   LaunchFlowPageHeader(
-                    title: driver.releaseTitle,
-                    description: driver.releaseDescription,
+                    title: driver.permissionsTitle,
+                    description: driver.permissionsDescription,
                   ),
-                  LmuContentTile(
-                    contentList: driver.releaseNotes
-                        .map(
-                          (entry) => LmuListItem.base(
-                            title: entry.title,
-                            subtitle: entry.description,
-                            mainContentAlignment: MainContentAlignment.top,
-                            leadingArea: LmuInListBlurEmoji(emoji: entry.emoji),
-                          ),
-                        )
-                        .toList(),
+                  Image.asset(
+                    "assets/notification.png",
+                    package: "launch_flow",
+                    height: 250,
                   ),
                   const SizedBox(height: LmuSizes.size_96)
                 ],
@@ -69,6 +67,6 @@ class ReleaseNotesPage extends DrivableWidget<ReleaseNotesPageDriver> {
   }
 
   @override
-  WidgetDriverProvider<ReleaseNotesPageDriver> get driverProvider =>
-      $ReleaseNotesPageDriverProvider();
+  WidgetDriverProvider<PermissionsOnboardingPageDriver> get driverProvider =>
+      $PermissionsOnboardingPageDriverProvider();
 }

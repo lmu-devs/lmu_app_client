@@ -24,7 +24,9 @@ class FacultySelectionPage extends DrivableWidget<FacultySelectionPageDriver> {
                 title: driver.doneButtonText,
                 showFullWidth: true,
                 size: ButtonSize.large,
-                state: driver.isDoneButtonEnabled ? ButtonState.enabled : ButtonState.disabled,
+                state: driver.isDoneButtonEnabled
+                    ? ButtonState.enabled
+                    : ButtonState.disabled,
                 onTap: driver.onDonePressed,
               ),
               const SizedBox(height: LmuSizes.size_12),
@@ -42,28 +44,34 @@ class FacultySelectionPage extends DrivableWidget<FacultySelectionPageDriver> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                LaunchFlowPageHeader(
-                  title: driver.selectionTitle,
-                  description: driver.selectionDescription,
-                ),
-                LmuContentTile(
-                  contentList: driver.faculties
-                      .map(
-                        (faculty) => LmuListItem.action(
-                          leadingArea: LmuInListBlurEmoji(emoji: faculty.id.toString()),
-                          actionType: LmuListItemAction.checkbox,
-                          title: faculty.name,
-                          onChange: (val) => driver.onFacultySelected(faculty, val),
-                          initialValue: driver.selectedFaculties.contains(faculty),
-                        ),
-                      )
-                      .toList(),
-                ),
-                const SizedBox(height: LmuSizes.size_96)
-              ],
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  LaunchFlowPageHeader(
+                    title: driver.selectionTitle,
+                    description: driver.selectionDescription,
+                  ),
+                  LmuContentTile(
+                    contentList: driver.faculties
+                        .map(
+                          (faculty) => LmuListItem.action(
+                            leadingArea: LmuInListBlurEmoji(
+                                emoji: faculty.id.toString()),
+                            actionType: LmuListItemAction.checkbox,
+                            title: faculty.name,
+                            onChange: (val) =>
+                                driver.onFacultySelected(faculty, val),
+                            initialValue:
+                                driver.selectedFaculties.contains(faculty),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                  const SizedBox(height: LmuSizes.size_96)
+                ],
+              ),
             ),
           ),
         ),
@@ -72,5 +80,6 @@ class FacultySelectionPage extends DrivableWidget<FacultySelectionPageDriver> {
   }
 
   @override
-  WidgetDriverProvider<FacultySelectionPageDriver> get driverProvider => $FacultySelectionPageDriverProvider();
+  WidgetDriverProvider<FacultySelectionPageDriver> get driverProvider =>
+      $FacultySelectionPageDriverProvider();
 }

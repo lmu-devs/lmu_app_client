@@ -66,8 +66,7 @@ class SettingsMainPage extends StatelessWidget {
                     builder: (context, _) => LmuListItem.action(
                       title: settingLocalizations.appearance,
                       actionType: LmuListItemAction.chevron,
-                      trailingTitle: _getThemeModeString(
-                          themeMode.themeMode, settingLocalizations),
+                      trailingTitle: _getThemeModeString(themeMode.themeMode, settingLocalizations),
                       onTap: () => const SettingsAppearanceRoute().go(context),
                     ),
                   ),
@@ -192,15 +191,13 @@ class SettingsMainPage extends StatelessWidget {
                       ),
                     )
                   : const SizedBox.shrink(),
-              const SizedBox(
-                  height: kDebugMode ? LmuSizes.size_16 : LmuSizes.none),
+              const SizedBox(height: kDebugMode ? LmuSizes.size_16 : LmuSizes.none),
               LmuContentTile(
                 contentList: [
                   LmuListItem.base(
                     title: context.locals.app.suggestFeature,
                     mainContentAlignment: MainContentAlignment.center,
-                    leadingArea:
-                        const LeadingFancyIcons(icon: LucideIcons.plus),
+                    leadingArea: const LeadingFancyIcons(icon: LucideIcons.plus),
                     onTap: () {
                       feedbackApi.showFeedback(
                         context,
@@ -243,8 +240,7 @@ class SettingsMainPage extends StatelessWidget {
   }
 }
 
-String _getThemeModeString(
-    ThemeMode themeMode, SettingsLocalizations localizations) {
+String _getThemeModeString(ThemeMode themeMode, SettingsLocalizations localizations) {
   return switch (themeMode) {
     ThemeMode.system => localizations.systemMode,
     ThemeMode.dark => localizations.darkMode,

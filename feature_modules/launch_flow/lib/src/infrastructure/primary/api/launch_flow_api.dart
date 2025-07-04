@@ -90,6 +90,11 @@ class LaunchFlowApiImpl extends LaunchFlowApi {
           ),
         ),
         LaunchStep(
+          name: "Permission Onboarding",
+          route: const LaunchFlowPermissionsOnboardingRoute().location,
+          condition: () => _repository.shouldShowPermissionsOnboardingPage(),
+        ),
+        LaunchStep(
           name: "Release Notes",
           route: const LaunchFlowReleaseNotesRoute().location,
           condition: () => _getReleaseNotesUsecase.loadReleaseNotes().timeout(_defaultTimeout, onTimeout: () => false),

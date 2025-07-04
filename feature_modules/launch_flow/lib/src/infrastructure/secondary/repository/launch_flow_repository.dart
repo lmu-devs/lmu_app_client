@@ -25,4 +25,14 @@ class LaunchFlowRepository implements LaunchFlowRepositoryInterface {
   Future<void> showedFacultySelectionPage() {
     return _storage.saveShowedFacultySelectionPage();
   }
+
+  @override
+  Future<bool> shouldShowPermissionsOnboardingPage() async {
+    return await _storage.getShowPermissionsOnboardingPage() ?? true;
+  }
+
+  @override
+  Future<void> showedPermissionsOnboardingPage() {
+    return _storage.saveShowedPermissionsOnboardingPage();
+  }
 }
