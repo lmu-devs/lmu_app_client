@@ -308,7 +308,11 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                 ),
                 GoRouteData.$route(
                   path: 'people',
-                  factory: $PeopleMainRouteExtension._fromState,
+                  factory: $PeopleOverviewRouteExtension._fromState,
+                ),
+                GoRouteData.$route(
+                  path: 'people-faculties',
+                  factory: $PeopleFacultyOverviewRouteExtension._fromState,
                 ),
               ],
             ),
@@ -973,11 +977,32 @@ extension $LecturesMainRouteExtension on LecturesMainRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $PeopleMainRouteExtension on PeopleMainRoute {
-  static PeopleMainRoute _fromState(GoRouterState state) => const PeopleMainRoute();
+extension $PeopleOverviewRouteExtension on PeopleOverviewRoute {
+  static PeopleOverviewRoute _fromState(GoRouterState state) => PeopleOverviewRoute(
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
+      );
 
   String get location => GoRouteData.$location(
         '/studies/people',
+        queryParams: {
+          'faculty-id': facultyId.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $PeopleFacultyOverviewRouteExtension on PeopleFacultyOverviewRoute {
+  static PeopleFacultyOverviewRoute _fromState(GoRouterState state) => const PeopleFacultyOverviewRoute();
+
+  String get location => GoRouteData.$location(
+        '/studies/people-faculties',
       );
 
   void go(BuildContext context) => context.go(location);

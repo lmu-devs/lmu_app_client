@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -206,8 +204,11 @@ class LaunchFlowShellRoute extends ShellRouteData {
             TypedGoRoute<LecturesMainRoute>(
               path: LecturesMainRoute.path,
             ),
-            TypedGoRoute<PeopleMainRoute>(
-              path: PeopleMainRoute.path,
+            TypedGoRoute<PeopleOverviewRoute>(
+              path: PeopleOverviewRoute.path,
+            ),
+            TypedGoRoute<PeopleFacultyOverviewRoute>(
+              path: PeopleFacultyOverviewRoute.path,
             ),
           ],
         ),
