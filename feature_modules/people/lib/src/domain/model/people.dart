@@ -5,7 +5,7 @@ class People {
     required this.title,
   });
 
-  final String id;
+  final int id;
   final String name;
   final String title; // Position/Titel wie "Professor:in", "Wis. Mitarbeiter", etc.
 }
