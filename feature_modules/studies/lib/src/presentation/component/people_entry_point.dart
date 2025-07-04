@@ -26,10 +26,10 @@ class PeopleEntryPoint extends StatelessWidget {
         title: context.locals.people.peopleTitle,
         leadingArea: const LmuInListBlurEmoji(emoji: "👥"),
         onTap: () {
-          if (selectedFaculties.length == 1) {
+          if (selectedFaculties.length == 2) {
             PeopleOverviewRoute(facultyId: selectedFaculties.first.id).go(context);
           } else {
-            // Wenn Fakultäten ausgewählt sind, gehe zur Fakultäten-Seite
+
             const PeopleFacultyOverviewRoute().go(context);
           }
         },

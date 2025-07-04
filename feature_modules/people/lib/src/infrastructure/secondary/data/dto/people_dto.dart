@@ -10,14 +10,17 @@ class PeopleDto extends Equatable{
   const PeopleDto({
     required this.id,
     required this.name,
+    required this.title,
   });
 
   final String id;
   final String name;
+  final String title;
 
   People toDomain() => People(
         id: id,
         name: name,
+        title: title,
       );
 
   factory PeopleDto.fromJson(Map<String, dynamic> json) => _$PeopleDtoFromJson(json);
@@ -25,5 +28,5 @@ class PeopleDto extends Equatable{
   Map<String, dynamic> toJson() => _$PeopleDtoToJson(this);
 
   @override
-  List<Object?> get props => [id, name];
+  List<Object?> get props => [id, name, title];
 }

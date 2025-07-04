@@ -5,6 +5,7 @@ import 'package:shared_api/studies.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../application/usecase/get_people_usecase.dart';
+import '../../domain/model/people.dart';
 
 part 'people_overview_driver.g.dart';
 
@@ -23,8 +24,6 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
   late AppLocalizations _appLocalizations;
   late LmuToast _toast;
 
-  int _count = 0;
-
   List<Faculty> get selectedFaculties => _facultiesApi.selectedFaculties;
   List<Faculty> get allFaculties => _facultiesApi.allFaculties;
 
@@ -40,13 +39,36 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
     }
   }
 
-  String get peopleId => _usecase.data?.id ?? '';
-  String get title => _usecase.data?.name ?? '';
-  String get description => _count.toString();
+  List<People> get people => _usecase.data;
+  
+  // Filter und Sortierung
+  List<People> get filteredPeople {
+    var filtered = people;
+    
+    // Alphabetisch sortieren
+    filtered.sort((a, b) => a.name.compareTo(b.name));
+    
+    return filtered;
+  }
+  
+  // Gruppierung nach Alphabet
+  Map<String, List<People>> get groupedPeople {
+    final grouped = <String, List<People>>{};
+    
+    for (final person in filteredPeople) {
+      final firstLetter = person.name.isNotEmpty ? person.name[0].toUpperCase() : '#';
+      if (!grouped.containsKey(firstLetter)) {
+        grouped[firstLetter] = [];
+      }
+      grouped[firstLetter]!.add(person);
+    }
+    
+    return grouped;
+  }
 
-  void onPeopleCardPressed() {
-    _count += 1;
-    notifyWidget();
+  void onPersonPressed(People person) {
+    // TODO: Navigate to person details or implement person interaction
+    print('Person pressed: ${person.name}');
   }
 
   void _onStateChanged() {

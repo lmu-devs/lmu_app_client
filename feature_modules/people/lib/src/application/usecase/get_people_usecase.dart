@@ -12,10 +12,10 @@ class GetPeopleUsecase extends ChangeNotifier {
   final PeopleRepositoryInterface _repository;
 
   PeopleLoadState _loadState = PeopleLoadState.initial;
-  People? _data;
+  List<People> _data = [];
 
   PeopleLoadState get loadState => _loadState;
-  People? get data => _data;
+  List<People> get data => _data;
 
   Future<void> load() async {
     if (_loadState == PeopleLoadState.loading ||
@@ -25,13 +25,13 @@ class GetPeopleUsecase extends ChangeNotifier {
     }
 
     final cached = await _repository.getCachedPeople();
-    if (cached != null) {
+    if (cached != null && cached.isNotEmpty) {
       _loadState = PeopleLoadState.loadingWithCache;
       _data = cached;
       notifyListeners();
     } else {
       _loadState = PeopleLoadState.loading;
-      _data = null;
+      _data = [];
       notifyListeners();
     }
 
@@ -40,12 +40,12 @@ class GetPeopleUsecase extends ChangeNotifier {
       _loadState = PeopleLoadState.success;
       _data = result;
     } on PeopleGenericException {
-      if (cached != null) {
+      if (cached != null && cached.isNotEmpty) {
         _loadState = PeopleLoadState.success;
         _data = cached;
       } else {
         _loadState = PeopleLoadState.error;
-        _data = null;
+        _data = [];
       }
     }
 

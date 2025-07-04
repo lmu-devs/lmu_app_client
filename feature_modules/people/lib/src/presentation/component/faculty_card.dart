@@ -1,17 +1,19 @@
 import 'package:core/components.dart';
 import 'package:flutter/material.dart';
 
+import 'faculty_number_widget.dart';
+
 class FacultyCard extends StatelessWidget {
   const FacultyCard({
     super.key,
     required this.title,
     required this.onTap,
-    this.emoji = "📚",
+    required this.facultyId,
   });
 
   final String title;
   final void Function() onTap;
-  final String emoji;
+  final int facultyId;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class FacultyCard extends StatelessWidget {
         title: title,
         onTap: onTap,
         actionType: LmuListItemAction.chevron,
-        leadingArea: const LmuInListBlurEmoji(emoji: "📚"),
+        leadingArea: FacultyNumberWidget(facultyId: facultyId),
       ),
     );
   }

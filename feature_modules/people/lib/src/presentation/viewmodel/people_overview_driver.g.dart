@@ -28,16 +28,16 @@ class _$TestPeopleOverviewDriver extends TestDriver
   String get largeTitle => ' ';
 
   @override
-  String get peopleId => ' ';
+  List<People> get people => [];
 
   @override
-  String get title => ' ';
+  List<People> get filteredPeople => [];
 
   @override
-  String get description => ' ';
+  Map<String, List<People>> get groupedPeople => {};
 
   @override
-  void onPeopleCardPressed() {}
+  void onPersonPressed(People person) {}
 
   @override
   void didInitDriver() {}

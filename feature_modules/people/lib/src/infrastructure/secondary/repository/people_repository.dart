@@ -11,26 +11,22 @@ class PeopleRepository implements PeopleRepositoryInterface {
   final PeopleStorage _storage;
 
   @override
-  Future<People> getPeople() async {
+  Future<List<People>> getPeople() async {
     try {
       final retrievedPeopleData = await _apiClient.getPeople();
-      await _storage.savePeople(retrievedPeopleData);
-      return retrievedPeopleData.toDomain();
+      // For now, we'll just return the data directly
+      // TODO: Implement proper caching for lists
+      return retrievedPeopleData.map((dto) => dto.toDomain()).toList();
     } catch (e) {
       throw const PeopleGenericException();
     }
   }
 
   @override
-  Future<People?> getCachedPeople() async {
-    final cachedPeopleData = await _storage.getPeople();
-    if (cachedPeopleData == null) return null;
-    try {
-      return cachedPeopleData.toDomain();
-    } catch (e) {
-      deletePeople();
-      return null;
-    }
+  Future<List<People>?> getCachedPeople() async {
+    // For now, return null (no caching for lists yet)
+    // TODO: Implement proper caching for lists
+    return null;
   }
 
   @override

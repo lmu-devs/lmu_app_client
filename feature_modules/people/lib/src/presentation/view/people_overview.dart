@@ -1,9 +1,10 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../component/people_card.dart';
+import '../../domain/model/people.dart';
+import '../component/person_list_item.dart';
 import '../viewmodel/people_overview_driver.dart';
 
 class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
@@ -18,33 +19,47 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
         largeTitle: driver.largeTitle,
         leadingAction: LeadingAction.back,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-        child: LmuPageAnimationWrapper(
-          child: Align(
-            key: ValueKey("people_page_${driver.isLoading}"),
-            alignment: Alignment.topCenter,
-            child: content,
-          ),
-        ),
-      ),
+      body: _buildBody(),
     );
   }
 
-  Widget get content {
-    if (driver.isLoading) return const SizedBox.shrink(); // replace with skeleton loading
+  Widget _buildBody() {
+    try {
+      if (driver.isLoading) {
+        return const Center(child: CircularProgressIndicator());
+      }
 
-    return Column(
-      children: [
-        const SizedBox(height: LmuSizes.size_16),
-        PeopleCard(
-          id: driver.peopleId,
-          title: driver.title,
-          description: driver.description,
-          onTap: driver.onPeopleCardPressed,
+      final people = driver.people;
+      if (people.isEmpty) {
+        return Center(
+          child: LmuText.body('Keine Personen gefunden'),
+        );
+      }
+
+      // Einfachste mögliche Liste ohne Gruppierung
+      return Padding(
+        padding: const EdgeInsets.all(LmuSizes.size_16),
+        child: LmuContentTile(
+          contentList: people
+              .map((person) => PersonListItem(
+                    person: person,
+                    onTap: () => _onPersonTapped(person),
+                  ))
+              .toList(),
         ),
-      ],
-    );
+      );
+    } catch (e) {
+      return Center(
+        child: LmuText.body('Fehler beim Laden der Daten'),
+      );
+    }
+  }
+
+  void _onPersonTapped(People person) {
+    try {
+      driver.onPersonPressed(person);
+    } catch (e) {
+    }
   }
 
   @override
