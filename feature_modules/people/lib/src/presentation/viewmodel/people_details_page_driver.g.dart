@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'people_overview_driver.dart';
+part of 'people_details_page_driver.dart';
 
 // **************************************************************************
 // WidgetDriverGenerator
@@ -10,74 +10,50 @@ part of 'people_overview_driver.dart';
 
 // This file was generated with widget_driver_generator version "1.3.5"
 
-class _$TestPeopleOverviewDriver extends TestDriver implements PeopleOverviewDriver {
+class _$TestPeopleDetailsPageDriver extends TestDriver implements PeopleDetailsPageDriver {
   @override
-  int get facultyId => 0;
+  int get personId => 0;
 
   @override
-  List<Faculty> get selectedFaculties => [];
+  People? get person => null;
 
   @override
-  List<Faculty> get allFaculties => [];
-
-  @override
-  bool get isLoading => false;
-
-  @override
-  String get largeTitle => ' ';
-
-  @override
-  List<People> get people => [];
-
-  @override
-  List<People> get filteredPeople => [];
-
-  @override
-  Map<String, List<People>> get groupedPeople => {};
-
-  @override
-  void onPersonPressed(BuildContext context, People person) {}
-
-  @override
-  void onShowAllFacultiesPressed(BuildContext context) {}
+  String get personName => ' ';
 
   @override
   void didInitDriver() {}
 
   @override
-  void didUpdateBuildContext(BuildContext context) {}
-
-  @override
-  void didUpdateProvidedProperties({required int newFacultyId}) {}
+  void didUpdateProvidedProperties({required int newPersonId}) {}
 
   @override
   void dispose() {}
 }
 
-class $PeopleOverviewDriverProvider extends WidgetDriverProvider<PeopleOverviewDriver> {
-  final int _facultyId;
+class $PeopleDetailsPageDriverProvider extends WidgetDriverProvider<PeopleDetailsPageDriver> {
+  final int _personId;
 
-  $PeopleOverviewDriverProvider({
-    required int facultyId,
-  }) : _facultyId = facultyId;
+  $PeopleDetailsPageDriverProvider({
+    required int personId,
+  }) : _personId = personId;
 
   @override
-  PeopleOverviewDriver buildDriver() {
-    return PeopleOverviewDriver(
-      facultyId: _facultyId,
+  PeopleDetailsPageDriver buildDriver() {
+    return PeopleDetailsPageDriver(
+      personId: _personId,
     );
   }
 
   @override
-  PeopleOverviewDriver buildTestDriver() {
-    return _$TestPeopleOverviewDriver();
+  PeopleDetailsPageDriver buildTestDriver() {
+    return _$TestPeopleDetailsPageDriver();
   }
 
   @override
-  void updateDriverProvidedProperties(PeopleOverviewDriver driver) {
+  void updateDriverProvidedProperties(PeopleDetailsPageDriver driver) {
     // In case you get a compiler error here, you have to implement _$DriverProvidedProperties in your driver.
     // Like this:
-    //  class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedProperties {
+    //  class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedProperties {
     //
     //    ...
     //
@@ -87,7 +63,7 @@ class $PeopleOverviewDriverProvider extends WidgetDriverProvider<PeopleOverviewD
     //    }
     //  }
     driver.didUpdateProvidedProperties(
-      newFacultyId: _facultyId,
+      newPersonId: _personId,
     );
   }
 }
@@ -110,6 +86,6 @@ abstract class _$DriverProvidedProperties {
   /// it is NOT the place to run time consuming or blocking tasks etc. (like calling Api-Endpoints)
   /// This could greatly impact your apps performance.
   void didUpdateProvidedProperties({
-    required int newFacultyId,
+    required int newPersonId,
   });
 }

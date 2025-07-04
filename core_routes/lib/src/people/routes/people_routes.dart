@@ -27,3 +27,17 @@ class PeopleFacultyOverviewRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) => _router.buildFacultyOverview(context);
 }
+
+class PeopleDetailsRoute extends GoRouteData {
+  final int facultyId;
+  final int personId;
+
+  const PeopleDetailsRoute({required this.facultyId, required this.personId});
+
+  static const String path = 'details';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return _router.buildDetails(context, facultyId: facultyId, personId: personId);
+  }
+}
