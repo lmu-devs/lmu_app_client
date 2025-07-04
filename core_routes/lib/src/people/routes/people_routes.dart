@@ -7,9 +7,9 @@ import '../router/people_router.dart';
 PeopleRouter get _router => GetIt.I.get<PeopleRouter>();
 
 class PeopleOverviewRoute extends GoRouteData {
-  final int? facultyId;
+  final int facultyId;
 
-  const PeopleOverviewRoute({this.facultyId});
+  const PeopleOverviewRoute({required this.facultyId});
 
   static const String path = 'people';
 

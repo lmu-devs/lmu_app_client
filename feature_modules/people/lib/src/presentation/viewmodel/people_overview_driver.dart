@@ -11,11 +11,11 @@ part 'people_overview_driver.g.dart';
 @GenerateTestDriver()
 class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedProperties {
   PeopleOverviewDriver({
-    @driverProvidableProperty required int? facultyId,
+    @driverProvidableProperty required int facultyId,
   }) : _facultyId = facultyId;
 
-  late int? _facultyId;
-  int? get facultyId => _facultyId;
+  late int _facultyId;
+  int get facultyId => _facultyId;
 
   final _usecase = GetIt.I.get<GetPeopleUsecase>();
   final _facultiesApi = GetIt.I.get<FacultiesApi>();
@@ -31,13 +31,8 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
   bool get isLoading => _usecase.loadState != PeopleLoadState.success;
 
     String get largeTitle {
-    if (facultyId == null) return "People";
-    try {
-      final faculty = allFaculties.firstWhere((f) => f.id == facultyId);
-      return faculty.name;
-    } catch (e) {
-      return "People";
-    }
+    final faculty = allFaculties.firstWhere((f) => f.id == facultyId);
+    return faculty.name;
   }
 
   String get peopleId => _usecase.data?.id ?? '';
@@ -83,7 +78,7 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
 
   @override
   void didUpdateProvidedProperties({
-    required int? newFacultyId,
+    required int newFacultyId,
   }) {
     _facultyId = newFacultyId;
   }

@@ -13,7 +13,7 @@ part of 'people_overview_driver.dart';
 class _$TestPeopleOverviewDriver extends TestDriver
     implements PeopleOverviewDriver {
   @override
-  int? get facultyId => 0;
+  int get facultyId => 0;
 
   @override
   List<Faculty> get selectedFaculties => [];
@@ -46,7 +46,7 @@ class _$TestPeopleOverviewDriver extends TestDriver
   void didUpdateBuildContext(BuildContext context) {}
 
   @override
-  void didUpdateProvidedProperties({required int? newFacultyId}) {}
+  void didUpdateProvidedProperties({required int newFacultyId}) {}
 
   @override
   void dispose() {}
@@ -54,10 +54,10 @@ class _$TestPeopleOverviewDriver extends TestDriver
 
 class $PeopleOverviewDriverProvider
     extends WidgetDriverProvider<PeopleOverviewDriver> {
-  final int? _facultyId;
+  final int _facultyId;
 
   $PeopleOverviewDriverProvider({
-    required int? facultyId,
+    required int facultyId,
   }) : _facultyId = facultyId;
 
   @override
@@ -109,6 +109,6 @@ abstract class _$DriverProvidedProperties {
   /// it is NOT the place to run time consuming or blocking tasks etc. (like calling Api-Endpoints)
   /// This could greatly impact your apps performance.
   void didUpdateProvidedProperties({
-    required int? newFacultyId,
+    required int newFacultyId,
   });
 }
