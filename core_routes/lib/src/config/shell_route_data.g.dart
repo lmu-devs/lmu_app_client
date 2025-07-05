@@ -141,6 +141,10 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                       factory: $SettingsDebugRouteExtension._fromState,
                     ),
                     GoRouteData.$route(
+                      path: 'safari',
+                      factory: $SettingsSafariRouteExtension._fromState,
+                    ),
+                    GoRouteData.$route(
                       path: 'faculites',
                       factory: $FaculitesMainRouteExtension._fromState,
                     ),
@@ -442,6 +446,22 @@ extension $SettingsDebugRouteExtension on SettingsDebugRoute {
 
   String get location => GoRouteData.$location(
         '/home/settings/debug',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $SettingsSafariRouteExtension on SettingsSafariRoute {
+  static SettingsSafariRoute _fromState(GoRouterState state) => const SettingsSafariRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/settings/safari',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -979,7 +999,7 @@ extension $LecturesMainRouteExtension on LecturesMainRoute {
 
 extension $PeopleOverviewRouteExtension on PeopleOverviewRoute {
   static PeopleOverviewRoute _fromState(GoRouterState state) => PeopleOverviewRoute(
-        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!),
       );
 
   String get location => GoRouteData.$location(
