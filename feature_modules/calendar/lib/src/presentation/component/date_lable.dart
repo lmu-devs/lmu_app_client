@@ -1,10 +1,11 @@
+import 'package:core/components.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
+import '../../domain/model/helper/date_time_formatter.dart';
 
 class LmuDateLabel extends StatelessWidget {
-  final DateTime date;
-
   const LmuDateLabel({super.key, required this.date});
+  final DateTime date;
 
   @override
   Widget build(BuildContext context) {
@@ -12,21 +13,6 @@ class LmuDateLabel extends StatelessWidget {
     final today = DateTime(now.year, now.month, now.day);
     final input = DateTime(date.year, date.month, date.day);
     final diff = input.difference(today).inDays;
-
-    String prefix;
-    if (diff == 0) {
-      prefix = 'Heute';
-    } else if (diff == -1) {
-      prefix = 'Gestern';
-    } else if (diff == 1) {
-      prefix = 'Morgen';
-    } else {
-      prefix = '';
-    }
-
-    final weekday = DateFormat.EEEE('de_DE').format(date);
-    final dayMonth = DateFormat('d. MMMM', 'de_DE').format(date);
-    final text = [if (prefix.isNotEmpty) prefix, weekday, dayMonth].join(', ');
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,11 +33,8 @@ class LmuDateLabel extends StatelessWidget {
         const SizedBox(width: 8),
 
         /// Date text
-        Text(
-          text,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
+        LmuText.body(
+          DateTimeFormatter.formatShortDate(date),
         ),
       ],
     );

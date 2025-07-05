@@ -101,7 +101,7 @@ class CalendarEntryCard extends StatelessWidget {
 
                       /// Ort (Adresse + optional Raum)
                       LmuText.bodySmall(
-                        DateTimeFormatter.formatShortDate(event.startDate, context),
+                        DateTimeFormatter.formatShortDate(event.startDate),
                         color: context.colors.neutralColors.textColors.mediumColors.base,
                         maxLines: 2,
                         customOverFlow: TextOverflow.ellipsis,

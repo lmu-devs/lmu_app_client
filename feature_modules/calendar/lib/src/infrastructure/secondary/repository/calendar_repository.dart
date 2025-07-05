@@ -36,13 +36,14 @@ class CalendarRepository implements CalendarRepositoryInterface {
 
   @override
   Future<List<CalendarEntry>> getCalendarEvents() async {
-    final fetchedEventDtos = await _apiClient.getCalendarEntries();
-    final List<CalendarEntry> fetchedEventData =
-        fetchedEventDtos.map((dto) => CalendarEntryMapper.fromDto(dto)).toList();
-    if (fetchedEventData.isEmpty) {
-      return [];
+    try {
+      final fetchedEventDtos = await _apiClient.getCalendarEntries();
+      final List<CalendarEntry> fetchedEventData =
+          fetchedEventDtos.map((dto) => CalendarEntryMapper.fromDto(dto)).toList();
+      return fetchedEventData;
+    } catch (e) {
+      throw CalendarGenericException(e.toString());
     }
-    return fetchedEventData;
   }
 
   @override

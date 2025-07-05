@@ -1,3 +1,4 @@
+import 'package:core/components.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/model/helper/date_time_formatter.dart';
@@ -21,26 +22,26 @@ class DateRangeDisplay extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     if (isSameDay) {
-      final prefix = DateTimeFormatter.getRelativeDayLabel(start, context);
-      final dateText = DateTimeFormatter.formatFullDate(start, context);
+      final prefix = DateTimeFormatter.formatShortDate(start);
+      final dateLmuText = DateTimeFormatter.formatFullDate(start, context);
 
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('$prefix$dateText', style: textTheme.bodyMedium),
+          LmuText('$prefix$dateLmuText', textStyle: textTheme.bodyMedium),
           if (allDay)
-            Text('(ganztags)', style: textTheme.bodySmall)
+            LmuText('(ganztags)', textStyle: textTheme.bodySmall) // TODO: use localization
           else
-            Text('${DateTimeFormatter.formatTime(start, context)} - ${DateTimeFormatter.formatTime(end, context)}',
-                style: textTheme.bodySmall),
+            LmuText('${DateTimeFormatter.formatTime24h(start)} - ${DateTimeFormatter.formatTime24h(end)}',
+                textStyle: textTheme.bodySmall),
         ],
       );
     } else {
-      final startPrefix = allDay ? '' : DateTimeFormatter.formatTime(start, context);
-      final endPrefix = allDay ? '' : DateTimeFormatter.formatTime(end, context);
+      final startPrefix = allDay ? '' : DateTimeFormatter.formatTime24h(start);
+      final endPrefix = allDay ? '' : DateTimeFormatter.formatTime24h(end);
 
-      final startDate = DateTimeFormatter.formatShortDate(start, context);
-      final endDate = DateTimeFormatter.formatShortDate(end, context);
+      final startDate = DateTimeFormatter.formatShortDate(start);
+      final endDate = DateTimeFormatter.formatShortDate(end);
 
       return Wrap(
         crossAxisAlignment: WrapCrossAlignment.center,
@@ -50,16 +51,18 @@ class DateRangeDisplay extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(startDate, style: textTheme.bodyMedium),
-              if (!allDay) Text(startPrefix, style: textTheme.bodySmall),
+              LmuText(
+                startDate,
+              ),
+              if (!allDay) LmuText(startPrefix, textStyle: textTheme.bodySmall),
             ],
           ),
           const Icon(Icons.arrow_forward, size: 20),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(endDate, style: textTheme.bodyMedium),
-              if (!allDay) Text(endPrefix, style: textTheme.bodySmall),
+              LmuText(endDate, textStyle: textTheme.bodyMedium),
+              if (!allDay) LmuText(endPrefix, textStyle: textTheme.bodySmall),
             ],
           ),
         ],
