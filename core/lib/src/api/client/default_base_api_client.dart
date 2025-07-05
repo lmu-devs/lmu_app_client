@@ -46,7 +46,7 @@ class DefaultBaseApiClient extends BaseApiClient {
 
   Map<String, String> get _defaultHeaders => {
         "app-version": GetIt.I.get<SystemInfoService>().systemInfo.appVersion,
-        "accept-language": _locale.languageCode,
+        "accept-language": _locale.toLanguageTag(),
         if (_userApiKey != null) "user-api-key": _userApiKey!,
       };
 

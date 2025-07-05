@@ -30,5 +30,9 @@
   "facultySelectionDescription": "to see personalized content",
   "@facultySelectionDescription": {
     "description": "Description for the faculty selection screen"
-  }
+  },
+  "permissionsOnboardingTitle": "Notifications",
+  "permissionsOnboardingDescription": "Stay informed on timely updates like deadlines, events, and news",
+  "permissionsOnboardingButton": "Allow Notifications",
+  "permissionsOnboardingSkip": "Set up later"
 }

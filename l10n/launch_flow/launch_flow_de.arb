@@ -12,7 +12,7 @@
   "dataPrivacyIntro": "Mit dem Fortfahren akzeptierst du unsere ",
   "dataPrivacyLabel": "Datenschutzerklärung",
   "letsGo": "Los geht's",
-  "releaseNotesTitle": "Was is neu?",
+  "releaseNotesTitle": "Was ist neu?",
   "version": "Version {appVersion}",
   "facultySelectionTitle": "Wähle deine Fakultät",
   "@facultySelectionTitle": {
@@ -21,5 +21,9 @@
   "facultySelectionDescription": "um personalisierte Inhalte zu sehen",
   "@facultySelectionDescription": {
     "description": "Beschreibung für den Fakultätsauswahl-Screen"
-  }
+  },
+  "permissionsOnboardingTitle": "Benachrichtigungen",
+  "permissionsOnboardingDescription": "Bleibe über aktuelle Informationen wie Fristen, Veranstaltungen und Neuigkeiten auf dem Laufenden",
+  "permissionsOnboardingButton": "Erlauben",
+  "permissionsOnboardingSkip": "Später festlegen"
 }

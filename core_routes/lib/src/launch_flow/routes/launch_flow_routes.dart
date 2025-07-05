@@ -27,7 +27,7 @@ class LaunchFlowAppUpdateRoute extends GoRouteData {
 class LaunchFlowReleaseNotesRoute extends GoRouteData {
   const LaunchFlowReleaseNotesRoute();
 
-  static const String path = '/release-notes';
+  static const String path = '/release_notes';
 
   @override
   Widget build(BuildContext context, GoRouterState state) => _router.buildReleaseNotes(context);
@@ -36,8 +36,17 @@ class LaunchFlowReleaseNotesRoute extends GoRouteData {
 class LaunchFlowFacultySelectionRoute extends GoRouteData {
   const LaunchFlowFacultySelectionRoute();
 
-  static const String path = '/faculty-selection';
+  static const String path = '/faculty_selection';
 
   @override
   Widget build(BuildContext context, GoRouterState state) => _router.buildFacultySelection(context);
+}
+
+class LaunchFlowPermissionsOnboardingRoute extends GoRouteData {
+  const LaunchFlowPermissionsOnboardingRoute();
+
+  static const String path = '/permissions_onboarding';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => _router.buildPermissionsOnboarding(context);
 }

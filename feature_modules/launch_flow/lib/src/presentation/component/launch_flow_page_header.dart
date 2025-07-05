@@ -21,10 +21,13 @@ class LaunchFlowPageHeader extends StatelessWidget {
         const SizedBox(height: LmuSizes.size_48),
         LmuText.h1(title, textAlign: TextAlign.center),
         const SizedBox(height: LmuSizes.size_8),
-        LmuText.body(
-          description,
-          textAlign: TextAlign.center,
-          color: context.colors.neutralColors.textColors.mediumColors.base,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+          child: LmuText.body(
+            description,
+            textAlign: TextAlign.center,
+            color: context.colors.neutralColors.textColors.mediumColors.base,
+          ),
         ),
         const SizedBox(height: LmuSizes.size_48),
       ],

@@ -12,7 +12,7 @@ part of 'release_notes_page_driver.dart';
 
 class _$TestReleaseNotesPageDriver extends TestDriver implements ReleaseNotesPageDriver {
   @override
-  String get relaseTitle => ' ';
+  String get releaseTitle => ' ';
 
   @override
   String get releaseDescription => ' ';

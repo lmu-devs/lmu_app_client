@@ -11,6 +11,8 @@ abstract class SettingsRouter {
 
   Widget buildAnalytics(BuildContext context);
 
+  Widget buildNotifications(BuildContext context);
+
   Widget buildLicense(BuildContext context);
 
   Widget buildDebug(BuildContext context);
