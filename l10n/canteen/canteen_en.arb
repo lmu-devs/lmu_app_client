@@ -33,6 +33,20 @@
   "@closed": {
     "description": "The state of being closed"
   },
+  "closedDescription": "Unfortunately {canteenGender} {canteenName} is closed today.",
+  "@closedDescription": {
+    "description": "The state of being closed with canteen name",
+    "placeholders": {
+      "canteenName": {
+        "type": "String",
+        "example": "Mensa"
+      },
+      "canteenGender": {
+        "type": "String",
+        "example": "this"
+      }
+    }
+  },
   "allCanteens": "All Canteens",
   "@allCanteens": {
     "description": "Display all canteens"
@@ -286,6 +300,10 @@
   "menuNotAvailable": "Menu not available",
   "@menuNotAvailable": {
     "description": "Menu not available"
+  },
+  "menuNotAvailableDescription": "There is currently no menu available for this day. Please check back later.",
+  "@menuNotAvailableDescription": {
+    "description": "Description for menu not available"
   },
   "unsavedChanges": "You Have Unsaved Changes",
   "@unsavedChanges": {

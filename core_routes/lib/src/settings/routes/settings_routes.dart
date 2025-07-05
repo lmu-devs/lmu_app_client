@@ -68,3 +68,12 @@ class SettingsDebugRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) => _router.buildDebug(context);
 }
+
+class SettingsSafariRoute extends GoRouteData {
+  const SettingsSafariRoute();
+
+  static const String path = 'safari';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => _router.buildSafari(context);
+}

@@ -170,6 +170,15 @@ class SettingsMainPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: LmuSizes.size_16),
+              LmuContentTile(
+                content: LmuListItem.action(
+                  title: "LMU Safari",
+                  mainContentAlignment: MainContentAlignment.center,
+                  actionType: LmuListItemAction.chevron,
+                  onTap: () => const SettingsSafariRoute().go(context),
+                ),
+              ),
+              const SizedBox(height: LmuSizes.size_16),
               kDebugMode
                   ? LmuContentTile(
                       content: LmuListItem.action(
