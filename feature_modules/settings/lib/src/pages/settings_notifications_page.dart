@@ -5,17 +5,18 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:permission_handler/permission_handler.dart' show PermissionStatus;
+import 'package:permission_handler/permission_handler.dart'
+    show PermissionStatus;
 
 class SettingsNotificationsPage extends StatefulWidget {
   const SettingsNotificationsPage({super.key});
 
   @override
-  State<SettingsNotificationsPage> createState() =>
-      _SettingsNotificationsPageState();
+  State<SettingsNotificationsPage> createState() => _SettingsNotificationsPageState();
 }
 
 class _SettingsNotificationsPageState extends State<SettingsNotificationsPage> with WidgetsBindingObserver {
+  final _notificationsClient = GetIt.I<PushNotificationsClient>();
   final _notificationsPreferenceService = GetIt.I<NotificationsUserPreferenceService>();
 
   @override
@@ -38,6 +39,23 @@ class _SettingsNotificationsPageState extends State<SettingsNotificationsPage> w
     }
   }
 
+  Future<void> _onToggle(bool value) async {
+    final localContext = context;
+
+    LmuVibrations.secondary();
+    final hasShownNotificationRequest = await _notificationsClient.hasShownPermissionsRequest();
+
+    if (!localContext.mounted) return;
+
+    if (hasShownNotificationRequest ?? false) {
+      await PermissionsService.showNotificationsPermissionDialog(localContext);
+    } else {
+      await _notificationsClient.requestPermission();
+    }
+
+    _notificationsPreferenceService.refreshStatus();
+  }
+
   @override
   Widget build(BuildContext context) {
     return LmuScaffold(
@@ -56,18 +74,15 @@ class _SettingsNotificationsPageState extends State<SettingsNotificationsPage> w
               content: ValueListenableBuilder<PermissionStatus?>(
                 valueListenable: _notificationsPreferenceService.permissionStatus,
                 builder: (context, status, child) {
-                  final bool isEnabled = PermissionsService.isNotificationsPermissionGranted(status);
+                  final bool isEnabled =
+                      PermissionsService.isNotificationsPermissionGranted(status);
 
                   return LmuListItem.action(
                     key: ValueKey<bool>(isEnabled),
                     title: context.locals.settings.notificationsSwitch,
                     actionType: LmuListItemAction.toggle,
                     initialValue: isEnabled,
-                    onChange: (value) async {
-                      LmuVibrations.secondary();
-                      await PermissionsService.showNotificationsPermissionDialog(context);
-                      _notificationsPreferenceService.refreshStatus();
-                    },
+                    onChange: (value) async => await _onToggle(value),
                   );
                 },
               ),

@@ -1,11 +1,11 @@
 abstract class PushNotificationsClient {
   Stream<String?> get onNotificationClick;
 
-  Future<String?> getFcmToken();
-
   Future<void> init();
 
-  Future<bool> requestPermission();
+  Future<void> requestPermission();
+
+  Future<bool?> hasShownPermissionsRequest();
 
   Future<void> showNotification({
     required String title,

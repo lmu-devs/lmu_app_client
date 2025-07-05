@@ -4,6 +4,8 @@ import 'dart:math';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../../logging.dart';
 import 'push_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tz;
@@ -21,6 +23,8 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
   final _localNotifications = FlutterLocalNotificationsPlugin();
   final _firebaseMessaging = FirebaseMessaging.instance;
 
+  final String _permissionsRequestKey = 'shown_permission_request';
+
   final StreamController<String?> _onClickController = StreamController.broadcast();
 
   final AndroidNotificationChannel _androidChannel = const AndroidNotificationChannel(
@@ -32,15 +36,6 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
 
   @override
   Stream<String?> get onNotificationClick => _onClickController.stream;
-
-  @override
-  Future<String?> getFcmToken() async {
-    try {
-      return await _firebaseMessaging.getToken();
-    } catch (e) {
-      throw Exception("Failed to retrieve Firebase Cloud Messaging token - $e");
-    }
-  }
 
   @override
   Future<void> init() async {
@@ -132,8 +127,16 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
     }
   }
 
+  Future<String?> getFcmToken() async {
+    try {
+      return await _firebaseMessaging.getToken();
+    } catch (e) {
+      throw Exception("Failed to retrieve Firebase Cloud Messaging token - $e");
+    }
+  }
+
   @override
-  Future<bool> requestPermission() async {
+  Future<void> requestPermission() async {
     final permission = await _firebaseMessaging.requestPermission(
       alert: true,
       announcement: false,
@@ -144,7 +147,18 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
       sound: true,
     );
 
-    return permission.authorizationStatus == AuthorizationStatus.authorized;
+    if (permission.authorizationStatus == AuthorizationStatus.authorized) {
+      AppLogger().logMessage("FCM Token: ${await getFcmToken()}");
+    }
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_permissionsRequestKey, true);
+  }
+
+  @override
+  Future<bool?> hasShownPermissionsRequest() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_permissionsRequestKey);
   }
 
   NotificationDetails _notificationDetails() {
