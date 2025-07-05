@@ -3,6 +3,7 @@ import '../../../domain/interface/calendar_repository_interface.dart';
 import '../../../domain/model/calendar.dart';
 import '../../../domain/model/calendar_entry.dart';
 import '../data/api/calendar_api_client.dart';
+import '../data/dto/calendar_entry_mapper.dart';
 import '../data/storage/calendar_storage.dart';
 
 class CalendarRepository implements CalendarRepositoryInterface {
@@ -36,7 +37,8 @@ class CalendarRepository implements CalendarRepositoryInterface {
   @override
   Future<List<CalendarEntry>> getCalendarEvents() async {
     final fetchedEventDtos = await _apiClient.getCalendarEntries();
-    final List<CalendarEntry> fetchedEventData = fetchedEventDtos.map((e) => e.toDomain()).toList();
+    final List<CalendarEntry> fetchedEventData =
+        fetchedEventDtos.map((dto) => CalendarEntryMapper.fromDto(dto)).toList();
     if (fetchedEventData.isEmpty) {
       return [];
     }
@@ -48,7 +50,7 @@ class CalendarRepository implements CalendarRepositoryInterface {
     final cachedCalendarEntriesData = await _storage.getCalendarEntries();
     if (cachedCalendarEntriesData == null) return null;
     try {
-      return cachedCalendarEntriesData.map((e) => e.toDomain()).toList();
+      return cachedCalendarEntriesData.map((dto) => CalendarEntryMapper.fromDto(dto)).toList();
     } catch (e) {
       return null;
     }

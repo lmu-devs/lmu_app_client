@@ -1,3 +1,4 @@
+import 'package:core/logging.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/exception/calendar_events_generic_exception.dart';
@@ -5,6 +6,8 @@ import '../../domain/interface/calendar_repository_interface.dart';
 import '../../domain/model/calendar_entry.dart';
 
 enum CalendarEntriesLoadState { initial, loading, loadingWithCache, success, error }
+
+final _appLogger = AppLogger();
 
 class GetCalendarEntriesByDateUsecase extends ChangeNotifier {
   GetCalendarEntriesByDateUsecase(this._repository);
@@ -52,27 +55,6 @@ class GetCalendarEntriesByDateUsecase extends ChangeNotifier {
       }
     }
 
-    print('--> Loaded ${_data?.length ?? 0} calendar entries for date range: $dateRange');
+    _appLogger.logMessage('--> Loaded ${_data?.length ?? 0} calendar entries for date range: $dateRange');
   }
-
-  // Future<List<CalendarEvent>> call({DateTime? date}) async {
-  //   final allEvents = await _repository.getCalendarEvents();
-  //   if (date == null) return allEvents;
-  //   return allEvents.where((e) => e.occursOn(date)).toList();
-  // }
-
-  // Future<List<CalendarEvent>> call({DateTime? date}) async {
-  //   final allEvents = await _repository.getCalendarEvents();
-  //   print("Returned ${allEvents.length} events");
-  //   return allEvents; // temporär: kein Filter
-  // }
-
-  // Future<List<CalendarEntry>> call({DateTime? date}) async {
-  //   final allEvents = await _repository.getCalendarEvents();
-  //   print("Returned ${allEvents.length} events");
-
-  //   if (date == null) return allEvents;
-
-  //   return allEvents.where((event) => event.occursOn(date)).toList();
-  // }
 }

@@ -2,6 +2,7 @@ import 'package:core/api.dart';
 import 'package:flutter/material.dart';
 
 import '../../infrastructure/secondary/data/dto/calendar_entry_dto.dart';
+import '../../infrastructure/secondary/data/dto/calendar_entry_mapper.dart';
 import 'calendar_entry.dart';
 import 'event_type.dart';
 
@@ -91,7 +92,7 @@ List<CalendarEntryDto> createMockCalendarEntryDtos() {
     // return CalendarEntryDto.fromDomain(entry);
 
     // Creating a new DTO instance, to show that the data was modified from a mocked DTO object
-    final CalendarEntryDto dto = CalendarEntryDto.fromDomain(entry);
+    final CalendarEntryDto dto = CalendarEntryMapper.toDto(entry);
 
     return CalendarEntryDto(
       id: dto.id,

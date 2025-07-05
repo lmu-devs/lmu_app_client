@@ -25,9 +25,6 @@ class CalendarEventBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final location = LmuText(event.location.address);
-    final description = event.description != null ? LmuText.body(event.description!) : const SizedBox.shrink();
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -62,9 +59,9 @@ class CalendarEventBottomSheet extends StatelessWidget {
                 allDay: event.allDay,
               ),
               const SizedBox(height: LmuSizes.size_8),
-              location,
+              LmuText(event.location.address),
               const SizedBox(height: LmuSizes.size_16),
-              description,
+              event.description != null ? LmuText.body(event.description!) : const SizedBox.shrink(),
             ],
           ),
         ),

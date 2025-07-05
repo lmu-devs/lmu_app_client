@@ -6,8 +6,8 @@ import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../application/usecase/get_events_by_date_usecase.dart';
-import '../../domain/model/CalendarViewMode.dart';
 import '../../domain/model/calendar_entry.dart';
+import '../../domain/model/calendar_view_mode.dart';
 import '../view/calendar_event_contentsheet.dart';
 
 part 'calendar_page_driver.g.dart';
@@ -34,30 +34,9 @@ class CalendarPageDriver extends WidgetDriver {
   CalendarViewMode get viewMode => _viewMode;
   @TestDriverDefaultValue('2025-01-01')
   DateTimeRange get selectedDate => _selectedDateTimeRange;
-  // List<CalendarEntry>? get calendarEntries => _calendarEntries;
 
-  // Future<void> loadEvents() async {
-  //   _calendarEntriesLoadState = CalendarEntriesLoadState.loading;
-  //   notifyWidget();
-  //   await _getCalendarEntriesByDateUsecase.load(dateRange: _selectedDateTimeRange);
-
-  //   // if (_viewMode == CalendarViewMode.day) {
-  //   //   // _calendarEntries =
-  //   // } else {
-  //   //   // _calendarEntries =
-  //   //   await _getCalendarEntriesByDateUsecase.load(); // All events
-  //   // }
-  //   _calendarEntries = _getCalendarEntriesByDateUsecase.data;
-
-  //   for (final entry in _calendarEntries ?? []) {
-  //     print('Loaded event: ${entry.title}');
-  //   }
-  //   print('Loaded events inside : ${_selectedDateTimeRange.toString()}');
-
-  //   _calendarEntriesLoadState = CalendarEntriesLoadState.success;
-  //   notifyWidget();
-  // }
-
+  // Getter for the current date range
+  // This code is only used for testing purposes as it is not very efficient to compute the date range every time
   Future<void> loadEvents() async {
     _calendarEntriesLoadState = CalendarEntriesLoadState.loading;
     notifyWidget();

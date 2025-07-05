@@ -1,34 +1,18 @@
-// import 'package:core/api.dart';
-
-// import '../dto/calendar_dto.dart';
-
-// class CalendarApiClient {
-//   const CalendarApiClient(this._baseApiClient);
-
-//   // ignore: unused_field
-//   final BaseApiClient _baseApiClient;
-
-//   Future<CalendarDto> getCalendar() async {
-//     return const CalendarDto(id: 'test-id-123', name: 'TestCalendarEintrag');
-//     // final response = await _baseApiClient.get(CalendarApiEndpoints.calendar);
-//     // return CalendarDto.fromJson(jsonDecode(response.body));
-//   }
-// }
-
 import 'dart:convert';
 
 import 'package:core/api.dart';
+import 'package:core/logging.dart';
 
 import '../../../../domain/model/mock_events.dart';
 import '../dto/calendar_dto.dart';
 import '../dto/calendar_entry_dto.dart';
 import 'calendar_api_endpoints.dart';
 
+final _appLogger = AppLogger();
+
 class CalendarApiClient {
   const CalendarApiClient(this._baseApiClient);
   final BaseApiClient _baseApiClient;
-
-  // CalendarApiClient() : _baseApiClient = GetIt.I.get<BaseApiClient>();
 
   /// Creates a new calendar entry.
   Future<CalendarEntryDto> createCalendarEntry(CalendarEntryDto calendarData) async {
@@ -98,30 +82,6 @@ class CalendarApiClient {
     return CalendarEntryDto.fromJson({'entries': jsonList});
   }
 
-  // /// Retrieves calendar entries for a user, with optional filters.
-  // Future<List<CalendarEntryDto>> getCalendarEntries({
-  //   String? eventType,
-  //   String? frequency,
-  //   bool? allDay,
-  // }) async {
-  //   final response = await _baseApiClient.get(
-  //     CalendarApiEndpoints.getCalendarEntries(
-  //       eventType: eventType,
-  //       frequency: frequency,
-  //       allDay: allDay,
-  //     ),
-  //   );
-
-  //   if (response.statusCode == 504) {
-  //     throw Exception('Failed to load calendar data - ${response.statusCode}');
-  //   }
-  //   // Decode the JSON string into a List<dynamic>
-  //   final List<dynamic> jsonList = json.decode(response.body) as List<dynamic>;
-
-  //   // Map each item in the list to a CalendarEntry object
-  //   return jsonList.map((json) => CalendarEntryDto.fromJson(json)).toList();
-  // }
-
   /// Retrieves calendar entries for a user, with optional filters.
   Future<List<CalendarEntryDto>> getCalendarEntries({
     String? eventType,
@@ -134,7 +94,7 @@ class CalendarApiClient {
       allDay: allDay,
     );
 
-    print("[DEBUG] Request URL: $url"); // Log the exact URL being called
+    _appLogger.logMessage("[DEBUG] Request URL: $url"); // Log the exact URL being called
 
     return createMockCalendarEntryDtos();
 
