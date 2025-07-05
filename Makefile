@@ -6,6 +6,7 @@ include fvm.mk
 
 localizations: check_fvm_info
 	$(FVM_FLUTTER) gen-l10n --arb-dir ./l10n/app --output-dir ./core/lib/src/localizations/generated --template-arb-file app_en.arb --output-localization-file app_localizations.dart --output-class AppLocalizations --no-synthetic-package
+	$(FVM_FLUTTER) gen-l10n --arb-dir ./l10n/calendar --output-dir ./core/lib/src/localizations/generated --template-arb-file calendar_en.arb --output-localization-file calendar_localizations.dart --output-class CalendarLocalizations --no-synthetic-package
 	$(FVM_FLUTTER) gen-l10n --arb-dir ./l10n/canteen --output-dir ./core/lib/src/localizations/generated --template-arb-file canteen_en.arb --output-localization-file canteen_localizations.dart --output-class CanteenLocalizations --no-synthetic-package
 	$(FVM_FLUTTER) gen-l10n --arb-dir ./l10n/explore --output-dir ./core/lib/src/localizations/generated --template-arb-file explore_en.arb --output-localization-file explore_localizations.dart --output-class ExploreLocalizations --no-synthetic-package
 	$(FVM_FLUTTER) gen-l10n --arb-dir ./l10n/wishlist --output-dir ./core/lib/src/localizations/generated --template-arb-file wishlist_en.arb --output-localization-file wishlist_localizations.dart --output-class WishlistLocalizations --no-synthetic-package

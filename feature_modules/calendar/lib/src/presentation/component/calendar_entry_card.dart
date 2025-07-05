@@ -21,15 +21,13 @@ class CalendarEntryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // LayoutBuilder here would be nice -  Paul
     final cardWidth = isHalfWidth ? (MediaQuery.of(context).size.width - 40) / 2 : double.infinity;
 
     return GestureDetector(
       onTap: () => onTap(),
       child: Container(
         height: 150,
-        // constraints: const BoxConstraints(
-        //   maxHeight: 150,
-        // ),
         width: cardWidth,
         margin: const EdgeInsets.only(bottom: LmuSizes.size_12),
         decoration: BoxDecoration(
@@ -103,7 +101,7 @@ class CalendarEntryCard extends StatelessWidget {
 
                       /// Ort (Adresse + optional Raum)
                       LmuText.bodySmall(
-                        DateTimeFormatter.formatShortDate(event.startDate, context),
+                        DateTimeFormatter.formatShortDate(event.startDate),
                         color: context.colors.neutralColors.textColors.mediumColors.base,
                         maxLines: 2,
                         customOverFlow: TextOverflow.ellipsis,
