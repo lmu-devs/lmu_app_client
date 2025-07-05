@@ -10,7 +10,11 @@ import 'routes/settings_router.dart';
 import 'usecase/safari_usecase.dart';
 
 class SettingsModule extends AppModule
-    with PublicApiProvidingAppModule, LocalDependenciesProvidingAppModule, NoticeableAppStartAppModule {
+    with
+        PublicApiProvidingAppModule,
+        LocalDependenciesProvidingAppModule,
+        NoticeableAppStartAppModule,
+        PrivateDataContainingAppModule {
   @override
   String get moduleName => 'SettingsModule';
 
@@ -32,5 +36,11 @@ class SettingsModule extends AppModule
   void onAppStartNotice() {
     final safariUsecase = GetIt.I.get<SafariUsecase>();
     safariUsecase.loadAnimalsSeen();
+  }
+
+  @override
+  void onDeletePrivateData() {
+    final safariUsecase = GetIt.I.get<SafariUsecase>();
+    safariUsecase.reset();
   }
 }
