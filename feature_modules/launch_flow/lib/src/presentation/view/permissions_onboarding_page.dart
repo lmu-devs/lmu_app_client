@@ -67,6 +67,5 @@ class PermissionsOnboardingPage
   }
 
   @override
-  WidgetDriverProvider<PermissionsOnboardingPageDriver> get driverProvider =>
-      $PermissionsOnboardingPageDriverProvider();
+  WidgetDriverProvider<PermissionsOnboardingPageDriver> get driverProvider => $PermissionsOnboardingPageDriverProvider();
 }

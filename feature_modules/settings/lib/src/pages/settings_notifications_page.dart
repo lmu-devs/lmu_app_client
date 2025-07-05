@@ -64,9 +64,7 @@ class _SettingsNotificationsPageState extends State<SettingsNotificationsPage> w
         leadingAction: LeadingAction.back,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: LmuSizes.size_16,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
         child: Column(
           children: [
             const SizedBox(height: LmuSizes.size_16),
@@ -74,8 +72,7 @@ class _SettingsNotificationsPageState extends State<SettingsNotificationsPage> w
               content: ValueListenableBuilder<PermissionStatus?>(
                 valueListenable: _notificationsPreferenceService.permissionStatus,
                 builder: (context, status, child) {
-                  final bool isEnabled =
-                      PermissionsService.isNotificationsPermissionGranted(status);
+                  final bool isEnabled = PermissionsService.isNotificationsPermissionGranted(status);
 
                   return LmuListItem.action(
                     key: ValueKey<bool>(isEnabled),

@@ -127,7 +127,7 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
     }
   }
 
-  Future<String?> getFcmToken() async {
+  Future<String?> _getFcmToken() async {
     try {
       return await _firebaseMessaging.getToken();
     } catch (e) {
@@ -148,7 +148,7 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
     );
 
     if (permission.authorizationStatus == AuthorizationStatus.authorized) {
-      AppLogger().logMessage("FCM Token: ${await getFcmToken()}");
+      AppLogger().logMessage("FCM Token: ${await _getFcmToken()}");
     }
 
     final prefs = await SharedPreferences.getInstance();

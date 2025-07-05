@@ -22,8 +22,7 @@ class ReleaseNotesPage extends DrivableWidget<ReleaseNotesPageDriver> {
             mainAxisSize: MainAxisSize.min,
             children: [
               if (driver.showPrivacyPolicy) const DataPrivacyDisclaimer(),
-              if (driver.showPrivacyPolicy)
-                const SizedBox(height: LmuSizes.size_16),
+              if (driver.showPrivacyPolicy) const SizedBox(height: LmuSizes.size_16),
               LmuButton(
                 title: driver.buttonText,
                 showFullWidth: true,
@@ -69,6 +68,5 @@ class ReleaseNotesPage extends DrivableWidget<ReleaseNotesPageDriver> {
   }
 
   @override
-  WidgetDriverProvider<ReleaseNotesPageDriver> get driverProvider =>
-      $ReleaseNotesPageDriverProvider();
+  WidgetDriverProvider<ReleaseNotesPageDriver> get driverProvider => $ReleaseNotesPageDriverProvider();
 }

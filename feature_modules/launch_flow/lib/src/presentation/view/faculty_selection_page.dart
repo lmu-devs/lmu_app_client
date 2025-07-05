@@ -46,31 +46,33 @@ class FacultySelectionPage extends DrivableWidget<FacultySelectionPageDriver> {
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
           child: Align(
             alignment: Alignment.topCenter,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  LaunchFlowPageHeader(
-                    title: driver.selectionTitle,
-                    description: driver.selectionDescription,
-                  ),
-                  LmuContentTile(
-                    contentList: driver.faculties
-                        .map(
-                          (faculty) => LmuListItem.action(
-                            leadingArea: LmuInListBlurEmoji(
-                                emoji: faculty.id.toString()),
-                            actionType: LmuListItemAction.checkbox,
-                            title: faculty.name,
-                            onChange: (val) =>
-                                driver.onFacultySelected(faculty, val),
-                            initialValue:
-                                driver.selectedFaculties.contains(faculty),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                  const SizedBox(height: LmuSizes.size_96)
-                ],
+            child: ListFadingShader(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    LaunchFlowPageHeader(
+                      title: driver.selectionTitle,
+                      description: driver.selectionDescription,
+                    ),
+                    LmuContentTile(
+                      contentList: driver.faculties
+                          .map(
+                            (faculty) => LmuListItem.action(
+                              leadingArea: LmuInListBlurEmoji(
+                                  emoji: faculty.id.toString()),
+                              actionType: LmuListItemAction.checkbox,
+                              title: faculty.name,
+                              onChange: (val) =>
+                                  driver.onFacultySelected(faculty, val),
+                              initialValue:
+                                  driver.selectedFaculties.contains(faculty),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                    const SizedBox(height: LmuSizes.size_96)
+                  ],
+                ),
               ),
             ),
           ),
