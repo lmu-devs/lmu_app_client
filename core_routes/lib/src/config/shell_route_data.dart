@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -28,6 +26,8 @@ part 'shell_route_data.g.dart';
   routes: [
     TypedGoRoute<LaunchFlowWelcomeRoute>(path: LaunchFlowWelcomeRoute.path),
     TypedGoRoute<LaunchFlowAppUpdateRoute>(path: LaunchFlowAppUpdateRoute.path),
+    TypedGoRoute<LaunchFlowReleaseNotesRoute>(path: LaunchFlowReleaseNotesRoute.path),
+    TypedGoRoute<LaunchFlowFacultySelectionRoute>(path: LaunchFlowFacultySelectionRoute.path),
   ],
 )
 class LaunchFlowShellRoute extends ShellRouteData {
@@ -204,8 +204,11 @@ class LaunchFlowShellRoute extends ShellRouteData {
             TypedGoRoute<LecturesMainRoute>(
               path: LecturesMainRoute.path,
             ),
-            TypedGoRoute<PeopleMainRoute>(
-              path: PeopleMainRoute.path,
+            TypedGoRoute<PeopleOverviewRoute>(
+              path: PeopleOverviewRoute.path,
+            ),
+            TypedGoRoute<PeopleFacultyOverviewRoute>(
+              path: PeopleFacultyOverviewRoute.path,
             ),
           ],
         ),

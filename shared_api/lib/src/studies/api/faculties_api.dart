@@ -9,4 +9,7 @@ abstract class FacultiesApi {
 
   /// A stream that emits updates whenever [selectedFaculties] changes.
   Stream<List<Faculty>> get selectedFacultiesStream;
+
+  /// Selects the given list of faculties.
+  void selectFaculties(List<Faculty> faculties);
 }
