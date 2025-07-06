@@ -51,6 +51,15 @@ class SettingsAnalyticsRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) => _router.buildAnalytics(context);
 }
 
+class SettingsNotificationsRoute extends GoRouteData {
+  const SettingsNotificationsRoute();
+
+  static const String path = 'notifications';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => _router.buildNotifications(context);
+}
+
 class SettingsLicenceRoute extends GoRouteData {
   const SettingsLicenceRoute();
 

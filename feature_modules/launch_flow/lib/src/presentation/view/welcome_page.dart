@@ -46,27 +46,31 @@ class WelcomePage extends DrivableWidget<WelcomePageDriver> {
           body: SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    LaunchFlowPageHeader(
-                      title: driver.welcomeTitle,
-                      description: driver.welcomeSubtitle,
-                    ),
-                    LmuContentTile(
-                      contentList: driver.entries
-                          .map(
-                            (entry) => LmuListItem.base(
-                              title: entry.title,
-                              subtitle: entry.description,
-                              mainContentAlignment: MainContentAlignment.top,
-                              leadingArea: LmuInListBlurEmoji(emoji: entry.emoji),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                    const SizedBox(height: LmuSizes.size_96)
-                  ],
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      LaunchFlowPageHeader(
+                        title: driver.welcomeTitle,
+                        description: driver.welcomeSubtitle,
+                      ),
+                      LmuContentTile(
+                        contentList: driver.entries
+                            .map(
+                              (entry) => LmuListItem.base(
+                                title: entry.title,
+                                subtitle: entry.description,
+                                mainContentAlignment: MainContentAlignment.top,
+                                leadingArea:
+                                    LmuInListBlurEmoji(emoji: entry.emoji),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                      const SizedBox(height: LmuSizes.size_96)
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -77,5 +81,6 @@ class WelcomePage extends DrivableWidget<WelcomePageDriver> {
   }
 
   @override
-  WidgetDriverProvider<WelcomePageDriver> get driverProvider => $WelcomePageDriverProvider();
+  WidgetDriverProvider<WelcomePageDriver> get driverProvider =>
+      $WelcomePageDriverProvider();
 }
