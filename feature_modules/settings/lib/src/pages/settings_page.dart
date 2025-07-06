@@ -78,10 +78,26 @@ class SettingsMainPage extends StatelessWidget {
                         actionType: LmuListItemAction.chevron,
                         trailingTitle: languageMode.isAutomatic
                             ? settingLocalizations.systemMode
-                            : languageMode.locale.localizedName(settingLocalizations),
+                            : languageMode.locale
+                                .localizedName(settingLocalizations),
                         onTap: () => const SettingsLanguageRoute().go(context),
                       );
                     },
+                  ),
+                ],
+              ),
+              const SizedBox(height: LmuSizes.size_16),
+              LmuContentTile(
+                contentList: [
+                  LmuListItem.action(
+                    title: "Analytics",
+                    actionType: LmuListItemAction.chevron,
+                    onTap: () => const SettingsAnalyticsRoute().go(context),
+                  ),
+                  LmuListItem.action(
+                    title: settingLocalizations.notificationsTitle,
+                    actionType: LmuListItemAction.chevron,
+                    onTap: () => const SettingsNotificationsRoute().go(context),
                   ),
                 ],
               ),
@@ -158,11 +174,6 @@ class SettingsMainPage extends StatelessWidget {
                     },
                   ),
                   LmuListItem.action(
-                    title: "Analytics",
-                    actionType: LmuListItemAction.chevron,
-                    onTap: () => const SettingsAnalyticsRoute().go(context),
-                  ),
-                  LmuListItem.action(
                     title: settingLocalizations.licenses,
                     actionType: LmuListItemAction.chevron,
                     onTap: () => const SettingsLicenceRoute().go(context),
@@ -190,7 +201,9 @@ class SettingsMainPage extends StatelessWidget {
                     onTap: () {
                       feedbackApi.showFeedback(
                         context,
-                        args: const FeedbackArgs(type: FeedbackType.suggestion, origin: 'SettingsScreen'),
+                        args: const FeedbackArgs(
+                            type: FeedbackType.suggestion,
+                            origin: 'SettingsScreen'),
                       );
                     },
                   ),
@@ -201,7 +214,8 @@ class SettingsMainPage extends StatelessWidget {
                     onTap: () {
                       feedbackApi.showFeedback(
                         context,
-                        args: const FeedbackArgs(type: FeedbackType.bug, origin: 'SettingsScreen'),
+                        args: const FeedbackArgs(
+                            type: FeedbackType.bug, origin: 'SettingsScreen'),
                       );
                     },
                   ),
