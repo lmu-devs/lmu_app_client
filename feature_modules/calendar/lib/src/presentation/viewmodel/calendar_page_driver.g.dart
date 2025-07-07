@@ -8,26 +8,40 @@ part of 'calendar_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.3.3"
+// This file was generated with widget_driver_generator version "1.3.5"
 
 class _$TestCalendarPageDriver extends TestDriver implements CalendarPageDriver {
   @override
-  bool get isLoading => false;
+  bool get isLoadingEvents => false;
 
   @override
   String get largeTitle => ' ';
 
   @override
-  String get calendarId => ' ';
+  CalendarViewMode get viewMode => CalendarViewMode.values[0];
 
   @override
-  String get title => ' ';
+  DateTimeRange<DateTime> get selectedDate => DateTime.now().dateTimeRangeFromDateTime;
 
   @override
-  String get description => ' ';
+  List<CalendarEntry>? get calendarEntries => [];
 
   @override
-  void onCalendarCardPressed() {}
+  Future<void> loadEvents() {
+    return Future.value();
+  }
+
+  @override
+  void onViewModeChanged(CalendarViewMode mode) {}
+
+  @override
+  void onDateSelected(DateTimeRange<DateTime> dateRange) {}
+
+  @override
+  void onEventTap(CalendarEntry event, BuildContext context) {}
+
+  @override
+  void onAddEventPressed() {}
 
   @override
   void didInitDriver() {}

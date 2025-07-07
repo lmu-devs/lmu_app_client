@@ -65,6 +65,10 @@
   "@tomorrow": {
     "description": "Tomorrow"
   },
+  "yesterday": "Yesterday",
+  "@yesterday": {
+    "description": "Yesterday"
+  },
   "search": "Search",
   "@search": {
     "description": "Search"
