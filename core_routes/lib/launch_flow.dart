@@ -5,5 +5,6 @@ export 'src/config/shell_route_data.dart'
         $LaunchFlowAppUpdateRouteExtension,
         $LaunchFlowWelcomeRouteExtension,
         $LaunchFlowReleaseNotesRouteExtension,
-        $LaunchFlowFacultySelectionRouteExtension;
+        $LaunchFlowFacultySelectionRouteExtension,
+        $LaunchFlowPermissionsOnboardingRouteExtension;
 export 'src/launch_flow/launch_flow.dart';

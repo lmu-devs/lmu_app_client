@@ -8,4 +8,6 @@ abstract class LaunchFlowRouter {
   Widget buildReleaseNotes(BuildContext context);
 
   Widget buildFacultySelection(BuildContext context);
+
+  Widget buildPermissionsOnboarding(BuildContext context);
 }

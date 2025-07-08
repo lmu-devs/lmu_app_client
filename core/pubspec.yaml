@@ -52,6 +52,9 @@ dependencies:
   core_routes:
     path: ../core_routes
   firebase_analytics: ^11.5.0
+  firebase_messaging: ^15.2.7
+  flutter_local_notifications: ^19.3.0
+  timezone: ^0.10.1
 
 dev_dependencies:
   flutter_lints: ^2.0.0

@@ -89,7 +89,7 @@ class _LinksContentViewState extends State<LinksContentView> {
                           },
                         ),
                       ),
-                      const SizedBox(height: LmuSizes.size_72 + LmuSizes.size_96),
+                      const SizedBox(height: LmuSizes.size_96),
                     ],
                   );
                 },

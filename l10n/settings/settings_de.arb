@@ -40,5 +40,8 @@
   "changeFaculty": "Fakultät ändern",
   "analyticsSwitch": "Analytics erlauben",
   "analyticsDescription": "Hilf uns, die App zu verbessern, indem du anonyme Nutzungsdaten teilst. Dazu gehören Informationen darüber, welche Funktionen du am häufigsten verwendest und wo Probleme auftreten.",
-  "analyticsLink": "Für mehr Informationen besuch unsere "
+  "analyticsLink": "Für mehr Informationen besuch unsere ",
+  "notificationsTitle": "Benachrichtigungen",
+  "notificationsSwitch": "Benachrichtigungen erlauben",
+  "notificationsDescription": "Push-Benachrichtigungen halten dich über aktuelle und relevante Informationen auf dem Laufenden z.B. Fristen, Veranstaltungen und Neuigkeiten. Du kannst sie in den Geräteeinstellungen ein- oder ausstellen."
 }
