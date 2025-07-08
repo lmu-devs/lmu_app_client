@@ -48,7 +48,7 @@ class WelcomePageDriver extends WidgetDriver {
 
   void onButtonPressed() {
     final analyticsUserPreferenceService = GetIt.I<AnalyticsUserPreferenceService>();
-    analyticsUserPreferenceService.toggleAnalytics(true);
+    analyticsUserPreferenceService.toggleAnalytics(AnalyticsPreference.enabled);
     GetIt.I.get<LaunchFlowRepositoryInterface>().showedWelcomePage();
     final launchFlowApi = GetIt.I.get<LaunchFlowApi>();
     launchFlowApi.continueFlow(_navigatorContext);
