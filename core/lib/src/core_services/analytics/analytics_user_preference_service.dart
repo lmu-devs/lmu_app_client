@@ -30,8 +30,8 @@ class AnalyticsUserPreferenceService {
   Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
 
-    final currentPref = _prefs.getString(_analyticsKey) ?? AnalyticsPreference.none.name;
-    final preference = AnalyticsPreferenceExtension.fromString(currentPref);
+    final storedPreference = _prefs.getString(_analyticsKey) ?? AnalyticsPreference.none.name;
+    final preference = AnalyticsPreferenceExtension.fromString(storedPreference);
     analyticsPreference.value = preference;
 
     if (preference == AnalyticsPreference.enabled) {
