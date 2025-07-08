@@ -18,7 +18,53 @@ class _$TestPeopleDetailsPageDriver extends TestDriver implements PeopleDetailsP
   People? get person => null;
 
   @override
-  String get personName => ' ';
+  bool get isLoading => false;
+
+  @override
+  String get faculty => ' ';
+
+  @override
+  String get role => ' ';
+
+  @override
+  String get email => ' ';
+
+  @override
+  String get phone => ' ';
+
+  @override
+  String get website => ' ';
+
+  @override
+  String get room => ' ';
+
+  @override
+  String get consultation => ' ';
+
+  @override
+  Future<void> onEmailTap() {
+    return Future.value();
+  }
+
+  @override
+  Future<void> onPhoneTap() {
+    return Future.value();
+  }
+
+  @override
+  Future<void> onWebsiteTap() {
+    return Future.value();
+  }
+
+  @override
+  Future<void> onRoomTap() {
+    return Future.value();
+  }
+
+  @override
+  Future<void> onConsultationTap() {
+    return Future.value();
+  }
 
   @override
   void didInitDriver() {}
