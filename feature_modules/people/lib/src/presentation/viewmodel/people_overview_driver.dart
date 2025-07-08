@@ -39,15 +39,9 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
 
   List<People> get people => _usecase.data;
 
-  String _getLastName(String fullName) {
-    final parts = fullName.trim().split(' ');
-    return parts.isNotEmpty ? parts.last : fullName;
-  }
-
   List<People> get filteredPeople {
     var filtered = people;
-    filtered.sort((a, b) => _getLastName(a.name).compareTo(_getLastName(b.name)));
-
+    filtered.sort((a, b) => a.surname.compareTo(b.surname));
     return filtered;
   }
 
@@ -55,8 +49,7 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
     final grouped = <String, List<People>>{};
 
     for (final person in filteredPeople) {
-      final lastName = _getLastName(person.name);
-      final firstLetter = lastName.isNotEmpty ? lastName[0].toUpperCase() : '#';
+      final firstLetter = person.surname.isNotEmpty ? person.surname[0].toUpperCase() : '#';
       if (!grouped.containsKey(firstLetter)) {
         grouped[firstLetter] = [];
       }
