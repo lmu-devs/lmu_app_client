@@ -1,3 +1,4 @@
+import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
@@ -23,16 +24,7 @@ class FacultyNumberWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(LmuSizes.size_6),
         ),
       ),
-      child: Center(
-        child: Text(
-          formattedNumber,
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: LmuSizes.size_20,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
+      child: Center(child: LmuText.h2(formattedNumber)),
     );
   }
 }

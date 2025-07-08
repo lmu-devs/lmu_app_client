@@ -39,23 +39,18 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
 
   List<People> get people => _usecase.data;
 
-  // Helper to extract last name from full name
   String _getLastName(String fullName) {
     final parts = fullName.trim().split(' ');
     return parts.isNotEmpty ? parts.last : fullName;
   }
 
-  // Filter und Sortierung nach Nachnamen
   List<People> get filteredPeople {
     var filtered = people;
-
-    // Alphabetisch nach Nachnamen sortieren
     filtered.sort((a, b) => _getLastName(a.name).compareTo(_getLastName(b.name)));
 
     return filtered;
   }
 
-  // Gruppierung nach Nachnamen-Anfangsbuchstaben
   Map<String, List<People>> get groupedPeople {
     final grouped = <String, List<People>>{};
 
@@ -68,7 +63,6 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
       grouped[firstLetter]!.add(person);
     }
 
-    // Sortiere die Buchstaben alphabetisch
     final sortedKeys = grouped.keys.toList()..sort();
     final sortedGrouped = <String, List<People>>{};
     for (final key in sortedKeys) {
