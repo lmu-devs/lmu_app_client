@@ -7,11 +7,13 @@ part of 'people_dto.dart';
 // **************************************************************************
 
 PeopleDto _$PeopleDtoFromJson(Map<String, dynamic> json) => PeopleDto(
-      id: json['id'] as String,
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
+      title: json['title'] as String,
     );
 
 Map<String, dynamic> _$PeopleDtoToJson(PeopleDto instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'title': instance.title,
     };
