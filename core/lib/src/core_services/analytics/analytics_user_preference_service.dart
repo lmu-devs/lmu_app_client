@@ -32,13 +32,7 @@ class AnalyticsUserPreferenceService {
 
     final storedPreference = _prefs.getString(_analyticsKey) ?? AnalyticsPreference.none.name;
     final preference = AnalyticsPreferenceExtension.fromString(storedPreference);
-    analyticsPreference.value = preference;
-
-    if (preference == AnalyticsPreference.enabled) {
-      _applyAnalyticsSetting(true);
-    } else {
-      _applyAnalyticsSetting(false);
-    }
+    await toggleAnalytics(preference);
   }
 
   Future<void> toggleAnalytics(AnalyticsPreference preference) async {
