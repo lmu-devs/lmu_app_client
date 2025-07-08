@@ -11,8 +11,7 @@ CalendarDto _$CalendarDtoFromJson(Map<String, dynamic> json) => CalendarDto(
       name: json['name'] as String,
     );
 
-Map<String, dynamic> _$CalendarDtoToJson(CalendarDto instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$CalendarDtoToJson(CalendarDto instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
     };

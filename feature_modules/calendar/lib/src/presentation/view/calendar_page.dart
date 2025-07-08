@@ -3,7 +3,7 @@ import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../../domain/model/CalendarViewMode.dart';
+import '../../domain/model/calendar_view_mode.dart';
 import '../component/calendar_entry_card.dart';
 import '../component/loading_components/calendar_card_loading.dart';
 import '../component/week_selector.dart';

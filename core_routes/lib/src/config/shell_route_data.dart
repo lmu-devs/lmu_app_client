@@ -73,6 +73,9 @@ class LaunchFlowShellRoute extends ShellRouteData {
                 TypedGoRoute<SettingsDebugRoute>(
                   path: SettingsDebugRoute.path,
                 ),
+                TypedGoRoute<SettingsSafariRoute>(
+                  path: SettingsSafariRoute.path,
+                ),
                 TypedGoRoute<FaculitesMainRoute>(
                   path: FaculitesMainRoute.path,
                 ),

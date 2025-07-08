@@ -8,6 +8,7 @@ export 'src/config/shell_route_data.dart'
         $SettingsDebugRouteExtension,
         $SettingsLanguageRouteExtension,
         $SettingsAnalyticsRouteExtension,
-        $SettingsNotificationsRouteExtension,
-        $SettingsLicenceRouteExtension;
+        $SettingsLicenceRouteExtension,
+        $SettingsSafariRouteExtension,
+        $SettingsNotificationsRouteExtension;
 export 'src/settings/settings.dart';

@@ -30,7 +30,7 @@ class StudiesPage extends DrivableWidget<StudiesPageDriver> {
               onTap: () {},
             ),
             const SizedBox(height: LmuSizes.size_32),
-            const CalanderEntryPoint.CalanderEntryPoint(),
+            const CelanderEntryPoint(),
             // const CalanderEntryPoint(),
             const SizedBox(height: LmuSizes.size_32),
             const LecturesEntryPoint(),

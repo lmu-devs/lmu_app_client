@@ -6,17 +6,13 @@ part of 'calendar_rule_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CalendarRuleDto _$CalendarRuleDtoFromJson(Map<String, dynamic> json) =>
-    CalendarRuleDto(
+CalendarRuleDto _$CalendarRuleDtoFromJson(Map<String, dynamic> json) => CalendarRuleDto(
       frequency: $enumDecode(_$FrequencyEnumMap, json['frequency']),
       interval: (json['interval'] as num).toInt(),
-      untilTime: json['until_time'] == null
-          ? null
-          : DateTime.parse(json['until_time'] as String),
+      untilTime: json['until_time'] == null ? null : DateTime.parse(json['until_time'] as String),
     );
 
-Map<String, dynamic> _$CalendarRuleDtoToJson(CalendarRuleDto instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$CalendarRuleDtoToJson(CalendarRuleDto instance) => <String, dynamic>{
       'frequency': _$FrequencyEnumMap[instance.frequency]!,
       'interval': instance.interval,
       'until_time': instance.untilTime?.toIso8601String(),

@@ -177,6 +177,10 @@
   "@somethingWentWrong": {
     "description": "Something went wrong"
   },
+  "somethingWentWrongDescription": "An unexpected error has occurred. Please try again later.",
+  "@somethingWentWrongDescription": {
+    "description": "Description for the error message"
+  },
   "tryAgain": "Try again",
   "@tryAgain": {
     "description": "Try again"
@@ -233,9 +237,13 @@
   "@prevSearch": {
     "description": "Previous Search"
   },
-  "noResults": "No results",
-  "@noResults": {
+  "noSearchResults": "No results found",
+  "@noSearchResults": {
     "description": "No results"
+  },
+  "noSearchResultsDescription": "Try adjusting your search terms or check your spelling.",
+  "@noSearchResultsDescription": {
+    "description": "Description for no search results"
   },
   "favorites": "Favorites",
   "@favorites": {
@@ -244,6 +252,16 @@
   "allClosed": "Everything is closed",
   "@allClosed": {
     "description": "All canteens or libraries are closed"
+  },
+  "allClosedDescription": "All {places} are currently closed. Please check back later.",
+  "@allClosedDescription": {
+    "description": "Description when all canteens or libraries are closed",
+    "placeholders": {
+      "places": {
+        "type": "String",
+        "example": "Libraries"
+      }
+    }
   },
   "phone": "Phone",
   "@phone": {
@@ -304,5 +322,18 @@
   "setUpLater": "Set up later",
   "@setUpLater": {
     "description": "Set up later"
+  },
+  "noInternetConnection": "No internet connection",
+  "@noInternetConnection": {
+    "description": "No internet connection"
+  },
+  "noInternetConnectionDescription": "Please check your internet connection and try again.",
+  "diese": "this",
+  "@diese": {
+    "description": "This (feminine)"
+  },
+  "dieses": "this",
+  "@dieses": {
+    "description": "This (neuter)"
   }
 }
