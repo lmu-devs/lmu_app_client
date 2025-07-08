@@ -17,7 +17,7 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
     if (driver.isLoading) {
       return LmuScaffold(
         appBar: LmuAppBarData(
-          largeTitle: 'Loading...',
+          largeTitle: driver.loadingText,
           leadingAction: LeadingAction.back,
         ),
         body: const Center(
@@ -29,11 +29,11 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
     if (person == null) {
       return LmuScaffold(
         appBar: LmuAppBarData(
-          largeTitle: 'Person not found',
+          largeTitle: driver.personNotFoundText,
           leadingAction: LeadingAction.back,
         ),
-        body: const Center(
-          child: Text('Person not found'),
+        body: Center(
+          child: Text(driver.personNotFoundText),
         ),
       );
     }
@@ -56,7 +56,7 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            LmuTileHeadline.base(title: "Fakultät & Rolle"),
+            LmuTileHeadline.base(title: driver.facultyAndRoleText),
             const SizedBox(height: LmuSizes.size_2),
             LmuContentTile(
               contentList: [
@@ -69,36 +69,36 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
               ],
             ),
             const SizedBox(height: LmuSizes.size_32),
-            LmuTileHeadline.base(title: "Kontakt"),
+            LmuTileHeadline.base(title: driver.contactText),
             const SizedBox(height: LmuSizes.size_2),
             LmuContentTile(
               contentList: [
                 LmuListItem.base(
-                  title: "E-Mail",
+                  title: driver.emailText,
                   subtitle: driver.email,
                   trailingArea: const Icon(Icons.mail_outline),
                   onTap: () => driver.onEmailTap(),
                 ),
                 LmuListItem.base(
-                  title: "Telefon",
+                  title: driver.phoneText,
                   subtitle: driver.phone,
                   trailingArea: const Icon(Icons.phone_outlined),
                   onTap: () => driver.onPhoneTap(),
                 ),
                 LmuListItem.base(
-                  title: "Website",
+                  title: driver.websiteText,
                   subtitle: driver.website,
                   trailingArea: const Icon(Icons.open_in_new),
                   onTap: () => driver.onWebsiteTap(),
                 ),
                 LmuListItem.base(
-                  title: "Raum",
+                  title: driver.roomText,
                   subtitle: driver.room,
                   trailingArea: const Icon(Icons.map_outlined),
                   onTap: () => driver.onRoomTap(),
                 ),
                 LmuListItem.base(
-                  title: "Sprechstunde",
+                  title: driver.consultationHoursText,
                   subtitle: driver.consultation,
                   trailingArea: const Icon(Icons.schedule_outlined),
                   onTap: () => driver.onConsultationTap(),

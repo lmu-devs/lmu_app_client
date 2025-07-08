@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:core/localizations.dart';
 
 import '../../application/usecase/get_people_usecase.dart';
 import '../../domain/model/people.dart';
@@ -20,6 +21,18 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
   int get personId => _personId;
 
   final _usecase = GetIt.I.get<GetPeopleUsecase>();
+
+  late AppLocalizations _appLocalizations;
+
+  String get loadingText => _appLocalizations.people.loading;
+  String get personNotFoundText => _appLocalizations.people.personNotFound;
+  String get facultyAndRoleText => _appLocalizations.people.facultyAndRole;
+  String get contactText => _appLocalizations.people.contact;
+  String get emailText => _appLocalizations.people.email;
+  String get phoneText => _appLocalizations.people.phone;
+  String get websiteText => _appLocalizations.people.website;
+  String get roomText => _appLocalizations.people.room;
+  String get consultationHoursText => _appLocalizations.people.consultationHours;
 
   People? get person => _usecase.data.where((p) => p.id == personId).firstOrNull;
   bool get isLoading => _usecase.loadState != PeopleLoadState.success;
@@ -62,6 +75,12 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
     if (_usecase.data.isEmpty) {
       _usecase.load();
     }
+  }
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {
+    super.didUpdateBuildContext(context);
+    _appLocalizations = context.locals.app;
   }
 
   @override

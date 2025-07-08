@@ -34,7 +34,7 @@ class PeopleFacultyOverview extends DrivableWidget<PeopleFacultyOverviewDriver> 
       children: [
         const SizedBox(height: LmuSizes.size_16),
         if (driver.selectedFaculties.isNotEmpty) ...[
-          LmuTileHeadline.base(title: "Meine Fakultäten"),
+          LmuTileHeadline.base(title: driver.myFacultiesText),
           const SizedBox(height: LmuSizes.size_2),
           LmuContentTile(
             contentList: driver.selectedFaculties
@@ -50,7 +50,7 @@ class PeopleFacultyOverview extends DrivableWidget<PeopleFacultyOverviewDriver> 
           ),
           const SizedBox(height: LmuSizes.size_24),
         ],
-        LmuTileHeadline.base(title: "Alle Fakultäten"),
+        LmuTileHeadline.base(title: driver.allFacultiesText),
         const SizedBox(height: LmuSizes.size_2),
         LmuContentTile(
           contentList: driver.allFaculties

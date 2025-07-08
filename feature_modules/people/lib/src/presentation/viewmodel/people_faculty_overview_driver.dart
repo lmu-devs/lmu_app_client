@@ -17,13 +17,17 @@ class PeopleFacultyOverviewDriver extends WidgetDriver {
   late AppLocalizations _appLocalizations;
   late LmuToast _toast;
 
+  String get contactsText => _appLocalizations.people.contacts;
+  String get myFacultiesText => _appLocalizations.people.myFaculties;
+  String get allFacultiesText => _appLocalizations.people.allFaculties;
+
   List<Faculty> get selectedFaculties => _facultiesApi.selectedFaculties;
 
   List<Faculty> get allFaculties => _facultiesApi.allFaculties;
 
   bool get isLoading => _usecase.loadState != PeopleLoadState.success;
 
-  String get largeTitle => "Kontakte";
+  String get largeTitle => contactsText;
 
   void onFacultyPressed(BuildContext context, Faculty faculty) {
     PeopleOverviewRoute(facultyId: faculty.id).go(context);

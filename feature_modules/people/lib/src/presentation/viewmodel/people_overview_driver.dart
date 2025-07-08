@@ -27,6 +27,8 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
   late AppLocalizations _appLocalizations;
   late LmuToast _toast;
 
+  String get showAllFacultiesText => _appLocalizations.people.showAllFaculties;
+
   List<Faculty> get selectedFaculties => _facultiesApi.selectedFaculties;
   List<Faculty> get allFaculties => _facultiesApi.allFaculties;
 
