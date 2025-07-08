@@ -36,27 +36,30 @@ class ReleaseNotesPage extends DrivableWidget<ReleaseNotesPageDriver> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                LaunchFlowPageHeader(
-                  title: driver.relaseTitle,
-                  description: driver.releaseDescription,
-                ),
-                LmuContentTile(
-                  contentList: driver.releaseNotes
-                      .map(
-                        (entry) => LmuListItem.base(
-                          title: entry.title,
-                          subtitle: entry.description,
-                          mainContentAlignment: MainContentAlignment.top,
-                          leadingArea: LmuInListBlurEmoji(emoji: entry.emoji),
-                        ),
-                      )
-                      .toList(),
-                ),
-                const SizedBox(height: LmuSizes.size_96)
-              ],
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  LaunchFlowPageHeader(
+                    title: driver.releaseTitle,
+                    description: driver.releaseDescription,
+                  ),
+                  LmuContentTile(
+                    contentList: driver.releaseNotes
+                        .map(
+                          (entry) => LmuListItem.base(
+                            title: entry.title,
+                            subtitle: entry.description,
+                            mainContentAlignment: MainContentAlignment.top,
+                            leadingArea: LmuInListBlurEmoji(emoji: entry.emoji),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                  const SizedBox(height: LmuSizes.size_96)
+                ],
+              ),
             ),
           ),
         ),

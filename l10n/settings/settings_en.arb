@@ -163,5 +163,17 @@
   "analyticsLink": "For more information visit our ",
   "@analyticsLink": {
     "description": "Text before the privacy policy link"
+  },
+  "notificationsTitle": "Notifications",
+  "@notificationsTitle": {
+    "description": "Notifications"
+  },
+  "notificationsSwitch": "Allow Notification",
+  "@notificationsSwitch": {
+    "description": "Text before the notifications switch"
+  },
+  "notificationsDescription": "Push notifications keep you informed about timely and relevant updates e.g. deadlines, events, and news. You can set them via your device settings.",
+  "@notificationsDescription": {
+    "description": "Description for notifications"
   }
 }

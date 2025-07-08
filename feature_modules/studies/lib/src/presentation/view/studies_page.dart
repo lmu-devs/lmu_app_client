@@ -31,6 +31,7 @@ class StudiesPage extends DrivableWidget<StudiesPageDriver> {
             ),
             const SizedBox(height: LmuSizes.size_32),
             const CelanderEntryPoint(),
+            // const CalanderEntryPoint(),
             const SizedBox(height: LmuSizes.size_32),
             const LecturesEntryPoint(),
             const SizedBox(height: LmuSizes.size_32),

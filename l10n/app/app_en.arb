@@ -65,6 +65,10 @@
   "@tomorrow": {
     "description": "Tomorrow"
   },
+  "yesterday": "Yesterday",
+  "@yesterday": {
+    "description": "Yesterday"
+  },
   "search": "Search",
   "@search": {
     "description": "Search"
@@ -104,6 +108,14 @@
   "settings": "Settings",
   "@settings": {
     "description": "Settings"
+  },
+  "notificationsPermissionDialogTitle": "Stay in control of notifications",
+  "@notificationsPermissionDialogTitle": {
+    "description": "Dialog title if notifications permissions get changed"
+  },
+  "notificationsPermissionDialogText": "You can manage your preferences on push notifications by going to your device settings and turning notifications on or off for this app.",
+  "@notificationsPermissionDialogText": {
+      "description": "Dialog text if notifications permissions get changed"
   },
   "suggestFeature": "Suggest a feature",
   "@suggestFeature": {

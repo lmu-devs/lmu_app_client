@@ -80,6 +80,7 @@ class SettingsAnalyticsPage extends StatelessWidget {
                 ],
               ),
             ),
+            const SizedBox(height: LmuSizes.size_96),
           ],
         ),
       ),

@@ -20,7 +20,7 @@ class ReleaseNotesPageDriver extends WidgetDriver {
 
   final _repository = GetIt.I.get<ReleaseNotesRepositoryInterface>();
 
-  String get relaseTitle => _flowLocalizations.releaseNotesTitle;
+  String get releaseTitle => _flowLocalizations.releaseNotesTitle;
 
   String get releaseDescription => _flowLocalizations.version(_appVersion);
 

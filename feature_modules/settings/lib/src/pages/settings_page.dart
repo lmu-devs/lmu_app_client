@@ -88,6 +88,21 @@ class SettingsMainPage extends StatelessWidget {
               const SizedBox(height: LmuSizes.size_16),
               LmuContentTile(
                 contentList: [
+                  LmuListItem.action(
+                    title: "Analytics",
+                    actionType: LmuListItemAction.chevron,
+                    onTap: () => const SettingsAnalyticsRoute().go(context),
+                  ),
+                  LmuListItem.action(
+                    title: settingLocalizations.notificationsTitle,
+                    actionType: LmuListItemAction.chevron,
+                    onTap: () => const SettingsNotificationsRoute().go(context),
+                  ),
+                ],
+              ),
+              const SizedBox(height: LmuSizes.size_16),
+              LmuContentTile(
+                contentList: [
                   LmuListItem.base(
                     title: settingLocalizations.aboutLmuDevelopers,
                     trailingArea: linkIcon,
@@ -156,11 +171,6 @@ class SettingsMainPage extends StatelessWidget {
                         mode: LmuUrlLauncherMode.inAppWebView,
                       );
                     },
-                  ),
-                  LmuListItem.action(
-                    title: "Analytics",
-                    actionType: LmuListItemAction.chevron,
-                    onTap: () => const SettingsAnalyticsRoute().go(context),
                   ),
                   LmuListItem.action(
                     title: settingLocalizations.licenses,

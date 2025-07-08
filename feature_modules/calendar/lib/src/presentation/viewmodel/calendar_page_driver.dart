@@ -1,46 +1,103 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
+import 'package:core/utils.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../../application/usecase/get_calendar_usecase.dart';
-import '../../domain/model/calendar.dart';
+import '../../application/usecase/get_events_by_date_usecase.dart';
+import '../../domain/model/calendar_entry.dart';
+import '../../domain/model/calendar_view_mode.dart';
+import '../view/calendar_event_contentsheet.dart';
 
 part 'calendar_page_driver.g.dart';
 
 @GenerateTestDriver()
 class CalendarPageDriver extends WidgetDriver {
-  final _getCalendarUsecase = GetIt.I.get<GetCalendarUsecase>();
+  final _getCalendarEntriesByDateUsecase = GetIt.I.get<GetCalendarEntriesByDateUsecase>();
 
   late AppLocalizations _appLocalizations;
   late LmuToast _toast;
 
-  late Calendar? _calendar;
-  late CalendarLoadState _calendarLoadState;
+  late List<CalendarEntry>? _calendarEntries;
+  late CalendarEntriesLoadState _calendarEntriesLoadState;
 
-  int _count = 0;
-
-  bool get isLoading => _calendarLoadState != CalendarLoadState.success;
-
+  bool get isLoadingEvents => _calendarEntriesLoadState != CalendarEntriesLoadState.success;
   String get largeTitle => "Calendar"; // TODO: Replace with localized title
 
-  String get calendarId => _calendar?.id ?? '';
+  CalendarViewMode _viewMode = CalendarViewMode.list;
+  DateTimeRange _selectedDateTimeRange = DateTimeRange(
+    start: DateTime.now(),
+    end: DateTime.now().add(const Duration(days: 365)),
+  );
 
-  String get title => _calendar?.name ?? '';
+  CalendarViewMode get viewMode => _viewMode;
+  @TestDriverDefaultValue('2025-01-01')
+  DateTimeRange get selectedDate => _selectedDateTimeRange;
 
-  String get description => _count.toString();
-
-  void onCalendarCardPressed() {
-    _count += 1;
+  // Getter for the current date range
+  // This code is only used for testing purposes as it is not very efficient to compute the date range every time
+  Future<void> loadEvents() async {
+    _calendarEntriesLoadState = CalendarEntriesLoadState.loading;
     notifyWidget();
+
+    await _getCalendarEntriesByDateUsecase.load(dateRange: _selectedDateTimeRange);
+
+    _allCalendarEntries = _getCalendarEntriesByDateUsecase.data;
+
+    _calendarEntriesLoadState = CalendarEntriesLoadState.success;
+    notifyWidget(); // This will trigger recompute of `calendarEntries`
   }
 
-  void _onCalendarStateChanged() {
-    _calendarLoadState = _getCalendarUsecase.loadState;
-    _calendar = _getCalendarUsecase.data;
+  late List<CalendarEntry>? _allCalendarEntries;
+
+  List<CalendarEntry>? get calendarEntries {
+    if (_allCalendarEntries == null) return null;
+
+    print('Loaded events inside ---: ${_selectedDateTimeRange.toString()}');
+    return _allCalendarEntries!.where((entry) {
+      print('entry.title: ${entry.title}, '
+          'overlaps: ${entry.overlapsWithRange(_selectedDateTimeRange)}');
+      return entry.overlapsWithRange(_selectedDateTimeRange);
+    }).toList();
+  }
+
+  void onViewModeChanged(CalendarViewMode mode) {
+    if (_viewMode != mode) {
+      if (mode == CalendarViewMode.list) {
+        final weekStart = _selectedDateTimeRange.start.startOfWeek;
+        final weekEnd = weekStart.add(const Duration(days: 6));
+        _selectedDateTimeRange = DateTimeRange(start: weekStart, end: weekEnd);
+      } else if (mode == CalendarViewMode.day) {
+        final day = _selectedDateTimeRange.start;
+        _selectedDateTimeRange = DateTimeRange(start: day.startOfDay, end: day.endOfDay);
+      }
+    }
+    _viewMode = mode;
+    loadEvents();
+  }
+
+  void onDateSelected(DateTimeRange dateRange) {
+    _selectedDateTimeRange = dateRange;
+    if (_viewMode == CalendarViewMode.day) {
+      loadEvents();
+    }
+  }
+
+  void onEventTap(CalendarEntry event, BuildContext context) {
+    openCalendarEventContentSheet(context, event: event);
+  }
+
+  void onAddEventPressed() {
+    // navigation or modal logic
+  }
+
+  void _onCalendarEntriesStateChanged() {
+    _calendarEntriesLoadState = _getCalendarEntriesByDateUsecase.loadState;
+    _calendarEntries = _getCalendarEntriesByDateUsecase.data;
     notifyWidget();
 
-    if (_calendarLoadState == CalendarLoadState.error) {
+    if (_calendarEntriesLoadState == CalendarEntriesLoadState.error) {
       _showErrorToast();
     }
   }
@@ -50,17 +107,18 @@ class CalendarPageDriver extends WidgetDriver {
       message: _appLocalizations.somethingWentWrong,
       type: ToastType.error,
       actionText: _appLocalizations.tryAgain,
-      onActionPressed: () => _getCalendarUsecase.load(),
+      onActionPressed: () => _getCalendarEntriesByDateUsecase.load(),
     );
   }
 
   @override
   void didInitDriver() {
     super.didInitDriver();
-    _calendarLoadState = _getCalendarUsecase.loadState;
-    _calendar = _getCalendarUsecase.data;
-    _getCalendarUsecase.addListener(_onCalendarStateChanged);
-    _getCalendarUsecase.load();
+    _calendarEntriesLoadState = _getCalendarEntriesByDateUsecase.loadState;
+    _calendarEntries = _getCalendarEntriesByDateUsecase.data;
+    loadEvents();
+    _getCalendarEntriesByDateUsecase.addListener(_onCalendarEntriesStateChanged);
+    _getCalendarEntriesByDateUsecase.load(dateRange: _selectedDateTimeRange);
   }
 
   @override
@@ -72,7 +130,7 @@ class CalendarPageDriver extends WidgetDriver {
 
   @override
   void dispose() {
-    _getCalendarUsecase.removeListener(_onCalendarStateChanged);
+    _getCalendarEntriesByDateUsecase.removeListener(_onCalendarEntriesStateChanged);
     super.dispose();
   }
 }

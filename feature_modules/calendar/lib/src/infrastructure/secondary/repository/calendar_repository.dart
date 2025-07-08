@@ -1,7 +1,9 @@
 import '../../../domain/exception/calendar_generic_exception.dart';
 import '../../../domain/interface/calendar_repository_interface.dart';
 import '../../../domain/model/calendar.dart';
+import '../../../domain/model/calendar_entry.dart';
 import '../data/api/calendar_api_client.dart';
+import '../data/dto/calendar_entry_mapper.dart';
 import '../data/storage/calendar_storage.dart';
 
 class CalendarRepository implements CalendarRepositoryInterface {
@@ -17,7 +19,7 @@ class CalendarRepository implements CalendarRepositoryInterface {
       await _storage.saveCalendar(retrivedCalendarData);
       return retrivedCalendarData.toDomain();
     } catch (e) {
-      throw const CalendarGenericException();
+      throw CalendarGenericException(e.toString());
     }
   }
 
@@ -27,6 +29,29 @@ class CalendarRepository implements CalendarRepositoryInterface {
     if (cachedCalendarData == null) return null;
     try {
       return cachedCalendarData.toDomain();
+    } catch (e) {
+      return null;
+    }
+  }
+
+  @override
+  Future<List<CalendarEntry>> getCalendarEvents() async {
+    try {
+      final fetchedEventDtos = await _apiClient.getCalendarEntries();
+      final List<CalendarEntry> fetchedEventData =
+          fetchedEventDtos.map((dto) => CalendarEntryMapper.fromDto(dto)).toList();
+      return fetchedEventData;
+    } catch (e) {
+      throw CalendarGenericException(e.toString());
+    }
+  }
+
+  @override
+  Future<List<CalendarEntry>?> getCachedCalendarEntries() async {
+    final cachedCalendarEntriesData = await _storage.getCalendarEntries();
+    if (cachedCalendarEntriesData == null) return null;
+    try {
+      return cachedCalendarEntriesData.map((dto) => CalendarEntryMapper.fromDto(dto)).toList();
     } catch (e) {
       return null;
     }
