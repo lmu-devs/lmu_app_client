@@ -47,9 +47,11 @@ class WelcomePageDriver extends WidgetDriver {
   String get buttonText => _appLocalizations.continueAction;
 
   void onButtonPressed() {
-    final analyticsUserPreferenceService = GetIt.I<AnalyticsUserPreferenceService>();
-    analyticsUserPreferenceService.toggleAnalytics(true);
     GetIt.I.get<LaunchFlowRepositoryInterface>().showedWelcomePage();
+
+    final analyticsUserPreferenceService = GetIt.I<AnalyticsUserPreferenceService>();
+    analyticsUserPreferenceService.toggleAnalytics(AnalyticsPreference.enabled);
+
     final launchFlowApi = GetIt.I.get<LaunchFlowApi>();
     launchFlowApi.continueFlow(_navigatorContext);
   }

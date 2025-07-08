@@ -28,17 +28,23 @@ class SettingsAnalyticsPage extends StatelessWidget {
           children: [
             const SizedBox(height: LmuSizes.size_16),
             LmuContentTile(
-              content: ValueListenableBuilder<bool>(
-                valueListenable: analyticsUserPreferenceService.isAnalyticsEnabled,
-                builder: (context, isEnabled, child) => LmuListItem.action(
-                  title: context.locals.settings.analyticsSwitch,
-                  actionType: LmuListItemAction.toggle,
-                  initialValue: isEnabled,
-                  onChange: (value) {
-                    LmuVibrations.secondary();
-                    analyticsUserPreferenceService.toggleAnalytics(value);
-                  },
-                ),
+              content: ValueListenableBuilder<AnalyticsPreference>(
+                valueListenable: analyticsUserPreferenceService.analyticsPreference,
+                builder: (context, preference, child) {
+                  final isEnabled = preference == AnalyticsPreference.enabled;
+                  return LmuListItem.action(
+                    title: context.locals.settings.analyticsSwitch,
+                    actionType: LmuListItemAction.toggle,
+                    initialValue: isEnabled,
+                    onChange: (value) {
+                      LmuVibrations.secondary();
+                      final newPreference = value
+                          ? AnalyticsPreference.enabled
+                          : AnalyticsPreference.disabled;
+                      analyticsUserPreferenceService.toggleAnalytics(newPreference);
+                    },
+                  );
+                },
               ),
             ),
             const SizedBox(height: LmuSizes.size_16),

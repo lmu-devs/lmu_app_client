@@ -32,6 +32,15 @@ class ReleaseNotesPageDriver extends WidgetDriver {
 
   void onButtonPressed() {
     _repository.markReleaseNotesAsShown();
+    
+    if (showPrivacyPolicy) {
+      final analyticsUserPreferenceService = GetIt.I<AnalyticsUserPreferenceService>();
+      final analyticsPreference = analyticsUserPreferenceService.analyticsPreference.value;
+      if (analyticsPreference == AnalyticsPreference.none) {
+        analyticsUserPreferenceService.toggleAnalytics(AnalyticsPreference.enabled);
+      }
+    }
+
     final launchFlowApi = GetIt.I.get<LaunchFlowApi>();
     launchFlowApi.continueFlow(_navigatorContext);
   }
