@@ -106,11 +106,12 @@ extension $LaunchFlowFacultySelectionRouteExtension on LaunchFlowFacultySelectio
 }
 
 extension $LaunchFlowPermissionsOnboardingRouteExtension on LaunchFlowPermissionsOnboardingRoute {
-  static LaunchFlowPermissionsOnboardingRoute _fromState(GoRouterState state) => const LaunchFlowPermissionsOnboardingRoute();
+  static LaunchFlowPermissionsOnboardingRoute _fromState(GoRouterState state) =>
+      const LaunchFlowPermissionsOnboardingRoute();
 
   String get location => GoRouteData.$location(
-    '/permissions_onboarding',
-  );
+        '/permissions_onboarding',
+      );
 
   void go(BuildContext context) => context.go(location);
 
@@ -163,6 +164,10 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                     GoRouteData.$route(
                       path: 'debug',
                       factory: $SettingsDebugRouteExtension._fromState,
+                    ),
+                    GoRouteData.$route(
+                      path: 'safari',
+                      factory: $SettingsSafariRouteExtension._fromState,
                     ),
                     GoRouteData.$route(
                       path: 'faculites',
@@ -333,6 +338,12 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                 GoRouteData.$route(
                   path: 'people',
                   factory: $PeopleOverviewRouteExtension._fromState,
+                  routes: [
+                    GoRouteData.$route(
+                      path: 'details',
+                      factory: $PeopleDetailsRouteExtension._fromState,
+                    ),
+                  ],
                 ),
                 GoRouteData.$route(
                   path: 'people-faculties',
@@ -433,8 +444,8 @@ extension $SettingsNotificationsRouteExtension on SettingsNotificationsRoute {
   static SettingsNotificationsRoute _fromState(GoRouterState state) => const SettingsNotificationsRoute();
 
   String get location => GoRouteData.$location(
-    '/home/settings/notifications',
-  );
+        '/home/settings/notifications',
+      );
 
   void go(BuildContext context) => context.go(location);
 
@@ -482,6 +493,22 @@ extension $SettingsDebugRouteExtension on SettingsDebugRoute {
 
   String get location => GoRouteData.$location(
         '/home/settings/debug',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $SettingsSafariRouteExtension on SettingsSafariRoute {
+  static SettingsSafariRoute _fromState(GoRouterState state) => const SettingsSafariRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/settings/safari',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -1019,13 +1046,36 @@ extension $LecturesMainRouteExtension on LecturesMainRoute {
 
 extension $PeopleOverviewRouteExtension on PeopleOverviewRoute {
   static PeopleOverviewRoute _fromState(GoRouterState state) => PeopleOverviewRoute(
-        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!),
       );
 
   String get location => GoRouteData.$location(
         '/studies/people',
         queryParams: {
           'faculty-id': facultyId.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $PeopleDetailsRouteExtension on PeopleDetailsRoute {
+  static PeopleDetailsRoute _fromState(GoRouterState state) => PeopleDetailsRoute(
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
+        personId: int.parse(state.uri.queryParameters['person-id']!)!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/studies/people/details',
+        queryParams: {
+          'faculty-id': facultyId.toString(),
+          'person-id': personId.toString(),
         },
       );
 

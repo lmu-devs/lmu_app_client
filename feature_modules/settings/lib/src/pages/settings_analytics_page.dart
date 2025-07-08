@@ -55,26 +55,20 @@ class SettingsAnalyticsPage extends StatelessWidget {
                 children: [
                   LmuText.bodyXSmall(
                     context.locals.settings.analyticsDescription,
-                    color:
-                        context.colors.neutralColors.textColors.weakColors.base,
+                    color: context.colors.neutralColors.textColors.weakColors.base,
                   ),
                   const SizedBox(height: LmuSizes.size_8),
                   Text.rich(
                     TextSpan(
                       text: context.locals.settings.analyticsLink,
-                      style:
-                          LmuText.bodyXSmall('').getTextStyle(context).copyWith(
-                                color: context.colors.neutralColors.textColors
-                                    .weakColors.base,
-                              ),
+                      style: LmuText.bodyXSmall('').getTextStyle(context).copyWith(
+                            color: context.colors.neutralColors.textColors.weakColors.base,
+                          ),
                       children: [
                         TextSpan(
                           text: context.locals.launchFlow.dataPrivacyLabel,
-                          style: LmuText.bodyXSmall('')
-                              .getTextStyle(context)
-                              .copyWith(
-                                color: context.colors.neutralColors.textColors
-                                    .strongColors.base,
+                          style: LmuText.bodyXSmall('').getTextStyle(context).copyWith(
+                                color: context.colors.neutralColors.textColors.strongColors.base,
                                 fontWeight: FontWeight.w400,
                               ),
                           recognizer: TapGestureRecognizer()

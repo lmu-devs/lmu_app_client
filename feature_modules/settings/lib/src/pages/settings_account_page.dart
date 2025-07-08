@@ -48,12 +48,10 @@ class SettingsAccountPage extends StatelessWidget {
                   ),**/
               const SizedBox(height: LmuSizes.size_16),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+                padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
                 child: LmuText.bodyXSmall(
                   localization.connectToAccountDescription,
-                  color:
-                      context.colors.neutralColors.textColors.weakColors.base,
+                  color: context.colors.neutralColors.textColors.weakColors.base,
                 ),
               ),
               const SizedBox(height: LmuSizes.size_32),
@@ -74,12 +72,10 @@ class SettingsAccountPage extends StatelessWidget {
               ),
               const SizedBox(height: LmuSizes.size_16),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+                padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
                 child: LmuText.bodyXSmall(
                   localization.deleteDataDescription,
-                  color:
-                      context.colors.neutralColors.textColors.weakColors.base,
+                  color: context.colors.neutralColors.textColors.weakColors.base,
                 ),
               ),
               const SizedBox(height: LmuSizes.size_32),

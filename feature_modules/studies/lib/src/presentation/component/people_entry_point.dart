@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/launch_flow.dart';
 
-import '../../application/usecase/get_faculties_usecase.dart'; // <-- Usecase importieren
+import '../../application/usecase/get_faculties_usecase.dart';
 
 class PeopleEntryPoint extends StatelessWidget {
   const PeopleEntryPoint({super.key});
@@ -17,7 +17,6 @@ class PeopleEntryPoint extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    // Hole die aktuell ausgewählten Fakultäten aus dem Usecase!
     final selectedFaculties = GetIt.I.get<GetFacultiesUsecase>().selectedFaculties;
 
     return LmuContentTile(
@@ -26,10 +25,9 @@ class PeopleEntryPoint extends StatelessWidget {
         title: context.locals.people.peopleTitle,
         leadingArea: const LmuInListBlurEmoji(emoji: "👥"),
         onTap: () {
-          if (selectedFaculties.length == 1) {
+          if (selectedFaculties.length == 2) {
             PeopleOverviewRoute(facultyId: selectedFaculties.first.id).go(context);
           } else {
-            // Wenn Fakultäten ausgewählt sind, gehe zur Fakultäten-Seite
             const PeopleFacultyOverviewRoute().go(context);
           }
         },

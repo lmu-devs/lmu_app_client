@@ -27,16 +27,19 @@ class _$TestPeopleOverviewDriver extends TestDriver implements PeopleOverviewDri
   String get largeTitle => ' ';
 
   @override
-  String get peopleId => ' ';
+  List<People> get people => [];
 
   @override
-  String get title => ' ';
+  List<People> get filteredPeople => [];
 
   @override
-  String get description => ' ';
+  Map<String, List<People>> get groupedPeople => {};
 
   @override
-  void onPeopleCardPressed() {}
+  void onPersonPressed(BuildContext context, People person) {}
+
+  @override
+  void onShowAllFacultiesPressed(BuildContext context) {}
 
   @override
   void didInitDriver() {}

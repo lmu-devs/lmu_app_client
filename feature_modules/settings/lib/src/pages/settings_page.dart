@@ -78,8 +78,7 @@ class SettingsMainPage extends StatelessWidget {
                         actionType: LmuListItemAction.chevron,
                         trailingTitle: languageMode.isAutomatic
                             ? settingLocalizations.systemMode
-                            : languageMode.locale
-                                .localizedName(settingLocalizations),
+                            : languageMode.locale.localizedName(settingLocalizations),
                         onTap: () => const SettingsLanguageRoute().go(context),
                       );
                     },
@@ -181,6 +180,15 @@ class SettingsMainPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: LmuSizes.size_16),
+              LmuContentTile(
+                content: LmuListItem.action(
+                  title: "LMU Safari",
+                  mainContentAlignment: MainContentAlignment.center,
+                  actionType: LmuListItemAction.chevron,
+                  onTap: () => const SettingsSafariRoute().go(context),
+                ),
+              ),
+              const SizedBox(height: LmuSizes.size_16),
               kDebugMode
                   ? LmuContentTile(
                       content: LmuListItem.action(
@@ -201,9 +209,7 @@ class SettingsMainPage extends StatelessWidget {
                     onTap: () {
                       feedbackApi.showFeedback(
                         context,
-                        args: const FeedbackArgs(
-                            type: FeedbackType.suggestion,
-                            origin: 'SettingsScreen'),
+                        args: const FeedbackArgs(type: FeedbackType.suggestion, origin: 'SettingsScreen'),
                       );
                     },
                   ),
@@ -214,8 +220,7 @@ class SettingsMainPage extends StatelessWidget {
                     onTap: () {
                       feedbackApi.showFeedback(
                         context,
-                        args: const FeedbackArgs(
-                            type: FeedbackType.bug, origin: 'SettingsScreen'),
+                        args: const FeedbackArgs(type: FeedbackType.bug, origin: 'SettingsScreen'),
                       );
                     },
                   ),

@@ -3,6 +3,7 @@ import 'package:core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
+import '../component/faculty_number_widget.dart';
 import '../viewmodel/people_faculty_overview_driver.dart';
 
 class PeopleFacultyOverview extends DrivableWidget<PeopleFacultyOverviewDriver> {
@@ -39,7 +40,7 @@ class PeopleFacultyOverview extends DrivableWidget<PeopleFacultyOverviewDriver> 
             contentList: driver.selectedFaculties
                 .map(
                   (faculty) => LmuListItem.action(
-                    leadingArea: LmuInListBlurEmoji(emoji: faculty.id.toString()),
+                    leadingArea: FacultyNumberWidget(facultyId: faculty.id),
                     actionType: LmuListItemAction.chevron,
                     title: faculty.name,
                     onTap: () => driver.onFacultyPressed(context, faculty),
@@ -55,7 +56,7 @@ class PeopleFacultyOverview extends DrivableWidget<PeopleFacultyOverviewDriver> 
           contentList: driver.allFaculties
               .map(
                 (faculty) => LmuListItem.action(
-                  leadingArea: LmuText.h2(faculty.id.toString()),
+                  leadingArea: FacultyNumberWidget(facultyId: faculty.id),
                   actionType: LmuListItemAction.chevron,
                   title: faculty.name,
                   onTap: () => driver.onFacultyPressed(context, faculty),

@@ -1,6 +1,5 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:core/localizations.dart';
 import 'package:core_routes/sports.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -17,13 +16,11 @@ class SportsAllCourseSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sportsStateService = GetIt.I.get<SportsStateService>();
-    final locals = context.locals;
     return Column(
       children: [
         ValueListenableBuilder(
           valueListenable: sportsStateService.filteredGroupedSportsNotifier,
           builder: (context, filteredGroupedSports, _) {
-            if (filteredGroupedSports.isEmpty) return LmuIssueType(message: locals.app.searchEmpty, hasSpacing: false);
             return ListView.builder(
               padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
