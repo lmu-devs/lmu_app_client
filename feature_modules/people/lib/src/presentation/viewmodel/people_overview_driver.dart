@@ -41,8 +41,14 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
 
   List<People> get people => _usecase.data;
 
+  List<People> get favoritePeople => _usecase.favoritePeople;
+
+  List<People> get nonFavoritePeople => _usecase.nonFavoritePeople;
+
+  bool get hasFavorites => favoritePeople.isNotEmpty;
+
   List<People> get filteredPeople {
-    var filtered = people;
+    var filtered = nonFavoritePeople;  
     filtered.sort((a, b) => a.surname.compareTo(b.surname));
     return filtered;
   }

@@ -49,6 +49,9 @@ class _$TestPeopleDetailsPageDriver extends TestDriver
   bool get isLoading => false;
 
   @override
+  bool get isFavorite => false;
+
+  @override
   String get faculty => ' ';
 
   @override
@@ -86,6 +89,16 @@ class _$TestPeopleDetailsPageDriver extends TestDriver
 
   @override
   Future<void> onRoomTap() {
+    return Future.value();
+  }
+
+  @override
+  Future<void> onConsultationTap() {
+    return Future.value();
+  }
+
+  @override
+  Future<void> onFavoriteTap() {
     return Future.value();
   }
 

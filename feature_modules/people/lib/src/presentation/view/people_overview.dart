@@ -1,5 +1,7 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
+import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
@@ -39,10 +41,53 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: LmuSizes.size_16),
+        _buildFavoritesSection(context),
+        const SizedBox(height: LmuSizes.size_24),
         ..._buildGroupedPeople(context),
+        
         const SizedBox(height: LmuSizes.size_24),
         _buildShowAllFacultiesButton(context),
         const SizedBox(height: LmuSizes.size_96),
+      ],
+    );
+  }
+
+  Widget _buildFavoritesSection(BuildContext context) {
+    final starColor = context.colors.neutralColors.textColors.weakColors.base;
+    
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: LmuSizes.size_24,
+          child: StarIcon(isActive: false, size: LmuIconSizes.small, disabledColor: starColor),
+        ),
+        const SizedBox(height: LmuSizes.size_12),
+        if (driver.hasFavorites)
+          LmuContentTile(
+            contentList: driver.favoritePeople
+                .map((person) => PersonListItem(
+                      person: person,
+                      onTap: () => driver.onPersonPressed(context, person),
+                    ))
+                .toList(),
+          )
+        else
+          _buildEmptyFavoritesState(context),
+      ],
+    );
+  }
+
+  Widget _buildEmptyFavoritesState(BuildContext context) {
+    final starColor = context.colors.neutralColors.textColors.weakColors.base;
+    final placeholderTextColor = context.colors.neutralColors.textColors.mediumColors.base;
+    
+    return PlaceholderTile(
+      minHeight: 56,
+      content: [
+        LmuText.bodySmall(context.locals.people.favoritesA, color: placeholderTextColor),
+        StarIcon(isActive: false, disabledColor: starColor, size: LmuSizes.size_16),
+        LmuText.bodySmall(context.locals.people.favoritesB, color: placeholderTextColor),
       ],
     );
   }

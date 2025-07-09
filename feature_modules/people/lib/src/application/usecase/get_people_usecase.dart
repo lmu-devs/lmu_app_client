@@ -17,6 +17,10 @@ class GetPeopleUsecase extends ChangeNotifier {
   PeopleLoadState get loadState => _loadState;
   List<People> get data => _data;
 
+  List<People> get favoritePeople => _data.where((person) => person.isFavorite).toList();
+
+  List<People> get nonFavoritePeople => _data.where((person) => !person.isFavorite).toList();
+
   Future<void> load() async {
     if (_loadState == PeopleLoadState.loading ||
         _loadState == PeopleLoadState.loadingWithCache ||
@@ -50,5 +54,23 @@ class GetPeopleUsecase extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  /// Toggle favorite status of a person
+  Future<void> toggleFavorite(int personId) async {
+    try {
+      await _repository.toggleFavorite(personId);
+      
+      // Update the local data to reflect the change immediately
+      final personIndex = _data.indexWhere((person) => person.id == personId);
+      if (personIndex != -1) {
+        final person = _data[personIndex];
+        _data[personIndex] = person.copyWith(isFavorite: !person.isFavorite);
+        notifyListeners();
+      }
+    } catch (e) {
+      // Handle error - could show toast or ignore for now
+      // The error handling can be implemented based on requirements
+    }
   }
 }
