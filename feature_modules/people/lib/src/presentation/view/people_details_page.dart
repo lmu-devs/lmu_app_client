@@ -33,7 +33,7 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
           leadingAction: LeadingAction.back,
         ),
         body: Center(
-          child: Text(driver.personNotFoundText),
+          child: LmuText.body(driver.personNotFoundText),
         ),
       );
     }
