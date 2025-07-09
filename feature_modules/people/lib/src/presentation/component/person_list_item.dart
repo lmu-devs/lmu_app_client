@@ -13,20 +13,14 @@ class PersonListItem extends StatelessWidget {
   final People person;
   final VoidCallback onTap;
 
-  String _getLastName(String fullName) {
-    final parts = fullName.trim().split(' ');
-    return parts.last;
-  }
-
-  String _getLastNameInitial(String fullName) {
-    final lastName = _getLastName(fullName);
-    return lastName[0].toUpperCase();
+  String _getLastNameInitial(String surname) {
+    return surname.isNotEmpty ? surname[0].toUpperCase() : '#';
   }
 
   @override
   Widget build(BuildContext context) {
     return LmuListItem.action(
-      title: person.name,
+      title: '${person.name} ${person.surname}',
       subtitle: person.title,
       actionType: LmuListItemAction.chevron,
       onTap: onTap,

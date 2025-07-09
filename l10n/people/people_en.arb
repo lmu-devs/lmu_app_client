@@ -1,5 +1,17 @@
 {
   "@@locale": "en",
   "@@context": "People",
-  "peopleTitle": "People"
+  "peopleTitle": "People",
+  "contacts": "Contacts",
+  "loading": "Loading...",
+  "personNotFound": "Person not found",
+  "facultyAndRole": "Faculty & Role",
+  "contact": "Contact",
+  "email": "Email",
+  "phone": "Phone",
+  "room": "Room",
+  "consultationHours": "Office Hours",
+  "myFaculties": "My Faculties",
+  "allFaculties": "All Faculties",
+  "showAllFaculties": "Show All Faculties"
 }

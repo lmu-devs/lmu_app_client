@@ -84,7 +84,7 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
   Widget _buildShowAllFacultiesButton(BuildContext context) {
     return LmuContentTile(
       content: LmuListItem.action(
-        title: "Show All Faculties",
+        title: driver.showAllFacultiesText,
         actionType: LmuListItemAction.chevron,
         onTap: () => driver.onShowAllFacultiesPressed(context),
       ),

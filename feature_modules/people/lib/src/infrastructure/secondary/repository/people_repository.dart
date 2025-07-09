@@ -13,10 +13,9 @@ class PeopleRepository implements PeopleRepositoryInterface {
   @override
   Future<List<People>> getPeople() async {
     try {
-      final retrievedPeopleData = await _apiClient.getPeople();
-      // For now, we'll just return the data directly
-      // TODO: Implement proper caching for lists
-      return retrievedPeopleData.map((dto) => dto.toDomain()).toList();
+      final wrapper = await _apiClient.getPeople();
+      // Extract the people list from the wrapper
+      return wrapper.people.map((dto) => dto.toDomain()).toList();
     } catch (e) {
       throw const PeopleGenericException();
     }
