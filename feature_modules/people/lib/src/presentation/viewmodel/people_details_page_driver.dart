@@ -22,17 +22,17 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
 
   final _usecase = GetIt.I.get<GetPeopleUsecase>();
 
-  late AppLocalizations _appLocalizations;
+  late LmuLocalizations _localizations;
 
-  String get loadingText => _appLocalizations.people.loading;
-  String get personNotFoundText => _appLocalizations.people.personNotFound;
-  String get facultyAndRoleText => _appLocalizations.people.facultyAndRole;
-  String get contactText => _appLocalizations.people.contact;
-  String get emailText => _appLocalizations.people.email;
-  String get phoneText => _appLocalizations.people.phone;
-  String get websiteText => _appLocalizations.people.website;
-  String get roomText => _appLocalizations.people.room;
-  String get consultationHoursText => _appLocalizations.people.consultationHours;
+  String get loadingText => _localizations.people.loading;
+  String get personNotFoundText => _localizations.people.personNotFound;
+  String get facultyAndRoleText => _localizations.people.facultyAndRole;
+  String get contactText => _localizations.people.contact;
+  String get emailText => _localizations.people.email;
+  String get phoneText => _localizations.people.phone;
+  String get websiteText => _localizations.people.website;
+  String get roomText => _localizations.people.room;
+  String get consultationHoursText => _localizations.people.consultationHours;
 
   People? get person => _usecase.data.where((p) => p.id == personId).firstOrNull;
   bool get isLoading => _usecase.loadState != PeopleLoadState.success;
@@ -80,7 +80,7 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
   @override
   void didUpdateBuildContext(BuildContext context) {
     super.didUpdateBuildContext(context);
-    _appLocalizations = context.locals.app;
+    _localizations = context.locals;
   }
 
   @override

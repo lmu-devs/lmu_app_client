@@ -24,10 +24,10 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
   final _usecase = GetIt.I.get<GetPeopleUsecase>();
   final _facultiesApi = GetIt.I.get<FacultiesApi>();
 
-  late AppLocalizations _appLocalizations;
+  late LmuLocalizations _localizations;
   late LmuToast _toast;
 
-  String get showAllFacultiesText => _appLocalizations.people.showAllFaculties;
+  String get showAllFacultiesText => _localizations.people.showAllFaculties;
 
   List<Faculty> get selectedFaculties => _facultiesApi.selectedFaculties;
   List<Faculty> get allFaculties => _facultiesApi.allFaculties;
@@ -85,9 +85,9 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
 
   void _showErrorToast() {
     _toast.showToast(
-      message: _appLocalizations.somethingWentWrong,
+      message: _localizations.app.somethingWentWrong,
       type: ToastType.error,
-      actionText: _appLocalizations.tryAgain,
+      actionText: _localizations.app.tryAgain,
       onActionPressed: () => _usecase.load(),
     );
   }
@@ -103,7 +103,7 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
   @override
   void didUpdateBuildContext(BuildContext context) {
     super.didUpdateBuildContext(context);
-    _appLocalizations = context.locals.app;
+    _localizations = context.locals;
     _toast = LmuToast.of(context);
   }
 
