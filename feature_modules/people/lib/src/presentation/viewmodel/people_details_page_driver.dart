@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:core/localizations.dart';
+import 'package:core/utils.dart';
 
 import '../../application/usecase/get_people_usecase.dart';
 import '../../domain/model/people.dart';
@@ -45,27 +45,20 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
   String get room => person?.room ?? '';
   String get consultation => person?.consultation ?? '';
 
-  Future<void> onEmailTap() async {
-    print('onEmailTap');
+  Future<void> onEmailTap(BuildContext context) async {
+    await LmuUrlLauncher.launchEmail(email: email, context: context);
   }
 
-  Future<void> onPhoneTap() async {
-    print('onPhoneTap');
+  Future<void> onPhoneTap(BuildContext context) async {
+    await LmuUrlLauncher.launchPhone(phoneNumber: phone, context: context);
   }
 
-  Future<void> onWebsiteTap() async {
-    final webUrl = Uri.parse(website);
-    if (await canLaunchUrl(webUrl)) {
-      await launchUrl(webUrl, mode: LaunchMode.externalApplication);
-    }
+  Future<void> onWebsiteTap(BuildContext context) async {
+    await LmuUrlLauncher.launchWebsite(url: website, context: context);
   }
 
   Future<void> onRoomTap() async {
-    print('onRoomTap');
-  }
-
-  Future<void> onConsultationTap() async {
-    print('onConsultationTap');
+    // TODO: Implement room tap functionality (e.g., open maps)
   }
 
   @override
