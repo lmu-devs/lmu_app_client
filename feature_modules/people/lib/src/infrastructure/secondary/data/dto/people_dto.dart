@@ -97,6 +97,20 @@ class PeopleDto extends Equatable {
   Map<String, dynamic> toJson() => _$PeopleDtoToJson(this);
 
   @override
-  List<Object?> get props =>
-      [id, name, surname, title, academicDegree, facultyId, faculty, role, email, phone, website, room, consultation, isFavorite];
+  List<Object?> get props => [
+        id,
+        name,
+        surname,
+        title,
+        academicDegree,
+        facultyId,
+        faculty,
+        role,
+        email,
+        phone,
+        website,
+        room,
+        consultation,
+        isFavorite
+      ];
 }

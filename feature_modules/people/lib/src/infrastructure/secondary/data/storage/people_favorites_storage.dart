@@ -33,4 +33,4 @@ class PeopleFavoritesStorage {
     final favoriteIds = await getFavoriteIds();
     return favoriteIds.contains(personId);
   }
-} 
+}

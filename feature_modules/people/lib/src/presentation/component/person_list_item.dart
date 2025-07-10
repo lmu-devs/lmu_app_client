@@ -16,12 +16,13 @@ class PersonListItem extends StatelessWidget {
   String _getLastNameInitial(String surname) {
     return surname.isNotEmpty ? surname[0].toUpperCase() : '#';
   }
+
   @override
   Widget build(BuildContext context) {
     final fullName = person.academicDegree != null && person.academicDegree!.isNotEmpty
         ? '${person.academicDegree} ${person.name} ${person.surname}'
         : '${person.name} ${person.surname}';
-        
+
     return LmuListItem.action(
       title: fullName,
       subtitle: person.title,

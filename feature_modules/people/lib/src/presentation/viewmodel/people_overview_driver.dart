@@ -48,7 +48,7 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
   bool get hasFavorites => favoritePeople.isNotEmpty;
 
   List<People> get filteredPeople {
-    var filtered = nonFavoritePeople;  
+    var filtered = nonFavoritePeople;
     filtered.sort((a, b) => a.surname.compareTo(b.surname));
     return filtered;
   }

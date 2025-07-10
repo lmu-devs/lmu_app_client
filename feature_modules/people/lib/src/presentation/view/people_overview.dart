@@ -44,7 +44,6 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
         _buildFavoritesSection(context),
         const SizedBox(height: LmuSizes.size_24),
         ..._buildGroupedPeople(context),
-        
         const SizedBox(height: LmuSizes.size_24),
         _buildShowAllFacultiesButton(context),
         const SizedBox(height: LmuSizes.size_96),
@@ -54,7 +53,7 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
 
   Widget _buildFavoritesSection(BuildContext context) {
     final starColor = context.colors.neutralColors.textColors.weakColors.base;
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -81,7 +80,7 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
   Widget _buildEmptyFavoritesState(BuildContext context) {
     final starColor = context.colors.neutralColors.textColors.weakColors.base;
     final placeholderTextColor = context.colors.neutralColors.textColors.mediumColors.base;
-    
+
     return PlaceholderTile(
       minHeight: 56,
       content: [

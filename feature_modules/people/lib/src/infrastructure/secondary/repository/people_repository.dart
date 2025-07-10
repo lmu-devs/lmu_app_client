@@ -17,7 +17,7 @@ class PeopleRepository implements PeopleRepositoryInterface {
     try {
       final wrapper = await _apiClient.getPeople();
       final favoriteIds = await _favoritesStorage.getFavoriteIds();
-      
+
       // Extract the people list from the wrapper and merge with favorite status
       return wrapper.people.map((dto) {
         final isFavorite = favoriteIds.contains(dto.id);

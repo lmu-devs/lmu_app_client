@@ -58,13 +58,9 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
     await LmuUrlLauncher.launchWebsite(url: website, context: context);
   }
 
-  Future<void> onRoomTap() async {
+  Future<void> onRoomTap() async {}
 
-  }
-
-  Future<void> onConsultationTap() async {
-    
-  }
+  Future<void> onConsultationTap() async {}
 
   Future<void> onFavoriteTap() async {
     await _usecase.toggleFavorite(personId);

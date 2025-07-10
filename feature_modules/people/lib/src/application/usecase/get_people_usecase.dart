@@ -60,7 +60,7 @@ class GetPeopleUsecase extends ChangeNotifier {
   Future<void> toggleFavorite(int personId) async {
     try {
       await _repository.toggleFavorite(personId);
-      
+
       // Update the local data to reflect the change immediately
       final personIndex = _data.indexWhere((person) => person.id == personId);
       if (personIndex != -1) {
