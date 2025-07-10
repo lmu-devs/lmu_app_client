@@ -10,8 +10,7 @@ part of 'people_details_page_driver.dart';
 
 // This file was generated with widget_driver_generator version "1.3.5"
 
-class _$TestPeopleDetailsPageDriver extends TestDriver
-    implements PeopleDetailsPageDriver {
+class _$TestPeopleDetailsPageDriver extends TestDriver implements PeopleDetailsPageDriver {
   @override
   int get personId => 0;
 
@@ -47,6 +46,9 @@ class _$TestPeopleDetailsPageDriver extends TestDriver
 
   @override
   bool get isLoading => false;
+
+  @override
+  bool get isFavorite => false;
 
   @override
   String get faculty => ' ';
@@ -90,6 +92,16 @@ class _$TestPeopleDetailsPageDriver extends TestDriver
   }
 
   @override
+  Future<void> onConsultationTap() {
+    return Future.value();
+  }
+
+  @override
+  Future<void> onFavoriteTap() {
+    return Future.value();
+  }
+
+  @override
   void didInitDriver() {}
 
   @override
@@ -102,8 +114,7 @@ class _$TestPeopleDetailsPageDriver extends TestDriver
   void dispose() {}
 }
 
-class $PeopleDetailsPageDriverProvider
-    extends WidgetDriverProvider<PeopleDetailsPageDriver> {
+class $PeopleDetailsPageDriverProvider extends WidgetDriverProvider<PeopleDetailsPageDriver> {
   final int _personId;
 
   $PeopleDetailsPageDriverProvider({

@@ -36,6 +36,7 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
 
   People? get person => _usecase.data.where((p) => p.id == personId).firstOrNull;
   bool get isLoading => _usecase.loadState != PeopleLoadState.success;
+  bool get isFavorite => person?.isFavorite ?? false;
 
   String get faculty => person?.faculty ?? '';
   String get role => person?.role ?? '';
@@ -57,8 +58,12 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
     await LmuUrlLauncher.launchWebsite(url: website, context: context);
   }
 
-  Future<void> onRoomTap() async {
-    // TODO: Implement room tap functionality (e.g., open maps)
+  Future<void> onRoomTap() async {}
+
+  Future<void> onConsultationTap() async {}
+
+  Future<void> onFavoriteTap() async {
+    await _usecase.toggleFavorite(personId);
   }
 
   @override

@@ -8,6 +8,7 @@ import 'domain/interface/people_repository_interface.dart';
 import 'infrastructure/primary/router/people_router.dart';
 import 'infrastructure/secondary/data/api/people_api_client.dart';
 import 'infrastructure/secondary/data/storage/people_storage.dart';
+import 'infrastructure/secondary/data/storage/people_favorites_storage.dart';
 import 'infrastructure/secondary/repository/people_repository.dart';
 
 class PeopleModule extends AppModule with LocalDependenciesProvidingAppModule, PublicApiProvidingAppModule {
@@ -18,7 +19,8 @@ class PeopleModule extends AppModule with LocalDependenciesProvidingAppModule, P
   void provideLocalDependencies() {
     final baseApiClient = GetIt.I.get<BaseApiClient>();
     final storage = PeopleStorage();
-    final repository = PeopleRepository(PeopleApiClient(baseApiClient), storage);
+    final favoritesStorage = PeopleFavoritesStorage();
+    final repository = PeopleRepository(PeopleApiClient(baseApiClient), storage, favoritesStorage);
     final getUsecase = GetPeopleUsecase(repository);
 
     GetIt.I.registerSingleton<PeopleRepositoryInterface>(repository);

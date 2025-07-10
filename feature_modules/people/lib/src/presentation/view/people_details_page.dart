@@ -45,6 +45,12 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
       appBar: LmuAppBarData(
         largeTitle: fullName,
         leadingAction: LeadingAction.back,
+        trailingWidgets: [
+          LmuFavoriteButton(
+            isFavorite: driver.isFavorite,
+            onTap: driver.onFavoriteTap,
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(
@@ -101,6 +107,7 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
                   title: driver.consultationHoursText,
                   subtitle: driver.consultation,
                   //trailingArea: const Icon(Icons.schedule_outlined),
+                  onTap: () => driver.onConsultationTap(),
                 ),
               ],
             ),

@@ -19,8 +19,12 @@ class PersonListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fullName = person.academicDegree != null && person.academicDegree!.isNotEmpty
+        ? '${person.academicDegree} ${person.name} ${person.surname}'
+        : '${person.name} ${person.surname}';
+
     return LmuListItem.action(
-      title: '${person.name} ${person.surname}',
+      title: fullName,
       subtitle: person.title,
       actionType: LmuListItemAction.chevron,
       onTap: onTap,
