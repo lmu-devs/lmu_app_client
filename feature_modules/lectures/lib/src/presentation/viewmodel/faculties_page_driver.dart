@@ -5,30 +5,28 @@ import 'package:widget_driver/widget_driver.dart';
 
 import '../../application/usecase/get_lectures_usecase.dart';
 
-part 'lectures_page_driver.g.dart';
+part 'faculties_page_driver.g.dart';
 
 @GenerateTestDriver()
-class LecturesPageDriver extends WidgetDriver {
+class FacultiesPageDriver extends WidgetDriver {
   final _usecase = GetIt.I.get<GetLecturesUsecase>();
 
   late AppLocalizations _appLocalizations;
-  late LecturesLocatizations _lecturesLocatizations;
   late LmuToast _toast;
 
   int _count = 0;
 
   bool get isLoading => _usecase.loadState != LecturesLoadState.success;
 
-  //String get largeTitle => _lecturesLocatizations.lecturesTitle;
-  String get largeTitle => 'Faculties';
+  String get largeTitle => 'Fakultäten';
 
-  String get lecturesId => _usecase.data?.id ?? '';
+  String get facultiesId => _usecase.data?.id ?? '';
 
   String get title => _usecase.data?.name ?? '';
 
   String get description => _count.toString();
 
-  void onLecturesCardPressed() {
+  void onFacultiesCardPressed() {
     _count += 1;
     notifyWidget();
   }
@@ -61,7 +59,6 @@ class LecturesPageDriver extends WidgetDriver {
   void didUpdateBuildContext(BuildContext context) {
     super.didUpdateBuildContext(context);
     _appLocalizations = context.locals.app;
-    _lecturesLocatizations = context.locals.lectures;
     _toast = LmuToast.of(context);
   }
 

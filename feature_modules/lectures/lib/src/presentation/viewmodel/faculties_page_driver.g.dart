@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'lectures_page_driver.dart';
+part of 'faculties_page_driver.dart';
 
 // **************************************************************************
 // WidgetDriverGenerator
@@ -8,9 +8,10 @@ part of 'lectures_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.3.3"
+// This file was generated with widget_driver_generator version "1.3.6"
 
-class _$TestLecturesPageDriver extends TestDriver implements LecturesPageDriver {
+class _$TestFacultiesPageDriver extends TestDriver
+    implements FacultiesPageDriver {
   @override
   bool get isLoading => false;
 
@@ -18,7 +19,7 @@ class _$TestLecturesPageDriver extends TestDriver implements LecturesPageDriver 
   String get largeTitle => ' ';
 
   @override
-  String get lecturesId => ' ';
+  String get facultiesId => ' ';
 
   @override
   String get title => ' ';
@@ -27,7 +28,7 @@ class _$TestLecturesPageDriver extends TestDriver implements LecturesPageDriver 
   String get description => ' ';
 
   @override
-  void onLecturesCardPressed() {}
+  void onFacultiesCardPressed() {}
 
   @override
   void didInitDriver() {}
@@ -39,14 +40,15 @@ class _$TestLecturesPageDriver extends TestDriver implements LecturesPageDriver 
   void dispose() {}
 }
 
-class $LecturesPageDriverProvider extends WidgetDriverProvider<LecturesPageDriver> {
+class $FacultiesPageDriverProvider
+    extends WidgetDriverProvider<FacultiesPageDriver> {
   @override
-  LecturesPageDriver buildDriver() {
-    return LecturesPageDriver();
+  FacultiesPageDriver buildDriver() {
+    return FacultiesPageDriver();
   }
 
   @override
-  LecturesPageDriver buildTestDriver() {
-    return _$TestLecturesPageDriver();
+  FacultiesPageDriver buildTestDriver() {
+    return _$TestFacultiesPageDriver();
   }
 }

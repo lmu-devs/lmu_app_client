@@ -2,11 +2,12 @@ import 'package:collection/collection.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 
 import 'lecture_list_page.dart';
 
-class LecturesPage extends StatelessWidget {
-  const LecturesPage({super.key});
+class FacultiesPage extends StatelessWidget {
+  const FacultiesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,31 +26,28 @@ class LecturesPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header row: title + search/sort
+            // Action buttons row
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                LmuTileHeadline.base(title: 'Alle Fakultäten'),
-                Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.search),
-                      tooltip: 'Suche',
-                      onPressed: () {
-                        // TODO: implement search
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.sort),
-                      tooltip: 'Sortieren',
-                      onPressed: () {
-                        // TODO: implement sort
-                      },
-                    ),
-                  ],
+                LmuIconButton(
+                  icon: LucideIcons.search,
+                  onPressed: () {
+                    // TODO: implement search
+                  },
+                ),
+                const SizedBox(width: LmuSizes.size_8),
+                LmuIconButton(
+                  icon: LucideIcons.arrow_up_down,
+                  onPressed: () {
+                    // TODO: implement sort
+                  },
                 ),
               ],
             ),
+            const SizedBox(height: LmuSizes.size_16),
+
+            // Header row: title
+            LmuTileHeadline.base(title: 'Alle Fakultäten'),
             const SizedBox(height: LmuSizes.size_8),
 
             // Faculty list
@@ -109,9 +107,9 @@ class LecturesPage extends StatelessWidget {
 }
 
 class _FacultyIdBadge extends StatelessWidget {
-  final String id;
-
   const _FacultyIdBadge({required this.id});
+
+  final String id;
 
   @override
   Widget build(BuildContext context) {

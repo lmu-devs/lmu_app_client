@@ -26,7 +26,7 @@ class _LecturesCardState extends State<LecturesCard> {
       borderRadius: BorderRadius.circular(12),
       child: Container(
         margin: const EdgeInsets.only(bottom: 16),
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.fromLTRB(14, 4, 6, 14), // 14px left/bottom, 4px top, 6px right
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
@@ -41,18 +41,18 @@ class _LecturesCardState extends State<LecturesCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Title + Favorite
+            // Title row with icon and favorite icon, vertically centered
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(
-                  child: Text(
-                    widget.title,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                Text(
+                  widget.title,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
+                const Spacer(),
                 IconButton(
                   icon: Icon(
                     isFavorite ? Icons.star : Icons.star_border,
@@ -64,31 +64,32 @@ class _LecturesCardState extends State<LecturesCard> {
                       isFavorite = !isFavorite;
                     });
                   },
+                  padding: const EdgeInsets.only(right: 0, top: 0, left: 0, bottom: 0),
+                  constraints: const BoxConstraints(),
                 ),
               ],
             ),
-
-            const SizedBox(height: 12),
-
-            // Tags
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: widget.tags.map(
-                (tag) {
-                  return Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(6),
+            const SizedBox(height: 0),
+            // Tags row (single row, not wrap)
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: ['VL', '6 SWS', 'Master', 'Englisch'].map((tag) {
+                return Container(
+                  margin: const EdgeInsets.only(right: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    tag,
+                    style: const TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w500,
                     ),
-                    child: Text(
-                      tag,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w500),
-                    ),
-                  );
-                },
-              ).toList(),
+                  ),
+                );
+              }).toList(),
             ),
           ],
         ),
