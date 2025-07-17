@@ -181,9 +181,7 @@ String formatSportsTimeSlots(AppLocalizations locals, List<SportsTimeSlot> slots
     groupedRanges.add(currentGroup);
 
     return groupedRanges
-        .map((group) => group.length > 1
-            ? '${group.first.name} - ${group.last.name(locals)}' // "Wednesday - Friday"
-            : group.first.name)
+        .map((group) => group.length > 1 ? '${group.first.name} - ${group.last.name}' : group.first.name)
         .join(', ');
   }
 

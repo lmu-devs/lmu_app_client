@@ -1,3 +1,4 @@
+import 'package:core/utils.dart';
 import 'package:equatable/equatable.dart';
 
 import '../repository/api/api.dart';
@@ -30,6 +31,9 @@ class WishlistLoadSuccess extends WishlistState {
 }
 
 class WishlistLoadFailure extends WishlistState {
+  WishlistLoadFailure({required this.loadState});
+
+  final LoadState loadState;
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [loadState];
 }

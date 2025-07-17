@@ -12,7 +12,7 @@ MenuItemModel _$MenuItemModelFromJson(Map<String, dynamic> json) => MenuItemMode
       dishType: json['dish_type'] as String,
       dishCategory: $enumDecode(_$DishCategoryEnumMap, json['dish_category']),
       ratingModel: RatingModel.fromJson(json['rating'] as Map<String, dynamic>),
-      priceSimple: json['price_simple'] as String,
+      priceSimple: json['price_simple'] as String? ?? '€',
       labels: (json['labels'] as List<dynamic>).map((e) => e as String).toList(),
       prices: (json['prices'] as List<dynamic>).map((e) => PriceModel.fromJson(e as Map<String, dynamic>)).toList(),
     );

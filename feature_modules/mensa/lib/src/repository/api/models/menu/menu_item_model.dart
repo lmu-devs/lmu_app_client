@@ -41,7 +41,7 @@ class MenuItemModel extends Equatable {
   final DishCategory dishCategory;
   @JsonKey(name: 'rating')
   final RatingModel ratingModel;
-  @JsonKey(name: 'price_simple')
+  @JsonKey(name: 'price_simple', defaultValue: "€")
   final String priceSimple;
   final List<String> labels;
   final List<PriceModel> prices;
