@@ -8,6 +8,7 @@ import 'package:shared_api/studies.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../application/usecase/get_people_usecase.dart';
+import '../../application/usecase/favorite_people_usecase.dart';
 import '../../domain/model/people.dart';
 
 part 'people_overview_driver.g.dart';
@@ -22,6 +23,7 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
   int get facultyId => _facultyId;
 
   final _usecase = GetIt.I.get<GetPeopleUsecase>();
+  final _favoritesUsecase = GetIt.I.get<FavoritePeopleUsecase>();
   final _facultiesApi = GetIt.I.get<FacultiesApi>();
 
   late LmuLocalizations _localizations;
@@ -41,11 +43,13 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
 
   List<People> get people => _usecase.data;
 
-  List<People> get favoritePeople => _usecase.favoritePeople;
+  List<People> get favoritePeople => 
+      people.where((person) => _favoritesUsecase.isFavorite(person.id)).toList();
 
-  List<People> get nonFavoritePeople => _usecase.nonFavoritePeople;
+  List<People> get nonFavoritePeople => 
+      people.where((person) => !_favoritesUsecase.isFavorite(person.id)).toList();
 
-  bool get hasFavorites => favoritePeople.isNotEmpty;
+  bool get hasFavorites => _favoritesUsecase.favoriteIds.isNotEmpty;
 
   List<People> get filteredPeople {
     var filtered = nonFavoritePeople;
@@ -102,6 +106,7 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
   void didInitDriver() {
     super.didInitDriver();
     _usecase.addListener(_onStateChanged);
+    _favoritesUsecase.addListener(_onStateChanged);
     _usecase.load();
     _facultiesApi.selectedFacultiesStream.listen((_) => notifyWidget());
   }
@@ -123,6 +128,7 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
   @override
   void dispose() {
     _usecase.removeListener(_onStateChanged);
+    _favoritesUsecase.removeListener(_onStateChanged);
     super.dispose();
   }
 }

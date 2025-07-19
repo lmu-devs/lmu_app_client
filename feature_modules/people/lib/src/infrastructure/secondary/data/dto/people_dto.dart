@@ -21,7 +21,6 @@ class PeopleDto extends Equatable {
     required this.website,
     required this.room,
     required this.consultation,
-    this.isFavorite = false,
   });
 
   final int id;
@@ -38,7 +37,6 @@ class PeopleDto extends Equatable {
   final String room;
   final String consultation;
   @JsonKey(includeFromJson: false, includeToJson: false)
-  final bool isFavorite;
 
   People toDomain() => People(
         id: id,
@@ -54,7 +52,6 @@ class PeopleDto extends Equatable {
         website: website,
         room: room,
         consultation: consultation,
-        isFavorite: isFavorite,
       );
 
   /// Create a copy with updated favorite status
@@ -72,7 +69,6 @@ class PeopleDto extends Equatable {
     String? website,
     String? room,
     String? consultation,
-    bool? isFavorite,
   }) {
     return PeopleDto(
       id: id ?? this.id,
@@ -88,7 +84,6 @@ class PeopleDto extends Equatable {
       website: website ?? this.website,
       room: room ?? this.room,
       consultation: consultation ?? this.consultation,
-      isFavorite: isFavorite ?? this.isFavorite,
     );
   }
 
@@ -111,6 +106,5 @@ class PeopleDto extends Equatable {
         website,
         room,
         consultation,
-        isFavorite
       ];
 }

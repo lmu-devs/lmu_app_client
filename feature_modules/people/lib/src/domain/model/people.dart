@@ -13,25 +13,22 @@ class People {
     required this.website,
     required this.room,
     required this.consultation,
-    this.isFavorite = false,
   });
 
   final int id;
   final String name;
   final String surname;
-  final String title; // Position/Titel wie "Professor:in", "Wis. Mitarbeiter", etc.
-  final String? academicDegree; // Optional: "Prof. Dr.", "Dr.", etc.
-  final int facultyId; // Fakultäts-ID
-  final String faculty; // Fakultät
-  final String role; // Rolle in der Fakultät
+  final String title; 
+  final String? academicDegree; 
+  final int facultyId;
+  final String faculty; 
+  final String role; 
   final String email;
   final String phone;
   final String website;
   final String room;
-  final String consultation; // Sprechstunde
-  final bool isFavorite; // Favorisiert
+  final String consultation;
 
-  /// Create a copy with updated favorite status
   People copyWith({
     int? id,
     String? name,
@@ -46,7 +43,6 @@ class People {
     String? website,
     String? room,
     String? consultation,
-    bool? isFavorite,
   }) {
     return People(
       id: id ?? this.id,
@@ -62,7 +58,6 @@ class People {
       website: website ?? this.website,
       room: room ?? this.room,
       consultation: consultation ?? this.consultation,
-      isFavorite: isFavorite ?? this.isFavorite,
     );
   }
 }
