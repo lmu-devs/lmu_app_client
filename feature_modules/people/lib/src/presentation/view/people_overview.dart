@@ -19,7 +19,7 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
   Widget build(BuildContext context) {
     return LmuScaffold(
       appBar: LmuAppBarData(
-        largeTitle: driver.largeTitle,
+        largeTitle: driver.pageTitle,
         leadingAction: LeadingAction.back,
       ),
       body: _buildBody(context),
@@ -42,6 +42,7 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        LmuTileHeadline.base(title: driver.largeTitle),
         const SizedBox(height: LmuSizes.size_16),
         _buildFavoritesSection(context),
         const SizedBox(height: LmuSizes.size_24),

@@ -36,9 +36,11 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
 
   bool get isLoading => _usecase.loadState != PeopleLoadState.success;
 
+  String get pageTitle => _localizations.people.contacts;
+
   String get largeTitle {
     final faculty = allFaculties.firstWhere((f) => f.id == facultyId);
-    return faculty.name;
+    return '${_localizations.people.people_subtitleTile}${faculty.name}';
   }
 
   List<People> get people => _usecase.data;
