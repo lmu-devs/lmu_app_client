@@ -14,23 +14,4 @@ class PeopleFavoritesStorage {
     final favoriteStrings = favoriteIds.map((id) => id.toString()).toList();
     await prefs.setStringList(_favoritesKey, favoriteStrings);
   }
-
-  Future<void> addFavorite(int personId) async {
-    final currentFavorites = await getFavoriteIds();
-    if (!currentFavorites.contains(personId)) {
-      currentFavorites.add(personId);
-      await saveFavoriteIds(currentFavorites);
-    }
-  }
-
-  Future<void> removeFavorite(int personId) async {
-    final currentFavorites = await getFavoriteIds();
-    currentFavorites.remove(personId);
-    await saveFavoriteIds(currentFavorites);
-  }
-
-  Future<bool> isFavorite(int personId) async {
-    final favoriteIds = await getFavoriteIds();
-    return favoriteIds.contains(personId);
-  }
 }
