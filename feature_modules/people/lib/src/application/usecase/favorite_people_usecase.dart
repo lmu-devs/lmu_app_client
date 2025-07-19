@@ -33,4 +33,4 @@ class FavoritePeopleUsecase extends ChangeNotifier {
     favoriteIdsNotifier.value = Set.from(_favoriteIds);
     notifyListeners();
   }
-} 
+}

@@ -18,8 +18,7 @@ class GetPeopleUsecase extends ChangeNotifier {
   List<People> get data => _data;
 
   Future<void> load() async {
-    if (_loadState == PeopleLoadState.loading ||
-        _loadState == PeopleLoadState.success) {
+    if (_loadState == PeopleLoadState.loading || _loadState == PeopleLoadState.success) {
       return;
     }
 

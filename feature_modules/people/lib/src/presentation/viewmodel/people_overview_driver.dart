@@ -43,11 +43,9 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
 
   List<People> get people => _usecase.data;
 
-  List<People> get favoritePeople => 
-      people.where((person) => _favoritesUsecase.isFavorite(person.id)).toList();
+  List<People> get favoritePeople => people.where((person) => _favoritesUsecase.isFavorite(person.id)).toList();
 
-  List<People> get nonFavoritePeople => 
-      people.where((person) => !_favoritesUsecase.isFavorite(person.id)).toList();
+  List<People> get nonFavoritePeople => people.where((person) => !_favoritesUsecase.isFavorite(person.id)).toList();
 
   bool get hasFavorites => _favoritesUsecase.favoriteIds.isNotEmpty;
 

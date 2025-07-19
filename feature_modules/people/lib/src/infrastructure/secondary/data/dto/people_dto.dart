@@ -37,7 +37,6 @@ class PeopleDto extends Equatable {
   final String room;
   final String consultation;
   @JsonKey(includeFromJson: false, includeToJson: false)
-
   People toDomain() => People(
         id: id,
         name: name,

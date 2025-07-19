@@ -18,11 +18,11 @@ class People {
   final int id;
   final String name;
   final String surname;
-  final String title; 
-  final String? academicDegree; 
+  final String title;
+  final String? academicDegree;
   final int facultyId;
-  final String faculty; 
-  final String role; 
+  final String faculty;
+  final String role;
   final String email;
   final String phone;
   final String website;
