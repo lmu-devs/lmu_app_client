@@ -5,6 +5,7 @@ import 'package:core/localizations.dart';
 import 'package:core/utils.dart';
 
 import '../../application/usecase/get_people_usecase.dart';
+import '../../application/usecase/favorite_people_usecase.dart';
 import '../../domain/model/people.dart';
 
 part 'people_details_page_driver.g.dart';
@@ -21,6 +22,7 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
   int get personId => _personId;
 
   final _usecase = GetIt.I.get<GetPeopleUsecase>();
+  final _favoritesUsecase = GetIt.I.get<FavoritePeopleUsecase>();
 
   late LmuLocalizations _localizations;
 
@@ -30,12 +32,13 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
   String get contactText => _localizations.people.contact;
   String get emailText => _localizations.people.email;
   String get phoneText => _localizations.people.phone;
-  String get websiteText => _localizations.people.website;
+  String get websiteText => "Website";
   String get roomText => _localizations.people.room;
   String get consultationHoursText => _localizations.people.consultationHours;
 
   People? get person => _usecase.data.where((p) => p.id == personId).firstOrNull;
   bool get isLoading => _usecase.loadState != PeopleLoadState.success;
+  bool get isFavorite => _favoritesUsecase.isFavorite(personId);
 
   String get faculty => person?.faculty ?? '';
   String get role => person?.role ?? '';
@@ -57,14 +60,19 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
     await LmuUrlLauncher.launchWebsite(url: website, context: context);
   }
 
-  Future<void> onRoomTap() async {
-    // TODO: Implement room tap functionality (e.g., open maps)
+  Future<void> onRoomTap() async {}
+
+  Future<void> onConsultationTap() async {}
+
+  Future<void> onFavoriteTap() async {
+    await _favoritesUsecase.toggleFavorite(personId);
   }
 
   @override
   void didInitDriver() {
     super.didInitDriver();
     _usecase.addListener(_onStateChanged);
+    _favoritesUsecase.addListener(_onStateChanged);
     if (_usecase.data.isEmpty) {
       _usecase.load();
     }
@@ -91,6 +99,7 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
   @override
   void dispose() {
     _usecase.removeListener(_onStateChanged);
+    _favoritesUsecase.removeListener(_onStateChanged);
     super.dispose();
   }
 }

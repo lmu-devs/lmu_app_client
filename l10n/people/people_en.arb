@@ -13,5 +13,7 @@
   "consultationHours": "Office Hours",
   "myFaculties": "My Faculties",
   "allFaculties": "All Faculties",
-  "showAllFaculties": "Show All Faculties"
+  "showAllFaculties": "Show All Faculties",
+  "favoritesA": "Tap the ",
+  "favoritesB": " icon to add favorites here"
 }
