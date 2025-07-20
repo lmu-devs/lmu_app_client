@@ -37,6 +37,7 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
   String get copiedEmailText => _localizations.people.copiedEmail;
   String get copiedPhoneText => _localizations.people.copiedPhone;
   String get copiedWebsiteText => _localizations.people.copiedWebsite;
+  
 
   People? get person => _usecase.data.where((p) => p.id == personId).firstOrNull;
   bool get isLoading => _usecase.loadState != PeopleLoadState.success;
@@ -51,17 +52,16 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
   String get room => person?.room ?? '';
   String get consultation => person?.consultation ?? '';
 
-  // Combined faculty and role for display
   String get facultyAndRole {
     final facultyText = faculty.isNotEmpty ? faculty : '';
-    final roleText = role.isNotEmpty ? role : '';
+    final titleText = title.isNotEmpty ? title : '';
     
-    if (facultyText.isNotEmpty && roleText.isNotEmpty) {
-      return '$roleText, $facultyText';
+    if (facultyText.isNotEmpty && titleText.isNotEmpty) {
+      return '$titleText, $facultyText';
     } else if (facultyText.isNotEmpty) {
       return facultyText;
-    } else if (roleText.isNotEmpty) {
-      return roleText;
+    } else if (titleText.isNotEmpty) {
+      return titleText;
     }
     return '';
   }

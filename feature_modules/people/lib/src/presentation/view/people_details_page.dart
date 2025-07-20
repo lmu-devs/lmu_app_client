@@ -71,15 +71,15 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
                 const SizedBox(height: LmuSizes.size_2),
               ],
               
-              const SizedBox(height: LmuSizes.size_32), 
+              const SizedBox(height: LmuSizes.size_16), 
               LmuTileHeadline.base(title: driver.contactText),
               const SizedBox(height: LmuSizes.size_2),
               LmuContentTile(
                 contentList: [
                   if (driver.email.isNotEmpty)
                     LmuListItem.base(
-                      title: driver.email,
-                      subtitle: driver.emailText,
+                      title: driver.emailText,
+                      subtitle: driver.email,
                       leadingArea: LmuIconButton(
                         icon: LucideIcons.mail,
                         onPressed: () => driver.onEmailTap(context),
@@ -89,14 +89,14 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
                         onPressed: () => CopyToClipboardUtil.copyToClipboard(
                           context: context,
                           copiedText: driver.email,
-                          message: driver.copiedToClipboardText,
+                          message: driver.copiedEmailText,
                         ),
                       ),
                     ),
                   if (driver.phone.isNotEmpty)
                     LmuListItem.base(
-                      title: driver.phone,
-                      subtitle: driver.phoneText,
+                      title: driver.phoneText,
+                      subtitle: driver.phone,
                       leadingArea: LmuIconButton(
                         icon: LucideIcons.phone,
                         onPressed: () => driver.onPhoneTap(context),
@@ -112,8 +112,8 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
                     ),
                   if (driver.website.isNotEmpty)
                     LmuListItem.base(
-                      title: driver.website,
-                      subtitle: driver.websiteText,
+                      title: driver.websiteText,
+                      subtitle: driver.website,
                       leadingArea: LmuIconButton(
                         icon: LucideIcons.globe,
                         onPressed: () => driver.onWebsiteTap(context),
@@ -123,7 +123,7 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
                         onPressed: () => CopyToClipboardUtil.copyToClipboard(
                           context: context,
                           copiedText: driver.website,
-                          message: driver.copiedToClipboardText,
+                          message: driver.copiedWebsiteText,
                         ),
                       ),
                     ),
@@ -137,7 +137,7 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
                       title: driver.roomText,
                       subtitle: driver.room,
                       trailingArea: LmuIconButton(
-                        icon: LucideIcons.map_pin,
+                        icon: LucideIcons.map,
                         onPressed: () => driver.onRoomTap(),
                       ),
                     ),
