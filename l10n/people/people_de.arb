@@ -5,7 +5,6 @@
   "contacts": "Kontakte",
   "loading": "Lädt...",
   "personNotFound": "Person nicht gefunden",
-  "facultyAndRole": "Fakultät & Rolle",
   "contact": "Kontakt",
   "email": "E-Mail",
   "phone": "Telefon",
@@ -16,5 +15,8 @@
   "showAllFaculties": "Alle Fakultäten anzeigen",
   "favoritesA": "Füge Favoriten mit dem ",
   "favoritesB": " Symbol hinzu",
-  "people_subtitleTile": "aus der "
+  "people_subtitleTile": "aus der ",
+  "copiedEmail": "E-Mail kopiert",
+  "copiedWebsite": "Website kopiert",
+  "copiedPhone": "Telefonnummer kopiert"
 }

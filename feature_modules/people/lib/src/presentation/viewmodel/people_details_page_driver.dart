@@ -28,13 +28,15 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
 
   String get loadingText => _localizations.people.loading;
   String get personNotFoundText => _localizations.people.personNotFound;
-  String get facultyAndRoleText => _localizations.people.facultyAndRole;
   String get contactText => _localizations.people.contact;
   String get emailText => _localizations.people.email;
   String get phoneText => _localizations.people.phone;
   String get websiteText => "Website";
   String get roomText => _localizations.people.room;
   String get consultationHoursText => _localizations.people.consultationHours;
+  String get copiedEmailText => _localizations.people.copiedEmail;
+  String get copiedPhoneText => _localizations.people.copiedPhone;
+  String get copiedWebsiteText => _localizations.people.copiedWebsite;
 
   People? get person => _usecase.data.where((p) => p.id == personId).firstOrNull;
   bool get isLoading => _usecase.loadState != PeopleLoadState.success;
@@ -42,11 +44,27 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
 
   String get faculty => person?.faculty ?? '';
   String get role => person?.role ?? '';
+  String get title => person?.title ?? '';
   String get email => person?.email ?? '';
   String get phone => person?.phone ?? '';
   String get website => person?.website ?? '';
   String get room => person?.room ?? '';
   String get consultation => person?.consultation ?? '';
+
+  // Combined faculty and role for display
+  String get facultyAndRole {
+    final facultyText = faculty.isNotEmpty ? faculty : '';
+    final roleText = role.isNotEmpty ? role : '';
+    
+    if (facultyText.isNotEmpty && roleText.isNotEmpty) {
+      return '$roleText, $facultyText';
+    } else if (facultyText.isNotEmpty) {
+      return facultyText;
+    } else if (roleText.isNotEmpty) {
+      return roleText;
+    }
+    return '';
+  }
 
   Future<void> onEmailTap(BuildContext context) async {
     await LmuUrlLauncher.launchEmail(email: email, context: context);
