@@ -79,70 +79,46 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
                     LmuListItem.base(
                       title: driver.emailText,
                       subtitle: driver.email,
-                      leadingArea: LmuIconButton(
-                        icon: LucideIcons.mail,
-                        onPressed: () => driver.onEmailTap(context),
-                      ),
+                      leadingArea: const Icon(LucideIcons.mail),
                       trailingArea: LmuIconButton(
                         icon: LucideIcons.copy,
-                        onPressed: () {
-                          CopyToClipboardUtil.copyToClipboard(
-                            context: context,
-                            copiedText: driver.email,
-                            message: driver.copiedEmailText,
-                          );
-                          LmuToast.of(context).showToast(
-                            message: driver.copiedEmailText,
-                            type: ToastType.success,
-                          );
-                        },
+                        onPressed: () => CopyToClipboardUtil.copyToClipboard(
+                          context: context,
+                          copiedText: driver.email,
+                          message: driver.copiedEmailText,
+                        ),
                       ),
+                      onTap: () => driver.onEmailTap(context),
                     ),
                   if (driver.phone.isNotEmpty)
                     LmuListItem.base(
                       title: driver.phoneText,
                       subtitle: driver.phone,
-                      leadingArea: LmuIconButton(
-                        icon: LucideIcons.phone,
-                        onPressed: () => driver.onPhoneTap(context),
-                      ),
+                      leadingArea: const Icon(LucideIcons.phone),
                       trailingArea: LmuIconButton(
                         icon: LucideIcons.copy,
-                        onPressed: () {
-                          CopyToClipboardUtil.copyToClipboard(
-                            context: context,
-                            copiedText: driver.phone,
-                            message: driver.copiedPhoneText,
-                          );
-                          LmuToast.of(context).showToast(
-                            message: driver.copiedPhoneText,
-                            type: ToastType.success,
-                          );
-                        },
+                        onPressed: () => CopyToClipboardUtil.copyToClipboard(
+                          context: context,
+                          copiedText: driver.phone,
+                          message: driver.copiedPhoneText,
+                        ),
                       ),
+                      onTap: () => driver.onPhoneTap(context),
                     ),
                   if (driver.website.isNotEmpty)
                     LmuListItem.base(
                       title: driver.websiteText,
                       subtitle: driver.website,
-                      leadingArea: LmuIconButton(
-                        icon: LucideIcons.globe,
-                        onPressed: () => driver.onWebsiteTap(context),
-                      ),
+                      leadingArea: const Icon(LucideIcons.globe),
                       trailingArea: LmuIconButton(
                         icon: LucideIcons.copy,
-                        onPressed: () {
-                          CopyToClipboardUtil.copyToClipboard(
-                            context: context,
-                            copiedText: driver.website,
-                            message: driver.copiedWebsiteText,
-                          );
-                          LmuToast.of(context).showToast(
-                            message: driver.copiedWebsiteText,
-                            type: ToastType.success,
-                          );
-                        },
+                        onPressed: () => CopyToClipboardUtil.copyToClipboard(
+                          context: context,
+                          copiedText: driver.website,
+                          message: driver.copiedWebsiteText,
+                        ),
                       ),
+                      onTap: () => driver.onWebsiteTap(context),
                     ),
                 ],
               ),
