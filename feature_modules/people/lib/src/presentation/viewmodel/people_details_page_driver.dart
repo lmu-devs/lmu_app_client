@@ -1,8 +1,7 @@
-import 'package:flutter/widgets.dart';
-import 'package:get_it/get_it.dart';
-import 'package:widget_driver/widget_driver.dart';
 import 'package:core/localizations.dart';
 import 'package:core/utils.dart';
+import 'package:get_it/get_it.dart';
+import 'package:widget_driver/widget_driver.dart';
 
 import '../../application/usecase/get_people_usecase.dart';
 import '../../domain/model/people.dart';
@@ -30,7 +29,7 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
   String get contactText => _localizations.people.contact;
   String get emailText => _localizations.people.email;
   String get phoneText => _localizations.people.phone;
-  String get websiteText => _localizations.people.website;
+  String get websiteText => "_localizations.people.website";
   String get roomText => _localizations.people.room;
   String get consultationHoursText => _localizations.people.consultationHours;
 

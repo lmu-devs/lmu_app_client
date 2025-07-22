@@ -52,6 +52,8 @@ dependencies:
     path: ./feature_modules/lectures
   people:
     path: ./feature_modules/people
+  developerdex:
+    path: ./feature_modules/developerdex
   shared_api:
     path: ./shared_api
 

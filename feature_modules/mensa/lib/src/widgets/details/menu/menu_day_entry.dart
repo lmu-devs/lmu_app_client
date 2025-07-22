@@ -40,8 +40,7 @@ class MenuDayEntry extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.only(top: LmuSizes.size_24, bottom: LmuSizes.size_96),
           child: LmuEmptyState(
-            type: EmptyStateType.custom,
-            assetName: LmuAnimalAssets.caterpillar,
+            type: EmptyStateType.closed,
             title: "$mensaName ${mensaLocals.closed.toLowerCase()}",
             description: mensaLocals.closedDescription(
               mensaName,
@@ -53,8 +52,7 @@ class MenuDayEntry extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.only(top: LmuSizes.size_24, bottom: LmuSizes.size_96),
         child: LmuEmptyState(
-          type: EmptyStateType.custom,
-          assetName: LmuAnimalAssets.kiwi,
+          type: EmptyStateType.generic,
           title: mensaLocals.menuNotAvailable,
           description: mensaLocals.menuNotAvailableDescription,
         ),

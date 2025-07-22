@@ -12,7 +12,7 @@ class SettingsSafariPageDriver extends WidgetDriver {
 
   List<SafariAnimal> _seenAnimals = [];
 
-  String get safariTitle => "LMU Safari";
+  String get safariTitle => "Developerdex";
 
   int get stampCount => SafariAnimal.values.length;
 

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
@@ -29,18 +31,13 @@ class SettingsSafariPage extends DrivableWidget<SettingsSafariPageDriver> {
         ],
       ),
       slivers: [
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.all(LmuSizes.size_16),
-            child: LmuText.body(
-              "Collect all the animals in the LMU Safari! Tap on an animal to mark it as seen.",
-              textAlign: TextAlign.left,
-              color: context.colors.neutralColors.textColors.mediumColors.base,
-            ),
-          ),
-        ),
         SliverPadding(
-          padding: const EdgeInsets.all(LmuSizes.size_16),
+          padding: const EdgeInsets.only(
+            left: LmuSizes.size_16,
+            right: LmuSizes.size_16,
+            top: LmuSizes.size_16,
+            bottom: LmuSizes.size_96,
+          ),
           sliver: SliverGrid(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
@@ -48,9 +45,50 @@ class SettingsSafariPage extends DrivableWidget<SettingsSafariPageDriver> {
                 final isSeen = driver.isAnimalSeen(safariAnimal);
                 return Stack(
                   children: [
-                    isSeen
-                        ? Padding(
-                            padding: const EdgeInsets.all(LmuSizes.size_8),
+                    if (!isSeen)
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(LmuSizes.size_12),
+                          color: context.colors.neutralColors.backgroundColors.tile,
+                        ),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Image.asset(
+                              color: context.colors.neutralColors.textColors.weakColors.disabled!.withAlpha(30),
+                              safariAnimal.toAsset(),
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
+                              package: "core",
+                            ),
+                          ),
+                        ),
+                      ),
+                    if (isSeen)
+                      Stack(
+                        children: [
+                          Opacity(
+                            opacity: 0.5,
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: ImageFiltered(
+                                imageFilter: ImageFilter.blur(
+                                  sigmaX: LmuSizes.size_32,
+                                  sigmaY: LmuSizes.size_32,
+                                ),
+                                child: Image.asset(
+                                  safariAnimal.toAsset(),
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                  package: "core",
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(LmuSizes.size_12),
                             child: Image.asset(
                               safariAnimal.toAsset(),
                               fit: BoxFit.cover,
@@ -58,17 +96,9 @@ class SettingsSafariPage extends DrivableWidget<SettingsSafariPageDriver> {
                               height: double.infinity,
                               package: "core",
                             ),
-                          )
-                        : Center(child: LmuText.h1("?")),
-                    Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          width: LmuSizes.size_4,
-                          color: context.colors.neutralColors.borderColors.cutout,
-                        ),
-                      ),
-                    )
+                          ),
+                        ],
+                      )
                   ],
                 );
               },
@@ -76,8 +106,8 @@ class SettingsSafariPage extends DrivableWidget<SettingsSafariPageDriver> {
             ),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
-              mainAxisSpacing: LmuSizes.size_32,
-              crossAxisSpacing: LmuSizes.size_32,
+              mainAxisSpacing: LmuSizes.size_12,
+              crossAxisSpacing: LmuSizes.size_12,
               childAspectRatio: 1,
             ),
           ),

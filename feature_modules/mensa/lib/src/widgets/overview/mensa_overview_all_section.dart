@@ -41,7 +41,7 @@ class MensaOverviewAllSection extends StatelessWidget {
 
                 if (filteredMensaModels.isEmpty) {
                   return LmuEmptyState(
-                    type: EmptyStateType.allClosed,
+                    type: EmptyStateType.closed,
                     description: context.locals.app.allClosedDescription(context.locals.canteen.canteens),
                   );
                 }
