@@ -53,6 +53,7 @@ class _ScreeningsHistoryPageState extends State<ScreeningsHistoryPage> {
   @override
   Widget build(BuildContext context) {
     final localizations = context.locals.cinema;
+    final cinema = cinemas.first;
 
     return LmuScaffold(
       appBar: LmuAppBarData(
@@ -60,20 +61,11 @@ class _ScreeningsHistoryPageState extends State<ScreeningsHistoryPage> {
         leadingAction: LeadingAction.back,
         largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
         largeTitleTrailingWidget: cinemas.length == 1
-            ? Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: LmuSizes.size_4,
-                  vertical: LmuSizes.size_2,
-                ),
-                decoration: BoxDecoration(
-                  color: cinemas.first.type.getTextColor(context).withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
-                ),
-                child: LmuText.bodySmall(
-                  cinemas.first.type.getValue(),
-                  color: cinemas.first.type.getTextColor(context),
-                ),
-              )
+            ? LmuInTextVisual.text(
+                title: cinema.type.getValue(),
+                textColor: cinema.type.getTextColor(context),
+                backgroundColor: cinema.type.getBackgroundColor(context),
+            )
             : null,
       ),
       body: screenings.isNotEmpty

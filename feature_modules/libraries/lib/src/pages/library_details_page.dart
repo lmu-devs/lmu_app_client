@@ -3,10 +3,12 @@ import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
+import 'package:core_routes/explore.dart';
 import 'package:core_routes/libraries.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/explore.dart';
 
 import '../extensions/equipment_icon_extension.dart';
 import '../extensions/opening_hours_extensions.dart';
@@ -21,10 +23,12 @@ class LibraryDetailsPage extends StatelessWidget {
     super.key,
     required this.library,
     this.withAppBar = true,
+    this.withMapButton = true,
   });
 
   final LibraryModel library;
   final bool withAppBar;
+  final bool withMapButton;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +38,13 @@ class LibraryDetailsPage extends StatelessWidget {
         const SizedBox(height: LmuSizes.size_8),
         LmuButtonRow(
           buttons: [
+            if (withMapButton)
+              LmuMapImageButton(
+                onTap: () {
+                  const ExploreMainRoute().go(context);
+                  GetIt.I<ExploreApi>().selectLocation(library.id);
+                },
+              ),
             if (library.reservationUrl != null && library.reservationUrl!.isNotEmpty)
               LmuButton(
                 title: context.locals.libraries.seatBooking,

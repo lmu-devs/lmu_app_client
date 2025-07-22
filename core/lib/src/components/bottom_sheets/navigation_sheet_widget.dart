@@ -28,11 +28,9 @@ class NavigationSheet extends StatelessWidget {
     required bool isApple,
   }) async {
     final String appleMapsUrl = 'maps:0,0?q=$latitude,$longitude';
-    final String googleMapsUrlAndroid =
-        'google.navigation:q=$latitude,$longitude';
+    final String googleMapsUrlAndroid = 'google.navigation:q=$latitude,$longitude';
     final String googleMapsUrlIOS = 'comgooglemaps://?q=$latitude,$longitude';
-    final String googleMapsUrlWeb =
-        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+    final String googleMapsUrlWeb = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
 
     final bool isGoogleMapsInstalled = await LmuUrlLauncher.canLaunch(
         url: Platform.isIOS ? googleMapsUrlIOS : googleMapsUrlAndroid);
@@ -76,11 +74,19 @@ class NavigationSheet extends StatelessWidget {
         if (!isAlreadyOnExplorePage)
           LmuListItem.base(
             title: context.locals.explore.inAppMaps,
-            leadingArea: Image.asset(
-              getPngAssetTheme('assets/app_icon'),
-              package: 'launch_flow',
+            leadingArea: Container(
               height: LmuIconSizes.large,
               width: LmuIconSizes.large,
+              decoration: BoxDecoration(
+              border: Border.all(color: context.colors.neutralColors.borderColors.seperatorLight),
+              borderRadius: BorderRadius.circular(LmuRadiusSizes.medium),
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: Image.asset(
+                getPngAssetTheme('lib/assets/maps_icon'),
+                package: 'core',
+                fit: BoxFit.cover,
+              ),
             ),
             onTap: () {
               Navigator.pop(context);

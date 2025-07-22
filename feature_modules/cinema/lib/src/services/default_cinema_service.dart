@@ -70,6 +70,7 @@ class DefaultCinemaService implements CinemaService {
               screenings: getScreeningsForCinema(state.screenings, cinemaModel.id),
             ),
             withAppBar: false,
+            withMapButton: false,
           ),
         ),
       ];
