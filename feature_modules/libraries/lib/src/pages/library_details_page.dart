@@ -48,15 +48,22 @@ class LibraryDetailsPage extends StatelessWidget {
             if (library.reservationUrl != null && library.reservationUrl!.isNotEmpty)
               LmuButton(
                 title: context.locals.libraries.seatBooking,
-                leadingIcon: LucideIcons.armchair,
                 emphasis: ButtonEmphasis.secondary,
-                onTap: () => LmuUrlLauncher.launchWebsite(url: library.reservationUrl!, context: context),
+                onTap: () => LmuUrlLauncher.launchWebsite(
+                  url: library.reservationUrl!,
+                  context: context,
+                  mode: LmuUrlLauncherMode.inAppWebView,
+                ),
               ),
             if (library.url.isNotEmpty)
               LmuButton(
                 title: "Website",
                 emphasis: ButtonEmphasis.secondary,
-                onTap: () => LmuUrlLauncher.launchWebsite(url: library.url, context: context),
+                onTap: () => LmuUrlLauncher.launchWebsite(
+                  url: library.url,
+                  context: context,
+                  mode: LmuUrlLauncherMode.inAppWebView,
+                ),
               ),
             if (library.phones != null && library.phones!.isNotEmpty)
               LmuButton(
@@ -148,7 +155,11 @@ class LibraryDetailsPage extends StatelessWidget {
                         )
                       : null,
                   onTap: () => equipment.url != null && equipment.url!.isNotEmpty
-                      ? LmuUrlLauncher.launchWebsite(url: equipment.url!, context: context)
+                      ? LmuUrlLauncher.launchWebsite(
+                        url: equipment.url!,
+                        context: context,
+                        mode: LmuUrlLauncherMode.inAppWebView,
+                      )
                       : null,
                 ),
               )

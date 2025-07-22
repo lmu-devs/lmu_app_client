@@ -100,17 +100,16 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
                 LmuListItem.base(
                   title: driver.roomText,
                   subtitle: driver.room,
-                  //trailingArea: const Icon(Icons.map_outlined),
                   onTap: () => driver.onRoomTap(),
                 ),
                 LmuListItem.base(
                   title: driver.consultationHoursText,
                   subtitle: driver.consultation,
-                  //trailingArea: const Icon(Icons.schedule_outlined),
                   onTap: () => driver.onConsultationTap(),
                 ),
               ],
             ),
+            const SizedBox(height: LmuSizes.size_96),
           ],
         ),
       ),

@@ -45,7 +45,11 @@ class SportsCourseTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         final url = GetIt.I.get<SportsStateService>().constructUrl(sportType);
-        LmuUrlLauncher.launchWebsite(context: context, url: url);
+        LmuUrlLauncher.launchWebsite(
+          context: context,
+          url: url,
+          mode: LmuUrlLauncherMode.inAppWebView,
+        );
       },
       child: Container(
         margin: EdgeInsets.only(bottom: hasDivider ? LmuSizes.size_12 : LmuSizes.none),

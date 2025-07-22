@@ -18,7 +18,6 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
 
   late int _personId;
 
-  @override
   int get personId => _personId;
 
   final _usecase = GetIt.I.get<GetPeopleUsecase>();
@@ -57,7 +56,7 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
   }
 
   Future<void> onWebsiteTap(BuildContext context) async {
-    await LmuUrlLauncher.launchWebsite(url: website, context: context);
+    await LmuUrlLauncher.launchWebsite(url: website, context: context, mode: LmuUrlLauncherMode.inAppWebView);
   }
 
   Future<void> onRoomTap() async {}

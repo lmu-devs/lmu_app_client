@@ -32,6 +32,7 @@ class DataPrivacyDisclaimer extends StatelessWidget {
                 LmuUrlLauncher.launchWebsite(
                   url: LmuDevStrings.lmuDevDataPrivacy,
                   context: context,
+                  mode: LmuUrlLauncherMode.inAppWebView,
                 );
               },
           ),
