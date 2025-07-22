@@ -45,7 +45,7 @@ class MenuItemTile extends StatelessWidget {
               "dish_category": menuItemModel.dishCategory.name,
               "dish_type": menuItemModel.dishType,
               "dish_price_simple": menuItemModel.priceSimple,
-              "dish_likes": menuItemModel.ratingModel.likeCount,
+              "dish_likes": menuItemModel.ratingModel.likeCount.toString(),
             },
           );
           LmuBottomSheet.showExtended(
