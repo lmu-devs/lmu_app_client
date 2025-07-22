@@ -17,6 +17,7 @@ class LmuEmptyState extends StatefulWidget {
     this.assetName,
     this.title,
     this.description,
+    this.hasVerticalPadding = false,
   });
 
   final EmptyStateType type;
@@ -24,6 +25,7 @@ class LmuEmptyState extends StatefulWidget {
   final String? title;
   final String? description;
   final void Function()? onRetry;
+  final bool hasVerticalPadding;
 
   @override
   State<LmuEmptyState> createState() => _LmuEmptyStateState();
@@ -45,7 +47,12 @@ class _LmuEmptyStateState extends State<LmuEmptyState> {
     final locals = context.locals;
     final asset = widget.assetName ?? _assetName;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_24),
+      padding: EdgeInsets.only(
+        left: LmuSizes.size_24,
+        right: LmuSizes.size_24,
+        top: hasVerticalPadding ? LmuSizes.size_24 : 0,
+        bottom: hasVerticalPadding ? LmuSizes.size_96 : 0,
+      ),
       child: Column(
         children: [
           encounterWidget ??

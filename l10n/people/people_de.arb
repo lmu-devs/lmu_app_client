@@ -13,5 +13,8 @@
   "consultationHours": "Sprechstunde",
   "myFaculties": "Meine Fakultäten",
   "allFaculties": "Alle Fakultäten",
-  "showAllFaculties": "Alle Fakultäten anzeigen"
+  "showAllFaculties": "Alle Fakultäten anzeigen",
+  "favoritesA": "Füge Favoriten mit dem ",
+  "favoritesB": " Symbol hinzu",
+  "people_subtitleTile": "aus der "
 }

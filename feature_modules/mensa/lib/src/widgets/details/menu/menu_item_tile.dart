@@ -33,8 +33,7 @@ class MenuItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-          bottom: hasDivider ? LmuSizes.size_12 : LmuSizes.none),
+      padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.size_12 : LmuSizes.none),
       child: GestureDetector(
         onTap: () {
           final AnalyticsClient analytics = GetIt.I<AnalyticsClient>();

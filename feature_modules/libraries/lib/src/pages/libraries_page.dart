@@ -27,6 +27,7 @@ class _LibrariesPageState extends State<LibrariesPage> {
 
   @override
   Widget build(BuildContext context) {
+    final librariesCubit = GetIt.I.get<LibrariesCubit>();
     return LmuScaffold(
       appBar: LmuAppBarData(
         largeTitle: context.locals.libraries.pageTitle,
@@ -40,7 +41,7 @@ class _LibrariesPageState extends State<LibrariesPage> {
         ),
       ),
       body: BlocBuilder<LibrariesCubit, LibrariesState>(
-        bloc: GetIt.I.get<LibrariesCubit>(),
+        bloc: librariesCubit,
         builder: (context, state) {
           Widget child = const LibrariesLoadingView(key: ValueKey("librariesLoading"));
 
@@ -54,9 +55,17 @@ class _LibrariesPageState extends State<LibrariesPage> {
               key: const ValueKey("librariesContent"),
               libraries: state.libraries,
             );
+          } else if (state is LibrariesLoadFailure) {
+            final isNoNetworkError = state.loadState.isNoNetworkError;
+            child = LmuEmptyState(
+              key: ValueKey("libraries${isNoNetworkError ? 'NoNetwork' : 'GenericError'}"),
+              type: isNoNetworkError ? EmptyStateType.noInternet : EmptyStateType.generic,
+              hasVerticalPadding: true,
+              onRetry: () => librariesCubit.loadLibraries(),
+            );
           }
 
-          return LmuPageAnimationWrapper(child: child);
+          return child;
         },
       ),
     );

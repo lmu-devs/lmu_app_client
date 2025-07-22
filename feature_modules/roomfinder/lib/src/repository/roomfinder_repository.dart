@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:core/utils.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -53,10 +54,18 @@ class RoomfinderRepository {
   Future<List<RoomfinderStreet>> getRoomfinderData() async {
     String? data;
 
-    data = await getCachedJsonString(_cacheKey);
-    if (data == null) {
-      data = await roomfinderApiClient.getRoomfinderData();
-      await cacheJsonList(_cacheKey, data);
+    try {
+      data = await getCachedJsonString(_cacheKey);
+      if (data == null) {
+        data = await roomfinderApiClient.getRoomfinderData();
+        await cacheJsonList(_cacheKey, data);
+      }
+    } catch (e) {
+      if (e is SocketException) {
+        throw NoNetworkException();
+      } else {
+        throw Exception("Failed to load roomfinder data: $e");
+      }
     }
 
     final encodedJson = json.decode(data) as List<dynamic>;

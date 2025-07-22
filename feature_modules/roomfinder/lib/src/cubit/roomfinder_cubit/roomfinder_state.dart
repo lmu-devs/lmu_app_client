@@ -1,3 +1,4 @@
+import 'package:core/utils.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../repository/api/models/models.dart';
@@ -27,5 +28,10 @@ class RoomfinderLoadSuccess extends RoomfinderState {
 }
 
 class RoomfinderLoadFailure extends RoomfinderState {
-  const RoomfinderLoadFailure();
+  const RoomfinderLoadFailure({this.loadState = LoadState.genericError});
+
+  final LoadState loadState;
+
+  @override
+  List<Object> get props => [loadState];
 }

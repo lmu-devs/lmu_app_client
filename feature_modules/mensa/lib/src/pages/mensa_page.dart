@@ -1,6 +1,7 @@
 import 'package:core/components.dart';
 import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -57,7 +58,15 @@ class _MensaPageState extends State<MensaPage> {
             child = MensaOverviewContentView(key: const ValueKey("mensaContent"), mensaModels: state.mensaModels!);
           } else if (state is MensaLoadSuccess) {
             child = MensaOverviewContentView(key: const ValueKey("mensaContent"), mensaModels: state.mensaModels);
+          } else if (state is MensaLoadFailure) {
+            final isNoNetworkError = state.loadState.isNoNetworkError;
+            child = LmuEmptyState(
+              key: ValueKey("mensa${isNoNetworkError ? 'NoNetwork' : 'GenericError'}"),
+              type: isNoNetworkError ? EmptyStateType.noInternet : EmptyStateType.generic,
+              onRetry: () => mensaCubit.loadMensaData(),
+            );
           }
+
           return LmuPageAnimationWrapper(child: child);
         },
       ),
