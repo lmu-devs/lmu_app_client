@@ -51,7 +51,7 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
         trailingWidgets: [
           LmuFavoriteButton(
             isFavorite: driver.isFavorite,
-            onTap: driver.onFavoriteTap,
+            onTap: () => driver.onFavoriteTap(context),
           ),
         ],
       ),
@@ -59,7 +59,7 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(
             LmuSizes.size_16,
-            LmuSizes.size_2, 
+            LmuSizes.size_2,
             LmuSizes.size_16,
             LmuSizes.size_16,
           ),
@@ -67,11 +67,10 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (driver.facultyAndRole.isNotEmpty) ...[
-                LmuTileHeadline.base(title: driver.facultyAndRole),
+                LmuText.body(driver.facultyAndRole),
                 const SizedBox(height: LmuSizes.size_2),
               ],
-              
-              const SizedBox(height: LmuSizes.size_16), 
+              const SizedBox(height: LmuSizes.size_16),
               LmuTileHeadline.base(title: driver.contactText),
               const SizedBox(height: LmuSizes.size_2),
               LmuContentTile(
@@ -86,11 +85,17 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
                       ),
                       trailingArea: LmuIconButton(
                         icon: LucideIcons.copy,
-                        onPressed: () => CopyToClipboardUtil.copyToClipboard(
-                          context: context,
-                          copiedText: driver.email,
-                          message: driver.copiedEmailText,
-                        ),
+                        onPressed: () {
+                          CopyToClipboardUtil.copyToClipboard(
+                            context: context,
+                            copiedText: driver.email,
+                            message: driver.copiedEmailText,
+                          );
+                          LmuToast.of(context).showToast(
+                            message: driver.copiedEmailText,
+                            type: ToastType.success,
+                          );
+                        },
                       ),
                     ),
                   if (driver.phone.isNotEmpty)
@@ -103,11 +108,17 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
                       ),
                       trailingArea: LmuIconButton(
                         icon: LucideIcons.copy,
-                        onPressed: () => CopyToClipboardUtil.copyToClipboard(
-                          context: context,
-                          copiedText: driver.phone,
-                          message: driver.copiedPhoneText,
-                        ),
+                        onPressed: () {
+                          CopyToClipboardUtil.copyToClipboard(
+                            context: context,
+                            copiedText: driver.phone,
+                            message: driver.copiedPhoneText,
+                          );
+                          LmuToast.of(context).showToast(
+                            message: driver.copiedPhoneText,
+                            type: ToastType.success,
+                          );
+                        },
                       ),
                     ),
                   if (driver.website.isNotEmpty)
@@ -120,11 +131,17 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
                       ),
                       trailingArea: LmuIconButton(
                         icon: LucideIcons.copy,
-                        onPressed: () => CopyToClipboardUtil.copyToClipboard(
-                          context: context,
-                          copiedText: driver.website,
-                          message: driver.copiedWebsiteText,
-                        ),
+                        onPressed: () {
+                          CopyToClipboardUtil.copyToClipboard(
+                            context: context,
+                            copiedText: driver.website,
+                            message: driver.copiedWebsiteText,
+                          );
+                          LmuToast.of(context).showToast(
+                            message: driver.copiedWebsiteText,
+                            type: ToastType.success,
+                          );
+                        },
                       ),
                     ),
                 ],

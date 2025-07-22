@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 import 'package:core/localizations.dart';
 import 'package:core/utils.dart';
+import 'package:core/components.dart';
 
 import '../../application/usecase/get_people_usecase.dart';
 import '../../application/usecase/favorite_people_usecase.dart';
@@ -37,7 +38,8 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
   String get copiedEmailText => _localizations.people.copiedEmail;
   String get copiedPhoneText => _localizations.people.copiedPhone;
   String get copiedWebsiteText => _localizations.people.copiedWebsite;
-  
+  String get addedToFavoritesText => _localizations.people.addedToFavorites ?? 'Added to favorites';
+  String get removedFromFavoritesText => _localizations.people.removedFromFavorites ?? 'Removed from favorites';
 
   People? get person => _usecase.data.where((p) => p.id == personId).firstOrNull;
   bool get isLoading => _usecase.loadState != PeopleLoadState.success;
@@ -55,7 +57,7 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
   String get facultyAndRole {
     final facultyText = faculty.isNotEmpty ? faculty : '';
     final titleText = title.isNotEmpty ? title : '';
-    
+
     if (facultyText.isNotEmpty && titleText.isNotEmpty) {
       return '$titleText, $facultyText';
     } else if (facultyText.isNotEmpty) {
@@ -82,8 +84,16 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
 
   Future<void> onConsultationTap() async {}
 
-  Future<void> onFavoriteTap() async {
+  Future<void> onFavoriteTap(BuildContext context) async {
+    final wasFavorite = isFavorite;
     await _favoritesUsecase.toggleFavorite(personId);
+    final nowFavorite = isFavorite;
+    final toast = LmuToast.of(context);
+    if (nowFavorite && !wasFavorite) {
+      toast.showToast(message: addedToFavoritesText, type: ToastType.success);
+    } else if (!nowFavorite && wasFavorite) {
+      toast.showToast(message: removedFromFavoritesText, type: ToastType.success);
+    }
   }
 
   @override

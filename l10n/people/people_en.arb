@@ -18,5 +18,7 @@
   "people_subtitleTile": "from the ",
   "copiedEmail": "Email copied to clipboard",
   "copiedWebsite":"Website copied to clipboard",
-  "copiedPhone": "Phone number copied to clipboard"
+  "copiedPhone": "Phone number copied to clipboard",
+  "addedToFavorites": "Added to favorites",
+  "removedFromFavorites": "Removed from favorites"
 }
