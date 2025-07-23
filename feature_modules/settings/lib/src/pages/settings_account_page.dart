@@ -46,7 +46,7 @@ class SettingsAccountPage extends StatelessWidget {
                   print("connect to dominik avatar style");
                   },
                   ),**/
-              const SizedBox(height: LmuSizes.size_16),
+              const SizedBox(height: LmuSizes.size_8),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
                 child: LmuText.bodyXSmall(
@@ -70,7 +70,7 @@ class SettingsAccountPage extends StatelessWidget {
                   );
                 },
               ),
-              const SizedBox(height: LmuSizes.size_16),
+              const SizedBox(height: LmuSizes.size_12),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
                 child: LmuText.bodyXSmall(

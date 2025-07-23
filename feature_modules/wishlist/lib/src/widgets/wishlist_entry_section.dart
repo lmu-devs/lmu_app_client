@@ -47,29 +47,33 @@ class WishlistEntrySection extends StatelessWidget {
           );
 
           tiles.add(
-            LmuContentTile(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              contentList: [
-                Padding(
-                  padding: const EdgeInsets.only(top: LmuSizes.size_8, left: LmuSizes.size_12),
-                  child: LmuText.bodyXSmall(status.getValue(context)),
+            Column(
+              children: [
+                LmuTileHeadline.base(
+                  title: status.getValue(context),
                 ),
-                Column(
-                  children: wishlistEntries
-                      .map(
-                        (wishlistModel) => LmuListItem.action(
-                          title: wishlistModel.title,
-                          subtitle: wishlistModel.description,
-                          trailingTitle: wishlistModel.ratingModel.calculateLikeCount(
-                            likedWishlistIds.contains(wishlistModel.id.toString()),
-                          ),
-                          maximizeLeadingTitleArea: true,
-                          actionType: LmuListItemAction.chevron,
-                          onTap: () => WishlistDetailsRoute(wishlistModel).go(context),
-                        ),
-                      )
-                      .toList(),
+                LmuContentTile(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  contentList: [
+                    Column(
+                      children: wishlistEntries
+                          .map(
+                            (wishlistModel) => LmuListItem.action(
+                              title: wishlistModel.title,
+                              subtitle: wishlistModel.description,
+                              trailingTitle: wishlistModel.ratingModel.calculateLikeCount(
+                                likedWishlistIds.contains(wishlistModel.id.toString()),
+                              ),
+                              maximizeLeadingTitleArea: true,
+                              actionType: LmuListItemAction.chevron,
+                              onTap: () => WishlistDetailsRoute(wishlistModel).go(context),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ],
                 ),
+                const SizedBox(height: LmuSizes.size_32),
               ],
             ),
           );

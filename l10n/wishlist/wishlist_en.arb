@@ -29,10 +29,6 @@
   "@betaSubtitle": {
     "description": "Beta subtitle"
   },
-  "wishlistEntriesTitle": "Future Features",
-  "@wishlistEntriesTitle": {
-    "description": "Title of the wishlist-entries section"
-  },
   "wishlistStatusHidden": "Hidden",
   "@wishlistStatusHidden": {
     "description": "Hidden"

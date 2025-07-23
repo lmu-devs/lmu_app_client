@@ -127,8 +127,7 @@ class _WishlistPageState extends State<WishlistPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: LmuSizes.size_32),
-                  LmuTileHeadline.base(title: context.locals.wishlist.wishlistEntriesTitle),
+                  const SizedBox(height: LmuSizes.size_48),
                   const WishlistEntryList(),
                   const SizedBox(height: LmuSizes.size_16),
                   LmuContentTile(

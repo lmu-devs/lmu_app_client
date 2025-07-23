@@ -331,9 +331,9 @@ const lmuColorsLight = LmuColors(
   warningColors: WarningColors(
       textColors: WarningTextColors(
           strongColors: StrongColors(
-              base: ColorPrimitives.amber50,
-              pressed: ColorPrimitives.amber40,
-              active: ColorPrimitives.amber50,
+              base: ColorPrimitives.amber60,
+              pressed: ColorPrimitives.amber50,
+              active: ColorPrimitives.amber60,
               disabled: ColorPrimitives.trspAmber40))),
   customColors: CustomColors(
     textColors: CustomTextColors(
