@@ -2,6 +2,7 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
+import 'package:core_routes/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/user.dart';
@@ -53,6 +54,16 @@ class SettingsAccountPage extends StatelessWidget {
                   localization.connectToAccountDescription,
                   color: context.colors.neutralColors.textColors.weakColors.base,
                 ),
+              ),
+              const SizedBox(height: LmuSizes.size_32),
+              LmuContentTile(
+                contentList: [
+                  LmuListItem.action(
+                    title: "Analytics",
+                    actionType: LmuListItemAction.chevron,
+                    onTap: () => const SettingsAnalyticsRoute().go(context),
+                  ),
+                ],
               ),
               const SizedBox(height: LmuSizes.size_32),
               LmuTileHeadline.base(
