@@ -1,6 +1,7 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
+import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
@@ -67,7 +68,10 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (driver.facultyAndRole.isNotEmpty) ...[
-                LmuText.body(driver.facultyAndRole),
+                LmuText.body(
+                  driver.facultyAndRole,
+                  color: context.colors.neutralColors.textColors.mediumColors.base,
+                ),
                 const SizedBox(height: LmuSizes.size_2),
               ],
               const SizedBox(height: LmuSizes.size_16),
