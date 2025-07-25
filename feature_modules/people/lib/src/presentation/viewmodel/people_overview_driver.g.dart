@@ -27,10 +27,22 @@ class _$TestPeopleOverviewDriver extends TestDriver implements PeopleOverviewDri
   bool get isLoading => false;
 
   @override
+  String get pageTitle => ' ';
+
+  @override
   String get largeTitle => ' ';
 
   @override
   List<People> get people => [];
+
+  @override
+  List<People> get favoritePeople => [];
+
+  @override
+  List<People> get nonFavoritePeople => [];
+
+  @override
+  bool get hasFavorites => false;
 
   @override
   List<People> get filteredPeople => [];

@@ -21,9 +21,6 @@ class _$TestPeopleDetailsPageDriver extends TestDriver implements PeopleDetailsP
   String get personNotFoundText => ' ';
 
   @override
-  String get facultyAndRoleText => ' ';
-
-  @override
   String get contactText => ' ';
 
   @override
@@ -42,6 +39,21 @@ class _$TestPeopleDetailsPageDriver extends TestDriver implements PeopleDetailsP
   String get consultationHoursText => ' ';
 
   @override
+  String get copiedEmailText => ' ';
+
+  @override
+  String get copiedPhoneText => ' ';
+
+  @override
+  String get copiedWebsiteText => ' ';
+
+  @override
+  String get addedToFavoritesText => ' ';
+
+  @override
+  String get removedFromFavoritesText => ' ';
+
+  @override
   People? get person => null;
 
   @override
@@ -57,6 +69,9 @@ class _$TestPeopleDetailsPageDriver extends TestDriver implements PeopleDetailsP
   String get role => ' ';
 
   @override
+  String get title => ' ';
+
+  @override
   String get email => ' ';
 
   @override
@@ -70,6 +85,9 @@ class _$TestPeopleDetailsPageDriver extends TestDriver implements PeopleDetailsP
 
   @override
   String get consultation => ' ';
+
+  @override
+  String get facultyAndRole => ' ';
 
   @override
   Future<void> onEmailTap(BuildContext context) {
@@ -97,7 +115,7 @@ class _$TestPeopleDetailsPageDriver extends TestDriver implements PeopleDetailsP
   }
 
   @override
-  Future<void> onFavoriteTap() {
+  Future<void> onFavoriteTap(BuildContext context) {
     return Future.value();
   }
 

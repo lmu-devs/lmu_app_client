@@ -60,17 +60,26 @@ class LmuTileHeadline extends StatelessWidget {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            LmuText.body(
-              title,
-              weight: FontWeight.w600,
-              color: textColors.mediumColors.base,
+            Flexible(
+              child: LmuText.body(
+                title,
+                weight: FontWeight.w600,
+                color: textColors.mediumColors.base,
+                maxLines: 3,
+                customOverFlow: TextOverflow.ellipsis,
+              ),
             ),
             if (trailingTitle != null)
-              LmuText.body(
-                trailingTitle,
-                weight: FontWeight.w600,
-                color: textColors.weakColors.base,
+              Flexible(
+                child: LmuText.body(
+                  trailingTitle,
+                  weight: FontWeight.w600,
+                  color: textColors.weakColors.base,
+                  maxLines: 2,
+                  customOverFlow: TextOverflow.ellipsis,
+                ),
               ),
             if (actionTitle != null)
               LmuButton(
