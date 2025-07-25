@@ -54,6 +54,9 @@ app.*.map.json
 **/build/
 **/.cmake/
 
+# iOS
+**/ios/Podfile.lock
+
 # FVM Version Cache
 .fvm/
 
