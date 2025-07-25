@@ -38,8 +38,8 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
   String get copiedEmailText => _localizations.people.copiedEmail;
   String get copiedPhoneText => _localizations.people.copiedPhone;
   String get copiedWebsiteText => _localizations.people.copiedWebsite;
-  String get addedToFavoritesText => _localizations.people.addedToFavorites ?? 'Added to favorites';
-  String get removedFromFavoritesText => _localizations.people.removedFromFavorites ?? 'Removed from favorites';
+  String get addedToFavoritesText => _localizations.app.favoriteAdded;
+  String get removedFromFavoritesText => _localizations.app.favoriteRemoved;
 
   People? get person => _usecase.data.where((p) => p.id == personId).firstOrNull;
   bool get isLoading => _usecase.loadState != PeopleLoadState.success;
