@@ -7,6 +7,7 @@ import 'package:widget_driver/widget_driver.dart';
 import 'package:get_it/get_it.dart';
 
 import '../component/person_list_item.dart';
+import '../component/people_button_section.dart';
 import '../viewmodel/people_overview_driver.dart';
 import '../../application/usecase/favorite_people_usecase.dart';
 
@@ -27,25 +28,47 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
   }
 
   Widget _buildBody(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-      child: LmuPageAnimationWrapper(
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: _buildContent(context),
+    return LmuPageAnimationWrapper(
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+                child: _buildHeaderContent(context),
+              ),
+              PeopleButtonSection(
+                isProfessorFilterActive: driver.isProfessorFilterActive,
+                onProfessorFilterToggle: driver.toggleProfessorFilter,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+                child: _buildMainContent(context),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildContent(BuildContext context) {
+  Widget _buildHeaderContent(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         LmuTileHeadline.base(title: driver.largeTitle),
         const SizedBox(height: LmuSizes.size_16),
         _buildFavoritesSection(context),
-        const SizedBox(height: LmuSizes.size_24),
+        const SizedBox(height: LmuSizes.size_16),
+      ],
+    );
+  }
+
+  Widget _buildMainContent(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
         ..._buildGroupedPeople(context),
         const SizedBox(height: LmuSizes.size_24),
         _buildShowAllFacultiesButton(context),

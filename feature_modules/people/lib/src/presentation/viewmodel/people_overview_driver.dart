@@ -29,6 +29,9 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
   late LmuLocalizations _localizations;
   late LmuToast _toast;
 
+  bool _isProfessorFilterActive = false;
+  bool get isProfessorFilterActive => _isProfessorFilterActive;
+
   String get showAllFacultiesText => _localizations.people.showAllFaculties;
 
   List<Faculty> get selectedFaculties => _facultiesApi.selectedFaculties;
@@ -53,6 +56,14 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
 
   List<People> get filteredPeople {
     var filtered = nonFavoritePeople;
+
+    if (_isProfessorFilterActive) {
+      filtered = filtered.where((person) {
+        final title = person.title.toLowerCase();
+        return title.contains('professor') || title.contains('prof');
+      }).toList();
+    }
+
     filtered.sort((a, b) => a.surname.compareTo(b.surname));
     return filtered;
   }
@@ -83,6 +94,11 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
 
   void onShowAllFacultiesPressed(BuildContext context) {
     const PeopleFacultyOverviewRoute().go(context);
+  }
+
+  void toggleProfessorFilter() {
+    _isProfessorFilterActive = !_isProfessorFilterActive;
+    notifyWidget();
   }
 
   void _onStateChanged() {
