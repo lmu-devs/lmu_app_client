@@ -86,6 +86,7 @@ const lmuColorsDark = LmuColors(
       seperatorDark: ColorPrimitives.black,
       iconOutline: ColorPrimitives.trspBlack80,
       tile: ColorPrimitives.trspBlack00,
+      highlight: ColorPrimitives.trspWhite10,
     ),
   ),
   successColors: SuccessColors(
@@ -301,6 +302,7 @@ const lmuColorsLight = LmuColors(
       seperatorDark: ColorPrimitives.white,
       iconOutline: ColorPrimitives.trspWhite95,
       tile: ColorPrimitives.white,
+      highlight: ColorPrimitives.white,
     ),
   ),
   successColors: SuccessColors(

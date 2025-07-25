@@ -33,7 +33,7 @@ class LmuBottomSheet {
           ),
           border: Border(
             top: BorderSide(
-              color: context.colors.neutralColors.borderColors.seperatorLight,
+              color: context.colors.neutralColors.borderColors.highlight,
               width: .8,
             ),
           ),
@@ -79,7 +79,7 @@ class LmuBottomSheet {
           ),
           border: Border(
             top: BorderSide(
-              color: context.colors.neutralColors.borderColors.seperatorLight,
+              color: context.colors.neutralColors.borderColors.highlight,
               width: .8,
             ),
           ),

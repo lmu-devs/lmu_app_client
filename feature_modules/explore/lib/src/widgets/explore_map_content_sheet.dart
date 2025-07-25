@@ -125,7 +125,7 @@ class ExploreMapContentSheetState extends State<ExploreMapContentSheet> {
             color: colors.neutralColors.backgroundColors.base,
             border: Border(
               top: BorderSide(
-                color: colors.neutralColors.borderColors.seperatorLight,
+                color: colors.neutralColors.borderColors.highlight,
                 width: .8,
               ),
             ),
