@@ -1,3 +1,4 @@
+import 'package:core/utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
@@ -16,14 +17,20 @@ class MenuCubit extends Cubit<MenuState> {
   final MensaRepository _mensaRepository = GetIt.I.get<MensaRepository>();
 
   void loadMensaMenuData() async {
-    emit(MenuLoadInProgress());
+    final cachedData = await _mensaRepository.getCachedMenuDayForMensa(_canteenId);
+    emit(MenuLoadInProgress(menuModels: cachedData));
 
     try {
       final mensaMenuModels = await _mensaRepository.getMenuDayForMensa(_canteenId);
-
       emit(MenuLoadSuccess(menuModels: mensaMenuModels));
-    } catch (_) {
-      emit(MenuLoadFailure());
+    } catch (e) {
+      if (cachedData != null) {
+        emit(MenuLoadSuccess(menuModels: cachedData));
+      } else if (e is NoNetworkException) {
+        emit(MenuLoadFailure(loadState: LoadState.noNetworkError));
+      } else {
+        emit(MenuLoadFailure(loadState: LoadState.genericError));
+      }
     }
   }
 }

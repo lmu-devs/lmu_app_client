@@ -10,37 +10,29 @@ class LinksLoadingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: LmuScaffold(
-        appBar: LmuAppBarData(
-          largeTitle: "Links",
-          leadingAction: LeadingAction.back,
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-            child: LmuSkeleton(
-              child: Column(
-                children: [
-                  const SizedBox(height: LmuSizes.size_16),
-                  LmuTileHeadline.base(title: BoneMock.chars(2)),
-                  LmuContentTile(contentList: List.generate(2, (index) => const LinkCardLoading())),
-                  const SizedBox(height: LmuSizes.size_16),
-                  LmuTileHeadline.base(title: BoneMock.chars(2)),
-                  const LmuContentTile(content: LinkCardLoading()),
-                  const SizedBox(height: LmuSizes.size_16),
-                  LmuTileHeadline.base(title: BoneMock.chars(2)),
-                  LmuContentTile(contentList: List.generate(2, (index) => const LinkCardLoading())),
-                  const SizedBox(height: LmuSizes.size_16),
-                  LmuTileHeadline.base(title: BoneMock.chars(2)),
-                  const LmuContentTile(content: LinkCardLoading()),
-                  const SizedBox(height: LmuSizes.size_16),
-                  LmuTileHeadline.base(title: BoneMock.chars(2)),
-                  LmuContentTile(contentList: List.generate(2, (index) => const LinkCardLoading())),
-                  const SizedBox(height: LmuSizes.size_96),
-                ],
-              ),
-            ),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+        child: LmuSkeleton(
+          child: Column(
+            children: [
+              const SizedBox(height: LmuSizes.size_16),
+              LmuTileHeadline.base(title: BoneMock.chars(2)),
+              LmuContentTile(contentList: List.generate(2, (index) => const LinkCardLoading())),
+              const SizedBox(height: LmuSizes.size_16),
+              LmuTileHeadline.base(title: BoneMock.chars(2)),
+              const LmuContentTile(content: LinkCardLoading()),
+              const SizedBox(height: LmuSizes.size_16),
+              LmuTileHeadline.base(title: BoneMock.chars(2)),
+              LmuContentTile(contentList: List.generate(2, (index) => const LinkCardLoading())),
+              const SizedBox(height: LmuSizes.size_16),
+              LmuTileHeadline.base(title: BoneMock.chars(2)),
+              const LmuContentTile(content: LinkCardLoading()),
+              const SizedBox(height: LmuSizes.size_16),
+              LmuTileHeadline.base(title: BoneMock.chars(2)),
+              LmuContentTile(contentList: List.generate(2, (index) => const LinkCardLoading())),
+              const SizedBox(height: LmuSizes.size_96),
+            ],
           ),
         ),
       ),

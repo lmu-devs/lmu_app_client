@@ -1,3 +1,4 @@
+import 'package:core/utils.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../repository/api/models/links/link_model.dart';
@@ -32,5 +33,10 @@ class LinksLoadSuccess extends LinksState {
 }
 
 class LinksLoadFailure extends LinksState {
-  const LinksLoadFailure();
+  const LinksLoadFailure({this.loadState = LoadState.genericError});
+
+  final LoadState loadState;
+
+  @override
+  List<Object> get props => [loadState];
 }

@@ -1,3 +1,4 @@
+import 'package:core/utils.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../repository/api/models/mensa/mensa_model.dart';
@@ -30,6 +31,10 @@ class MensaLoadSuccess extends MensaState {
 }
 
 class MensaLoadFailure extends MensaState {
+  const MensaLoadFailure({this.loadState = LoadState.genericError});
+
+  final LoadState loadState;
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [loadState];
 }

@@ -15,7 +15,6 @@ class TasteProfileLoadInProgress extends TasteProfileState {
 }
 
 class TasteProfileLoadSuccess extends TasteProfileState {
-
   TasteProfileLoadSuccess(this.tasteProfile);
   final TasteProfileModel tasteProfile;
 

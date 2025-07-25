@@ -1,3 +1,4 @@
+import 'package:core/utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
@@ -13,12 +14,19 @@ class LibrariesCubit extends Cubit<LibrariesState> {
     final cachedLibraries = await _repository.getCachedLibraries();
     emit(LibrariesLoadInProgress(libraries: cachedLibraries));
 
-    final libraries = await _repository.getLibraries();
-
-    if (libraries == null && cachedLibraries == null) {
-      emit(const LibrariesLoadFailure());
-      return;
+    try {
+      final retrievedLibraries = await _repository.getLibraries();
+      emit(LibrariesLoadInProgress(libraries: retrievedLibraries));
+    } catch (e) {
+      if (cachedLibraries != null) {
+        emit(LibrariesLoadSuccess(libraries: cachedLibraries));
+      } else {
+        if (e is NoNetworkException) {
+          emit(const LibrariesLoadFailure(loadState: LoadState.noNetworkError));
+        } else {
+          emit(const LibrariesLoadFailure(loadState: LoadState.genericError));
+        }
+      }
     }
-    emit(LibrariesLoadSuccess(libraries: libraries ?? cachedLibraries!));
   }
 }
