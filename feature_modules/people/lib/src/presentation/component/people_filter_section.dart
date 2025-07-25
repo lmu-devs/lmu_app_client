@@ -1,13 +1,12 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
+import 'package:core_routes/people.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
-import '../view/people_search_route.dart';
-
-class PeopleButtonSection extends StatelessWidget {
-  const PeopleButtonSection({
+class PeopleFilterSection extends StatelessWidget {
+  const PeopleFilterSection({
     super.key,
     required this.isProfessorFilterActive,
     required this.onProfessorFilterToggle,
@@ -29,7 +28,7 @@ class PeopleButtonSection extends StatelessWidget {
           buttons: [
             LmuIconButton(
               icon: LucideIcons.search,
-              onPressed: () => Navigator.of(context).push(PeopleSearchRoute()),
+              onPressed: () => const PeopleSearchRoute().go(context),
             ),
             LmuButton(
               title: context.locals.people.professorFilter,
@@ -43,4 +42,4 @@ class PeopleButtonSection extends StatelessWidget {
       ],
     );
   }
-}
+} 

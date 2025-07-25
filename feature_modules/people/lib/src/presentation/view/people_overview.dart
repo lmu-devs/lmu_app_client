@@ -7,7 +7,7 @@ import 'package:widget_driver/widget_driver.dart';
 import 'package:get_it/get_it.dart';
 
 import '../component/person_list_item.dart';
-import '../component/people_button_section.dart';
+import '../component/people_filter_section.dart';
 import '../viewmodel/people_overview_driver.dart';
 import '../../application/usecase/favorite_people_usecase.dart';
 
@@ -38,7 +38,7 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
                 padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
                 child: _buildHeaderContent(context),
               ),
-              PeopleButtonSection(
+              PeopleFilterSection(
                 isProfessorFilterActive: driver.isProfessorFilterActive,
                 onProfessorFilterToggle: driver.toggleProfessorFilter,
               ),
