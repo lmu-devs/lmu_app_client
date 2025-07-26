@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'people_overview_driver.dart';
+part of 'people_search_driver.dart';
 
 // **************************************************************************
 // WidgetDriverGenerator
@@ -10,22 +10,19 @@ part of 'people_overview_driver.dart';
 
 // This file was generated with widget_driver_generator version "1.3.5"
 
-class _$TestPeopleOverviewDriver extends TestDriver
-    implements PeopleOverviewDriver {
+class _$TestPeopleSearchDriver extends TestDriver
+    implements PeopleSearchDriver {
   @override
   int get facultyId => 0;
 
   @override
-  bool get isProfessorFilterActive => false;
+  List<People> get recentSearches => [];
 
   @override
-  String get showAllFacultiesText => ' ';
+  List<People> get people => [];
 
   @override
-  List<Faculty> get selectedFaculties => [];
-
-  @override
-  List<Faculty> get allFaculties => [];
+  List<People> get facultyPeople => [];
 
   @override
   bool get isLoading => false;
@@ -34,37 +31,19 @@ class _$TestPeopleOverviewDriver extends TestDriver
   String get pageTitle => ' ';
 
   @override
-  String get largeTitle => ' ';
+  List<PeopleSearchEntry> get searchEntries => [];
 
   @override
-  List<People> get people => [];
+  List<PeopleSearchEntry> get recentSearchEntries => [];
 
   @override
-  List<People> get favoritePeople => [];
-
-  @override
-  List<People> get nonFavoritePeople => [];
-
-  @override
-  bool get hasFavorites => false;
-
-  @override
-  List<People> get filteredPeople => [];
-
-  @override
-  Map<String, List<People>> get groupedPeople => {};
+  List<PeopleSearchEntry> get recommendedEntries => [];
 
   @override
   void onPersonPressed(BuildContext context, People person) {}
 
   @override
-  void onShowAllFacultiesPressed(BuildContext context) {}
-
-  @override
-  void onSearchPressed(BuildContext context) {}
-
-  @override
-  void toggleProfessorFilter() {}
+  void updateRecentSearch(List<PeopleSearchEntry> recentSearchEntries) {}
 
   @override
   void didInitDriver() {}
@@ -76,34 +55,34 @@ class _$TestPeopleOverviewDriver extends TestDriver
   void didUpdateProvidedProperties({required int newFacultyId}) {}
 
   @override
-  void dispose() {}
+  void didDisposeDriver() {}
 }
 
-class $PeopleOverviewDriverProvider
-    extends WidgetDriverProvider<PeopleOverviewDriver> {
+class $PeopleSearchDriverProvider
+    extends WidgetDriverProvider<PeopleSearchDriver> {
   final int _facultyId;
 
-  $PeopleOverviewDriverProvider({
+  $PeopleSearchDriverProvider({
     required int facultyId,
   }) : _facultyId = facultyId;
 
   @override
-  PeopleOverviewDriver buildDriver() {
-    return PeopleOverviewDriver(
+  PeopleSearchDriver buildDriver() {
+    return PeopleSearchDriver(
       facultyId: _facultyId,
     );
   }
 
   @override
-  PeopleOverviewDriver buildTestDriver() {
-    return _$TestPeopleOverviewDriver();
+  PeopleSearchDriver buildTestDriver() {
+    return _$TestPeopleSearchDriver();
   }
 
   @override
-  void updateDriverProvidedProperties(PeopleOverviewDriver driver) {
+  void updateDriverProvidedProperties(PeopleSearchDriver driver) {
     // In case you get a compiler error here, you have to implement _$DriverProvidedProperties in your driver.
     // Like this:
-    //  class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedProperties {
+    //  class PeopleSearchDriver extends WidgetDriver implements _$DriverProvidedProperties {
     //
     //    ...
     //
