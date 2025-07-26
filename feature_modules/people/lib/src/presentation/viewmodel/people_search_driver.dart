@@ -16,6 +16,7 @@ class PeopleSearchEntry extends SearchEntry {
   const PeopleSearchEntry({
     required super.title,
     required this.person,
+    super.tags,
   });
 }
 
@@ -42,9 +43,9 @@ class PeopleSearchDriver extends WidgetDriver implements _$DriverProvidedPropert
 
   bool get isLoading => _usecase.loadState != PeopleLoadState.success;
 
-  String get pageTitle => _localizations.app.search;
+  String get pageTitle => "Suche";
 
-  List<PeopleSearchEntry> get searchEntries => facultyPeople
+  List<PeopleSearchEntry> get searchEntries => people
       .map((person) => PeopleSearchEntry(
             title: '${person.name} ${person.surname}',
             person: person,
@@ -59,7 +60,7 @@ class PeopleSearchDriver extends WidgetDriver implements _$DriverProvidedPropert
       .toList();
 
   List<PeopleSearchEntry> get recommendedEntries {
-    final recommended = facultyPeople.take(4).toList();
+    final recommended = people.take(4).toList();
     return recommended
         .map((person) => PeopleSearchEntry(
               title: '${person.name} ${person.surname}',
