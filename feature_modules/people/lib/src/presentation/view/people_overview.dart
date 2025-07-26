@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 import 'package:get_it/get_it.dart';
 
+import 'package:flutter_lucide/flutter_lucide.dart';
+
 import '../component/person_list_item.dart';
-import '../component/people_filter_section.dart';
+
 import '../viewmodel/people_overview_driver.dart';
 import '../../application/usecase/favorite_people_usecase.dart';
 
@@ -15,6 +17,9 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
   PeopleOverview({super.key, required this.facultyId});
 
   final int facultyId;
+
+  @override
+  PeopleOverviewDriver createDriver() => GetIt.I<PeopleOverviewDriver>(param1: facultyId);
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +43,7 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
                 padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
                 child: _buildHeaderContent(context),
               ),
-              PeopleFilterSection(
-                isProfessorFilterActive: driver.isProfessorFilterActive,
-                onProfessorFilterToggle: driver.toggleProfessorFilter,
-              ),
+              _buildSearchAndFilterSection(context),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
                 child: _buildMainContent(context),
@@ -64,6 +66,35 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
       ],
     );
   }
+
+  Widget _buildSearchAndFilterSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+          child: LmuTileHeadline.base(title: context.locals.people.allPeople),
+        ),
+                 LmuButtonRow(
+           buttons: [
+             LmuIconButton(
+               icon: LucideIcons.search,
+               onPressed: () => driver.onSearchPressed(context),
+             ),
+             LmuButton(
+               title: context.locals.people.professorFilter,
+               emphasis: driver.isProfessorFilterActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
+               action: driver.isProfessorFilterActive ? ButtonAction.contrast : ButtonAction.base,
+               onTap: driver.toggleProfessorFilter,
+             ),
+           ],
+         ),
+        const SizedBox(height: LmuSizes.size_16),
+      ],
+    );
+  }
+
+
 
   Widget _buildMainContent(BuildContext context) {
     return Column(

@@ -3,7 +3,6 @@ import 'package:core/localizations.dart';
 import 'package:core_routes/people.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
 import 'package:shared_api/studies.dart';
 import 'package:widget_driver/widget_driver.dart';
 
@@ -94,6 +93,10 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
 
   void onShowAllFacultiesPressed(BuildContext context) {
     const PeopleFacultyOverviewRoute().go(context);
+  }
+
+  void onSearchPressed(BuildContext context) {
+    PeopleSearchRoute(facultyId: facultyId).go(context);
   }
 
   void toggleProfessorFilter() {
