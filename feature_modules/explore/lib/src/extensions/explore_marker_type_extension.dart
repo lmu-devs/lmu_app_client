@@ -7,13 +7,13 @@ import 'package:shared_api/explore.dart';
 extension ExploreMarkerTypeStyling on ExploreMarkerType {
   Color markerColor(LmuColors colors) {
     return switch (this) {
-      ExploreMarkerType.mensaMensa => colors.customColors.textColors.mensa,
-      ExploreMarkerType.mensaStuBistro => colors.customColors.textColors.stuBistro,
-      ExploreMarkerType.mensaStuCafe => colors.customColors.textColors.stuCafe,
-      ExploreMarkerType.mensaStuLounge => colors.customColors.textColors.stuLounge,
-      ExploreMarkerType.cinema => colors.customColors.textColors.cinema,
-      ExploreMarkerType.roomfinderBuilding => colors.customColors.textColors.building,
-      ExploreMarkerType.library => colors.customColors.textColors.library,
+      ExploreMarkerType.mensaMensa => colors.customColors.colorColors.green,
+      ExploreMarkerType.mensaStuBistro => colors.customColors.colorColors.pink,
+      ExploreMarkerType.mensaStuCafe => colors.customColors.colorColors.amber,
+      ExploreMarkerType.mensaStuLounge => colors.customColors.colorColors.stuLounge,
+      ExploreMarkerType.cinema => colors.customColors.colorColors.red,
+      ExploreMarkerType.roomfinderBuilding => colors.customColors.colorColors.blue,
+      ExploreMarkerType.library => colors.customColors.colorColors.purple,
     };
   }
 

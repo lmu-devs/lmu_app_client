@@ -24,8 +24,10 @@ class DataPrivacyDisclaimer extends StatelessWidget {
           TextSpan(
             text: flowLocalizations.dataPrivacyLabel,
             style: LmuText.bodySmall('').getTextStyle(context).copyWith(
-                  color: neutralColors.textColors.strongColors.base,
-                  fontWeight: FontWeight.w500,
+                  color: neutralColors.textColors.mediumColors.base,
+                  fontWeight: FontWeight.w400,
+                  decoration: TextDecoration.underline,
+                  decorationColor: neutralColors.textColors.mediumColors.base,
                 ),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
