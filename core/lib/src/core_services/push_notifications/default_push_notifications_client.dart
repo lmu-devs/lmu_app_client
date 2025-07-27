@@ -1,14 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+
 import '../../../logging.dart';
 import 'push_notifications.dart';
-import 'package:timezone/timezone.dart' as tz;
-import 'package:timezone/data/latest_all.dart' as tz;
 
 class _AndroidNotificationConstants {
   static const channelId = 'default_notifications';
@@ -44,14 +46,12 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
 
       if (defaultTargetPlatform == TargetPlatform.android) {
         await _localNotifications
-            .resolvePlatformSpecificImplementation<
-                AndroidFlutterLocalNotificationsPlugin>()
+            .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
             ?.createNotificationChannel(_androidChannel);
       }
 
       await _initLocalNotifications();
       await _initFirebase();
-
     } catch (e) {
       throw Exception("Failed to initialize push notifications - $e");
     }
@@ -59,11 +59,9 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
 
   Future<void> _initLocalNotifications() async {
     const AndroidInitializationSettings androidSettings =
-        AndroidInitializationSettings(
-            _AndroidNotificationConstants.androidIcon);
+        AndroidInitializationSettings(_AndroidNotificationConstants.androidIcon);
 
-    const DarwinInitializationSettings iosSettings =
-        DarwinInitializationSettings(
+    const DarwinInitializationSettings iosSettings = DarwinInitializationSettings(
       requestAlertPermission: false,
       requestBadgePermission: false,
       requestCriticalPermission: false,
@@ -71,8 +69,7 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
       requestSoundPermission: false,
     );
 
-    const InitializationSettings initSettings =
-        InitializationSettings(android: androidSettings, iOS: iosSettings);
+    const InitializationSettings initSettings = InitializationSettings(android: androidSettings, iOS: iosSettings);
 
     await _localNotifications.initialize(
       initSettings,
