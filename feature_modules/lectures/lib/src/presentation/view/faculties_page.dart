@@ -2,9 +2,9 @@ import 'package:collection/collection.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
+import 'package:core_routes/lectures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
-import 'package:go_router/go_router.dart';
 
 class FacultiesPage extends StatelessWidget {
   const FacultiesPage({super.key});
@@ -63,13 +63,10 @@ class FacultiesPage extends StatelessWidget {
                   actionType: LmuListItemAction.chevron,
                   hasDivider: false,
                   onTap: () {
-                    context.push(
-                      '/lecture-list',
-                      extra: {
-                        'facultyId': faculty['id'] as String,
-                        'facultyName': faculty['name'] as String,
-                      },
-                    );
+                    LectureListRoute({
+                      'facultyId': faculty['id'] as String,
+                      'facultyName': faculty['name'] as String,
+                    }).go(context);
                   },
                 );
               }).toList(),
