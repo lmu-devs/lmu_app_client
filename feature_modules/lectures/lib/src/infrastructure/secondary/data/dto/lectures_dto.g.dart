@@ -11,7 +11,8 @@ LecturesDto _$LecturesDtoFromJson(Map<String, dynamic> json) => LecturesDto(
       name: json['name'] as String,
     );
 
-Map<String, dynamic> _$LecturesDtoToJson(LecturesDto instance) => <String, dynamic>{
+Map<String, dynamic> _$LecturesDtoToJson(LecturesDto instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
     };

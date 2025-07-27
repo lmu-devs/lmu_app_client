@@ -1,5 +1,7 @@
 {
   "@@locale": "de",
   "@@context": "Lectures",
-  "lecturesTitle": "Vorlesungen"
+  "lecturesTitle": "Vorlesungen",
+  "facultiesTitle": "Fakultäten",
+  "allFacultiesTitle": "Alle Fakultäten"
 }

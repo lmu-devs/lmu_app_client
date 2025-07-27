@@ -8,9 +8,10 @@ part of 'lectures_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.3.3"
+// This file was generated with widget_driver_generator version "1.3.6"
 
-class _$TestLecturesPageDriver extends TestDriver implements LecturesPageDriver {
+class _$TestLecturesPageDriver extends TestDriver
+    implements LecturesPageDriver {
   @override
   bool get isLoading => false;
 
@@ -39,7 +40,8 @@ class _$TestLecturesPageDriver extends TestDriver implements LecturesPageDriver 
   void dispose() {}
 }
 
-class $LecturesPageDriverProvider extends WidgetDriverProvider<LecturesPageDriver> {
+class $LecturesPageDriverProvider
+    extends WidgetDriverProvider<LecturesPageDriver> {
   @override
   LecturesPageDriver buildDriver() {
     return LecturesPageDriver();
