@@ -10,8 +10,7 @@ part of 'people_faculty_overview_driver.dart';
 
 // This file was generated with widget_driver_generator version "1.3.5"
 
-class _$TestPeopleFacultyOverviewDriver extends TestDriver
-    implements PeopleFacultyOverviewDriver {
+class _$TestPeopleFacultyOverviewDriver extends TestDriver implements PeopleFacultyOverviewDriver {
   @override
   String get contactsText => ' ';
 
@@ -46,8 +45,7 @@ class _$TestPeopleFacultyOverviewDriver extends TestDriver
   void dispose() {}
 }
 
-class $PeopleFacultyOverviewDriverProvider
-    extends WidgetDriverProvider<PeopleFacultyOverviewDriver> {
+class $PeopleFacultyOverviewDriverProvider extends WidgetDriverProvider<PeopleFacultyOverviewDriver> {
   @override
   PeopleFacultyOverviewDriver buildDriver() {
     return PeopleFacultyOverviewDriver();

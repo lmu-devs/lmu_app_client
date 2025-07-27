@@ -51,6 +51,7 @@ class PeopleSearchPage extends DrivableWidget<PeopleSearchDriver> {
       },
     );
   }
+
   @override
   WidgetDriverProvider<PeopleSearchDriver> get driverProvider => $PeopleSearchDriverProvider(facultyId: facultyId);
 }

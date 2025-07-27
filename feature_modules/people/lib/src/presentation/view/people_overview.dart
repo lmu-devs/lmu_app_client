@@ -75,26 +75,24 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
           child: LmuTileHeadline.base(title: context.locals.people.allPeople),
         ),
-                 LmuButtonRow(
-           buttons: [
-             LmuIconButton(
-               icon: LucideIcons.search,
-               onPressed: () => driver.onSearchPressed(context),
-             ),
-             LmuButton(
-               title: context.locals.people.professorFilter,
-               emphasis: driver.isProfessorFilterActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
-               action: driver.isProfessorFilterActive ? ButtonAction.contrast : ButtonAction.base,
-               onTap: driver.toggleProfessorFilter,
-             ),
-           ],
-         ),
+        LmuButtonRow(
+          buttons: [
+            LmuIconButton(
+              icon: LucideIcons.search,
+              onPressed: () => driver.onSearchPressed(context),
+            ),
+            LmuButton(
+              title: context.locals.people.professorFilter,
+              emphasis: driver.isProfessorFilterActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
+              action: driver.isProfessorFilterActive ? ButtonAction.contrast : ButtonAction.base,
+              onTap: driver.toggleProfessorFilter,
+            ),
+          ],
+        ),
         const SizedBox(height: LmuSizes.size_16),
       ],
     );
   }
-
-
 
   Widget _buildMainContent(BuildContext context) {
     return Column(

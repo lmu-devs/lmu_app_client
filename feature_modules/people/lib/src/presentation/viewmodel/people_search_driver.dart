@@ -12,7 +12,7 @@ part 'people_search_driver.g.dart';
 
 class PeopleSearchEntry extends SearchEntry {
   final People person;
-  
+
   const PeopleSearchEntry({
     required super.title,
     required this.person,
@@ -121,4 +121,4 @@ class PeopleSearchDriver extends WidgetDriver implements _$DriverProvidedPropert
     _usecase.removeListener(_onStateChanged);
     super.dispose();
   }
-} 
+}

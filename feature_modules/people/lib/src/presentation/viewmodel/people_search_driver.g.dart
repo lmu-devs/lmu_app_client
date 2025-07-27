@@ -10,8 +10,7 @@ part of 'people_search_driver.dart';
 
 // This file was generated with widget_driver_generator version "1.3.5"
 
-class _$TestPeopleSearchDriver extends TestDriver
-    implements PeopleSearchDriver {
+class _$TestPeopleSearchDriver extends TestDriver implements PeopleSearchDriver {
   @override
   int get facultyId => 0;
 
@@ -58,8 +57,7 @@ class _$TestPeopleSearchDriver extends TestDriver
   void didDisposeDriver() {}
 }
 
-class $PeopleSearchDriverProvider
-    extends WidgetDriverProvider<PeopleSearchDriver> {
+class $PeopleSearchDriverProvider extends WidgetDriverProvider<PeopleSearchDriver> {
   final int _facultyId;
 
   $PeopleSearchDriverProvider({
