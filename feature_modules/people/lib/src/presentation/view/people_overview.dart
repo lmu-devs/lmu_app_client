@@ -62,7 +62,7 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
         LmuTileHeadline.base(title: driver.largeTitle),
         const SizedBox(height: LmuSizes.size_16),
         _buildFavoritesSection(context),
-        const SizedBox(height: LmuSizes.size_16),
+        const SizedBox(height: LmuSizes.size_32),
       ],
     );
   }
