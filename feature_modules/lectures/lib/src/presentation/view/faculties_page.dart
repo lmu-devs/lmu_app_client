@@ -61,7 +61,7 @@ class FacultiesPage extends DrivableWidget<FacultiesPageDriver> {
                   child: CircularProgressIndicator(),
                 ),
               )
-            else if (driver.faculties.isEmpty)
+            else if (driver.hasError || driver.faculties.isEmpty)
               Expanded(
                 child: Center(
                   child: Column(
@@ -75,9 +75,7 @@ class FacultiesPage extends DrivableWidget<FacultiesPageDriver> {
                       LmuButton(
                         title: context.locals.app.tryAgain,
                         emphasis: ButtonEmphasis.primary,
-                        onTap: () {
-                          // TODO: Implement retry logic
-                        },
+                        onTap: () => driver.retry(),
                       ),
                     ],
                   ),
