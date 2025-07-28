@@ -6,7 +6,7 @@ import '../../../presentation/view/lecture_list_page.dart';
 
 class LecturesRouterImpl extends LecturesRouter {
   @override
-  Widget buildMain(BuildContext context) => const FacultiesPage();
+  Widget buildMain(BuildContext context) => FacultiesPage();
 
   @override
   Widget buildLectureList(BuildContext context, Map<String, dynamic> extra) {

@@ -2,12 +2,14 @@ import 'package:collection/collection.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
-import 'package:core_routes/lectures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:widget_driver/widget_driver.dart';
 
-class FacultiesPage extends StatelessWidget {
-  const FacultiesPage({super.key});
+import '../viewmodel/faculties_page_driver.dart';
+
+class FacultiesPage extends DrivableWidget<FacultiesPageDriver> {
+  FacultiesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,53 +55,54 @@ class FacultiesPage extends StatelessWidget {
             const SizedBox(height: LmuSizes.size_2),
 
             // Faculty list
-            LmuContentTile(
-              contentList: _faculties.mapIndexed((index, faculty) {
-                return LmuListItem.action(
-                  key: Key("faculty_${faculty['id']}"),
-                  title: faculty['name'] as String,
-                  leadingArea: LmuInListBlurEmoji(emoji: faculty['id'] as String),
-                  trailingTitle: (faculty['courseCount'] as int).toString(),
-                  actionType: LmuListItemAction.chevron,
-                  hasDivider: false,
-                  onTap: () {
-                    LectureListRoute({
-                      'facultyId': faculty['id'] as String,
-                      'facultyName': faculty['name'] as String,
-                    }).go(context);
-                  },
-                );
-              }).toList(),
-            ),
+            if (driver.isLoading)
+              const Expanded(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
+            else if (driver.faculties.isEmpty)
+              Expanded(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      LmuText.body(
+                        context.locals.app.somethingWentWrong,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: LmuSizes.size_16),
+                      LmuButton(
+                        title: context.locals.app.tryAgain,
+                        emphasis: ButtonEmphasis.primary,
+                        onTap: () {
+                          // TODO: Implement retry logic
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            else
+              LmuContentTile(
+                contentList: driver.faculties.mapIndexed((index, faculty) {
+                  return LmuListItem.action(
+                    key: Key("faculty_${faculty.id}"),
+                    title: faculty.name,
+                    leadingArea: LmuInListBlurEmoji(emoji: faculty.id.toString()),
+                    trailingTitle: driver.getCourseCount(faculty),
+                    actionType: LmuListItemAction.chevron,
+                    hasDivider: false,
+                    onTap: () => driver.onFacultyPressed(context, faculty),
+                  );
+                }).toList(),
+              ),
           ],
         ),
       ),
     );
   }
 
-  static final _faculties = [
-    {'id': '00', 'name': 'Fakultätsübergreifende Veranstaltung', 'courseCount': 26},
-    {'id': '01', 'name': 'Katholisch-Theologische Fakultät', 'courseCount': 120},
-    {'id': '02', 'name': 'Evangelisch - Theologische Fakultät', 'courseCount': 143},
-    {'id': '03', 'name': 'Juristische Fakultät', 'courseCount': 210},
-    {'id': '04', 'name': 'Fakultät für Betriebswirtschaft', 'courseCount': 324},
-    {'id': '05', 'name': 'Volkswirtschaftliche Fakultät', 'courseCount': 289},
-    {'id': '07', 'name': 'Medizinische Fakultät', 'courseCount': 196},
-    {'id': '08', 'name': 'Tierärztliche Fakultät', 'courseCount': 167},
-    {'id': '09', 'name': 'Fakultät für Geschichts- und Kunstwissenschaften', 'courseCount': 112},
-    {
-      'id': '10',
-      'name': 'Fakultät für Philosophie, Wissenschaftstheorie und Religionswissenschaft',
-      'courseCount': 123,
-    },
-    {'id': '11', 'name': 'Fakultät für Psychologie und Pädagogik', 'courseCount': 145},
-    {'id': '12', 'name': 'Fakultät für Kulturwissenschaften', 'courseCount': 165},
-    {'id': '13', 'name': 'Fakultät für Sprach- und Literaturwissenschaften', 'courseCount': 112},
-    {'id': '15', 'name': 'Sozialwissenschaftliche Fakultät', 'courseCount': 97},
-    {'id': '16', 'name': 'Fakultät für Mathematik, Informatik und Statistik', 'courseCount': 320},
-    {'id': '17', 'name': 'Fakultät für Physik', 'courseCount': 112},
-    {'id': '18', 'name': 'Fakultät für Chemie und Pharmazie', 'courseCount': 112},
-    {'id': '19', 'name': 'Fakultät für Biologie', 'courseCount': 112},
-    {'id': '20', 'name': 'Fakultät für Geowissenschaften', 'courseCount': 112},
-  ];
+  @override
+  WidgetDriverProvider<FacultiesPageDriver> get driverProvider => $FacultiesPageDriverProvider();
 }
