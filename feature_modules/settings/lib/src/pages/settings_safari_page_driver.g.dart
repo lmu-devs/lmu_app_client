@@ -10,7 +10,8 @@ part of 'settings_safari_page_driver.dart';
 
 // This file was generated with widget_driver_generator version "1.3.6"
 
-class _$TestSettingsSafariPageDriver extends TestDriver implements SettingsSafariPageDriver {
+class _$TestSettingsSafariPageDriver extends TestDriver
+    implements SettingsSafariPageDriver {
   @override
   String get safariTitle => ' ';
 
@@ -27,12 +28,10 @@ class _$TestSettingsSafariPageDriver extends TestDriver implements SettingsSafar
 
   @override
   void didInitDriver() {}
-
-  @override
-  void didUpdateBuildContext(BuildContext context) {}
 }
 
-class $SettingsSafariPageDriverProvider extends WidgetDriverProvider<SettingsSafariPageDriver> {
+class $SettingsSafariPageDriverProvider
+    extends WidgetDriverProvider<SettingsSafariPageDriver> {
   @override
   SettingsSafariPageDriver buildDriver() {
     return SettingsSafariPageDriver();

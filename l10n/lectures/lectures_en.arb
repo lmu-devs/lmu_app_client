@@ -1,5 +1,7 @@
 {
   "@@locale": "en",
   "@@context": "Lectures",
-  "lecturesTitle": "Lectures"
+  "lecturesTitle": "Lectures",
+  "facultiesTitle": "Faculties",
+  "allFacultiesTitle": "All Faculties"
 }
