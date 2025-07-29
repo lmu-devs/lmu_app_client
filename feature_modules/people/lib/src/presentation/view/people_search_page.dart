@@ -16,14 +16,12 @@ class PeopleSearchPage extends DrivableWidget<PeopleSearchDriver> {
 
   @override
   Widget build(BuildContext context) {
-    final recentSearchController = LmuRecentSearchController<PeopleSearchEntry>();
-
     return LmuSearchPage<PeopleSearchEntry>(
       searchEntries: driver.searchEntries,
       emptySearchEntriesTitle: context.locals.app.prevSearch,
       emptySearchEntries: driver.recommendedEntries,
       recentSearchEntries: driver.recentSearchEntries,
-      recentSearchController: recentSearchController,
+      recentSearchController: driver.recentSearchController,
       onRecentSearchesUpdated: (recentSearchEntries) => driver.updateRecentSearch(recentSearchEntries),
       searchEntryBuilder: (PeopleSearchEntry entry) {
         final person = entry.person;
@@ -33,7 +31,7 @@ class PeopleSearchPage extends DrivableWidget<PeopleSearchDriver> {
           actionType: LmuListItemAction.chevron,
           onTap: () {
             driver.onPersonPressed(context, person);
-            recentSearchController.trigger(entry);
+            driver.recentSearchController.trigger(entry);
           },
         );
       },

@@ -12,11 +12,10 @@ part 'people_search_driver.g.dart';
 
 class PeopleSearchEntry extends SearchEntry {
   final People person;
-
+  
   const PeopleSearchEntry({
     required super.title,
     required this.person,
-    super.tags,
   });
 }
 
@@ -30,20 +29,18 @@ class PeopleSearchDriver extends WidgetDriver implements _$DriverProvidedPropert
   int get facultyId => _facultyId;
 
   final _usecase = GetIt.I.get<GetPeopleUsecase>();
-
-  late LmuLocalizations _localizations;
-  late LmuToast _toast;
+  final _recentSearchController = LmuRecentSearchController<PeopleSearchEntry>();
 
   List<People> _recentSearches = [];
   List<People> get recentSearches => _recentSearches;
+
+  LmuRecentSearchController<PeopleSearchEntry> get recentSearchController => _recentSearchController;
 
   List<People> get people => _usecase.data;
 
   List<People> get facultyPeople => people.where((person) => person.facultyId == facultyId).toList();
 
-  bool get isLoading => _usecase.loadState != PeopleLoadState.success;
-
-  String get pageTitle => _localizations.app.search;
+  String get pageTitle => "Suche";
 
   List<PeopleSearchEntry> get searchEntries => people
       .map((person) => PeopleSearchEntry(
@@ -78,47 +75,10 @@ class PeopleSearchDriver extends WidgetDriver implements _$DriverProvidedPropert
     // TODO: Save to SharedPreferences later
   }
 
-  void _onStateChanged() {
-    notifyWidget();
-
-    if (_usecase.loadState == PeopleLoadState.error) {
-      _showErrorToast();
-    }
-  }
-
-  void _showErrorToast() {
-    _toast.showToast(
-      message: _localizations.app.somethingWentWrong,
-      type: ToastType.error,
-      actionText: _localizations.app.tryAgain,
-      onActionPressed: () => _usecase.load(),
-    );
-  }
-
-  @override
-  void didInitDriver() {
-    super.didInitDriver();
-    _usecase.addListener(_onStateChanged);
-    _usecase.load();
-  }
-
-  @override
-  void didUpdateBuildContext(BuildContext context) {
-    super.didUpdateBuildContext(context);
-    _localizations = context.locals;
-    _toast = LmuToast.of(context);
-  }
-
   @override
   void didUpdateProvidedProperties({
     required int newFacultyId,
   }) {
     _facultyId = newFacultyId;
-  }
-
-  @override
-  void dispose() {
-    _usecase.removeListener(_onStateChanged);
-    super.dispose();
   }
 }
