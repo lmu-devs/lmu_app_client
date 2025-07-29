@@ -43,7 +43,7 @@ class PeopleSearchDriver extends WidgetDriver implements _$DriverProvidedPropert
 
   bool get isLoading => _usecase.loadState != PeopleLoadState.success;
 
-  String get pageTitle => "Suche";
+  String get pageTitle => _localizations.app.search;
 
   List<PeopleSearchEntry> get searchEntries => people
       .map((person) => PeopleSearchEntry(
