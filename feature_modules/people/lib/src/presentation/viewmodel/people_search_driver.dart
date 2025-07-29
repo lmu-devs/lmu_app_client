@@ -70,7 +70,7 @@ class PeopleSearchDriver extends WidgetDriver implements _$DriverProvidedPropert
   }
 
   void onPersonPressed(BuildContext context, People person) {
-    PeopleDetailsRoute(facultyId: facultyId, personId: person.id).go(context);
+    PeopleDetailsRoute(facultyId: facultyId, personId: person.id).push(context);
   }
 
   void updateRecentSearch(List<PeopleSearchEntry> recentSearchEntries) {

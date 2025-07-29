@@ -88,15 +88,15 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
   }
 
   void onPersonPressed(BuildContext context, People person) {
-    PeopleDetailsRoute(facultyId: facultyId, personId: person.id).go(context);
+    PeopleDetailsRoute(facultyId: facultyId, personId: person.id).push(context);
   }
 
   void onShowAllFacultiesPressed(BuildContext context) {
-    const PeopleFacultyOverviewRoute().go(context);
+    const PeopleFacultyOverviewRoute().push(context);
   }
 
   void onSearchPressed(BuildContext context) {
-    PeopleSearchRoute(facultyId: facultyId).go(context);
+    PeopleSearchRoute(facultyId: facultyId).push(context);
   }
 
   void toggleProfessorFilter() {
