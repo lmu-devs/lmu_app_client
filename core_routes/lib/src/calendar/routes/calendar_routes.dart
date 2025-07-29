@@ -14,3 +14,12 @@ class CalendarMainRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) => _router.buildMain(context);
 }
+
+class CalendarTestRoute extends GoRouteData {
+  const CalendarTestRoute();
+
+  static const String path = 'calendar/test';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => _router.buildTestScreen(context);
+}

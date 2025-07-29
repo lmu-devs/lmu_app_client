@@ -21,7 +21,10 @@ class _$TestCalendarPageDriver extends TestDriver implements CalendarPageDriver 
   CalendarViewMode get viewMode => CalendarViewMode.values[0];
 
   @override
-  DateTimeRange<DateTime> get selectedDate => DateTime.now().dateTimeRangeFromDateTime;
+  DateTimeRange<DateTime> get selectedDate => DateTimeRange<DateTime>(
+        start: DateTime.now(),
+        end: DateTime.now().add(const Duration(days: 1)),
+      );
 
   @override
   List<CalendarEntry>? get calendarEntries => [];
@@ -42,6 +45,9 @@ class _$TestCalendarPageDriver extends TestDriver implements CalendarPageDriver 
 
   @override
   void onAddEventPressed() {}
+
+  @override
+  void onTestScreenPressed(BuildContext context) {}
 
   @override
   void didInitDriver() {}

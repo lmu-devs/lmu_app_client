@@ -34,7 +34,8 @@ class CalendarEntryCard extends StatelessWidget {
           color: context.colors.neutralColors.backgroundColors.tile,
           borderRadius: BorderRadius.circular(LmuRadiusSizes.mediumLarge),
           border: Border.all(
-              color: event.type == EventType.exam ? event.color : context.colors.neutralColors.backgroundColors.tile,
+              color:
+                  event.eventType == EventType.exam ? event.color : context.colors.neutralColors.backgroundColors.tile,
               width: 2,
               strokeAlign: BorderSide.strokeAlignInside),
         ),
@@ -43,7 +44,7 @@ class CalendarEntryCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               /// Farbbalken über die ganze Höhe
-              event.type != EventType.exam
+              event.eventType != EventType.exam
                   ? Padding(
                       padding: const EdgeInsets.only(
                           left: LmuSizes.size_16, top: LmuSizes.size_16, bottom: LmuSizes.size_16),
@@ -84,7 +85,7 @@ class CalendarEntryCard extends StatelessWidget {
 
                           /// Tag (immer sichtbar, direkt nach dem Titel)
                           LmuInTextVisual.text(
-                            title: event.type.name,
+                            title: event.eventType.name,
                           ),
                         ],
                       ),
@@ -93,7 +94,7 @@ class CalendarEntryCard extends StatelessWidget {
 
                       /// Zeit
                       LmuText.bodySmall(
-                        _formatDateTimeRange(event.startDate, event.endDate),
+                        _formatDateTimeRange(event.startTime, event.endTime),
                         color: context.colors.neutralColors.textColors.mediumColors.base,
                       ),
 
@@ -101,7 +102,7 @@ class CalendarEntryCard extends StatelessWidget {
 
                       /// Ort (Adresse + optional Raum)
                       LmuText.bodySmall(
-                        DateTimeFormatter.formatShortDate(event.startDate),
+                        DateTimeFormatter.formatShortDate(event.startTime),
                         color: context.colors.neutralColors.textColors.mediumColors.base,
                         maxLines: 2,
                         customOverFlow: TextOverflow.ellipsis,
