@@ -19,6 +19,7 @@ class LmuEmptyState extends StatelessWidget {
     this.assetName,
     this.title,
     this.description,
+    this.hasVerticalPadding = false,
   });
 
   final EmptyStateType type;
@@ -26,6 +27,7 @@ class LmuEmptyState extends StatelessWidget {
   final String? title;
   final String? description;
   final void Function()? onRetry;
+  final bool hasVerticalPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,12 @@ class LmuEmptyState extends StatelessWidget {
     final locals = context.locals;
     final asset = assetName ?? _assetName;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_24),
+      padding: EdgeInsets.only(
+        left: LmuSizes.size_24,
+        right: LmuSizes.size_24,
+        top: hasVerticalPadding ? LmuSizes.size_24 : 0,
+        bottom: hasVerticalPadding ? LmuSizes.size_96 : 0,
+      ),
       child: Column(
         children: [
           _AnimatedTapImage(

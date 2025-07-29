@@ -47,14 +47,14 @@ extension WeekdayToString on Weekday {
   }
 
   /// Returns the localized full name of the weekday (e.g., "Monday", "Montag", "Lunedi",...).
-  get name {
+  String get name {
     final fullName = DateFormat.EEEE(_currentLocale).format(_getDateTimeForWeekday());
     if (fullName.isEmpty) return fullName;
     return '${fullName[0].toUpperCase()}${fullName.substring(1)}';
   }
 
   /// Returns the localized short name of the weekday (e.g., "Mon", "Mo", "Lu", ...).
-  get nameShort {
+  String get nameShort {
     final shortName = DateFormat.E(_currentLocale).format(_getDateTimeForWeekday());
     if (shortName.isEmpty) return shortName;
     return '${shortName[0].toUpperCase()}${shortName.substring(1)}';

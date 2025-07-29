@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:core/utils.dart';
+
 import '../../../domain/exception/benefits_generic_exception.dart';
 import '../../../domain/interface/benefits_repository_interface.dart';
 import '../../../domain/models/benefit_category.dart';
@@ -17,7 +21,8 @@ class BenefitsRepository implements BenefitsRepositoryInterface {
       _storage.saveBenefits(response);
       return BenefitsMapper.mapToDomain(response);
     } catch (e) {
-      throw const BenefitsGenericException();
+      if (e is SocketException) throw NoNetworkException();
+      throw BenefitsGenericException();
     }
   }
 

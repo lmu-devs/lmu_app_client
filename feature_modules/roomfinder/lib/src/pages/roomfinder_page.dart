@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -15,10 +16,11 @@ class RoomfinderPage extends StatefulWidget {
 }
 
 class _RoomfinderPageState extends State<RoomfinderPage> {
+  late final RoomfinderCubit roomfinderCubit;
   @override
   void initState() {
     super.initState();
-    final roomfinderCubit = GetIt.I.get<RoomfinderCubit>();
+    roomfinderCubit = GetIt.I.get<RoomfinderCubit>();
 
     if (roomfinderCubit.state is! RoomfinderLoadSuccess) {
       roomfinderCubit.loadRoomfinderLocations();
@@ -33,13 +35,21 @@ class _RoomfinderPageState extends State<RoomfinderPage> {
         leadingAction: LeadingAction.back,
       ),
       body: BlocBuilder<RoomfinderCubit, RoomfinderState>(
-        bloc: GetIt.I.get<RoomfinderCubit>(),
+        bloc: roomfinderCubit,
         builder: (_, state) {
-          return LmuPageAnimationWrapper(
-            child: state is RoomfinderLoadSuccess
-                ? const RoomfinderContentView(key: ValueKey("roomfinderContent"))
-                : const RoomfinderLoadingView(key: ValueKey("roomfinderLoading")),
-          );
+          if (state is RoomfinderLoadSuccess) {
+            return const RoomfinderContentView();
+          } else if (state is RoomfinderLoadFailure) {
+            final isNoNetworkError = state.loadState.isNoNetworkError;
+
+            return LmuEmptyState(
+              type: isNoNetworkError ? EmptyStateType.noInternet : EmptyStateType.generic,
+              hasVerticalPadding: true,
+              onRetry: () => roomfinderCubit.loadRoomfinderLocations(),
+            );
+          }
+
+          return const RoomfinderLoadingView();
         },
       ),
     );

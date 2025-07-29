@@ -1,10 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:core/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/home_api_client.dart';
 import 'api/models/home/home_data.dart';
 import 'api/models/links/link_model.dart';
+import 'error/links_generic_exception.dart';
 
 class HomeRepository {
   const HomeRepository({required this.homeApiClient});
@@ -49,7 +52,7 @@ class HomeRepository {
     }
   }
 
-  Future<List<LinkModel>?> getLinks() async {
+  Future<List<LinkModel>> getLinks() async {
     final prefs = await SharedPreferences.getInstance();
 
     try {
@@ -58,7 +61,8 @@ class HomeRepository {
       await prefs.setInt(_cachedLinksTimestampKey, DateTime.now().millisecondsSinceEpoch);
       return links;
     } catch (e) {
-      return null;
+      if (e is SocketException) throw NoNetworkException();
+      throw LinksGenericException();
     }
   }
 
