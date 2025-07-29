@@ -306,37 +306,45 @@ const lmuColorsLight = LmuColors(
     ),
   ),
   successColors: SuccessColors(
-      textColors: SuccessTextColors(
-          strongColors: StrongColors(
-              base: ColorPrimitives.green40,
-              pressed: ColorPrimitives.green30,
-              active: ColorPrimitives.green40,
-              disabled: ColorPrimitives.trspGreen40))),
+    textColors: SuccessTextColors(
+      strongColors: StrongColors(
+        base: ColorPrimitives.green40,
+        pressed: ColorPrimitives.green30,
+        active: ColorPrimitives.green40,
+        disabled: ColorPrimitives.trspGreen40,
+      ),
+    ),
+  ),
   dangerColors: DangerColors(
-      textColors: DangerTextColors(
-          strongColors: StrongColors(
-              base: ColorPrimitives.red40,
-              pressed: ColorPrimitives.red30,
-              active: ColorPrimitives.red40,
-              disabled: ColorPrimitives.trspRed40)),
-      backgroundColors: DangerBackgroundColors(
-          weakColors: WeakColors(
-              base: ColorPrimitives.red90,
-              pressed: ColorPrimitives.red80,
-              active: ColorPrimitives.red90,
-              disabled: ColorPrimitives.trspRed10),
-          strongColors: StrongColors(
-              base: ColorPrimitives.red30,
-              pressed: ColorPrimitives.red20,
-              active: ColorPrimitives.red30,
-              disabled: ColorPrimitives.trspRed20))),
+    textColors: DangerTextColors(
+      strongColors: StrongColors(
+          base: ColorPrimitives.red40,
+          pressed: ColorPrimitives.red30,
+          active: ColorPrimitives.red40,
+          disabled: ColorPrimitives.trspRed40),
+    ),
+    backgroundColors: DangerBackgroundColors(
+      weakColors: WeakColors(
+          base: ColorPrimitives.red90,
+          pressed: ColorPrimitives.red80,
+          active: ColorPrimitives.red90,
+          disabled: ColorPrimitives.trspRed10),
+      strongColors: StrongColors(
+          base: ColorPrimitives.red30,
+          pressed: ColorPrimitives.red20,
+          active: ColorPrimitives.red30,
+          disabled: ColorPrimitives.trspRed20),
+    ),
+  ),
   warningColors: WarningColors(
-      textColors: WarningTextColors(
-          strongColors: StrongColors(
-              base: ColorPrimitives.amber60,
-              pressed: ColorPrimitives.amber50,
-              active: ColorPrimitives.amber60,
-              disabled: ColorPrimitives.trspAmber40))),
+    textColors: WarningTextColors(
+      strongColors: StrongColors(
+          base: ColorPrimitives.amber60,
+          pressed: ColorPrimitives.amber50,
+          active: ColorPrimitives.amber60,
+          disabled: ColorPrimitives.trspAmber40),
+    ),
+  ),
   customColors: CustomColors(
     textColors: CustomTextColors(
       green: ColorPrimitives.green40,
@@ -361,14 +369,14 @@ const lmuColorsLight = LmuColors(
       stuLounge: Color(0x2E977243),
     ),
     colorColors: CustomColorColors(
-      green: ColorPrimitives.green40,
-      pink: ColorPrimitives.pink40,
-      amber: ColorPrimitives.amber40,
-      red: ColorPrimitives.red40,
-      blue: ColorPrimitives.blue40,
-      purple: ColorPrimitives.purple40,
-      teal: ColorPrimitives.teal40,
-      lime: ColorPrimitives.lime40,
+      green: ColorPrimitives.green50,
+      pink: ColorPrimitives.pink50,
+      amber: ColorPrimitives.amber50,
+      red: ColorPrimitives.red50,
+      blue: ColorPrimitives.blue50,
+      purple: ColorPrimitives.purple50,
+      teal: ColorPrimitives.teal50,
+      lime: ColorPrimitives.lime50,
       stuLounge: Color.fromARGB(255, 167, 126, 72),
     ),
   ),

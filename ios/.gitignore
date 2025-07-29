@@ -33,4 +33,5 @@ Runner/GeneratedPluginRegistrant.*
 !default.pbxuser
 !default.perspectivev3
 
+/Podfile.lock
 /Runner/GoogleService-Info.plist
