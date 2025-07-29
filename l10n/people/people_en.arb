@@ -5,7 +5,6 @@
   "contacts": "Contacts",
   "loading": "Loading...",
   "personNotFound": "Person not found",
-  "facultyAndRole": "Faculty & Role",
   "contact": "Contact",
   "email": "Email",
   "phone": "Phone",
@@ -16,5 +15,8 @@
   "showAllFaculties": "Show All Faculties",
   "favoritesA": "Tap the ",
   "favoritesB": " icon to add favorites here",
-  "people_subtitleTile": "from the "
+  "people_subtitleTile": "from the ",
+  "copiedEmail": "Email copied to clipboard",
+  "copiedWebsite":"Website copied to clipboard",
+  "copiedPhone": "Phone number copied to clipboard"
 }
