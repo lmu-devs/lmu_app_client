@@ -5,8 +5,7 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:permission_handler/permission_handler.dart'
-    show PermissionStatus;
+import 'package:permission_handler/permission_handler.dart' show PermissionStatus;
 
 class SettingsNotificationsPage extends StatefulWidget {
   const SettingsNotificationsPage({super.key});
@@ -84,7 +83,7 @@ class _SettingsNotificationsPageState extends State<SettingsNotificationsPage> w
                 },
               ),
             ),
-            const SizedBox(height: LmuSizes.size_16),
+            const SizedBox(height: LmuSizes.size_8),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
               child: LmuText.bodyXSmall(
