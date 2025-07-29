@@ -16,7 +16,7 @@
   "favoritesA": "Tap the ",
   "favoritesB": " icon to add favorites here",
   "people_subtitleTile": "from the ",
-  "copiedEmail": "Email copied to clipboard",
-  "copiedWebsite":"Website copied to clipboard",
-  "copiedPhone": "Phone number copied to clipboard"
+  "copiedEmail": "Email copied",
+  "copiedWebsite":"Website copied",
+  "copiedPhone": "Phone number copied"
 }
