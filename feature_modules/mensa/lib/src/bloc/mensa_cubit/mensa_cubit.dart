@@ -14,13 +14,19 @@ class MensaCubit extends Cubit<MensaState> {
     final cachedData = await _mensaRepository.getCachedMensaModels();
     emit(MensaLoadInProgress(mensaModels: cachedData));
 
-    final mensaModels = await _mensaRepository.getMensaModels();
-    if (mensaModels == null && cachedData == null) {
-      emit(MensaLoadFailure());
-      listenForConnectivityRestoration(loadMensaData);
-      return;
+    try {
+      final mensaModels = await _mensaRepository.getMensaModels();
+      emit(MensaLoadSuccess(mensaModels: mensaModels));
+    } catch (e) {
+      if (cachedData != null) {
+        emit(MensaLoadSuccess(mensaModels: cachedData));
+      } else {
+        if (e is NoNetworkException) {
+          emit(const MensaLoadFailure(loadState: LoadState.noNetworkError));
+        } else {
+          emit(const MensaLoadFailure(loadState: LoadState.genericError));
+        }
+      }
     }
-
-    emit(MensaLoadSuccess(mensaModels: mensaModels ?? cachedData!));
   }
 }

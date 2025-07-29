@@ -4,9 +4,6 @@ import 'package:core/module.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/feedback.dart';
 
-import 'application/usecases/open_store_listing_usecase.dart';
-import 'application/usecases/request_app_review_usecase.dart';
-import 'application/usecases/send_feedback_usecase.dart';
 import 'domain/interfaces/app_review_repository_interface.dart';
 import 'domain/interfaces/feedback_repository_interface.dart';
 import 'infrastructure/primary/api/feedback_api.dart';
@@ -26,14 +23,11 @@ class FeedbackModule extends AppModule with LocalDependenciesProvidingAppModule,
     final appReviewRepository = AppReviewRepository();
     GetIt.I.registerSingleton<AppReviewRepositoryInterface>(appReviewRepository);
     GetIt.I.registerSingleton<FeedbackRepositoryInterface>(feedbackRepository);
-    GetIt.I.registerSingleton<SendFeedbackUsecase>(SendFeedbackUsecase(feedbackRepository));
-    GetIt.I.registerSingleton<RequestAppReviewUseCase>(RequestAppReviewUseCase(appReviewRepository));
-    GetIt.I.registerSingleton<OpenStoreListingUseCase>(OpenStoreListingUseCase(appReviewRepository));
   }
 
   @override
   void providePublicApi() {
-    final openStoreListingUsecase = GetIt.I.get<OpenStoreListingUseCase>();
-    GetIt.I.registerSingleton<FeedbackApi>(FeedbackApiImpl(openStoreListingUsecase));
+    final appReviewRepository = GetIt.I.get<AppReviewRepositoryInterface>();
+    GetIt.I.registerSingleton<FeedbackApi>(FeedbackApiImpl(appReviewRepository));
   }
 }

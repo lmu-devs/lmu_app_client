@@ -1,50 +1,48 @@
+import 'package:core/utils.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../domain/exception/benefits_generic_exception.dart';
 import '../../domain/interface/benefits_repository_interface.dart';
 import '../../domain/models/benefit_category.dart';
-
-enum BenefitsLoadState { initial, loading, loadingWithCache, success, error }
 
 class GetBenefitsUsecase extends ChangeNotifier {
   GetBenefitsUsecase(this._repository);
 
   final BenefitsRepositoryInterface _repository;
 
-  BenefitsLoadState _loadState = BenefitsLoadState.initial;
+  LoadState _loadState = LoadState.initial;
   List<BenefitCategory> _benefitCategories = [];
 
-  BenefitsLoadState get loadState => _loadState;
+  LoadState get loadState => _loadState;
   List<BenefitCategory> get benefitCategories => _benefitCategories;
 
   Future<void> load() async {
-    if (_loadState == BenefitsLoadState.loading ||
-        _loadState == BenefitsLoadState.loadingWithCache ||
-        _loadState == BenefitsLoadState.success) {
-      return;
-    }
+    if (_loadState.isLoadingOrSuccess) return;
 
     final cachedBenefits = await _repository.getCachedBenefits();
     if (cachedBenefits != null) {
-      _loadState = BenefitsLoadState.loadingWithCache;
+      _loadState = LoadState.loadingWithCache;
       _benefitCategories = cachedBenefits;
       notifyListeners();
     } else {
-      _loadState = BenefitsLoadState.loading;
+      _loadState = LoadState.loading;
       _benefitCategories = [];
       notifyListeners();
     }
 
     try {
       final benefits = await _repository.getBenefits();
-      _loadState = BenefitsLoadState.success;
+      _loadState = LoadState.success;
       _benefitCategories = benefits;
-    } on BenefitsGenericException {
+    } catch (e) {
       if (cachedBenefits != null) {
-        _loadState = BenefitsLoadState.success;
+        _loadState = LoadState.success;
         _benefitCategories = cachedBenefits;
       } else {
-        _loadState = BenefitsLoadState.error;
+        if (e is NoNetworkException) {
+          _loadState = LoadState.noNetworkError;
+        } else {
+          _loadState = LoadState.genericError;
+        }
         _benefitCategories = [];
       }
     }

@@ -1,13 +1,16 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:core/logging.dart';
+import 'package:core/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/api.dart';
 import 'api/enums/sort_options.dart';
+import 'error/libraries_generic_exception.dart';
 
 abstract class LibrariesRepository {
-  Future<List<LibraryModel>?> getLibraries();
+  Future<List<LibraryModel>> getLibraries();
 
   Future<List<LibraryModel>?> getCachedLibraries();
 
@@ -46,7 +49,7 @@ class ConnectedLibrariesRepository implements LibrariesRepository {
   static const String _recentSearchesKey = 'libraries_recentSearches';
 
   @override
-  Future<List<LibraryModel>?> getLibraries({String? id}) async {
+  Future<List<LibraryModel>> getLibraries({String? id}) async {
     final prefs = await SharedPreferences.getInstance();
     try {
       final libraries = await librariesApiClient.getLibraries(id: id);
@@ -54,7 +57,12 @@ class ConnectedLibrariesRepository implements LibrariesRepository {
       await prefs.setInt(_librariesCacheTimeStampKey, DateTime.now().millisecondsSinceEpoch);
       return libraries;
     } catch (e) {
-      return null;
+      if (e is SocketException) {
+        throw NoNetworkException();
+      } else {
+        _appLogger.logError('[LibrariesRepository]: Error fetching libraries: $e');
+        throw LibrariesGenericException();
+      }
     }
   }
 

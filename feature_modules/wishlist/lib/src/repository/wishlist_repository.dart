@@ -1,12 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:core/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/models/wishlist_model.dart';
 import 'api/wishlist_api_client.dart';
+import 'error/wishlist_generic_exception.dart';
 
 abstract class WishlistRepository {
-  Future<List<WishlistModel>?> getWishlistEntries();
+  Future<List<WishlistModel>> getWishlistEntries();
 
   Future<List<WishlistModel>?> getCachedWishlistEntries({String? id});
 
@@ -34,7 +37,7 @@ class ConnectedWishlistRepository implements WishlistRepository {
   static const String _likedWishlistIdsKey = 'liked_wishlist_ids_key';
 
   @override
-  Future<List<WishlistModel>?> getWishlistEntries() async {
+  Future<List<WishlistModel>> getWishlistEntries() async {
     final prefs = await SharedPreferences.getInstance();
     try {
       final wishlistEntries = await wishlistApiClient.getWishlistModels(id: null);
@@ -42,7 +45,11 @@ class ConnectedWishlistRepository implements WishlistRepository {
       await prefs.setInt(_cachedWihshlistEntriesTimestampKey, DateTime.now().millisecondsSinceEpoch);
       return wishlistEntries;
     } catch (e) {
-      return null;
+      if (e is SocketException) {
+        throw NoNetworkException();
+      } else {
+        throw WishlistGenericException();
+      }
     }
   }
 
