@@ -16,18 +16,6 @@ class PeopleSearchPage extends DrivableWidget<PeopleSearchDriver> {
 
   @override
   Widget build(BuildContext context) {
-    if (driver.isLoading) {
-      return LmuScaffold(
-        appBar: LmuAppBarData(
-          largeTitle: driver.pageTitle,
-          leadingAction: LeadingAction.back,
-        ),
-        body: const Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
-    }
-
     final recentSearchController = LmuRecentSearchController<PeopleSearchEntry>();
 
     return LmuSearchPage<PeopleSearchEntry>(
