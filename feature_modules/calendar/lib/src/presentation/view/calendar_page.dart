@@ -3,7 +3,7 @@ import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../../domain/model/CalendarViewMode.dart';
+import '../../domain/model/calendar_view_mode.dart';
 import '../component/calendar_entry_card.dart';
 import '../component/loading_components/calendar_card_loading.dart';
 import '../component/week_selector.dart';
@@ -14,6 +14,8 @@ class CalendarPage extends DrivableWidget<CalendarPageDriver> {
 
   @override
   Widget build(BuildContext context) {
+    // return DayTimelinePage(events: mockCalendarEntries);
+
     return LmuScaffold(
       appBar: LmuAppBarData(
         largeTitle: driver.largeTitle,
@@ -23,8 +25,11 @@ class CalendarPage extends DrivableWidget<CalendarPageDriver> {
         height: 700,
         child: Column(
           children: [
+            LmuButton(
+              title: 'Open Test Screen',
+              onTap: () => driver.onTestScreenPressed(context),
+            ),
             _buildViewSelector(),
-            // if (driver.viewMode == CalendarViewMode.day) _buildDateSelector(),
             if (driver.viewMode == CalendarViewMode.day) _buildWeekPicker(),
             Expanded(child: _buildEventList()),
           ],
@@ -60,18 +65,6 @@ class CalendarPage extends DrivableWidget<CalendarPageDriver> {
       ],
     );
   }
-
-  // Widget _buildDateSelector() {
-  //   return Padding(
-  //     padding: const EdgeInsets.all(8.0),
-  //     child: CalendarDatePicker(
-  //       initialDate: driver.selectedDate,
-  //       firstDate: DateTime(2020),
-  //       lastDate: DateTime(2030),
-  //       onDateChanged: driver.onDateSelected,
-  //     ),
-  //   );
-  // }
 
   Widget _buildEventList() {
     if (driver.isLoadingEvents) {

@@ -1,5 +1,4 @@
-// Assuming Frequency is also a domain enum
-import 'frequency.dart'; // Your Frequency enum
+import 'frequency.dart';
 
 class CalendarRule {
   CalendarRule({

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:core/api.dart';
 import 'package:core/logging.dart';
 
-import '../../../../domain/model/mock_events.dart';
 import '../dto/calendar_dto.dart';
 import '../dto/calendar_entry_dto.dart';
 import 'calendar_api_endpoints.dart';
@@ -96,12 +95,11 @@ class CalendarApiClient {
 
     _appLogger.logMessage("[DEBUG] Request URL: $url"); // Log the exact URL being called
 
-    return createMockCalendarEntryDtos();
+    // return createMockCalendarEntryDtos();
 
     final response = await _baseApiClient.get(url);
 
-    // Log the raw response body for debugging
-    print("[DEBUG] Raw API Response Body (Status ${response.statusCode}): ${response.body}");
+    _appLogger.logMessage("[DEBUG] Raw API Response Body (Status ${response.statusCode}): ${response.body}");
 
     if (response.statusCode == 504) {
       throw Exception('Failed to load calendar data - Gateway Timeout (504)');
@@ -119,7 +117,7 @@ class CalendarApiClient {
 
     // Check if the response body is empty or not a valid JSON structure before decoding
     if (response.body.isEmpty) {
-      throw Exception('API response body is empty.');
+      throw Exception('calendar API response body is empty.');
     }
 
     // Attempt to decode as a List<dynamic>
@@ -129,13 +127,14 @@ class CalendarApiClient {
       return jsonList.map((json) => CalendarEntryDto.fromJson(json)).toList();
     } on TypeError catch (e) {
       // This catches the '_Map<String, dynamic>' is not a subtype of type 'List<dynamic>' error
-      print("Error during JSON decoding/casting: $e");
-      print("Response body was: ${response.body}");
-      throw Exception('Unexpected API response format. Expected a list but got a map or other type. Error: $e');
+      _appLogger.logMessage("Error during calendar JSON decoding/casting: $e");
+      _appLogger.logMessage("Response calendar body was: ${response.body}");
+      throw Exception(
+          'Unexpected calendar API response format. Expected a list but got a map or other type. Error: $e');
     } on FormatException catch (e) {
       // This catches errors if the response body is not valid JSON
-      print("Error parsing JSON response: $e");
-      print("Response body was: ${response.body}");
+      _appLogger.logMessage("Error parsing JSON calendarresponse: $e");
+      _appLogger.logMessage("Response calendar body was: ${response.body}");
       throw Exception('Invalid JSON response from API. Error: $e');
     }
   }
