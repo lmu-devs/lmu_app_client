@@ -38,7 +38,7 @@ class LecturesPage extends DrivableWidget<LecturesPageDriver> {
         LecturesCard(
           id: driver.lecturesId,
           title: driver.title,
-          description: driver.description,
+          tags: const [], // TODO: implement tags from driver
           onTap: driver.onLecturesCardPressed,
         ),
       ],

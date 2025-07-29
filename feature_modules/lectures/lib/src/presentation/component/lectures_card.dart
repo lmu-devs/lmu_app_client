@@ -2,26 +2,46 @@ import 'package:core/components.dart';
 import 'package:flutter/material.dart';
 
 class LecturesCard extends StatelessWidget {
+  final String id;
+  final String title;
+  final List<String> tags;
+  final bool isFavorite;
+  final VoidCallback? onTap;
+  final VoidCallback? onFavoriteTap;
+
   const LecturesCard({
     super.key,
     required this.id,
     required this.title,
-    required this.description,
-    required this.onTap,
+    required this.tags,
+    this.isFavorite = false,
+    this.onTap,
+    this.onFavoriteTap,
   });
-
-  final String id;
-  final String title;
-  final String description;
-  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
     return LmuCard(
       title: title,
-      subtitle: description,
-      leadingIcon: const LmuInListBlurEmoji(emoji: "🧬"),
+      hasFavoriteStar: true,
+      isFavorite: isFavorite,
+      onFavoriteTap: onFavoriteTap,
       onTap: onTap,
+      customSubtitle: tags.isNotEmpty
+          ? Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Wrap(
+                spacing: 8.0,
+                runSpacing: 4.0,
+                children: tags
+                    .map((tag) => LmuInTextVisual.text(
+                          title: tag,
+                          actionType: ActionType.base,
+                        ))
+                    .toList(),
+              ),
+            )
+          : null,
     );
   }
 }

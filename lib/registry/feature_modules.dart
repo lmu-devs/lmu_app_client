@@ -18,6 +18,7 @@ import 'package:user/user.dart';
 import 'package:wishlist/wishlist.dart';
 
 final modules = [
+  StudiesModule(), // Keep first to register FacultiesApi early
   UserModule(),
   HomeModule(),
   CinemaModule(),
@@ -31,7 +32,6 @@ final modules = [
   SportsModule(),
   TimelineModule(),
   BenefitsModule(),
-  StudiesModule(),
   LaunchFlowModule(),
   CalendarModule(),
   LecturesModule(),

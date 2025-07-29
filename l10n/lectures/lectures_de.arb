@@ -3,5 +3,11 @@
   "@@context": "Lectures",
   "lecturesTitle": "Vorlesungen",
   "facultiesTitle": "Fakultäten",
-  "allFacultiesTitle": "Alle Fakultäten"
+  "allFacultiesTitle": "Alle Fakultäten",
+  "removeFavorite": "Von Favoriten entfernen",
+  "addFavorite": "Zu Favoriten hinzufügen",
+  "winterSemester": "Winter",
+  "summerSemester": "Sommer",
+  "myStudy": "Mein Studium",
+  "coursesCount": "Kurse"
 }

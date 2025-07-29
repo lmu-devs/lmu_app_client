@@ -24,16 +24,17 @@ class LecturesModule extends AppModule with LocalDependenciesProvidingAppModule,
     final storage = LecturesStorage();
     final repository = LecturesRepository(LecturesApiClient(baseApiClient), storage);
     final getUsecase = GetLecturesUsecase(repository);
-    final facultiesApi = GetIt.I.get<FacultiesApi>();
-    final getLecturesFacultiesUsecase = GetLecturesFacultiesUsecase(facultiesApi);
 
     GetIt.I.registerSingleton<LecturesRepositoryInterface>(repository);
     GetIt.I.registerSingleton<GetLecturesUsecase>(getUsecase);
-    GetIt.I.registerSingleton<GetLecturesFacultiesUsecase>(getLecturesFacultiesUsecase);
   }
 
   @override
   void providePublicApi() {
+    final facultiesApi = GetIt.I.get<FacultiesApi>();
+    final getLecturesFacultiesUsecase = GetLecturesFacultiesUsecase(facultiesApi);
+
+    GetIt.I.registerSingleton<GetLecturesFacultiesUsecase>(getLecturesFacultiesUsecase);
     GetIt.I.registerSingleton<LecturesApi>(LecturesApiImpl());
     GetIt.I.registerSingleton<LecturesRouter>(LecturesRouterImpl());
   }
