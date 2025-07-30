@@ -271,9 +271,9 @@
   "@callPhone": {
     "description": "Call Phone"
   },
-  "copiedPhone": "Phone number copied to clipboard",
+  "copiedPhone": "Phone number copied",
   "@copiedPhone": {
-    "description": "Phone number copied to clipboard"
+    "description": "Phone number copied"
   },
   "errorLaunchWebsite": "Could not launch website",
   "@errorLaunchWebsite": {
