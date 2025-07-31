@@ -353,6 +353,10 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                       path: 'lecture-list',
                       factory: $LectureListRouteExtension._fromState,
                     ),
+                    GoRouteData.$route(
+                      path: 'lecture-detail',
+                      factory: $LectureDetailRouteExtension._fromState,
+                    ),
                   ],
                 ),
                 GoRouteData.$route(
@@ -1169,6 +1173,28 @@ extension $LectureListRouteExtension on LectureListRoute {
 
   String get location => GoRouteData.$location(
         '/studies/lectures/lecture-list',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
+}
+
+extension $LectureDetailRouteExtension on LectureDetailRoute {
+  static LectureDetailRoute _fromState(GoRouterState state) =>
+      LectureDetailRoute(
+        state.extra as Map<String, dynamic>,
+      );
+
+  String get location => GoRouteData.$location(
+        '/studies/lectures/lecture-detail',
       );
 
   void go(BuildContext context) => context.go(location, extra: $extra);

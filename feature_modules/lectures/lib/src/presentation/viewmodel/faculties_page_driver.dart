@@ -17,6 +17,7 @@ class FacultiesPageDriver extends WidgetDriver {
   late LmuToast _toast;
 
   List<Faculty> get faculties => _usecase.faculties;
+
   bool get isLoading => _usecase.isLoading;
   bool get hasError => _usecase.hasError;
 

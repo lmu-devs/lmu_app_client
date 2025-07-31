@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../../presentation/view/faculties_page.dart';
 import '../../../presentation/view/lecture_list_page.dart';
+import '../../../presentation/view/lecture_detail_page.dart';
 
 class LecturesRouterImpl extends LecturesRouter {
   @override
@@ -16,6 +17,17 @@ class LecturesRouterImpl extends LecturesRouter {
     return LectureListPage(
       facultyId: facultyId,
       facultyName: facultyName,
+    );
+  }
+
+  @override
+  Widget buildLectureDetail(BuildContext context, Map<String, dynamic> extra) {
+    final lectureId = extra['lectureId'] as String;
+    final lectureTitle = extra['lectureTitle'] as String;
+
+    return LectureDetailPage(
+      lectureId: lectureId,
+      lectureTitle: lectureTitle,
     );
   }
 }

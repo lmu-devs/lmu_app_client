@@ -2,13 +2,6 @@ import 'package:core/components.dart';
 import 'package:flutter/material.dart';
 
 class LecturesCard extends StatelessWidget {
-  final String id;
-  final String title;
-  final List<String> tags;
-  final bool isFavorite;
-  final VoidCallback? onTap;
-  final VoidCallback? onFavoriteTap;
-
   const LecturesCard({
     super.key,
     required this.id,
@@ -18,6 +11,13 @@ class LecturesCard extends StatelessWidget {
     this.onTap,
     this.onFavoriteTap,
   });
+
+  final String id;
+  final String title;
+  final List<String> tags;
+  final bool isFavorite;
+  final VoidCallback? onTap;
+  final VoidCallback? onFavoriteTap;
 
   @override
   Widget build(BuildContext context) {

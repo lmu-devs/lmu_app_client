@@ -25,3 +25,14 @@ class LectureListRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) => _router.buildLectureList(context, $extra);
 }
+
+class LectureDetailRoute extends GoRouteData {
+  const LectureDetailRoute(this.$extra);
+
+  final Map<String, dynamic> $extra;
+
+  static const String path = 'lecture-detail';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => _router.buildLectureDetail(context, $extra);
+}
