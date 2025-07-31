@@ -1,23 +1,21 @@
 import 'dart:math';
 
+import 'package:core/components.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+
+import '../../application/usecase/get_developerdex_usecase.dart';
+import '../../domain/model/animal.dart';
+import '../../domain/model/lmu_developer.dart';
 
 class DeveloperEncounter extends StatefulWidget {
   const DeveloperEncounter({
     super.key,
-    required this.assetName,
-    this.height,
-    this.fit,
-    this.package,
-    this.onTap,
+    required this.developer,
   });
 
-  final String assetName;
-  final double? height;
-  final BoxFit? fit;
-  final String? package;
-  final void Function()? onTap;
+  final LmuDeveloper developer;
 
   @override
   State<DeveloperEncounter> createState() => _DeveloperEncounterState();
@@ -28,12 +26,18 @@ class _DeveloperEncounterState extends State<DeveloperEncounter> with SingleTick
   late final Animation<double> _scaleAnimation;
   late Animation<double> _rotationAnimation;
 
+  late final GetDeveloperdexUsecase _getDeveloperdexUsecase;
+
   final Random _random = Random();
   double _rotationAngle = 0;
+
+  LmuDeveloper get _developer => widget.developer;
 
   @override
   void initState() {
     super.initState();
+    _getDeveloperdexUsecase = GetIt.I.get<GetDeveloperdexUsecase>();
+
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 100),
@@ -47,7 +51,7 @@ class _DeveloperEncounterState extends State<DeveloperEncounter> with SingleTick
     _rotationAnimation = Tween<double>(begin: 0.0, end: 0.0).animate(_controller);
   }
 
-  void _onTap() {
+  void _onTap(BuildContext context) {
     LmuVibrations.secondary();
     setState(() {
       _rotationAngle = (_random.nextDouble() - 0.5) * 0.2;
@@ -60,9 +64,20 @@ class _DeveloperEncounterState extends State<DeveloperEncounter> with SingleTick
       ));
     });
 
-    widget.onTap?.call();
+    _registerEncounter(context);
 
     _controller.forward().then((_) => _controller.reverse());
+  }
+
+  void _registerEncounter(BuildContext context) {
+    final isNew = _getDeveloperdexUsecase.caughtDeveloper(_developer.id);
+
+    if (isNew) {
+      LmuToast.of(context).showToast(
+        message: "Caught ${_developer.name}!",
+        type: ToastType.success,
+      );
+    }
   }
 
   @override
@@ -74,7 +89,7 @@ class _DeveloperEncounterState extends State<DeveloperEncounter> with SingleTick
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: _onTap,
+      onTap: () => _onTap(context),
       child: AnimatedBuilder(
         animation: _controller,
         builder: (context, child) {
@@ -87,10 +102,10 @@ class _DeveloperEncounterState extends State<DeveloperEncounter> with SingleTick
           );
         },
         child: Image.asset(
-          widget.assetName,
-          height: widget.height,
-          fit: widget.fit,
-          package: widget.package,
+          _developer.animal.asset,
+          height: 128,
+          fit: BoxFit.cover,
+          package: "developerdex",
         ),
       ),
     );

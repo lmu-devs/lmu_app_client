@@ -1,13 +1,20 @@
+import 'animal.dart';
+import 'rarity.dart';
+
 class LmuDeveloper {
   const LmuDeveloper({
     required this.id,
     required this.name,
-    required this.asset,
-    this.encounterPercentage = 0.0,
+    required this.animal,
+    this.rarity = Rarity.common,
+    this.tags = const [],
+    this.description,
   });
 
   final String id;
   final String name;
-  final String asset;
-  final double encounterPercentage;
+  final Animal animal;
+  final Rarity rarity;
+  final List<String> tags;
+  final String? description;
 }

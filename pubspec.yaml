@@ -83,7 +83,6 @@ flutter:
   assets:
     - .env
     - core/lib/assets/
-    - core/lib/assets/animals/
     - feature_modules/mensa/assets/
     - feature_modules/explore/assets/
   shaders:

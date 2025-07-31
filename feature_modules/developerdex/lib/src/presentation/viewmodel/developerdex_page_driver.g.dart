@@ -8,35 +8,25 @@ part of 'developerdex_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.3.3"
+// This file was generated with widget_driver_generator version "1.3.6"
 
 class _$TestDeveloperdexPageDriver extends TestDriver implements DeveloperdexPageDriver {
   @override
-  bool get isLoading => false;
+  String get appBarTitle => ' ';
 
   @override
-  String get largeTitle => ' ';
+  List<SemesterCourse> get semesterCourses => [];
 
   @override
-  String get developerdexId => ' ';
-
-  @override
-  String get title => ' ';
-
-  @override
-  String get description => ' ';
-
-  @override
-  void onDeveloperdexCardPressed() {}
+  bool wasDeveloperSeen(String id) {
+    return false;
+  }
 
   @override
   void didInitDriver() {}
 
   @override
   void didUpdateBuildContext(BuildContext context) {}
-
-  @override
-  void dispose() {}
 }
 
 class $DeveloperdexPageDriverProvider extends WidgetDriverProvider<DeveloperdexPageDriver> {

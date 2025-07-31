@@ -1,0 +1,9 @@
+{
+  "@@locale": "en",
+  "@@context": "Developerdex",
+  "developerdexTitle": "Developerdex",
+  "legendary": "Legendary",
+  "epic": "Epic",
+  "rare": "Rare",
+  "common": "Common"
+}

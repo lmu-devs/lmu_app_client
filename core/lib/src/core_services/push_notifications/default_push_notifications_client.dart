@@ -44,14 +44,12 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
 
       if (defaultTargetPlatform == TargetPlatform.android) {
         await _localNotifications
-            .resolvePlatformSpecificImplementation<
-                AndroidFlutterLocalNotificationsPlugin>()
+            .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
             ?.createNotificationChannel(_androidChannel);
       }
 
       await _initLocalNotifications();
       await _initFirebase();
-
     } catch (e) {
       throw Exception("Failed to initialize push notifications - $e");
     }
@@ -59,11 +57,9 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
 
   Future<void> _initLocalNotifications() async {
     const AndroidInitializationSettings androidSettings =
-        AndroidInitializationSettings(
-            _AndroidNotificationConstants.androidIcon);
+        AndroidInitializationSettings(_AndroidNotificationConstants.androidIcon);
 
-    const DarwinInitializationSettings iosSettings =
-        DarwinInitializationSettings(
+    const DarwinInitializationSettings iosSettings = DarwinInitializationSettings(
       requestAlertPermission: false,
       requestBadgePermission: false,
       requestCriticalPermission: false,
@@ -71,8 +67,7 @@ class DefaultPushNotificationsClient implements PushNotificationsClient {
       requestSoundPermission: false,
     );
 
-    const InitializationSettings initSettings =
-        InitializationSettings(android: androidSettings, iOS: iosSettings);
+    const InitializationSettings initSettings = InitializationSettings(android: androidSettings, iOS: iosSettings);
 
     await _localNotifications.initialize(
       initSettings,

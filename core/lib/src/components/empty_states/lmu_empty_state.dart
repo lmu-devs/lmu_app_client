@@ -50,8 +50,8 @@ class _LmuEmptyStateState extends State<LmuEmptyState> {
       padding: EdgeInsets.only(
         left: LmuSizes.size_24,
         right: LmuSizes.size_24,
-        top: hasVerticalPadding ? LmuSizes.size_24 : 0,
-        bottom: hasVerticalPadding ? LmuSizes.size_96 : 0,
+        top: widget.hasVerticalPadding ? LmuSizes.size_24 : 0,
+        bottom: widget.hasVerticalPadding ? LmuSizes.size_96 : 0,
       ),
       child: Column(
         children: [
@@ -86,10 +86,10 @@ class _LmuEmptyStateState extends State<LmuEmptyState> {
 
   String get _assetName {
     return switch (widget.type) {
-      EmptyStateType.generic => "lib/assets/generic_error.png",
-      EmptyStateType.noInternet => "lib/assets/internet_error.png",
-      EmptyStateType.noSearchResults => "lib/assets/empty_search.png",
-      EmptyStateType.closed => "lib/assets/closed.png",
+      EmptyStateType.generic => "lib/assets/generic_error.webp",
+      EmptyStateType.noInternet => "lib/assets/internet_error.webp",
+      EmptyStateType.noSearchResults => "lib/assets/empty_search.webp",
+      EmptyStateType.closed => "lib/assets/closed.webp",
       EmptyStateType.custom => throw ("Please provide a custom asset name for custom state"),
     };
   }

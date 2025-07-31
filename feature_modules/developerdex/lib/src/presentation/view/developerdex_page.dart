@@ -2,18 +2,24 @@ import 'package:collection/collection.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
+import 'package:core/utils.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:widget_driver/widget_driver.dart';
 
+import '../../domain/model/animal.dart';
+import '../../domain/model/semester.dart';
 import '../component/developerdex_entry.dart';
 import '../viewmodel/developerdex_page_driver.dart';
+import 'developer_details_page.dart';
 
 class DeveloperdexPage extends DrivableWidget<DeveloperdexPageDriver> {
   DeveloperdexPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final neutralColors = context.colors.neutralColors;
     return LmuScaffold(
       appBar: LmuAppBarData(
         largeTitle: driver.appBarTitle,
@@ -30,22 +36,27 @@ class DeveloperdexPage extends DrivableWidget<DeveloperdexPageDriver> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      LmuInTextVisual.text(
-                        backgroundColor: context.colors.customColors.textColors.stuBistro,
-                        title: semesterCourse.semester.name.toUpperCase(),
-                      ),
+                      LmuInTextVisual.text(title: semesterCourse.semester.localizedName),
                     ],
                   ),
                 ),
                 const SizedBox(height: LmuSizes.size_16),
-                if (semesterCourse.developers.isNotEmpty)
+                if (semesterCourse.state == SemesterState.finished)
                   SliverGrid(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
                         final developer = semesterCourse.developers[index];
+                        final wasSeen = driver.wasDeveloperSeen(developer.id);
                         return DeveloperdexEntry(
-                          wasSeen: index == 1,
-                          assetName: developer.asset,
+                          wasSeen: wasSeen,
+                          assetName: developer.animal.asset,
+                          onTap: () {
+                            if (!wasSeen) return;
+                            LmuBottomSheet.showExtended(
+                              context,
+                              content: DeveloperDetailsPage(developer: developer),
+                            );
+                          },
                         );
                       },
                       childCount: semesterCourse.developers.length,
@@ -66,13 +77,30 @@ class DeveloperdexPage extends DrivableWidget<DeveloperdexPageDriver> {
                         height: height,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(LmuSizes.size_12),
-                          color: context.colors.neutralColors.backgroundColors.tile,
+                          color: neutralColors.backgroundColors.tile,
                         ),
                         child: Center(
-                          child: LmuText.body(
-                            "Available soon...",
-                            color: context.colors.neutralColors.textColors.weakColors.active,
-                          ),
+                          child: semesterCourse.state == SemesterState.inProgress
+                              ? LmuText.body(
+                                  "Available soon",
+                                  color: neutralColors.textColors.weakColors.active,
+                                )
+                              : Text.rich(
+                                  TextSpan(
+                                    text: "Apply now",
+                                    style: context.textTheme.bodySmall.copyWith(
+                                      color: neutralColors.textColors.mediumColors.base,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        LmuUrlLauncher.launchWebsite(
+                                          url: LmuDevStrings.lmuDevWebsite,
+                                          context: context,
+                                        );
+                                      },
+                                  ),
+                                ),
                         ),
                       );
                     },

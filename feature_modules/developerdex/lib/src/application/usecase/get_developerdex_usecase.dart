@@ -14,12 +14,14 @@ class GetDeveloperdexUsecase extends ChangeNotifier {
   List<SemesterCourse> get semesterCourses => _semesterCourses;
   List<String> get seenEntries => _seenEntries;
 
-  void caughtDeveloper(String id) {
-    if (!_seenEntries.contains(id)) {
-      _seenEntries.add(id);
-      _repository.saveSeenDeleoperdexIds(_seenEntries);
-      notifyListeners();
-    }
+  bool caughtDeveloper(String id) {
+    final isNew = !_seenEntries.contains(id);
+
+    if (!isNew) return false;
+    _seenEntries.add(id);
+    _repository.saveSeenDeleoperdexIds(_seenEntries);
+    notifyListeners();
+    return true;
   }
 
   void initDevelopers() async {
