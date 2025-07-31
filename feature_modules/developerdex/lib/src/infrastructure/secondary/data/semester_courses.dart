@@ -16,7 +16,8 @@ const List<SemesterCourse> semesterCourses = [
         rarity: Rarity.legendary,
         tags: [
           'Co-Founder',
-          'Alex Lover',
+          'Backend Development',
+          'UI/UX Design',
         ],
       ),
       LmuDeveloper(
@@ -24,7 +25,12 @@ const List<SemesterCourse> semesterCourses = [
         name: 'Lukas',
         animal: Animal.aperolCat,
         rarity: Rarity.legendary,
-        tags: ['Co-Founder', 'Certified Aperol Enjoyer'],
+        tags: [
+          'Co-Founder',
+          'Frontend Development',
+          'Release Management',
+          'App Marketing',
+        ],
       ),
       LmuDeveloper(
         id: '3',
@@ -33,7 +39,8 @@ const List<SemesterCourse> semesterCourses = [
         rarity: Rarity.legendary,
         tags: [
           'Co-Founder',
-          'Master of the Universe',
+          'Frontend Development',
+          'App Architecture',
         ],
       ),
     ],

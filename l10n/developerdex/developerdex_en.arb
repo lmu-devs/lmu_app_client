@@ -5,5 +5,15 @@
   "legendary": "Legendary",
   "epic": "Epic",
   "rare": "Rare",
-  "common": "Common"
+  "common": "Common",
+  "caught": "Caught {developer}!",
+  "@caught": {
+    "description": "Indicates that a developer has been caught",
+    "placeholders": {
+      "developer": {
+        "type": "String",
+        "example": "John Doe"
+      }
+    }
+  }
 }

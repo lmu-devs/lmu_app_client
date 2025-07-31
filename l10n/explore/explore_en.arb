@@ -29,7 +29,7 @@
   "@copyToClipboard": {
     "description": "Copy address to clipboard"
   },
-  "copiedToClipboard": "Address copied to clipboard",
+  "copiedToClipboard": "Address copied",
   "@copiedToClipboard": {
     "description": "Toast message for copied address"
   },

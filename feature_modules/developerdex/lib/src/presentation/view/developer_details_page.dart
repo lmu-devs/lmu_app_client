@@ -1,6 +1,7 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
+import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -43,20 +44,25 @@ class DeveloperDetailsPage extends StatelessWidget {
             LmuInTextVisual.text(
               title: developer.rarity.toLocalizedString(context.locals.developerdex),
               size: InTextVisualSize.large,
+              backgroundColor: developer.rarity.toBackgroundColor(context.colors),
+              textColor: developer.rarity.toTextColor(context.colors),
             ),
             const SizedBox(height: LmuSizes.size_16),
-            Wrap(
-              children: developer.tags
-                  .map(
-                    (tag) => Padding(
-                      padding: const EdgeInsets.only(right: LmuSizes.size_8),
-                      child: LmuInTextVisual.text(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+              child: Wrap(
+                spacing: LmuSizes.size_8,
+                runSpacing: LmuSizes.size_8,
+                alignment: WrapAlignment.center,
+                children: developer.tags
+                    .map(
+                      (tag) => LmuInTextVisual.text(
                         title: tag,
                         size: InTextVisualSize.large,
                       ),
-                    ),
-                  )
-                  .toList(),
+                    )
+                    .toList(),
+              ),
             ),
             const SizedBox(height: LmuSizes.size_96),
           ],

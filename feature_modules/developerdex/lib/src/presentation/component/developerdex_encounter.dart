@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:core/components.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -74,7 +75,7 @@ class _DeveloperEncounterState extends State<DeveloperEncounter> with SingleTick
 
     if (isNew) {
       LmuToast.of(context).showToast(
-        message: "Caught ${_developer.name}!",
+        message: context.locals.developerdex.caught(_developer.name),
         type: ToastType.success,
       );
     }

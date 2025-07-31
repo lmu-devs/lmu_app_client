@@ -146,10 +146,6 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                       factory: $SettingsLanguageRouteExtension._fromState,
                     ),
                     GoRouteData.$route(
-                      path: 'analytics',
-                      factory: $SettingsAnalyticsRouteExtension._fromState,
-                    ),
-                    GoRouteData.$route(
                       path: 'notifications',
                       factory: $SettingsNotificationsRouteExtension._fromState,
                     ),
@@ -160,6 +156,12 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                     GoRouteData.$route(
                       path: 'account',
                       factory: $SettingsAccountRouteExtension._fromState,
+                      routes: [
+                        GoRouteData.$route(
+                          path: 'analytics',
+                          factory: $SettingsAnalyticsRouteExtension._fromState,
+                        ),
+                      ],
                     ),
                     GoRouteData.$route(
                       path: 'debug',
@@ -424,22 +426,6 @@ extension $SettingsLanguageRouteExtension on SettingsLanguageRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $SettingsAnalyticsRouteExtension on SettingsAnalyticsRoute {
-  static SettingsAnalyticsRoute _fromState(GoRouterState state) => const SettingsAnalyticsRoute();
-
-  String get location => GoRouteData.$location(
-        '/home/settings/analytics',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) => context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
 extension $SettingsNotificationsRouteExtension on SettingsNotificationsRoute {
   static SettingsNotificationsRoute _fromState(GoRouterState state) => const SettingsNotificationsRoute();
 
@@ -477,6 +463,22 @@ extension $SettingsAccountRouteExtension on SettingsAccountRoute {
 
   String get location => GoRouteData.$location(
         '/home/settings/account',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $SettingsAnalyticsRouteExtension on SettingsAnalyticsRoute {
+  static SettingsAnalyticsRoute _fromState(GoRouterState state) => const SettingsAnalyticsRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/settings/account/analytics',
       );
 
   void go(BuildContext context) => context.go(location);

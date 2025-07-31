@@ -59,9 +59,6 @@ class LaunchFlowShellRoute extends ShellRouteData {
                 TypedGoRoute<SettingsLanguageRoute>(
                   path: SettingsLanguageRoute.path,
                 ),
-                TypedGoRoute<SettingsAnalyticsRoute>(
-                  path: SettingsAnalyticsRoute.path,
-                ),
                 TypedGoRoute<SettingsNotificationsRoute>(
                   path: SettingsNotificationsRoute.path,
                 ),
@@ -70,6 +67,11 @@ class LaunchFlowShellRoute extends ShellRouteData {
                 ),
                 TypedGoRoute<SettingsAccountRoute>(
                   path: SettingsAccountRoute.path,
+                  routes: <TypedGoRoute<GoRouteData>>[
+                    TypedGoRoute<SettingsAnalyticsRoute>(
+                      path: SettingsAnalyticsRoute.path,
+                    ),
+                  ],
                 ),
                 TypedGoRoute<SettingsDebugRoute>(
                   path: SettingsDebugRoute.path,

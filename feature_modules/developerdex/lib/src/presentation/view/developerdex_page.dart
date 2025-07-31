@@ -36,7 +36,11 @@ class DeveloperdexPage extends DrivableWidget<DeveloperdexPageDriver> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      LmuInTextVisual.text(title: semesterCourse.semester.localizedName),
+                      LmuInTextVisual.text(
+                        title: semesterCourse.semester.localizedName,
+                        backgroundColor: context.colors.customColors.backgroundColors.pink,
+                        textColor: context.colors.customColors.textColors.pink,
+                      ),
                     ],
                   ),
                 ),

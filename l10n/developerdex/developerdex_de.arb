@@ -5,5 +5,6 @@
   "legendary": "Legendär",
   "epic": "Episch",
   "rare": "Selten",
-  "common": "Gewöhnlich"
+  "common": "Gewöhnlich",
+  "caught": "{developer} gefangen!"
 }

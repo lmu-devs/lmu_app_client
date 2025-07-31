@@ -1,6 +1,9 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/themes.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../viewmodel/people_details_page_driver.dart';
@@ -48,70 +51,100 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
         trailingWidgets: [
           LmuFavoriteButton(
             isFavorite: driver.isFavorite,
-            onTap: driver.onFavoriteTap,
+            onTap: () => driver.onFavoriteTap(context),
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          LmuSizes.size_16,
-          LmuSizes.size_32,
-          LmuSizes.size_16,
-          LmuSizes.size_16,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            LmuTileHeadline.base(title: driver.facultyAndRoleText),
-            const SizedBox(height: LmuSizes.size_2),
-            LmuContentTile(
-              contentList: [
-                LmuListItem.base(
-                  title: driver.faculty,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(
+            LmuSizes.size_16,
+            LmuSizes.size_2,
+            LmuSizes.size_16,
+            LmuSizes.size_16,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (driver.facultyAndRole.isNotEmpty) ...[
+                LmuText.body(
+                  driver.facultyAndRole,
+                  color: context.colors.neutralColors.textColors.mediumColors.base,
                 ),
-                LmuListItem.base(
-                  title: driver.role,
-                ),
+                const SizedBox(height: LmuSizes.size_2),
               ],
-            ),
-            const SizedBox(height: LmuSizes.size_32),
-            LmuTileHeadline.base(title: driver.contactText),
-            const SizedBox(height: LmuSizes.size_2),
-            LmuContentTile(
-              contentList: [
-                LmuListItem.base(
-                  title: driver.emailText,
-                  subtitle: driver.email,
-                  trailingArea: const Icon(Icons.mail_outline),
-                  onTap: () => driver.onEmailTap(context),
-                ),
-                LmuListItem.base(
-                  title: driver.phoneText,
-                  subtitle: driver.phone,
-                  trailingArea: const Icon(Icons.phone_outlined),
-                  onTap: () => driver.onPhoneTap(context),
-                ),
-                LmuListItem.base(
-                  title: driver.websiteText,
-                  subtitle: driver.website,
-                  trailingArea: const Icon(Icons.open_in_new),
-                  onTap: () => driver.onWebsiteTap(context),
-                ),
-                LmuListItem.base(
-                  title: driver.roomText,
-                  subtitle: driver.room,
-                  //trailingArea: const Icon(Icons.map_outlined),
-                  onTap: () => driver.onRoomTap(),
-                ),
-                LmuListItem.base(
-                  title: driver.consultationHoursText,
-                  subtitle: driver.consultation,
-                  //trailingArea: const Icon(Icons.schedule_outlined),
-                  onTap: () => driver.onConsultationTap(),
-                ),
-              ],
-            ),
-          ],
+              const SizedBox(height: LmuSizes.size_32),
+              LmuTileHeadline.base(title: driver.contactText),
+              LmuContentTile(
+                contentList: [
+                  if (driver.email.isNotEmpty)
+                    LmuListItem.base(
+                      title: driver.emailText,
+                      subtitle: driver.email,
+                      leadingArea: const Icon(LucideIcons.mail),
+                      trailingArea: LmuIconButton(
+                        icon: LucideIcons.copy,
+                        onPressed: () => CopyToClipboardUtil.copyToClipboard(
+                          context: context,
+                          copiedText: driver.email,
+                          message: driver.copiedEmailText,
+                        ),
+                      ),
+                      onTap: () => driver.onEmailTap(context),
+                    ),
+                  if (driver.phone.isNotEmpty)
+                    LmuListItem.base(
+                      title: driver.phoneText,
+                      subtitle: driver.phone,
+                      leadingArea: const Icon(LucideIcons.phone),
+                      trailingArea: LmuIconButton(
+                        icon: LucideIcons.copy,
+                        onPressed: () => CopyToClipboardUtil.copyToClipboard(
+                          context: context,
+                          copiedText: driver.phone,
+                          message: driver.copiedPhoneText,
+                        ),
+                      ),
+                      onTap: () => driver.onPhoneTap(context),
+                    ),
+                  if (driver.website.isNotEmpty)
+                    LmuListItem.base(
+                      title: driver.websiteText,
+                      subtitle: driver.website,
+                      leadingArea: const Icon(LucideIcons.globe),
+                      trailingArea: LmuIconButton(
+                        icon: LucideIcons.copy,
+                        onPressed: () => CopyToClipboardUtil.copyToClipboard(
+                          context: context,
+                          copiedText: driver.website,
+                          message: driver.copiedWebsiteText,
+                        ),
+                      ),
+                      onTap: () => driver.onWebsiteTap(context),
+                    ),
+                ],
+              ),
+              const SizedBox(height: LmuSizes.size_16),
+              LmuContentTile(
+                contentList: [
+                  if (driver.room.isNotEmpty)
+                    LmuListItem.base(
+                      title: driver.roomText,
+                      subtitle: driver.room,
+                      trailingArea: LmuIconButton(
+                        icon: LucideIcons.map,
+                        onPressed: () => driver.onRoomTap(),
+                      ),
+                    ),
+                  if (driver.consultation.isNotEmpty)
+                    LmuListItem.base(
+                      title: driver.consultationHoursText,
+                      subtitle: driver.consultation,
+                    ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
