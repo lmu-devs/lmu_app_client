@@ -27,7 +27,4 @@ class SettingsRouterImpl extends SettingsRouter {
 
   @override
   Widget buildLicense(BuildContext context) => const SettingsLicencePage();
-
-  @override
-  Widget buildSafari(BuildContext context) => SettingsSafariPage();
 }

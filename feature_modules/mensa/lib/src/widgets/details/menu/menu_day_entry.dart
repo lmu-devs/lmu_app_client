@@ -38,9 +38,8 @@ class MenuDayEntry extends StatelessWidget {
         final germanArticle =
             [MensaType.mensa, MensaType.lounge].contains(mensaType) ? allLocals.diese : allLocals.dieses;
         return LmuEmptyState(
-          type: EmptyStateType.custom,
+          type: EmptyStateType.closed,
           hasVerticalPadding: true,
-          assetName: LmuAnimalAssets.caterpillar,
           title: "$mensaName ${mensaLocals.closed.toLowerCase()}",
           description: mensaLocals.closedDescription(
             mensaName,
@@ -51,7 +50,7 @@ class MenuDayEntry extends StatelessWidget {
       return LmuEmptyState(
         type: EmptyStateType.custom,
         hasVerticalPadding: true,
-        assetName: LmuAnimalAssets.kiwi,
+        assetName: "lib/assets/no_menu.webp",
         title: mensaLocals.menuNotAvailable,
         description: mensaLocals.menuNotAvailableDescription,
       );

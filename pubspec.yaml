@@ -52,6 +52,8 @@ dependencies:
     path: ./feature_modules/lectures
   people:
     path: ./feature_modules/people
+  developerdex:
+    path: ./feature_modules/developerdex
   shared_api:
     path: ./shared_api
 
@@ -81,7 +83,6 @@ flutter:
   assets:
     - .env
     - core/lib/assets/
-    - core/lib/assets/animals/
     - feature_modules/mensa/assets/
     - feature_modules/explore/assets/
   shaders:

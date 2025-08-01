@@ -1,11 +1,11 @@
-import 'package:get_it/get_it.dart';
-import 'package:widget_driver/widget_driver.dart';
+import 'package:core/components.dart';
 import 'package:core/localizations.dart';
 import 'package:core/utils.dart';
-import 'package:core/components.dart';
+import 'package:get_it/get_it.dart';
+import 'package:widget_driver/widget_driver.dart';
 
-import '../../application/usecase/get_people_usecase.dart';
 import '../../application/usecase/favorite_people_usecase.dart';
+import '../../application/usecase/get_people_usecase.dart';
 import '../../domain/model/people.dart';
 
 part 'people_details_page_driver.g.dart';
@@ -18,7 +18,6 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
 
   late int _personId;
 
-  @override
   int get personId => _personId;
 
   final _usecase = GetIt.I.get<GetPeopleUsecase>();
