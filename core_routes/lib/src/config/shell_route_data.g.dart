@@ -452,10 +452,6 @@ extension $SettingsLanguageRouteExtension on SettingsLanguageRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $SettingsAnalyticsRouteExtension on SettingsAnalyticsRoute {
-  static SettingsAnalyticsRoute _fromState(GoRouterState state) =>
-      const SettingsAnalyticsRoute();
-
 extension $SettingsNotificationsRouteExtension on SettingsNotificationsRoute {
   static SettingsNotificationsRoute _fromState(GoRouterState state) =>
       const SettingsNotificationsRoute();
@@ -509,6 +505,10 @@ extension $SettingsAccountRouteExtension on SettingsAccountRoute {
 
   void replace(BuildContext context) => context.replace(location);
 }
+
+extension $SettingsAnalyticsRouteExtension on SettingsAnalyticsRoute {
+  static SettingsAnalyticsRoute _fromState(GoRouterState state) =>
+      const SettingsAnalyticsRoute();
 
   String get location => GoRouteData.$location(
         '/home/settings/account/analytics',
