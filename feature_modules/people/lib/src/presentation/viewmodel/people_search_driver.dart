@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../application/usecase/get_people_usecase.dart';
+import '../../application/usecase/recent_searches_usecase.dart';
 import '../../domain/model/people.dart';
 
 part 'people_search_driver.g.dart';
@@ -30,13 +31,16 @@ class PeopleSearchDriver extends WidgetDriver implements _$DriverProvidedPropert
 
   final _usecase = GetIt.I.get<GetPeopleUsecase>();
   final _recentSearchController = LmuRecentSearchController<PeopleSearchEntry>();
+  final _recentSearchesUsecase = GetIt.I.get<RecentSearchesUsecase>();
 
   late LmuLocalizations _localizations;
 
-  List<People> _recentSearches = [];
-  List<People> get recentSearches => _recentSearches;
+  List<People> get recentSearches => _recentSearchesUsecase.recentSearches;
 
+  @TestDriverDefaultValue(_TestLmuRecentSearchController())
   LmuRecentSearchController<PeopleSearchEntry> get recentSearchController => _recentSearchController;
+
+
 
   List<People> get people => _usecase.data;
 
@@ -51,36 +55,43 @@ class PeopleSearchDriver extends WidgetDriver implements _$DriverProvidedPropert
           ))
       .toList();
 
-  List<PeopleSearchEntry> get recentSearchEntries => _recentSearches
+  List<PeopleSearchEntry> get recentSearchEntries => recentSearches
       .map((person) => PeopleSearchEntry(
             title: '${person.name} ${person.surname}',
             person: person,
           ))
       .toList();
 
-  List<PeopleSearchEntry> get recommendedEntries {
-    final recommended = people.take(4).toList();
-    return recommended
-        .map((person) => PeopleSearchEntry(
-              title: '${person.name} ${person.surname}',
-              person: person,
-            ))
-        .toList();
-  }
+
 
   void onPersonPressed(BuildContext context, People person) {
+    addRecentSearch(person);
     PeopleDetailsRoute(facultyId: facultyId, personId: person.id).push(context);
   }
 
   void updateRecentSearch(List<PeopleSearchEntry> recentSearchEntries) {
-    _recentSearches = recentSearchEntries.map((entry) => entry.person).toList();
-    // TODO: Save to SharedPreferences later
+    if (recentSearchEntries.isEmpty) {
+      _recentSearchesUsecase.clearRecentSearches();
+    } else {
+      for (final entry in recentSearchEntries) {
+        _recentSearchesUsecase.addRecentSearch(entry.person);
+      }
+    }
+  }
+
+  Future<void> addRecentSearch(People person) async {
+    await _recentSearchesUsecase.addRecentSearch(person);
   }
 
   @override
   void didUpdateBuildContext(BuildContext context) {
     super.didUpdateBuildContext(context);
     _localizations = context.locals;
+    _recentSearchesUsecase.addListener(_onRecentSearchesChanged);
+  }
+
+  void _onRecentSearchesChanged() {
+    notifyWidget();
   }
 
   @override
@@ -89,4 +100,8 @@ class PeopleSearchDriver extends WidgetDriver implements _$DriverProvidedPropert
   }) {
     _facultyId = newFacultyId;
   }
+}
+
+class _TestLmuRecentSearchController extends EmptyDefault implements LmuRecentSearchController<PeopleSearchEntry> {
+  const _TestLmuRecentSearchController();
 }

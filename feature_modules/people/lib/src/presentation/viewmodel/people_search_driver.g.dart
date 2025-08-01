@@ -10,7 +10,8 @@ part of 'people_search_driver.dart';
 
 // This file was generated with widget_driver_generator version "1.3.5"
 
-class _$TestPeopleSearchDriver extends TestDriver implements PeopleSearchDriver {
+class _$TestPeopleSearchDriver extends TestDriver
+    implements PeopleSearchDriver {
   @override
   int get facultyId => 0;
 
@@ -18,13 +19,14 @@ class _$TestPeopleSearchDriver extends TestDriver implements PeopleSearchDriver 
   List<People> get recentSearches => [];
 
   @override
+  LmuRecentSearchController<PeopleSearchEntry> get recentSearchController =>
+      _TestLmuRecentSearchController();
+
+  @override
   List<People> get people => [];
 
   @override
   List<People> get facultyPeople => [];
-
-  @override
-  bool get isLoading => false;
 
   @override
   String get pageTitle => ' ';
@@ -36,7 +38,9 @@ class _$TestPeopleSearchDriver extends TestDriver implements PeopleSearchDriver 
   List<PeopleSearchEntry> get recentSearchEntries => [];
 
   @override
-  List<PeopleSearchEntry> get recommendedEntries => [];
+  Future<void> reloadRecentSearches() {
+    return Future.value();
+  }
 
   @override
   void onPersonPressed(BuildContext context, People person) {}
@@ -45,19 +49,24 @@ class _$TestPeopleSearchDriver extends TestDriver implements PeopleSearchDriver 
   void updateRecentSearch(List<PeopleSearchEntry> recentSearchEntries) {}
 
   @override
-  void didInitDriver() {}
+  Future<void> loadRecentSearches() {
+    return Future.value();
+  }
+
+  @override
+  Future<void> addRecentSearch(People person) {
+    return Future.value();
+  }
 
   @override
   void didUpdateBuildContext(BuildContext context) {}
 
   @override
   void didUpdateProvidedProperties({required int newFacultyId}) {}
-
-  @override
-  void didDisposeDriver() {}
 }
 
-class $PeopleSearchDriverProvider extends WidgetDriverProvider<PeopleSearchDriver> {
+class $PeopleSearchDriverProvider
+    extends WidgetDriverProvider<PeopleSearchDriver> {
   final int _facultyId;
 
   $PeopleSearchDriverProvider({
