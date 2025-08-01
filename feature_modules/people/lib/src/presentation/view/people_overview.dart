@@ -59,8 +59,8 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        LmuTileHeadline.base(title: driver.largeTitle),
-        const SizedBox(height: LmuSizes.size_16),
+        LmuText(driver.largeTitle, color: context.colors.neutralColors.textColors.mediumColors.base),
+        const SizedBox(height: LmuSizes.size_32),
         _buildFavoritesSection(context),
         const SizedBox(height: LmuSizes.size_32),
       ],
@@ -99,7 +99,7 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ..._buildGroupedPeople(context),
-        const SizedBox(height: LmuSizes.size_24),
+        const SizedBox(height: LmuSizes.size_32),
         _buildShowAllFacultiesButton(context),
         const SizedBox(height: LmuSizes.size_96),
       ],
@@ -165,9 +165,6 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
       widgets.add(
         LmuTileHeadline.base(title: letter),
       );
-      widgets.add(
-        const SizedBox(height: LmuSizes.size_2),
-      );
 
       widgets.add(
         LmuContentTile(
@@ -181,7 +178,7 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
       );
 
       widgets.add(
-        const SizedBox(height: LmuSizes.size_16),
+        const SizedBox(height: LmuSizes.size_32),
       );
     }
 

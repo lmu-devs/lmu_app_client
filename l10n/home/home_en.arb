@@ -134,7 +134,7 @@
   "@linksFilterExternal": {
     "description": "Filter for external links"
   },
-  "linkCopiedToClipboard": "Link copied to clipboard",
+  "linkCopiedToClipboard": "Link copied",
   "@linkCopiedToClipboard": {
     "description": "Toast message for copying a link to clipboard"
   },

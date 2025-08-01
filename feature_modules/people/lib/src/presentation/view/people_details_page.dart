@@ -1,6 +1,5 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
@@ -74,9 +73,8 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
                 ),
                 const SizedBox(height: LmuSizes.size_2),
               ],
-              const SizedBox(height: LmuSizes.size_16),
+              const SizedBox(height: LmuSizes.size_32),
               LmuTileHeadline.base(title: driver.contactText),
-              const SizedBox(height: LmuSizes.size_2),
               LmuContentTile(
                 contentList: [
                   if (driver.email.isNotEmpty)

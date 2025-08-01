@@ -19,9 +19,9 @@ extension MensaTypeNameMapper on MensaType {
   Color? backgroundColor(LmuColors colors) {
     final mensaBackgroundColors = colors.customColors.backgroundColors;
     return switch (this) {
-      MensaType.mensa => mensaBackgroundColors.mensa,
-      MensaType.stuBistro => mensaBackgroundColors.stuBistro,
-      MensaType.stuCafe => mensaBackgroundColors.stuCafe,
+      MensaType.mensa => mensaBackgroundColors.green,
+      MensaType.stuBistro => mensaBackgroundColors.pink,
+      MensaType.stuCafe => mensaBackgroundColors.amber,
       MensaType.lounge => mensaBackgroundColors.stuLounge,
       MensaType.cafeBar => mensaBackgroundColors.stuLounge,
       MensaType.none => null,
