@@ -31,6 +31,8 @@ class PeopleSearchDriver extends WidgetDriver implements _$DriverProvidedPropert
   final _usecase = GetIt.I.get<GetPeopleUsecase>();
   final _recentSearchController = LmuRecentSearchController<PeopleSearchEntry>();
 
+  late LmuLocalizations _localizations;
+
   List<People> _recentSearches = [];
   List<People> get recentSearches => _recentSearches;
 
@@ -73,6 +75,12 @@ class PeopleSearchDriver extends WidgetDriver implements _$DriverProvidedPropert
   void updateRecentSearch(List<PeopleSearchEntry> recentSearchEntries) {
     _recentSearches = recentSearchEntries.map((entry) => entry.person).toList();
     // TODO: Save to SharedPreferences later
+  }
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {
+    super.didUpdateBuildContext(context);
+    _localizations = context.locals;
   }
 
   @override
