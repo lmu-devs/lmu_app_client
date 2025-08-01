@@ -83,16 +83,6 @@ class SettingsMainPage extends StatelessWidget {
                       );
                     },
                   ),
-                ],
-              ),
-              const SizedBox(height: LmuSizes.size_16),
-              LmuContentTile(
-                contentList: [
-                  LmuListItem.action(
-                    title: "Analytics",
-                    actionType: LmuListItemAction.chevron,
-                    onTap: () => const SettingsAnalyticsRoute().go(context),
-                  ),
                   LmuListItem.action(
                     title: settingLocalizations.notificationsTitle,
                     actionType: LmuListItemAction.chevron,

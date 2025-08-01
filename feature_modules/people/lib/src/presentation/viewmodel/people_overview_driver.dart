@@ -1,7 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
 import 'package:core_routes/people.dart';
-import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/studies.dart';
 import 'package:widget_driver/widget_driver.dart';

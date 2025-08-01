@@ -2,20 +2,16 @@ import 'package:flutter/material.dart';
 
 class ColorPrimitives {
   // Brand/Main Colors
-  static const Color brand10 = Color(0xFF000C02);
-  static const Color brand20 = Color(0xFF001504);
-  static const Color brand30 = Color(0xFF012D0D);
-  static const Color brand40 = Color(0xFF034618);
-  static const Color brand50 = Color(0xFF076125);
-  static const Color brand60 = Color(0xFF0B7E32);
-  static const Color brand70 = Color(0xFF12A242);
-  static const Color brand80 = Color(0xFF40AC58);
-  static const Color brand90 = Color(0xFF64BA72);
-  static const Color brand100 = Color(0xFF83C78C);
-  static const Color brand110 = Color(0xFFA0D4A6);
-  static const Color brand120 = Color(0xFFBCE0BF);
-  static const Color brand130 = Color(0xFFD8EDDA);
-  static const Color brand140 = Color(0xFFEBF6EC);
+  static const Color green10 = Color(0xFF001F07);
+  static const Color green20 = Color(0xFF004216);
+  static const Color green30 = Color(0xFF006E2A);
+  static const Color green40 = Color(0xFF009B3E);
+  static const Color green50 = Color(0xFF32BB58);
+  static const Color green60 = Color(0xFF4DCC6A);
+  static const Color green70 = Color(0xFF61DE7B);
+  static const Color green80 = Color(0xFF74F08D);
+  static const Color green90 = Color(0xFF98FFA9);
+  static const Color green100 = Color(0xFFE0FFE3);
 
   // Grayscale colors
   static const Color black = Color(0x00000000);
@@ -58,27 +54,128 @@ class ColorPrimitives {
   static const Color trspWhite82 = Color(0xD1FFFFFF);
   static const Color trspWhite95 = Color(0xF2FFFFFF);
 
-  // Error colors
-  static const Color red10 = Color(0xFF350909);
-  static const Color red20 = Color(0xFF500E0E);
-  static const Color red30 = Color(0xFF761515);
-  static const Color red40 = Color(0xFF9F1C1C);
-  static const Color red50 = Color(0xFFC92323);
-  static const Color red60 = Color(0xFFDC4E4E);
-  static const Color red70 = Color(0xFFE17979);
-  static const Color red80 = Color(0xFFE89D9D);
-  static const Color red90 = Color(0xFFEFbebe);
-  static const Color red100 = Color(0xFFF6DFDF);
+  // Transparent colored variants
+  static const Color trspGreen10 = Color(0x1A32BB58);
+  static const Color trspGreen20 = Color(0x3332BB58);
+  static const Color trspGreen30 = Color(0x4D32BB58);
+  static const Color trspGreen40 = Color(0x6632BB58);
 
-  // Warning colors
-  static const Color amber10 = Color(0xFF2B1C02);
-  static const Color amber20 = Color(0xFF432B03);
-  static const Color amber30 = Color(0xFF724905);
-  static const Color amber40 = Color(0xFFA16807);
-  static const Color amber50 = Color(0xFFD08609);
-  static const Color amber60 = Color(0xFFF5A215);
-  static const Color amber70 = Color(0xFFF7B544);
-  static const Color amber80 = Color(0xFFF9C772);
-  static const Color amber90 = Color(0xFFFBDAA1);
-  static const Color amber100 = Color(0xFFFDECD0);
+  static const Color trspRed10 = Color(0x1AFC6660);
+  static const Color trspRed20 = Color(0x33FC6660);
+  static const Color trspRed30 = Color(0x4DFC6660);
+  static const Color trspRed40 = Color(0x66FC6660);
+
+  static const Color trspAmber10 = Color(0x1AE1831E);
+  static const Color trspAmber20 = Color(0x33E1831E);
+  static const Color trspAmber30 = Color(0x4DE1831E);
+  static const Color trspAmber40 = Color(0x66E1831E);
+
+  static const Color trspBlue10 = Color(0x1A16ABE6);
+  static const Color trspBlue20 = Color(0x3316ABE6);
+  static const Color trspBlue30 = Color(0x4D16ABE6);
+  static const Color trspBlue40 = Color(0x6616ABE6);
+
+  static const Color trspPurple10 = Color(0x1AA489F3);
+  static const Color trspPurple20 = Color(0x33A489F3);
+  static const Color trspPurple30 = Color(0x4DA489F3);
+  static const Color trspPurple40 = Color(0x66A489F3);
+
+  static const Color trspPink10 = Color(0x1AE8709A);
+  static const Color trspPink20 = Color(0x33E8709A);
+  static const Color trspPink30 = Color(0x4DE8709A);
+  static const Color trspPink40 = Color(0x66E8709A);
+
+  static const Color trspTeal10 = Color(0x1A00BC97);
+  static const Color trspTeal20 = Color(0x3300BC97);
+  static const Color trspTeal30 = Color(0x4D00BC97);
+  static const Color trspTeal40 = Color(0x6600BC97);
+
+  static const Color trspLime10 = Color(0x1A8EAD04);
+  static const Color trspLime20 = Color(0x338EAD04);
+  static const Color trspLime30 = Color(0x4D8EAD04);
+  static const Color trspLime40 = Color(0x668EAD04);
+
+  // Error colors (updated from JSON)
+  static const Color red10 = Color(0xFF360003);
+  static const Color red20 = Color(0xFF6B000B);
+  static const Color red30 = Color(0xFFAC0019);
+  static const Color red40 = Color(0xFFE33438);
+  static const Color red50 = Color(0xFFFC6660);
+  static const Color red60 = Color(0xFFFF867E);
+  static const Color red70 = Color(0xFFFFA49C);
+  static const Color red80 = Color(0xFFFFBFB9);
+  static const Color red90 = Color(0xFFFFD9D5);
+  static const Color red100 = Color(0xFFFFF2F0);
+
+  // Warning colors (updated from JSON)
+  static const Color amber10 = Color(0xFF281200);
+  static const Color amber20 = Color(0xFF522A00);
+  static const Color amber30 = Color(0xFF864900);
+  static const Color amber40 = Color(0xFFBB6800);
+  static const Color amber50 = Color(0xFFE1831E);
+  static const Color amber60 = Color(0xFFF2953C);
+  static const Color amber70 = Color(0xFFFFAA5F);
+  static const Color amber80 = Color(0xFFFFC393);
+  static const Color amber90 = Color(0xFFFFDCBF);
+  static const Color amber100 = Color(0xFFFFF3E9);
+
+  // Teal colors
+  static const Color teal10 = Color(0xFF001E17);
+  static const Color teal20 = Color(0xFF004034);
+  static const Color teal30 = Color(0xFF006A57);
+  static const Color teal40 = Color(0xFF00967C);
+  static const Color teal50 = Color(0xFF00BC97);
+  static const Color teal60 = Color(0xFF00CBA8);
+  static const Color teal70 = Color(0xFF17DFB9);
+  static const Color teal80 = Color(0xFF3EF1CB);
+  static const Color teal90 = Color(0xFF7AFFDD);
+  static const Color teal100 = Color(0xFFD9FFF3);
+
+  // Purple colors
+  static const Color purple10 = Color(0xFF1E0047);
+  static const Color purple20 = Color(0xFF410088);
+  static const Color purple30 = Color(0xFF6632BF);
+  static const Color purple40 = Color(0xFF8865DF);
+  static const Color purple50 = Color(0xFFA489F3);
+  static const Color purple60 = Color(0xFFB49CFF);
+  static const Color purple70 = Color(0xFFC3B3FF);
+  static const Color purple80 = Color(0xFFD3C9FF);
+  static const Color purple90 = Color(0xFFE4DEFF);
+  static const Color purple100 = Color(0xFFF5F3FF);
+
+  // Blue colors
+  static const Color blue10 = Color(0xFF001B2B);
+  static const Color blue20 = Color(0xFF003A57);
+  static const Color blue30 = Color(0xFF00618E);
+  static const Color blue40 = Color(0xFF008AC6);
+  static const Color blue50 = Color(0xFF06A9F1);
+  static const Color blue60 = Color(0xFF3FBAFF);
+  static const Color blue70 = Color(0xFF77CAFF);
+  static const Color blue80 = Color(0xFFA1D9FF);
+  static const Color blue90 = Color(0xFFC7E8FF);
+  static const Color blue100 = Color(0xFFECF7FF);
+
+  // Pink colors
+  static const Color pink10 = Color(0xFF340017);
+  static const Color pink20 = Color(0xFF670033);
+  static const Color pink30 = Color(0xFFA60056);
+  static const Color pink40 = Color(0xFFD0467C);
+  static const Color pink50 = Color(0xFFE8709A);
+  static const Color pink60 = Color(0xFFFA83AB);
+  static const Color pink70 = Color(0xFFFF9FBD);
+  static const Color pink80 = Color(0xFFFFBCCF);
+  static const Color pink90 = Color(0xFFFFD7E2);
+  static const Color pink100 = Color(0xFFFFF1F5);
+
+  // Lime colors
+  static const Color lime10 = Color(0xFF151C00);
+  static const Color lime20 = Color(0xFF2F3C00);
+  static const Color lime30 = Color(0xFF516400);
+  static const Color lime40 = Color(0xFF738D00);
+  static const Color lime50 = Color(0xFF8EAD04);
+  static const Color lime60 = Color(0xFF9EBE31);
+  static const Color lime70 = Color(0xFFAFD047);
+  static const Color lime80 = Color(0xFFC0E25B);
+  static const Color lime90 = Color(0xFFD2F46E);
+  static const Color lime100 = Color(0xFFEBFFBE);
 }
