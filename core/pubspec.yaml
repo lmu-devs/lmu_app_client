@@ -65,7 +65,6 @@ flutter:
   generate: true
   assets:
     - lib/assets/
-    - lib/assets/animals/
   fonts:
     - family: Inter
       fonts:

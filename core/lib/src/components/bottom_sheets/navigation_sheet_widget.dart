@@ -1,11 +1,11 @@
 import 'dart:io';
 
+import 'package:core_routes/explore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_api/explore.dart';
-import 'package:core_routes/explore.dart';
 
 import '../../../api.dart';
 import '../../../components.dart';
@@ -32,8 +32,8 @@ class NavigationSheet extends StatelessWidget {
     final String googleMapsUrlIOS = 'comgooglemaps://?q=$latitude,$longitude';
     final String googleMapsUrlWeb = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
 
-    final bool isGoogleMapsInstalled = await LmuUrlLauncher.canLaunch(
-        url: Platform.isIOS ? googleMapsUrlIOS : googleMapsUrlAndroid);
+    final bool isGoogleMapsInstalled =
+        await LmuUrlLauncher.canLaunch(url: Platform.isIOS ? googleMapsUrlIOS : googleMapsUrlAndroid);
 
     final String urlToLaunch = isApple
         ? appleMapsUrl

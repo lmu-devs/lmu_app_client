@@ -4,6 +4,7 @@ import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
+import 'package:core_routes/developerdex.dart';
 import 'package:core_routes/settings.dart';
 import 'package:core_routes/studies.dart';
 import 'package:flutter/foundation.dart';
@@ -83,16 +84,6 @@ class SettingsMainPage extends StatelessWidget {
                       );
                     },
                   ),
-                ],
-              ),
-              const SizedBox(height: LmuSizes.size_16),
-              LmuContentTile(
-                contentList: [
-                  LmuListItem.action(
-                    title: "Analytics",
-                    actionType: LmuListItemAction.chevron,
-                    onTap: () => const SettingsAnalyticsRoute().go(context),
-                  ),
                   LmuListItem.action(
                     title: settingLocalizations.notificationsTitle,
                     actionType: LmuListItemAction.chevron,
@@ -113,6 +104,12 @@ class SettingsMainPage extends StatelessWidget {
                         mode: LmuUrlLauncherMode.inAppWebView,
                       );
                     },
+                  ),
+                  LmuListItem.action(
+                    title: "Developerdex",
+                    mainContentAlignment: MainContentAlignment.center,
+                    actionType: LmuListItemAction.chevron,
+                    onTap: () => const DeveloperdexMainRoute().go(context),
                   ),
                   LmuListItem.base(
                     title: settingLocalizations.contact,
@@ -178,15 +175,6 @@ class SettingsMainPage extends StatelessWidget {
                     onTap: () => const SettingsLicenceRoute().go(context),
                   ),
                 ],
-              ),
-              const SizedBox(height: LmuSizes.size_16),
-              LmuContentTile(
-                content: LmuListItem.action(
-                  title: "LMU Safari",
-                  mainContentAlignment: MainContentAlignment.center,
-                  actionType: LmuListItemAction.chevron,
-                  onTap: () => const SettingsSafariRoute().go(context),
-                ),
               ),
               const SizedBox(height: LmuSizes.size_16),
               kDebugMode

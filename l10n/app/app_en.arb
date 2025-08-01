@@ -115,7 +115,7 @@
   },
   "notificationsPermissionDialogText": "You can manage your preferences on push notifications by going to your device settings and turning notifications on or off for this app.",
   "@notificationsPermissionDialogText": {
-      "description": "Dialog text if notifications permissions get changed"
+    "description": "Dialog text if notifications permissions get changed"
   },
   "suggestFeature": "Suggest a feature",
   "@suggestFeature": {
@@ -237,11 +237,11 @@
   "@prevSearch": {
     "description": "Previous Search"
   },
-  "noSearchResults": "No results found",
+  "noSearchResults": "No search results found",
   "@noSearchResults": {
-    "description": "No results"
+    "description": "No search results"
   },
-  "noSearchResultsDescription": "Try adjusting your search terms or check your spelling.",
+  "noSearchResultsDescription": "Try adjusting your search or using different keywords.",
   "@noSearchResultsDescription": {
     "description": "Description for no search results"
   },
@@ -271,9 +271,9 @@
   "@callPhone": {
     "description": "Call Phone"
   },
-  "copiedPhone": "Phone number copied to clipboard",
+  "copiedPhone": "Phone number copied",
   "@copiedPhone": {
-    "description": "Phone number copied to clipboard"
+    "description": "Phone number copied"
   },
   "errorLaunchWebsite": "Could not launch website",
   "@errorLaunchWebsite": {

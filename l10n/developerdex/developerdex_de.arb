@@ -1,0 +1,10 @@
+{
+  "@@locale": "de",
+  "@@context": "Developerdex",
+  "developerdexTitle": "Developerdex",
+  "legendary": "Legendär",
+  "epic": "Episch",
+  "rare": "Selten",
+  "common": "Gewöhnlich",
+  "caught": "{developer} gefangen!"
+}

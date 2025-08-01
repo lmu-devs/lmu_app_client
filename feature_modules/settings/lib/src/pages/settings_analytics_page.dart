@@ -47,7 +47,7 @@ class SettingsAnalyticsPage extends StatelessWidget {
                 },
               ),
             ),
-            const SizedBox(height: LmuSizes.size_16),
+            const SizedBox(height: LmuSizes.size_8),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
               child: Column(
@@ -57,7 +57,6 @@ class SettingsAnalyticsPage extends StatelessWidget {
                     context.locals.settings.analyticsDescription,
                     color: context.colors.neutralColors.textColors.weakColors.base,
                   ),
-                  const SizedBox(height: LmuSizes.size_8),
                   Text.rich(
                     TextSpan(
                       text: context.locals.settings.analyticsLink,
@@ -68,8 +67,10 @@ class SettingsAnalyticsPage extends StatelessWidget {
                         TextSpan(
                           text: context.locals.launchFlow.dataPrivacyLabel,
                           style: LmuText.bodyXSmall('').getTextStyle(context).copyWith(
-                                color: context.colors.neutralColors.textColors.strongColors.base,
+                                color: context.colors.neutralColors.textColors.weakColors.base,
                                 fontWeight: FontWeight.w400,
+                                decoration: TextDecoration.underline,
+                                decorationColor: context.colors.neutralColors.textColors.weakColors.base,
                               ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
