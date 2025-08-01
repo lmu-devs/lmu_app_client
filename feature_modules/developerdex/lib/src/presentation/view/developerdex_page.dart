@@ -1,10 +1,11 @@
 import 'package:collection/collection.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:widget_driver/widget_driver.dart';
 
@@ -24,6 +25,27 @@ class DeveloperdexPage extends DrivableWidget<DeveloperdexPageDriver> {
       appBar: LmuAppBarData(
         largeTitle: driver.appBarTitle,
         leadingAction: LeadingAction.back,
+        largeTitleTrailingWidget: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () => LmuDialog.show(
+            context: context,
+            title: driver.infoDialogTitle,
+            description: driver.infoDialogDescription,
+            buttonActions: [
+              LmuDialogAction(
+                title: context.locals.app.ok,
+                onPressed: (dialogContext) => Navigator.of(dialogContext).pop(),
+              ),
+            ],
+          ),
+          child: const Padding(
+            padding: EdgeInsets.only(left: LmuSizes.size_16),
+            child: SizedBox(
+              height: 40,
+              child: LmuIcon(icon: LucideIcons.info, size: LmuIconSizes.medium),
+            ),
+          ),
+        ),
       ),
       slivers: [
         const SliverToBoxAdapter(child: SizedBox(height: LmuSizes.size_16)),
@@ -76,37 +98,41 @@ class DeveloperdexPage extends DrivableWidget<DeveloperdexPageDriver> {
                   LayoutBuilder(
                     builder: (context, constraints) {
                       final height = (constraints.maxWidth - LmuSizes.size_24) / 3;
-                      return Container(
-                        width: constraints.maxWidth,
-                        height: height,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(LmuSizes.size_12),
-                          color: neutralColors.backgroundColors.tile,
-                        ),
-                        child: Center(
-                          child: semesterCourse.state == SemesterState.inProgress
-                              ? LmuText.body(
-                                  "Available soon",
+                      return semesterCourse.state == SemesterState.inProgress
+                          ? Container(
+                              width: constraints.maxWidth,
+                              height: height,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(LmuSizes.size_12),
+                                color: neutralColors.backgroundColors.tile,
+                              ),
+                              child: Center(
+                                child: LmuText.body(
+                                  driver.availableSoonText,
                                   color: neutralColors.textColors.weakColors.active,
-                                )
-                              : Text.rich(
-                                  TextSpan(
-                                    text: "Apply now",
-                                    style: context.textTheme.bodySmall.copyWith(
-                                      color: neutralColors.textColors.mediumColors.base,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        LmuUrlLauncher.launchWebsite(
-                                          url: LmuDevStrings.lmuDevWebsite,
-                                          context: context,
-                                        );
-                                      },
+                                ),
+                              ),
+                            )
+                          : Column(
+                              children: [
+                                const SizedBox(height: LmuSizes.size_24),
+                                LmuText.body(
+                                  driver.joinText,
+                                  color: neutralColors.textColors.weakColors.active,
+                                ),
+                                const SizedBox(height: LmuSizes.size_12),
+                                LmuButton(
+                                  title: driver.joinButton,
+                                  emphasis: ButtonEmphasis.secondary,
+                                  onTap: () => LmuUrlLauncher.launchEmail(
+                                    email: LmuDevStrings.lmuDevContactMail,
+                                    subject: "[YOUR NAME] 🤝 ${LmuDevStrings.devTeam}]",
+                                    body: "Who are you?, Why are you interested? What kind of experience do you have? Where do you want to help? ...",
+                                    context: context,
                                   ),
                                 ),
-                        ),
-                      );
+                              ],
+                            );
                     },
                   ),
                 SliverToBoxAdapter(

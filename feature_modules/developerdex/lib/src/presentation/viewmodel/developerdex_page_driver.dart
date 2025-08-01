@@ -15,6 +15,11 @@ class DeveloperdexPageDriver extends WidgetDriver {
   late DeveloperdexLocatizations _developerdexLocatizations;
 
   String get appBarTitle => _developerdexLocatizations.developerdexTitle;
+  String get infoDialogTitle => _developerdexLocatizations.developerdexInfoDialogTitle;
+  String get infoDialogDescription => _developerdexLocatizations.developerdexInfoDialogDescription;
+  String get availableSoonText => _developerdexLocatizations.availableSoon;
+  String get joinText => _developerdexLocatizations.joinText;
+  String get joinButton => _developerdexLocatizations.joinButton;
 
   List<SemesterCourse> get semesterCourses => _semesterCourses;
 
