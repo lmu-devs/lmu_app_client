@@ -40,7 +40,7 @@ class PeopleSearchDriver extends WidgetDriver implements _$DriverProvidedPropert
 
   List<People> get facultyPeople => people.where((person) => person.facultyId == facultyId).toList();
 
-  String get pageTitle => "Suche";
+  String get pageTitle => _localizations.app.search;
 
   List<PeopleSearchEntry> get searchEntries => people
       .map((person) => PeopleSearchEntry(
