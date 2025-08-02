@@ -59,7 +59,7 @@ class DeveloperdexPage extends DrivableWidget<DeveloperdexPageDriver> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       LmuInTextVisual.text(
-                        title: semesterCourse.semester.localizedName,
+                        title: semesterCourse.semester.localizedName(context),
                         backgroundColor: context.colors.customColors.backgroundColors.pink,
                         textColor: context.colors.customColors.textColors.pink,
                       ),
@@ -126,7 +126,7 @@ class DeveloperdexPage extends DrivableWidget<DeveloperdexPageDriver> {
                                   emphasis: ButtonEmphasis.secondary,
                                   onTap: () => LmuUrlLauncher.launchEmail(
                                     email: LmuDevStrings.lmuDevContactMail,
-                                    subject: "[YOUR NAME] 🤝 ${LmuDevStrings.devTeam}]",
+                                    subject: "[YOUR NAME] 🤝 ${LmuDevStrings.devTeam}",
                                     body: "Who are you?, Why are you interested? What kind of experience do you have? Where do you want to help? ...",
                                     context: context,
                                   ),

@@ -11,7 +11,7 @@ part 'developerdex_page_driver.g.dart';
 class DeveloperdexPageDriver extends WidgetDriver {
   late final GetDeveloperdexUsecase _getDeveloperdexUsecase;
   late final List<SemesterCourse> _semesterCourses;
-  late final List<String> _seenEntries;
+  late List<String> _seenEntries;
   late DeveloperdexLocatizations _developerdexLocatizations;
 
   String get appBarTitle => _developerdexLocatizations.developerdexTitle;
