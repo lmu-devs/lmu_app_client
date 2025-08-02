@@ -77,5 +77,7 @@
   "noInternetConnection": "Keine Internetverbindung",
   "noInternetConnectionDescription": "Bitte überprüfe deine Internetverbindung und versuche es erneut.",
   "diese": "diese",
-  "dieses": "dieses"
+  "dieses": "dieses",
+  "summerCaps": "SOMMER",
+  "winterCaps": "WINTER"
 }

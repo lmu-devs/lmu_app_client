@@ -335,5 +335,13 @@
   "dieses": "this",
   "@dieses": {
     "description": "This (neuter)"
+  },
+  "summerCaps": "SUMMER",
+  "@summerCaps": {
+    "description": "Summer semester in caps"
+  },
+  "winterCaps": "WINTER",
+  "@winterCaps": {
+    "description": "Winter semester in caps"
   }
 }

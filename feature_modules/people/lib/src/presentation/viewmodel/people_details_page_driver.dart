@@ -75,7 +75,7 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
   }
 
   Future<void> onWebsiteTap(BuildContext context) async {
-    await LmuUrlLauncher.launchWebsite(url: website, context: context);
+    await LmuUrlLauncher.launchWebsite(url: website, context: context, mode: LmuUrlLauncherMode.inAppWebView);
   }
 
   Future<void> onRoomTap() async {}

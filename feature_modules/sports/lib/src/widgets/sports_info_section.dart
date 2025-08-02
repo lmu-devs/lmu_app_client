@@ -45,7 +45,11 @@ class SportsInfoSection extends StatelessWidget {
             ),
             onTap: () {
               final url = GetIt.I.get<SportsStateService>().constructUrl(_basicTicket.title);
-              LmuUrlLauncher.launchWebsite(context: context, url: url);
+              LmuUrlLauncher.launchWebsite(
+                context: context,
+                url: url,
+                mode: LmuUrlLauncherMode.inAppWebView,
+              );
             },
           ),
           LmuListItem.base(
