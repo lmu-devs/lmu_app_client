@@ -6,7 +6,6 @@ import 'package:get_it/get_it.dart';
 
 import '../bloc/wishlist_cubit.dart';
 import '../bloc/wishlist_state.dart';
-import '../util/util.dart';
 import 'widgets.dart';
 
 class WishlistEntryList extends StatelessWidget {
@@ -20,11 +19,7 @@ class WishlistEntryList extends StatelessWidget {
       builder: (context, state) {
         Widget child = const WishlistEntrySectionLoading(
           key: ValueKey("wishlistLoading"),
-          lengths: {
-            WishlistStatus.beta: 1,
-            WishlistStatus.development: 2,
-            WishlistStatus.none : 4,
-          },
+          lengths: [2, 4],
         );
 
         if (state is WishlistLoadInProgress && state.wishlistModels != null) {

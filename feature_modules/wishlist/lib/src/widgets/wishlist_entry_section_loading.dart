@@ -3,32 +3,29 @@ import 'package:core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../util/util.dart';
-
 class WishlistEntrySectionLoading extends StatelessWidget {
   const WishlistEntrySectionLoading({
     super.key,
     required this.lengths,
   });
 
-  final Map<WishlistStatus, int> lengths;
+  final List<int> lengths;
 
   @override
   Widget build(BuildContext context) {
-    final validEntries = lengths.entries.where((length) => length.value > 0).toList();
-
-    if (validEntries.isEmpty) return const SizedBox.shrink();
+    if (lengths.isEmpty) return const SizedBox.shrink();
 
     return Column(
-      children: List.generate(validEntries.length, (index) {
-        final entry = validEntries[index];
-        final isLast = index == validEntries.length - 1;
+      children: List.generate(lengths.length, (index) {
+        if (lengths[index] == 0) return const SizedBox.shrink();
 
-        return Column(
-          children: [
-            WishlistSectionSkeleton(title: entry.key.getValue(context), itemCount: entry.value),
-            if (!isLast) const SizedBox(height: LmuSizes.size_8),
-          ],
+        return Padding(
+          padding: EdgeInsets.only(
+              bottom: !(lengths.last == lengths[index])
+                  ? LmuSizes.size_8
+                  : LmuSizes.none,
+          ),
+          child: WishlistSectionSkeleton(itemCount: lengths[index]),
         );
       }),
     );
@@ -38,24 +35,22 @@ class WishlistEntrySectionLoading extends StatelessWidget {
 class WishlistSectionSkeleton extends StatelessWidget {
   const WishlistSectionSkeleton({
     super.key,
-    required this.title,
     required this.itemCount,
   });
 
-  final String title;
   final int itemCount;
 
   @override
   Widget build(BuildContext context) {
-    return LmuContentTile(
+    return LmuSkeleton(
+      child: LmuContentTile(
       crossAxisAlignment: CrossAxisAlignment.start,
       contentList: [
         Padding(
           padding: const EdgeInsets.only(top: LmuSizes.size_8, left: LmuSizes.size_12),
-          child: LmuText.bodyXSmall(title),
+          child: LmuText.bodyXSmall(BoneMock.chars(7)),
         ),
-        LmuSkeleton(
-          child: Column(
+        Column(
             children: List.generate(
               itemCount,
               (index) => LmuListItem.action(
@@ -66,8 +61,8 @@ class WishlistSectionSkeleton extends StatelessWidget {
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
