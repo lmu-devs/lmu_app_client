@@ -25,7 +25,7 @@ class PeopleModule extends AppModule with LocalDependenciesProvidingAppModule, P
     final repository = PeopleRepository(PeopleApiClient(baseApiClient));
     final getUsecase = GetPeopleUsecase(repository);
     final favoritesUsecase = FavoritePeopleUsecase(favoritesStorage);
-    final recentSearchesUsecase = RecentSearchesUsecase(recentSearchesStorage);
+    final recentSearchesUsecase = RecentSearchesUsecase(recentSearchesStorage, getUsecase);
 
     GetIt.I.registerSingleton<PeopleFavoritesStorage>(favoritesStorage);
     GetIt.I.registerSingleton<PeopleRecentSearchesStorage>(recentSearchesStorage);
