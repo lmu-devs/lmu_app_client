@@ -345,6 +345,10 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                       path: 'details',
                       factory: $PeopleDetailsRouteExtension._fromState,
                     ),
+                    GoRouteData.$route(
+                      path: 'people-search',
+                      factory: $PeopleSearchRouteExtension._fromState,
+                    ),
                   ],
                 ),
                 GoRouteData.$route(
@@ -1086,6 +1090,28 @@ extension $PeopleDetailsRouteExtension on PeopleDetailsRoute {
   Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
   void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $PeopleSearchRouteExtension on PeopleSearchRoute {
+  static PeopleSearchRoute _fromState(GoRouterState state) => PeopleSearchRoute(
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/studies/people/people-search',
+        queryParams: {
+          'faculty-id': facultyId.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
 }

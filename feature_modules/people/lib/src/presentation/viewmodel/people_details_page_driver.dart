@@ -34,7 +34,7 @@ class PeopleDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPr
   String get roomText => _localizations.people.room;
   String get consultationHoursText => _localizations.people.consultationHours;
   String get copiedEmailText => _localizations.people.copiedEmail;
-  String get copiedPhoneText => _localizations.people.copiedPhone;
+  String get copiedPhoneText => _localizations.app.copiedPhone;
   String get copiedWebsiteText => _localizations.people.copiedWebsite;
   String get addedToFavoritesText => _localizations.app.favoriteAdded;
   String get removedFromFavoritesText => _localizations.app.favoriteRemoved;

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'people_overview_driver.dart';
+part of 'people_search_driver.dart';
 
 // **************************************************************************
 // WidgetDriverGenerator
@@ -10,100 +10,86 @@ part of 'people_overview_driver.dart';
 
 // This file was generated with widget_driver_generator version "1.3.5"
 
-class _$TestPeopleOverviewDriver extends TestDriver
-    implements PeopleOverviewDriver {
+class _$TestPeopleSearchDriver extends TestDriver
+    implements PeopleSearchDriver {
   @override
   int get facultyId => 0;
 
   @override
-  bool get isProfessorFilterActive => false;
+  List<People> get recentSearches => [];
 
   @override
-  String get showAllFacultiesText => ' ';
-
-  @override
-  List<Faculty> get selectedFaculties => [];
-
-  @override
-  List<Faculty> get allFaculties => [];
-
-  @override
-  bool get isLoading => false;
-
-  @override
-  String get pageTitle => ' ';
-
-  @override
-  String get largeTitle => ' ';
+  LmuRecentSearchController<PeopleSearchEntry> get recentSearchController =>
+      _TestLmuRecentSearchController();
 
   @override
   List<People> get people => [];
 
   @override
-  List<People> get favoritePeople => [];
+  List<People> get facultyPeople => [];
 
   @override
-  List<People> get nonFavoritePeople => [];
+  String get pageTitle => ' ';
 
   @override
-  bool get hasFavorites => false;
+  List<PeopleSearchEntry> get searchEntries => [];
 
   @override
-  List<People> get filteredPeople => [];
+  List<PeopleSearchEntry> get recentSearchEntries => [];
 
   @override
-  Map<String, List<People>> get groupedPeople => {};
+  Future<void> reloadRecentSearches() {
+    return Future.value();
+  }
 
   @override
   void onPersonPressed(BuildContext context, People person) {}
 
   @override
-  void onShowAllFacultiesPressed(BuildContext context) {}
+  void updateRecentSearch(List<PeopleSearchEntry> recentSearchEntries) {}
 
   @override
-  void onSearchPressed(BuildContext context) {}
+  Future<void> loadRecentSearches() {
+    return Future.value();
+  }
 
   @override
-  void toggleProfessorFilter() {}
-
-  @override
-  void didInitDriver() {}
+  Future<void> addRecentSearch(People person) {
+    return Future.value();
+  }
 
   @override
   void didUpdateBuildContext(BuildContext context) {}
 
   @override
   void didUpdateProvidedProperties({required int newFacultyId}) {}
-
-  @override
-  void dispose() {}
 }
 
-class $PeopleOverviewDriverProvider
-    extends WidgetDriverProvider<PeopleOverviewDriver> {
+class $PeopleSearchDriverProvider
+    extends WidgetDriverProvider<PeopleSearchDriver> {
   final int _facultyId;
 
-  $PeopleOverviewDriverProvider({
+  $PeopleSearchDriverProvider({
     required int facultyId,
   }) : _facultyId = facultyId;
 
   @override
-  PeopleOverviewDriver buildDriver() {
-    return PeopleOverviewDriver(
+  PeopleSearchDriver buildDriver() {
+    return PeopleSearchDriver(
       facultyId: _facultyId,
     );
   }
 
   @override
-  PeopleOverviewDriver buildTestDriver() {
-    return _$TestPeopleOverviewDriver();
+  PeopleSearchDriver buildTestDriver() {
+    return _$TestPeopleSearchDriver();
   }
 
   @override
-  void updateDriverProvidedProperties(PeopleOverviewDriver driver) {
+  void updateDriverProvidedProperties(PeopleSearchDriver driver) {
     // In case you get a compiler error here, you have to implement _$DriverProvidedProperties in your driver.
     // Like this:
-    //  class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedProperties {
+    //  class PeopleSearchDriver extends WidgetDriver implements _$DriverProvidedProperties {
     //
     //    ...
     //
