@@ -8,73 +8,19 @@ import 'package:fuzzywuzzy/fuzzywuzzy.dart';
 
 import '../viewmodel/people_search_driver.dart';
 
-class PeopleSearchPage extends DrivableWidget<PeopleSearchDriver> {
+class PeopleSearchPage extends StatefulWidget {
   PeopleSearchPage({super.key, required this.facultyId});
 
   final int facultyId;
 
   @override
-  PeopleSearchDriver createDriver() => GetIt.I<PeopleSearchDriver>(param1: facultyId);
-
-  @override
-  Widget build(BuildContext context) {
-    return _PeopleSearchPageCustom<PeopleSearchEntry>(
-      searchEntries: driver.searchEntries,
-      recentSearchEntries: driver.recentSearchEntries,
-      recentSearchController: driver.recentSearchController,
-      onRecentSearchesUpdated: (recentSearchEntries) => driver.updateRecentSearch(recentSearchEntries),
-
-      searchEntryBuilder: (PeopleSearchEntry entry) {
-        final person = entry.person;
-        return LmuListItem.action(
-          title: '${person.name} ${person.surname}',
-          subtitle: person.title.isNotEmpty ? person.title : person.role,
-          actionType: LmuListItemAction.chevron,
-          onTap: () {
-            driver.onPersonPressed(context, person);
-            driver.recentSearchController.trigger(entry);
-          },
-        );
-      },
-    );
-  }
-
-  @override
-  WidgetDriverProvider<PeopleSearchDriver> get driverProvider => $PeopleSearchDriverProvider(facultyId: facultyId);
+  State<PeopleSearchPage> createState() => _PeopleSearchPageState();
 }
 
-class _PeopleSearchPageCustom<T extends SearchEntry> extends StatefulWidget {
-  const _PeopleSearchPageCustom({
-    required this.searchEntryBuilder,
-    required this.searchEntries,
-    this.recentSearchEntries,
-    this.onRecentSearchesUpdated,
-
-    this.maxRecentSearchEntries = 5,
-    this.recentSearchController,
-    this.searchCutoff = 60,
-  });
-
-  final Widget Function(T) searchEntryBuilder;
-  final List<T> searchEntries;
-  final List<T>? recentSearchEntries;
-  final void Function(List<T>)? onRecentSearchesUpdated;
-
-  final LmuRecentSearchController<T>? recentSearchController;
-  final int maxRecentSearchEntries;
-  final int searchCutoff;
-  
-  static const Duration animationDuration = Duration(milliseconds: 150);
-  static const EdgeInsets searchPadding = EdgeInsets.symmetric(horizontal: LmuSizes.size_16);
-  static const EdgeInsets contentPadding = EdgeInsets.only(top: LmuSizes.size_16, bottom: LmuSizes.size_96);
-
-  @override
-  State<_PeopleSearchPageCustom<T>> createState() => _PeopleSearchPageCustomState<T>();
-}
-
-class _PeopleSearchPageCustomState<T extends SearchEntry> extends State<_PeopleSearchPageCustom<T>> {
-  late ValueNotifier<List<T>> _recentSearchEntriesNotifier;
-  late ValueNotifier<List<T>> _searchEntriesNotifier;
+class _PeopleSearchPageState extends State<PeopleSearchPage> {
+  late PeopleSearchDriver _driver;
+  late ValueNotifier<List<PeopleSearchEntry>> _recentSearchEntriesNotifier;
+  late ValueNotifier<List<PeopleSearchEntry>> _searchEntriesNotifier;
   late ValueNotifier<bool> _isSearchActiveNotifier;
 
   late TextEditingController _searchController;
@@ -84,32 +30,32 @@ class _PeopleSearchPageCustomState<T extends SearchEntry> extends State<_PeopleS
   void initState() {
     super.initState();
 
-    if (widget.recentSearchController != null) {
-      widget.recentSearchController!.triggerAction = _updateRecentSearchEntries;
+    _driver = PeopleSearchDriver(facultyId: widget.facultyId);
+
+    if (_driver.recentSearchController != null) {
+      _driver.recentSearchController!.triggerAction = _updateRecentSearchEntries;
     }
 
-    _recentSearchEntriesNotifier = ValueNotifier(widget.recentSearchEntries ?? []);
+    _recentSearchEntriesNotifier = ValueNotifier(_driver.recentSearchEntries);
     _searchEntriesNotifier = ValueNotifier([]);
     _isSearchActiveNotifier = ValueNotifier(false);
 
     _searchController = TextEditingController();
     _searchFocusNode = FocusNode();
 
-
-
     _searchFocusNode.requestFocus();
   }
 
-  void _updateRecentSearchEntries(T input) {
-    final recentSearchEntries = List<T>.from(_recentSearchEntriesNotifier.value);
+  void _updateRecentSearchEntries(PeopleSearchEntry input) {
+    final recentSearchEntries = List<PeopleSearchEntry>.from(_recentSearchEntriesNotifier.value);
     if (recentSearchEntries.map((e) => e.title).contains(input.title)) {
       recentSearchEntries.removeWhere((element) => element.title == input.title);
     }
     final updatedRecentSearchEntries = [input, ...recentSearchEntries];
-    if (updatedRecentSearchEntries.length > widget.maxRecentSearchEntries) {
+    if (updatedRecentSearchEntries.length > 5) { // maxRecentSearchEntries = 5
       updatedRecentSearchEntries.removeLast();
     }
-    widget.onRecentSearchesUpdated?.call(updatedRecentSearchEntries);
+    _driver.updateRecentSearch(updatedRecentSearchEntries);
     _recentSearchEntriesNotifier.value = updatedRecentSearchEntries;
   }
 
@@ -125,13 +71,26 @@ class _PeopleSearchPageCustomState<T extends SearchEntry> extends State<_PeopleS
   void _search(String searchQuery) {
     final list = extractAllSorted(
       query: searchQuery,
-      choices: widget.searchEntries,
+      choices: _driver.searchEntries,
       getter: (obj) => obj.title,
-      cutoff: widget.searchCutoff,
+      cutoff: 60, // searchCutoff = 60
     );
 
     final results = list.map((e) => e.choice).toList();
     _searchEntriesNotifier.value = results;
+  }
+
+  Widget _buildSearchEntry(PeopleSearchEntry entry) {
+    final person = entry.person;
+    return LmuListItem.action(
+      title: '${person.name} ${person.surname}',
+      subtitle: person.title.isNotEmpty ? person.title : person.role,
+      actionType: LmuListItemAction.chevron,
+      onTap: () {
+        _driver.onPersonPressed(context, person);
+        _driver.recentSearchController.trigger(entry);
+      },
+    );
   }
 
   @override
@@ -161,7 +120,7 @@ class _PeopleSearchPageCustomState<T extends SearchEntry> extends State<_PeopleS
           delegate: SliverChildListDelegate.fixed(
             [
               Padding(
-                padding: _PeopleSearchPageCustom.searchPadding,
+                padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
                 child: ValueListenableBuilder(
                   valueListenable: _isSearchActiveNotifier,
                   builder: (context, isSearchActive, _) {
@@ -169,7 +128,7 @@ class _PeopleSearchPageCustomState<T extends SearchEntry> extends State<_PeopleS
                       valueListenable: _searchEntriesNotifier,
                       builder: (context, searchEntries, child) {
                         return AnimatedSwitcher(
-                          duration: _PeopleSearchPageCustom.animationDuration,
+                          duration: const Duration(milliseconds: 150),
                           switchInCurve: Curves.easeInOut,
                           child: searchEntries.isEmpty && !isSearchActive
                               ? child!
@@ -185,13 +144,13 @@ class _PeopleSearchPageCustomState<T extends SearchEntry> extends State<_PeopleS
                                       ),
                                     )
                                   : Padding(
-                                      padding: _PeopleSearchPageCustom.contentPadding,
+                                      padding: const EdgeInsets.only(top: LmuSizes.size_16, bottom: LmuSizes.size_96),
                                       child: Column(
                                         key: const Key("search_entries"),
                                         children: [
                                           LmuContentTile(
                                             contentList:
-                                                searchEntries.map((input) => widget.searchEntryBuilder(input)).toList(),
+                                                searchEntries.map((input) => _buildSearchEntry(input)).toList(),
                                           ),
                                         ],
                                       ),
@@ -199,7 +158,7 @@ class _PeopleSearchPageCustomState<T extends SearchEntry> extends State<_PeopleS
                         );
                       },
                       child: Padding(
-                        padding: _PeopleSearchPageCustom.contentPadding,
+                        padding: const EdgeInsets.only(top: LmuSizes.size_16, bottom: LmuSizes.size_96),
                         child: Column(
                           key: const Key("recent_searches"),
                           children: [
@@ -213,14 +172,14 @@ class _PeopleSearchPageCustomState<T extends SearchEntry> extends State<_PeopleS
                                       title: appLocals.prevSearch,
                                       actionTitle: appLocals.clear,
                                       onActionTap: () {
-                                        widget.onRecentSearchesUpdated?.call([]);
+                                        _driver.updateRecentSearch([]);
                                         _recentSearchEntriesNotifier.value = [];
                                       },
                                     ),
                                     LmuContentTile(
                                       contentList: recentSearchEntries
                                           .map(
-                                            (input) => widget.searchEntryBuilder(input),
+                                            (input) => _buildSearchEntry(input),
                                           )
                                           .toList(),
                                     ),
