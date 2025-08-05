@@ -24,8 +24,8 @@ class LectureListPageDriver extends WidgetDriver implements _$DriverProvidedProp
   final _favoritesUsecase = GetIt.I.get<FavoriteLecturesUsecase>();
   final _facultiesApi = GetIt.I.get<FacultiesApi>();
 
-  late LmuLocalizations _localizations;
-  late LmuToast _toast;
+  LmuLocalizations? _localizations;
+  LmuToast? _toast;
 
   @override
   void didInitDriver() {
@@ -128,8 +128,8 @@ class LectureListPageDriver extends WidgetDriver implements _$DriverProvidedProp
   void onLectureFavoriteToggle(String lectureId) {
     _favoritesUsecase.toggleFavorite(lectureId);
     _showToast(_favoritesUsecase.isFavorite(lectureId)
-        ? _localizations.lectures.addFavorite
-        : _localizations.lectures.removeFavorite);
+        ? _localizations?.lectures.addFavorite ?? 'Added to favorites'
+        : _localizations?.lectures.removeFavorite ?? 'Removed from favorites');
   }
 
   void onFavoritesFilterToggle() {
@@ -150,17 +150,17 @@ class LectureListPageDriver extends WidgetDriver implements _$DriverProvidedProp
 
   // Toast helpers
   void _showToast(String message) {
-    _toast.showToast(
+    _toast?.showToast(
       message: message,
       type: ToastType.base,
     );
   }
 
   void _showErrorToast() {
-    _toast.showToast(
-      message: _localizations.app.somethingWentWrong,
+    _toast?.showToast(
+      message: _localizations?.app.somethingWentWrong ?? 'Something went wrong',
       type: ToastType.error,
-      actionText: _localizations.app.tryAgain,
+      actionText: _localizations?.app.tryAgain ?? 'Try again',
       onActionPressed: () => _usecase.load(),
     );
   }

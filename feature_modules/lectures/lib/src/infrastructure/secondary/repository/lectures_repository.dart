@@ -79,6 +79,12 @@ class LecturesRepository implements LecturesRepositoryInterface {
         return ['VL', '8 SWS', 'Master', 'English'];
       case 'data structures & algorithms':
         return ['VL', '6 SWS', 'Bachelor', 'German'];
+      case 'software engineering':
+        return ['VL', '7 SWS', 'Master', 'English'];
+      case 'database systems':
+        return ['VL', '5 SWS', 'Bachelor', 'German'];
+      case 'computer networks':
+        return ['VL', '6 SWS', 'Master', 'English'];
       default:
         return ['VL', '6 SWS', 'Master', 'English'];
     }

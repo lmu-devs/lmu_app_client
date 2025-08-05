@@ -131,7 +131,7 @@ class _LectureDetailPageState extends State<LectureDetailPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Course metadata tags
-          _buildCourseTags(lecture),
+          _buildCourseTags(lecture, driver),
           const SizedBox(height: LmuSizes.size_32),
 
           // Action buttons row
@@ -191,7 +191,7 @@ class _LectureDetailPageState extends State<LectureDetailPage> {
           const SizedBox(height: LmuSizes.size_24),
 
           // Schedule and location card
-          _buildScheduleCard(lecture, locals),
+          _buildScheduleCard(lecture, locals, driver),
           const SizedBox(height: LmuSizes.size_24),
 
           // Expandable sections
@@ -219,15 +219,16 @@ class _LectureDetailPageState extends State<LectureDetailPage> {
           LmuContentTile(
             contentList: [
               LmuListItem.base(
-                title: '(39)',
+                title: '(${driver.totalRatings})',
                 leadingArea: Row(
                   children: [
-                    LmuText.body('3,8'),
+                    LmuText.body(driver.overallRating.toStringAsFixed(1).replaceAll('.', ',')),
                     const SizedBox(width: LmuSizes.size_8),
                     Row(
                       children: List.generate(5, (index) {
-                        if (index < 3) return StarIcon(isActive: true, size: 20);
-                        if (index == 3) return StarIcon(isActive: true, size: 20);
+                        final rating = driver.overallRating;
+                        if (index < rating.floor()) return StarIcon(isActive: true, size: 20);
+                        if (index == rating.floor() && rating % 1 > 0) return StarIcon(isActive: true, size: 20);
                         return StarIcon(isActive: false, size: 20);
                       }),
                     ),
@@ -244,31 +245,33 @@ class _LectureDetailPageState extends State<LectureDetailPage> {
                 },
               ),
               // Individual rating items (only show when expanded)
-              if (_isRatingsExpanded) ...[
+              if (_isRatingsExpanded && driver.ratingCategories != null) ...[
                 const SizedBox(height: LmuSizes.size_16),
                 LmuListItem.base(
                   subtitle: locals.ratingsExplanation,
-                  trailingTitle: '3,2',
+                  trailingTitle:
+                      driver.ratingCategories!['explanation']?.toStringAsFixed(1).replaceAll('.', ',') ?? '3,2',
                   trailingArea: StarIcon(isActive: false, size: 20),
                 ),
                 LmuListItem.base(
                   subtitle: locals.ratingsMaterials,
-                  trailingTitle: '3,8',
+                  trailingTitle:
+                      driver.ratingCategories!['materials']?.toStringAsFixed(1).replaceAll('.', ',') ?? '3,8',
                   trailingArea: StarIcon(isActive: false, size: 20),
                 ),
                 LmuListItem.base(
                   subtitle: locals.ratingsEffort,
-                  trailingTitle: '2,2',
+                  trailingTitle: driver.ratingCategories!['effort']?.toStringAsFixed(1).replaceAll('.', ',') ?? '2,2',
                   trailingArea: StarIcon(isActive: false, size: 20),
                 ),
                 LmuListItem.base(
                   subtitle: locals.ratingsTeacher,
-                  trailingTitle: '4,1',
+                  trailingTitle: driver.ratingCategories!['teacher']?.toStringAsFixed(1).replaceAll('.', ',') ?? '4,1',
                   trailingArea: StarIcon(isActive: false, size: 20),
                 ),
                 LmuListItem.base(
                   subtitle: locals.ratingsExam,
-                  trailingTitle: '1,2',
+                  trailingTitle: driver.ratingCategories!['exam']?.toStringAsFixed(1).replaceAll('.', ',') ?? '1,2',
                   trailingArea: StarIcon(isActive: false, size: 20),
                 ),
               ],
@@ -290,17 +293,24 @@ class _LectureDetailPageState extends State<LectureDetailPage> {
     );
   }
 
-  Widget _buildCourseTags(dynamic lecture) {
-    final tags = _getTagsForCourse(lecture.title);
+  Widget _buildCourseTags(dynamic lecture, LectureDetailPageDriver driver) {
+    final tags = _getTagsForCourse(lecture.title, driver);
     return LmuText.body(
       tags.join(' • '),
       color: Colors.grey,
     );
   }
 
-  List<String> _getTagsForCourse(String courseName) {
-    // TODO: Remove mock tags when server provides real tags
-    // Mock tags based on course metadata for testing
+  List<String> _getTagsForCourse(String courseName, LectureDetailPageDriver driver) {
+    // Use API data if available, otherwise fall back to hardcoded tags
+    if (driver.hasCourseDetails) {
+      final language = driver.courseLanguage;
+      final credits = driver.lecture?.credits ?? 6;
+      final degree = courseName.toLowerCase().contains('data structures') ? 'Bachelor' : 'Master';
+      return ['VL', '$credits SWS', degree, language];
+    }
+
+    // Fallback to hardcoded tags
     switch (courseName.toLowerCase()) {
       case 'natural computing':
         return ['VL', '6 SWS', 'Master', 'English'];
@@ -313,28 +323,28 @@ class _LectureDetailPageState extends State<LectureDetailPage> {
     }
   }
 
-  Widget _buildScheduleCard(dynamic lecture, LecturesLocatizations locals) {
+  Widget _buildScheduleCard(dynamic lecture, LecturesLocatizations locals, LectureDetailPageDriver driver) {
     return LmuContentTile(
       contentList: [
         LmuListItem.base(
           subtitle: locals.scheduleTime,
-          trailingTitle: 'wöchtl., Mo, 16:15-17:45',
+          trailingTitle: driver.scheduleTime,
           maximizeTrailingTitleArea: true,
         ),
         LmuListItem.base(
           subtitle: locals.scheduleDuration,
-          trailingTitle: '12.05.2025 - 23.07.2025',
+          trailingTitle: driver.scheduleDuration,
           maximizeTrailingTitleArea: true,
         ),
         LmuListItem.base(
           subtitle: locals.scheduleAddress,
-          trailingTitle: 'Luisenstr. 37 (C)',
+          trailingTitle: driver.scheduleAddress,
           maximizeTrailingTitleArea: true,
           trailingArea: Icon(LucideIcons.map, size: 20),
         ),
         LmuListItem.base(
           subtitle: locals.scheduleRoom,
-          trailingTitle: 'C 006',
+          trailingTitle: driver.scheduleRoom,
           maximizeTrailingTitleArea: true,
           trailingArea: Icon(LucideIcons.external_link, size: 20),
         ),
