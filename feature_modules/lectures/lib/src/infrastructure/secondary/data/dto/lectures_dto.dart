@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../../domain/model/lectures.dart';
+import '../../../../domain/model/lecture.dart';
 
 part 'lectures_dto.g.dart';
 
@@ -17,10 +17,18 @@ class LecturesDto extends Equatable {
   final String id;
   final String name;
 
-  Lectures toDomain() => Lectures(
+  // Convert single DTO to single domain object
+  Lecture toDomain() => Lecture(
         id: id,
-        name: name,
+        title: name,
+        tags: [],
+        facultyId: 0, // Default faculty ID, should be updated when real API is implemented
       );
+
+  // Convert list of DTOs to list of domain objects
+  static List<Lecture> toDomainList(List<LecturesDto> dtos) {
+    return dtos.map((dto) => dto.toDomain()).toList();
+  }
 
   Map<String, dynamic> toJson() => _$LecturesDtoToJson(this);
 

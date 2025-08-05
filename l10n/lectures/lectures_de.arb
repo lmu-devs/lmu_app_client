@@ -9,5 +9,11 @@
   "winterSemester": "Winter",
   "summerSemester": "Sommer",
   "myStudy": "Mein Studium",
-  "coursesCount": "Kurse"
+  "coursesCount": "Kurse",
+  "loading": "Lädt...",
+  "lectureNotFound": "Vorlesung nicht gefunden",
+  "noLecturesFound": "Keine Vorlesungen gefunden",
+  "errorLoadingLectures": "Fehler beim Laden der Vorlesungen",
+  "retry": "Wiederholen",
+  "selectSemester": "Semester auswählen"
 }

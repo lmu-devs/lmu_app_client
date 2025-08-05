@@ -9,5 +9,11 @@
   "winterSemester": "Winter",
   "summerSemester": "Summer",
   "myStudy": "My Study",
-  "coursesCount": "courses"
+  "coursesCount": "courses",
+  "loading": "Loading...",
+  "lectureNotFound": "Lecture not found",
+  "noLecturesFound": "No lectures found",
+  "errorLoadingLectures": "Error loading lectures",
+  "retry": "Retry",
+  "selectSemester": "Select Semester"
 }

@@ -1,147 +1,136 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../../bloc/lecture_list_cubit/lecture_list_cubit.dart';
-import '../../domain/model/lecture.dart';
-import '../component/lectures_card.dart';
+import '../../application/usecase/favorite_lectures_usecase.dart';
+import '../component/lecture_card.dart';
 import '../viewmodel/lecture_list_page_driver.dart';
 
 class LectureListPage extends DrivableWidget<LectureListPageDriver> {
   LectureListPage({
     super.key,
     required this.facultyId,
-    required this.facultyName,
   });
 
-  final String facultyId;
-  final String facultyName;
+  final int facultyId;
 
   @override
   Widget build(BuildContext context) {
-    return _buildContent(context, driver);
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: driver.facultyName,
+        leadingAction: LeadingAction.back,
+      ),
+      body: _buildBody(context),
+    );
   }
 
   @override
-  WidgetDriverProvider<LectureListPageDriver> get driverProvider =>
-      _LectureListPageDriverProvider(facultyId, facultyName);
+  WidgetDriverProvider<LectureListPageDriver> get driverProvider => _LectureListPageDriverProvider(facultyId);
 
-  Widget _buildContent(BuildContext context, LectureListPageDriver driver) {
+  Widget _buildBody(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+      child: LmuPageAnimationWrapper(
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: _buildContent(context),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
     if (driver.isLoading) {
-      return LmuScaffold(
-        appBar: LmuAppBarData(largeTitle: 'Loading...'),
-        body: Center(child: CircularProgressIndicator()),
-      );
+      return Center(child: CircularProgressIndicator());
     }
 
     if (driver.hasError) {
-      return LmuScaffold(
-        appBar: LmuAppBarData(largeTitle: 'Error'),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Error loading lectures'),
-              ElevatedButton(
-                onPressed: driver.retry,
-                child: Text('Retry'),
-              ),
-            ],
-          ),
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(context.locals.lectures.errorLoadingLectures),
+            ElevatedButton(
+              onPressed: driver.retry,
+              child: Text(context.locals.lectures.retry),
+            ),
+          ],
         ),
       );
     }
 
-    final title = facultyName.isNotEmpty ? facultyName : 'Faculty Lectures';
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: LmuSizes.size_16),
+        _buildHeaderRow(context),
+        const SizedBox(height: LmuSizes.size_32),
+        _buildLectureCountRow(context),
+        const SizedBox(height: LmuSizes.size_32),
+        ..._buildGroupedLectureCards(context, driver),
+        const SizedBox(height: LmuSizes.size_96),
+      ],
+    );
+  }
 
+  Widget _buildHeaderRow(BuildContext context) {
+    return Row(
+      children: [
+        // Search button
+        LmuIconButton(
+          icon: LucideIcons.search,
+          onPressed: () {
+            // TODO: implement search functionality
+          },
+        ),
+        const SizedBox(width: LmuSizes.size_8),
+        // Favorites filter button
+        LmuIconButton(
+          icon: LucideIcons.star,
+          onPressed: driver.onFavoritesFilterToggle,
+        ),
+        const SizedBox(width: LmuSizes.size_8),
+        // Semester dropdown button
+        LmuButton(
+          title: 'Winter 24/25',
+          emphasis: ButtonEmphasis.secondary,
+          trailingIcon: Icons.keyboard_arrow_down,
+          onTap: () => _showSemesterDropdown(context),
+        ),
+        const SizedBox(width: LmuSizes.size_8),
+        // My Study button
+        LmuButton(
+          title: context.locals.lectures.myStudy,
+          emphasis: ButtonEmphasis.secondary,
+          onTap: driver.onMyStudyPressed,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLectureCountRow(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: LmuSizes.size_16),
-      child: LmuScaffold(
-        appBar: LmuAppBarData(
-          largeTitle: title,
-          leadingAction: LeadingAction.back,
-          trailingWidgets: [
-            // Faculty favorite icon in top right corner
-            GestureDetector(
-              onTap: driver.onFacultyFavoriteToggle,
-              child: Padding(
-                padding: const EdgeInsets.all(LmuSizes.size_4),
-                child: StarIcon(
-                  isActive: driver.isFacultyFavorite,
-                  disabledColor: context.colors.neutralColors.backgroundColors.mediumColors.active,
-                ),
-              ),
-            ),
-          ],
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(LmuSizes.size_16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header row: search, favorites filter, dropdown, my study
-              Row(
-                children: [
-                  // Search button
-                  LmuIconButton(
-                    icon: LucideIcons.search,
-                    onPressed: () {
-                      // TODO: implement search functionality
-                    },
-                  ),
-                  const SizedBox(width: LmuSizes.size_8),
-                  // Favorites filter button
-                  LmuIconButton(
-                    icon: LucideIcons.star,
-                    onPressed: driver.onFavoritesFilterToggle,
-                  ),
-                  const SizedBox(width: LmuSizes.size_8),
-                  // Semester dropdown button
-                  LmuButton(
-                    title: driver.selectedSemester,
-                    emphasis: ButtonEmphasis.secondary,
-                    trailingIcon: Icons.keyboard_arrow_down,
-                    onTap: () => _showSemesterDropdown(context),
-                  ),
-                  const SizedBox(width: LmuSizes.size_8),
-                  // My Study button
-                  LmuButton(
-                    title: 'My Study', // TODO: use context.locals.lectures.myStudy
-                    emphasis: ButtonEmphasis.secondary,
-                    onTap: driver.onMyStudyPressed,
-                  ),
-                ],
-              ),
-              const SizedBox(height: LmuSizes.size_32),
-              // Headline: number of courses with sort button
-              Padding(
-                padding: const EdgeInsets.only(bottom: 14.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.baseline,
-                  textBaseline: TextBaseline.alphabetic,
-                  children: [
-                    Text(
-                      '${driver.lectureCount} Kurse', // TODO: use context.locals.lectures.coursesCount
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    // Sort button aligned to the right
-                    LmuIconButton(
-                      icon: LucideIcons.arrow_up_down,
-                      onPressed: driver.onSortPressed,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: LmuSizes.size_32),
-              // Alphabetic grouping and sorting of lectures
-              ..._buildGroupedLectureCards(context, driver),
-            ],
+      padding: const EdgeInsets.only(bottom: 14.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.baseline,
+        textBaseline: TextBaseline.alphabetic,
+        children: [
+          LmuText.body(
+            '${driver.lectureCount} ${context.locals.lectures.coursesCount}',
           ),
-        ),
+          // Sort button aligned to the right
+          LmuIconButton(
+            icon: LucideIcons.arrow_up_down,
+            onPressed: driver.onSortPressed,
+          ),
+        ],
       ),
     );
   }
@@ -154,11 +143,11 @@ class LectureListPage extends DrivableWidget<LectureListPageDriver> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            LmuText.h3('Select Semester'),
+            LmuText.h3(context.locals.lectures.selectSemester),
             const SizedBox(height: LmuSizes.size_16),
             // Current semester
             LmuButton(
-              title: 'Winter 24/25', // TODO: use context.locals.lectures.winterSemester
+              title: context.locals.lectures.winterSemester + ' 24/25',
               emphasis: ButtonEmphasis.primary,
               onTap: () {
                 Navigator.pop(context);
@@ -168,7 +157,7 @@ class LectureListPage extends DrivableWidget<LectureListPageDriver> {
             const SizedBox(height: LmuSizes.size_8),
             // Previous semesters
             LmuButton(
-              title: 'Summer 24', // TODO: use context.locals.lectures.summerSemester
+              title: context.locals.lectures.summerSemester + ' 24',
               emphasis: ButtonEmphasis.secondary,
               onTap: () {
                 Navigator.pop(context);
@@ -177,7 +166,7 @@ class LectureListPage extends DrivableWidget<LectureListPageDriver> {
             ),
             const SizedBox(height: LmuSizes.size_8),
             LmuButton(
-              title: 'Winter 23/24', // TODO: use context.locals.lectures.winterSemester
+              title: context.locals.lectures.winterSemester + ' 23/24',
               emphasis: ButtonEmphasis.secondary,
               onTap: () {
                 Navigator.pop(context);
@@ -193,93 +182,97 @@ class LectureListPage extends DrivableWidget<LectureListPageDriver> {
 
 List<Widget> _buildGroupedLectureCards(BuildContext context, LectureListPageDriver driver) {
   // Get lectures from driver
-  final lectures = driver.groupedLectures;
+  final lectures = driver.filteredLectures;
 
   if (lectures.isEmpty) {
     return [
-      Center(
-        child: Text('No lectures found'),
-      ),
+      _buildEmptyState(context),
     ];
   }
 
-  // Group by first letter
-  Map<String, List<Lecture>> grouped = {};
-  for (var lecture in lectures) {
-    final letter = lecture.title[0].toUpperCase();
-    grouped.putIfAbsent(letter, () => []).add(lecture);
-  }
+  // Use driver's grouped lectures
+  final groupedLectures = driver.groupedLectures;
+  final List<Widget> widgets = [];
 
-  // Build widgets
-  List<Widget> widgets = [];
-  final groupEntries = grouped.entries.toList();
-
-  for (int groupIndex = 0; groupIndex < groupEntries.length; groupIndex++) {
-    final entry = groupEntries[groupIndex];
+  for (final entry in groupedLectures.entries) {
     final letter = entry.key;
-    final lectures = entry.value;
+    final lecturesInGroup = entry.value;
 
-    // Add 32px spacing before each letter (except the first one)
-    if (groupIndex > 0) {
-      widgets.add(const SizedBox(height: LmuSizes.size_32));
-    }
-
-    // Add letter with built-in bottom padding (12px)
     widgets.add(
       LmuTileHeadline.base(title: letter),
     );
+    widgets.add(
+      const SizedBox(height: LmuSizes.size_2),
+    );
 
-    // Add lecture cards
-    for (int i = 0; i < lectures.length; i++) {
-      final lecture = lectures[i];
-      widgets.add(LecturesCard(
-        id: lecture.id,
-        title: lecture.title,
-        tags: lecture.tags,
-        isFavorite: lecture.isFavorite,
-        onTap: () {
-          // TODO: Navigate to lecture details
-          driver.onLectureCardPressed(context, lecture.id, lecture.title);
-        },
-        onFavoriteTap: () {
-          // TODO: Toggle favorite state
-          driver.onLectureFavoriteToggle(lecture.id, lecture.isFavorite);
-        },
-      ));
+    widgets.add(
+      ValueListenableBuilder<Set<String>>(
+        valueListenable: GetIt.I<FavoriteLecturesUsecase>().favoriteIdsNotifier,
+        builder: (context, favoriteIds, _) {
+          return Column(
+            children: lecturesInGroup.asMap().entries.map((entry) {
+              final index = entry.key;
+              final lecture = entry.value;
+              final isFavorite = favoriteIds.contains(lecture.id);
 
-      // Add 8px spacing between lecture cards (except after the last one in a group)
-      if (i < lectures.length - 1) {
-        widgets.add(const SizedBox(height: LmuSizes.size_8));
-      }
-    }
+              return Column(
+                children: [
+                  LectureCard(
+                    id: lecture.id,
+                    title: lecture.title,
+                    tags: lecture.tags,
+                    isFavorite: isFavorite,
+                    onTap: () {
+                      driver.onLectureCardPressed(context, lecture.id, lecture.title);
+                    },
+                    onFavoriteTap: () {
+                      driver.onLectureFavoriteToggle(lecture.id);
+                    },
+                  ),
+                  if (index < lecturesInGroup.length - 1) const SizedBox(height: LmuSizes.size_8),
+                ],
+              );
+            }).toList(),
+          );
+        },
+      ),
+    );
+
+    widgets.add(
+      const SizedBox(height: LmuSizes.size_32),
+    );
   }
 
   return widgets;
 }
 
-class _LectureListPageDriverProvider extends WidgetDriverProvider<LectureListPageDriver> {
-  _LectureListPageDriverProvider(this.facultyId, this.facultyName);
+Widget _buildEmptyState(BuildContext context) {
+  final placeholderTextColor = context.colors.neutralColors.textColors.mediumColors.base;
 
-  final String facultyId;
-  final String facultyName;
+  return PlaceholderTile(
+    minHeight: 56,
+    content: [
+      LmuText.bodySmall(context.locals.lectures.noLecturesFound, color: placeholderTextColor),
+    ],
+  );
+}
+
+class _LectureListPageDriverProvider extends WidgetDriverProvider<LectureListPageDriver> {
+  _LectureListPageDriverProvider(this.facultyId);
+
+  final int facultyId;
 
   @override
   LectureListPageDriver buildDriver() {
-    final cubit = LectureListCubit(facultyId: facultyId);
     return LectureListPageDriver(
       facultyId: facultyId,
-      facultyName: facultyName,
-      cubit: cubit,
     );
   }
 
   @override
   LectureListPageDriver buildTestDriver() {
-    final cubit = LectureListCubit(facultyId: 'test');
     return LectureListPageDriver(
-      facultyId: 'test',
-      facultyName: 'test',
-      cubit: cubit,
+      facultyId: 1,
     );
   }
 }

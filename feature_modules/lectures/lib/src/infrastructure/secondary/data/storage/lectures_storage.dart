@@ -6,6 +6,7 @@ import '../dto/lectures_dto.dart';
 
 class LecturesStorage {
   final _lecturesKey = 'lectures_data_key';
+  final _favoriteLectureIdsKey = 'favorite_lecture_ids_key';
 
   Future<void> saveLectures(LecturesDto lectures) async {
     final prefs = await SharedPreferences.getInstance();
@@ -23,5 +24,15 @@ class LecturesStorage {
   Future<void> deleteLectures() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(_lecturesKey);
+  }
+
+  Future<void> saveFavoriteLectureIds(List<String> favoriteIds) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(_favoriteLectureIdsKey, favoriteIds);
+  }
+
+  Future<List<String>> getFavoriteLectureIds() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList(_favoriteLectureIdsKey) ?? [];
   }
 }

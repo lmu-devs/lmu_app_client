@@ -1,8 +1,8 @@
 import 'package:core/components.dart';
 import 'package:flutter/material.dart';
 
-class LecturesCard extends StatelessWidget {
-  const LecturesCard({
+class LectureCard extends StatelessWidget {
+  const LectureCard({
     super.key,
     required this.id,
     required this.title,

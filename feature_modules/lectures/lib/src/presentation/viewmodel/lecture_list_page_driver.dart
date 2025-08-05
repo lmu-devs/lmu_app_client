@@ -1,177 +1,99 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:core_routes/lectures.dart';
+import 'package:get_it/get_it.dart';
+import 'package:shared_api/studies.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../../bloc/lecture_list_cubit/lecture_list_cubit.dart';
-import '../../bloc/lecture_list_cubit/lecture_list_state.dart';
+import '../../application/usecase/favorite_lectures_usecase.dart';
+import '../../application/usecase/get_lectures_usecase.dart';
 import '../../domain/model/lecture.dart';
 
-class LectureListPageDriver extends WidgetDriver {
-  LectureListPageDriver({
-    required this.facultyId,
-    required this.facultyName,
-    required this.cubit,
-  }) {
-    if (kDebugMode) {
-      debugPrint('LectureListPageDriver constructor: facultyId = "$facultyId"');
-      debugPrint('LectureListPageDriver constructor: facultyName = "$facultyName"');
-    }
-  }
+part 'lecture_list_page_driver.g.dart';
 
-  final String facultyId;
-  final String facultyName;
-  final LectureListCubit cubit;
+@GenerateTestDriver()
+class LectureListPageDriver extends WidgetDriver implements _$DriverProvidedProperties {
+  LectureListPageDriver({
+    @driverProvidableProperty required int facultyId,
+  }) : _facultyId = facultyId;
+
+  late int _facultyId;
+  int get facultyId => _facultyId;
+
+  final _usecase = GetIt.I.get<GetLecturesUsecase>();
+  final _favoritesUsecase = GetIt.I.get<FavoriteLecturesUsecase>();
+  final _facultiesApi = GetIt.I.get<FacultiesApi>();
 
   late LmuLocalizations _localizations;
   late LmuToast _toast;
 
-  // Getters for UI
-  String get displayFacultyName {
-    final result = facultyName.isNotEmpty ? facultyName : 'Lectures';
-    if (kDebugMode) {
-      debugPrint('LectureListPageDriver.displayFacultyName: facultyName = "$facultyName", result = "$result"');
-    }
-    return result;
+  // Faculty information
+  String get facultyName {
+    final faculty = _facultiesApi.allFaculties.firstWhere((f) => f.id == _facultyId);
+    return faculty.name;
   }
 
-  bool get isFacultyFavorite => cubit.isFacultyFavorite;
-  bool get showOnlyFavorites => cubit.showOnlyFavorites;
-  String get selectedSemester => cubit.selectedSemester;
-  int get lectureCount => cubit.lectureCount;
-  bool get isLoading => cubit.state is LectureListLoadInProgress;
-  bool get hasError => cubit.state is LectureListLoadFailure;
+  // State management
+  bool get isLoading => _usecase.loadState == LecturesLoadState.loading;
+  bool get hasError => _usecase.loadState == LecturesLoadState.error;
+  bool get hasData => _usecase.data.isNotEmpty;
 
-  // Data methods
-  List<Lecture> get lectures => cubit.lectures;
-  List<Lecture> get filteredLectures => cubit.filteredLectures;
-  List<Lecture> get groupedLectures => cubit.groupedLectures;
+  // Data
+  List<Lecture> get lectures => _usecase.filteredLectures;
+  List<Lecture> get favoriteLectures => _usecase.favoriteLectures;
+  List<Lecture> get nonFavoriteLectures => _usecase.nonFavoriteLectures;
 
-  // Actions
-  void onFacultyFavoriteToggle() {
-    try {
-      cubit.toggleFacultyFavorite();
-      _showToast(cubit.isFacultyFavorite ? 'Faculty added to favorites' : 'Faculty removed from favorites');
-    } catch (e) {
-      _showErrorToast('Failed to update faculty favorite status');
+  // Filtered data for display
+  List<Lecture> get filteredLectures {
+    if (_usecase.showOnlyFavorites) {
+      return favoriteLectures;
     }
+    return lectures;
   }
 
-  void onFavoritesFilterToggle() {
-    try {
-      cubit.toggleFavoritesFilter();
-      _showToast(cubit.showOnlyFavorites ? 'Showing only favorites' : 'Showing all courses');
-    } catch (e) {
-      _showErrorToast('Failed to update favorites filter');
-    }
-  }
+  int get lectureCount => filteredLectures.length;
 
-  void onSemesterChanged(String semester) {
-    try {
-      cubit.setSemester(semester);
-      _showToast('Semester changed to $semester');
-    } catch (e) {
-      _showErrorToast('Failed to change semester');
-    }
-  }
+  // Grouped lectures for display
+  Map<String, List<Lecture>> get groupedLectures {
+    final grouped = <String, List<Lecture>>{};
 
-  void onLectureCardPressed(BuildContext context, String lectureId, String lectureTitle) {
-    try {
-      context.push('/studies/lectures/lecture-detail', extra: {
-        'lectureId': lectureId,
-        'lectureTitle': lectureTitle,
-      });
-    } catch (e) {
-      _showErrorToast('Failed to open lecture details');
-    }
-  }
-
-  void onLectureFavoriteToggle(String lectureId, bool isFavorite) {
-    try {
-      cubit.toggleLectureFavorite(lectureId);
-      _showToast(isFavorite ? 'Removed from favorites' : 'Added to favorites');
-    } catch (e) {
-      _showErrorToast('Failed to update favorite status');
-    }
-  }
-
-  void onSearchPressed() {
-    try {
-      _showToast('Search functionality coming soon');
-    } catch (e) {
-      _showErrorToast('Search functionality temporarily unavailable');
-    }
-  }
-
-  void onSortPressed() {
-    try {
-      _showToast('Sort functionality coming soon');
-    } catch (e) {
-      _showErrorToast('Sort functionality temporarily unavailable');
-    }
-  }
-
-  void onMyStudyPressed() {
-    try {
-      _showToast('My Study functionality coming soon');
-    } catch (e) {
-      _showErrorToast('My Study functionality temporarily unavailable');
-    }
-  }
-
-  void retry() {
-    try {
-      cubit.loadLectures();
-    } catch (e) {
-      _showErrorToast('Failed to retry loading');
-    }
-  }
-
-  void _showToast(String message) {
-    try {
-      _toast.showToast(
-        message: message,
-        type: ToastType.success,
-        duration: const Duration(seconds: 1),
-      );
-    } catch (e) {
-      // Fallback to console log if toast fails
-      if (kDebugMode) {
-        debugPrint('Toast failed: $message');
+    for (final lecture in filteredLectures) {
+      final firstLetter = lecture.title.isNotEmpty ? lecture.title[0].toUpperCase() : '#';
+      if (!grouped.containsKey(firstLetter)) {
+        grouped[firstLetter] = [];
       }
+      grouped[firstLetter]!.add(lecture);
     }
+
+    final sortedKeys = grouped.keys.toList()..sort();
+    final sortedGrouped = <String, List<Lecture>>{};
+    for (final key in sortedKeys) {
+      sortedGrouped[key] = grouped[key]!;
+    }
+
+    return sortedGrouped;
   }
 
-  void _showErrorToast(String message) {
-    try {
-      _toast.showToast(
-        message: message,
-        type: ToastType.error,
-        duration: const Duration(seconds: 3),
-      );
-    } catch (e) {
-      // Fallback to console log if toast fails
-      if (kDebugMode) {
-        debugPrint('Error toast failed: $message');
-      }
-    }
-  }
-
+  // State change handling
   void _onStateChanged() {
     notifyWidget();
 
-    if (cubit.state is LectureListLoadFailure) {
-      _showErrorToast(_localizations.app.somethingWentWrong);
+    if (_usecase.loadState == LecturesLoadState.error) {
+      _showErrorToast();
     }
   }
 
   @override
   void didInitDriver() {
     super.didInitDriver();
-    cubit.stream.listen((_) => _onStateChanged());
-    cubit.loadLectures();
+    _usecase.addListener(_onStateChanged);
+    _favoritesUsecase.addListener(_onStateChanged);
+
+    // Set faculty ID and load data
+    _usecase.setFacultyId(_facultyId);
+    if (_usecase.data.isEmpty) {
+      _usecase.load();
+    }
   }
 
   @override
@@ -182,8 +104,64 @@ class LectureListPageDriver extends WidgetDriver {
   }
 
   @override
+  void didUpdateProvidedProperties({
+    required int newFacultyId,
+  }) {
+    _facultyId = newFacultyId;
+  }
+
+  @override
   void dispose() {
-    cubit.close();
+    _usecase.removeListener(_onStateChanged);
+    _favoritesUsecase.removeListener(_onStateChanged);
     super.dispose();
+  }
+
+  // Actions
+  void onLectureCardPressed(BuildContext context, String lectureId, String lectureTitle) {
+    LectureDetailRoute({
+      'lectureId': lectureId,
+      'lectureTitle': lectureTitle,
+    }).go(context);
+  }
+
+  void onLectureFavoriteToggle(String lectureId) {
+    _favoritesUsecase.toggleFavorite(lectureId);
+    _showToast(_favoritesUsecase.isFavorite(lectureId)
+        ? _localizations.lectures.addFavorite
+        : _localizations.lectures.removeFavorite);
+  }
+
+  void onFavoritesFilterToggle() {
+    _usecase.toggleFavoritesFilter();
+  }
+
+  void onMyStudyPressed() {
+    _showToast('My Study functionality coming soon');
+  }
+
+  void onSortPressed() {
+    _showToast('Sort functionality coming soon');
+  }
+
+  void retry() {
+    _usecase.load();
+  }
+
+  // Toast helpers
+  void _showToast(String message) {
+    _toast.showToast(
+      message: message,
+      type: ToastType.base,
+    );
+  }
+
+  void _showErrorToast() {
+    _toast.showToast(
+      message: _localizations.app.somethingWentWrong,
+      type: ToastType.error,
+      actionText: _localizations.app.tryAgain,
+      onActionPressed: () => _usecase.load(),
+    );
   }
 }

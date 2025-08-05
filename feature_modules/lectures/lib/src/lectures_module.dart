@@ -3,9 +3,8 @@ import 'package:core/module.dart';
 import 'package:core_routes/lectures.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/lectures.dart';
-import 'package:shared_api/studies.dart';
 
-import 'application/usecase/get_lectures_faculties_usecase.dart';
+import 'application/usecase/favorite_lectures_usecase.dart';
 import 'application/usecase/get_lectures_usecase.dart';
 import 'domain/interface/lectures_repository_interface.dart';
 import 'infrastructure/primary/api/lectures_api.dart';
@@ -23,18 +22,16 @@ class LecturesModule extends AppModule with LocalDependenciesProvidingAppModule,
     final baseApiClient = GetIt.I.get<BaseApiClient>();
     final storage = LecturesStorage();
     final repository = LecturesRepository(LecturesApiClient(baseApiClient), storage);
-    final getUsecase = GetLecturesUsecase(repository);
+    final favoriteUsecase = FavoriteLecturesUsecase(storage);
+    final getUsecase = GetLecturesUsecase(repository, favoriteUsecase);
 
     GetIt.I.registerSingleton<LecturesRepositoryInterface>(repository);
     GetIt.I.registerSingleton<GetLecturesUsecase>(getUsecase);
+    GetIt.I.registerSingleton<FavoriteLecturesUsecase>(favoriteUsecase);
   }
 
   @override
   void providePublicApi() {
-    final facultiesApi = GetIt.I.get<FacultiesApi>();
-    final getLecturesFacultiesUsecase = GetLecturesFacultiesUsecase(facultiesApi);
-
-    GetIt.I.registerSingleton<GetLecturesFacultiesUsecase>(getLecturesFacultiesUsecase);
     GetIt.I.registerSingleton<LecturesApi>(LecturesApiImpl());
     GetIt.I.registerSingleton<LecturesRouter>(LecturesRouterImpl());
   }

@@ -1,23 +1,22 @@
 import '../exception/lectures_generic_exception.dart';
-import '../model/course.dart';
-import '../model/lectures.dart';
+import '../model/lecture.dart';
 
 abstract class LecturesRepositoryInterface {
-  /// Fetches the latest Lectures data from the remote source.
+  /// Fetches the latest lectures data from the remote source.
   ///
   /// Throws a [LecturesGenericException] on failure.
-  Future<Lectures> getLectures();
+  Future<List<Lecture>> getLectures();
 
-  /// Retrieves cached Lectures data, if available.
+  /// Retrieves cached lectures data, if available.
   ///
   /// Returns `null` if no cached data exists.
-  Future<Lectures?> getCachedLectures();
+  Future<List<Lecture>?> getCachedLectures();
 
-  /// Deletes any cached Lectures data.
+  /// Deletes any cached lectures data.
   Future<void> deleteLectures();
 
-  /// Fetches courses for a specific faculty.
+  /// Fetches lectures for a specific faculty.
   ///
   /// Throws a [LecturesGenericException] on failure.
-  Future<List<Course>> getCoursesByFaculty(int facultyId);
+  Future<List<Lecture>> getLecturesByFaculty(int facultyId);
 }

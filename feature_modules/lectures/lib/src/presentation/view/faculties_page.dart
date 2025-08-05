@@ -37,13 +37,14 @@ class FacultiesPage extends DrivableWidget<FacultiesPageDriver> {
                 LmuIconButton(
                   icon: LucideIcons.search,
                   onPressed: () {
-                    // TODO: implement search
+                    // Search functionality placeholder
                   },
                 ),
+                const SizedBox(width: LmuSizes.size_8),
                 LmuIconButton(
                   icon: LucideIcons.arrow_up_down,
                   onPressed: () {
-                    // TODO: implement sort
+                    // Sort functionality placeholder
                   },
                 ),
               ],
@@ -55,46 +56,19 @@ class FacultiesPage extends DrivableWidget<FacultiesPageDriver> {
             const SizedBox(height: LmuSizes.size_2),
 
             // Faculty list
-            if (driver.isLoading)
-              const Expanded(
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              )
-            else if (driver.hasError || driver.faculties.isEmpty)
-              Expanded(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      LmuText.body(
-                        context.locals.app.somethingWentWrong,
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: LmuSizes.size_16),
-                      LmuButton(
-                        title: context.locals.app.tryAgain,
-                        emphasis: ButtonEmphasis.primary,
-                        onTap: () => driver.retry(),
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            else
-              LmuContentTile(
-                contentList: driver.faculties.mapIndexed((index, faculty) {
-                  return LmuListItem.action(
-                    key: Key("faculty_${faculty.id}"),
-                    title: faculty.name,
-                    leadingArea: LmuInListBlurEmoji(emoji: faculty.id.toString()),
-                    trailingTitle: driver.getCourseCount(faculty),
-                    actionType: LmuListItemAction.chevron,
-                    hasDivider: false,
-                    onTap: () => driver.onFacultyPressed(context, faculty),
-                  );
-                }).toList(),
-              ),
+            LmuContentTile(
+              contentList: driver.faculties.mapIndexed((index, faculty) {
+                return LmuListItem.action(
+                  key: Key("faculty_${faculty.id}"),
+                  title: faculty.name,
+                  leadingArea: LmuInListBlurEmoji(emoji: faculty.id.toString()),
+                  trailingTitle: driver.courseCount,
+                  actionType: LmuListItemAction.chevron,
+                  hasDivider: false,
+                  onTap: () => driver.onFacultyPressed(context, faculty),
+                );
+              }).toList(),
+            ),
           ],
         ),
       ),
@@ -102,5 +76,17 @@ class FacultiesPage extends DrivableWidget<FacultiesPageDriver> {
   }
 
   @override
-  WidgetDriverProvider<FacultiesPageDriver> get driverProvider => $FacultiesPageDriverProvider();
+  WidgetDriverProvider<FacultiesPageDriver> get driverProvider => _FacultiesPageDriverProvider();
+}
+
+class _FacultiesPageDriverProvider extends WidgetDriverProvider<FacultiesPageDriver> {
+  @override
+  FacultiesPageDriver buildDriver() {
+    return FacultiesPageDriver();
+  }
+
+  @override
+  FacultiesPageDriver buildTestDriver() {
+    return FacultiesPageDriver();
+  }
 }

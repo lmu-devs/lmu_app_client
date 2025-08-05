@@ -25,28 +25,74 @@ class LectureDetailPage extends DrivableWidget<LectureDetailPageDriver> {
       _LectureDetailPageDriverProvider(lectureId, lectureTitle);
 
   Widget _buildContent(BuildContext context, LectureDetailPageDriver driver) {
+    if (driver.isLoading) {
+      return LmuScaffold(
+        appBar: LmuAppBarData(
+          largeTitle: driver.loadingText,
+          leadingAction: LeadingAction.back,
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              const SizedBox(height: LmuSizes.size_16),
+              Text(driver.loadingText),
+            ],
+          ),
+        ),
+      );
+    }
+
+    if (driver.hasError) {
+      return LmuScaffold(
+        appBar: LmuAppBarData(
+          largeTitle: 'Error',
+          leadingAction: LeadingAction.back,
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.error_outline, size: 64, color: Colors.red),
+              const SizedBox(height: LmuSizes.size_16),
+              Text(driver.errorText),
+              const SizedBox(height: LmuSizes.size_16),
+              ElevatedButton(
+                onPressed: driver.onRetry,
+                child: Text(driver.retryText),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    if (driver.isNotFound) {
+      return LmuScaffold(
+        appBar: LmuAppBarData(
+          largeTitle: 'Not Found',
+          leadingAction: LeadingAction.back,
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.search_off, size: 64, color: Colors.grey),
+              const SizedBox(height: LmuSizes.size_16),
+              Text(driver.lectureNotFoundText),
+            ],
+          ),
+        ),
+      );
+    }
+
     return LmuScaffold(
       appBar: LmuAppBarData(
-        largeTitle: lectureTitle,
+        largeTitle: driver.displayLectureTitle,
         leadingAction: LeadingAction.back,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(LmuSizes.size_16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              lectureTitle,
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            const SizedBox(height: LmuSizes.size_16),
-            Text(
-              'Lecture ID: $lectureId',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ],
-        ),
-      ),
+      body: Container(), // Empty body as requested
     );
   }
 }
