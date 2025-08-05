@@ -91,9 +91,21 @@ class LectureListPage extends DrivableWidget<LectureListPageDriver> {
         ),
         const SizedBox(width: LmuSizes.size_8),
         // Favorites filter button
-        LmuIconButton(
-          icon: LucideIcons.star,
-          onPressed: driver.onFavoritesFilterToggle,
+        GestureDetector(
+          onTap: driver.onFavoritesFilterToggle,
+          child: Container(
+            padding: const EdgeInsets.all(LmuSizes.size_8),
+            decoration: BoxDecoration(
+              color: driver.isFavoritesFilterActive
+                  ? context.colors.neutralColors.backgroundColors.strongColors.base
+                  : context.colors.neutralColors.backgroundColors.mediumColors.base,
+              borderRadius: BorderRadius.circular(LmuSizes.size_8),
+            ),
+            child: StarIcon(
+              isActive: driver.isFavoritesFilterActive,
+              size: LmuIconSizes.mediumSmall,
+            ),
+          ),
         ),
         const SizedBox(width: LmuSizes.size_8),
         // Semester dropdown button

@@ -29,6 +29,7 @@ class LectureDetailPageDriver extends WidgetDriver implements _$DriverProvidedPr
 
   LmuLocalizations? _localizations;
   Map<String, dynamic>? _courseDetails;
+  bool _isRatingsExpanded = false;
 
   @override
   void didInitDriver() {
@@ -69,6 +70,7 @@ class LectureDetailPageDriver extends WidgetDriver implements _$DriverProvidedPr
   bool get isLoading => _usecase.loadState == LecturesLoadState.loading;
   bool get hasError => _usecase.loadState == LecturesLoadState.error;
   bool get isNotFound => !isLoading && !hasError && lecture == null;
+  bool get isRatingsExpanded => _isRatingsExpanded;
 
   // Data
   Lecture? get lecture {
@@ -149,5 +151,10 @@ class LectureDetailPageDriver extends WidgetDriver implements _$DriverProvidedPr
 
   void onFavoriteToggle() {
     _favoritesUsecase.toggleFavorite(_lectureId);
+  }
+
+  void onRatingsExpandToggle() {
+    _isRatingsExpanded = !_isRatingsExpanded;
+    notifyWidget();
   }
 }

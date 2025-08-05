@@ -12,7 +12,7 @@ import 'lecture_links.dart';
 import 'lecture_more_details.dart';
 import 'lecture_study_program.dart';
 
-class LectureDetailPage extends StatefulWidget {
+class LectureDetailPage extends DrivableWidget<LectureDetailPageDriver> {
   LectureDetailPage({
     super.key,
     required this.lectureId,
@@ -23,22 +23,12 @@ class LectureDetailPage extends StatefulWidget {
   final String lectureTitle;
 
   @override
-  State<LectureDetailPage> createState() => _LectureDetailPageState();
-}
-
-class _LectureDetailPageState extends State<LectureDetailPage> {
-  bool _isRatingsExpanded = false;
-  late LectureDetailPageDriver _driver;
-
-  @override
-  void initState() {
-    super.initState();
-    _driver = _LectureDetailPageDriverProvider(widget.lectureId, widget.lectureTitle).buildDriver();
-  }
+  WidgetDriverProvider<LectureDetailPageDriver> get driverProvider =>
+      _LectureDetailPageDriverProvider(lectureId, lectureTitle);
 
   @override
   Widget build(BuildContext context) {
-    return _buildContent(context, _driver);
+    return _buildContent(context, driver);
   }
 
   Widget _buildContent(BuildContext context, LectureDetailPageDriver driver) {
@@ -115,11 +105,11 @@ class _LectureDetailPageState extends State<LectureDetailPage> {
           ),
         ],
       ),
-      body: _buildLectureDetailContent(driver),
+      body: _buildLectureDetailContent(context, driver),
     );
   }
 
-  Widget _buildLectureDetailContent(LectureDetailPageDriver driver) {
+  Widget _buildLectureDetailContent(BuildContext context, LectureDetailPageDriver driver) {
     final lecture = driver.lecture;
     if (lecture == null) return Container();
 
@@ -195,7 +185,7 @@ class _LectureDetailPageState extends State<LectureDetailPage> {
           const SizedBox(height: LmuSizes.size_24),
 
           // Expandable sections
-          _buildExpandableSections(locals),
+          _buildExpandableSections(context, locals, driver),
           const SizedBox(height: LmuSizes.size_32),
 
           // Ratings section
@@ -235,17 +225,15 @@ class _LectureDetailPageState extends State<LectureDetailPage> {
                   ],
                 ),
                 trailingArea: Icon(
-                  _isRatingsExpanded ? LucideIcons.chevron_up : LucideIcons.chevron_down,
+                  driver.isRatingsExpanded ? LucideIcons.chevron_up : LucideIcons.chevron_down,
                   size: 20,
                 ),
                 onTap: () {
-                  setState(() {
-                    _isRatingsExpanded = !_isRatingsExpanded;
-                  });
+                  driver.onRatingsExpandToggle();
                 },
               ),
               // Individual rating items (only show when expanded)
-              if (_isRatingsExpanded && driver.ratingCategories != null) ...[
+              if (driver.isRatingsExpanded && driver.ratingCategories != null) ...[
                 const SizedBox(height: LmuSizes.size_16),
                 LmuListItem.base(
                   subtitle: locals.ratingsExplanation,
@@ -352,74 +340,74 @@ class _LectureDetailPageState extends State<LectureDetailPage> {
     );
   }
 
-  Widget _buildExpandableSections(LecturesLocatizations locals) {
+  Widget _buildExpandableSections(BuildContext context, LecturesLocatizations locals, LectureDetailPageDriver driver) {
     return LmuContentTile(
       contentList: [
         LmuListItem.base(
-          subtitle: locals.sectionsContent,
+          subtitle: locals.contentTitle,
           trailingArea: Icon(LucideIcons.chevron_right, size: 20),
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => LectureCourseContent(
-                  lectureTitle: widget.lectureTitle,
+                  lectureTitle: driver.lectureTitle,
                 ),
               ),
             );
           },
         ),
         LmuListItem.base(
-          subtitle: locals.sectionsTeachers,
+          subtitle: locals.lecturersTitle,
           trailingArea: Icon(LucideIcons.chevron_right, size: 20),
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => LectureLecturers(
-                  lectureTitle: widget.lectureTitle,
+                  lectureTitle: driver.lectureTitle,
                 ),
               ),
             );
           },
         ),
         LmuListItem.base(
-          subtitle: locals.sectionsProgram,
+          subtitle: locals.studyProgramTitle,
           trailingArea: Icon(LucideIcons.chevron_right, size: 20),
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => LectureStudyProgram(
-                  lectureTitle: widget.lectureTitle,
+                  lectureTitle: driver.lectureTitle,
                 ),
               ),
             );
           },
         ),
         LmuListItem.base(
-          subtitle: locals.sectionsDetails,
+          subtitle: locals.moreDetailsTitle,
           trailingArea: Icon(LucideIcons.chevron_right, size: 20),
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => LectureMoreDetails(
-                  lectureTitle: widget.lectureTitle,
+                  lectureTitle: driver.lectureTitle,
                 ),
               ),
             );
           },
         ),
         LmuListItem.base(
-          subtitle: locals.sectionsLinks,
+          subtitle: locals.linksTitle,
           trailingArea: Icon(LucideIcons.chevron_right, size: 20),
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => LectureLinks(
-                  lectureTitle: widget.lectureTitle,
+                  lectureTitle: driver.lectureTitle,
                 ),
               ),
             );

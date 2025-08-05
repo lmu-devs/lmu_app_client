@@ -85,6 +85,8 @@ class LectureListPageDriver extends WidgetDriver implements _$DriverProvidedProp
     return lectures;
   }
 
+  bool get isFavoritesFilterActive => _usecase.showOnlyFavorites;
+
   int get lectureCount => filteredLectures.length;
 
   // Grouped lectures for display
