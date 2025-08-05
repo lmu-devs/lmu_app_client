@@ -1164,23 +1164,24 @@ extension $LecturesMainRouteExtension on LecturesMainRoute {
 
 extension $LectureListRouteExtension on LectureListRoute {
   static LectureListRoute _fromState(GoRouterState state) => LectureListRoute(
-        state.extra as Map<String, dynamic>,
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
       );
 
   String get location => GoRouteData.$location(
         '/studies/lectures/lecture-list',
+        queryParams: {
+          'faculty-id': facultyId.toString(),
+        },
       );
 
-  void go(BuildContext context) => context.go(location, extra: $extra);
+  void go(BuildContext context) => context.go(location);
 
-  Future<T?> push<T>(BuildContext context) =>
-      context.push<T>(location, extra: $extra);
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
   void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location, extra: $extra);
+      context.pushReplacement(location);
 
-  void replace(BuildContext context) =>
-      context.replace(location, extra: $extra);
+  void replace(BuildContext context) => context.replace(location);
 }
 
 extension $PeopleOverviewRouteExtension on PeopleOverviewRoute {

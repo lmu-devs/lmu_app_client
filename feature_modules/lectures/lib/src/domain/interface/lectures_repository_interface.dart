@@ -1,5 +1,6 @@
 import '../exception/lectures_generic_exception.dart';
 import '../model/lectures.dart';
+import 'package:shared_api/studies.dart';
 
 abstract class LecturesRepositoryInterface {
   /// Fetches the latest Lectures data from the remote source.
@@ -14,4 +15,9 @@ abstract class LecturesRepositoryInterface {
 
   /// Deletes any cached Lectures data.
   Future<void> deleteLectures();
+
+  /// Fetches faculty information by ID from the remote source.
+  ///
+  /// Throws a [LecturesGenericException] on failure.
+  Future<Faculty> getFacultyById(int facultyId);
 }

@@ -5,17 +5,34 @@ import 'package:core/localizations.dart';
 import 'package:core_routes/lectures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:get_it/get_it.dart';
+import 'package:shared_api/studies.dart';
 
-class FacultiesPage extends StatelessWidget {
+class FacultiesPage extends StatefulWidget {
   const FacultiesPage({super.key});
+
+  @override
+  State<FacultiesPage> createState() => _FacultiesPageState();
+}
+
+class _FacultiesPageState extends State<FacultiesPage> {
+  late final FacultiesApi _facultiesApi;
+
+  @override
+  void initState() {
+    super.initState();
+    _facultiesApi = GetIt.I.get<FacultiesApi>();
+  }
 
   @override
   Widget build(BuildContext context) {
     final lecturesLocalizations = context.locals.lectures;
+    final studiesLocalizations = context.locals.studies;
+    final appLocalizations = context.locals.app;
 
     return LmuScaffold(
       appBar: LmuAppBarData(
-        largeTitle: lecturesLocalizations.facultiesTitle,
+        largeTitle: studiesLocalizations.facultiesTitle,
         leadingAction: LeadingAction.back,
       ),
       body: Padding(
@@ -49,24 +66,21 @@ class FacultiesPage extends StatelessWidget {
             const SizedBox(height: LmuSizes.size_32),
 
             // Header row: title
-            LmuTileHeadline.base(title: lecturesLocalizations.allFacultiesTitle),
+            LmuTileHeadline.base(title: '${appLocalizations.all} ${studiesLocalizations.facultiesTitle}'),
             const SizedBox(height: LmuSizes.size_2),
 
             // Faculty list
             LmuContentTile(
-              contentList: _faculties.mapIndexed((index, faculty) {
+              contentList: _facultiesApi.allFaculties.mapIndexed((index, faculty) {
                 return LmuListItem.action(
-                  key: Key("faculty_${faculty['id']}"),
-                  title: faculty['name'] as String,
-                  leadingArea: LmuInListBlurEmoji(emoji: faculty['id'] as String),
-                  trailingTitle: (faculty['courseCount'] as int).toString(),
+                  key: Key("faculty_${faculty.id}"),
+                  title: faculty.name,
+                  leadingArea: LmuInListBlurEmoji(emoji: faculty.id.toString()),
+                  trailingTitle: '', // TODO: implement course count
                   actionType: LmuListItemAction.chevron,
                   hasDivider: false,
                   onTap: () {
-                    LectureListRoute({
-                      'facultyId': faculty['id'] as String,
-                      'facultyName': faculty['name'] as String,
-                    }).go(context);
+                    LectureListRoute(facultyId: faculty.id).go(context);
                   },
                 );
               }).toList(),
@@ -76,30 +90,4 @@ class FacultiesPage extends StatelessWidget {
       ),
     );
   }
-
-  static final _faculties = [
-    {'id': '00', 'name': 'Fakultätsübergreifende Veranstaltung', 'courseCount': 26},
-    {'id': '01', 'name': 'Katholisch-Theologische Fakultät', 'courseCount': 120},
-    {'id': '02', 'name': 'Evangelisch - Theologische Fakultät', 'courseCount': 143},
-    {'id': '03', 'name': 'Juristische Fakultät', 'courseCount': 210},
-    {'id': '04', 'name': 'Fakultät für Betriebswirtschaft', 'courseCount': 324},
-    {'id': '05', 'name': 'Volkswirtschaftliche Fakultät', 'courseCount': 289},
-    {'id': '07', 'name': 'Medizinische Fakultät', 'courseCount': 196},
-    {'id': '08', 'name': 'Tierärztliche Fakultät', 'courseCount': 167},
-    {'id': '09', 'name': 'Fakultät für Geschichts- und Kunstwissenschaften', 'courseCount': 112},
-    {
-      'id': '10',
-      'name': 'Fakultät für Philosophie, Wissenschaftstheorie und Religionswissenschaft',
-      'courseCount': 123,
-    },
-    {'id': '11', 'name': 'Fakultät für Psychologie und Pädagogik', 'courseCount': 145},
-    {'id': '12', 'name': 'Fakultät für Kulturwissenschaften', 'courseCount': 165},
-    {'id': '13', 'name': 'Fakultät für Sprach- und Literaturwissenschaften', 'courseCount': 112},
-    {'id': '15', 'name': 'Sozialwissenschaftliche Fakultät', 'courseCount': 97},
-    {'id': '16', 'name': 'Fakultät für Mathematik, Informatik und Statistik', 'courseCount': 320},
-    {'id': '17', 'name': 'Fakultät für Physik', 'courseCount': 112},
-    {'id': '18', 'name': 'Fakultät für Chemie und Pharmazie', 'courseCount': 112},
-    {'id': '19', 'name': 'Fakultät für Biologie', 'courseCount': 112},
-    {'id': '20', 'name': 'Fakultät für Geowissenschaften', 'courseCount': 112},
-  ];
 }
