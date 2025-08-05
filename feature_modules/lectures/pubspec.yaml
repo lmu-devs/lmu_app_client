@@ -26,9 +26,14 @@ dependencies:
   collection: ^1.18.0
   go_router: ^15.1.3
   flutter_bloc: ^8.1.6
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   json_serializable: ^6.6.2
   build_runner: ^2.4.9
   widget_driver_generator: ^1.3.3
+
+flutter:
+  generate: true
 

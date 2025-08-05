@@ -1,11 +1,18 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../viewmodel/lecture_detail_page_driver.dart';
+import 'lecture_course_content.dart';
+import 'lecture_lecturers.dart';
+import 'lecture_links.dart';
+import 'lecture_more_details.dart';
+import 'lecture_study_program.dart';
 
-class LectureDetailPage extends DrivableWidget<LectureDetailPageDriver> {
+class LectureDetailPage extends StatefulWidget {
   LectureDetailPage({
     super.key,
     required this.lectureId,
@@ -16,13 +23,23 @@ class LectureDetailPage extends DrivableWidget<LectureDetailPageDriver> {
   final String lectureTitle;
 
   @override
-  Widget build(BuildContext context) {
-    return _buildContent(context, driver);
+  State<LectureDetailPage> createState() => _LectureDetailPageState();
+}
+
+class _LectureDetailPageState extends State<LectureDetailPage> {
+  bool _isRatingsExpanded = false;
+  late LectureDetailPageDriver _driver;
+
+  @override
+  void initState() {
+    super.initState();
+    _driver = _LectureDetailPageDriverProvider(widget.lectureId, widget.lectureTitle).buildDriver();
   }
 
   @override
-  WidgetDriverProvider<LectureDetailPageDriver> get driverProvider =>
-      _LectureDetailPageDriverProvider(lectureId, lectureTitle);
+  Widget build(BuildContext context) {
+    return _buildContent(context, _driver);
+  }
 
   Widget _buildContent(BuildContext context, LectureDetailPageDriver driver) {
     if (driver.isLoading) {
@@ -91,8 +108,378 @@ class LectureDetailPage extends DrivableWidget<LectureDetailPageDriver> {
       appBar: LmuAppBarData(
         largeTitle: driver.displayLectureTitle,
         leadingAction: LeadingAction.back,
+        trailingWidgets: [
+          LmuFavoriteButton(
+            isFavorite: driver.isFavorite,
+            onTap: driver.onFavoriteToggle,
+          ),
+        ],
       ),
-      body: Container(), // Empty body as requested
+      body: _buildLectureDetailContent(driver),
+    );
+  }
+
+  Widget _buildLectureDetailContent(LectureDetailPageDriver driver) {
+    final lecture = driver.lecture;
+    if (lecture == null) return Container();
+
+    final locals = context.locals.lectures;
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(LmuSizes.size_16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Course metadata tags
+          _buildCourseTags(lecture),
+          const SizedBox(height: LmuSizes.size_32),
+
+          // Action buttons row
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                LmuMapImageButton(
+                  onTap: () {},
+                ),
+                const SizedBox(width: LmuSizes.size_8),
+                LmuButton(
+                  title: lecture.semester ?? locals.winterSemester,
+                  size: ButtonSize.medium,
+                  emphasis: ButtonEmphasis.secondary,
+                  action: ButtonAction.base,
+                  state: ButtonState.enabled,
+                  trailingIcon: Icons.keyboard_arrow_down,
+                  onTap: () {},
+                ),
+                const SizedBox(width: LmuSizes.size_8),
+                LmuButton(
+                  title: 'LSF',
+                  onTap: () {},
+                  emphasis: ButtonEmphasis.secondary,
+                ),
+                const SizedBox(width: LmuSizes.size_8),
+                LmuButton(
+                  title: 'Moodle',
+                  onTap: () {},
+                  emphasis: ButtonEmphasis.secondary,
+                ),
+                const SizedBox(width: LmuSizes.size_8),
+                LmuButton(
+                  title: locals.share,
+                  onTap: () {},
+                  emphasis: ButtonEmphasis.secondary,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: LmuSizes.size_32),
+
+          // Calendar button
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              LmuButton(
+                title: locals.addToCalendar,
+                onTap: () {},
+                emphasis: ButtonEmphasis.link,
+                size: ButtonSize.large,
+                trailingIcon: Icons.event,
+              ),
+            ],
+          ),
+          const SizedBox(height: LmuSizes.size_24),
+
+          // Schedule and location card
+          _buildScheduleCard(lecture, locals),
+          const SizedBox(height: LmuSizes.size_24),
+
+          // Expandable sections
+          _buildExpandableSections(locals),
+          const SizedBox(height: LmuSizes.size_32),
+
+          // Ratings section
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              LmuText.h3(locals.ratingsTitle),
+              LmuButton(
+                title: locals.ratingsRate,
+                onTap: () {},
+                emphasis: ButtonEmphasis.link,
+                size: ButtonSize.large,
+                action: ButtonAction.base,
+                state: ButtonState.disabled,
+              ),
+            ],
+          ),
+          const SizedBox(height: LmuSizes.size_24),
+
+          // Average rating tile
+          LmuContentTile(
+            contentList: [
+              LmuListItem.base(
+                title: '(39)',
+                leadingArea: Row(
+                  children: [
+                    LmuText.body('3,8'),
+                    const SizedBox(width: LmuSizes.size_8),
+                    Row(
+                      children: List.generate(5, (index) {
+                        if (index < 3) return StarIcon(isActive: true, size: 20);
+                        if (index == 3) return StarIcon(isActive: true, size: 20);
+                        return StarIcon(isActive: false, size: 20);
+                      }),
+                    ),
+                  ],
+                ),
+                trailingArea: Icon(
+                  _isRatingsExpanded ? LucideIcons.chevron_up : LucideIcons.chevron_down,
+                  size: 20,
+                ),
+                onTap: () {
+                  setState(() {
+                    _isRatingsExpanded = !_isRatingsExpanded;
+                  });
+                },
+              ),
+              // Individual rating items (only show when expanded)
+              if (_isRatingsExpanded) ...[
+                const SizedBox(height: LmuSizes.size_16),
+                LmuListItem.base(
+                  subtitle: locals.ratingsExplanation,
+                  trailingTitle: '3,2',
+                  trailingArea: StarIcon(isActive: false, size: 20),
+                ),
+                LmuListItem.base(
+                  subtitle: locals.ratingsMaterials,
+                  trailingTitle: '3,8',
+                  trailingArea: StarIcon(isActive: false, size: 20),
+                ),
+                LmuListItem.base(
+                  subtitle: locals.ratingsEffort,
+                  trailingTitle: '2,2',
+                  trailingArea: StarIcon(isActive: false, size: 20),
+                ),
+                LmuListItem.base(
+                  subtitle: locals.ratingsTeacher,
+                  trailingTitle: '4,1',
+                  trailingArea: StarIcon(isActive: false, size: 20),
+                ),
+                LmuListItem.base(
+                  subtitle: locals.ratingsExam,
+                  trailingTitle: '1,2',
+                  trailingArea: StarIcon(isActive: false, size: 20),
+                ),
+              ],
+            ],
+          ),
+          const SizedBox(height: LmuSizes.size_24),
+
+          // Last updated text
+          const SizedBox(height: LmuSizes.size_48),
+          Center(
+            child: LmuText.bodyXSmall(
+              locals.lastUpdated('32.12.2023 25:61'),
+              color: Colors.grey,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCourseTags(dynamic lecture) {
+    final tags = _getTagsForCourse(lecture.title);
+    return LmuText.body(
+      tags.join(' • '),
+      color: Colors.grey,
+    );
+  }
+
+  List<String> _getTagsForCourse(String courseName) {
+    // TODO: Remove mock tags when server provides real tags
+    // Mock tags based on course metadata for testing
+    switch (courseName.toLowerCase()) {
+      case 'natural computing':
+        return ['VL', '6 SWS', 'Master', 'English'];
+      case 'machine learning':
+        return ['VL', '8 SWS', 'Master', 'English'];
+      case 'data structures & algorithms':
+        return ['VL', '6 SWS', 'Bachelor', 'German'];
+      default:
+        return ['VL', '6 SWS', 'Master', 'English'];
+    }
+  }
+
+  Widget _buildScheduleCard(dynamic lecture, LecturesLocatizations locals) {
+    return LmuContentTile(
+      contentList: [
+        LmuListItem.base(
+          subtitle: locals.scheduleTime,
+          trailingTitle: 'wöchtl., Mo, 16:15-17:45',
+          maximizeTrailingTitleArea: true,
+        ),
+        LmuListItem.base(
+          subtitle: locals.scheduleDuration,
+          trailingTitle: '12.05.2025 - 23.07.2025',
+          maximizeTrailingTitleArea: true,
+        ),
+        LmuListItem.base(
+          subtitle: locals.scheduleAddress,
+          trailingTitle: 'Luisenstr. 37 (C)',
+          maximizeTrailingTitleArea: true,
+          trailingArea: Icon(LucideIcons.map, size: 20),
+        ),
+        LmuListItem.base(
+          subtitle: locals.scheduleRoom,
+          trailingTitle: 'C 006',
+          maximizeTrailingTitleArea: true,
+          trailingArea: Icon(LucideIcons.external_link, size: 20),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildExpandableSections(LecturesLocatizations locals) {
+    return LmuContentTile(
+      contentList: [
+        LmuListItem.base(
+          subtitle: locals.sectionsContent,
+          trailingArea: Icon(LucideIcons.chevron_right, size: 20),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => LectureCourseContent(
+                  lectureTitle: widget.lectureTitle,
+                ),
+              ),
+            );
+          },
+        ),
+        LmuListItem.base(
+          subtitle: locals.sectionsTeachers,
+          trailingArea: Icon(LucideIcons.chevron_right, size: 20),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => LectureLecturers(
+                  lectureTitle: widget.lectureTitle,
+                ),
+              ),
+            );
+          },
+        ),
+        LmuListItem.base(
+          subtitle: locals.sectionsProgram,
+          trailingArea: Icon(LucideIcons.chevron_right, size: 20),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => LectureStudyProgram(
+                  lectureTitle: widget.lectureTitle,
+                ),
+              ),
+            );
+          },
+        ),
+        LmuListItem.base(
+          subtitle: locals.sectionsDetails,
+          trailingArea: Icon(LucideIcons.chevron_right, size: 20),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => LectureMoreDetails(
+                  lectureTitle: widget.lectureTitle,
+                ),
+              ),
+            );
+          },
+        ),
+        LmuListItem.base(
+          subtitle: locals.sectionsLinks,
+          trailingArea: Icon(LucideIcons.chevron_right, size: 20),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => LectureLinks(
+                  lectureTitle: widget.lectureTitle,
+                ),
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRatingsSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Overall rating
+        Row(
+          children: [
+            LmuText.h2('3,8'),
+            const SizedBox(width: LmuSizes.size_8),
+            Row(
+              children: List.generate(5, (index) {
+                if (index < 3) return Icon(Icons.star, color: Colors.amber, size: 20);
+                if (index == 3) return Icon(Icons.star_half, color: Colors.amber, size: 20);
+                return Icon(Icons.star_border, color: Colors.grey, size: 20);
+              }),
+            ),
+            const SizedBox(width: LmuSizes.size_8),
+            LmuText.bodySmall('(39)'),
+          ],
+        ),
+        const SizedBox(height: LmuSizes.size_16),
+
+        // Individual ratings
+        _buildRatingItem('Erklärung & Aufbau', 3.2),
+        _buildRatingItem('Materialien', 3.8),
+        _buildRatingItem('Aufwand', 2.2),
+        _buildRatingItem('Lehrperson', 4.1),
+        _buildRatingItem('Prüfungsaufbau', 1.2),
+        _buildRatingItem('Gesamteindruck', 3.2),
+
+        const SizedBox(height: LmuSizes.size_16),
+        LmuText.bodySmall(
+          'Anzeigen der Bewertungskriterien',
+          color: Colors.blue,
+          decoration: TextDecoration.underline,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRatingItem(String label, double rating) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: LmuSizes.size_8),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 3,
+            child: LmuText.bodySmall(label),
+          ),
+          Expanded(
+            flex: 2,
+            child: Row(
+              children: [
+                LmuText.bodySmall(rating.toStringAsFixed(1)),
+                const SizedBox(width: LmuSizes.size_4),
+                Icon(Icons.star, size: 16, color: Colors.amber),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

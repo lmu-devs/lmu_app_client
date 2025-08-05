@@ -1,19 +1,196 @@
 {
-  "@@locale": "de",
-  "@@context": "Lectures",
-  "lecturesTitle": "Vorlesungen",
+  "title": "Vorlesungen",
+  "loading": "Lade Vorlesungen...",
+  "error": "Fehler beim Laden der Vorlesungen",
+  "retry": "Erneut versuchen",
+  "notFound": "Keine Vorlesungen gefunden",
+  "back": "Zurück",
+  "favorite": "Favorit",
+  "unfavorite": "Favorit entfernen",
+  "addToCalendar": "Hinzufügen",
+  "share": "Teilen",
+  "winterSemester": "Winter 25/26",
+  "summerSemester": "Sommer 25/26",
+  "lastUpdated": "Zuletzt aktualisiert am {date}",
+  "@lastUpdated": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "tagsLecture": "VL",
+  "tagsSemesterHours": "{hours} SWS",
+  "@tagsSemesterHours": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "tagsMaster": "Master",
+  "tagsBachelor": "Bachelor",
+  "tagsEnglish": "English",
+  "tagsGerman": "German",
+  "scheduleTime": "Zeit",
+  "scheduleDuration": "Dauer",
+  "scheduleAddress": "Adresse",
+  "scheduleRoom": "Raum",
+  "scheduleWeekly": "wöchtl.",
+  "scheduleMonday": "Mo",
+  "scheduleTuesday": "Di",
+  "scheduleWednesday": "Mi",
+  "scheduleThursday": "Do",
+  "scheduleFriday": "Fr",
+  "scheduleSaturday": "Sa",
+  "scheduleSunday": "So",
+  "sectionsContent": "Inhalt",
+  "sectionsTeachers": "Lehrpersonen",
+  "sectionsProgram": "Studiengang & Abschluss",
+  "sectionsDetails": "Weitere Details",
+  "sectionsLinks": "Links",
+  "ratingsTitle": "Bewertungen",
+  "ratingsRate": "Bewerten",
+  "ratingsExplanation": "Erklärung & Aufbau",
+  "ratingsMaterials": "Materialien",
+  "ratingsEffort": "Aufwand",
+  "ratingsTeacher": "Lehrperson",
+  "ratingsExam": "Prüfungsaufbau",
+  "ratingsOverall": "Gesamteindruck",
+  "ratingsShowCriteria": "Anzeigen der Bewertungskriterien",
+  "contentTitle": "Kursinhalt",
+  "contentLearningObjectives": "Lernziele",
+  "contentPrerequisites": "Voraussetzungen",
+  "contentDescription": "Dieser Kurs behandelt die Grundlagen und fortgeschrittenen Konzepte des Natural Computing. Die Studierenden lernen verschiedene bio-inspirierte Algorithmen und deren Anwendungen kennen.",
+  "contentObjectives1": "Verständnis der biologischen Prinzipien hinter Natural Computing",
+  "contentObjectives2": "Implementierung von bio-inspirierten Algorithmen",
+  "contentObjectives3": "Anwendung auf praktische Probleme",
+  "contentObjectives4": "Kritische Bewertung der Methoden",
+  "contentPrerequisitesText": "Grundkenntnisse in Algorithmen und Datenstrukturen, sowie Programmiererfahrung in Python oder Java.",
+  "teachersTitle": "Lehrpersonen",
+  "teachersMainLecturer": "Hauptdozent",
+  "teachersTutor": "Tutor",
+  "teachersTutorFemale": "Tutorin",
+  "programTitle": "Studiengang & Abschluss",
+  "programFacultyMathInfo": "Fakultät für Mathematik, Informatik und Statistik",
+  "programFacultyPhysics": "Fakultät für Physik",
+  "programComputerScience": "Informatik",
+  "programMediaInformatics": "Mediinfo",
+  "programPhysics": "Physik",
+  "programMaster": "Master",
+  "programBachelor": "Bachelor",
+  "detailsTitle": "Weitere Details",
+  "detailsLanguage": "Sprache",
+  "detailsEnglish": "Englisch",
+  "detailsGerman": "Deutsch",
+  "detailsParticipants": "Teilnehmerzahl",
+  "detailsMaxParticipants": "Max. {count}",
+  "@detailsMaxParticipants": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "detailsRegistration": "Anmeldung",
+  "detailsExamRegistration": "Prüfungsanmeldung",
+  "detailsExamDate": "Prüfungstermin",
+  "detailsUntil": "Bis {date}",
+  "@detailsUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "detailsLiterature": "Literatur",
+  "detailsLiterature1": "\"Natural Computing: An Introduction\" von Wolfgang Banzhaf",
+  "detailsLiterature2": "\"Bio-inspired Algorithms for Optimization\" von Xin-She Yang",
+  "detailsLiterature3": "Aktuelle Forschungsartikel werden im Kurs bereitgestellt",
+  "detailsNotes": "Hinweise",
+  "detailsNotesText": "Die Vorlesung wird durch praktische Übungen und ein Projekt ergänzt. Teilnahme an den Übungen ist für die Prüfungszulassung erforderlich.",
+  "linksTitle": "Links",
+  "linksMoodleCourse": "Moodle-Kurs",
+  "linksLsfEvent": "LSF-Veranstaltung",
+  "linksSlides": "Vorlesungsfolien",
+  "linksExercises": "Übungsblätter",
+  "linksForum": "Forum",
+  "linksUsefulResources": "Nützliche Ressourcen",
+  "linksResources1": "GitHub Repository mit Code-Beispielen",
+  "linksResources2": "YouTube-Playlist mit Vorlesungsaufzeichnungen",
+  "linksResources3": "Forschungsgruppe Natural Computing",
+  "linksResources4": "Konferenz-Website ICARIS",
   "facultiesTitle": "Fakultäten",
   "allFacultiesTitle": "Alle Fakultäten",
-  "removeFavorite": "Von Favoriten entfernen",
-  "addFavorite": "Zu Favoriten hinzufügen",
-  "winterSemester": "Winter",
-  "summerSemester": "Sommer",
+  "lectureNotFound": "Vorlesung nicht gefunden",
+  "addFavorite": "Zu Favoriten hinzugefügt",
+  "removeFavorite": "Von Favoriten entfernt",
+  "errorLoadingLectures": "Fehler beim Laden der Vorlesungen",
   "myStudy": "Mein Studium",
   "coursesCount": "Kurse",
-  "loading": "Lädt...",
-  "lectureNotFound": "Vorlesung nicht gefunden",
+  "selectSemester": "Semester auswählen",
   "noLecturesFound": "Keine Vorlesungen gefunden",
-  "errorLoadingLectures": "Fehler beim Laden der Vorlesungen",
-  "retry": "Wiederholen",
-  "selectSemester": "Semester auswählen"
+  "lecturesTitle": "Vorlesungen",
+  "courseContentTitle": "Kursinhalt",
+  "courseContentDescription": "Dieser Kurs behandelt die Grundlagen und fortgeschrittenen Konzepte des Natural Computing. Die Studierenden lernen verschiedene bio-inspirierte Algorithmen und deren Anwendungen kennen.",
+  "courseContentObjectives": "Lernziele",
+  "courseContentObjectives1": "Verständnis der biologischen Prinzipien hinter Natural Computing",
+  "courseContentObjectives2": "Implementierung von bio-inspirierten Algorithmen",
+  "courseContentObjectives3": "Anwendung auf praktische Probleme",
+  "courseContentObjectives4": "Kritische Bewertung der Methoden",
+  "courseContentPrerequisites": "Voraussetzungen",
+  "courseContentPrerequisitesText": "Grundkenntnisse in Algorithmen und Datenstrukturen, sowie Programmiererfahrung in Python oder Java.",
+  "lecturersTitle": "Lehrpersonen",
+  "lecturersMainLecturer": "Hauptdozent",
+  "lecturersTutor": "Tutor",
+  "lecturersTutorFemale": "Tutorin",
+  "studyProgramTitle": "Studiengang & Abschluss",
+  "studyProgramFacultyMathInfo": "Fakultät für Mathematik, Informatik und Statistik",
+  "studyProgramFacultyPhysics": "Fakultät für Physik",
+  "studyProgramComputerScience": "Informatik",
+  "studyProgramMediaInformatics": "Mediinfo",
+  "studyProgramPhysics": "Physik",
+  "studyProgramMaster": "Master",
+  "studyProgramBachelor": "Bachelor",
+  "moreDetailsTitle": "Weitere Details",
+  "moreDetailsLanguage": "Sprache",
+  "moreDetailsEnglish": "Englisch",
+  "moreDetailsGerman": "Deutsch",
+  "moreDetailsParticipants": "Teilnehmerzahl",
+  "moreDetailsMaxParticipants": "Max. {count}",
+  "@moreDetailsMaxParticipants": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "moreDetailsRegistration": "Anmeldung",
+  "moreDetailsExamRegistration": "Prüfungsanmeldung",
+  "moreDetailsExamDate": "Prüfungstermin",
+  "moreDetailsUntil": "Bis {date}",
+  "@moreDetailsUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "moreDetailsLiterature": "Literatur",
+  "moreDetailsLiterature1": "\"Natural Computing: An Introduction\" von Wolfgang Banzhaf",
+  "moreDetailsLiterature2": "\"Bio-inspired Algorithms for Optimization\" von Xin-She Yang",
+  "moreDetailsLiterature3": "Aktuelle Forschungsartikel werden im Kurs bereitgestellt",
+  "moreDetailsNotes": "Hinweise",
+  "moreDetailsNotesText": "Die Vorlesung wird durch praktische Übungen und ein Projekt ergänzt. Teilnahme an den Übungen ist für die Prüfungszulassung erforderlich.",
+  "linksTitle": "Links",
+  "linksMoodleCourse": "Moodle-Kurs",
+  "linksLsfEvent": "LSF-Veranstaltung",
+  "linksSlides": "Vorlesungsfolien",
+  "linksExercises": "Übungsblätter",
+  "linksForum": "Forum",
+  "linksUsefulResources": "Nützliche Ressourcen",
+  "linksResources1": "GitHub Repository mit Code-Beispielen",
+  "linksResources2": "YouTube-Playlist mit Vorlesungsaufzeichnungen",
+  "linksResources3": "Forschungsgruppe Natural Computing",
+  "linksResources4": "Konferenz-Website ICARIS"
 }

@@ -56,7 +56,7 @@ class LecturesRepository implements LecturesRepositoryInterface {
           .map((dto) => Lecture(
                 id: dto.id,
                 title: dto.name,
-                tags: [], // CourseDto doesn't have tags, using empty list as default
+                tags: _getTagsForCourse(dto.name), // Add meaningful tags based on course name
                 facultyId: dto.facultyId,
                 description: dto.description,
                 credits: dto.credits,
@@ -66,6 +66,21 @@ class LecturesRepository implements LecturesRepositoryInterface {
     } catch (e) {
       AppLogger().logError("[LecturesRepository]: Failed to load courses for faculty $facultyId", error: e);
       throw const LecturesGenericException();
+    }
+  }
+
+  List<String> _getTagsForCourse(String courseName) {
+    // TODO: Remove mock tags when server provides real tags
+    // Mock tags based on course metadata for testing
+    switch (courseName.toLowerCase()) {
+      case 'natural computing':
+        return ['VL', '6 SWS', 'Master', 'English'];
+      case 'machine learning':
+        return ['VL', '8 SWS', 'Master', 'English'];
+      case 'data structures & algorithms':
+        return ['VL', '6 SWS', 'Bachelor', 'German'];
+      default:
+        return ['VL', '6 SWS', 'Master', 'English'];
     }
   }
 }

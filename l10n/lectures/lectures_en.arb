@@ -1,19 +1,196 @@
 {
-  "@@locale": "en",
-  "@@context": "Lectures",
-  "lecturesTitle": "Lectures",
+  "title": "Lectures",
+  "loading": "Loading lectures...",
+  "error": "Error loading lectures",
+  "retry": "Retry",
+  "notFound": "No lectures found",
+  "back": "Back",
+  "favorite": "Favorite",
+  "unfavorite": "Remove from favorites",
+  "addToCalendar": "Add",
+  "share": "Share",
+  "winterSemester": "Winter 25/26",
+  "summerSemester": "Summer 25/26",
+  "lastUpdated": "Last updated on {date}",
+  "@lastUpdated": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "tagsLecture": "L",
+  "tagsSemesterHours": "{hours} SWS",
+  "@tagsSemesterHours": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      }
+    }
+  },
+  "tagsMaster": "Master",
+  "tagsBachelor": "Bachelor",
+  "tagsEnglish": "English",
+  "tagsGerman": "German",
+  "scheduleTime": "Time",
+  "scheduleDuration": "Duration",
+  "scheduleAddress": "Address",
+  "scheduleRoom": "Room",
+  "scheduleWeekly": "weekly",
+  "scheduleMonday": "Mon",
+  "scheduleTuesday": "Tue",
+  "scheduleWednesday": "Wed",
+  "scheduleThursday": "Thu",
+  "scheduleFriday": "Fri",
+  "scheduleSaturday": "Sat",
+  "scheduleSunday": "Sun",
+  "sectionsContent": "Content",
+  "sectionsTeachers": "Teachers",
+  "sectionsProgram": "Study Program & Degree",
+  "sectionsDetails": "Further Details",
+  "sectionsLinks": "Links",
+  "ratingsTitle": "Ratings",
+  "ratingsRate": "Rate",
+  "ratingsExplanation": "Explanation & Structure",
+  "ratingsMaterials": "Materials",
+  "ratingsEffort": "Effort",
+  "ratingsTeacher": "Teacher",
+  "ratingsExam": "Exam Structure",
+  "ratingsOverall": "Overall Impression",
+  "ratingsShowCriteria": "Show rating criteria",
+  "contentTitle": "Course Content",
+  "contentLearningObjectives": "Learning Objectives",
+  "contentPrerequisites": "Prerequisites",
+  "contentDescription": "This course covers the fundamentals and advanced concepts of Natural Computing. Students learn about various bio-inspired algorithms and their applications.",
+  "contentObjectives1": "Understanding of biological principles behind Natural Computing",
+  "contentObjectives2": "Implementation of bio-inspired algorithms",
+  "contentObjectives3": "Application to practical problems",
+  "contentObjectives4": "Critical evaluation of methods",
+  "contentPrerequisitesText": "Basic knowledge of algorithms and data structures, as well as programming experience in Python or Java.",
+  "teachersTitle": "Teachers",
+  "teachersMainLecturer": "Main Lecturer",
+  "teachersTutor": "Tutor",
+  "teachersTutorFemale": "Tutor",
+  "programTitle": "Study Program & Degree",
+  "programFacultyMathInfo": "Faculty of Mathematics, Computer Science and Statistics",
+  "programFacultyPhysics": "Faculty of Physics",
+  "programComputerScience": "Computer Science",
+  "programMediaInformatics": "Media Informatics",
+  "programPhysics": "Physics",
+  "programMaster": "Master",
+  "programBachelor": "Bachelor",
+  "detailsTitle": "Further Details",
+  "detailsLanguage": "Language",
+  "detailsEnglish": "English",
+  "detailsGerman": "German",
+  "detailsParticipants": "Number of Participants",
+  "detailsMaxParticipants": "Max. {count}",
+  "@detailsMaxParticipants": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "detailsRegistration": "Registration",
+  "detailsExamRegistration": "Exam Registration",
+  "detailsExamDate": "Exam Date",
+  "detailsUntil": "Until {date}",
+  "@detailsUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "detailsLiterature": "Literature",
+  "detailsLiterature1": "\"Natural Computing: An Introduction\" by Wolfgang Banzhaf",
+  "detailsLiterature2": "\"Bio-inspired Algorithms for Optimization\" by Xin-She Yang",
+  "detailsLiterature3": "Current research articles will be provided in the course",
+  "detailsNotes": "Notes",
+  "detailsNotesText": "The lecture is supplemented by practical exercises and a project. Participation in the exercises is required for exam admission.",
+  "linksTitle": "Links",
+  "linksMoodleCourse": "Moodle Course",
+  "linksLsfEvent": "LSF Event",
+  "linksSlides": "Lecture Slides",
+  "linksExercises": "Exercise Sheets",
+  "linksForum": "Forum",
+  "linksUsefulResources": "Useful Resources",
+  "linksResources1": "GitHub Repository with code examples",
+  "linksResources2": "YouTube playlist with lecture recordings",
+  "linksResources3": "Natural Computing research group",
+  "linksResources4": "ICARIS conference website",
   "facultiesTitle": "Faculties",
   "allFacultiesTitle": "All Faculties",
-  "removeFavorite": "Remove from favorites",
-  "addFavorite": "Add to favorites",
-  "winterSemester": "Winter",
-  "summerSemester": "Summer",
+  "lectureNotFound": "Lecture not found",
+  "addFavorite": "Added to favorites",
+  "removeFavorite": "Removed from favorites",
+  "errorLoadingLectures": "Error loading lectures",
   "myStudy": "My Study",
   "coursesCount": "courses",
-  "loading": "Loading...",
-  "lectureNotFound": "Lecture not found",
+  "selectSemester": "Select Semester",
   "noLecturesFound": "No lectures found",
-  "errorLoadingLectures": "Error loading lectures",
-  "retry": "Retry",
-  "selectSemester": "Select Semester"
+  "lecturesTitle": "Lectures",
+  "courseContentTitle": "Course Content",
+  "courseContentDescription": "This course covers the fundamentals and advanced concepts of Natural Computing. Students learn about various bio-inspired algorithms and their applications.",
+  "courseContentObjectives": "Learning Objectives",
+  "courseContentObjectives1": "Understanding of biological principles behind Natural Computing",
+  "courseContentObjectives2": "Implementation of bio-inspired algorithms",
+  "courseContentObjectives3": "Application to practical problems",
+  "courseContentObjectives4": "Critical evaluation of methods",
+  "courseContentPrerequisites": "Prerequisites",
+  "courseContentPrerequisitesText": "Basic knowledge of algorithms and data structures, as well as programming experience in Python or Java.",
+  "lecturersTitle": "Teachers",
+  "lecturersMainLecturer": "Main Lecturer",
+  "lecturersTutor": "Tutor",
+  "lecturersTutorFemale": "Tutor",
+  "studyProgramTitle": "Study Program & Degree",
+  "studyProgramFacultyMathInfo": "Faculty of Mathematics, Computer Science and Statistics",
+  "studyProgramFacultyPhysics": "Faculty of Physics",
+  "studyProgramComputerScience": "Computer Science",
+  "studyProgramMediaInformatics": "Media Informatics",
+  "studyProgramPhysics": "Physics",
+  "studyProgramMaster": "Master",
+  "studyProgramBachelor": "Bachelor",
+  "moreDetailsTitle": "Further Details",
+  "moreDetailsLanguage": "Language",
+  "moreDetailsEnglish": "English",
+  "moreDetailsGerman": "German",
+  "moreDetailsParticipants": "Number of Participants",
+  "moreDetailsMaxParticipants": "Max. {count}",
+  "@moreDetailsMaxParticipants": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "moreDetailsRegistration": "Registration",
+  "moreDetailsExamRegistration": "Exam Registration",
+  "moreDetailsExamDate": "Exam Date",
+  "moreDetailsUntil": "Until {date}",
+  "@moreDetailsUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "moreDetailsLiterature": "Literature",
+  "moreDetailsLiterature1": "\"Natural Computing: An Introduction\" by Wolfgang Banzhaf",
+  "moreDetailsLiterature2": "\"Bio-inspired Algorithms for Optimization\" by Xin-She Yang",
+  "moreDetailsLiterature3": "Current research articles will be provided in the course",
+  "moreDetailsNotes": "Notes",
+  "moreDetailsNotesText": "The lecture is supplemented by practical exercises and a project. Participation in the exercises is required for exam admission.",
+  "linksTitle": "Links",
+  "linksMoodleCourse": "Moodle Course",
+  "linksLsfEvent": "LSF Event",
+  "linksSlides": "Lecture Slides",
+  "linksExercises": "Exercise Sheets",
+  "linksForum": "Forum",
+  "linksUsefulResources": "Useful Resources",
+  "linksResources1": "GitHub Repository with code examples",
+  "linksResources2": "YouTube playlist with lecture recordings",
+  "linksResources3": "Natural Computing research group",
+  "linksResources4": "ICARIS conference website"
 }
