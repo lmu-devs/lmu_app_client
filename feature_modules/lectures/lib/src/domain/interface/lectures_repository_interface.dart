@@ -5,7 +5,7 @@ abstract class LecturesRepositoryInterface {
   /// Fetches the latest lectures data from the remote source.
   ///
   /// Throws a [LecturesGenericException] on failure.
-  Future<List<Lecture>> getLectures();
+  Future<List<Lecture>> getLectures({bool forceRefresh = false});
 
   /// Retrieves cached lectures data, if available.
   ///

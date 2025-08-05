@@ -1,3 +1,5 @@
+import 'package:core/logging.dart';
+
 import '../../../domain/exception/lectures_generic_exception.dart';
 import '../../../domain/interface/lectures_repository_interface.dart';
 import '../../../domain/model/lecture.dart';
@@ -11,15 +13,17 @@ class LecturesRepository implements LecturesRepositoryInterface {
   final LecturesStorage _storage;
 
   @override
-  Future<List<Lecture>> getLectures() async {
+  Future<List<Lecture>> getLectures({bool forceRefresh = false}) async {
     try {
-      // For now, return mock data since API is not implemented
-      return _getMockLectures();
+      final cachedLectures = await _storage.getLectures();
 
-      // TODO: Uncomment when API is ready
-      // final retrievedLecturesData = await _apiClient.getLectures();
-      // await _storage.saveLectures(retrievedLecturesData);
-      // return retrievedLecturesData.toDomain();
+      if (cachedLectures != null && !forceRefresh) {
+        return [cachedLectures.toDomain()];
+      }
+
+      final retrievedLecturesData = await _apiClient.getLectures();
+      await _storage.saveLectures(retrievedLecturesData);
+      return [retrievedLecturesData.toDomain()];
     } catch (e) {
       throw const LecturesGenericException();
     }
@@ -47,6 +51,7 @@ class LecturesRepository implements LecturesRepositoryInterface {
   Future<List<Lecture>> getLecturesByFaculty(int facultyId) async {
     try {
       final coursesData = await _apiClient.getCoursesByFaculty(facultyId);
+      AppLogger().logMessage("[LecturesRepository]: Loaded ${coursesData.length} courses for faculty $facultyId");
       return coursesData
           .map((dto) => Lecture(
                 id: dto.id,
@@ -59,43 +64,8 @@ class LecturesRepository implements LecturesRepositoryInterface {
               ))
           .toList();
     } catch (e) {
+      AppLogger().logError("[LecturesRepository]: Failed to load courses for faculty $facultyId", error: e);
       throw const LecturesGenericException();
     }
-  }
-
-  // Mock data for testing
-  List<Lecture> _getMockLectures() {
-    return [
-      Lecture(
-        id: '1',
-        title: 'Credit Risk Modelling',
-        tags: ['VL', '6 SWS', 'Master', 'English'],
-        facultyId: 1,
-      ),
-      Lecture(
-        id: '2',
-        title: 'Cybersecurity',
-        tags: ['VL', '4 SWS', 'Bachelor', 'German'],
-        facultyId: 1,
-      ),
-      Lecture(
-        id: '3',
-        title: 'Game Development',
-        tags: ['VL', '8 SWS', 'Master', 'English'],
-        facultyId: 1,
-      ),
-      Lecture(
-        id: '4',
-        title: 'Machine Learning',
-        tags: ['VL', '6 SWS', 'Master', 'English'],
-        facultyId: 2,
-      ),
-      Lecture(
-        id: '5',
-        title: 'Data Structures',
-        tags: ['VL', '4 SWS', 'Bachelor', 'German'],
-        facultyId: 2,
-      ),
-    ];
   }
 }

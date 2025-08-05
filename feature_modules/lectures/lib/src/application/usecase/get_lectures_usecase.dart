@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
+import 'package:core/logging.dart';
 
 import '../../domain/exception/lectures_generic_exception.dart';
 import '../../domain/interface/lectures_repository_interface.dart';
@@ -19,6 +21,7 @@ class GetLecturesUsecase extends ChangeNotifier {
   List<Lecture> _data = [];
   int? _facultyId;
   bool _showOnlyFavorites = false;
+  Completer<void>? _loadingCompleter;
 
   LecturesLoadState get loadState => _loadState;
   List<Lecture> get data => _data;
@@ -69,24 +72,47 @@ class GetLecturesUsecase extends ChangeNotifier {
   }
 
   Future<void> load() async {
-    if (_loadState == LecturesLoadState.loading || _loadState == LecturesLoadState.success) {
-      return;
+    if (_loadingCompleter != null) {
+      return _loadingCompleter!.future;
     }
 
-    _loadState = LecturesLoadState.loading;
-    _data = [];
-    notifyListeners();
-
+    _loadingCompleter = Completer<void>();
+    
     try {
-      final result = await _repository.getLectures();
-      _loadState = LecturesLoadState.success;
-      _data = result;
-    } on LecturesGenericException {
-      _loadState = LecturesLoadState.error;
-      _data = [];
-    }
+      if (_loadState == LecturesLoadState.loading || _loadState == LecturesLoadState.success) {
+        return;
+      }
 
-    notifyListeners();
+      _loadState = LecturesLoadState.loading;
+      _data = [];
+      notifyListeners();
+
+      try {
+        if (_facultyId != null) {
+          // Use faculty-specific API call
+          final result = await _repository.getLecturesByFaculty(_facultyId!);
+          _loadState = LecturesLoadState.success;
+          _data = result;
+        } else {
+          // Fallback to general lectures call
+          final result = await _repository.getLectures(forceRefresh: false);
+          _loadState = LecturesLoadState.success;
+          _data = result;
+        }
+      } on LecturesGenericException {
+        _loadState = LecturesLoadState.error;
+        _data = [];
+      } catch (e) {
+        AppLogger().logError("[GetLecturesUsecase]: Unexpected error", error: e);
+        _loadState = LecturesLoadState.error;
+        _data = [];
+      }
+
+      notifyListeners();
+    } finally {
+      _loadingCompleter?.complete();
+      _loadingCompleter = null;
+    }
   }
 
   @override
