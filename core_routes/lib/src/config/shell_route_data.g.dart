@@ -354,7 +354,7 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                       factory: $LectureListRouteExtension._fromState,
                     ),
                     GoRouteData.$route(
-                      path: 'lecture-detail',
+                      path: 'detail',
                       factory: $LectureDetailRouteExtension._fromState,
                     ),
                   ],
@@ -1168,45 +1168,49 @@ extension $LecturesMainRouteExtension on LecturesMainRoute {
 
 extension $LectureListRouteExtension on LectureListRoute {
   static LectureListRoute _fromState(GoRouterState state) => LectureListRoute(
-        state.extra as Map<String, dynamic>,
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
       );
 
   String get location => GoRouteData.$location(
         '/studies/lectures/lecture-list',
+        queryParams: {
+          'faculty-id': facultyId.toString(),
+        },
       );
 
-  void go(BuildContext context) => context.go(location, extra: $extra);
+  void go(BuildContext context) => context.go(location);
 
-  Future<T?> push<T>(BuildContext context) =>
-      context.push<T>(location, extra: $extra);
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
   void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location, extra: $extra);
+      context.pushReplacement(location);
 
-  void replace(BuildContext context) =>
-      context.replace(location, extra: $extra);
+  void replace(BuildContext context) => context.replace(location);
 }
 
 extension $LectureDetailRouteExtension on LectureDetailRoute {
   static LectureDetailRoute _fromState(GoRouterState state) =>
       LectureDetailRoute(
-        state.extra as Map<String, dynamic>,
+        lectureId: state.uri.queryParameters['lecture-id']!,
+        lectureTitle: state.uri.queryParameters['lecture-title']!,
       );
 
   String get location => GoRouteData.$location(
-        '/studies/lectures/lecture-detail',
+        '/studies/lectures/detail',
+        queryParams: {
+          'lecture-id': lectureId,
+          'lecture-title': lectureTitle,
+        },
       );
 
-  void go(BuildContext context) => context.go(location, extra: $extra);
+  void go(BuildContext context) => context.go(location);
 
-  Future<T?> push<T>(BuildContext context) =>
-      context.push<T>(location, extra: $extra);
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
 
   void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location, extra: $extra);
+      context.pushReplacement(location);
 
-  void replace(BuildContext context) =>
-      context.replace(location, extra: $extra);
+  void replace(BuildContext context) => context.replace(location);
 }
 
 extension $PeopleOverviewRouteExtension on PeopleOverviewRoute {

@@ -16,9 +16,9 @@ class FacultiesPageDriver extends WidgetDriver {
 
   // Actions
   void onFacultyPressed(BuildContext context, Faculty faculty) {
-    LectureListRoute({
-      'facultyId': faculty.id,
-    }).go(context);
+    LectureListRoute(
+      facultyId: faculty.id,
+    ).go(context);
   }
 
   // Placeholder for backend data

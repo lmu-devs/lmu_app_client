@@ -10,19 +10,14 @@ class LecturesRouterImpl extends LecturesRouter {
   Widget buildMain(BuildContext context) => FacultiesPage();
 
   @override
-  Widget buildLectureList(BuildContext context, Map<String, dynamic> extra) {
-    final facultyId = extra['facultyId'] as int;
-
+  Widget buildLectureList(BuildContext context, {required int facultyId}) {
     return LectureListPage(
       facultyId: facultyId,
     );
   }
 
   @override
-  Widget buildLectureDetail(BuildContext context, Map<String, dynamic> extra) {
-    final lectureId = extra['lectureId'] as String;
-    final lectureTitle = extra['lectureTitle'] as String;
-
+  Widget buildLectureDetail(BuildContext context, {required String lectureId, required String lectureTitle}) {
     return LectureDetailPage(
       lectureId: lectureId,
       lectureTitle: lectureTitle,

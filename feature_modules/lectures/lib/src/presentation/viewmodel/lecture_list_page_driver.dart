@@ -27,6 +27,40 @@ class LectureListPageDriver extends WidgetDriver implements _$DriverProvidedProp
   late LmuLocalizations _localizations;
   late LmuToast _toast;
 
+  @override
+  void didInitDriver() {
+    super.didInitDriver();
+    _usecase.addListener(_onStateChanged);
+    _favoritesUsecase.addListener(_onStateChanged);
+
+    // Set faculty ID and load data
+    _usecase.setFacultyId(_facultyId);
+    if (_usecase.data.isEmpty) {
+      _usecase.load();
+    }
+  }
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {
+    super.didUpdateBuildContext(context);
+    _localizations = context.locals;
+    _toast = LmuToast.of(context);
+  }
+
+  @override
+  void didUpdateProvidedProperties({
+    required int newFacultyId,
+  }) {
+    _facultyId = newFacultyId;
+  }
+
+  @override
+  void dispose() {
+    _usecase.removeListener(_onStateChanged);
+    _favoritesUsecase.removeListener(_onStateChanged);
+    super.dispose();
+  }
+
   // Faculty information
   String get facultyName {
     final faculty = _facultiesApi.allFaculties.firstWhere((f) => f.id == _facultyId);
@@ -83,46 +117,12 @@ class LectureListPageDriver extends WidgetDriver implements _$DriverProvidedProp
     }
   }
 
-  @override
-  void didInitDriver() {
-    super.didInitDriver();
-    _usecase.addListener(_onStateChanged);
-    _favoritesUsecase.addListener(_onStateChanged);
-
-    // Set faculty ID and load data
-    _usecase.setFacultyId(_facultyId);
-    if (_usecase.data.isEmpty) {
-      _usecase.load();
-    }
-  }
-
-  @override
-  void didUpdateBuildContext(BuildContext context) {
-    super.didUpdateBuildContext(context);
-    _localizations = context.locals;
-    _toast = LmuToast.of(context);
-  }
-
-  @override
-  void didUpdateProvidedProperties({
-    required int newFacultyId,
-  }) {
-    _facultyId = newFacultyId;
-  }
-
-  @override
-  void dispose() {
-    _usecase.removeListener(_onStateChanged);
-    _favoritesUsecase.removeListener(_onStateChanged);
-    super.dispose();
-  }
-
   // Actions
   void onLectureCardPressed(BuildContext context, String lectureId, String lectureTitle) {
-    LectureDetailRoute({
-      'lectureId': lectureId,
-      'lectureTitle': lectureTitle,
-    }).go(context);
+    LectureDetailRoute(
+      lectureId: lectureId,
+      lectureTitle: lectureTitle,
+    ).push(context);
   }
 
   void onLectureFavoriteToggle(String lectureId) {

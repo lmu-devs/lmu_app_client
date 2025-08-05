@@ -26,35 +26,6 @@ class LectureDetailPageDriver extends WidgetDriver implements _$DriverProvidedPr
 
   late LmuLocalizations _localizations;
 
-  // State management
-  bool get isLoading => _usecase.loadState == LecturesLoadState.loading;
-  bool get hasError => _usecase.loadState == LecturesLoadState.error;
-  bool get isNotFound => !isLoading && !hasError && lecture == null;
-
-  // Data
-  Lecture? get lecture {
-    try {
-      return _usecase.data.firstWhere((lecture) => lecture.id == _lectureId);
-    } catch (e) {
-      return null;
-    }
-  }
-
-  // Display data
-  String get displayLectureTitle => lecture?.title ?? _lectureTitle;
-  bool get isFavorite => _favoritesUsecase.isFavorite(_lectureId);
-
-  // Localization
-  String get loadingText => _localizations.lectures.loading;
-  String get lectureNotFoundText => _localizations.lectures.lectureNotFound;
-  String get errorText => _localizations.app.somethingWentWrong;
-  String get retryText => _localizations.app.tryAgain;
-
-  // State change handling
-  void _onStateChanged() {
-    notifyWidget();
-  }
-
   @override
   void didInitDriver() {
     super.didInitDriver();
@@ -86,6 +57,35 @@ class LectureDetailPageDriver extends WidgetDriver implements _$DriverProvidedPr
     _usecase.removeListener(_onStateChanged);
     _favoritesUsecase.removeListener(_onStateChanged);
     super.dispose();
+  }
+
+  // State management
+  bool get isLoading => _usecase.loadState == LecturesLoadState.loading;
+  bool get hasError => _usecase.loadState == LecturesLoadState.error;
+  bool get isNotFound => !isLoading && !hasError && lecture == null;
+
+  // Data
+  Lecture? get lecture {
+    try {
+      return _usecase.data.firstWhere((lecture) => lecture.id == _lectureId);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // Display data
+  String get displayLectureTitle => lecture?.title ?? _lectureTitle;
+  bool get isFavorite => _favoritesUsecase.isFavorite(_lectureId);
+
+  // Localization
+  String get loadingText => _localizations.lectures.loading;
+  String get lectureNotFoundText => _localizations.lectures.lectureNotFound;
+  String get errorText => _localizations.app.somethingWentWrong;
+  String get retryText => _localizations.app.tryAgain;
+
+  // State change handling
+  void _onStateChanged() {
+    notifyWidget();
   }
 
   // Actions
