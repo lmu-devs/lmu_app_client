@@ -19,7 +19,7 @@ class _$TestCalendarPageDriver extends TestDriver implements CalendarPageDriver 
   String get largeTitle => ' ';
 
   @override
-  CalendarViewMode get viewMode => CalendarViewMode.values[0];
+  CalendarViewType get viewType => CalendarViewType.types[0];
 
   @override
   DateTimeRange<DateTime> get selectedDate => DateTimeRange<DateTime>(
@@ -36,7 +36,7 @@ class _$TestCalendarPageDriver extends TestDriver implements CalendarPageDriver 
   }
 
   @override
-  void onViewModeChanged(CalendarViewMode mode) {}
+  void onCalendarViewTypeChanged(CalendarViewType mode) {}
 
   @override
   void onDateSelected(DateTimeRange<DateTime> dateRange) {}

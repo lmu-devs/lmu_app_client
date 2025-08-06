@@ -25,4 +25,14 @@ class LocationModel extends Equatable {
       ];
 
   Map<String, dynamic> toJson() => _$LocationModelToJson(this);
+
+  /// Checks if the location is an online location based on the address.
+  /// An online location is identified by a URL pattern.
+  bool get isOnline {
+    final RegExp urlRegex = RegExp(
+      r'((https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})(\/\S*)?',
+      caseSensitive: false,
+    );
+    return urlRegex.hasMatch(address);
+  }
 }
