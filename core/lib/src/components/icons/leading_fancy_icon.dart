@@ -11,7 +11,8 @@ class LeadingFancyIcons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final backgroundColor = context.colors.neutralColors.backgroundColors.mediumColors.base;
+    final backgroundColor =
+        context.colors.neutralColors.backgroundColors.mediumColors.base;
     return Container(
       width: LmuSizes.size_48,
       height: LmuSizes.size_48,

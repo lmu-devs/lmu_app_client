@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:flutter/widgets.dart';
@@ -24,8 +26,8 @@ class StudiesPage extends DrivableWidget<StudiesPageDriver> {
           children: [
             const SizedBox(height: LmuSizes.size_16),
             StudentId(
-              id: "123456",
-              title: "John Doe",
+              id: "12680165",
+              title: "Raphael Wennmacher",
               description: "Computer Science Student",
               onTap: () {},
             ),
