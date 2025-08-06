@@ -53,4 +53,10 @@ class DateTimeFormatter {
     final locale = _currentLocale.toString();
     return DateFormat.Hm(locale).format(time);
   }
+
+  static String formatDateTimeRange(DateTime start, DateTime end) {
+    final startTime = '${start.hour.toString().padLeft(2, '0')}:${start.minute.toString().padLeft(2, '0')}';
+    final endTime = '${end.hour.toString().padLeft(2, '0')}:${end.minute.toString().padLeft(2, '0')}';
+    return '$startTime - $endTime';
+  }
 }

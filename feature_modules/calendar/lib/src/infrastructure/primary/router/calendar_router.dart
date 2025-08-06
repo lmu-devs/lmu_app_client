@@ -8,5 +8,5 @@ class CalendarRouterImpl extends CalendarRouter {
   @override
   Widget buildMain(BuildContext context) => CalendarPage();
   @override
-  Widget buildTestScreen(BuildContext context) => const CalendarTest();
+  Widget buildTestScreen(BuildContext context) => const CalendarEntriesDayView(entries: []);
 }
