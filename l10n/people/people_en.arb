@@ -16,7 +16,8 @@
   "favoritesA": "Tap the ",
   "favoritesB": " icon to add favorites here",
   "people_subtitleTile": "from the ",
-  "copiedEmail": "Email copied",
-  "copiedWebsite":"Website copied",
-  "copiedPhone": "Phone number copied"
+  "copiedEmail": "Email copied to clipboard",
+  "copiedWebsite":"Website copied to clipboard",
+  "allPeople": "All People",
+  "professorFilter": "Professor"
 }
