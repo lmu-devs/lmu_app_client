@@ -6,6 +6,8 @@ import '../../domain/model/calendar_view_type.dart';
 import '../../domain/model/mock_events.dart';
 import '../component/calendar_custom_appbar.dart';
 import '../component/calendar_entries_list.dart';
+import '../component/calendar_entry_card.dart';
+import '../component/loading_components/calendar_card_loading.dart';
 import '../component/week_selector.dart';
 import '../viewmodel/calendar_page_driver.dart';
 import 'calendar_test-page.dart';
@@ -118,61 +120,6 @@ class CalendarPage extends DrivableWidget<CalendarPageDriver> {
         );
       },
     );
-  }
-
-  Widget _buildWeekPicker() {
-    final startOfWeek = DateTime.now().subtract(
-      Duration(days: DateTime.now().weekday - 1),
-    );
-    driver.selectedDate.dateTimeFromSingleDayRange;
-    startOfWeek.subtract(
-      Duration(days: startOfWeek.weekday - 1),
-    );
-
-    return WeekPicker(
-        selectedDate: driver.selectedDate.dateTimeFromSingleDayRange,
-        onDateSelected: (date) => driver.onDateSelected(date));
-
-    // return Padding(
-    //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-    //   child: Row(
-    //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-    //     children: List.generate(7, (index) {
-    //       final date = startOfWeek.add(Duration(days: index));
-    //       final isSelected = date.day == driver.selectedDate.dateTimeFromSingleDayRange.day &&
-    //           date.month == driver.selectedDate.dateTimeFromSingleDayRange.month &&
-    //           date.year == driver.selectedDate.dateTimeFromSingleDayRange.year;
-
-    //       return GestureDetector(
-    //         onTap: () => driver.onDateSelected(date),
-    //         child: Container(
-    //           padding: const EdgeInsets.all(8),
-    //           decoration: BoxDecoration(
-    //             color: isSelected ? Colors.blueAccent : Colors.transparent,
-    //             borderRadius: BorderRadius.circular(8),
-    //           ),
-    //           child: Column(
-    //             children: [
-    //               Text(
-    //                 ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'][index],
-    //                 style: TextStyle(
-    //                   fontWeight: FontWeight.bold,
-    //                   color: isSelected ? Colors.white : Colors.black,
-    //                 ),
-    //               ),
-    //               Text(
-    //                 '${date.day}',
-    //                 style: TextStyle(
-    //                   color: isSelected ? Colors.white : Colors.black,
-    //                 ),
-    //               ),
-    //             ],
-    //           ),
-    //         ),
-    //       );
-    //     }),
-    //   ),
-    // );
   }
 
   @override

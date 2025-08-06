@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:flutter/widgets.dart';
@@ -8,7 +6,7 @@ import 'package:widget_driver/widget_driver.dart';
 import '../component/calendar_entry_point.dart';
 import '../component/lectures_entry_point.dart';
 import '../component/people_entry_point.dart';
-import '../component/student_id.dart';
+import '../component/student_id/holographic_card.dart';
 import '../viewmodel/studies_page_driver.dart';
 
 class StudiesPage extends DrivableWidget<StudiesPageDriver> {
@@ -20,24 +18,20 @@ class StudiesPage extends DrivableWidget<StudiesPageDriver> {
       appBar: LmuAppBarData(
         largeTitle: driver.pageTitle,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+      body: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
         child: Column(
           children: [
-            const SizedBox(height: LmuSizes.size_16),
-            StudentId(
-              id: "12680165",
-              title: "Raphael Wennmacher",
-              description: "Computer Science Student",
-              onTap: () {},
-            ),
-            const SizedBox(height: LmuSizes.size_32),
-            const CalenderEntryPoint(),
-            const SizedBox(height: LmuSizes.size_32),
-            const LecturesEntryPoint(),
-            const SizedBox(height: LmuSizes.size_32),
-            const PeopleEntryPoint(),
-            const SizedBox(height: LmuSizes.size_96),
+            SizedBox(height: LmuSizes.size_32),
+            HolographicCard(),
+            SizedBox(height: LmuSizes.size_32),
+            SizedBox(height: LmuSizes.size_32),
+            CalenderEntryPoint(),
+            SizedBox(height: LmuSizes.size_32),
+            LecturesEntryPoint(),
+            SizedBox(height: LmuSizes.size_32),
+            PeopleEntryPoint(),
+            SizedBox(height: LmuSizes.size_96),
           ],
         ),
       ),

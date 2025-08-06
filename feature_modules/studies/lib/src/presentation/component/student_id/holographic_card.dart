@@ -1,13 +1,15 @@
-import 'dart:math' as math;
 import 'dart:async'; // For StreamSubscription
-import 'package:flutter/material.dart';
-import 'package:sensors_plus/sensors_plus.dart'; // For device motion
-import 'dart:ui' as ui;
-import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:developer' as developer;
+import 'dart:math' as math;
+import 'dart:ui' as ui;
+
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'card_components/holographic_watermarks.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sensors_plus/sensors_plus.dart'; // For device motion
+
 import 'card_components/holographic_assets.dart';
+import 'card_components/holographic_watermarks.dart';
 import 'themes/themes.dart';
 
 class HolographicCard extends StatefulWidget {
@@ -119,7 +121,7 @@ class HolographicCard extends StatefulWidget {
     this.borderCardColor = Colors.black,
 
     // Shadow properties
-    this.ambientShadowOpacity = 0.4,
+    this.ambientShadowOpacity = 0.2,
     this.ambientShadowBlur = 30,
     this.ambientShadowYOffset = 8,
     this.primaryShadowOpacity = 0.30,
@@ -138,8 +140,7 @@ class HolographicCard extends StatefulWidget {
     this.logoAsset = 'packages/core/assets/holograms/legal_logo.svg',
     this.hologramAsset = 'packages/core/assets/holograms/LMU-Sigel.svg',
     this.hologramAsset2 = 'packages/core/assets/holograms/LMUcard.svg',
-    this.shaderpath =
-        'packages/core/assets/shader/holographic_shader.frag.glsl',
+    this.shaderpath = 'packages/core/assets/shader/holographic_shader.frag.glsl',
 
     // Feature toggles
     this.enableFlip = true,
@@ -188,8 +189,7 @@ class HolographicCard extends StatefulWidget {
   State<HolographicCard> createState() => _HolographicCardState();
 }
 
-class _HolographicCardState extends State<HolographicCard>
-    with TickerProviderStateMixin {
+class _HolographicCardState extends State<HolographicCard> with TickerProviderStateMixin {
   Offset _offset = Offset.zero; // To store the pointer offset
   late AnimationController _returnToCenterController;
   late Animation<Offset> _returnAnimation;
@@ -252,11 +252,9 @@ class _HolographicCardState extends State<HolographicCard>
 
     _targetGyroscopeOffset = Offset(
       _targetGyroscopeOffset.dx * widget.gyroSmoothing +
-          (yFactor * event.y * widget.gyroSensitivity) *
-              (1 - widget.gyroSmoothing),
+          (yFactor * event.y * widget.gyroSensitivity) * (1 - widget.gyroSmoothing),
       _targetGyroscopeOffset.dy * widget.gyroSmoothing +
-          (xFactor * event.x * widget.gyroSensitivity) *
-              (1 - widget.gyroSmoothing),
+          (xFactor * event.x * widget.gyroSensitivity) * (1 - widget.gyroSmoothing),
     );
 
     // Ensure animation is running
@@ -270,10 +268,8 @@ class _HolographicCardState extends State<HolographicCard>
 
     setState(() {
       _gyroscopeOffset = Offset(
-        _gyroscopeOffset.dx +
-            (_targetGyroscopeOffset.dx - _gyroscopeOffset.dx) * 0.1,
-        _gyroscopeOffset.dy +
-            (_targetGyroscopeOffset.dy - _gyroscopeOffset.dy) * 0.1,
+        _gyroscopeOffset.dx + (_targetGyroscopeOffset.dx - _gyroscopeOffset.dx) * 0.1,
+        _gyroscopeOffset.dy + (_targetGyroscopeOffset.dy - _gyroscopeOffset.dy) * 0.1,
       );
     });
   }
@@ -282,8 +278,7 @@ class _HolographicCardState extends State<HolographicCard>
     print('Shader loading initiated.');
 
     if (!widget.enableShader || path == null) {
-      print(
-          'Shader loading skipped: ${path == null ? 'Path is null' : 'Shader disabled'}');
+      print('Shader loading skipped: ${path == null ? 'Path is null' : 'Shader disabled'}');
       setState(() {
         _holographicProgram = null;
       });
@@ -323,18 +318,12 @@ class _HolographicCardState extends State<HolographicCard>
   @override
   Widget build(BuildContext context) {
     // Parallax rotations from gestures (offset is now -0.5 to 0.5)
-    final double gestureRotateX =
-        widget.enableGestures ? -_offset.dy * widget.gestureSensitivity : 0.0;
-    final double gestureRotateY =
-        widget.enableGestures ? _offset.dx * widget.gestureSensitivity : 0.0;
+    final double gestureRotateX = widget.enableGestures ? -_offset.dy * widget.gestureSensitivity : 0.0;
+    final double gestureRotateY = widget.enableGestures ? _offset.dx * widget.gestureSensitivity : 0.0;
 
     // Parallax rotations from gyroscope
-    final double gyroRotateX = widget.enableGyro
-        ? -_gyroscopeOffset.dy
-        : 0.0; // dy influences X-axis rotation
-    final double gyroRotateY = widget.enableGyro
-        ? _gyroscopeOffset.dx
-        : 0.0; // dx influences Y-axis rotation
+    final double gyroRotateX = widget.enableGyro ? -_gyroscopeOffset.dy : 0.0; // dy influences X-axis rotation
+    final double gyroRotateY = widget.enableGyro ? _gyroscopeOffset.dx : 0.0; // dx influences Y-axis rotation
 
     // Combined rotation
     final double finalRotateX = gestureRotateX + gyroRotateX;
@@ -354,8 +343,7 @@ class _HolographicCardState extends State<HolographicCard>
           : null,
       onPanUpdate: widget.enableGestures
           ? (details) {
-              final RenderBox renderBox =
-                  context.findRenderObject() as RenderBox;
+              final RenderBox renderBox = context.findRenderObject() as RenderBox;
               final localPosition = renderBox.globalToLocal(
                 details.globalPosition,
               );
@@ -427,28 +415,23 @@ class _HolographicCardState extends State<HolographicCard>
 
                   // Calculate shadow values based on tilt
                   final shadowIntensity =
-                      math.sqrt(combinedX * combinedX + combinedY * combinedY) *
-                          widget.shadowIntensityMultiplier;
+                      math.sqrt(combinedX * combinedX + combinedY * combinedY) * widget.shadowIntensityMultiplier;
                   final shadowIntensityLimited = shadowIntensity.clamp(
                     0.0,
                     1.0,
                   );
 
                   // Shadow direction based on tilt
-                  final shadowOffsetX =
-                      -combinedX * widget.shadowOffsetMultiplier;
-                  final shadowOffsetY =
-                      -combinedY * widget.shadowOffsetMultiplier;
+                  final shadowOffsetX = -combinedX * widget.shadowOffsetMultiplier;
+                  final shadowOffsetY = -combinedY * widget.shadowOffsetMultiplier;
 
                   // Shadow size increases with intensity
                   final shadowSpreadBase = 0.2;
-                  final shadowSpread =
-                      shadowSpreadBase + shadowIntensityLimited * 2.0;
+                  final shadowSpread = shadowSpreadBase + shadowIntensityLimited * 2.0;
 
                   // Shadow blur increases with distance from card
                   final shadowBlurBase = 6.0;
-                  final shadowBlur =
-                      shadowBlurBase + shadowIntensityLimited * 25.0;
+                  final shadowBlur = shadowBlurBase + shadowIntensityLimited * 25.0;
 
                   return Container(
                     width: widget.width,
@@ -471,8 +454,7 @@ class _HolographicCardState extends State<HolographicCard>
                               // Primary shadow - closest to card, follows movement most
                               BoxShadow(
                                 color: Colors.black.withOpacity(
-                                  widget.primaryShadowOpacity *
-                                      shadowIntensityLimited,
+                                  widget.primaryShadowOpacity * shadowIntensityLimited,
                                 ),
                                 blurRadius: shadowBlur * 0.3,
                                 offset: Offset(
@@ -484,8 +466,7 @@ class _HolographicCardState extends State<HolographicCard>
                               // Mid-level shadow - larger spread, more diffuse
                               BoxShadow(
                                 color: Colors.black.withOpacity(
-                                  widget.midShadowOpacity *
-                                      shadowIntensityLimited,
+                                  widget.midShadowOpacity * shadowIntensityLimited,
                                 ),
                                 blurRadius: shadowBlur * 0.8,
                                 offset: Offset(
@@ -497,8 +478,7 @@ class _HolographicCardState extends State<HolographicCard>
                               // Distant shadow - largest, most diffuse
                               BoxShadow(
                                 color: Colors.black.withOpacity(
-                                  widget.distantShadowOpacity *
-                                      shadowIntensityLimited,
+                                  widget.distantShadowOpacity * shadowIntensityLimited,
                                 ),
                                 blurRadius: shadowBlur * 1.5,
                                 offset: Offset(
@@ -514,8 +494,7 @@ class _HolographicCardState extends State<HolographicCard>
                       borderRadius: BorderRadius.circular(widget.borderRadius),
                       child: ShaderMask(
                         shaderCallback: (Rect bounds) {
-                          if (_holographicProgram == null ||
-                              !widget.enableShader) {
+                          if (_holographicProgram == null || !widget.enableShader) {
                             return ui.Gradient.linear(
                               Offset.zero,
                               Offset(bounds.width, bounds.height),
@@ -526,28 +505,19 @@ class _HolographicCardState extends State<HolographicCard>
                           final shader = _holographicProgram!.fragmentShader();
 
                           // Combine touch and gyroscope effects
-                          final combinedX =
-                              widget.enableGestures ? _offset.dx : 0.0;
-                          final combinedY =
-                              widget.enableGestures ? _offset.dy : 0.0;
-                          final gyroX =
-                              widget.enableGyro ? _gyroscopeOffset.dx : 0.0;
-                          final gyroY =
-                              widget.enableGyro ? _gyroscopeOffset.dy : 0.0;
+                          final combinedX = widget.enableGestures ? _offset.dx : 0.0;
+                          final combinedY = widget.enableGestures ? _offset.dy : 0.0;
+                          final gyroX = widget.enableGyro ? _gyroscopeOffset.dx : 0.0;
+                          final gyroY = widget.enableGyro ? _gyroscopeOffset.dy : 0.0;
 
                           final totalX = combinedX + gyroX;
                           final totalY = combinedY + gyroY;
 
-                          final effectX =
-                              _flipController.value >= 0.5 ? -totalX : totalX;
+                          final effectX = _flipController.value >= 0.5 ? -totalX : totalX;
                           final effectY = totalY;
 
-                          final centerX = 0.5 +
-                              (-effectX * widget.hologramCenterMovement)
-                                  .clamp(-0.3, 0.3);
-                          final centerY = 0.5 +
-                              (-effectY * widget.hologramCenterMovement)
-                                  .clamp(-0.3, 0.3);
+                          final centerX = 0.5 + (-effectX * widget.hologramCenterMovement).clamp(-0.3, 0.3);
+                          final centerY = 0.5 + (-effectY * widget.hologramCenterMovement).clamp(-0.3, 0.3);
 
                           shader.setFloat(0, bounds.width);
                           shader.setFloat(1, bounds.height);
@@ -580,8 +550,7 @@ class _HolographicCardState extends State<HolographicCard>
                                 name: widget.name,
                                 matrikelnr: widget.matrikelnr,
                                 hologramColor: widget.hologramColor,
-                                enableHolographicEffects:
-                                    widget.enableHolographicEffects,
+                                enableHolographicEffects: widget.enableHolographicEffects,
                                 combinedX: combinedX,
                                 combinedY: combinedY,
                               ),
@@ -589,8 +558,7 @@ class _HolographicCardState extends State<HolographicCard>
                                 hologramAsset: widget.hologramAsset,
                                 hologramAsset2: widget.hologramAsset2,
                                 hologramColor: widget.hologramColor,
-                                enableHolographicEffects:
-                                    widget.enableHolographicEffects,
+                                enableHolographicEffects: widget.enableHolographicEffects,
                                 combinedX: combinedX,
                                 combinedY: combinedY,
                                 hologram1Width: widget.hologram1Width,
@@ -607,16 +575,14 @@ class _HolographicCardState extends State<HolographicCard>
                               width: widget.width,
                               height: widget.height,
                               decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(widget.borderRadius),
+                                borderRadius: BorderRadius.circular(widget.borderRadius),
                                 border: Border.all(
                                   color: widget.borderCardColor,
                                   width: widget.borderWidth,
                                 ),
                               ),
                               child: ClipRRect(
-                                borderRadius:
-                                    BorderRadius.circular(widget.borderRadius),
+                                borderRadius: BorderRadius.circular(widget.borderRadius),
                                 child: Stack(
                                   children: [
                                     if (_flipController.value < 0.5) ...[
@@ -636,19 +602,16 @@ class _HolographicCardState extends State<HolographicCard>
                                                 ),
                                               )
                                             : Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Container(
-                                                    padding:
-                                                        const EdgeInsets.all(4),
+                                                    padding: const EdgeInsets.all(4),
                                                     color: Colors.black,
                                                     child: Text(
                                                       'LMU',
                                                       style: TextStyle(
                                                         color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.bold,
+                                                        fontWeight: FontWeight.bold,
                                                         fontSize: 16,
                                                       ),
                                                     ),
@@ -710,14 +673,12 @@ class _HolographicCardState extends State<HolographicCard>
                                         bottom: 20,
                                         left: 20,
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               'Matrikelnr',
                                               style: TextStyle(
-                                                color:
-                                                    widget.secondaryTextColor,
+                                                color: widget.secondaryTextColor,
                                                 fontSize: 12,
                                               ),
                                             ),
@@ -733,32 +694,25 @@ class _HolographicCardState extends State<HolographicCard>
                                                 ),
                                                 const SizedBox(width: 5),
                                                 GestureDetector(
-                                                  onTap:
-                                                      widget.onMatrikelnrCopy !=
-                                                              null
-                                                          ? () {
-                                                              developer.log(
-                                                                'Copying Matrikelnr: ${widget.matrikelnr}',
-                                                                name:
-                                                                    'HolographicCard',
-                                                              );
-                                                              Clipboard.setData(
-                                                                ClipboardData(
-                                                                  text: widget
-                                                                      .matrikelnr,
-                                                                ),
-                                                              );
-                                                              widget
-                                                                  .onMatrikelnrCopy!(
-                                                                widget
-                                                                    .matrikelnr,
-                                                              );
-                                                            }
-                                                          : null,
+                                                  onTap: widget.onMatrikelnrCopy != null
+                                                      ? () {
+                                                          developer.log(
+                                                            'Copying Matrikelnr: ${widget.matrikelnr}',
+                                                            name: 'HolographicCard',
+                                                          );
+                                                          Clipboard.setData(
+                                                            ClipboardData(
+                                                              text: widget.matrikelnr,
+                                                            ),
+                                                          );
+                                                          widget.onMatrikelnrCopy!(
+                                                            widget.matrikelnr,
+                                                          );
+                                                        }
+                                                      : null,
                                                   child: Icon(
                                                     Icons.copy,
-                                                    color: widget
-                                                        .secondaryTextColor,
+                                                    color: widget.secondaryTextColor,
                                                     size: 16,
                                                   ),
                                                 ),
@@ -773,14 +727,12 @@ class _HolographicCardState extends State<HolographicCard>
                                         bottom: 20,
                                         right: 20,
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
+                                          crossAxisAlignment: CrossAxisAlignment.end,
                                           children: [
                                             Text(
                                               'LRZ Kennung',
                                               style: TextStyle(
-                                                color:
-                                                    widget.secondaryTextColor,
+                                                color: widget.secondaryTextColor,
                                                 fontSize: 12,
                                               ),
                                             ),
@@ -796,32 +748,25 @@ class _HolographicCardState extends State<HolographicCard>
                                                 ),
                                                 const SizedBox(width: 5),
                                                 GestureDetector(
-                                                  onTap:
-                                                      widget.onLrzKennungCopy !=
-                                                              null
-                                                          ? () {
-                                                              developer.log(
-                                                                'Copying LRZ Kennung: ${widget.lrzKennung}',
-                                                                name:
-                                                                    'HolographicCard',
-                                                              );
-                                                              Clipboard.setData(
-                                                                ClipboardData(
-                                                                  text: widget
-                                                                      .lrzKennung,
-                                                                ),
-                                                              );
-                                                              widget
-                                                                  .onLrzKennungCopy!(
-                                                                widget
-                                                                    .lrzKennung,
-                                                              );
-                                                            }
-                                                          : null,
+                                                  onTap: widget.onLrzKennungCopy != null
+                                                      ? () {
+                                                          developer.log(
+                                                            'Copying LRZ Kennung: ${widget.lrzKennung}',
+                                                            name: 'HolographicCard',
+                                                          );
+                                                          Clipboard.setData(
+                                                            ClipboardData(
+                                                              text: widget.lrzKennung,
+                                                            ),
+                                                          );
+                                                          widget.onLrzKennungCopy!(
+                                                            widget.lrzKennung,
+                                                          );
+                                                        }
+                                                      : null,
                                                   child: Icon(
                                                     Icons.copy,
-                                                    color: widget
-                                                        .secondaryTextColor,
+                                                    color: widget.secondaryTextColor,
                                                     size: 16,
                                                   ),
                                                 ),
@@ -837,13 +782,11 @@ class _HolographicCardState extends State<HolographicCard>
                                         right: 30,
                                         child: Transform(
                                           alignment: Alignment.center,
-                                          transform: Matrix4.identity()
-                                            ..scale(-1.0, 1.0),
+                                          transform: Matrix4.identity()..scale(-1.0, 1.0),
                                           child: Text(
                                             widget.braille,
                                             style: TextStyle(
-                                              color:
-                                                  widget.textColor.withOpacity(
+                                              color: widget.textColor.withOpacity(
                                                 0.3,
                                               ),
                                               fontSize: 24,
@@ -858,13 +801,11 @@ class _HolographicCardState extends State<HolographicCard>
                                       // Back content - Theme Selection
                                       Transform(
                                         alignment: Alignment.center,
-                                        transform: Matrix4.identity()
-                                          ..rotateY(math.pi),
+                                        transform: Matrix4.identity()..rotateY(math.pi),
                                         child: Padding(
                                           padding: const EdgeInsets.all(20.0),
                                           child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               // Title
                                               Text(
@@ -875,115 +816,72 @@ class _HolographicCardState extends State<HolographicCard>
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
-                                              const SizedBox(
-                                                  height: 10), // Fixed spacing
+                                              const SizedBox(height: 10), // Fixed spacing
 
                                               // Use Expanded to let GridView fill remaining space
                                               Expanded(
                                                 child: GridView.builder(
-                                                  physics:
-                                                      const NeverScrollableScrollPhysics(),
-                                                  padding: EdgeInsets
-                                                      .zero, // Avoid extra padding
-                                                  gridDelegate:
-                                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  physics: const NeverScrollableScrollPhysics(),
+                                                  padding: EdgeInsets.zero, // Avoid extra padding
+                                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                                     crossAxisCount: 3,
                                                     crossAxisSpacing: 12,
                                                     mainAxisSpacing: 12,
                                                     childAspectRatio: 1.5,
                                                   ),
                                                   itemCount: 6,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    final themeIndex = index %
-                                                        LmuCardThemes(context)
-                                                            .allThemes.length;
-                                                    final theme = LmuCardThemes(
-                                                            context)
-                                                        .allThemes[themeIndex];
-                                                    final isSelected = widget
-                                                            .currentTheme
-                                                            ?.name ==
-                                                        theme.name;
+                                                  itemBuilder: (context, index) {
+                                                    final themeIndex = index % LmuCardThemes(context).allThemes.length;
+                                                    final theme = LmuCardThemes(context).allThemes[themeIndex];
+                                                    final isSelected = widget.currentTheme?.name == theme.name;
 
                                                     return GestureDetector(
                                                       onTap: () {
-                                                        if (widget
-                                                                .onThemeSelected !=
-                                                            null) {
-                                                          widget.onThemeSelected!(
-                                                              theme);
+                                                        if (widget.onThemeSelected != null) {
+                                                          widget.onThemeSelected!(theme);
                                                         }
                                                       },
                                                       child: Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color:
-                                                              theme.cardColor,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(15),
+                                                        decoration: BoxDecoration(
+                                                          color: theme.cardColor,
+                                                          borderRadius: BorderRadius.circular(15),
                                                           border: Border.all(
-                                                            color: isSelected
-                                                                ? widget
-                                                                    .textColor
-                                                                : theme
-                                                                    .borderColor,
-                                                            width: isSelected
-                                                                ? 2
-                                                                : 1,
+                                                            color: isSelected ? widget.textColor : theme.borderColor,
+                                                            width: isSelected ? 2 : 1,
                                                           ),
                                                         ),
                                                         child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
+                                                          mainAxisAlignment: MainAxisAlignment.center,
                                                           children: [
                                                             Container(
                                                               width: 24,
                                                               height: 18,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: theme
-                                                                    .cardColor,
-                                                                shape: BoxShape
-                                                                    .circle,
-                                                                border:
-                                                                    Border.all(
-                                                                  color: theme
-                                                                      .textColor
-                                                                      .withOpacity(
-                                                                          0.3),
+                                                              decoration: BoxDecoration(
+                                                                color: theme.cardColor,
+                                                                shape: BoxShape.circle,
+                                                                border: Border.all(
+                                                                  color: theme.textColor.withOpacity(0.3),
                                                                   width: 1,
                                                                 ),
                                                               ),
                                                               child: isSelected
                                                                   ? Icon(
-                                                                      Icons
-                                                                          .check,
-                                                                      color: theme
-                                                                          .textColor,
+                                                                      Icons.check,
+                                                                      color: theme.textColor,
                                                                       size: 18,
                                                                     )
                                                                   : null,
                                                             ),
-                                                            const SizedBox(
-                                                                height: 8),
+                                                            const SizedBox(height: 8),
                                                             Text(
                                                               theme.name,
                                                               style: TextStyle(
-                                                                color: theme
-                                                                    .textColor,
+                                                                color: theme.textColor,
                                                                 fontSize: 12,
-                                                                fontWeight: isSelected
-                                                                    ? FontWeight
-                                                                        .bold
-                                                                    : FontWeight
-                                                                        .normal,
+                                                                fontWeight:
+                                                                    isSelected ? FontWeight.bold : FontWeight.normal,
                                                               ),
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
+                                                              textAlign: TextAlign.center,
                                                             ),
                                                           ],
                                                         ),
