@@ -6,36 +6,20 @@ class PeopleRecentSearchesStorage {
   static const String _recentSearchesKey = 'people_recent_searches';
   static const int _maxRecentSearches = 10;
 
-  Future<List<int>> getRecentSearches() async {
+  Future<List<String>> getRecentSearches() async {
     final prefs = await SharedPreferences.getInstance();
-    final recentSearchesJson = prefs.getStringList(_recentSearchesKey) ?? [];
-    
-    final List<int> recentSearches = [];
-    for (final jsonString in recentSearchesJson) {
-      try {
-        final int personId = int.parse(jsonString);
-        recentSearches.add(personId);
-      } catch (e) {
-        continue;
-      }
-    }
-    
-    return recentSearches;
+    return prefs.getStringList(_recentSearchesKey) ?? [];
   }
 
-  Future<void> saveRecentSearches(List<int> recentSearches) async {
+  Future<void> saveRecentSearches(List<String> recentSearches) async {
     final prefs = await SharedPreferences.getInstance();
     
     final limitedSearches = recentSearches.take(_maxRecentSearches).toList();
     
-    final List<String> recentSearchesJson = limitedSearches
-        .map((personId) => personId.toString())
-        .toList();
-    
-    await prefs.setStringList(_recentSearchesKey, recentSearchesJson);
+    await prefs.setStringList(_recentSearchesKey, limitedSearches);
   }
 
-  Future<void> addRecentSearch(int personId) async {
+  Future<void> addRecentSearch(String personId) async {
     final currentSearches = await getRecentSearches();
     
     currentSearches.removeWhere((id) => id == personId);

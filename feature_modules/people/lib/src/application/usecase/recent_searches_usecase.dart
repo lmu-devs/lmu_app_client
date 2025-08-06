@@ -31,7 +31,7 @@ class RecentSearchesUsecase extends ChangeNotifier {
       _recentSearchIds.removeRange(10, _recentSearchIds.length);
     }
     
-    await _storage.saveRecentSearches(_recentSearchIds);
+    await _storage.saveRecentSearches(_recentSearchIds.map((e) => e.toString()).toList());
     _updateRecentSearchesNotifier();
     notifyListeners();
   }
@@ -45,7 +45,8 @@ class RecentSearchesUsecase extends ChangeNotifier {
 
   Future<void> _load() async {
     _recentSearchIds.clear();
-    _recentSearchIds.addAll(await _storage.getRecentSearches());
+    final stringIds = await _storage.getRecentSearches();
+    _recentSearchIds.addAll(stringIds.map((s) => int.tryParse(s)).whereType<int>());
     _updateRecentSearchesNotifier();
     notifyListeners();
   }
