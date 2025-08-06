@@ -14,3 +14,27 @@ class LecturesMainRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) => _router.buildMain(context);
 }
+
+class LectureListRoute extends GoRouteData {
+  final int facultyId;
+
+  const LectureListRoute({required this.facultyId});
+
+  static const String path = 'lecture-list';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => _router.buildLectureList(context, facultyId: facultyId);
+}
+
+class LectureDetailRoute extends GoRouteData {
+  final String lectureId;
+  final String lectureTitle;
+
+  const LectureDetailRoute({required this.lectureId, required this.lectureTitle});
+
+  static const String path = 'detail';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      _router.buildLectureDetail(context, lectureId: lectureId, lectureTitle: lectureTitle);
+}

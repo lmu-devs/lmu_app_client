@@ -4,6 +4,7 @@ import 'package:core_routes/lectures.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/lectures.dart';
 
+import 'application/usecase/favorite_lectures_usecase.dart';
 import 'application/usecase/get_lectures_usecase.dart';
 import 'domain/interface/lectures_repository_interface.dart';
 import 'infrastructure/primary/api/lectures_api.dart';
@@ -20,11 +21,15 @@ class LecturesModule extends AppModule with LocalDependenciesProvidingAppModule,
   void provideLocalDependencies() {
     final baseApiClient = GetIt.I.get<BaseApiClient>();
     final storage = LecturesStorage();
-    final repository = LecturesRepository(LecturesApiClient(baseApiClient), storage);
-    final getUsecase = GetLecturesUsecase(repository);
+    final apiClient = LecturesApiClient(baseApiClient);
+    final repository = LecturesRepository(apiClient, storage);
+    final favoriteUsecase = FavoriteLecturesUsecase(storage);
+    final getUsecase = GetLecturesUsecase(repository, favoriteUsecase);
 
+    GetIt.I.registerSingleton<LecturesApiClient>(apiClient);
     GetIt.I.registerSingleton<LecturesRepositoryInterface>(repository);
     GetIt.I.registerSingleton<GetLecturesUsecase>(getUsecase);
+    GetIt.I.registerSingleton<FavoriteLecturesUsecase>(favoriteUsecase);
   }
 
   @override
