@@ -1,4 +1,5 @@
 import 'package:core/components.dart';
+import 'package:core/constants.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/model/helper/date_time_formatter.dart';
@@ -20,11 +21,11 @@ class LmuDateLabel extends StatelessWidget {
         /// Half-circle indicator if today
         if (diff == 0)
           Container(
-            width: 12,
-            height: 24,
+            width: LmuSizes.size_12,
+            height: LmuSizes.size_24,
             decoration: const BoxDecoration(
               color: Colors.white, // customize this color
-              borderRadius: BorderRadius.horizontal(right: Radius.circular(12)),
+              borderRadius: BorderRadius.horizontal(right: Radius.circular(LmuRadiusSizes.round)),
             ),
           )
         else

@@ -6,38 +6,70 @@ part of 'calendar_entry_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CalendarEntryDto _$CalendarEntryDtoFromJson(Map<String, dynamic> json) => CalendarEntryDto(
-      id: json['id'] as String,
-      title: json['title'] as String,
-      type: $enumDecode(_$EventTypeEnumMap, json['type']),
-      startDate: DateTime.parse(json['startDate'] as String),
-      endDate: DateTime.parse(json['endDate'] as String),
-      color: const ColorConverter().fromJson((json['color'] as num).toInt()),
-      location: LocationModel.fromJson(json['location'] as Map<String, dynamic>),
-      allDay: json['allDay'] as bool,
-      description: json['description'] as String?,
-      address: json['address'] as String?,
-      rule: json['rule'] == null ? null : CalendarRuleDto.fromJson(json['rule'] as Map<String, dynamic>),
-      recurrenceId: (json['recurrenceId'] as num?)?.toInt(),
-      createdAt: json['createdAt'] == null ? null : DateTime.parse(json['createdAt'] as String),
-      updatedAt: json['updatedAt'] == null ? null : DateTime.parse(json['updatedAt'] as String),
-    );
+// CalendarEntryDto _$CalendarEntryDtoFromJson(Map<String, dynamic> json) =>
+//     CalendarEntryDto(
+//       id: json['id'] as String,
+//       title: json['title'] as String,
+//       eventType: $enumDecode(_$EventTypeEnumMap, json['event_type']),
+//       startTime: DateTime.parse(json['start_date'] as String),
+//       endTime: DateTime.parse(json['end_date'] as String),
+//       color: const ColorConverter().fromJson((json['color'] as num).toInt()),
+//       location:
+//           LocationModel.fromJson(json['location'] as Map<String, dynamic>),
+//       allDay: json['all_day'] as bool,
+//       description: json['description'] as String?,
+//       address: json['address'] as String?,
+//       rule: json['rule'] == null
+//           ? null
+//           : CalendarRuleDto.fromJson(json['rule'] as Map<String, dynamic>),
+//       recurrenceId: (json['recurrence_id'] as num?)?.toInt(),
+//       createdAt: json['created_at'] == null
+//           ? null
+//           : DateTime.parse(json['created_at'] as String),
+//       updatedAt: json['updated_at'] == null
+//           ? null
+//           : DateTime.parse(json['updated_at'] as String),
+//     );
+
+// for testing puropses
+CalendarEntryDto _$CalendarEntryDtoFromJson(Map<String, dynamic> json) {
+  for (final entry in json.entries) {
+    print('Key: ${entry.key}, Value: ${entry.value}');
+  }
+  final a = CalendarEntryDto(
+    id: json['id'] as String,
+    title: json['title'] as String,
+    eventType: $enumDecode(_$EventTypeEnumMap, json['event_type']),
+    startTime: DateTime.parse(json['start_time'] as String),
+    endTime: DateTime.parse(json['end_time'] as String),
+    color: json['color'] != null
+        ? const ColorConverter().fromJson((json['color'] as num).toInt())
+        : const Color(0xFFFFC0CB),
+    location: LocationModel.fromJson(json['location'] as Map<String, dynamic>),
+    allDay: json['all_day'] as bool,
+    description: json['description'] as String?,
+    rule: json['rule'] == null ? null : CalendarRuleDto.fromJson(json['rule'] as Map<String, dynamic>),
+    recurrenceId: (json['recurrence_id'] as num?)?.toInt(),
+    createdAt: json['created_at'] == null ? null : DateTime.parse(json['created_at'] as String),
+    updatedAt: json['updated_at'] == null ? null : DateTime.parse(json['updated_at'] as String),
+  );
+  return a;
+}
 
 Map<String, dynamic> _$CalendarEntryDtoToJson(CalendarEntryDto instance) => <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
-      'type': _$EventTypeEnumMap[instance.type]!,
-      'startDate': instance.startDate.toIso8601String(),
-      'endDate': instance.endDate.toIso8601String(),
-      'allDay': instance.allDay,
+      'event_type': _$EventTypeEnumMap[instance.eventType]!,
+      'start_time': instance.startTime.toIso8601String(),
+      'end_time': instance.endTime.toIso8601String(),
+      'all_day': instance.allDay,
       'color': const ColorConverter().toJson(instance.color),
       'location': instance.location,
       'description': instance.description,
-      'address': instance.address,
       'rule': instance.rule,
-      'recurrenceId': instance.recurrenceId,
-      'createdAt': instance.createdAt?.toIso8601String(),
-      'updatedAt': instance.updatedAt?.toIso8601String(),
+      'recurrence_id': instance.recurrenceId,
+      'created_at': instance.createdAt?.toIso8601String(),
+      'updated_at': instance.updatedAt?.toIso8601String(),
     };
 
 const _$EventTypeEnumMap = {

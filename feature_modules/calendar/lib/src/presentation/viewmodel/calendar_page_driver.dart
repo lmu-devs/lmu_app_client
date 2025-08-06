@@ -1,13 +1,14 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
 import 'package:core/utils.dart';
+import 'package:core_routes/calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../application/usecase/get_events_by_date_usecase.dart';
 import '../../domain/model/calendar_entry.dart';
-import '../../domain/model/calendar_view_mode.dart';
+import '../../domain/model/calendar_view_type.dart';
 import '../view/calendar_event_contentsheet.dart';
 
 part 'calendar_page_driver.g.dart';
@@ -25,13 +26,13 @@ class CalendarPageDriver extends WidgetDriver {
   bool get isLoadingEvents => _calendarEntriesLoadState != CalendarEntriesLoadState.success;
   String get largeTitle => "Calendar"; // TODO: Replace with localized title
 
-  CalendarViewMode _viewMode = CalendarViewMode.list;
+  CalendarViewType _viewType = CalendarViewType.list;
   DateTimeRange _selectedDateTimeRange = DateTimeRange(
-    start: DateTime.now(),
+    start: DateTime.now().subtract(const Duration(days: 365)),
     end: DateTime.now().add(const Duration(days: 365)),
   );
 
-  CalendarViewMode get viewMode => _viewMode;
+  CalendarViewType get viewType => _viewType;
   @TestDriverDefaultValue('2025-01-01')
   DateTimeRange get selectedDate => _selectedDateTimeRange;
 
@@ -41,7 +42,8 @@ class CalendarPageDriver extends WidgetDriver {
     _calendarEntriesLoadState = CalendarEntriesLoadState.loading;
     notifyWidget();
 
-    await _getCalendarEntriesByDateUsecase.load(dateRange: _selectedDateTimeRange);
+    await _getCalendarEntriesByDateUsecase.load();
+    // await _getCalendarEntriesByDateUsecase.load(dateRange: _selectedDateTimeRange);
 
     _allCalendarEntries = _getCalendarEntriesByDateUsecase.data;
 
@@ -53,33 +55,29 @@ class CalendarPageDriver extends WidgetDriver {
 
   List<CalendarEntry>? get calendarEntries {
     if (_allCalendarEntries == null) return null;
-
-    print('Loaded events inside ---: ${_selectedDateTimeRange.toString()}');
     return _allCalendarEntries!.where((entry) {
-      print('entry.title: ${entry.title}, '
-          'overlaps: ${entry.overlapsWithRange(_selectedDateTimeRange)}');
       return entry.overlapsWithRange(_selectedDateTimeRange);
     }).toList();
   }
 
-  void onViewModeChanged(CalendarViewMode mode) {
-    if (_viewMode != mode) {
-      if (mode == CalendarViewMode.list) {
+  void onCalendarViewTypeChanged(CalendarViewType mode) {
+    if (_viewType != mode) {
+      if (mode == CalendarViewType.list) {
         final weekStart = _selectedDateTimeRange.start.startOfWeek;
         final weekEnd = weekStart.add(const Duration(days: 6));
         _selectedDateTimeRange = DateTimeRange(start: weekStart, end: weekEnd);
-      } else if (mode == CalendarViewMode.day) {
+      } else if (mode == CalendarViewType.day) {
         final day = _selectedDateTimeRange.start;
         _selectedDateTimeRange = DateTimeRange(start: day.startOfDay, end: day.endOfDay);
       }
     }
-    _viewMode = mode;
+    _viewType = mode;
     loadEvents();
   }
 
   void onDateSelected(DateTimeRange dateRange) {
     _selectedDateTimeRange = dateRange;
-    if (_viewMode == CalendarViewMode.day) {
+    if (_viewType == CalendarViewType.day) {
       loadEvents();
     }
   }
@@ -90,6 +88,10 @@ class CalendarPageDriver extends WidgetDriver {
 
   void onAddEventPressed() {
     // navigation or modal logic
+  }
+
+  void onTestScreenPressed(BuildContext context) {
+    const CalendarTestRoute().go(context);
   }
 
   void _onCalendarEntriesStateChanged() {
