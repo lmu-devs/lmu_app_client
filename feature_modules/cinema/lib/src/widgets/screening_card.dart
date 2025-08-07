@@ -114,10 +114,13 @@ class ScreeningCard extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Flexible(
-                                  child: LmuText.body(
-                                    screening.movie.title,
-                                    maxLines: 2,
-                                    customOverFlow: TextOverflow.ellipsis,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: LmuSizes.size_4),
+                                    child: LmuText.body(
+                                      screening.movie.title,
+                                      maxLines: 2,
+                                      customOverFlow: TextOverflow.ellipsis,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(width: LmuSizes.size_8),
@@ -130,8 +133,8 @@ class ScreeningCard extends StatelessWidget {
                                   child: Padding(
                                     padding: const EdgeInsets.only(
                                       left: LmuSizes.size_8,
-                                      right: LmuSizes.size_8,
-                                      top: LmuSizes.size_8,
+                                      right: LmuSizes.size_6,
+                                      top: LmuSizes.size_6,
                                       bottom: LmuSizes.size_4,
                                     ),
                                     child: StarIcon(isActive: likedScreeningIds.contains(screening.id)),
@@ -141,6 +144,7 @@ class ScreeningCard extends StatelessWidget {
                             );
                           },
                         ),
+                        const SizedBox(height: LmuSizes.size_2),
                         LmuText.bodySmall(
                           getScreeningTime(context: context, time: screening.entryTime),
                           color: context.colors.neutralColors.textColors.mediumColors.base,

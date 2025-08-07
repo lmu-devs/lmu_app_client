@@ -78,14 +78,17 @@ class NavigationSheet extends StatelessWidget {
               height: LmuIconSizes.large,
               width: LmuIconSizes.large,
               decoration: BoxDecoration(
-              border: Border.all(color: context.colors.neutralColors.borderColors.seperatorLight),
-              borderRadius: BorderRadius.circular(LmuRadiusSizes.medium),
+                border: Border.all(color: context.colors.neutralColors.borderColors.seperatorLight),
+                borderRadius: BorderRadius.circular(LmuRadiusSizes.medium),
               ),
               clipBehavior: Clip.antiAlias,
-              child: Image.asset(
-                getPngAssetTheme('lib/assets/maps_icon'),
-                package: 'core',
-                fit: BoxFit.cover,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(LmuRadiusSizes.medium),
+                child: Image.asset(
+                  getPngAssetTheme('lib/assets/maps_icon'),
+                  package: 'core',
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             onTap: () {

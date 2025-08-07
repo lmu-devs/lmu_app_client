@@ -37,22 +37,28 @@ class MenuDayEntry extends StatelessWidget {
         final mensaName = mensaType.text(mensaLocals);
         final germanArticle =
             [MensaType.mensa, MensaType.lounge].contains(mensaType) ? allLocals.diese : allLocals.dieses;
-        return LmuEmptyState(
-          type: EmptyStateType.closed,
-          hasVerticalPadding: true,
-          title: "$mensaName ${mensaLocals.closed.toLowerCase()}",
-          description: mensaLocals.closedDescription(
-            mensaName,
-            germanArticle,
+        return Padding(
+          padding: const EdgeInsets.only(bottom: LmuSizes.size_96),
+          child: LmuEmptyState(
+            type: EmptyStateType.closed,
+            hasVerticalPadding: true,
+            title: "$mensaName ${mensaLocals.closed.toLowerCase()}",
+            description: mensaLocals.closedDescription(
+              mensaName,
+              germanArticle,
+            ),
           ),
         );
       }
-      return LmuEmptyState(
-        type: EmptyStateType.custom,
-        hasVerticalPadding: true,
-        assetName: "lib/assets/no_menu.webp",
-        title: mensaLocals.menuNotAvailable,
-        description: mensaLocals.menuNotAvailableDescription,
+      return Padding(
+          padding: const EdgeInsets.only(bottom: LmuSizes.size_96),
+          child: LmuEmptyState(
+            type: EmptyStateType.custom,
+            hasVerticalPadding: true,
+            assetName: "lib/assets/no_menu.webp",
+            title: mensaLocals.menuNotAvailable,
+            description: mensaLocals.menuNotAvailableDescription,
+          ),
       );
     }
 
