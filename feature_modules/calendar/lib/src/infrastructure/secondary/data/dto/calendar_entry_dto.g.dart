@@ -6,62 +6,28 @@ part of 'calendar_entry_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-// CalendarEntryDto _$CalendarEntryDtoFromJson(Map<String, dynamic> json) =>
-//     CalendarEntryDto(
-//       id: json['id'] as String,
-//       title: json['title'] as String,
-//       eventType: $enumDecode(_$EventTypeEnumMap, json['event_type']),
-//       startTime: DateTime.parse(json['start_date'] as String),
-//       endTime: DateTime.parse(json['end_date'] as String),
-//       color: const ColorConverter().fromJson((json['color'] as num).toInt()),
-//       location:
-//           LocationModel.fromJson(json['location'] as Map<String, dynamic>),
-//       allDay: json['all_day'] as bool,
-//       description: json['description'] as String?,
-//       address: json['address'] as String?,
-//       rule: json['rule'] == null
-//           ? null
-//           : CalendarRuleDto.fromJson(json['rule'] as Map<String, dynamic>),
-//       recurrenceId: (json['recurrence_id'] as num?)?.toInt(),
-//       createdAt: json['created_at'] == null
-//           ? null
-//           : DateTime.parse(json['created_at'] as String),
-//       updatedAt: json['updated_at'] == null
-//           ? null
-//           : DateTime.parse(json['updated_at'] as String),
-//     );
-
-// for testing puropses
-CalendarEntryDto _$CalendarEntryDtoFromJson(Map<String, dynamic> json) {
-  for (final entry in json.entries) {
-    print('Key: ${entry.key}, Value: ${entry.value}');
-  }
-  final a = CalendarEntryDto(
-    id: json['id'] as String,
-    title: json['title'] as String,
-    eventType: $enumDecode(_$EventTypeEnumMap, json['event_type']),
-    startTime: DateTime.parse(json['start_time'] as String),
-    endTime: DateTime.parse(json['end_time'] as String),
-    color: json['color'] != null
-        ? const ColorConverter().fromJson((json['color'] as num).toInt())
-        : const Color(0xFFFFC0CB),
-    location: LocationModel.fromJson(json['location'] as Map<String, dynamic>),
-    allDay: json['all_day'] as bool,
-    description: json['description'] as String?,
-    rule: json['rule'] == null ? null : CalendarRuleDto.fromJson(json['rule'] as Map<String, dynamic>),
-    recurrenceId: (json['recurrence_id'] as num?)?.toInt(),
-    createdAt: json['created_at'] == null ? null : DateTime.parse(json['created_at'] as String),
-    updatedAt: json['updated_at'] == null ? null : DateTime.parse(json['updated_at'] as String),
-  );
-  return a;
-}
+CalendarEntryDto _$CalendarEntryDtoFromJson(Map<String, dynamic> json) => CalendarEntryDto(
+      id: json['id'] as String,
+      title: json['title'] as String,
+      eventType: $enumDecode(_$EventTypeEnumMap, json['event_type']),
+      startTime: DateTime.parse(json['start_date'] as String),
+      endTime: DateTime.parse(json['end_date'] as String),
+      color: const ColorConverter().fromJson((json['color'] as num).toInt()),
+      location: LocationModel.fromJson(json['location'] as Map<String, dynamic>),
+      allDay: json['all_day'] as bool,
+      description: json['description'] as String?,
+      rule: json['rule'] == null ? null : CalendarRuleDto.fromJson(json['rule'] as Map<String, dynamic>),
+      recurrenceId: (json['recurrence_id'] as num?)?.toInt(),
+      createdAt: json['created_at'] == null ? null : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null ? null : DateTime.parse(json['updated_at'] as String),
+    );
 
 Map<String, dynamic> _$CalendarEntryDtoToJson(CalendarEntryDto instance) => <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'event_type': _$EventTypeEnumMap[instance.eventType]!,
-      'start_time': instance.startTime.toIso8601String(),
-      'end_time': instance.endTime.toIso8601String(),
+      'start_date': instance.startTime.toIso8601String(),
+      'end_date': instance.endTime.toIso8601String(),
       'all_day': instance.allDay,
       'color': const ColorConverter().toJson(instance.color),
       'location': instance.location,

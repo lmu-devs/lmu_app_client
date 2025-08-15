@@ -1,6 +1,6 @@
-import 'package:flutter/widgets.dart'; // Ensure this is imported for Canvas, Paint, Offset, etc.
+import 'package:flutter/widgets.dart';
 
-import '../../domain/model/helper/date_time_formatter.dart'; // Assuming this path is correct
+import '../../domain/model/helper/date_time_formatter.dart';
 
 class TimeGridPainter extends CustomPainter {
   TimeGridPainter({
@@ -9,6 +9,7 @@ class TimeGridPainter extends CustomPainter {
     required this.textStyle,
     this.hourLabelWidth = 50.0,
     this.currentTime,
+    required this.isToday,
   });
 
   final double heightPerHour;
@@ -16,6 +17,7 @@ class TimeGridPainter extends CustomPainter {
   final TextStyle textStyle;
   final double hourLabelWidth;
   final DateTime? currentTime;
+  final bool isToday;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -27,7 +29,7 @@ class TimeGridPainter extends CustomPainter {
       ..color = lineColor.withAlpha(75)
       ..strokeWidth = 1.0;
 
-    // Calculate the Y-position for the current time line if provided
+    // Calculate the Y-position for the current time line
     double? currentTimeY;
     if (currentTime != null) {
       final double currentMinuteIntoDay = currentTime!.hour.toDouble() * 60 + currentTime!.minute.toDouble();
@@ -39,10 +41,12 @@ class TimeGridPainter extends CustomPainter {
     for (int hour = 0; hour < 24; hour++) {
       final double y = hour * heightPerHour;
 
-      // Check if this hour line is within the exclusion zone of currentTimeY and if it is do not draw it
+      // Check if this hour line is within the exclusion zone of currentTimeY to know if to raw it or not
       bool skipHourLine = false;
       bool skipHourText = false;
-      if (currentTimeY != null) {
+      bool isCurrentTimeIsSetAndIsToday = currentTimeY != null && isToday;
+
+      if (isCurrentTimeIsSetAndIsToday) {
         if ((y >= currentTimeY - exclusionPixels) && (y <= currentTimeY + exclusionPixels)) {
           skipHourLine = true;
         }
@@ -66,19 +70,19 @@ class TimeGridPainter extends CustomPainter {
         tp.paint(canvas, Offset(hourLabelWidth - tp.width - 5, y - tp.height / 2));
       }
 
-      // Draw quarter hour lines
+      // Quarter hour lines
       for (int minute = 15; minute < 60; minute += 15) {
         final double minuteY = y + (minute / 60.0 * heightPerHour);
 
         // Check if this quarter-hour line is within the exclusion zone of currentTimeY
         bool skipMinuteLine = false;
-        if (currentTimeY != null) {
+        if (isCurrentTimeIsSetAndIsToday) {
           if ((minuteY >= currentTimeY - exclusionPixels) && (minuteY <= currentTimeY + exclusionPixels)) {
             skipMinuteLine = true;
           }
         }
 
-        // Draw quarter hour line if not skipped
+        // Quarter hour line if not skipped
         if (!skipMinuteLine) {
           canvas.drawLine(Offset(hourLabelWidth, minuteY), Offset(size.width, minuteY), linePaint);
         }
@@ -88,11 +92,11 @@ class TimeGridPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant TimeGridPainter oldDelegate) {
-    // Also consider currentTime for repainting, especially for the 10-minute exclusion logic
+    // repainting if data changes
     return oldDelegate.heightPerHour != heightPerHour ||
         oldDelegate.lineColor != lineColor ||
         oldDelegate.textStyle != textStyle ||
         oldDelegate.hourLabelWidth != hourLabelWidth ||
-        oldDelegate.currentTime != currentTime; // Added currentTime to shouldRepaint
+        oldDelegate.currentTime != currentTime;
   }
 }

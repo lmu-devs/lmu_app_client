@@ -34,7 +34,6 @@ class _ViewTypeSelectorState extends State<ViewTypeSelector> {
   Widget build(BuildContext context) {
     return PopupMenuButton<CalendarViewType>(
       initialValue: _selectedView,
-      // Only call onSelected if the item is not disabled
       onSelected: (CalendarViewType newValue) {
         if (!newValue.disabled) {
           setState(() {
@@ -48,7 +47,6 @@ class _ViewTypeSelectorState extends State<ViewTypeSelector> {
       ),
       itemBuilder: (BuildContext context) {
         return CalendarViewType.types.map((CalendarViewType viewType) {
-          // Check if the item is disabled
           if (viewType.disabled) {
             return PopupMenuItem<CalendarViewType>(
               enabled: false,

@@ -8,30 +8,38 @@ import 'view_type_selector.dart';
 
 typedef OnViewTypeSelectedCallback = void Function(CalendarViewType viewType);
 
+//
+// Very simple custom AppBar
+// Will change drastically in the future
+// No need to review this code in detail
+//
+
 class CustomCalendarAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomCalendarAppBar({
     super.key,
-    required this.currentSelectedMonth,
+    required this.currentSelectedDateTimeRange,
     required this.currentViewType,
-    this.onCalendarPressed,
-    this.onMonthPressed,
+    this.onChangeToTodayPressed,
+    this.onExpandDatePickerPressed,
+    required this.isExpanded,
     this.onViewTypeSelected,
     this.onStretchPressed,
     this.onSearchPressed,
-    this.onAddPressed,
-    this.onSyncPressed,
+    this.onAddCalendarEntryPressed,
+    this.onOpenCalendarSettingsPressed,
   });
 
-  final String currentSelectedMonth;
+  final String currentSelectedDateTimeRange;
   final CalendarViewType currentViewType;
 
-  final VoidCallback? onCalendarPressed;
-  final VoidCallback? onMonthPressed;
+  final VoidCallback? onChangeToTodayPressed;
+  final VoidCallback? onExpandDatePickerPressed;
+  final bool isExpanded;
   final OnViewTypeSelectedCallback? onViewTypeSelected;
   final VoidCallback? onStretchPressed;
   final VoidCallback? onSearchPressed;
-  final VoidCallback? onAddPressed;
-  final VoidCallback? onSyncPressed;
+  final VoidCallback? onAddCalendarEntryPressed;
+  final VoidCallback? onOpenCalendarSettingsPressed;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -52,13 +60,13 @@ class CustomCalendarAppBar extends StatelessWidget implements PreferredSizeWidge
               children: [
                 LmuIconButton(
                   icon: LucideIcons.calendar,
-                  onPressed: () => onCalendarPressed,
+                  onPressed: () => onChangeToTodayPressed,
                 ),
                 const SizedBox(width: LmuSizes.size_8),
                 LmuButton(
-                  trailingIcon: LucideIcons.chevron_down,
-                  title: currentSelectedMonth,
-                  onTap: onMonthPressed,
+                  trailingIcon: isExpanded ? LucideIcons.chevron_up : LucideIcons.chevron_down,
+                  title: currentSelectedDateTimeRange,
+                  onTap: onExpandDatePickerPressed,
                   emphasis: ButtonEmphasis.secondary,
                 ),
               ],
@@ -80,12 +88,12 @@ class CustomCalendarAppBar extends StatelessWidget implements PreferredSizeWidge
                 const SizedBox(width: LmuSizes.size_8),
                 LmuIconButton(
                   icon: LucideIcons.plus,
-                  onPressed: () => onAddPressed,
+                  onPressed: () => onAddCalendarEntryPressed,
                 ),
                 const SizedBox(width: LmuSizes.size_8),
                 LmuIconButton(
-                  icon: LucideIcons.calendar_sync,
-                  onPressed: () => onSyncPressed,
+                  icon: LucideIcons.calendar_cog,
+                  onPressed: () => onOpenCalendarSettingsPressed,
                 ),
               ],
             ),

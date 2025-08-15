@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../../application/usecase/get_events_by_date_usecase.dart';
+import '../../application/usecase/get_entries_by_date_usecase.dart';
 import '../../domain/model/calendar_entry.dart';
 import '../../domain/model/calendar_view_type.dart';
 import '../view/calendar_event_contentsheet.dart';
@@ -27,14 +27,18 @@ class CalendarPageDriver extends WidgetDriver {
   String get largeTitle => "Calendar"; // TODO: Replace with localized title
 
   CalendarViewType _viewType = CalendarViewType.list;
+  bool _isDatePickerExpanded = false;
   DateTimeRange _selectedDateTimeRange = DateTimeRange(
-    start: DateTime.now().subtract(const Duration(days: 365)),
-    end: DateTime.now().add(const Duration(days: 365)),
+    start: DateTime.now().startOfDay,
+    end: DateTime.now().endOfDay,
   );
 
+  @TestDriverDefaultValue(false)
+  bool get isDatePickerExpanded => _isDatePickerExpanded;
+  @TestDriverDefaultValue(CalendarViewType.list)
   CalendarViewType get viewType => _viewType;
   @TestDriverDefaultValue('2025-01-01')
-  DateTimeRange get selectedDate => _selectedDateTimeRange;
+  DateTimeRange get selectedDateTimeRange => _selectedDateTimeRange;
 
   // Getter for the current date range
   // This code is only used for testing purposes as it is not very efficient to compute the date range every time
@@ -75,11 +79,14 @@ class CalendarPageDriver extends WidgetDriver {
     loadEvents();
   }
 
-  void onDateSelected(DateTimeRange dateRange) {
+  void onDateTimeRangeSelected(DateTimeRange dateRange) {
     _selectedDateTimeRange = dateRange;
-    if (_viewType == CalendarViewType.day) {
-      loadEvents();
-    }
+    notifyWidget();
+  }
+
+  void onExpandDatePickerPressed() {
+    _isDatePickerExpanded = !_isDatePickerExpanded;
+    notifyWidget();
   }
 
   void onEventTap(CalendarEntry event, BuildContext context) {

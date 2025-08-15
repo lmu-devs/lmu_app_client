@@ -1,4 +1,3 @@
-import 'package:core/logging.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/exception/calendar_events_generic_exception.dart';
@@ -6,8 +5,6 @@ import '../../domain/interface/calendar_repository_interface.dart';
 import '../../domain/model/calendar_entry.dart';
 
 enum CalendarEntriesLoadState { initial, loading, loadingWithCache, success, error }
-
-final _appLogger = AppLogger();
 
 class GetCalendarEntriesByDateUsecase extends ChangeNotifier {
   GetCalendarEntriesByDateUsecase(this._repository);
@@ -54,7 +51,5 @@ class GetCalendarEntriesByDateUsecase extends ChangeNotifier {
         notifyListeners();
       }
     }
-
-    _appLogger.logMessage('--> Loaded ${_data?.length ?? 0} calendar entries for date range: $dateRange');
   }
 }

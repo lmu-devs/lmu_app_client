@@ -19,12 +19,12 @@ class _$TestCalendarPageDriver extends TestDriver implements CalendarPageDriver 
   String get largeTitle => ' ';
 
   @override
-  CalendarViewType get viewType => CalendarViewType.types[0];
+  CalendarViewType get viewType => CalendarViewType.list;
 
   @override
-  DateTimeRange<DateTime> get selectedDate => DateTimeRange<DateTime>(
-        start: DateTime.now(),
-        end: DateTime.now().add(const Duration(days: 1)),
+  DateTimeRange<DateTime> get selectedDateTimeRange => DateTimeRange(
+        start: DateTime(2025),
+        end: DateTime(2025),
       );
 
   @override

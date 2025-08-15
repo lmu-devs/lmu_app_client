@@ -10,9 +10,9 @@ class CalenderEntryPoint extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isCalendarActive = GetIt.I.get<FeatureToggleApi>().isEnabled('CALENDAR');
-    if (!isCalendarActive) {
-      return const SizedBox.shrink();
-    }
+    // if (!isCalendarActive) {
+    //   return const SizedBox.shrink();
+    // }
     return LmuContentTile(
       content: LmuListItem.action(
         actionType: LmuListItemAction.chevron,

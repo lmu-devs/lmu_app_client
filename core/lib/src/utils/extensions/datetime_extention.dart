@@ -73,8 +73,18 @@ extension DateTimeExtension on DateTime {
     return DateTime(newYear);
   }
 
+  bool get isToday {
+    final now = DateTime.now();
+    return year == now.year && month == now.month && day == now.day;
+  }
+
   bool isSameDay(DateTime dateTime) {
     return DateTime(year, month, day) == DateTime(dateTime.year, dateTime.month, dateTime.day);
+  }
+
+  bool isNextDay(DateTime dateTime) {
+    final nextDay = DateTime(year, month, day).add(const Duration(days: 1));
+    return nextDay.year == dateTime.year && nextDay.month == dateTime.month && nextDay.day == dateTime.day;
   }
 
   bool isSameMonth(DateTime dateTime) {
@@ -175,6 +185,16 @@ extension DateTimeExtension on DateTime {
 
   DateTime setMicrosecond(int newMicrosecond) {
     return DateTime(year, month, day, hour, minute, second, millisecond, newMicrosecond);
+  }
+
+  /// Returns the number of days in the month of the given [DateTime].
+  static int daysInMonth(DateTime date) {
+    return DateTime(date.year, date.month + 1, 0).day;
+  }
+
+  /// Returns the weekday of the first day of the month of the given [DateTime].
+  static int firstDayWeekday(DateTime date) {
+    return DateTime(date.year, date.month, 1).weekday;
   }
 
   /// Converts a [DateTime] to a [DateTimeRange] covering the entire day.

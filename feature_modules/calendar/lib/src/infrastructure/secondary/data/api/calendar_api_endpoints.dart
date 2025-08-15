@@ -1,7 +1,3 @@
-// class CalendarApiEndpoints {
-//   static const calendar = '/calendar';
-// }
-
 class CalendarApiEndpoints {
   static String createCalendarEntry() => '/calendar-create';
   static String deleteCalendarEntry() => '/calendar-delete';
