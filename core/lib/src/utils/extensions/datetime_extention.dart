@@ -149,9 +149,8 @@ extension DateTimeExtension on DateTime {
     DateTime fromDateTime,
     DateTime toDateTime,
   ) {
-    final date = this;
-    final isAfter = date.isAfterOrEqualTo(fromDateTime);
-    final isBefore = date.isBeforeOrEqualTo(toDateTime);
+    final isAfter = isAfterOrEqualTo(fromDateTime);
+    final isBefore = isBeforeOrEqualTo(toDateTime);
     return isAfter && isBefore;
   }
 
@@ -200,8 +199,6 @@ extension DateTimeExtension on DateTime {
   /// Converts a [DateTime] to a [DateTimeRange] covering the entire day.
   /// The range starts at 00:00:01 and ends at 23:59:59 of the given day.
   DateTimeRange get dateTimeRangeFromDateTime {
-    final start = DateTime(year, month, day, 0, 0, 1);
-    final end = DateTime(year, month, day, 23, 59, 59);
-    return DateTimeRange(start: start, end: end);
+    return DateTimeRange(start: startOfDay, end: endOfDay);
   }
 }
