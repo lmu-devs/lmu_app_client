@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_api/calendar.dart';
 
 import 'application/usecase/get_calendar_usecase.dart';
-import 'application/usecase/get_events_by_date_usecase.dart';
+import 'application/usecase/get_entries_by_date_usecase.dart';
 import 'domain/interface/calendar_repository_interface.dart';
 import 'infrastructure/primary/api/calendar_api.dart';
 import 'infrastructure/primary/router/calendar_router.dart';

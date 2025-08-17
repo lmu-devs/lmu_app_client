@@ -10,9 +10,9 @@ class CalendarEntry extends Equatable {
   const CalendarEntry({
     required this.id,
     required this.title,
-    required this.type,
-    required this.startDate,
-    required this.endDate,
+    required this.eventType,
+    required this.startTime,
+    required this.endTime,
     required this.color,
     required this.location,
     required this.allDay,
@@ -24,11 +24,12 @@ class CalendarEntry extends Equatable {
     this.updatedAt,
   });
 
+  // All nested values with custom types need to extend Equatable for some operations to work efficiently!
   final String id;
   final String title;
-  final EventType type;
-  final DateTime startDate;
-  final DateTime endDate;
+  final EventType eventType;
+  final DateTime startTime;
+  final DateTime endTime;
   final bool allDay;
   final Color color;
   final LocationModel location;
@@ -44,9 +45,9 @@ class CalendarEntry extends Equatable {
   List<Object?> get props => [
         id,
         title,
-        type,
-        startDate,
-        endDate,
+        eventType,
+        startTime,
+        endTime,
         allDay,
         color,
         location,
@@ -58,39 +59,39 @@ class CalendarEntry extends Equatable {
         updatedAt,
       ];
 
-  // Domain-specific methods (like occursOn) belong here
+  /// Checks if the event occurs on the given date
   bool occursOn(DateTime date) {
     // This logic might need refinement depending on how allDay and timezones are handled
-    return startDate.year == date.year && startDate.month == date.month && startDate.day == date.day;
+    return startTime.year == date.year && startTime.month == date.month && startTime.day == date.day;
   }
 
   /// Checks if the event overlaps with the given DateTimeRange.
   /// An event overlaps with a range if its start or end date falls within the range.
   bool overlapsWithRange(DateTimeRange range) {
-    return endDate.isBetween(range.start, range.end) || startDate.isBetween(range.start, range.end);
+    return endTime.isBetween(range.start, range.end) || startTime.isBetween(range.start, range.end);
   }
 
   /// Checks if the event occurs within the given DateTimeRange.
   bool isWithinRange(DateTimeRange range) {
-    return startDate.isBeforeOrEqualTo(range.end) && endDate.isAfterOrEqualTo(range.start);
+    return startTime.isBeforeOrEqualTo(range.end) && endTime.isAfterOrEqualTo(range.start);
   }
 
   /// Returns the duration of the event.
-  Duration get duration => endDate.difference(startDate);
+  Duration get duration => endTime.difference(startTime);
 
   /// Checks if this entry overlaps with another entry.
   bool isOverlapping(CalendarEntry other) {
     // Two events overlap if their time intervals intersect.
-    return startDate.isBefore(other.endDate) && endDate.isAfter(other.startDate);
+    return startTime.isBefore(other.endTime) && endTime.isAfter(other.startTime);
   }
 
   /// Checks if the event is in the past.
-  bool get isPast => endDate.isBefore(DateTime.now());
+  bool get isPast => endTime.isBefore(DateTime.now());
 
   /// Checks if the event is currently ongoing.
   bool get isOngoing {
     final now = DateTime.now();
-    return startDate.isBefore(now) && endDate.isAfter(now);
+    return startTime.isBefore(now) && endTime.isAfter(now);
   }
 
   /// Checks if the event is an all-day event.
@@ -101,8 +102,8 @@ class CalendarEntry extends Equatable {
     String? id,
     String? title,
     EventType? type,
-    DateTime? startDate,
-    DateTime? endDate,
+    DateTime? startTime,
+    DateTime? endTime,
     bool? allDay,
     Color? color,
     LocationModel? location,
@@ -116,9 +117,9 @@ class CalendarEntry extends Equatable {
     return CalendarEntry(
       id: id ?? this.id,
       title: title ?? this.title,
-      type: type ?? this.type,
-      startDate: startDate ?? this.startDate,
-      endDate: endDate ?? this.endDate,
+      eventType: type ?? this.eventType,
+      startTime: startTime ?? this.startTime,
+      endTime: endTime ?? this.endTime,
       allDay: allDay ?? this.allDay,
       color: color ?? this.color,
       location: location ?? this.location,
