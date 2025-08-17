@@ -1,11 +1,16 @@
+import 'package:equatable/equatable.dart';
+
 import 'frequency.dart';
 
-class CalendarRule {
-  CalendarRule({
+class CalendarRule extends Equatable {
+  const CalendarRule({
     required this.frequency,
     required this.interval,
     this.untilTime,
   });
+
+  @override
+  List<Object?> get props => [frequency, interval, untilTime];
 
   final Frequency frequency;
   final int interval;

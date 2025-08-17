@@ -28,10 +28,8 @@ class CalendarPageDriver extends WidgetDriver {
 
   CalendarViewType _viewType = CalendarViewType.list;
   bool _isDatePickerExpanded = false;
-  DateTimeRange _selectedDateTimeRange = DateTimeRange(
-    start: DateTime.now().startOfDay,
-    end: DateTime.now().endOfDay,
-  );
+  DateTimeRange _selectedDateTimeRange = DateTime.now().dateTimeRangeFromDateTime;
+  int _scrollToDateRequest = 0;
 
   @TestDriverDefaultValue(false)
   bool get isDatePickerExpanded => _isDatePickerExpanded;
@@ -39,6 +37,8 @@ class CalendarPageDriver extends WidgetDriver {
   CalendarViewType get viewType => _viewType;
   @TestDriverDefaultValue('2025-01-01')
   DateTimeRange get selectedDateTimeRange => _selectedDateTimeRange;
+  @TestDriverDefaultValue(0)
+  int get scrollToDateRequest => _scrollToDateRequest;
 
   // Getter for the current date range
   // This code is only used for testing purposes as it is not very efficient to compute the date range every time
@@ -52,7 +52,7 @@ class CalendarPageDriver extends WidgetDriver {
     _allCalendarEntries = _getCalendarEntriesByDateUsecase.data;
 
     _calendarEntriesLoadState = CalendarEntriesLoadState.success;
-    notifyWidget(); // This will trigger recompute of `calendarEntries`
+    notifyWidget();
   }
 
   late List<CalendarEntry>? _allCalendarEntries;
@@ -65,16 +65,6 @@ class CalendarPageDriver extends WidgetDriver {
   }
 
   void onCalendarViewTypeChanged(CalendarViewType mode) {
-    if (_viewType != mode) {
-      if (mode == CalendarViewType.list) {
-        final weekStart = _selectedDateTimeRange.start.startOfWeek;
-        final weekEnd = weekStart.add(const Duration(days: 6));
-        _selectedDateTimeRange = DateTimeRange(start: weekStart, end: weekEnd);
-      } else if (mode == CalendarViewType.day) {
-        final day = _selectedDateTimeRange.start;
-        _selectedDateTimeRange = DateTimeRange(start: day.startOfDay, end: day.endOfDay);
-      }
-    }
     _viewType = mode;
     loadEvents();
   }
@@ -86,6 +76,12 @@ class CalendarPageDriver extends WidgetDriver {
 
   void onExpandDatePickerPressed() {
     _isDatePickerExpanded = !_isDatePickerExpanded;
+    notifyWidget();
+  }
+
+  void onChangeToTodayPressed() {
+    _selectedDateTimeRange = DateTime.now().dateTimeRangeFromDateTime;
+    _scrollToDateRequest++;
     notifyWidget();
   }
 

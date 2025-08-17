@@ -24,6 +24,7 @@ class CalendarEntry extends Equatable {
     this.updatedAt,
   });
 
+  // All nested values with custom types need to extend Equatable for some operations to work efficiently!
   final String id;
   final String title;
   final EventType eventType;
@@ -58,7 +59,7 @@ class CalendarEntry extends Equatable {
         updatedAt,
       ];
 
-  // Domain-specific methods (like occursOn) belong here
+  /// Checks if the event occurs on the given date
   bool occursOn(DateTime date) {
     // This logic might need refinement depending on how allDay and timezones are handled
     return startTime.year == date.year && startTime.month == date.month && startTime.day == date.day;

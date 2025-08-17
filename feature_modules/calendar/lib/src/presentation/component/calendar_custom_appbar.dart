@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
 import '../../domain/model/calendar_view_type.dart';
+import '../../domain/model/helper/date_time_formatter.dart';
 import 'view_type_selector.dart';
 
 typedef OnViewTypeSelectedCallback = void Function(CalendarViewType viewType);
@@ -29,7 +30,7 @@ class CustomCalendarAppBar extends StatelessWidget implements PreferredSizeWidge
     this.onOpenCalendarSettingsPressed,
   });
 
-  final String currentSelectedDateTimeRange;
+  final DateTimeRange currentSelectedDateTimeRange;
   final CalendarViewType currentViewType;
 
   final VoidCallback? onChangeToTodayPressed;
@@ -60,27 +61,37 @@ class CustomCalendarAppBar extends StatelessWidget implements PreferredSizeWidge
               children: [
                 LmuIconButton(
                   icon: LucideIcons.calendar,
-                  onPressed: () => onChangeToTodayPressed,
+                  onPressed: () => onChangeToTodayPressed?.call(),
                 ),
                 const SizedBox(width: LmuSizes.size_8),
-                LmuButton(
-                  trailingIcon: isExpanded ? LucideIcons.chevron_up : LucideIcons.chevron_down,
-                  title: currentSelectedDateTimeRange,
+                GestureDetector(
                   onTap: onExpandDatePickerPressed,
-                  emphasis: ButtonEmphasis.secondary,
+                  child: Row(
+                    children: [
+                      LmuText.body(
+                        _calculateTitleFormat(currentSelectedDateTimeRange, currentViewType),
+                        weight: FontWeight.bold,
+                      ),
+                      const SizedBox(width: LmuSizes.size_4),
+                      LmuIcon(
+                        icon: isExpanded ? LucideIcons.chevron_up : LucideIcons.chevron_down,
+                        size: LmuIconSizes.mediumSmall,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
             // Right side elements
             Row(
               mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ViewTypeSelector(
                   context: context,
                   initialView: currentViewType,
                   onSelected: (viewType) => onViewTypeSelected?.call(viewType),
                 ),
-                const SizedBox(width: LmuSizes.size_8),
                 LmuIconButton(
                   icon: LucideIcons.search,
                   onPressed: () => onSearchPressed,
@@ -101,5 +112,16 @@ class CustomCalendarAppBar extends StatelessWidget implements PreferredSizeWidge
         ),
       ),
     );
+  }
+
+  String _calculateTitleFormat(DateTimeRange<DateTime> currentSelectedDateTimeRange, CalendarViewType currentViewType) {
+    switch (currentViewType) {
+      case CalendarViewType.day:
+        return DateTimeFormatter.formatShorterDate(currentSelectedDateTimeRange.start, withYearIfDifferent: true);
+      case CalendarViewType.month || CalendarViewType.list:
+        return DateTimeFormatter.formatMonthName(currentSelectedDateTimeRange.start, withYearIfDifferent: true);
+      default:
+        return DateTimeFormatter.formatShorterDate(currentSelectedDateTimeRange.start, withYearIfDifferent: true);
+    }
   }
 }

@@ -10,17 +10,27 @@ import '../viewmodel/calendar_page_driver.dart';
 class CalendarPage extends DrivableWidget<CalendarPageDriver> {
   CalendarPage({super.key});
   // Switch between mock and real data
-  static const _useMockData = false;
+  static const _useMockData = true;
 
   @override
   Widget build(BuildContext context) {
+    // driver.calendarEntries;
+    // if (driver.calendarEntries!.isNotEmpty) {
+    //   for (final entry in driver.calendarEntries!) {
+    //     print('Entry: ${entry.title}, Start: ${entry.startTime}, End: ${entry.endTime}');
+    //   }
+    // } else {
+    //   print('No calendar entries found.');
+    // }
+
     return Scaffold(
       appBar: CustomCalendarAppBar(
         currentViewType: driver.viewType,
         onViewTypeSelected: (viewType) => driver.onCalendarViewTypeChanged(viewType),
-        currentSelectedDateTimeRange: 'August', // TODO: not hardcoded
+        currentSelectedDateTimeRange: driver.selectedDateTimeRange,
         isExpanded: driver.isDatePickerExpanded,
         onExpandDatePickerPressed: () => driver.onExpandDatePickerPressed(),
+        onChangeToTodayPressed: () => driver.onChangeToTodayPressed(),
       ),
       body: Column(
         children: [
@@ -37,6 +47,7 @@ class CalendarPage extends DrivableWidget<CalendarPageDriver> {
               isLoading: driver.isLoadingEvents,
               hasError: false, // TODO: driver.hasErrorLoadingEvents state
               selectedDateTimeRange: driver.selectedDateTimeRange,
+              scrollToDateRequest: driver.scrollToDateRequest,
             ),
           ),
         ],

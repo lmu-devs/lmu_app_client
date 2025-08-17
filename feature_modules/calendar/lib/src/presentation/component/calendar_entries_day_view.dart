@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../../domain/model/calendar_entry.dart';
 import '../constants.dart';
 import '../view/calendar_event_contentsheet.dart';
-import 'calendar_entry_card_dynamic.dart';
+import 'calendar_entry_card.dart';
 import 'current_time_indicator.dart';
 import 'layout_helpers/event_layout.dart';
 import 'layout_helpers/event_layout_algorithm.dart';
@@ -183,7 +183,7 @@ class _CalendarEntriesDayViewState extends State<CalendarEntriesDayView> {
                                 left: eventCardLeft,
                                 width: layout.width * eventAreaWidth,
                                 height: layout.height,
-                                child: CalendarCardExperimental2(
+                                child: CalendarCard.bounded(
                                   entry: layout.entry,
                                   onTap: () {
                                     showModalBottomSheet(

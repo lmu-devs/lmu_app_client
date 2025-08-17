@@ -45,6 +45,24 @@ class DateTimeFormatter {
     return '$weekday, $datePart';
   }
 
+  /// Returns a formatted date string with the day of the week, day, month, and short year.
+  ///
+  /// This uses the [_currentLocale] to produce locale-aware output, including the day of the week.
+  ///
+  /// Example outputs:
+  ///  - en_US: "Monday, 1. Jan '25"
+  ///  - de_DE: "Montag, 1. Jan '25"
+  /// [withYearIfDifferent]
+  ///   - If `true`, appends the short year when [date] is not in the current year.
+  ///   - If `false` (default), only the dayname, date, and month is shown, even if the year differs.
+  ///
+  static String formatShorterDate(DateTime date, {bool? withYearIfDifferent}) {
+    final bool sameYear = date.year == DateTime.now().year;
+    withYearIfDifferent ??= false;
+    final String format = (!sameYear && withYearIfDifferent) ? "EEEE, d. MMM ''yy" : "EEEE, d. MMM";
+    return DateFormat(format, _currentLocale).format(date);
+  }
+
   /// Returns a formatted date string with the relative day of the week, day, month, and short year.
   ///
   /// This uses the [_currentLocale] to produce locale-aware output, including the day of the week.

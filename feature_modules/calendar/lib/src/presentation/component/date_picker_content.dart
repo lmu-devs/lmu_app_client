@@ -42,7 +42,7 @@ class DatePickerSection extends StatelessWidget {
     if (viewType == CalendarViewType.list) {
       return MonthDaySelector(
           selectedDate: selectedDateTimeRange.start,
-          onDateTimeRangeSelected: onDateSelected,
+          onDateTimeRangeSelected: (dateRange) => onDateSelected(dateRange),
           entries: mockCalendarEntries);
     } else if (viewType == CalendarViewType.week) {
       return const Text('Date picker in WeekView is WIP');

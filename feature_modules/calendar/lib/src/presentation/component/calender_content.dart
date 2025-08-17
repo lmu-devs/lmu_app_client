@@ -5,6 +5,7 @@ import '../../domain/model/calendar_entry.dart';
 import '../../domain/model/calendar_view_type.dart';
 import '../component/calendar_entries_day_view.dart';
 import '../component/calendar_entries_list_view.dart';
+import 'loading_components/calendar_card_loading.dart';
 
 class CalendarContent extends StatelessWidget {
   const CalendarContent({
@@ -14,6 +15,7 @@ class CalendarContent extends StatelessWidget {
     this.isLoading = false,
     this.hasError = false,
     required this.selectedDateTimeRange,
+    required this.scrollToDateRequest,
   });
 
   final List<CalendarEntry>? entries;
@@ -21,22 +23,23 @@ class CalendarContent extends StatelessWidget {
   final bool isLoading;
   final bool hasError;
   final DateTimeRange selectedDateTimeRange;
+  final int scrollToDateRequest;
 
   @override
   Widget build(BuildContext context) {
-    // if (isLoading) {
-    //   return const Column(
-    //     children: [
-    //       CalendarCardLoading(),
-    //       CalendarCardLoading(),
-    //       CalendarCardLoading(),
-    //     ],
-    //   );
-    //   // TODO: Add error handling state and placeholder image
-    // }
-    // if (hasError) {
-    //   return const Center(child: Text('Error loading events. Please try again.'));
-    // }
+    if (isLoading) {
+      return const Column(
+        children: [
+          CalendarCardLoading(),
+          CalendarCardLoading(),
+          CalendarCardLoading(),
+        ],
+      );
+      // TODO: Add error handling state and placeholder image
+    }
+    if (hasError) {
+      return const Center(child: Text('Error loading events. Please try again.'));
+    }
 
     if (entries == null || entries?.isEmpty == true) {
       // TODO: return an empty state with a placeholder image
@@ -58,6 +61,7 @@ class CalendarContent extends StatelessWidget {
               key: const ValueKey('listView'),
               entries: entries ?? [],
               selectedDate: selectedDateTimeRange.start,
+              scrollToDateRequest: scrollToDateRequest,
             ),
     );
   }
