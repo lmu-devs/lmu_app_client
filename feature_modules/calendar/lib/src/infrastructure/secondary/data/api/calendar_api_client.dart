@@ -46,40 +46,15 @@ class CalendarApiClient {
   }
 
   /// Updates an existing calendar entry.
+  /// TODO: Endpoint changed, so the method needs to be updated accordingly.
   Future<CalendarEntryDto> updateCalendarEntry({
     required CalendarEntryDto calendarData,
     required String entryId,
     int? recurrenceId,
     int updateType = 0,
   }) async {
-    final queryParams = <String, dynamic>{
-      'entry_id': entryId,
-      'update_type': updateType.toString(),
-    };
-    if (recurrenceId != null) {
-      queryParams['recurrence_id'] = recurrenceId.toString();
-    }
-
-    final Map<String, String> additionalHeaders = {
-      'Content-Type': 'application/json',
-    };
-
-    queryParams.forEach((key, value) {
-      additionalHeaders[key] = value;
-    });
-
-    final response = await _baseApiClient.put(
-      CalendarApiEndpoints.updateCalendarEntry(),
-      body: jsonEncode(calendarData.toJson()),
-      additionalHeaders: additionalHeaders,
-    );
-
-    if (response.statusCode != 200) {
-      throw Exception('Failed to update calendar entry - ${response.statusCode}');
-    }
-
-    final jsonList = json.decode(response.body) as List<dynamic>;
-    return CalendarEntryDto.fromJson({'entries': jsonList});
+    // TODO: Update return vallue to match the API
+    return createMockCalendarEntryDtos().first;
   }
 
   /// Retrieves calendar entries for a user, with optional filters.
@@ -94,19 +69,15 @@ class CalendarApiClient {
       allDay: allDay,
     );
 
-    _appLogger.logMessage("[DEBUG] Request URL: $url"); // Log the exact URL being called
-
-    return createMockCalendarEntryDtos();
+    _appLogger.logMessage("[DEBUG] Request URL: $url");
 
     final response = await _baseApiClient.get(url);
 
-    // Log the raw response body for debugging
-    print("[DEBUG] Raw API Response Body (Status ${response.statusCode}): ${response.body}");
+    _appLogger.logMessage("[DEBUG] Raw API Response Body (Status ${response.statusCode}): ${response.body}");
 
     if (response.statusCode == 504) {
       throw Exception('Failed to load calendar data - Gateway Timeout (504)');
     } else if (response.statusCode >= 400) {
-      // Handle other client/server errors (e.g., 404, 400, 500)
       final errorBody = json.decode(response.body);
       String errorMessage = 'Failed to load calendar data - Status: ${response.statusCode}';
       if (errorBody is Map && errorBody.containsKey('detail')) {
@@ -117,25 +88,19 @@ class CalendarApiClient {
       throw Exception(errorMessage);
     }
 
-    // Check if the response body is empty or not a valid JSON structure before decoding
     if (response.body.isEmpty) {
-      throw Exception('API response body is empty.');
+      throw Exception('calendar API response body is empty.');
     }
 
-    // Attempt to decode as a List<dynamic>
     try {
       final List<dynamic> jsonList = json.decode(response.body) as List<dynamic>;
-      // Map each item in the list to a CalendarEntryDto object
       return jsonList.map((json) => CalendarEntryDto.fromJson(json)).toList();
     } on TypeError catch (e) {
-      // This catches the '_Map<String, dynamic>' is not a subtype of type 'List<dynamic>' error
-      print("Error during JSON decoding/casting: $e");
-      print("Response body was: ${response.body}");
-      throw Exception('Unexpected API response format. Expected a list but got a map or other type. Error: $e');
+      _appLogger.logMessage("Error during calendar JSON decoding/casting: $e");
+      throw Exception(
+          'Unexpected calendar API response format. Expected a list but got a map or other type. Error: $e');
     } on FormatException catch (e) {
-      // This catches errors if the response body is not valid JSON
-      print("Error parsing JSON response: $e");
-      print("Response body was: ${response.body}");
+      _appLogger.logMessage("Error parsing JSON calendarresponse: $e");
       throw Exception('Invalid JSON response from API. Error: $e');
     }
   }

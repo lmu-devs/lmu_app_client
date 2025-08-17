@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import '../../domain/exception/calendar_generic_exception.dart';
 import '../../domain/interface/calendar_repository_interface.dart';
 import '../../domain/model/calendar.dart';
-import '../../domain/model/calendar_entry.dart';
 
 enum CalendarLoadState { initial, loading, loadingWithCache, success, error }
 
@@ -14,11 +13,9 @@ class GetCalendarUsecase extends ChangeNotifier {
 
   CalendarLoadState _loadState = CalendarLoadState.initial;
   Calendar? _data;
-  List<CalendarEntry>? _testEvent;
 
   CalendarLoadState get loadState => _loadState;
   Calendar? get data => _data;
-  List<CalendarEntry>? get testEvent => _testEvent;
 
   Future<void> load() async {
     if (_loadState == CalendarLoadState.loading ||
