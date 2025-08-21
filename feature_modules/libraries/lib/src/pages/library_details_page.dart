@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
@@ -49,11 +50,17 @@ class LibraryDetailsPage extends StatelessWidget {
               LmuButton(
                 title: context.locals.libraries.seatBooking,
                 emphasis: ButtonEmphasis.secondary,
-                onTap: () => LmuUrlLauncher.launchWebsite(
-                  url: library.reservationUrl!,
-                  context: context,
-                  mode: LmuUrlLauncherMode.inAppWebView,
-                ),
+                onTap: () {
+                  LmuUrlLauncher.launchWebsite(
+                    url: library.reservationUrl!,
+                    context: context,
+                    mode: LmuUrlLauncherMode.inAppWebView,
+                  );
+                  GetIt.I<AnalyticsClient>().logClick(
+                    eventName: "library_booking_clicked",
+                    parameters: {"library": library.name},
+                  );
+                },
               ),
             if (library.url.isNotEmpty)
               LmuButton(

@@ -83,7 +83,10 @@ class LibraryTile extends StatelessWidget {
 
                 userPreferencesService.toggleFavoriteLibraryId(id);
               },
-              onTap: () => LibraryDetailsRoute(library).go(context),
+              onTap: () {
+                LibraryDetailsRoute(library).go(context);
+                GetIt.I<AnalyticsClient>().logClick(eventName: "library_clicked", parameters: {"library": library.name});
+              },
             );
           },
         );
