@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PeopleRecentSearchesStorage {
@@ -13,19 +11,15 @@ class PeopleRecentSearchesStorage {
 
   Future<void> saveRecentSearches(List<String> recentSearches) async {
     final prefs = await SharedPreferences.getInstance();
-    
-    final limitedSearches = recentSearches.take(_maxRecentSearches).toList();
-    
-    await prefs.setStringList(_recentSearchesKey, limitedSearches);
+    await prefs.setStringList(_recentSearchesKey, recentSearches);
   }
 
   Future<void> addRecentSearch(String personId) async {
     final currentSearches = await getRecentSearches();
-    
+
     currentSearches.removeWhere((id) => id == personId);
-    
     currentSearches.insert(0, personId);
-    
+
     await saveRecentSearches(currentSearches);
   }
 
@@ -33,4 +27,4 @@ class PeopleRecentSearchesStorage {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_recentSearchesKey);
   }
-} 
+}

@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
-
+import 'package:collection/collection.dart';
 import '../../infrastructure/secondary/data/storage/people_recent_searches_storage.dart';
 import '../../domain/model/people.dart';
 import 'get_people_usecase.dart';
+import 'package:collection/collection.dart';
+
 
 class RecentSearchesUsecase extends ChangeNotifier {
   RecentSearchesUsecase(this._storage, this._getPeopleUsecase) {
@@ -18,19 +20,12 @@ class RecentSearchesUsecase extends ChangeNotifier {
     final allPeople = _getPeopleUsecase.data;
     return _recentSearchIds
         .map((id) => allPeople.where((person) => person.id == id).firstOrNull)
-        .where((person) => person != null)
-        .cast<People>()
+        .whereType<People>()
         .toList();
   }
 
   Future<void> addRecentSearch(People person) async {
-    _recentSearchIds.removeWhere((id) => id == person.id);
-    _recentSearchIds.insert(0, person.id);
-    
-    if (_recentSearchIds.length > 10) {
-      _recentSearchIds.removeRange(10, _recentSearchIds.length);
-    }
-    
+    _updateRecentSearchIds(person.id);
     await _storage.saveRecentSearches(_recentSearchIds.map((e) => e.toString()).toList());
     _updateRecentSearchesNotifier();
     notifyListeners();
@@ -51,7 +46,16 @@ class RecentSearchesUsecase extends ChangeNotifier {
     notifyListeners();
   }
 
+  void _updateRecentSearchIds(int id) {
+    _recentSearchIds.remove(id);
+    _recentSearchIds.insert(0, id);
+
+    if (_recentSearchIds.length > 10) {
+      _recentSearchIds.removeRange(10, _recentSearchIds.length);
+    }
+  }
+
   void _updateRecentSearchesNotifier() {
     recentSearchesNotifier.value = recentSearches;
   }
-} 
+}
