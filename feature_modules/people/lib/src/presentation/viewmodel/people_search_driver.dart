@@ -83,11 +83,29 @@ class PeopleSearchDriver extends WidgetDriver implements _$DriverProvidedPropert
     await _recentSearchesUsecase.addRecentSearch(person);
   }
 
+  void _updateRecentSearchEntries(PeopleSearchEntry input) {
+    addRecentSearch(input.person);
+  }
+
+  Widget buildSearchEntry(BuildContext context, PeopleSearchEntry entry) {
+    final person = entry.person;
+    return LmuListItem.action(
+      title: '${person.name} ${person.surname}',
+      subtitle: person.title.isNotEmpty ? person.title : person.role,
+      actionType: LmuListItemAction.chevron,
+      onTap: () {
+        onPersonPressed(context, person);
+        recentSearchController.trigger(entry);
+      },
+    );
+  }
+
   @override
   void didUpdateBuildContext(BuildContext context) {
     super.didUpdateBuildContext(context);
     _localizations = context.locals;
     _recentSearchesUsecase.addListener(_onRecentSearchesChanged);
+    _recentSearchController.triggerAction = _updateRecentSearchEntries;
   }
 
   void _onRecentSearchesChanged() {
