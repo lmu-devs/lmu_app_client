@@ -143,6 +143,7 @@ class PeopleDetailsPage extends DrivableWidget<PeopleDetailsPageDriver> {
                     ),
                 ],
               ),
+              const SizedBox(height: LmuSizes.size_96),
             ],
           ),
         ),

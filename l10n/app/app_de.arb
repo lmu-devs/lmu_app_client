@@ -40,7 +40,7 @@
   "readMore": "Weiterlesen",
   "somethingWentWrong": "Etwas ist schiefgelaufen",
   "somethingWentWrongDescription": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es später erneut.",
-  "tryAgain": "Wiederholen",
+  "tryAgain": "Erneut versuchen",
   "showAll": "Alle anzeigen",
   "discard": "Verwerfen",
   "continueAction": "Weiter",
@@ -77,5 +77,7 @@
   "noInternetConnection": "Keine Internetverbindung",
   "noInternetConnectionDescription": "Bitte überprüfe deine Internetverbindung und versuche es erneut.",
   "diese": "diese",
-  "dieses": "dieses"
+  "dieses": "dieses",
+  "summerCaps": "SOMMER",
+  "winterCaps": "WINTER"
 }

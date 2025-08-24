@@ -6,4 +6,3 @@ export 'settings_language_page.dart';
 export 'settings_licence_page.dart';
 export 'settings_notifications_page.dart';
 export 'settings_page.dart';
-export 'settings_safari_page.dart';

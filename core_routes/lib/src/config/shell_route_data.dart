@@ -8,6 +8,7 @@ import '../../libraries.dart';
 import '../../studies.dart';
 import '../benefits/benefits.dart';
 import '../cinema/cinema.dart';
+import '../developerdex/developerdex.dart';
 import '../explore/explore.dart';
 import '../home/home.dart';
 import '../mensa/mensa.dart';
@@ -75,8 +76,8 @@ class LaunchFlowShellRoute extends ShellRouteData {
                 TypedGoRoute<SettingsDebugRoute>(
                   path: SettingsDebugRoute.path,
                 ),
-                TypedGoRoute<SettingsSafariRoute>(
-                  path: SettingsSafariRoute.path,
+                TypedGoRoute<DeveloperdexMainRoute>(
+                  path: DeveloperdexMainRoute.path,
                 ),
                 TypedGoRoute<FaculitesMainRoute>(
                   path: FaculitesMainRoute.path,

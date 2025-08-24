@@ -1,0 +1,24 @@
+{
+  "@@locale": "en",
+  "@@context": "Developerdex",
+  "developerdexTitle": "Developerdex",
+  "developerdexInfoDialogTitle": "Get to know your Developers",
+  "developerdexInfoDialogDescription": "Every now and then, a wild developer will appear inside the app! Keep an eye out during certain interactions and tap on the developer to collect them and fill out your Developerdex.",
+  "availableSoon": "Available soon",
+  "joinText": "Want to be part of this team?",
+  "joinButton": "Join us",
+  "legendary": "Legendary",
+  "epic": "Epic",
+  "rare": "Rare",
+  "common": "Common",
+  "caught": "Caught {developer}!",
+  "@caught": {
+    "description": "Indicates that a developer has been caught",
+    "placeholders": {
+      "developer": {
+        "type": "String",
+        "example": "John Doe"
+      }
+    }
+  }
+}

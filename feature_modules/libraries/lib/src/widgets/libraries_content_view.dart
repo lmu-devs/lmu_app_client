@@ -85,7 +85,8 @@ class _LibrariesContentViewState extends State<LibrariesContentView> {
                             if (filteredLibraries.isEmpty) {
                               return Center(
                                 child: LmuEmptyState(
-                                  type: EmptyStateType.allClosed,
+                                  hasVerticalPadding: true,
+                                  type: EmptyStateType.closed,
                                   description: context.locals.app.allClosedDescription(libraryLocals.library),
                                 ),
                               );

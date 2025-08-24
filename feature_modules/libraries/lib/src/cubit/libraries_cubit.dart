@@ -16,7 +16,7 @@ class LibrariesCubit extends Cubit<LibrariesState> {
 
     try {
       final retrievedLibraries = await _repository.getLibraries();
-      emit(LibrariesLoadInProgress(libraries: retrievedLibraries));
+      emit(LibrariesLoadSuccess(libraries: retrievedLibraries));
     } catch (e) {
       if (cachedLibraries != null) {
         emit(LibrariesLoadSuccess(libraries: cachedLibraries));

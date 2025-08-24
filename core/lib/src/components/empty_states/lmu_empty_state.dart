@@ -1,17 +1,15 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:shared_api/settings.dart';
+import 'package:shared_api/developerdex.dart';
 
 import '../../../components.dart';
 import '../../../constants.dart';
 import '../../../localizations.dart';
 import '../../../themes.dart';
 
-enum EmptyStateType { generic, noInternet, noSearchResults, allClosed, custom }
+enum EmptyStateType { generic, noInternet, noSearchResults, closed, custom }
 
-class LmuEmptyState extends StatelessWidget {
+class LmuEmptyState extends StatefulWidget {
   const LmuEmptyState({
     super.key,
     this.type = EmptyStateType.generic,
@@ -30,43 +28,55 @@ class LmuEmptyState extends StatelessWidget {
   final bool hasVerticalPadding;
 
   @override
-  Widget build(BuildContext context) {
-    final safariApi = GetIt.I.get<SafariApi>();
+  State<LmuEmptyState> createState() => _LmuEmptyStateState();
+}
 
+class _LmuEmptyStateState extends State<LmuEmptyState> {
+  late final DeveloperdexApi _developerdexApi;
+  late Widget? encounterWidget;
+
+  @override
+  void initState() {
+    super.initState();
+    _developerdexApi = GetIt.I.get<DeveloperdexApi>();
+    encounterWidget = _developerdexApi.getDeveloperEncounter();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final locals = context.locals;
-    final asset = assetName ?? _assetName;
+    final asset = widget.assetName ?? _assetName;
     return Padding(
       padding: EdgeInsets.only(
         left: LmuSizes.size_24,
         right: LmuSizes.size_24,
-        top: hasVerticalPadding ? LmuSizes.size_24 : 0,
-        bottom: hasVerticalPadding ? LmuSizes.size_96 : 0,
+        top: widget.hasVerticalPadding ? LmuSizes.size_24 : 0,
+        bottom: widget.hasVerticalPadding ? LmuSizes.size_96 : 0,
       ),
       child: Column(
         children: [
-          _AnimatedTapImage(
-            key: Key("empty_state_${type.name}"),
-            assetName: asset,
-            height: 128,
-            fit: BoxFit.cover,
-            package: "core",
-            onTap: () => safariApi.animalSeen(asset.toSafariAnimal()),
-          ),
+          encounterWidget ??
+              Image.asset(
+                asset,
+                height: 128,
+                fit: BoxFit.cover,
+                package: "core",
+              ),
           const SizedBox(height: LmuSizes.size_12),
-          LmuText.h3(title ?? _getTitle(locals), textAlign: TextAlign.center),
+          LmuText.h3(widget.title ?? _getTitle(locals), textAlign: TextAlign.center),
           const SizedBox(height: LmuSizes.size_6),
           LmuText.body(
-            description ?? _getDescription(locals),
+            widget.description ?? _getDescription(locals),
             color: context.colors.neutralColors.textColors.mediumColors.base,
             textAlign: TextAlign.center,
           ),
-          if (onRetry != null)
+          if (widget.onRetry != null)
             Padding(
               padding: const EdgeInsets.only(top: LmuSizes.size_24),
               child: LmuButton(
                 title: locals.app.tryAgain,
                 emphasis: ButtonEmphasis.primary,
-                onTap: onRetry,
+                onTap: widget.onRetry,
               ),
             )
         ],
@@ -75,127 +85,34 @@ class LmuEmptyState extends StatelessWidget {
   }
 
   String get _assetName {
-    return switch (type) {
-      EmptyStateType.generic => LmuAnimalAssets.blobfish,
-      EmptyStateType.noInternet => LmuAnimalAssets.capybara,
-      EmptyStateType.noSearchResults => LmuAnimalAssets.mole,
-      EmptyStateType.allClosed => LmuAnimalAssets.sloth,
+    return switch (widget.type) {
+      EmptyStateType.generic => "lib/assets/generic_error.webp",
+      EmptyStateType.noInternet => "lib/assets/internet_error.webp",
+      EmptyStateType.noSearchResults => "lib/assets/empty_search.webp",
+      EmptyStateType.closed => "lib/assets/closed.webp",
       EmptyStateType.custom => throw ("Please provide a custom asset name for custom state"),
     };
   }
 
   String _getTitle(LmuLocalizations locals) {
     final appLocals = locals.app;
-    return switch (type) {
+    return switch (widget.type) {
       EmptyStateType.generic => appLocals.somethingWentWrong,
       EmptyStateType.noInternet => appLocals.noInternetConnection,
       EmptyStateType.noSearchResults => appLocals.noSearchResults,
-      EmptyStateType.allClosed => appLocals.allClosed,
+      EmptyStateType.closed => appLocals.allClosed,
       EmptyStateType.custom => throw ("Please provide a custom title for custom state"),
     };
   }
 
   String _getDescription(LmuLocalizations locals) {
     final appLocals = locals.app;
-    return switch (type) {
+    return switch (widget.type) {
       EmptyStateType.generic => appLocals.somethingWentWrongDescription,
       EmptyStateType.noInternet => appLocals.noInternetConnectionDescription,
       EmptyStateType.noSearchResults => appLocals.noSearchResultsDescription,
-      EmptyStateType.allClosed => throw ("Please provide a custom description for allClosed state"),
+      EmptyStateType.closed => throw ("Please provide a custom description for allClosed state"),
       EmptyStateType.custom => throw ("Please provide a custom description for custom state"),
     };
-  }
-}
-
-class _AnimatedTapImage extends StatefulWidget {
-  const _AnimatedTapImage({
-    super.key,
-    required this.assetName,
-    this.height,
-    this.fit,
-    this.package,
-    this.onTap,
-  });
-
-  final String assetName;
-  final double? height;
-  final BoxFit? fit;
-  final String? package;
-  final void Function()? onTap;
-
-  @override
-  State<_AnimatedTapImage> createState() => _AnimatedTapImageState();
-}
-
-class _AnimatedTapImageState extends State<_AnimatedTapImage> with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-  late final Animation<double> _scaleAnimation;
-  late Animation<double> _rotationAnimation;
-
-  final Random _random = Random();
-  double _rotationAngle = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 100),
-      reverseDuration: const Duration(milliseconds: 150),
-    );
-
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.1).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
-    );
-
-    _rotationAnimation = Tween<double>(begin: 0.0, end: 0.0).animate(_controller);
-  }
-
-  void _onTap() {
-    setState(() {
-      _rotationAngle = (_random.nextDouble() - 0.5) * 0.2;
-      _rotationAnimation = Tween<double>(
-        begin: 0.0,
-        end: _rotationAngle,
-      ).animate(CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeOut,
-      ));
-    });
-
-    widget.onTap?.call();
-
-    _controller.forward().then((_) => _controller.reverse());
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: _onTap,
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (context, child) {
-          return Transform.rotate(
-            angle: _rotationAnimation.value,
-            child: Transform.scale(
-              scale: _scaleAnimation.value,
-              child: child,
-            ),
-          );
-        },
-        child: Image.asset(
-          widget.assetName,
-          height: widget.height,
-          fit: widget.fit,
-          package: widget.package,
-        ),
-      ),
-    );
   }
 }

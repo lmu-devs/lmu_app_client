@@ -1,6 +1,7 @@
 import 'package:benefits/benefits.dart';
 import 'package:calendar/calendar.dart';
 import 'package:cinema/cinema.dart';
+import 'package:developerdex/developerdex.dart';
 import 'package:explore/explore.dart';
 import 'package:feedback/feedback.dart';
 import 'package:home/home.dart';
@@ -36,4 +37,5 @@ final modules = [
   CalendarModule(),
   LecturesModule(),
   PeopleModule(),
+  DeveloperdexModule(),
 ];

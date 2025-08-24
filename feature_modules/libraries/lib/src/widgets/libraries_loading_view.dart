@@ -15,31 +15,40 @@ class LibrariesLoadingView extends StatelessWidget {
     final favoriteLibraries = GetIt.I.get<LibrariesUserPreferenceService>().favoriteLibraryIdsNotifier.value;
 
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(LmuSizes.size_16),
-        child: Column(
+      child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            LmuTileHeadline.base(title: context.locals.app.favorites, customBottomPadding: LmuSizes.size_6),
-            ListView.builder(
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: _calculateFavoriteLoadingItemCount(favoriteLibraries.length),
-              itemBuilder: (context, index) => const Padding(
-                padding: EdgeInsets.symmetric(vertical: LmuSizes.size_6),
-                child: LmuCardLoading(
-                  hasSubtitle: true,
-                  subtitleLength: 3,
-                  hasLargeImage: false,
-                  hasFavoriteStar: true,
-                  hasFavoriteCount: true,
-                  hasDivider: false,
-                ),
+            const SizedBox(height: LmuSizes.size_16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+              child: Column(
+                children: [
+                  LmuTileHeadline.base(title: context.locals.app.favorites, customBottomPadding: LmuSizes.size_6),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: _calculateFavoriteLoadingItemCount(favoriteLibraries.length),
+                    itemBuilder: (context, index) => const Padding(
+                      padding: EdgeInsets.symmetric(vertical: LmuSizes.size_6),
+                      child: LmuCardLoading(
+                        hasSubtitle: true,
+                        subtitleLength: 3,
+                        hasLargeImage: false,
+                        hasFavoriteStar: true,
+                        hasFavoriteCount: true,
+                        hasDivider: false,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 26),
-            LmuTileHeadline.base(title: context.locals.libraries.allLibraries),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+              child: LmuTileHeadline.base(title: context.locals.libraries.allLibraries),
+            ),
             LmuButtonRow(
               buttons: [
                 LmuMapImageButton(onTap: () {}),
@@ -62,23 +71,26 @@ class LibrariesLoadingView extends StatelessWidget {
               ],
             ),
             const SizedBox(height: LmuSizes.size_16),
-            ListView.builder(
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 5,
-              itemBuilder: (context, index) => const LmuCardLoading(
-                hasSubtitle: true,
-                subtitleLength: 3,
-                hasLargeImage: true,
-                hasFavoriteStar: true,
-                hasFavoriteCount: true,
-                hasDivider: true,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+              child: ListView.builder(
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 5,
+                itemBuilder: (context, index) => const LmuCardLoading(
+                  hasSubtitle: true,
+                  subtitleLength: 3,
+                  hasLargeImage: true,
+                  hasFavoriteStar: true,
+                  hasFavoriteCount: true,
+                  hasDivider: true,
+                ),
               ),
             ),
+            const SizedBox(height: LmuSizes.size_96)
           ],
         ),
-      ),
     );
   }
 

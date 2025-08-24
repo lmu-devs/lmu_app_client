@@ -27,10 +27,13 @@ class RoomfinderBuildingButtonSection extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: LmuSizes.size_16),
         child: LmuButtonRow(
           buttons: [
-            if (withMapButton) LmuMapImageButton(onTap: () {
-              const ExploreMainRoute().go(context);
-              GetIt.I<ExploreApi>().selectLocation(building.buildingPartId);
-            }),
+            if (withMapButton)
+              LmuMapImageButton(
+                  onTap: () {
+                    const ExploreMainRoute().go(context);
+                    GetIt.I<ExploreApi>().selectLocation(building.buildingPartId);
+                  },
+              ),
             LmuIconButton(
               icon: LucideIcons.search,
               onPressed: () async {
