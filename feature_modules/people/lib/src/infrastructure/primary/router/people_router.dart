@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import '../../../presentation/view/people_details_page.dart';
 import '../../../presentation/view/people_faculty_overview.dart';
 import '../../../presentation/view/people_overview.dart';
+import '../../../presentation/view/people_search_page.dart';
 
 class PeopleRouterImpl extends PeopleRouter {
   @override
@@ -17,5 +18,10 @@ class PeopleRouterImpl extends PeopleRouter {
   @override
   Widget buildDetails(BuildContext context, {required int facultyId, required int personId}) => PeopleDetailsPage(
         personId: personId,
+      );
+
+  @override
+  Widget buildSearch(BuildContext context, {required int facultyId}) => PeopleSearchPage(
+        facultyId: facultyId,
       );
 }
