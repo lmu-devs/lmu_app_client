@@ -56,6 +56,7 @@ class FacultiesPage extends DrivableWidget<FacultiesPageDriver> {
 
             // Faculty list
             if (driver.isLoading)
+              // TODO: Replace with skeleton loading for better UX
               const Expanded(
                 child: Center(
                   child: CircularProgressIndicator(),
@@ -88,7 +89,6 @@ class FacultiesPage extends DrivableWidget<FacultiesPageDriver> {
                     key: Key("faculty_${faculty.id}"),
                     title: faculty.name,
                     leadingArea: LmuInListBlurEmoji(emoji: faculty.id.toString()),
-                    trailingTitle: driver.getCourseCount(faculty),
                     actionType: LmuListItemAction.chevron,
                     hasDivider: false,
                     onTap: () => driver.onFacultyPressed(context, faculty),

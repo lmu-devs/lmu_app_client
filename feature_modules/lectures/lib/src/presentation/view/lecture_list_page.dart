@@ -1,21 +1,20 @@
 import 'package:core/components.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_api/studies.dart';
 
 class LectureListPage extends StatelessWidget {
   const LectureListPage({
     super.key,
-    required this.facultyId,
-    required this.facultyName,
+    required this.faculty,
   });
 
-  final String facultyId;
-  final String facultyName;
+  final Faculty faculty;
 
   @override
   Widget build(BuildContext context) {
     return LmuScaffold(
       appBar: LmuAppBarData(
-        largeTitle: facultyName,
+        largeTitle: faculty.name,
         leadingAction: LeadingAction.back,
       ),
       body: const Center(

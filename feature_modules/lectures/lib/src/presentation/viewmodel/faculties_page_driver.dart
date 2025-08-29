@@ -11,7 +11,7 @@ part 'faculties_page_driver.g.dart';
 
 @GenerateTestDriver()
 class FacultiesPageDriver extends WidgetDriver {
-  final _usecase = GetIt.I.get<GetLecturesFacultiesUsecase>();
+  final _usecase = GetIt.I.get<GetLectureByFacultiesUsecase>();
 
   late LmuLocalizations _localizations;
   late LmuToast _toast;
@@ -20,14 +20,9 @@ class FacultiesPageDriver extends WidgetDriver {
   bool get isLoading => _usecase.isLoading;
   bool get hasError => _usecase.hasError;
 
-  String getCourseCount(Faculty faculty) {
-    return '0'; // TODO: Implement when backend provides course counts
-  }
-
   void onFacultyPressed(BuildContext context, Faculty faculty) {
     LectureListRoute({
-      'facultyId': faculty.id.toString(),
-      'facultyName': faculty.name,
+      'faculty': faculty,
     }).go(context);
   }
 
@@ -38,12 +33,13 @@ class FacultiesPageDriver extends WidgetDriver {
   void _onStateChanged() {
     notifyWidget();
 
-    if (_usecase.loadState == LecturesLoadState.error) {
+    if (_usecase.loadState == LectureByFacultiesLoadState.error) {
       _showErrorToast();
     }
   }
 
   void _showErrorToast() {
+    // TODO: Replace toast with modern error handling (toasts were removed recently)
     _toast.showToast(
       message: _localizations.app.somethingWentWrong,
       type: ToastType.error,

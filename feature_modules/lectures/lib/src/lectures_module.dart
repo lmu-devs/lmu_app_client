@@ -3,7 +3,6 @@ import 'package:core/module.dart';
 import 'package:core_routes/lectures.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/lectures.dart';
-import 'package:shared_api/studies.dart';
 
 import 'application/usecase/get_lectures_faculties_usecase.dart';
 import 'application/usecase/get_lectures_usecase.dart';
@@ -24,12 +23,11 @@ class LecturesModule extends AppModule with LocalDependenciesProvidingAppModule,
     final storage = LecturesStorage();
     final repository = LecturesRepository(LecturesApiClient(baseApiClient), storage);
     final getUsecase = GetLecturesUsecase(repository);
-    final facultiesApi = GetIt.I.get<FacultiesApi>();
-    final getLecturesFacultiesUsecase = GetLecturesFacultiesUsecase(facultiesApi);
+    final getLecturesFacultiesUsecase = GetLectureByFacultiesUsecase();
 
     GetIt.I.registerSingleton<LecturesRepositoryInterface>(repository);
     GetIt.I.registerSingleton<GetLecturesUsecase>(getUsecase);
-    GetIt.I.registerSingleton<GetLecturesFacultiesUsecase>(getLecturesFacultiesUsecase);
+    GetIt.I.registerSingleton<GetLectureByFacultiesUsecase>(getLecturesFacultiesUsecase);
   }
 
   @override

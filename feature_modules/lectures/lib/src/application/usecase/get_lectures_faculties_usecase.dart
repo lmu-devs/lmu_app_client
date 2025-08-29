@@ -1,36 +1,36 @@
 import 'package:flutter/foundation.dart';
+import 'package:get_it/get_it.dart';
 import 'package:shared_api/studies.dart';
 
-enum LecturesLoadState { initial, loading, success, error }
+enum LectureByFacultiesLoadState { initial, loading, success, error }
 
-class GetLecturesFacultiesUsecase extends ChangeNotifier {
-  GetLecturesFacultiesUsecase(this._facultiesApi);
+class GetLectureByFacultiesUsecase extends ChangeNotifier {
+  GetLectureByFacultiesUsecase();
 
-  final FacultiesApi _facultiesApi;
+  FacultiesApi get _facultiesApi => GetIt.I.get<FacultiesApi>();
 
-  LecturesLoadState _loadState = LecturesLoadState.initial;
+  LectureByFacultiesLoadState _loadState = LectureByFacultiesLoadState.initial;
   List<Faculty> _faculties = [];
 
-  LecturesLoadState get loadState => _loadState;
+  LectureByFacultiesLoadState get loadState => _loadState;
   List<Faculty> get faculties => _faculties;
-  bool get isLoading => _loadState == LecturesLoadState.loading;
-  bool get hasError => _loadState == LecturesLoadState.error;
+  bool get isLoading => _loadState == LectureByFacultiesLoadState.loading;
+  bool get hasError => _loadState == LectureByFacultiesLoadState.error;
 
   Future<void> load() async {
-    if (_loadState == LecturesLoadState.loading || _loadState == LecturesLoadState.success) {
+    if (_loadState == LectureByFacultiesLoadState.loading || _loadState == LectureByFacultiesLoadState.success) {
       return;
     }
 
-    _loadState = LecturesLoadState.loading;
-    _faculties = [];
+    _loadState = LectureByFacultiesLoadState.loading;
     notifyListeners();
 
     try {
       // Faculties are already loaded by the studies module
       _faculties = _facultiesApi.allFaculties;
-      _loadState = LecturesLoadState.success;
+      _loadState = LectureByFacultiesLoadState.success;
     } catch (e) {
-      _loadState = LecturesLoadState.error;
+      _loadState = LectureByFacultiesLoadState.error;
       _faculties = [];
     }
 
