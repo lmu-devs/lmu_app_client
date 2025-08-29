@@ -1,4 +1,6 @@
+import 'package:core/core_services.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../domain/interface/developerdex_repository_interface.dart';
 import '../../domain/model/semester_course.dart';
@@ -20,6 +22,7 @@ class GetDeveloperdexUsecase extends ChangeNotifier {
     if (!isNew) return false;
     _seenEntries.add(id);
     _repository.saveSeenDeleoperdexIds(_seenEntries);
+    GetIt.I<AnalyticsClient>().logClick(eventName: "developer_caught", parameters: {"developer": id});
     notifyListeners();
     return true;
   }

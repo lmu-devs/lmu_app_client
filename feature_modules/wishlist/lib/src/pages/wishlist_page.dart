@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
@@ -69,12 +70,18 @@ class _WishlistPageState extends State<WishlistPage> {
               buttons: [
                 LmuButton(
                   title: context.locals.wishlist.shareApp,
-                  onTap: () => Share.share(LmuDevStrings.shareAppUrl),
+                  onTap: () {
+                    Share.share(LmuDevStrings.shareAppUrl);
+                    GetIt.I<AnalyticsClient>().logClick(eventName: "app_share_event");
+                  },
                 ),
                 LmuButton(
                   title: context.locals.wishlist.rateApp,
                   emphasis: ButtonEmphasis.secondary,
-                  onTap: () => GetIt.I.get<FeedbackApi>().openStoreListing(),
+                  onTap: () {
+                    GetIt.I.get<FeedbackApi>().openStoreListing();
+                    GetIt.I<AnalyticsClient>().logClick(eventName: "app_rating_event");
+                  },
                 ),
                 LmuButton(
                   title: LmuDevStrings.devTeam,
@@ -88,16 +95,22 @@ class _WishlistPageState extends State<WishlistPage> {
                 LmuButton(
                   title: 'Instagram',
                   emphasis: ButtonEmphasis.secondary,
-                  onTap: () => _openInstagram(context),
+                  onTap: () {
+                    _openInstagram(context);
+                    GetIt.I<AnalyticsClient>().logClick(eventName: "social_clicked", parameters: {"platform": "Instagram"});
+                  },
                 ),
                 LmuButton(
                   title: 'LinkedIn',
                   emphasis: ButtonEmphasis.secondary,
-                  onTap: () => LmuUrlLauncher.launchWebsite(
-                    url: LmuDevStrings.linkedinWebUrl,
-                    context: context,
-                    mode: LmuUrlLauncherMode.externalApplication,
-                  ),
+                  onTap: () {
+                    LmuUrlLauncher.launchWebsite(
+                      url: LmuDevStrings.linkedinWebUrl,
+                      context: context,
+                      mode: LmuUrlLauncherMode.externalApplication,
+                    );
+                    GetIt.I<AnalyticsClient>().logClick(eventName: "social_clicked", parameters: {"platform": "LinkedIn"});
+                  },
                 ),
               ],
             ),
