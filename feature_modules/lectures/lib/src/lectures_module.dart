@@ -22,7 +22,6 @@ class LecturesModule extends AppModule with LocalDependenciesProvidingAppModule,
     final storage = LecturesStorage();
     final repository = LecturesRepository(LecturesApiClient(baseApiClient), storage);
     final getUsecase = GetLecturesUsecase(repository);
-
     GetIt.I.registerSingleton<LecturesRepositoryInterface>(repository);
     GetIt.I.registerSingleton<GetLecturesUsecase>(getUsecase);
   }

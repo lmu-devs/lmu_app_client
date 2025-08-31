@@ -336,6 +336,12 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                 GoRouteData.$route(
                   path: 'lectures',
                   factory: $LecturesMainRouteExtension._fromState,
+                  routes: [
+                    GoRouteData.$route(
+                      path: 'lecture-list',
+                      factory: $LectureListRouteExtension._fromState,
+                    ),
+                  ],
                 ),
                 GoRouteData.$route(
                   path: 'people',
@@ -527,7 +533,8 @@ extension $DeveloperdexMainRouteExtension on DeveloperdexMainRoute {
 }
 
 extension $FaculitesMainRouteExtension on FaculitesMainRoute {
-  static FaculitesMainRoute _fromState(GoRouterState state) => const FaculitesMainRoute();
+  static FaculitesMainRoute _fromState(GoRouterState state) =>
+      const FaculitesMainRoute();
 
   String get location => GoRouteData.$location(
         '/home/settings/faculites',
@@ -1048,6 +1055,27 @@ extension $LecturesMainRouteExtension on LecturesMainRoute {
   void pushReplacement(BuildContext context) => context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LectureListRouteExtension on LectureListRoute {
+  static LectureListRoute _fromState(GoRouterState state) => LectureListRoute(
+        state.extra as Map<String, dynamic>,
+      );
+
+  String get location => GoRouteData.$location(
+        '/studies/lectures/lecture-list',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
 }
 
 extension $PeopleOverviewRouteExtension on PeopleOverviewRoute {

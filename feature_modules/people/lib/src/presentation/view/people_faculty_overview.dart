@@ -1,9 +1,9 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_api/studies.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../component/faculty_number_widget.dart';
 import '../viewmodel/people_faculty_overview_driver.dart';
 
 class PeopleFacultyOverview extends DrivableWidget<PeopleFacultyOverviewDriver> {
