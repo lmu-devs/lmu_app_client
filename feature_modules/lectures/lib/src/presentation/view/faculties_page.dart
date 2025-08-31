@@ -8,6 +8,7 @@ import 'package:widget_driver/widget_driver.dart';
 
 import '../viewmodel/faculties_page_driver.dart';
 
+// ToDo: Integrate logic for loading the page with 0, 1 or multiple selected faculties (see people module)
 class FacultiesPage extends DrivableWidget<FacultiesPageDriver> {
   FacultiesPage({super.key});
 
