@@ -14,8 +14,7 @@ class FacultiesPageDriver extends WidgetDriver {
 
   void onFacultyPressed(BuildContext context, Faculty faculty) {
     LectureListRoute({
-      'facultyId': faculty.id.toString(),
-      'facultyName': faculty.name,
+      'faculty': faculty,
     }).go(context);
   }
 
