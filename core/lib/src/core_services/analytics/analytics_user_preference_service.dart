@@ -10,8 +10,7 @@ enum AnalyticsPreference {
 }
 
 extension AnalyticsPreferenceExtension on AnalyticsPreference {
-  static AnalyticsPreference fromString(String preference) =>
-      switch (preference) {
+  static AnalyticsPreference fromString(String preference) => switch (preference) {
         'enabled' => AnalyticsPreference.enabled,
         'disabled' => AnalyticsPreference.disabled,
         'none' => AnalyticsPreference.none,

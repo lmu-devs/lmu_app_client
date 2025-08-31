@@ -1,7 +1,7 @@
 name: lmu_app
 description: "LMU Students - Your Companion for Study and Campus Life at LMU Munich"
 publish_to: "none"
-version: 1.1.1+15
+version: 1.1.1+16
 
 environment:
   sdk: ">=3.2.4 <4.0.0"
@@ -52,6 +52,8 @@ dependencies:
     path: ./feature_modules/lectures
   people:
     path: ./feature_modules/people
+  developerdex:
+    path: ./feature_modules/developerdex
   shared_api:
     path: ./shared_api
 
@@ -81,7 +83,6 @@ flutter:
   assets:
     - .env
     - core/lib/assets/
-    - core/lib/assets/animals/
     - feature_modules/mensa/assets/
     - feature_modules/explore/assets/
   shaders:

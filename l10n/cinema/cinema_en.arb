@@ -33,6 +33,10 @@
   "@nextMovieEmpty": {
     "description": "No more movies this semester"
   },
+  "screeningsEmptyStateDescription": "Please check back next semester to see the upcoming lineup.",
+    "@screeningsEmptyStateDescription": {
+    "description": "Description for empty state screenings"
+  },
   "watchlistEmptyBefore": "Tap the ",
   "@watchlistEmptyBefore": {
     "description": "Empty watchlist text before the star icon"
@@ -52,6 +56,10 @@
   "pastMoviesEmpty": "No past movies available",
   "@pastMoviesEmpty": {
     "description": "Empty state for screenings history"
+  },
+  "pastMoviesEmptyStateDescription": "Come back soon to view screenings that have already taken place.",
+    "@pastMoviesEmptyStateDescription": {
+    "description": "Description for empty state past movies"
   },
   "screeningsSortingAlphabetical": "Alphabetically",
   "@screeningsSortingAlphabetical": {

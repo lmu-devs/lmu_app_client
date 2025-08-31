@@ -79,6 +79,7 @@ class MensaOverviewLoadingView extends StatelessWidget {
                 hasDivider: true,
               ),
             ),
+            const SizedBox(height: LmuSizes.size_96),
           ],
         ),
       ),

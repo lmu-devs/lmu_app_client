@@ -10,7 +10,8 @@ part of 'people_details_page_driver.dart';
 
 // This file was generated with widget_driver_generator version "1.3.5"
 
-class _$TestPeopleDetailsPageDriver extends TestDriver implements PeopleDetailsPageDriver {
+class _$TestPeopleDetailsPageDriver extends TestDriver
+    implements PeopleDetailsPageDriver {
   @override
   int get personId => 0;
 
@@ -19,9 +20,6 @@ class _$TestPeopleDetailsPageDriver extends TestDriver implements PeopleDetailsP
 
   @override
   String get personNotFoundText => ' ';
-
-  @override
-  String get facultyAndRoleText => ' ';
 
   @override
   String get contactText => ' ';
@@ -42,6 +40,21 @@ class _$TestPeopleDetailsPageDriver extends TestDriver implements PeopleDetailsP
   String get consultationHoursText => ' ';
 
   @override
+  String get copiedEmailText => ' ';
+
+  @override
+  String get copiedPhoneText => ' ';
+
+  @override
+  String get copiedWebsiteText => ' ';
+
+  @override
+  String get addedToFavoritesText => ' ';
+
+  @override
+  String get removedFromFavoritesText => ' ';
+
+  @override
   People? get person => null;
 
   @override
@@ -57,6 +70,9 @@ class _$TestPeopleDetailsPageDriver extends TestDriver implements PeopleDetailsP
   String get role => ' ';
 
   @override
+  String get title => ' ';
+
+  @override
   String get email => ' ';
 
   @override
@@ -70,6 +86,9 @@ class _$TestPeopleDetailsPageDriver extends TestDriver implements PeopleDetailsP
 
   @override
   String get consultation => ' ';
+
+  @override
+  String get facultyAndRole => ' ';
 
   @override
   Future<void> onEmailTap(BuildContext context) {
@@ -97,7 +116,7 @@ class _$TestPeopleDetailsPageDriver extends TestDriver implements PeopleDetailsP
   }
 
   @override
-  Future<void> onFavoriteTap() {
+  Future<void> onFavoriteTap(BuildContext context) {
     return Future.value();
   }
 
@@ -114,7 +133,8 @@ class _$TestPeopleDetailsPageDriver extends TestDriver implements PeopleDetailsP
   void dispose() {}
 }
 
-class $PeopleDetailsPageDriverProvider extends WidgetDriverProvider<PeopleDetailsPageDriver> {
+class $PeopleDetailsPageDriverProvider
+    extends WidgetDriverProvider<PeopleDetailsPageDriver> {
   final int _personId;
 
   $PeopleDetailsPageDriverProvider({

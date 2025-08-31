@@ -10,9 +10,13 @@ part of 'people_overview_driver.dart';
 
 // This file was generated with widget_driver_generator version "1.3.5"
 
-class _$TestPeopleOverviewDriver extends TestDriver implements PeopleOverviewDriver {
+class _$TestPeopleOverviewDriver extends TestDriver
+    implements PeopleOverviewDriver {
   @override
   int get facultyId => 0;
+
+  @override
+  bool get isProfessorFilterActive => false;
 
   @override
   String get showAllFacultiesText => ' ';
@@ -27,10 +31,22 @@ class _$TestPeopleOverviewDriver extends TestDriver implements PeopleOverviewDri
   bool get isLoading => false;
 
   @override
+  String get pageTitle => ' ';
+
+  @override
   String get largeTitle => ' ';
 
   @override
   List<People> get people => [];
+
+  @override
+  List<People> get favoritePeople => [];
+
+  @override
+  List<People> get nonFavoritePeople => [];
+
+  @override
+  bool get hasFavorites => false;
 
   @override
   List<People> get filteredPeople => [];
@@ -45,6 +61,12 @@ class _$TestPeopleOverviewDriver extends TestDriver implements PeopleOverviewDri
   void onShowAllFacultiesPressed(BuildContext context) {}
 
   @override
+  void onSearchPressed(BuildContext context) {}
+
+  @override
+  void toggleProfessorFilter() {}
+
+  @override
   void didInitDriver() {}
 
   @override
@@ -57,7 +79,8 @@ class _$TestPeopleOverviewDriver extends TestDriver implements PeopleOverviewDri
   void dispose() {}
 }
 
-class $PeopleOverviewDriverProvider extends WidgetDriverProvider<PeopleOverviewDriver> {
+class $PeopleOverviewDriverProvider
+    extends WidgetDriverProvider<PeopleOverviewDriver> {
   final int _facultyId;
 
   $PeopleOverviewDriverProvider({

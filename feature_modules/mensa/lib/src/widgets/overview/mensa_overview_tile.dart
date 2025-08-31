@@ -93,7 +93,10 @@ class MensaOverviewTile extends StatelessWidget {
 
                 userPreferencesService.toggleFavoriteMensaId(id);
               },
-              onTap: () => MensaDetailsRoute(mensaModel).go(context),
+              onTap: () {
+                MensaDetailsRoute(mensaModel).go(context);
+                GetIt.I<AnalyticsClient>().logClick(eventName: "canteen_clicked", parameters: {"canteen": mensaModel.name});
+              },
             );
           },
         );

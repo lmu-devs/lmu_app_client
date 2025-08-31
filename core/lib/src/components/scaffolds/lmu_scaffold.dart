@@ -69,7 +69,7 @@ class _LmuScaffoldState extends State<LmuScaffold> {
     final backgroundColor = context.colors.neutralColors.backgroundColors.base;
     final textTheme = context.textTheme;
     final largeTitleTextTheme = textTheme.h0;
-    final collapsedTitleTextStyle = textTheme.h3;
+    final collapsedTitleTextStyle = textTheme.h3.copyWith(fontSize: 18);
     final largeTitleMaxLines = _calculateTitleMaxLines(_largeTitle, largeTitleTextTheme, mediaQuery.size.width);
     final calculatedLargeTitleHeight = largeTitleMaxLines * _largeTitleLineHeight + LmuSizes.size_16;
 

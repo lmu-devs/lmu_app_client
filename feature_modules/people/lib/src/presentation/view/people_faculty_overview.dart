@@ -35,7 +35,6 @@ class PeopleFacultyOverview extends DrivableWidget<PeopleFacultyOverviewDriver> 
         const SizedBox(height: LmuSizes.size_16),
         if (driver.selectedFaculties.isNotEmpty) ...[
           LmuTileHeadline.base(title: driver.myFacultiesText),
-          const SizedBox(height: LmuSizes.size_2),
           LmuContentTile(
             contentList: driver.selectedFaculties
                 .map(

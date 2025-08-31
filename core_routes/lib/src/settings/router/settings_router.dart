@@ -16,6 +16,4 @@ abstract class SettingsRouter {
   Widget buildLicense(BuildContext context);
 
   Widget buildDebug(BuildContext context);
-
-  Widget buildSafari(BuildContext context);
 }

@@ -19,7 +19,7 @@ class CinemaCubit extends Cubit<CinemaState> {
       final cinemas = await _repository.getCinemas();
       final screenings = await _repository.getScreenings();
 
-      CinemaLoadSuccess(cinemas: cinemas, screenings: screenings);
+      emit(CinemaLoadSuccess(cinemas: cinemas, screenings: screenings));
     } catch (e) {
       if (cachedCinemas != null && cachedScreenings != null) {
         emit(CinemaLoadSuccess(cinemas: cachedCinemas, screenings: cachedScreenings));

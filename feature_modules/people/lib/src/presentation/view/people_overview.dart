@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 import 'package:get_it/get_it.dart';
 
+import 'package:flutter_lucide/flutter_lucide.dart';
+
 import '../component/person_list_item.dart';
+
 import '../viewmodel/people_overview_driver.dart';
 import '../../application/usecase/favorite_people_usecase.dart';
 
@@ -14,6 +17,9 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
   PeopleOverview({super.key, required this.facultyId});
 
   final int facultyId;
+
+  @override
+  PeopleOverviewDriver createDriver() => GetIt.I<PeopleOverviewDriver>(param1: facultyId);
 
   @override
   Widget build(BuildContext context) {
@@ -27,27 +33,73 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
   }
 
   Widget _buildBody(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-      child: LmuPageAnimationWrapper(
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: _buildContent(context),
+    return LmuPageAnimationWrapper(
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+                child: _buildHeaderContent(context),
+              ),
+              _buildSearchAndFilterSection(context),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+                child: _buildMainContent(context),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildContent(BuildContext context) {
+  Widget _buildHeaderContent(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        LmuTileHeadline.base(title: driver.largeTitle),
-        const SizedBox(height: LmuSizes.size_16),
+        LmuText(driver.largeTitle, color: context.colors.neutralColors.textColors.mediumColors.base),
+        const SizedBox(height: LmuSizes.size_32),
         _buildFavoritesSection(context),
-        const SizedBox(height: LmuSizes.size_24),
+        const SizedBox(height: LmuSizes.size_32),
+      ],
+    );
+  }
+
+  Widget _buildSearchAndFilterSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+          child: LmuTileHeadline.base(title: context.locals.people.allPeople),
+        ),
+        LmuButtonRow(
+          buttons: [
+            LmuIconButton(
+              icon: LucideIcons.search,
+              onPressed: () => driver.onSearchPressed(context),
+            ),
+            LmuButton(
+              title: context.locals.people.professorFilter,
+              emphasis: driver.isProfessorFilterActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
+              action: driver.isProfessorFilterActive ? ButtonAction.contrast : ButtonAction.base,
+              onTap: driver.toggleProfessorFilter,
+            ),
+          ],
+        ),
+        const SizedBox(height: LmuSizes.size_16),
+      ],
+    );
+  }
+
+  Widget _buildMainContent(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
         ..._buildGroupedPeople(context),
-        const SizedBox(height: LmuSizes.size_24),
+        const SizedBox(height: LmuSizes.size_32),
         _buildShowAllFacultiesButton(context),
         const SizedBox(height: LmuSizes.size_96),
       ],
@@ -113,9 +165,6 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
       widgets.add(
         LmuTileHeadline.base(title: letter),
       );
-      widgets.add(
-        const SizedBox(height: LmuSizes.size_2),
-      );
 
       widgets.add(
         LmuContentTile(
@@ -129,7 +178,7 @@ class PeopleOverview extends DrivableWidget<PeopleOverviewDriver> {
       );
 
       widgets.add(
-        const SizedBox(height: LmuSizes.size_16),
+        const SizedBox(height: LmuSizes.size_32),
       );
     }
 

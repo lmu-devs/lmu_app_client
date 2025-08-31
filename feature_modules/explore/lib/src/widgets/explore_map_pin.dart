@@ -61,7 +61,7 @@ class _MarkerPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.19;
 
-    borderPaint.color = _blendColors(contentColor, borderColor);
+    borderPaint.color = borderColor;
 
     canvas.drawPath(shapePath, borderPaint);
   }
@@ -69,22 +69,5 @@ class _MarkerPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return false;
-  }
-
-  Color _blendColors(Color backgroundColor, Color foregroundColor) {
-    final bgR = backgroundColor.r;
-    final bgG = backgroundColor.g;
-    final bgB = backgroundColor.b;
-
-    final fgR = foregroundColor.r;
-    final fgG = foregroundColor.g;
-    final fgB = foregroundColor.b;
-    final fgA = foregroundColor.a;
-
-    final resultR = (fgR * fgA) + (bgR * (1 - fgA));
-    final resultG = (fgG * fgA) + (bgG * (1 - fgA));
-    final resultB = (fgB * fgA) + (bgB * (1 - fgA));
-
-    return Color.fromRGBO(resultR.round(), resultG.round(), resultB.round(), 1.0);
   }
 }

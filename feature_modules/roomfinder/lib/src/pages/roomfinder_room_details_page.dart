@@ -25,7 +25,7 @@ class RoomfinderRoomDetailsPage extends StatelessWidget {
         largeTitleTrailingWidget: LmuInTextVisual.text(
           title: "Room",
           textColor: colors.warningColors.textColors.strongColors.base,
-          backgroundColor: colors.customColors.backgroundColors.stuCafe,
+          backgroundColor: colors.customColors.backgroundColors.amber,
         ),
       ),
       body: SingleChildScrollView(

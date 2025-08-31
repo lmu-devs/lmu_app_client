@@ -301,7 +301,7 @@
   "@menuNotAvailable": {
     "description": "Menu not available"
   },
-  "menuNotAvailableDescription": "There is currently no menu available for this day. Please check back later.",
+  "menuNotAvailableDescription": "No menu available for this day yet. Please check back later.",
   "@menuNotAvailableDescription": {
     "description": "Description for menu not available"
   },

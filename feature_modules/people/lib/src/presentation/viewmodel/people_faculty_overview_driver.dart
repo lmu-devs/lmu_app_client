@@ -30,7 +30,7 @@ class PeopleFacultyOverviewDriver extends WidgetDriver {
   String get largeTitle => contactsText;
 
   void onFacultyPressed(BuildContext context, Faculty faculty) {
-    PeopleOverviewRoute(facultyId: faculty.id).go(context);
+    PeopleOverviewRoute(facultyId: faculty.id).push(context);
   }
 
   void _onStateChanged() {

@@ -17,7 +17,10 @@ class WishlistEntryList extends StatelessWidget {
     return BlocBuilder<WishlistCubit, WishlistState>(
       bloc: wishlistCubit,
       builder: (context, state) {
-        Widget child = const WishlistEntrySectionLoading(key: ValueKey("wishlistLoading"), length: 8);
+        Widget child = const WishlistEntrySectionLoading(
+          key: ValueKey("wishlistLoading"),
+          lengths: [2, 4],
+        );
 
         if (state is WishlistLoadInProgress && state.wishlistModels != null) {
           child = WishlistEntrySection(key: const ValueKey("wishlistContent"), wishlistModels: state.wishlistModels!);

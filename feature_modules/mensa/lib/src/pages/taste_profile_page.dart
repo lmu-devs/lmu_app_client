@@ -56,11 +56,6 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
     _activeIndexNotifier = ValueNotifier<int>(0);
     _listController = ListController();
 
-    if (_selectedPreferencePresetsNotifier.value != null && _selectedPreferencePresetsNotifier.value!.isNotEmpty) {
-      final AnalyticsClient analytics = GetIt.I<AnalyticsClient>();
-      analytics.logSelection(contentType: "taste_profile_preset", itemId: _selectedPreferencePresetsNotifier.value!);
-    }
-
     if (_tasteProfileCubit.state is! TasteProfileLoadSuccess) {
       _tasteProfileCubit.loadTasteProfile();
     }
@@ -431,12 +426,17 @@ class _SaveButtonState extends State<_SaveButton> {
               increaseTouchTarget: true,
               textScaleFactorEnabled: false,
               onTap: () {
+                final preferencePreset = tasteProfileService.selectedPreferencePresetNotifier.value;
                 tasteProfileService.saveTasteProfileState(
                   selectedAllergiesPresets: tasteProfileService.selectedAllergiesPresetsNotifier.value,
                   excludedLabels: _excludedLabelsNotifier.value,
                   isActive: _isActiveNotifier.value,
-                  selectedPreferencePreset: tasteProfileService.selectedPreferencePresetNotifier.value,
+                  selectedPreferencePreset: preferencePreset,
                 );
+                if (preferencePreset != null && preferencePreset.isNotEmpty) {
+                  final AnalyticsClient analytics = GetIt.I<AnalyticsClient>();
+                  analytics.logSelection(contentType: "taste_profile_preset", itemId: preferencePreset);
+                }
                 Navigator.of(context, rootNavigator: true).pop();
               },
             );

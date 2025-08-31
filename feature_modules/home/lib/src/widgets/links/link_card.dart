@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
@@ -87,6 +88,7 @@ class LinkCard extends StatelessWidget {
           context: context,
           mode: LmuUrlLauncherMode.externalApplication,
         );
+        GetIt.I<AnalyticsClient>().logClick(eventName: "link_clicked", parameters: {"link_title": link.title});
       },
       onLongPress: () => CopyToClipboardUtil.copyToClipboard(
         context: context,

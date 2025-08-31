@@ -59,8 +59,7 @@ class PermissionsService {
   }
 
   static bool isNotificationsPermissionGranted(PermissionStatus? status) =>
-      status == PermissionStatus.granted ||
-      status == PermissionStatus.provisional;
+      status == PermissionStatus.granted || status == PermissionStatus.provisional;
 
   static Future<void> showNotificationsPermissionDialog(BuildContext context) async {
     final appLocals = context.locals.app;

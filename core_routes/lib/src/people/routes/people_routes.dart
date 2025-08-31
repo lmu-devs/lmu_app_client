@@ -41,3 +41,16 @@ class PeopleDetailsRoute extends GoRouteData {
     return _router.buildDetails(context, facultyId: facultyId, personId: personId);
   }
 }
+
+class PeopleSearchRoute extends GoRouteData {
+  final int facultyId;
+
+  const PeopleSearchRoute({required this.facultyId});
+
+  static const String path = 'people-search';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return _router.buildSearch(context, facultyId: facultyId);
+  }
+}

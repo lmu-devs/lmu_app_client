@@ -37,7 +37,9 @@ class _LibrariesPageState extends State<LibrariesPage> {
           emphasis: ButtonEmphasis.secondary,
           onTap: () => LmuUrlLauncher.launchWebsite(
               url: "https://auth.anny.eu/start-session?entityId=https://lmuidp.lrz.de/idp/shibboleth",
-              context: context),
+              context: context,
+              mode: LmuUrlLauncherMode.inAppWebView,
+          ),
         ),
       ),
       body: BlocBuilder<LibrariesCubit, LibrariesState>(
