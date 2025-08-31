@@ -6,8 +6,8 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_api/feedback.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../../application/usecases/request_app_review_usecase.dart';
-import '../../application/usecases/send_feedback_usecase.dart';
+import '../../domain/interfaces/app_review_repository_interface.dart';
+import '../../domain/interfaces/feedback_repository_interface.dart';
 import '../../domain/models/emoji_feedback.dart';
 import '../../domain/models/user_feedback.dart';
 
@@ -21,8 +21,8 @@ class FeedbackPageDriver extends WidgetDriver implements _$DriverProvidedPropert
     @driverProvidableProperty required FeedbackArgs args,
   }) : _args = args;
 
-  final _sendFeedbackUsecase = GetIt.I.get<SendFeedbackUsecase>();
-  final _requestAppReviewUsecase = GetIt.I.get<RequestAppReviewUseCase>();
+  final _feedbackRepository = GetIt.I.get<FeedbackRepositoryInterface>();
+  final _appReviewRepository = GetIt.I.get<AppReviewRepositoryInterface>();
 
   late final TextEditingController _textEditingController;
   late final FeedbackArgs _args;
@@ -61,7 +61,7 @@ class FeedbackPageDriver extends WidgetDriver implements _$DriverProvidedPropert
     notifyWidget();
 
     try {
-      await _sendFeedbackUsecase.call(
+      await _feedbackRepository.sendFeedback(
         UserFeedback(
           type: _type,
           screen: _args.origin,
@@ -74,7 +74,7 @@ class FeedbackPageDriver extends WidgetDriver implements _$DriverProvidedPropert
       LmuVibrations.success();
       _navigatorState.pop();
       if (_selectedFeedback == EmojiFeedback.good) {
-        await _requestAppReviewUsecase.call();
+        await _appReviewRepository.requestReview();
       }
     } catch (e) {
       _toast.showToast(message: _type.error(_localizations), type: ToastType.error);

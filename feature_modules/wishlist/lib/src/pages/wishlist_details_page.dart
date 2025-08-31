@@ -103,10 +103,10 @@ class WishlistDetailsPage extends StatelessWidget {
                         title: "$calculatedLikes Likes",
                         emphasis: ButtonEmphasis.secondary,
                         onTap: () async {
+                          LmuVibrations.secondary();
                           await GetIt.I<WishlistUserPreferenceService>()
                               .toggleLikedWishlistId(
                                   wishlistModel.id.toString());
-                          LmuVibrations.secondary();
                         },
                       );
                     },

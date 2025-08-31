@@ -27,77 +27,67 @@ class _LinksContentViewState extends State<LinksContentView> {
   @override
   Widget build(BuildContext context) {
     final locals = context.locals;
-    return Stack(
-      children: [
-        LmuScaffold(
-          appBar: LmuAppBarData(
-            largeTitle: "Links",
-            leadingAction: LeadingAction.back,
-          ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-              child: ValueListenableBuilder<String?>(
-                valueListenable: _activeFilterNotifier,
-                builder: (context, activeFilter, child) {
-                  Map<String, List<LinkModel>> groupedLinks = _groupLinks(links, activeFilter);
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+        child: ValueListenableBuilder<String?>(
+          valueListenable: _activeFilterNotifier,
+          builder: (context, activeFilter, child) {
+            Map<String, List<LinkModel>> groupedLinks = _groupLinks(links, activeFilter);
 
-                  return Column(
-                    children: [
-                      const SizedBox(height: LmuSizes.size_16),
-                      FavoriteLinkSection(links: widget.links),
-                      LinkButtonSection(
-                        activeFilter: activeFilter,
-                        onFilterSelected: (filter) => _activeFilterNotifier.value = filter,
-                      ),
-                      const SizedBox(height: LmuSizes.size_16),
-                      Column(
-                        children: groupedLinks.entries.map(
-                          (entry) {
-                            return Column(
-                              children: [
-                                LmuTileHeadline.base(title: entry.key),
-                                LmuContentTile(
-                                  content: Column(
-                                    children: entry.value.map((link) => LinkCard(link: link)).toList(),
-                                  ),
-                                ),
-                                const SizedBox(height: LmuSizes.size_32),
-                              ],
-                            );
-                          },
-                        ).toList(),
-                      ),
-                      const SizedBox(height: LmuSizes.size_6),
-                      LmuTileHeadline.base(title: locals.feedback.missingItemInput),
-                      LmuContentTile(
-                        content: LmuListItem.base(
-                          title: locals.home.linkSuggestion,
-                          mainContentAlignment: MainContentAlignment.center,
-                          leadingArea: const LeadingFancyIcons(icon: LucideIcons.megaphone),
-                          onTap: () {
-                            GetIt.I.get<FeedbackApi>().showFeedback(
-                                  context,
-                                  args: FeedbackArgs(
-                                    type: FeedbackType.suggestion,
-                                    origin: 'LinksScreen',
-                                    title: locals.home.linkSuggestion,
-                                    description: locals.home.linkSuggestionDescription,
-                                    inputHint: locals.home.linkSuggestionHint,
-                                  ),
-                                );
-                          },
-                        ),
-                      ),
-                      const SizedBox(height: LmuSizes.size_72 + LmuSizes.size_96),
-                    ],
-                  );
-                },
-              ),
-            ),
-          ),
+            return Column(
+              children: [
+                const SizedBox(height: LmuSizes.size_16),
+                FavoriteLinkSection(links: widget.links),
+                LinkButtonSection(
+                  activeFilter: activeFilter,
+                  onFilterSelected: (filter) => _activeFilterNotifier.value = filter,
+                ),
+                const SizedBox(height: LmuSizes.size_16),
+                Column(
+                  children: groupedLinks.entries.map(
+                    (entry) {
+                      return Column(
+                        children: [
+                          LmuTileHeadline.base(title: entry.key),
+                          LmuContentTile(
+                            content: Column(
+                              children: entry.value.map((link) => LinkCard(link: link)).toList(),
+                            ),
+                          ),
+                          const SizedBox(height: LmuSizes.size_32),
+                        ],
+                      );
+                    },
+                  ).toList(),
+                ),
+                const SizedBox(height: LmuSizes.size_6),
+                LmuTileHeadline.base(title: locals.feedback.missingItemInput),
+                LmuContentTile(
+                  content: LmuListItem.base(
+                    title: locals.home.linkSuggestion,
+                    mainContentAlignment: MainContentAlignment.center,
+                    leadingArea: const LeadingFancyIcons(icon: LucideIcons.megaphone),
+                    onTap: () {
+                      GetIt.I.get<FeedbackApi>().showFeedback(
+                            context,
+                            args: FeedbackArgs(
+                              type: FeedbackType.suggestion,
+                              origin: 'LinksScreen',
+                              title: locals.home.linkSuggestion,
+                              description: locals.home.linkSuggestionDescription,
+                              inputHint: locals.home.linkSuggestionHint,
+                            ),
+                          );
+                    },
+                  ),
+                ),
+                const SizedBox(height: LmuSizes.size_96),
+              ],
+            );
+          },
         ),
-      ],
+      ),
     );
   }
 

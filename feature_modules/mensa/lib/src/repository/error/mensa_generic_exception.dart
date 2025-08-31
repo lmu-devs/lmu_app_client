@@ -1,0 +1,1 @@
+class MensaGenericException implements Exception {}

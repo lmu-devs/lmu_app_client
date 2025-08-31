@@ -1,0 +1,23 @@
+{
+  "@@locale": "de",
+  "@@context": "People",
+  "peopleTitle": "Kontakte",
+  "contacts": "Kontakte",
+  "loading": "Lädt...",
+  "personNotFound": "Person nicht gefunden",
+  "contact": "Kontakt",
+  "email": "E-Mail",
+  "phone": "Telefon",
+  "room": "Raum",
+  "consultationHours": "Sprechstunde",
+  "myFaculties": "Meine Fakultäten",
+  "allFaculties": "Alle Fakultäten",
+  "showAllFaculties": "Alle Fakultäten anzeigen",
+  "favoritesA": "Füge Favoriten mit dem ",
+  "favoritesB": " Symbol hinzu",
+  "people_subtitleTile": "aus der ",
+  "copiedEmail": "E-Mail kopiert",
+  "copiedWebsite": "Website kopiert",
+  "allPeople": "Alle Personen",
+  "professorFilter": "Professor:in"
+}

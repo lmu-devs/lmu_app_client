@@ -42,7 +42,7 @@ class MensaDetailsInfoSection extends StatelessWidget {
             onTap: () {
               LmuBottomSheet.show(
                 context,
-                content: NavigationSheet(location: mensaModel.location),
+                content: NavigationSheet(id: mensaModel.canteenId, location: mensaModel.location),
               );
             },
           ),
@@ -116,8 +116,8 @@ class MensaDetailsInfoSection extends StatelessWidget {
     final isToday = DateTime.now().weekday - 1 == index;
 
     return LmuListItem.base(
-      title: isToday ? detail.day.localizedWeekday(appLocalizations) : null,
-      subtitle: !isToday ? detail.day.localizedWeekday(appLocalizations) : null,
+      title: isToday ? detail.day.name : null,
+      subtitle: !isToday ? detail.day.name : null,
       hasVerticalPadding: false,
       hasHorizontalPadding: false,
       trailingTitle: isToday ? '${detail.startTime.substring(0, 5)} - ${detail.endTime.substring(0, 5)}' : null,

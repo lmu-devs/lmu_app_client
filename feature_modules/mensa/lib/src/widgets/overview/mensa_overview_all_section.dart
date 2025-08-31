@@ -40,9 +40,10 @@ class MensaOverviewAllSection extends StatelessWidget {
                 ).toList();
 
                 if (filteredMensaModels.isEmpty) {
-                  return LmuIssueType(
-                    message: context.locals.app.allClosed,
-                    hasSpacing: false,
+                  return LmuEmptyState(
+                    hasVerticalPadding: true,
+                    type: EmptyStateType.closed,
+                    description: context.locals.app.allClosedDescription(context.locals.canteen.canteens),
                   );
                 }
 

@@ -10,6 +10,7 @@ import '../routes/screenings_history_data.dart';
 import '../util/cinema_screenings.dart';
 import '../util/cinema_type.dart';
 import '../util/screening_sorting.dart';
+import '../widgets/cinema_empty_states.dart';
 import '../widgets/screening_card.dart';
 
 class ScreeningsHistoryPage extends StatefulWidget {
@@ -53,6 +54,7 @@ class _ScreeningsHistoryPageState extends State<ScreeningsHistoryPage> {
   @override
   Widget build(BuildContext context) {
     final localizations = context.locals.cinema;
+    final cinema = cinemas.first;
 
     return LmuScaffold(
       appBar: LmuAppBarData(
@@ -60,29 +62,21 @@ class _ScreeningsHistoryPageState extends State<ScreeningsHistoryPage> {
         leadingAction: LeadingAction.back,
         largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
         largeTitleTrailingWidget: cinemas.length == 1
-            ? Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: LmuSizes.size_4,
-                  vertical: LmuSizes.size_2,
-                ),
-                decoration: BoxDecoration(
-                  color: cinemas.first.type.getTextColor(context).withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
-                ),
-                child: LmuText.bodySmall(
-                  cinemas.first.type.getValue(),
-                  color: cinemas.first.type.getTextColor(context),
-                ),
+            ? LmuInTextVisual.text(
+                title: cinema.type.getValue(),
+                textColor: cinema.type.getTextColor(context),
+                backgroundColor: cinema.type.getBackgroundColor(context),
               )
             : null,
       ),
-      body: screenings.isNotEmpty
-          ? Padding(
-              padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-              child: SingleChildScrollView(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+        child: screenings.isNotEmpty
+            ? SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox(height: LmuSizes.size_16),
                     ValueListenableBuilder<SortOption>(
                       valueListenable: _sortOptionNotifier,
                       builder: (context, activeSortOption, _) {
@@ -131,14 +125,9 @@ class _ScreeningsHistoryPageState extends State<ScreeningsHistoryPage> {
                     const SizedBox(height: LmuSizes.size_96),
                   ],
                 ),
-              ),
-            )
-          : Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_32),
-                child: LmuText.body(context.locals.cinema.pastMoviesEmpty, textAlign: TextAlign.center),
-              ),
-            ),
+              )
+            : const CinemaEmptyState(emptyStateType: CinemaEmptyStateType.pastMovies),
+      ),
     );
   }
 

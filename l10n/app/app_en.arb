@@ -65,6 +65,10 @@
   "@tomorrow": {
     "description": "Tomorrow"
   },
+  "yesterday": "Yesterday",
+  "@yesterday": {
+    "description": "Yesterday"
+  },
   "search": "Search",
   "@search": {
     "description": "Search"
@@ -104,6 +108,14 @@
   "settings": "Settings",
   "@settings": {
     "description": "Settings"
+  },
+  "notificationsPermissionDialogTitle": "Stay in control of notifications",
+  "@notificationsPermissionDialogTitle": {
+    "description": "Dialog title if notifications permissions get changed"
+  },
+  "notificationsPermissionDialogText": "You can manage your preferences on push notifications by going to your device settings and turning notifications on or off for this app.",
+  "@notificationsPermissionDialogText": {
+    "description": "Dialog text if notifications permissions get changed"
   },
   "suggestFeature": "Suggest a feature",
   "@suggestFeature": {
@@ -165,6 +177,10 @@
   "@somethingWentWrong": {
     "description": "Something went wrong"
   },
+  "somethingWentWrongDescription": "An unexpected error has occurred. Please try again later.",
+  "@somethingWentWrongDescription": {
+    "description": "Description for the error message"
+  },
   "tryAgain": "Try again",
   "@tryAgain": {
     "description": "Try again"
@@ -221,9 +237,13 @@
   "@prevSearch": {
     "description": "Previous Search"
   },
-  "noResults": "No results",
-  "@noResults": {
-    "description": "No results"
+  "noSearchResults": "No search results found",
+  "@noSearchResults": {
+    "description": "No search results"
+  },
+  "noSearchResultsDescription": "Try adjusting your search or using different keywords.",
+  "@noSearchResultsDescription": {
+    "description": "Description for no search results"
   },
   "favorites": "Favorites",
   "@favorites": {
@@ -233,6 +253,16 @@
   "@allClosed": {
     "description": "All canteens or libraries are closed"
   },
+  "allClosedDescription": "All {places} are currently closed. Please check back later.",
+  "@allClosedDescription": {
+    "description": "Description when all canteens or libraries are closed",
+    "placeholders": {
+      "places": {
+        "type": "String",
+        "example": "Libraries"
+      }
+    }
+  },
   "phone": "Phone",
   "@phone": {
     "description": "Phone"
@@ -241,9 +271,9 @@
   "@callPhone": {
     "description": "Call Phone"
   },
-  "copiedPhone": "Phone number copied to clipboard",
+  "copiedPhone": "Phone number copied",
   "@copiedPhone": {
-    "description": "Phone number copied to clipboard"
+    "description": "Phone number copied"
   },
   "errorLaunchWebsite": "Could not launch website",
   "@errorLaunchWebsite": {
@@ -284,5 +314,34 @@
   "on": "on",
   "@on": {
     "description": "on"
+  },
+  "done": "Done",
+  "@done": {
+    "description": "Done"
+  },
+  "setUpLater": "Set up later",
+  "@setUpLater": {
+    "description": "Set up later"
+  },
+  "noInternetConnection": "No internet connection",
+  "@noInternetConnection": {
+    "description": "No internet connection"
+  },
+  "noInternetConnectionDescription": "Please check your internet connection and try again.",
+  "diese": "this",
+  "@diese": {
+    "description": "This (feminine)"
+  },
+  "dieses": "this",
+  "@dieses": {
+    "description": "This (neuter)"
+  },
+  "summerCaps": "SUMMER",
+  "@summerCaps": {
+    "description": "Summer semester in caps"
+  },
+  "winterCaps": "WINTER",
+  "@winterCaps": {
+    "description": "Winter semester in caps"
   }
 }

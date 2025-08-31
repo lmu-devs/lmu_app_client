@@ -1,12 +1,15 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
+import 'package:core_routes/explore.dart';
 import 'package:core_routes/libraries.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/explore.dart';
 
 import '../extensions/equipment_icon_extension.dart';
 import '../extensions/opening_hours_extensions.dart';
@@ -21,10 +24,12 @@ class LibraryDetailsPage extends StatelessWidget {
     super.key,
     required this.library,
     this.withAppBar = true,
+    this.withMapButton = true,
   });
 
   final LibraryModel library;
   final bool withAppBar;
+  final bool withMapButton;
 
   @override
   Widget build(BuildContext context) {
@@ -34,18 +39,38 @@ class LibraryDetailsPage extends StatelessWidget {
         const SizedBox(height: LmuSizes.size_8),
         LmuButtonRow(
           buttons: [
+            if (withMapButton)
+              LmuMapImageButton(
+                onTap: () {
+                  const ExploreMainRoute().go(context);
+                  GetIt.I<ExploreApi>().selectLocation(library.id);
+                },
+              ),
             if (library.reservationUrl != null && library.reservationUrl!.isNotEmpty)
               LmuButton(
                 title: context.locals.libraries.seatBooking,
-                leadingIcon: LucideIcons.armchair,
                 emphasis: ButtonEmphasis.secondary,
-                onTap: () => LmuUrlLauncher.launchWebsite(url: library.reservationUrl!, context: context),
+                onTap: () {
+                  LmuUrlLauncher.launchWebsite(
+                    url: library.reservationUrl!,
+                    context: context,
+                    mode: LmuUrlLauncherMode.inAppWebView,
+                  );
+                  GetIt.I<AnalyticsClient>().logClick(
+                    eventName: "library_booking_clicked",
+                    parameters: {"library": library.name},
+                  );
+                },
               ),
             if (library.url.isNotEmpty)
               LmuButton(
                 title: "Website",
                 emphasis: ButtonEmphasis.secondary,
-                onTap: () => LmuUrlLauncher.launchWebsite(url: library.url, context: context),
+                onTap: () => LmuUrlLauncher.launchWebsite(
+                  url: library.url,
+                  context: context,
+                  mode: LmuUrlLauncherMode.inAppWebView,
+                ),
               ),
             if (library.phones != null && library.phones!.isNotEmpty)
               LmuButton(
@@ -80,7 +105,7 @@ class LibraryDetailsPage extends StatelessWidget {
                 onTap: () {
                   LmuBottomSheet.show(
                     context,
-                    content: NavigationSheet(location: library.location),
+                    content: NavigationSheet(id: library.id, location: library.location),
                   );
                 },
               ),
@@ -137,7 +162,11 @@ class LibraryDetailsPage extends StatelessWidget {
                         )
                       : null,
                   onTap: () => equipment.url != null && equipment.url!.isNotEmpty
-                      ? LmuUrlLauncher.launchWebsite(url: equipment.url!, context: context)
+                      ? LmuUrlLauncher.launchWebsite(
+                        url: equipment.url!,
+                        context: context,
+                        mode: LmuUrlLauncherMode.inAppWebView,
+                      )
                       : null,
                 ),
               )
@@ -183,8 +212,8 @@ class LibraryDetailsPage extends StatelessWidget {
         largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
         largeTitleTrailingWidget: LmuInTextVisual.text(
           title: context.locals.libraries.library,
-          textColor: context.colors.customColors.textColors.library,
-          backgroundColor: context.colors.customColors.backgroundColors.library,
+          textColor: context.colors.customColors.textColors.purple,
+          backgroundColor: context.colors.customColors.backgroundColors.purple,
         ),
       ),
       body: SingleChildScrollView(

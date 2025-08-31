@@ -10,9 +10,10 @@ import '../services/cinema_user_preference_service.dart';
 import '../util/cinema_screenings.dart';
 import '../util/cinema_type.dart';
 import '../util/screening_filter_keys.dart';
+import 'cinema_empty_states.dart';
 import 'cinema_filter_row.dart';
 import 'screening_card.dart';
-import 'screening_placeholder.dart';
+import 'watchlist_placeholder.dart';
 
 class ScreeningsList extends StatelessWidget {
   ScreeningsList({
@@ -49,7 +50,7 @@ class ScreeningsList extends StatelessWidget {
               actionTitle: context.locals.cinema.historyAction,
               onActionTap: () => ScreeningsHistoryRoute(
                 ScreeningsHistoryData(cinemas: cinemas, screenings: _getPastScreenings()),
-              ).go(context),
+              ).push(context),
             ),
             futureScreenings.isNotEmpty
                 ? AnimatedSwitcher(
@@ -81,7 +82,9 @@ class ScreeningsList extends StatelessWidget {
                       },
                     ),
                   )
-                : ScreeningPlaceholder(activeFilter: _activeFilterNotifier.value),
+                : activeFilter != null && activeFilter == ScreeningFilterKeys.watchlist
+                  ? const WatchlistPlaceholder()
+                  : const CinemaEmptyState(emptyStateType: CinemaEmptyStateType.screenings),
           ],
         );
       },

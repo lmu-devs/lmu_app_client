@@ -20,5 +20,11 @@ class SettingsRouterImpl extends SettingsRouter {
   Widget buildLanguage(BuildContext context) => const SettingsLanguagePage();
 
   @override
+  Widget buildAnalytics(BuildContext context) => const SettingsAnalyticsPage();
+
+  @override
+  Widget buildNotifications(BuildContext context) => const SettingsNotificationsPage();
+
+  @override
   Widget buildLicense(BuildContext context) => const SettingsLicencePage();
 }

@@ -1,0 +1,1 @@
+class SportsGenericException implements Exception {}

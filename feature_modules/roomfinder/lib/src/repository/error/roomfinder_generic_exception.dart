@@ -1,0 +1,1 @@
+class RoomfinderGenericException implements Exception {}

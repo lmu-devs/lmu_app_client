@@ -3,6 +3,7 @@ import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+
 import '../extensions/opening_hours_extensions.dart';
 import '../repository/api/models/library_model.dart';
 import '../services/libraries_status_update_service.dart';
@@ -29,6 +30,8 @@ class _LibrariesContentViewState extends State<LibrariesContentView> {
 
   @override
   Widget build(BuildContext context) {
+    final appLocals = context.locals.app;
+    final libraryLocals = context.locals.libraries;
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +41,7 @@ class _LibrariesContentViewState extends State<LibrariesContentView> {
             padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
             child: Column(
               children: [
-                LmuTileHeadline.base(title: context.locals.app.favorites, customBottomPadding: LmuSizes.size_6),
+                LmuTileHeadline.base(title: appLocals.favorites, customBottomPadding: LmuSizes.size_6),
                 FavoriteLibrariesSection(libraries: _libraries),
               ],
             ),
@@ -46,7 +49,7 @@ class _LibrariesContentViewState extends State<LibrariesContentView> {
           const SizedBox(height: 26),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-            child: LmuTileHeadline.base(title: context.locals.libraries.allLibraries),
+            child: LmuTileHeadline.base(title: libraryLocals.allLibraries),
           ),
           LibrariesOverviewButtonSection(libraries: _libraries),
           Padding(
@@ -81,9 +84,10 @@ class _LibrariesContentViewState extends State<LibrariesContentView> {
 
                             if (filteredLibraries.isEmpty) {
                               return Center(
-                                child: LmuIssueType(
-                                  message: context.locals.app.allClosed,
-                                  hasSpacing: false,
+                                child: LmuEmptyState(
+                                  hasVerticalPadding: true,
+                                  type: EmptyStateType.closed,
+                                  description: context.locals.app.allClosedDescription(libraryLocals.library),
                                 ),
                               );
                             }

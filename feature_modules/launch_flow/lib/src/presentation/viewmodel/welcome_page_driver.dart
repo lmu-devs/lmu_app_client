@@ -1,8 +1,10 @@
+import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
-import 'package:core_routes/home.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/launch_flow.dart';
 import 'package:widget_driver/widget_driver.dart';
+
+import '../../domain/interface/launch_flow_repository_interface.dart';
 
 part 'welcome_page_driver.g.dart';
 
@@ -10,44 +12,55 @@ typedef WelcomePageEntry = ({String emoji, String title, String description});
 
 @GenerateTestDriver()
 class WelcomePageDriver extends WidgetDriver {
-  late LaunchFlowLocatizations _flowLocatizations;
+  late LaunchFlowLocatizations _flowLocalizations;
+  late AppLocalizations _appLocalizations;
   late BuildContext _navigatorContext;
 
   List<WelcomePageEntry> get _entries => <WelcomePageEntry>[
         (
           emoji: '🤝',
-          title: _flowLocatizations.campusCompanionTitle,
-          description: _flowLocatizations.campusCompanionDescription,
+          title: _flowLocalizations.campusCompanionTitle,
+          description: _flowLocalizations.campusCompanionDescription,
         ),
         (
           emoji: '🧑‍💻',
-          title: _flowLocatizations.developedByStudentsTitle,
-          description: _flowLocatizations.developedByStudentsDescription,
+          title: _flowLocalizations.developedByStudentsTitle,
+          description: _flowLocalizations.developedByStudentsDescription,
         ),
         (
           emoji: '🎉',
-          title: _flowLocatizations.moreToComeTitle,
-          description: _flowLocatizations.moreToComeDescription,
+          title: _flowLocalizations.moreToComeTitle,
+          description: _flowLocalizations.moreToComeDescription,
         ),
       ];
 
-  String get welcomeTitle => _flowLocatizations.welcome;
+  String get welcomeTitle => _flowLocalizations.welcome;
 
-  String get welcomeSubtitle => _flowLocatizations.fromStudents;
+  String get welcomeSubtitle => _flowLocalizations.fromStudents;
 
   List<WelcomePageEntry> get entries => _entries;
 
-  String get buttonText => _flowLocatizations.letsGo;
+  String get dataPrivacyIntro => _flowLocalizations.dataPrivacyIntro;
+
+  String get dataPrivacyLabel => _flowLocalizations.dataPrivacyLabel;
+
+  String get buttonText => _appLocalizations.continueAction;
 
   void onButtonPressed() {
-    GetIt.I.get<LaunchFlowApi>().showedWelcomePage();
-    const HomeMainRoute().pushReplacement(_navigatorContext);
+    GetIt.I.get<LaunchFlowRepositoryInterface>().showedWelcomePage();
+
+    final analyticsUserPreferenceService = GetIt.I<AnalyticsUserPreferenceService>();
+    analyticsUserPreferenceService.toggleAnalytics(AnalyticsPreference.enabled);
+
+    final launchFlowApi = GetIt.I.get<LaunchFlowApi>();
+    launchFlowApi.continueFlow(_navigatorContext);
   }
 
   @override
   void didUpdateBuildContext(BuildContext context) {
     super.didUpdateBuildContext(context);
-    _flowLocatizations = context.locals.launchFlow;
+    _flowLocalizations = context.locals.launchFlow;
+    _appLocalizations = context.locals.app;
     _navigatorContext = context;
   }
 }

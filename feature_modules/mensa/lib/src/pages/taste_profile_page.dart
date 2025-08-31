@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
@@ -425,12 +426,17 @@ class _SaveButtonState extends State<_SaveButton> {
               increaseTouchTarget: true,
               textScaleFactorEnabled: false,
               onTap: () {
+                final preferencePreset = tasteProfileService.selectedPreferencePresetNotifier.value;
                 tasteProfileService.saveTasteProfileState(
                   selectedAllergiesPresets: tasteProfileService.selectedAllergiesPresetsNotifier.value,
                   excludedLabels: _excludedLabelsNotifier.value,
                   isActive: _isActiveNotifier.value,
-                  selectedPreferencePreset: tasteProfileService.selectedPreferencePresetNotifier.value,
+                  selectedPreferencePreset: preferencePreset,
                 );
+                if (preferencePreset != null && preferencePreset.isNotEmpty) {
+                  final AnalyticsClient analytics = GetIt.I<AnalyticsClient>();
+                  analytics.logSelection(contentType: "taste_profile_preset", itemId: preferencePreset);
+                }
                 Navigator.of(context, rootNavigator: true).pop();
               },
             );

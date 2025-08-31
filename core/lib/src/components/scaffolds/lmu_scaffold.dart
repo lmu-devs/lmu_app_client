@@ -69,7 +69,7 @@ class _LmuScaffoldState extends State<LmuScaffold> {
     final backgroundColor = context.colors.neutralColors.backgroundColors.base;
     final textTheme = context.textTheme;
     final largeTitleTextTheme = textTheme.h0;
-    final collapsedTitleTextStyle = textTheme.h3;
+    final collapsedTitleTextStyle = textTheme.h3.copyWith(fontSize: 18);
     final largeTitleMaxLines = _calculateTitleMaxLines(_largeTitle, largeTitleTextTheme, mediaQuery.size.width);
     final calculatedLargeTitleHeight = largeTitleMaxLines * _largeTitleLineHeight + LmuSizes.size_16;
 
@@ -122,7 +122,7 @@ class _LmuScaffoldState extends State<LmuScaffold> {
   int _calculateTitleMaxLines(String largeTitleText, TextStyle largeTitleTextStyle, double maxWidth) {
     final span = TextSpan(text: largeTitleText, style: largeTitleTextStyle);
     final tp = TextPainter(text: span, textDirection: TextDirection.ltr, maxLines: 4);
-    tp.layout(maxWidth: maxWidth - LmuSizes.size_32);
+    tp.layout(maxWidth: maxWidth - 33);
     return min(tp.computeLineMetrics().length, 4);
   }
 }

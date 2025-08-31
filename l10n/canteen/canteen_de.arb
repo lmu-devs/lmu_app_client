@@ -6,6 +6,20 @@
   "openUntil": "Geöffnet bis {time} Uhr",
   "openingSoon": "Öffnet um {time} Uhr",
   "closed": "Geschlossen",
+  "closedDescription": "Leider hat {canteenGender} {canteenName} heute geschlossen.",
+  "@closedDescription": {
+    "description": "Description when the canteen is closed",
+    "placeholders": {
+      "canteenName": {
+        "type": "String",
+        "example": "Mensa"
+      },
+      "canteenGender": {
+        "type": "String",
+        "example": "diese"
+      }
+    }
+  },
   "allCanteens": "Alle Mensen",
   "mensaTypeMensa": "Mensa",
   "mensaTypeStuBistro": "StuBistro",
@@ -60,6 +74,7 @@
   "yourTasteFiltersAll": "Deine Food-Preferences sind literally so main character energy rn...",
   "cafeBarNotice": "Auswahl an Kaffeespezialitäten, Gebäck und Schmankerl für zwischendurch. Siehe Aushang vor Ort.",
   "menuNotAvailable": "Menu nicht verfügbar",
+  "menuNotAvailableDescription": "Noch kein Menü verfügbar. Bitte schau später nochmal vorbei.",
   "unsavedChanges": "Nicht gespeicherte Änderungen",
   "unsavedChangesDescription": "Möchtest du die Änderungen weiter bearbeiten",
   "canteens": "Mensen"

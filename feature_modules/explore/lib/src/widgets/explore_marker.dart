@@ -1,3 +1,4 @@
+import 'package:core/core_services.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -122,6 +123,7 @@ class _ExploreMarkerState extends State<ExploreMarker> with TickerProviderStateM
             final location = _locationService.getLocationById(_id);
             _locationService.bringToFront(_id);
             _mapService.updateMarker(location);
+            GetIt.I<AnalyticsClient>().logClick(eventName: "map_marker_clicked", parameters: {"location": location.name});
           },
           child: SizedBox(
             width: _markerSizeNotifier.value.size,

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../component/animated_light_rays.dart';
+import '../component/data_privacy_disclaimer.dart';
+import '../component/launch_flow_page_header.dart';
 import '../viewmodel/welcome_page_driver.dart';
 
 class WelcomePage extends DrivableWidget<WelcomePageDriver> {
@@ -23,40 +25,13 @@ class WelcomePage extends DrivableWidget<WelcomePageDriver> {
         ),
         Scaffold(
           backgroundColor: Colors.transparent,
-          body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+          bottomNavigationBar: Padding(
+            padding: const EdgeInsets.all(LmuSizes.size_16),
+            child: SafeArea(
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          const SizedBox(height: LmuSizes.size_48),
-                          LmuText.h1(driver.welcomeTitle, textAlign: TextAlign.center),
-                          const SizedBox(height: LmuSizes.size_12),
-                          LmuText.body(
-                            driver.welcomeSubtitle,
-                            textAlign: TextAlign.center,
-                            color: colors.neutralColors.textColors.mediumColors.base,
-                          ),
-                          const SizedBox(height: LmuSizes.size_48),
-                          LmuContentTile(
-                            contentList: driver.entries
-                                .map(
-                                  (entry) => LmuListItem.base(
-                                    title: entry.title,
-                                    subtitle: entry.description,
-                                    mainContentAlignment: MainContentAlignment.top,
-                                    leadingArea: LmuInListBlurEmoji(emoji: entry.emoji),
-                                  ),
-                                )
-                                .toList(),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  const DataPrivacyDisclaimer(),
                   const SizedBox(height: LmuSizes.size_16),
                   LmuButton(
                     title: driver.buttonText,
@@ -64,8 +39,39 @@ class WelcomePage extends DrivableWidget<WelcomePageDriver> {
                     size: ButtonSize.large,
                     onTap: driver.onButtonPressed,
                   ),
-                  const SizedBox(height: LmuSizes.size_16),
                 ],
+              ),
+            ),
+          ),
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      LaunchFlowPageHeader(
+                        title: driver.welcomeTitle,
+                        description: driver.welcomeSubtitle,
+                      ),
+                      LmuContentTile(
+                        contentList: driver.entries
+                            .map(
+                              (entry) => LmuListItem.base(
+                                title: entry.title,
+                                subtitle: entry.description,
+                                mainContentAlignment: MainContentAlignment.top,
+                                leadingArea:
+                                    LmuInListBlurEmoji(emoji: entry.emoji),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                      const SizedBox(height: LmuSizes.size_96)
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
@@ -75,5 +81,6 @@ class WelcomePage extends DrivableWidget<WelcomePageDriver> {
   }
 
   @override
-  WidgetDriverProvider<WelcomePageDriver> get driverProvider => $WelcomePageDriverProvider();
+  WidgetDriverProvider<WelcomePageDriver> get driverProvider =>
+      $WelcomePageDriverProvider();
 }

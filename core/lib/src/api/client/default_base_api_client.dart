@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 
 import '../../../core_services.dart';
 import '../../../logging.dart';
-import '../../../utils.dart';
 import '../env/env_config.dart';
 import 'base_api_client.dart';
 
@@ -47,7 +46,7 @@ class DefaultBaseApiClient extends BaseApiClient {
 
   Map<String, String> get _defaultHeaders => {
         "app-version": GetIt.I.get<SystemInfoService>().systemInfo.appVersion,
-        "accept-language": _locale.languageCode,
+        "accept-language": _locale.toLanguageTag(),
         if (_userApiKey != null) "user-api-key": _userApiKey!,
       };
 
@@ -106,9 +105,6 @@ class DefaultBaseApiClient extends BaseApiClient {
         _appLogger.logMessage(
             "[BaseApiClient][$method]: SUCCESS Response from $constructedUrl in ${stopwatch.elapsedMilliseconds}ms, "
             "StatusCode: ${response.statusCode}, Body: $truncatedBody");
-      } else if (response.statusCode == 426) {
-        _appLogger.logMessage("[BaseApiClient][$method]: Update Required - StatusCode: ${response.statusCode}");
-        AppUpdateNavigator.popAllAndNavigate();
       } else {
         _logError(method, constructedUrl, headers, response, stopwatch.elapsedMilliseconds);
       }

@@ -18,3 +18,12 @@ class StudiesMainRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) => _router.buildMain(context);
 }
+
+class FaculitesMainRoute extends GoRouteData {
+  const FaculitesMainRoute();
+
+  static const String path = 'faculites';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => _router.buildFaculties(context);
+}

@@ -31,13 +31,35 @@ class MenuDayEntry extends StatelessWidget {
 
     if (menuItems.isEmpty) {
       final mensaLocals = context.locals.canteen;
+      final allLocals = context.locals.app;
 
       if (mensaMenuModel.isClosed) {
-        return LmuIssueType(
-          message: "${mensaType.text(mensaLocals)} ${mensaLocals.closed.toLowerCase()}",
+        final mensaName = mensaType.text(mensaLocals);
+        final germanArticle =
+            [MensaType.mensa, MensaType.lounge].contains(mensaType) ? allLocals.diese : allLocals.dieses;
+        return Padding(
+          padding: const EdgeInsets.only(bottom: LmuSizes.size_96),
+          child: LmuEmptyState(
+            type: EmptyStateType.closed,
+            hasVerticalPadding: true,
+            title: "$mensaName ${mensaLocals.closed.toLowerCase()}",
+            description: mensaLocals.closedDescription(
+              mensaName,
+              germanArticle,
+            ),
+          ),
         );
       }
-      return LmuIssueType(message: mensaLocals.menuNotAvailable);
+      return Padding(
+          padding: const EdgeInsets.only(bottom: LmuSizes.size_96),
+          child: LmuEmptyState(
+            type: EmptyStateType.custom,
+            hasVerticalPadding: true,
+            assetName: "lib/assets/no_menu.webp",
+            title: mensaLocals.menuNotAvailable,
+            description: mensaLocals.menuNotAvailableDescription,
+          ),
+      );
     }
 
     return Padding(

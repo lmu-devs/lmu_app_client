@@ -22,6 +22,18 @@ RouteBase get $launchFlowShellRoute => ShellRouteData.$route(
           path: '/app_update',
           factory: $LaunchFlowAppUpdateRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: '/release_notes',
+          factory: $LaunchFlowReleaseNotesRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: '/faculty_selection',
+          factory: $LaunchFlowFacultySelectionRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: '/permissions_onboarding',
+          factory: $LaunchFlowPermissionsOnboardingRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -61,6 +73,55 @@ extension $LaunchFlowAppUpdateRouteExtension on LaunchFlowAppUpdateRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
+extension $LaunchFlowReleaseNotesRouteExtension on LaunchFlowReleaseNotesRoute {
+  static LaunchFlowReleaseNotesRoute _fromState(GoRouterState state) => const LaunchFlowReleaseNotesRoute();
+
+  String get location => GoRouteData.$location(
+        '/release_notes',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LaunchFlowFacultySelectionRouteExtension on LaunchFlowFacultySelectionRoute {
+  static LaunchFlowFacultySelectionRoute _fromState(GoRouterState state) => const LaunchFlowFacultySelectionRoute();
+
+  String get location => GoRouteData.$location(
+        '/faculty_selection',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LaunchFlowPermissionsOnboardingRouteExtension on LaunchFlowPermissionsOnboardingRoute {
+  static LaunchFlowPermissionsOnboardingRoute _fromState(GoRouterState state) =>
+      const LaunchFlowPermissionsOnboardingRoute();
+
+  String get location => GoRouteData.$location(
+        '/permissions_onboarding',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
 RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
       restorationScopeId: MainShellRouteData.$restorationScopeId,
       navigatorContainerBuilder: MainShellRouteData.$navigatorContainerBuilder,
@@ -85,16 +146,34 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                       factory: $SettingsLanguageRouteExtension._fromState,
                     ),
                     GoRouteData.$route(
+                      path: 'notifications',
+                      factory: $SettingsNotificationsRouteExtension._fromState,
+                    ),
+                    GoRouteData.$route(
                       path: 'license',
                       factory: $SettingsLicenceRouteExtension._fromState,
                     ),
                     GoRouteData.$route(
                       path: 'account',
                       factory: $SettingsAccountRouteExtension._fromState,
+                      routes: [
+                        GoRouteData.$route(
+                          path: 'analytics',
+                          factory: $SettingsAnalyticsRouteExtension._fromState,
+                        ),
+                      ],
                     ),
                     GoRouteData.$route(
                       path: 'debug',
                       factory: $SettingsDebugRouteExtension._fromState,
+                    ),
+                    GoRouteData.$route(
+                      path: 'developerdex',
+                      factory: $DeveloperdexMainRouteExtension._fromState,
+                    ),
+                    GoRouteData.$route(
+                      path: 'faculites',
+                      factory: $FaculitesMainRouteExtension._fromState,
                     ),
                   ],
                 ),
@@ -257,6 +336,30 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                 GoRouteData.$route(
                   path: 'lectures',
                   factory: $LecturesMainRouteExtension._fromState,
+                  routes: [
+                    GoRouteData.$route(
+                      path: 'lecture-list',
+                      factory: $LectureListRouteExtension._fromState,
+                    ),
+                  ],
+                ),
+                GoRouteData.$route(
+                  path: 'people',
+                  factory: $PeopleOverviewRouteExtension._fromState,
+                  routes: [
+                    GoRouteData.$route(
+                      path: 'details',
+                      factory: $PeopleDetailsRouteExtension._fromState,
+                    ),
+                    GoRouteData.$route(
+                      path: 'people-search',
+                      factory: $PeopleSearchRouteExtension._fromState,
+                    ),
+                  ],
+                ),
+                GoRouteData.$route(
+                  path: 'people-faculties',
+                  factory: $PeopleFacultyOverviewRouteExtension._fromState,
                 ),
               ],
             ),
@@ -333,6 +436,22 @@ extension $SettingsLanguageRouteExtension on SettingsLanguageRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
+extension $SettingsNotificationsRouteExtension on SettingsNotificationsRoute {
+  static SettingsNotificationsRoute _fromState(GoRouterState state) => const SettingsNotificationsRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/settings/notifications',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
 extension $SettingsLicenceRouteExtension on SettingsLicenceRoute {
   static SettingsLicenceRoute _fromState(GoRouterState state) => const SettingsLicenceRoute();
 
@@ -365,11 +484,60 @@ extension $SettingsAccountRouteExtension on SettingsAccountRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
+extension $SettingsAnalyticsRouteExtension on SettingsAnalyticsRoute {
+  static SettingsAnalyticsRoute _fromState(GoRouterState state) => const SettingsAnalyticsRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/settings/account/analytics',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
 extension $SettingsDebugRouteExtension on SettingsDebugRoute {
   static SettingsDebugRoute _fromState(GoRouterState state) => const SettingsDebugRoute();
 
   String get location => GoRouteData.$location(
         '/home/settings/debug',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $DeveloperdexMainRouteExtension on DeveloperdexMainRoute {
+  static DeveloperdexMainRoute _fromState(GoRouterState state) => const DeveloperdexMainRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/settings/developerdex',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $FaculitesMainRouteExtension on FaculitesMainRoute {
+  static FaculitesMainRoute _fromState(GoRouterState state) =>
+      const FaculitesMainRoute();
+
+  String get location => GoRouteData.$location(
+        '/home/settings/faculites',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -776,15 +944,10 @@ extension $MensaSearchRouteExtension on MensaSearchRoute {
 }
 
 extension $ExploreMainRouteExtension on ExploreMainRoute {
-  static ExploreMainRoute _fromState(GoRouterState state) => ExploreMainRoute(
-        filter: state.uri.queryParameters['filter'],
-      );
+  static ExploreMainRoute _fromState(GoRouterState state) => const ExploreMainRoute();
 
   String get location => GoRouteData.$location(
         '/explore',
-        queryParams: {
-          if (filter != null) 'filter': filter,
-        },
       );
 
   void go(BuildContext context) => context.go(location);
@@ -883,6 +1046,109 @@ extension $LecturesMainRouteExtension on LecturesMainRoute {
 
   String get location => GoRouteData.$location(
         '/studies/lectures',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LectureListRouteExtension on LectureListRoute {
+  static LectureListRoute _fromState(GoRouterState state) => LectureListRoute(
+        state.extra as Map<String, dynamic>,
+      );
+
+  String get location => GoRouteData.$location(
+        '/studies/lectures/lecture-list',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
+}
+
+extension $PeopleOverviewRouteExtension on PeopleOverviewRoute {
+  static PeopleOverviewRoute _fromState(GoRouterState state) => PeopleOverviewRoute(
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/studies/people',
+        queryParams: {
+          'faculty-id': facultyId.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $PeopleDetailsRouteExtension on PeopleDetailsRoute {
+  static PeopleDetailsRoute _fromState(GoRouterState state) => PeopleDetailsRoute(
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
+        personId: int.parse(state.uri.queryParameters['person-id']!)!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/studies/people/details',
+        queryParams: {
+          'faculty-id': facultyId.toString(),
+          'person-id': personId.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) => context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $PeopleSearchRouteExtension on PeopleSearchRoute {
+  static PeopleSearchRoute _fromState(GoRouterState state) => PeopleSearchRoute(
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/studies/people/people-search',
+        queryParams: {
+          'faculty-id': facultyId.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $PeopleFacultyOverviewRouteExtension on PeopleFacultyOverviewRoute {
+  static PeopleFacultyOverviewRoute _fromState(GoRouterState state) => const PeopleFacultyOverviewRoute();
+
+  String get location => GoRouteData.$location(
+        '/studies/people-faculties',
       );
 
   void go(BuildContext context) => context.go(location);
