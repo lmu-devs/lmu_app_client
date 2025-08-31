@@ -21,10 +21,10 @@ class FacultyNumberWidget extends StatelessWidget {
       decoration: ShapeDecoration(
         color: context.colors.neutralColors.backgroundColors.mediumColors.base,
         shape: RoundedSuperellipseBorder(
-          borderRadius: BorderRadius.circular(LmuSizes.size_6),
+          borderRadius: BorderRadius.circular(LmuRadiusSizes.mediumSmall),
         ),
       ),
-      child: Center(child: LmuText.h2(formattedNumber)),
+      child: Center(child: LmuText.h3(formattedNumber)),
     );
   }
 }
