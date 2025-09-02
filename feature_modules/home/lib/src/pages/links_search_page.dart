@@ -16,6 +16,7 @@ class LinksSearchEntry extends SearchEntry {
     required this.url,
     required this.faviconUrl,
     required this.types,
+    required this.aliases,
     required this.rating,
   });
 
@@ -24,6 +25,7 @@ class LinksSearchEntry extends SearchEntry {
   final String url;
   final String? faviconUrl;
   final List<String> types;
+  final List<String> aliases;
   final RatingModel rating;
 }
 
@@ -56,6 +58,7 @@ class _LinksSearchPageState extends State<LinksSearchPage> {
               url: link.url,
               faviconUrl: link.faviconUrl,
               types: link.types,
+              aliases: link.aliases,
               rating: link.rating,
             ))
         .toList();
@@ -70,6 +73,7 @@ class _LinksSearchPageState extends State<LinksSearchPage> {
               url: link.url,
               faviconUrl: link.faviconUrl,
               types: link.types,
+              aliases: link.aliases,
               rating: link.rating,
             ))
         .toList();
@@ -92,6 +96,7 @@ class _LinksSearchPageState extends State<LinksSearchPage> {
           faviconUrl: input.faviconUrl,
           faculties: input.tags!,
           types: input.types,
+          aliases: input.aliases,
           rating: input.rating,
         ),
         additionalCallbackOnTap: () => _recentSearchController.trigger(input),

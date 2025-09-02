@@ -17,6 +17,7 @@ class LinkModel extends Equatable {
     required this.faviconUrl,
     required this.faculties,
     required this.types,
+    required this.aliases,
     required this.rating,
   });
 
@@ -28,6 +29,7 @@ class LinkModel extends Equatable {
   final String? faviconUrl;
   final List<String> faculties;
   final List<String> types;
+  final List<String> aliases;
   final RatingModel rating;
 
   Map<String, dynamic> toJson() => _$LinkModelToJson(this);
