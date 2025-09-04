@@ -2,31 +2,17 @@ import 'package:collection/collection.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
-import 'package:core_routes/lectures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
-import 'package:get_it/get_it.dart';
-import 'package:shared_api/studies.dart';
+import 'package:widget_driver/widget_driver.dart';
 
-class FacultiesPage extends StatefulWidget {
-  const FacultiesPage({super.key});
+import '../viewmodel/faculties_page_driver.dart';
 
-  @override
-  State<FacultiesPage> createState() => _FacultiesPageState();
-}
-
-class _FacultiesPageState extends State<FacultiesPage> {
-  late final FacultiesApi _facultiesApi;
-
-  @override
-  void initState() {
-    super.initState();
-    _facultiesApi = GetIt.I.get<FacultiesApi>();
-  }
+class FacultiesPage extends DrivableWidget<FacultiesPageDriver> {
+  FacultiesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final lecturesLocalizations = context.locals.lectures;
     final studiesLocalizations = context.locals.studies;
     final appLocalizations = context.locals.app;
 
@@ -71,16 +57,16 @@ class _FacultiesPageState extends State<FacultiesPage> {
 
             // Faculty list
             LmuContentTile(
-              contentList: _facultiesApi.allFaculties.mapIndexed((index, faculty) {
+              contentList: driver.faculties.mapIndexed((index, faculty) {
                 return LmuListItem.action(
                   key: Key("faculty_${faculty.id}"),
                   title: faculty.name,
                   leadingArea: LmuInListBlurEmoji(emoji: faculty.id.toString()),
-                  trailingTitle: '', // TODO: implement course count
+                  trailingTitle: driver.courseCount,
                   actionType: LmuListItemAction.chevron,
                   hasDivider: false,
                   onTap: () {
-                    LectureListRoute(facultyId: faculty.id).go(context);
+                    driver.onFacultyPressed(context, faculty);
                   },
                 );
               }).toList(),
@@ -89,5 +75,20 @@ class _FacultiesPageState extends State<FacultiesPage> {
         ),
       ),
     );
+  }
+
+  @override
+  WidgetDriverProvider<FacultiesPageDriver> get driverProvider => _FacultiesPageDriverProvider();
+}
+
+class _FacultiesPageDriverProvider extends WidgetDriverProvider<FacultiesPageDriver> {
+  @override
+  FacultiesPageDriver buildDriver() {
+    return FacultiesPageDriver();
+  }
+
+  @override
+  FacultiesPageDriver buildTestDriver() {
+    return FacultiesPageDriver();
   }
 }
