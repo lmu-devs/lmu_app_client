@@ -1,25 +1,28 @@
 import '../../../domain/exception/lectures_generic_exception.dart';
 import '../../../domain/interface/lectures_repository_interface.dart';
 import '../../../domain/model/lecture.dart';
-import '../data/api/lectures_api_client.dart';
+import '../data/dto/lectures_dto.dart';
 import '../data/storage/lectures_storage.dart';
 
 class LecturesRepository implements LecturesRepositoryInterface {
-  const LecturesRepository(this._apiClient, this._storage);
+  const LecturesRepository(this._storage);
 
-  final LecturesApiClient _apiClient;
   final LecturesStorage _storage;
 
   @override
   Future<List<Lecture>> getLectures() async {
     try {
       // For now, return mock data since API is not implemented
-      return _getMockLectures();
+      final mockLectures = _getMockLectures();
+      
+      // Save to cache for future use
+      await _saveLecturesToCache(mockLectures);
+      return mockLectures;
 
       // TODO: Uncomment when API is ready
       // final retrievedLecturesData = await _apiClient.getLectures();
       // await _storage.saveLectures(retrievedLecturesData);
-      // return retrievedLecturesData.toDomain();
+      // return LecturesDto.toDomainList(retrievedLecturesData);
     } catch (e) {
       throw const LecturesGenericException();
     }
@@ -30,8 +33,7 @@ class LecturesRepository implements LecturesRepositoryInterface {
     final cachedLecturesData = await _storage.getLectures();
     if (cachedLecturesData == null) return null;
     try {
-      // Since we're storing a single LecturesDto, convert it to a list
-      return [cachedLecturesData.toDomain()];
+      return LecturesDto.toDomainList(cachedLecturesData);
     } catch (e) {
       deleteLectures();
       return null;
@@ -43,23 +45,23 @@ class LecturesRepository implements LecturesRepositoryInterface {
     await _storage.deleteLectures();
   }
 
-  @override
-  Future<List<Lecture>> getLecturesByFaculty(int facultyId) async {
+  // Helper method to save lectures to cache efficiently
+  Future<void> _saveLecturesToCache(List<Lecture> lectures) async {
     try {
-      final coursesData = await _apiClient.getCoursesByFaculty(facultyId);
-      return coursesData
-          .map((dto) => Lecture(
-                id: dto.id,
-                title: dto.name,
-                tags: [], // CourseDto doesn't have tags, using empty list as default
-                facultyId: dto.facultyId,
-                description: dto.description,
-                credits: dto.credits,
-                semester: dto.semester,
-              ))
-          .toList();
+      // Convert to DTOs only when saving to cache
+      final dtos = lectures.map((lecture) => LecturesDto(
+        id: lecture.id,
+        title: lecture.title,
+        tags: lecture.tags,
+        facultyId: lecture.facultyId,
+        description: lecture.description,
+        credits: lecture.credits,
+        semester: lecture.semester,
+      )).toList();
+      
+      await _storage.saveLectures(dtos);
     } catch (e) {
-      throw const LecturesGenericException();
+      // Cache save failed, but don't throw - data is still available
     }
   }
 

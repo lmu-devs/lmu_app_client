@@ -19,24 +19,34 @@ class GetLecturesUsecase extends ChangeNotifier {
   List<Lecture> _data = [];
   int? _facultyId;
   bool _showOnlyFavorites = false;
+  bool _isInitialized = false;
 
   LecturesLoadState get loadState => _loadState;
   List<Lecture> get data => _data;
   int? get facultyId => _facultyId;
   bool get showOnlyFavorites => _showOnlyFavorites;
 
-  // Filtered data based on current state
+  // Optimized single-pass filtering with memoization
+  List<Lecture>? _cachedFilteredLectures;
+  int? _lastFacultyId;
+  
   List<Lecture> get filteredLectures {
-    if (_data.isEmpty) return [];
-
-    var filtered = _data;
-
-    // Filter by faculty if specified
-    if (_facultyId != null) {
-      filtered = filtered.where((lecture) => lecture.facultyId == _facultyId).toList();
+    // Return cached result if faculty hasn't changed
+    if (_lastFacultyId == _facultyId && _cachedFilteredLectures != null) {
+      return _cachedFilteredLectures!;
     }
 
-    return filtered;
+    // Recalculate and cache
+    if (_data.isEmpty) {
+      _cachedFilteredLectures = _data;
+    } else if (_facultyId != null) {
+      _cachedFilteredLectures = _data.where((lecture) => lecture.facultyId == _facultyId).toList();
+    } else {
+      _cachedFilteredLectures = _data;
+    }
+    
+    _lastFacultyId = _facultyId;
+    return _cachedFilteredLectures!;
   }
 
   List<Lecture> get favoriteLectures {
@@ -50,8 +60,13 @@ class GetLecturesUsecase extends ChangeNotifier {
   int get lectureCount => filteredLectures.length;
 
   void setFacultyId(int facultyId) {
-    _facultyId = facultyId;
-    notifyListeners();
+    if (_facultyId != facultyId) {
+      _facultyId = facultyId;
+      // Clear cache to force recalculation
+      _cachedFilteredLectures = null;
+      _lastFacultyId = null;
+      notifyListeners();
+    }
   }
 
   void toggleFavoritesFilter() {
@@ -69,18 +84,45 @@ class GetLecturesUsecase extends ChangeNotifier {
   }
 
   Future<void> load() async {
-    if (_loadState == LecturesLoadState.loading || _loadState == LecturesLoadState.success) {
+    // Prevent concurrent loading
+    if (_loadState == LecturesLoadState.loading) {
       return;
     }
 
+    // Try cache-first loading
+    if (!_isInitialized) {
+      await _loadFromCache();
+    }
+
+    // If no cache or cache failed, load fresh data
+    if (_data.isEmpty) {
+      await _loadFreshData();
+    }
+  }
+
+  Future<void> _loadFromCache() async {
+    try {
+      final cachedData = await _repository.getCachedLectures();
+      if (cachedData != null && cachedData.isNotEmpty) {
+        _data = cachedData;
+        _loadState = LecturesLoadState.success;
+        _isInitialized = true;
+        notifyListeners();
+      }
+    } catch (e) {
+      // Cache failed, will load fresh data
+    }
+  }
+
+  Future<void> _loadFreshData() async {
     _loadState = LecturesLoadState.loading;
-    _data = [];
     notifyListeners();
 
     try {
       final result = await _repository.getLectures();
       _loadState = LecturesLoadState.success;
       _data = result;
+      _isInitialized = true;
     } on LecturesGenericException {
       _loadState = LecturesLoadState.error;
       _data = [];

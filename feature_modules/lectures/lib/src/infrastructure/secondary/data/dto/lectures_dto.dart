@@ -9,20 +9,33 @@ part 'lectures_dto.g.dart';
 class LecturesDto extends Equatable {
   const LecturesDto({
     required this.id,
-    required this.name,
+    required this.title,
+    required this.tags,
+    required this.facultyId,
+    this.description,
+    this.credits,
+    this.semester,
   });
 
   factory LecturesDto.fromJson(Map<String, dynamic> json) => _$LecturesDtoFromJson(json);
 
   final String id;
-  final String name;
+  final String title;
+  final List<String> tags;
+  final int facultyId;
+  final String? description;
+  final int? credits;
+  final String? semester;
 
   // Convert single DTO to single domain object
   Lecture toDomain() => Lecture(
         id: id,
-        title: name,
-        tags: [],
-        facultyId: 0, // Default faculty ID, should be updated when real API is implemented
+        title: title,
+        tags: tags,
+        facultyId: facultyId,
+        description: description,
+        credits: credits,
+        semester: semester,
       );
 
   // Convert list of DTOs to list of domain objects
@@ -33,5 +46,5 @@ class LecturesDto extends Equatable {
   Map<String, dynamic> toJson() => _$LecturesDtoToJson(this);
 
   @override
-  List<Object?> get props => [id, name];
+  List<Object?> get props => [id, title, tags, facultyId, description, credits, semester];
 }

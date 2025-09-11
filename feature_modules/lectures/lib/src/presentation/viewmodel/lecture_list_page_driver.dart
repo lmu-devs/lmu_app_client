@@ -1,5 +1,3 @@
-import 'package:core/components.dart';
-import 'package:core/localizations.dart';
 import 'package:core_routes/lectures.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/studies.dart';
@@ -24,9 +22,6 @@ class LectureListPageDriver extends WidgetDriver implements _$DriverProvidedProp
   final _favoritesUsecase = GetIt.I.get<FavoriteLecturesUsecase>();
   final _facultiesApi = GetIt.I.get<FacultiesApi>();
 
-  late LmuLocalizations _localizations;
-  late LmuToast _toast;
-
   @override
   void didInitDriver() {
     super.didInitDriver();
@@ -43,8 +38,6 @@ class LectureListPageDriver extends WidgetDriver implements _$DriverProvidedProp
   @override
   void didUpdateBuildContext(BuildContext context) {
     super.didUpdateBuildContext(context);
-    _localizations = context.locals;
-    _toast = LmuToast.of(context);
   }
 
   @override
@@ -70,7 +63,7 @@ class LectureListPageDriver extends WidgetDriver implements _$DriverProvidedProp
   // State management
   bool get isLoading => _usecase.loadState == LecturesLoadState.loading;
   bool get hasError => _usecase.loadState == LecturesLoadState.error;
-  bool get hasData => _usecase.data.isNotEmpty;
+  bool get hasData => _usecase.loadState == LecturesLoadState.success && _usecase.data.isNotEmpty;
 
   // Data
   List<Lecture> get lectures => _usecase.filteredLectures;
@@ -111,10 +104,6 @@ class LectureListPageDriver extends WidgetDriver implements _$DriverProvidedProp
   // State change handling
   void _onStateChanged() {
     notifyWidget();
-
-    if (_usecase.loadState == LecturesLoadState.error) {
-      _showErrorToast();
-    }
   }
 
   // Actions
@@ -122,14 +111,11 @@ class LectureListPageDriver extends WidgetDriver implements _$DriverProvidedProp
     LectureDetailRoute(
       lectureId: lectureId,
       lectureTitle: lectureTitle,
-    ).push(context);
+    ).go(context);
   }
 
   void onLectureFavoriteToggle(String lectureId) {
     _favoritesUsecase.toggleFavorite(lectureId);
-    _showToast(_favoritesUsecase.isFavorite(lectureId)
-        ? _localizations.lectures.addFavorite
-        : _localizations.lectures.removeFavorite);
   }
 
   void onFavoritesFilterToggle() {
@@ -137,31 +123,14 @@ class LectureListPageDriver extends WidgetDriver implements _$DriverProvidedProp
   }
 
   void onMyStudyPressed() {
-    _showToast('My Study functionality coming soon');
+    // TODO: implement My Study functionality
   }
 
   void onSortPressed() {
-    _showToast('Sort functionality coming soon');
+    // TODO: implement sort functionality
   }
 
   void retry() {
     _usecase.load();
-  }
-
-  // Toast helpers
-  void _showToast(String message) {
-    _toast.showToast(
-      message: message,
-      type: ToastType.base,
-    );
-  }
-
-  void _showErrorToast() {
-    _toast.showToast(
-      message: _localizations.app.somethingWentWrong,
-      type: ToastType.error,
-      actionText: _localizations.app.tryAgain,
-      onActionPressed: () => _usecase.load(),
-    );
   }
 }

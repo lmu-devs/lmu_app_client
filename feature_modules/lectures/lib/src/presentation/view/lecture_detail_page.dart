@@ -47,7 +47,7 @@ class LectureDetailPage extends DrivableWidget<LectureDetailPageDriver> {
     if (driver.hasError) {
       return LmuScaffold(
         appBar: LmuAppBarData(
-          largeTitle: 'Error',
+          largeTitle: driver.errorText,
           leadingAction: LeadingAction.back,
         ),
         body: Center(
@@ -71,7 +71,7 @@ class LectureDetailPage extends DrivableWidget<LectureDetailPageDriver> {
     if (driver.isNotFound) {
       return LmuScaffold(
         appBar: LmuAppBarData(
-          largeTitle: 'Not Found',
+          largeTitle: driver.lectureNotFoundText,
           leadingAction: LeadingAction.back,
         ),
         body: Center(

@@ -13,11 +13,12 @@ class FacultiesPage extends DrivableWidget<FacultiesPageDriver> {
 
   @override
   Widget build(BuildContext context) {
-    final lecturesLocalizations = context.locals.lectures;
+    final studiesLocalizations = context.locals.studies;
+    final appLocalizations = context.locals.app;
 
     return LmuScaffold(
       appBar: LmuAppBarData(
-        largeTitle: lecturesLocalizations.facultiesTitle,
+        largeTitle: studiesLocalizations.facultiesTitle,
         leadingAction: LeadingAction.back,
       ),
       body: Padding(
@@ -37,14 +38,13 @@ class FacultiesPage extends DrivableWidget<FacultiesPageDriver> {
                 LmuIconButton(
                   icon: LucideIcons.search,
                   onPressed: () {
-                    // Search functionality placeholder
+                    // TODO: implement search
                   },
                 ),
-                const SizedBox(width: LmuSizes.size_8),
                 LmuIconButton(
                   icon: LucideIcons.arrow_up_down,
                   onPressed: () {
-                    // Sort functionality placeholder
+                    // TODO: implement sort
                   },
                 ),
               ],
@@ -52,7 +52,7 @@ class FacultiesPage extends DrivableWidget<FacultiesPageDriver> {
             const SizedBox(height: LmuSizes.size_32),
 
             // Header row: title
-            LmuTileHeadline.base(title: lecturesLocalizations.allFacultiesTitle),
+            LmuTileHeadline.base(title: '${appLocalizations.all} ${studiesLocalizations.facultiesTitle}'),
             const SizedBox(height: LmuSizes.size_2),
 
             // Faculty list
@@ -65,7 +65,9 @@ class FacultiesPage extends DrivableWidget<FacultiesPageDriver> {
                   trailingTitle: driver.courseCount,
                   actionType: LmuListItemAction.chevron,
                   hasDivider: false,
-                  onTap: () => driver.onFacultyPressed(context, faculty),
+                  onTap: () {
+                    driver.onFacultyPressed(context, faculty);
+                  },
                 );
               }).toList(),
             ),

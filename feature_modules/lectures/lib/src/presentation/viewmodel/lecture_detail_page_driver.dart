@@ -62,7 +62,7 @@ class LectureDetailPageDriver extends WidgetDriver implements _$DriverProvidedPr
   // State management
   bool get isLoading => _usecase.loadState == LecturesLoadState.loading;
   bool get hasError => _usecase.loadState == LecturesLoadState.error;
-  bool get isNotFound => !isLoading && !hasError && lecture == null;
+  bool get isNotFound => _usecase.loadState == LecturesLoadState.success && lecture == null;
 
   // Data
   Lecture? get lecture {

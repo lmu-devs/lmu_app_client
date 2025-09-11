@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 
-import '../../infrastructure/secondary/data/storage/lectures_storage.dart';
+import '../../infrastructure/secondary/data/storage/lectures_favorites_storage.dart';
 
 class FavoriteLecturesUsecase extends ChangeNotifier {
   FavoriteLecturesUsecase(this._storage) {
     _load();
   }
 
-  final LecturesStorage _storage;
+  final LecturesFavoritesStorage _storage;
   final Set<String> _favoriteIds = {};
   final ValueNotifier<Set<String>> favoriteIdsNotifier = ValueNotifier<Set<String>>({});
 
@@ -17,10 +17,10 @@ class FavoriteLecturesUsecase extends ChangeNotifier {
 
   Future<void> toggleFavorite(String id) async {
     if (_favoriteIds.remove(id)) {
-      await _storage.saveFavoriteLectureIds(_favoriteIds.toList());
+      await _storage.saveFavoriteIds(_favoriteIds.toList());
     } else {
       _favoriteIds.add(id);
-      await _storage.saveFavoriteLectureIds(_favoriteIds.toList());
+      await _storage.saveFavoriteIds(_favoriteIds.toList());
     }
     favoriteIdsNotifier.value = Set.from(_favoriteIds);
     notifyListeners();
@@ -29,7 +29,7 @@ class FavoriteLecturesUsecase extends ChangeNotifier {
   Future<void> _load() async {
     _favoriteIds
       ..clear()
-      ..addAll(await _storage.getFavoriteLectureIds());
+      ..addAll(await _storage.getFavoriteIds());
     favoriteIdsNotifier.value = Set.from(_favoriteIds);
     notifyListeners();
   }

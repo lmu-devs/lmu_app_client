@@ -37,10 +37,13 @@ class _$TestLectureListPageDriver extends TestDriver
   List<Lecture> get nonFavoriteLectures => [];
 
   @override
+  List<Lecture> get filteredLectures => [];
+
+  @override
   int get lectureCount => 0;
 
   @override
-  List<Lecture> get filteredLectures => [];
+  Map<String, List<Lecture>> get groupedLectures => {};
 
   @override
   void didInitDriver() {}

@@ -56,6 +56,7 @@ class LectureListPage extends DrivableWidget<LectureListPageDriver> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(context.locals.lectures.errorLoadingLectures),
+            const SizedBox(height: LmuSizes.size_16),
             ElevatedButton(
               onPressed: driver.retry,
               child: Text(context.locals.lectures.retry),

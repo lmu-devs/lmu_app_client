@@ -14,9 +14,4 @@ abstract class LecturesRepositoryInterface {
 
   /// Deletes any cached lectures data.
   Future<void> deleteLectures();
-
-  /// Fetches lectures for a specific faculty.
-  ///
-  /// Throws a [LecturesGenericException] on failure.
-  Future<List<Lecture>> getLecturesByFaculty(int facultyId);
 }
