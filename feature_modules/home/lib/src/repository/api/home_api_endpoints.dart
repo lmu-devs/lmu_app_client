@@ -3,7 +3,9 @@ class HomeApiEndpoints {
   static const String _linkRoute = '/link';
 
   static const String _resourcesRoute = '/resources';
-  static const String _benefitsRoute = '/benefits';
+
+  static const String _toggleLike = '/toggle-like';
+  static const String _idQuery = 'id';
 
   static String getHomeData() {
     return _homeRoute;
@@ -13,7 +15,7 @@ class HomeApiEndpoints {
     return '$_linkRoute$_resourcesRoute';
   }
 
-  static String getBenefits() {
-    return '$_linkRoute$_benefitsRoute';
+  static String toggleFavoriteLink(String id) {
+    return '$_linkRoute$_resourcesRoute$_toggleLike?$_idQuery=$id';
   }
 }

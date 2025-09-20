@@ -16,6 +16,7 @@ class LmuCard extends StatelessWidget {
     this.subtitle,
     this.customSubtitle,
     this.leadingIcon,
+    this.leadingIconAlignment = CrossAxisAlignment.center,
     this.hasFavoriteStar = false,
     this.favoriteCount,
     this.isFavorite = false,
@@ -36,6 +37,7 @@ class LmuCard extends StatelessWidget {
   final String? subtitle;
   final Widget? customSubtitle;
   final Widget? leadingIcon;
+  final CrossAxisAlignment leadingIconAlignment;
   final bool hasFavoriteStar;
   final String? favoriteCount;
   final bool isFavorite;
@@ -94,7 +96,7 @@ class LmuCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(LmuSizes.size_16),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: leadingIconAlignment,
                     children: [
                       if (leadingIcon != null) ...[
                         leadingIcon!,
