@@ -2,8 +2,7 @@ import 'dart:convert';
 
 import 'package:core/api.dart';
 
-import '../dto/course_dto.dart';
-import '../dto/lectures_dto.dart';
+import '../dto/lecture_dto.dart';
 import 'lectures_api_endpoints.dart';
 
 class LecturesApiClient {
@@ -11,21 +10,17 @@ class LecturesApiClient {
 
   final BaseApiClient _baseApiClient;
 
-  Future<LecturesDto> getLectures() async {
-    return const LecturesDto(id: "1234234", name: "Natural Computing");
-    // ignore: dead_code
-    final response = await _baseApiClient.get(LecturesApiEndpoints.lectures);
-    return LecturesDto.fromJson(jsonDecode(response.body));
-  }
-
-  Future<List<CourseDto>> getCoursesByFaculty(int facultyId) async {
-    final response = await _baseApiClient.get(LecturesApiEndpoints.courseByFaculty(facultyId));
+  Future<List<LectureDto>> getLecturesByFaculty(int facultyId, {int termId = 1, int year = 2025}) async {
+    final response = await _baseApiClient.get(
+      LecturesApiEndpoints.lecturesByFaculty(facultyId, termId: termId, year: year),
+      version: 1, // Use v1 API
+    );
 
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
-      return data.map((json) => CourseDto.fromJson(json)).toList();
+      return data.map((json) => LectureDto.fromJson(json)).toList();
     } else {
-      throw Exception('Failed to load courses for faculty $facultyId - ${response.statusCode}');
+      throw Exception('Failed to load lectures for faculty $facultyId - ${response.statusCode}');
     }
   }
 }

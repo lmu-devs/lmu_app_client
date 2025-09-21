@@ -1,8 +1,8 @@
 import 'package:core_routes/lectures.dart';
 import 'package:flutter/widgets.dart';
-import 'package:shared_api/studies.dart';
 
 import '../../../presentation/view/faculties_page.dart';
+import '../../../presentation/view/lecture_detail_page.dart';
 import '../../../presentation/view/lecture_list_page.dart';
 
 class LecturesRouterImpl extends LecturesRouter {
@@ -11,10 +11,20 @@ class LecturesRouterImpl extends LecturesRouter {
 
   @override
   Widget buildLectureList(BuildContext context, Map<String, dynamic> extra) {
-    final faculty = extra['faculty'] as Faculty;
-
+    final facultyId = extra['facultyId'] as int;
+    print('🏗️ Building LectureListPage with facultyId: $facultyId');
     return LectureListPage(
-      faculty: faculty,
+      facultyId: facultyId,
+    );
+  }
+
+  @override
+  Widget buildLectureDetail(BuildContext context, Map<String, dynamic> extra) {
+    final lectureId = extra['lectureId'] as String;
+    final lectureTitle = extra['lectureTitle'] as String;
+    return LectureDetailPage(
+      lectureId: lectureId,
+      lectureTitle: lectureTitle,
     );
   }
 }

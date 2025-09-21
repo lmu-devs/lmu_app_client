@@ -1,7 +1,6 @@
 import '../../../domain/exception/lectures_generic_exception.dart';
 import '../../../domain/interface/lectures_repository_interface.dart';
-import '../../../domain/model/course.dart';
-import '../../../domain/model/lectures.dart';
+import '../../../domain/model/lecture.dart';
 import '../data/api/lectures_api_client.dart';
 import '../data/storage/lectures_storage.dart';
 
@@ -12,49 +11,28 @@ class LecturesRepository implements LecturesRepositoryInterface {
   final LecturesStorage _storage;
 
   @override
-  Future<Lectures> getLectures() async {
+  Future<List<Lecture>> getLecturesByFaculty(int facultyId, {int termId = 1, int year = 2025}) async {
     try {
-      final retrievedLecturesData = await _apiClient.getLectures();
-      await _storage.saveLectures(retrievedLecturesData);
-      return retrievedLecturesData.toDomain();
+      // Try to get from API first
+      final lecturesData = await _apiClient.getLecturesByFaculty(facultyId, termId: termId, year: year);
+
+      // Cache the data
+      await _storage.saveLecturesByFaculty(facultyId, lecturesData);
+
+      return lecturesData.map((dto) => dto.toDomain(facultyId: facultyId, termId: termId, year: year)).toList();
     } catch (e) {
+      // If API fails, try to get from cache
+      final cachedData = await _storage.getLecturesByFaculty(facultyId);
+      if (cachedData != null) {
+        return cachedData.map((dto) => dto.toDomain(facultyId: facultyId, termId: termId, year: year)).toList();
+      }
       throw const LecturesGenericException();
     }
   }
 
-  @override
-  Future<Lectures?> getCachedLectures() async {
-    final cachedLecturesData = await _storage.getLectures();
-    if (cachedLecturesData == null) return null;
-    try {
-      return cachedLecturesData.toDomain();
-    } catch (e) {
-      deleteLectures();
-      return null;
-    }
-  }
-
-  @override
-  Future<void> deleteLectures() async {
-    await _storage.deleteLectures();
-  }
-
-  @override
-  Future<List<Course>> getCoursesByFaculty(int facultyId) async {
-    try {
-      final coursesData = await _apiClient.getCoursesByFaculty(facultyId);
-      return coursesData
-          .map((dto) => Course(
-                id: dto.id,
-                name: dto.name,
-                facultyId: dto.facultyId,
-                description: dto.description,
-                credits: dto.credits,
-                semester: dto.semester,
-              ))
-          .toList();
-    } catch (e) {
-      throw const LecturesGenericException();
-    }
+  Future<List<Lecture>> getCachedLecturesByFaculty(int facultyId, {int termId = 1, int year = 2025}) async {
+    final cachedData = await _storage.getLecturesByFaculty(facultyId);
+    if (cachedData == null) return [];
+    return cachedData.map((dto) => dto.toDomain(facultyId: facultyId, termId: termId, year: year)).toList();
   }
 }

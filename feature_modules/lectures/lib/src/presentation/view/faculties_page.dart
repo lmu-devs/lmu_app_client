@@ -14,11 +14,11 @@ class FacultiesPage extends DrivableWidget<FacultiesPageDriver> {
 
   @override
   Widget build(BuildContext context) {
-    final lecturesLocalizations = context.locals.lectures;
+    final studiesLocalizations = context.locals.studies;
 
     return LmuScaffold(
       appBar: LmuAppBarData(
-        largeTitle: lecturesLocalizations.lecturesTitle,
+        largeTitle: studiesLocalizations.facultiesTitle,
         leadingAction: LeadingAction.back,
       ),
       body: Padding(
@@ -31,7 +31,7 @@ class FacultiesPage extends DrivableWidget<FacultiesPageDriver> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            LmuTileHeadline.base(title: lecturesLocalizations.allFacultiesTitle),
+            LmuTileHeadline.base(title: studiesLocalizations.facultiesTitle),
             const SizedBox(height: LmuSizes.size_2),
             LmuContentTile(
               contentList: driver.faculties.mapIndexed((index, faculty) {
@@ -52,6 +52,5 @@ class FacultiesPage extends DrivableWidget<FacultiesPageDriver> {
   }
 
   @override
-  WidgetDriverProvider<FacultiesPageDriver> get driverProvider =>
-      $FacultiesPageDriverProvider();
+  WidgetDriverProvider<FacultiesPageDriver> get driverProvider => $FacultiesPageDriverProvider();
 }

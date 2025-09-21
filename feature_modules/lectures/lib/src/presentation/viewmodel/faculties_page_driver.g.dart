@@ -16,18 +16,7 @@ class _$TestFacultiesPageDriver extends TestDriver
   List<Faculty> get faculties => [];
 
   @override
-  bool get isLoading => false;
-
-  @override
-  String getCourseCount(Faculty faculty) {
-    return ' ';
-  }
-
-  @override
   void onFacultyPressed(BuildContext context, Faculty faculty) {}
-
-  @override
-  void didUpdateBuildContext(BuildContext context) {}
 }
 
 class $FacultiesPageDriverProvider

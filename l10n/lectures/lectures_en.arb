@@ -3,5 +3,17 @@
   "@@context": "Lectures",
   "lecturesTitle": "Lectures",
   "facultiesTitle": "Faculties",
-  "allFacultiesTitle": "All Faculties"
+  "allFacultiesTitle": "All Faculties",
+  "removeFavorite": "Remove from favorites",
+  "addFavorite": "Add to favorites",
+  "winterSemester": "Winter",
+  "summerSemester": "Summer",
+  "myStudy": "My Study",
+  "coursesCount": "courses",
+  "loading": "Loading...",
+  "lectureNotFound": "Lecture not found",
+  "noLecturesFound": "No lectures found",
+  "errorLoadingLectures": "Error loading lectures",
+  "retry": "Retry",
+  "selectSemester": "Select Semester"
 }
