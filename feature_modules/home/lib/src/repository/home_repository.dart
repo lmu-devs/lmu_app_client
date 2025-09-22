@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:core/logging.dart';
 import 'package:core/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,17 +15,19 @@ class HomeRepository {
 
   final HomeApiClient homeApiClient;
 
+  static const String _homeDataKey = 'home_data_key';
+
+  static const String _cachedLinksKey = 'cached_links_key';
+  static const String _cachedLinksTimestampKey = 'cached_links_timestamp_key';
+
   static const String _likedLinksKey = 'liked_links_key';
-  final String _homeDataKey = 'home_data_key';
+  static const String _likedLinksTitleToIdMigrationKey = 'liked_links_migrated_v1_key';
 
-  final String _cachedLinksKey = 'cached_links_key';
-  final String _cachedLinksTimestampKey = 'cached_links_timestamp_key';
-
-  final _recentLinkSearchesKey = 'links_recentSearches';
+  static const _recentLinkSearchesKey = 'links_recentSearches';
 
   final _maxCacheTime = const Duration(days: 7);
 
-  final String _featuredTilesClosedKey = 'featured_tiles_closed_key';
+  static const String _featuredTilesClosedKey = 'featured_tiles_closed_key';
 
   Future<HomeData?> getHomeData() async {
     final prefs = await SharedPreferences.getInstance();
@@ -98,6 +101,20 @@ class HomeRepository {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setStringList(_likedLinksKey, ids);
+  }
+
+  Future<void> performLikedLinksMigrationV1() async {
+    final prefs = await SharedPreferences.getInstance();
+    final bool migrationDone = prefs.getBool(_likedLinksTitleToIdMigrationKey) ?? false;
+
+    if (migrationDone) return;
+
+    if (prefs.containsKey(_likedLinksKey)) {
+      await prefs.remove(_likedLinksKey);
+      AppLogger().logMessage('[HomeRepository]: Performed migration for liked links V1, data cleared');
+    }
+
+    await prefs.setBool(_likedLinksTitleToIdMigrationKey, true);
   }
 
   Future<void> saveRecentLinkSearches(List<String> values) async {
