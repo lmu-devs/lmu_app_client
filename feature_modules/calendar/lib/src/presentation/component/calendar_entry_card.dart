@@ -2,132 +2,310 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 
 import '../../domain/model/calendar_entry.dart';
 import '../../domain/model/event_type.dart';
 import '../../domain/model/helper/date_time_formatter.dart';
+import '../constants.dart';
 
-class CalendarEntryCard extends StatelessWidget {
-  const CalendarEntryCard({
+class CalendarCard extends StatelessWidget {
+  /// The default constructor for use in **unbounded-width** contexts (e.g., Column, Row, ListView, vertical scroll views, ...).
+  /// Meaning the parent widget does not impose any width constraints the card uses as much space as it needs.
+  ///
+  /// This card will **shrink-wrap** its content, taking up only as much vertical (and horizontal) space as needed.
+  const CalendarCard({
     super.key,
-    required this.event,
+    required this.entry,
+    this.fontSizeOverride,
     required this.onTap,
-    this.isHalfWidth = false,
-  });
+  }) : _isUnbounded = true;
 
-  final CalendarEntry event;
+  /// A constructor for use in **bounded-width & -height** contexts.
+  /// Meaning, the parent widget needs to give constrains in width and height, or else it will cause overflow!
+  ///
+  /// This card will expand to fill the width provided by its parent and the layout will adjust to the given width.
+  const CalendarCard.bounded({
+    super.key,
+    required this.entry,
+    this.fontSizeOverride,
+    required this.onTap,
+  }) : _isUnbounded = false;
+
+  final CalendarEntry entry;
+  final double? fontSizeOverride;
   final void Function() onTap;
-  final bool isHalfWidth;
+  final bool _isUnbounded;
+
+  static const double _verticalTextSpacing = LmuSizes.size_2;
 
   @override
   Widget build(BuildContext context) {
-    // LayoutBuilder here would be nice -  Paul
-    final cardWidth = isHalfWidth ? (MediaQuery.of(context).size.width - 40) / 2 : double.infinity;
+    final Widget cardContent = _isUnbounded ? _buildUnboundedLayout(context) : _buildBoundedLayout(context);
 
+    // The GestureDetector and basic card shell are shared between both layouts.
     return GestureDetector(
-      onTap: () => onTap(),
-      child: Container(
-        height: 150,
-        width: cardWidth,
-        margin: const EdgeInsets.only(bottom: LmuSizes.size_12),
-        decoration: BoxDecoration(
-          color: context.colors.neutralColors.backgroundColors.tile,
-          borderRadius: BorderRadius.circular(LmuRadiusSizes.mediumLarge),
-          border: Border.all(
-              color: event.type == EventType.exam ? event.color : context.colors.neutralColors.backgroundColors.tile,
-              width: 2,
-              strokeAlign: BorderSide.strokeAlignInside),
-        ),
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              /// Farbbalken über die ganze Höhe
-              event.type != EventType.exam
-                  ? Padding(
-                      padding: const EdgeInsets.only(
-                          left: LmuSizes.size_16, top: LmuSizes.size_16, bottom: LmuSizes.size_16),
-                      child: Container(
-                        width: 4,
-                        decoration: BoxDecoration(
-                          color: event.color,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(LmuRadiusSizes.mediumLarge),
-                          ),
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_2),
+        child: _isUnbounded ? IntrinsicWidth(child: cardContent) : cardContent,
+      ),
+    );
+  }
+
+  Widget _buildBoundedLayout(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final double currentHeight = constraints.maxHeight;
+        final double currentWidth = constraints.maxWidth;
+        final double screenWidth = MediaQuery.of(context).size.width;
+
+        // Dynamic calculations based on available space
+        final bool wrapTags = currentWidth < screenWidth * 0.4;
+        const double heightOf15Min = (15 / 60) * fixedHeightPerHour;
+        final int titleMaxLines = currentHeight >= heightOf15Min * 4 ? 2 : 1;
+        final int timeMaxLines = currentHeight >= heightOf15Min * 6 ? 2 : 1;
+        final int locationMaxLines = currentHeight >= heightOf15Min * 5 ? 2 : 1;
+
+        return ClipRRect(
+          clipBehavior: Clip.antiAlias,
+          borderRadius: BorderRadius.circular(8.0),
+          child: Container(
+            decoration: _getCardStyle(context, entry),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                CalendarCardVerticalColorBar(color: entry.color),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, LmuSizes.size_8, LmuSizes.size_8, LmuSizes.size_8),
+                    child: Wrap(
+                      children: [
+                        CalendarCardTitleWithTags(
+                          entry: entry,
+                          titleMaxLines: titleMaxLines,
+                          verticalTextSpacing: _verticalTextSpacing,
+                          wrapTags: wrapTags,
                         ),
-                      ),
-                    )
-                  : const SizedBox.shrink(),
-
-              /// Abstand + Inhalt
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(LmuSizes.size_16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      /// Titelzeile mit Tag daneben
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          /// Titel (maximaler Platz, aber nicht unendlich)
-                          Flexible(
-                            fit: FlexFit.loose,
-                            child: LmuText.h3(
-                              event.title,
-                              maxLines: 1,
-                              customOverFlow: TextOverflow.ellipsis,
-                            ),
-                          ),
-
-                          const SizedBox(width: LmuSizes.size_8),
-
-                          /// Tag (immer sichtbar, direkt nach dem Titel)
-                          LmuInTextVisual.text(
-                            title: event.type.name,
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: LmuSizes.size_4),
-
-                      /// Zeit
-                      LmuText.bodySmall(
-                        _formatDateTimeRange(event.startDate, event.endDate),
-                        color: context.colors.neutralColors.textColors.mediumColors.base,
-                      ),
-
-                      const SizedBox(height: LmuSizes.size_4),
-
-                      /// Ort (Adresse + optional Raum)
-                      LmuText.bodySmall(
-                        DateTimeFormatter.formatShortDate(event.startDate),
-                        color: context.colors.neutralColors.textColors.mediumColors.base,
-                        maxLines: 2,
-                        customOverFlow: TextOverflow.ellipsis,
-                      ),
-
-                      /// Ort (Adresse + optional Raum)
-                      LmuText.bodySmall(
-                        event.location.address,
-                        color: context.colors.neutralColors.textColors.mediumColors.base,
-                        maxLines: 2,
-                        customOverFlow: TextOverflow.ellipsis,
-                      ),
-                    ],
+                        CalendarCardTimeAndLocationColumn(
+                          startTime: entry.startTime,
+                          endTime: entry.endTime,
+                          location: entry.location.address,
+                          timeMaxLines: timeMaxLines,
+                          locationMaxLines: locationMaxLines,
+                          verticalTextSpacing: _verticalTextSpacing,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildUnboundedLayout(BuildContext context) {
+    return Container(
+      decoration: _getCardStyle(context, entry),
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            CalendarCardVerticalColorBar(color: entry.color),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, LmuSizes.size_8, LmuSizes.size_8, LmuSizes.size_8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    /// Titelzeile mit Tag daneben
+                    CalendarCardTitleWithTags(
+                      entry: entry,
+                      verticalTextSpacing: _verticalTextSpacing,
+                      titleMaxLines: 2,
+                      wrapTags: false,
+                    ),
+                    CalendarCardTimeAndLocationColumn(
+                      startTime: entry.startTime,
+                      endTime: entry.endTime,
+                      timeMaxLines: 2,
+                      locationMaxLines: 2,
+                      location: entry.location.address,
+                      verticalTextSpacing: _verticalTextSpacing,
+                    ),
+                  ],
+                ),
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+BoxDecoration _getCardStyle(BuildContext context, CalendarEntry entry) {
+  return BoxDecoration(
+    borderRadius: BorderRadius.circular(8.0),
+    border: Border.all(
+      color: context.colors.neutralColors.textColors.mediumColors.base.withAlpha(40),
+      width: 0.5,
+      strokeAlign: BorderSide.strokeAlignInside,
+    ),
+    gradient: entry.eventType == EventType.exam || entry.eventType == EventType.movie
+        ? LinearGradient(
+            colors: [
+              Color.lerp(entry.color, context.colors.neutralColors.backgroundColors.tile, 0.75)!,
+              context.colors.neutralColors.backgroundColors.tile,
             ],
+            begin: Alignment.centerRight,
+            end: Alignment.centerLeft,
+            stops: const [0.0, 1.0],
+          )
+        : null,
+    color: context.colors.neutralColors.backgroundColors.tile,
+  );
+}
+
+class CalendarCardVerticalColorBar extends StatelessWidget {
+  const CalendarCardVerticalColorBar({super.key, required this.color});
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(LmuSizes.size_8),
+      child: Container(
+        width: 2,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(LmuRadiusSizes.mediumLarge),
           ),
         ),
       ),
     );
   }
+}
 
-  String _formatDateTimeRange(DateTime start, DateTime end) {
-    final startTime = '${start.hour.toString().padLeft(2, '0')}:${start.minute.toString().padLeft(2, '0')}';
-    final endTime = '${end.hour.toString().padLeft(2, '0')}:${end.minute.toString().padLeft(2, '0')}';
-    return '$startTime - $endTime';
+class CalendarCardTitleWithTags extends StatelessWidget {
+  const CalendarCardTitleWithTags({
+    super.key,
+    required this.entry,
+    this.titleMaxLines,
+    required this.verticalTextSpacing,
+    this.wrapTags = false,
+  });
+
+  final CalendarEntry entry;
+  final int? titleMaxLines;
+  final double verticalTextSpacing;
+  final bool wrapTags;
+
+  @override
+  Widget build(BuildContext context) {
+    return wrapTags
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              LmuText.bodySmall(
+                entry.title,
+                weight: FontWeight.bold,
+                maxLines: titleMaxLines,
+                customOverFlow: TextOverflow.ellipsis,
+              ),
+              SizedBox(height: verticalTextSpacing),
+              _buildTags(wrapTags),
+            ],
+          )
+        : Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: LmuText.bodySmall(
+                  entry.title,
+                  weight: FontWeight.bold,
+                  maxLines: titleMaxLines,
+                  customOverFlow: TextOverflow.ellipsis,
+                ),
+              ),
+              const SizedBox(width: LmuSizes.size_8),
+              _buildTags(wrapTags),
+            ],
+          );
+  }
+
+  Widget _buildTags(bool wrapTags) {
+    final tagsContent = [
+      LmuInTextVisual.text(title: entry.eventType.name),
+      if (entry.eventType == EventType.movie) ...[
+        LmuInTextVisual.icon(icon: LucideIcons.clapperboard),
+        LmuInTextVisual.icon(icon: LucideIcons.star),
+      ],
+      if (entry.location != null && entry.location!.isOnline && entry.eventType != EventType.movie)
+        LmuInTextVisual.icon(icon: LucideIcons.external_link),
+      if (entry.rule != null && entry.rule!.isRecurring) LmuInTextVisual.icon(icon: LucideIcons.repeat),
+    ];
+
+    return wrapTags
+        ? Wrap(
+            spacing: LmuSizes.size_2,
+            runSpacing: LmuSizes.size_2,
+            children: tagsContent,
+          )
+        : Row(
+            spacing: LmuSizes.size_2,
+            mainAxisSize: MainAxisSize.min,
+            children: tagsContent,
+          );
+  }
+}
+
+class CalendarCardTimeAndLocationColumn extends StatelessWidget {
+  const CalendarCardTimeAndLocationColumn({
+    super.key,
+    required this.startTime,
+    required this.endTime,
+    required this.location,
+    this.timeMaxLines,
+    this.locationMaxLines,
+    required this.verticalTextSpacing,
+  });
+
+  final DateTime startTime;
+  final DateTime endTime;
+  final String location;
+  final int? timeMaxLines;
+  final int? locationMaxLines;
+  final double verticalTextSpacing;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: verticalTextSpacing),
+        // Time
+        LmuText.bodySmall(
+          DateTimeFormatter.formatDateTimeRange(startTime, endTime),
+          color: context.colors.neutralColors.textColors.mediumColors.base,
+          maxLines: timeMaxLines,
+          customOverFlow: TextOverflow.ellipsis,
+        ),
+        SizedBox(height: verticalTextSpacing),
+
+        /// Location
+        LmuText.bodySmall(
+          location,
+          color: context.colors.neutralColors.textColors.mediumColors.base,
+          maxLines: locationMaxLines,
+          customOverFlow: TextOverflow.ellipsis,
+        ),
+      ],
+    );
   }
 }
