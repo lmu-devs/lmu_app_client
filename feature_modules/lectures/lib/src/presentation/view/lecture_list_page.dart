@@ -4,10 +4,8 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
-import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../../application/usecase/favorite_lectures_usecase.dart';
 import '../component/lecture_card.dart';
 import '../viewmodel/lecture_list_page_driver.dart';
 
@@ -92,17 +90,37 @@ class LectureListPage extends DrivableWidget<LectureListPageDriver> {
         ),
         const SizedBox(width: LmuSizes.size_8),
         // Favorites filter button
-        LmuIconButton(
-          icon: LucideIcons.star,
-          onPressed: driver.onFavoritesFilterToggle,
+        ValueListenableBuilder<Set<String>>(
+          valueListenable: driver.favoritesUsecase?.favoriteIdsNotifier ?? ValueNotifier(<String>{}),
+          builder: (context, favoriteIds, _) {
+            return GestureDetector(
+              onTap: driver.onFavoritesFilterToggle,
+              child: Container(
+                padding: const EdgeInsets.all(LmuSizes.size_8),
+                decoration: BoxDecoration(
+                  color: context.colors.neutralColors.backgroundColors.mediumColors.base,
+                  borderRadius: BorderRadius.circular(LmuSizes.size_8),
+                ),
+                child: StarIcon(
+                  isActive: driver.showOnlyFavorites,
+                  size: LmuIconSizes.mediumSmall * MediaQuery.of(context).textScaler.textScaleFactor,
+                ),
+              ),
+            );
+          },
         ),
         const SizedBox(width: LmuSizes.size_8),
         // Semester dropdown button
         LmuButton(
           title: 'Winter 24/25',
           emphasis: ButtonEmphasis.secondary,
-          trailingIcon: Icons.keyboard_arrow_down,
-          onTap: () => _showSemesterDropdown(context),
+          trailingIcon: LucideIcons.chevron_down,
+          onTap: () {
+            LmuBottomSheet.show(
+              context,
+              content: _SemesterSelectionSheet(),
+            );
+          },
         ),
         const SizedBox(width: LmuSizes.size_8),
         // My Study button
@@ -136,114 +154,58 @@ class LectureListPage extends DrivableWidget<LectureListPageDriver> {
     );
   }
 
-  void _showSemesterDropdown(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => Container(
-        padding: const EdgeInsets.all(LmuSizes.size_16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            LmuText.h3(context.locals.lectures.selectSemester),
-            const SizedBox(height: LmuSizes.size_16),
-            // Current semester
-            LmuButton(
-              title: context.locals.lectures.winterSemester + ' 24/25',
-              emphasis: ButtonEmphasis.primary,
-              onTap: () {
-                Navigator.pop(context);
-                // TODO: implement semester selection
-              },
-            ),
-            const SizedBox(height: LmuSizes.size_8),
-            // Previous semesters
-            LmuButton(
-              title: context.locals.lectures.summerSemester + ' 24',
-              emphasis: ButtonEmphasis.secondary,
-              onTap: () {
-                Navigator.pop(context);
-                // TODO: implement semester selection
-              },
-            ),
-            const SizedBox(height: LmuSizes.size_8),
-            LmuButton(
-              title: context.locals.lectures.winterSemester + ' 23/24',
-              emphasis: ButtonEmphasis.secondary,
-              onTap: () {
-                Navigator.pop(context);
-                // TODO: implement semester selection
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   List<Widget> _buildGroupedLectureCards(BuildContext context, LectureListPageDriver driver) {
-    // Get lectures from driver
-    final lectures = driver.filteredLectures;
+    return [
+      ValueListenableBuilder<Set<String>>(
+        valueListenable: driver.favoritesUsecase?.favoriteIdsNotifier ?? ValueNotifier(<String>{}),
+        builder: (context, favoriteIds, _) {
+          // Get lectures from driver
+          final lectures = driver.filteredLectures;
 
-    if (lectures.isEmpty) {
-      return [
-        _buildEmptyState(context),
-      ];
-    }
+          if (lectures.isEmpty) {
+            return _buildEmptyState(context);
+          }
 
-    // Use driver's grouped lectures
-    final groupedLectures = driver.groupedLectures;
-    final List<Widget> widgets = [];
+          // Use driver's grouped lectures
+          final groupedLectures = driver.groupedLectures;
 
-    for (final entry in groupedLectures.entries) {
-      final letter = entry.key;
-      final lecturesInGroup = entry.value;
+          return Column(
+            children: [
+              for (final entry in groupedLectures.entries) ...[
+                LmuTileHeadline.base(title: entry.key),
+                const SizedBox(height: LmuSizes.size_2),
+                Column(
+                  children: entry.value.asMap().entries.map((lectureEntry) {
+                    final index = lectureEntry.key;
+                    final lecture = lectureEntry.value;
+                    final isFavorite = favoriteIds.contains(lecture.id);
 
-      widgets.add(
-        LmuTileHeadline.base(title: letter),
-      );
-      widgets.add(
-        const SizedBox(height: LmuSizes.size_2),
-      );
-
-      widgets.add(
-        ValueListenableBuilder<Set<String>>(
-          valueListenable: GetIt.I<FavoriteLecturesUsecase>().favoriteIdsNotifier,
-          builder: (context, favoriteIds, _) {
-            return Column(
-              children: lecturesInGroup.asMap().entries.map((entry) {
-                final index = entry.key;
-                final lecture = entry.value;
-                final isFavorite = favoriteIds.contains(lecture.id);
-
-                return Column(
-                  children: [
-                    LectureCard(
-                      id: lecture.id,
-                      title: lecture.title,
-                      tags: lecture.tags,
-                      isFavorite: isFavorite,
-                      onTap: () {
-                        driver.onLectureCardPressed(context, lecture.id, lecture.title);
-                      },
-                      onFavoriteTap: () {
-                        driver.onLectureFavoriteToggle(lecture.id);
-                      },
-                    ),
-                    if (index < lecturesInGroup.length - 1) const SizedBox(height: LmuSizes.size_8),
-                  ],
-                );
-              }).toList(),
-            );
-          },
-        ),
-      );
-
-      widgets.add(
-        const SizedBox(height: LmuSizes.size_32),
-      );
-    }
-
-    return widgets;
+                    return Column(
+                      children: [
+                        LectureCard(
+                          id: lecture.id,
+                          title: lecture.title,
+                          tags: lecture.tags,
+                          isFavorite: isFavorite,
+                          onTap: () {
+                            driver.onLectureCardPressed(context, lecture.id, lecture.title);
+                          },
+                          onFavoriteTap: () {
+                            driver.onLectureFavoriteToggle(lecture.id);
+                          },
+                        ),
+                        if (index < entry.value.length - 1) const SizedBox(height: LmuSizes.size_8),
+                      ],
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: LmuSizes.size_32),
+              ],
+            ],
+          );
+        },
+      ),
+    ];
   }
 
   Widget _buildEmptyState(BuildContext context) {
@@ -253,6 +215,29 @@ class LectureListPage extends DrivableWidget<LectureListPageDriver> {
       minHeight: 56,
       content: [
         LmuText.bodySmall(context.locals.lectures.noLecturesFound, color: placeholderTextColor),
+      ],
+    );
+  }
+}
+
+class _SemesterSelectionSheet extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        LmuListItem.base(
+          title: 'Winter 24/25',
+          leadingArea: LmuIcon(
+            icon: LucideIcons.calendar,
+            size: LmuIconSizes.medium,
+            color: context.colors.brandColors.textColors.strongColors.base,
+          ),
+          onTap: () {
+            Navigator.of(context, rootNavigator: true).pop();
+            // TODO: implement semester selection
+          },
+        ),
       ],
     );
   }

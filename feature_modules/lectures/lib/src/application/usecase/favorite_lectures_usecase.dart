@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../infrastructure/secondary/data/storage/lectures_storage.dart';
 
-class FavoriteLecturesUsecase extends ChangeNotifier {
+class FavoriteLecturesUsecase {
   FavoriteLecturesUsecase(this._storage) {
     _loadFavorites();
   }
@@ -23,7 +23,6 @@ class FavoriteLecturesUsecase extends ChangeNotifier {
     }
     _saveFavorites();
     favoriteIdsNotifier.value = Set.from(_favoriteIds);
-    notifyListeners();
   }
 
   void addFavorite(String lectureId) {
@@ -31,7 +30,6 @@ class FavoriteLecturesUsecase extends ChangeNotifier {
       _favoriteIds.add(lectureId);
       _saveFavorites();
       favoriteIdsNotifier.value = Set.from(_favoriteIds);
-      notifyListeners();
     }
   }
 
@@ -40,7 +38,6 @@ class FavoriteLecturesUsecase extends ChangeNotifier {
       _favoriteIds.remove(lectureId);
       _saveFavorites();
       favoriteIdsNotifier.value = Set.from(_favoriteIds);
-      notifyListeners();
     }
   }
 
@@ -50,7 +47,8 @@ class FavoriteLecturesUsecase extends ChangeNotifier {
       _favoriteIds.addAll(await _storage.getFavoriteIds());
       favoriteIdsNotifier.value = Set.from(_favoriteIds);
     } catch (e) {
-      // Handle error silently, start with empty set
+      // Handle error gracefully, start with empty set
+      // TODO: Add proper error logging
       favoriteIdsNotifier.value = <String>{};
     }
   }
@@ -59,13 +57,12 @@ class FavoriteLecturesUsecase extends ChangeNotifier {
     try {
       await _storage.saveFavoriteIds(_favoriteIds);
     } catch (e) {
-      // Handle error silently
+      // Handle error gracefully - favorites will be lost on app restart
+      // TODO: Add proper error logging
     }
   }
 
-  @override
   void dispose() {
     favoriteIdsNotifier.dispose();
-    super.dispose();
   }
 }

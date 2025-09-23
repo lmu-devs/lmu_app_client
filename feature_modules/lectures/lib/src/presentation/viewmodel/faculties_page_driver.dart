@@ -10,8 +10,8 @@ class FacultiesPageDriver extends WidgetDriver {
   List<Faculty> get faculties => GetIt.I.get<FacultiesApi>().allFaculties;
 
   void onFacultyPressed(BuildContext context, Faculty faculty) {
-    LectureListRoute({
-      'facultyId': faculty.id,
-    }).push(context);
+    LectureListRoute(
+      facultyId: faculty.id,
+    ).push(context);
   }
 }

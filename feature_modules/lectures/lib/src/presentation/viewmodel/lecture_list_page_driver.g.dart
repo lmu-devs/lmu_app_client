@@ -16,6 +16,9 @@ class _$TestLectureListPageDriver extends TestDriver
   int get facultyId => 0;
 
   @override
+  FavoriteLecturesUsecase? get favoritesUsecase => null;
+
+  @override
   String get facultyName => ' ';
 
   @override
@@ -34,10 +37,10 @@ class _$TestLectureListPageDriver extends TestDriver
   List<Lecture> get favoriteLectures => [];
 
   @override
-  List<Lecture> get nonFavoriteLectures => [];
+  List<Lecture> get filteredLectures => [];
 
   @override
-  List<Lecture> get filteredLectures => [];
+  bool get showOnlyFavorites => false;
 
   @override
   int get lectureCount => 0;

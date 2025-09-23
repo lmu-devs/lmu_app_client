@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:get_it/get_it.dart';
+import 'package:shared_api/studies.dart';
 
 import '../../domain/exception/lectures_generic_exception.dart';
 import '../../domain/interface/lectures_repository_interface.dart';
@@ -7,7 +9,7 @@ import 'favorite_lectures_usecase.dart';
 
 enum LecturesLoadState { initial, loading, loadingWithCache, success, error }
 
-class GetLecturesUsecase extends ChangeNotifier {
+class GetLecturesUsecase {
   GetLecturesUsecase(this._repository, this._favoritesUsecase);
 
   final LecturesRepositoryInterface _repository;
@@ -16,42 +18,45 @@ class GetLecturesUsecase extends ChangeNotifier {
   LecturesLoadState _loadState = LecturesLoadState.initial;
   List<Lecture> _data = [];
   int? _facultyId;
-  int _termId = 1;
-  int _year = 2025;
+  int _termId = _defaultTermId;
+  int _year = _defaultYear;
   bool _showOnlyFavorites = false;
+
+  // Default values for semester and year
+  static const int _defaultTermId = 1;
+  static const int _defaultYear = 2025;
+
+  // ValueNotifiers for state management
+  final ValueNotifier<LecturesLoadState> loadStateNotifier = ValueNotifier(LecturesLoadState.initial);
+  final ValueNotifier<List<Lecture>> dataNotifier = ValueNotifier([]);
+  final ValueNotifier<bool> showOnlyFavoritesNotifier = ValueNotifier(false);
 
   LecturesLoadState get loadState => _loadState;
   List<Lecture> get data => _data;
   bool get showOnlyFavorites => _showOnlyFavorites;
 
-      void setFacultyId(int facultyId, {int termId = 1, int year = 2025}) {
-        final previousFacultyId = _facultyId;
-        _facultyId = facultyId;
-        _termId = termId;
-        _year = year;
-        
-        print('🔄 setFacultyId: $previousFacultyId -> $facultyId');
-        
-        // If faculty ID changed, reset state and load new data
-        if (previousFacultyId != facultyId) {
-          print('🔄 Faculty ID changed, resetting state and loading new data');
-          _loadState = LecturesLoadState.initial;
-          _data = [];
-          notifyListeners();
-          load();
-        }
-      }
+  void setFacultyId(int facultyId, {int termId = _defaultTermId, int year = _defaultYear}) {
+    final previousFacultyId = _facultyId;
+    _facultyId = facultyId;
+    _termId = termId;
+    _year = year;
 
-      Future<void> load() async {
-        if (_facultyId == null) return;
-        
-        print('📚 GetLecturesUsecase.load() called for facultyId: $_facultyId, current state: $_loadState');
-        
-        if (_loadState == LecturesLoadState.loading ||
-            _loadState == LecturesLoadState.loadingWithCache) {
-          print('⏸️ Load already in progress, skipping');
-          return;
-        }
+    // If faculty ID changed, reset state and load new data
+    if (previousFacultyId != facultyId) {
+      _loadState = LecturesLoadState.initial;
+      _data = [];
+      loadStateNotifier.value = _loadState;
+      dataNotifier.value = _data;
+      load();
+    }
+  }
+
+  Future<void> load() async {
+    if (_facultyId == null) return;
+
+    if (_loadState == LecturesLoadState.loading || _loadState == LecturesLoadState.loadingWithCache) {
+      return;
+    }
 
     // Try to load from cache first
     try {
@@ -59,18 +64,47 @@ class GetLecturesUsecase extends ChangeNotifier {
       if (cachedLectures.isNotEmpty) {
         _loadState = LecturesLoadState.loadingWithCache;
         _data = cachedLectures;
-        notifyListeners();
+        loadStateNotifier.value = _loadState;
+        dataNotifier.value = _data;
+
+        // Load fresh data in background without blocking UI
+        _loadFreshDataInBackground();
+        return;
       } else {
         _loadState = LecturesLoadState.loading;
         _data = [];
-        notifyListeners();
+        loadStateNotifier.value = _loadState;
+        dataNotifier.value = _data;
       }
     } catch (e) {
       _loadState = LecturesLoadState.loading;
       _data = [];
-      notifyListeners();
+      loadStateNotifier.value = _loadState;
+      dataNotifier.value = _data;
     }
 
+    // Load from API
+    await _loadFromApi();
+  }
+
+  Future<void> _loadFreshDataInBackground() async {
+    try {
+      final currentFacultyId = _facultyId;
+      final freshLectures = await _repository.getLecturesByFaculty(currentFacultyId!, termId: _termId, year: _year);
+
+      // Only update if we still have the same faculty ID (user hasn't navigated away)
+      if (_facultyId == currentFacultyId) {
+        _data = freshLectures;
+        _loadState = LecturesLoadState.success;
+        loadStateNotifier.value = _loadState;
+        dataNotifier.value = _data;
+      }
+    } catch (e) {
+      // Keep showing cached data, don't change state
+    }
+  }
+
+  Future<void> _loadFromApi() async {
     try {
       _data = await _repository.getLecturesByFaculty(_facultyId!, termId: _termId, year: _year);
       _loadState = LecturesLoadState.success;
@@ -78,13 +112,25 @@ class GetLecturesUsecase extends ChangeNotifier {
       // If API fails and we have no cached data, show error
       if (_data.isEmpty) {
         _loadState = LecturesLoadState.error;
+        // TODO: Add proper error logging with context
       } else {
         // Keep cached data and show success state
         _loadState = LecturesLoadState.success;
+        // TODO: Log that we're showing cached data due to API error
+      }
+    } catch (e) {
+      // Handle unexpected errors
+      if (_data.isEmpty) {
+        _loadState = LecturesLoadState.error;
+        // TODO: Add proper error logging
+      } else {
+        _loadState = LecturesLoadState.success;
+        // TODO: Log that we're showing cached data due to unexpected error
       }
     }
 
-    notifyListeners();
+    loadStateNotifier.value = _loadState;
+    dataNotifier.value = _data;
   }
 
   List<Lecture> get filteredLectures {
@@ -98,20 +144,42 @@ class GetLecturesUsecase extends ChangeNotifier {
     return _data.where((lecture) => _favoritesUsecase.isFavorite(lecture.id)).toList();
   }
 
-  List<Lecture> get nonFavoriteLectures {
-    return _data.where((lecture) => !_favoritesUsecase.isFavorite(lecture.id)).toList();
-  }
-
   void toggleFavoritesFilter() {
     _showOnlyFavorites = !_showOnlyFavorites;
-    notifyListeners();
+    showOnlyFavoritesNotifier.value = _showOnlyFavorites;
   }
 
   Future<void> reload() async {
-    print('🔄 Reloading lectures for faculty $_facultyId');
     _loadState = LecturesLoadState.initial;
     _data = [];
-    notifyListeners();
+    loadStateNotifier.value = _loadState;
+    dataNotifier.value = _data;
     await load();
+  }
+
+  // Preload data for all faculties in background
+  static Future<void> preloadAllFaculties() async {
+    final repository = GetIt.I.get<LecturesRepositoryInterface>();
+    final faculties = GetIt.I.get<FacultiesApi>().allFaculties;
+
+    // Preload first few faculties in parallel
+    final futures = faculties.take(_preloadFacultyCount).map((faculty) async {
+      try {
+        await repository.getLecturesByFaculty(faculty.id);
+      } catch (e) {
+        // TODO: Handle preload errors gracefully
+      }
+    });
+
+    await Future.wait(futures);
+  }
+
+  // Configuration constants
+  static const int _preloadFacultyCount = 5;
+
+  void dispose() {
+    loadStateNotifier.dispose();
+    dataNotifier.dispose();
+    showOnlyFavoritesNotifier.dispose();
   }
 }

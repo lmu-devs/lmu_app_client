@@ -22,12 +22,16 @@ class LectureListPageDriver extends WidgetDriver implements _$DriverProvidedProp
   final _favoritesUsecase = GetIt.I.get<FavoriteLecturesUsecase>();
   final _facultiesApi = GetIt.I.get<FacultiesApi>();
 
+  // Public getter for the favorites usecase
+  @TestDriverDefaultValue(null)
+  FavoriteLecturesUsecase? get favoritesUsecase => _favoritesUsecase;
+
   @override
   void didInitDriver() {
     super.didInitDriver();
-    print('🚀 LectureListPageDriver initialized with facultyId: $_facultyId');
-    _usecase.addListener(_onStateChanged);
-    _favoritesUsecase.addListener(_onStateChanged);
+    _usecase.loadStateNotifier.addListener(_onStateChanged);
+    _usecase.dataNotifier.addListener(_onStateChanged);
+    _usecase.showOnlyFavoritesNotifier.addListener(_onStateChanged);
 
     // Set faculty ID - this will automatically load data if faculty ID changed
     _usecase.setFacultyId(_facultyId);
@@ -43,17 +47,16 @@ class LectureListPageDriver extends WidgetDriver implements _$DriverProvidedProp
     required int newFacultyId,
   }) {
     if (_facultyId != newFacultyId) {
-      print('🔄 Faculty changed from $_facultyId to $newFacultyId');
       _facultyId = newFacultyId;
       _usecase.setFacultyId(_facultyId);
-      _usecase.reload();
     }
   }
 
   @override
   void dispose() {
-    _usecase.removeListener(_onStateChanged);
-    _favoritesUsecase.removeListener(_onStateChanged);
+    _usecase.loadStateNotifier.removeListener(_onStateChanged);
+    _usecase.dataNotifier.removeListener(_onStateChanged);
+    _usecase.showOnlyFavoritesNotifier.removeListener(_onStateChanged);
     super.dispose();
   }
 
@@ -71,8 +74,8 @@ class LectureListPageDriver extends WidgetDriver implements _$DriverProvidedProp
   // Data
   List<Lecture> get lectures => _usecase.data;
   List<Lecture> get favoriteLectures => _usecase.favoriteLectures;
-  List<Lecture> get nonFavoriteLectures => _usecase.nonFavoriteLectures;
   List<Lecture> get filteredLectures => _usecase.filteredLectures;
+  bool get showOnlyFavorites => _usecase.showOnlyFavorites;
 
   int get lectureCount => filteredLectures.length;
 

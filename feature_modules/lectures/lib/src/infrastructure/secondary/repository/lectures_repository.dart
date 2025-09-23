@@ -17,19 +17,35 @@ class LecturesRepository implements LecturesRepositoryInterface {
       final lecturesData = await _apiClient.getLecturesByFaculty(facultyId, termId: termId, year: year);
 
       // Cache the data
-      await _storage.saveLecturesByFaculty(facultyId, lecturesData);
+      try {
+        await _storage.saveLecturesByFaculty(facultyId, lecturesData);
+      } catch (e) {
+        // Log cache error but don't fail the request
+        // TODO: Add proper logging
+      }
 
       return lecturesData.map((dto) => dto.toDomain(facultyId: facultyId, termId: termId, year: year)).toList();
     } catch (e) {
       // If API fails, try to get from cache
-      final cachedData = await _storage.getLecturesByFaculty(facultyId);
-      if (cachedData != null) {
-        return cachedData.map((dto) => dto.toDomain(facultyId: facultyId, termId: termId, year: year)).toList();
+      try {
+        final cachedData = await _storage.getLecturesByFaculty(facultyId);
+        if (cachedData != null && cachedData.isNotEmpty) {
+          return cachedData.map((dto) => dto.toDomain(facultyId: facultyId, termId: termId, year: year)).toList();
+        }
+      } catch (cacheError) {
+        // Log cache error but continue with API error
+        // TODO: Add proper logging
       }
-      throw const LecturesGenericException();
+      
+      // Re-throw the original API error with more context
+      if (e is LecturesGenericException) {
+        rethrow;
+      }
+      throw LecturesGenericException('Failed to load lectures for faculty $facultyId: ${e.toString()}');
     }
   }
 
+  @override
   Future<List<Lecture>> getCachedLecturesByFaculty(int facultyId, {int termId = 1, int year = 2025}) async {
     final cachedData = await _storage.getLecturesByFaculty(facultyId);
     if (cachedData == null) return [];

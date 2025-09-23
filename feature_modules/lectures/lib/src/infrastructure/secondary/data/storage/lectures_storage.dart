@@ -6,30 +6,68 @@ import '../dto/lecture_dto.dart';
 
 class LecturesStorage {
   final _lecturesKey = 'lectures_data_key';
+  final _lecturesTimestampKey = 'lectures_timestamp_key';
   final _favoritesKey = 'favorite_lectures_key';
+
+  // Cache expires after 1 hour
+  static const Duration _cacheExpiration = Duration(hours: 1);
 
   // Cache lectures by faculty
   Future<void> saveLecturesByFaculty(int facultyId, List<LectureDto> lectures) async {
-    final prefs = await SharedPreferences.getInstance();
-    final key = '${_lecturesKey}_$facultyId';
-    final lecturesJson = lectures.map((lecture) => lecture.toJson()).toList();
-    await prefs.setString(key, jsonEncode(lecturesJson));
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final key = '${_lecturesKey}_$facultyId';
+      final timestampKey = '${_lecturesTimestampKey}_$facultyId';
+      final lecturesJson = lectures.map((lecture) => lecture.toJson()).toList();
+
+      await prefs.setString(key, jsonEncode(lecturesJson));
+      await prefs.setInt(timestampKey, DateTime.now().millisecondsSinceEpoch);
+    } catch (e) {
+      // Log storage error but don't throw - caching is not critical
+      // TODO: Add proper logging
+      throw Exception('Failed to save lectures to cache: ${e.toString()}');
+    }
   }
 
   Future<List<LectureDto>?> getLecturesByFaculty(int facultyId) async {
-    final prefs = await SharedPreferences.getInstance();
-    final key = '${_lecturesKey}_$facultyId';
-    final lecturesJson = prefs.getString(key);
-    if (lecturesJson == null) return null;
-    
-    final List<dynamic> lecturesList = jsonDecode(lecturesJson);
-    return lecturesList.map((json) => LectureDto.fromJson(json)).toList();
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final key = '${_lecturesKey}_$facultyId';
+      final timestampKey = '${_lecturesTimestampKey}_$facultyId';
+
+      final lecturesJson = prefs.getString(key);
+      final timestamp = prefs.getInt(timestampKey);
+
+      if (lecturesJson == null || timestamp == null) return null;
+
+      // Check if cache is expired
+      final cacheTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
+      final now = DateTime.now();
+      if (now.difference(cacheTime) > _cacheExpiration) {
+        return null;
+      }
+
+      try {
+        final List<dynamic> lecturesList = jsonDecode(lecturesJson);
+        return lecturesList.map((json) => LectureDto.fromJson(json)).toList();
+      } catch (e) {
+        // Cache data is corrupted, return null to force fresh fetch
+        // TODO: Add proper logging
+        return null;
+      }
+    } catch (e) {
+      // Storage error, return null to force fresh fetch
+      // TODO: Add proper logging
+      return null;
+    }
   }
 
   Future<void> deleteLecturesByFaculty(int facultyId) async {
     final prefs = await SharedPreferences.getInstance();
     final key = '${_lecturesKey}_$facultyId';
+    final timestampKey = '${_lecturesTimestampKey}_$facultyId';
     await prefs.remove(key);
+    await prefs.remove(timestampKey);
   }
 
   // Favorites management
@@ -46,7 +84,9 @@ class LecturesStorage {
 
   Future<void> clearAllData() async {
     final prefs = await SharedPreferences.getInstance();
-    final keys = prefs.getKeys().where((key) => key.startsWith(_lecturesKey) || key == _favoritesKey);
+    final keys = prefs
+        .getKeys()
+        .where((key) => key.startsWith(_lecturesKey) || key.startsWith(_lecturesTimestampKey) || key == _favoritesKey);
     for (final key in keys) {
       await prefs.remove(key);
     }

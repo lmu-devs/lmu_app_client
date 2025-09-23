@@ -12,7 +12,6 @@ class LecturesRouterImpl extends LecturesRouter {
   @override
   Widget buildLectureList(BuildContext context, Map<String, dynamic> extra) {
     final facultyId = extra['facultyId'] as int;
-    print('🏗️ Building LectureListPage with facultyId: $facultyId');
     return LectureListPage(
       facultyId: facultyId,
     );

@@ -18,29 +18,14 @@ class LectureDto extends Equatable {
   });
 
   factory LectureDto.fromJsonWithTags(Map<String, dynamic> json) {
-    final tags = <String>[];
-
-    if (json['class_type']?.toString().isNotEmpty == true) {
-      tags.add(json['class_type'].toString());
-    }
-    if (json['language']?.toString().isNotEmpty == true) {
-      tags.add(json['language'].toString());
-    }
-
-    // Add SWS to tags if available
-    final swsValue = _parseIntSafely(json['sws']);
-    if (swsValue > 0) {
-      tags.add('${swsValue}SWS');
-    }
-
     return LectureDto(
       id: json['publish_id']?.toString(),
       name: json['name']?.toString(),
       facultyId: null,
       description: json['description']?.toString(),
-      sws: swsValue,
+      sws: _parseIntSafely(json['sws']),
       semester: json['semester']?.toString(),
-      tags: tags,
+      tags: _extractTags(json),
     );
   }
 
