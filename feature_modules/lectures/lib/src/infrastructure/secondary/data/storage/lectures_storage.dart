@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../domain/exception/lectures_generic_exception.dart';
 import '../dto/lecture_dto.dart';
 
 class LecturesStorage {
@@ -24,8 +26,8 @@ class LecturesStorage {
       await prefs.setInt(timestampKey, DateTime.now().millisecondsSinceEpoch);
     } catch (e) {
       // Log storage error but don't throw - caching is not critical
-      // TODO: Add proper logging
-      throw Exception('Failed to save lectures to cache: ${e.toString()}');
+      debugPrint('Failed to save lectures to cache: $e');
+      throw LecturesGenericException('Failed to save lectures to cache: ${e.toString()}');
     }
   }
 
@@ -52,12 +54,12 @@ class LecturesStorage {
         return lecturesList.map((json) => LectureDto.fromJson(json)).toList();
       } catch (e) {
         // Cache data is corrupted, return null to force fresh fetch
-        // TODO: Add proper logging
+        debugPrint('Cache data corrupted for faculty $facultyId: $e');
         return null;
       }
     } catch (e) {
       // Storage error, return null to force fresh fetch
-      // TODO: Add proper logging
+      debugPrint('Storage error for faculty $facultyId: $e');
       return null;
     }
   }

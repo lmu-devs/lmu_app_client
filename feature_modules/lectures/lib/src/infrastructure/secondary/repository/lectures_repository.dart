@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../../../domain/exception/lectures_generic_exception.dart';
 import '../../../domain/interface/lectures_repository_interface.dart';
 import '../../../domain/model/lecture.dart';
@@ -21,7 +23,7 @@ class LecturesRepository implements LecturesRepositoryInterface {
         await _storage.saveLecturesByFaculty(facultyId, lecturesData);
       } catch (e) {
         // Log cache error but don't fail the request
-        // TODO: Add proper logging
+        debugPrint('Failed to cache lectures for faculty $facultyId: $e');
       }
 
       return lecturesData.map((dto) => dto.toDomain(facultyId: facultyId, termId: termId, year: year)).toList();
@@ -34,7 +36,7 @@ class LecturesRepository implements LecturesRepositoryInterface {
         }
       } catch (cacheError) {
         // Log cache error but continue with API error
-        // TODO: Add proper logging
+        debugPrint('Failed to load cached lectures for faculty $facultyId: $cacheError');
       }
       
       // Re-throw the original API error with more context

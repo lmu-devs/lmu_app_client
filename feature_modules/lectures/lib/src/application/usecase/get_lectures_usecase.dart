@@ -5,54 +5,133 @@ import 'package:shared_api/studies.dart';
 import '../../domain/exception/lectures_generic_exception.dart';
 import '../../domain/interface/lectures_repository_interface.dart';
 import '../../domain/model/lecture.dart';
+import '../../domain/service/semester_config_service.dart';
 import 'favorite_lectures_usecase.dart';
 
 enum LecturesLoadState { initial, loading, loadingWithCache, success, error }
 
+class LecturesError {
+  const LecturesError({
+    required this.message,
+    this.details,
+    this.isRetryable = true,
+  });
+
+  final String message;
+  final String? details;
+  final bool isRetryable;
+}
+
 class GetLecturesUsecase {
-  GetLecturesUsecase(this._repository, this._favoritesUsecase);
+  GetLecturesUsecase(this._repository, this._favoritesUsecase, this._semesterService) {
+    // Initialize with current semester
+    _termId = _defaultTermId;
+    _year = _defaultYear;
+  }
 
   final LecturesRepositoryInterface _repository;
   final FavoriteLecturesUsecase _favoritesUsecase;
+  final SemesterConfigService _semesterService;
+
+  // Track active listeners to prevent memory leaks
+  final Set<VoidCallback> _activeListeners = <VoidCallback>{};
+
+  // Flag to prevent operations after disposal
+  bool _isDisposed = false;
 
   LecturesLoadState _loadState = LecturesLoadState.initial;
   List<Lecture> _data = [];
+  LecturesError? _error;
   int? _facultyId;
-  int _termId = _defaultTermId;
-  int _year = _defaultYear;
+  late int _termId;
+  late int _year;
   bool _showOnlyFavorites = false;
 
-  // Default values for semester and year
-  static const int _defaultTermId = 1;
-  static const int _defaultYear = 2025;
+  // Current semester configuration
+  SemesterInfo get currentSemester => _semesterService.currentSemester;
+  int get _defaultTermId => currentSemester.termId;
+  int get _defaultYear => currentSemester.year;
 
   // ValueNotifiers for state management
   final ValueNotifier<LecturesLoadState> loadStateNotifier = ValueNotifier(LecturesLoadState.initial);
   final ValueNotifier<List<Lecture>> dataNotifier = ValueNotifier([]);
   final ValueNotifier<bool> showOnlyFavoritesNotifier = ValueNotifier(false);
+  final ValueNotifier<LecturesError?> errorNotifier = ValueNotifier(null);
 
   LecturesLoadState get loadState => _loadState;
   List<Lecture> get data => _data;
+  LecturesError? get error => _error;
   bool get showOnlyFavorites => _showOnlyFavorites;
 
-  void setFacultyId(int facultyId, {int termId = _defaultTermId, int year = _defaultYear}) {
+  // Interface compatibility methods
+  List<Lecture> get lectures => _data;
+  bool get isLoading => _loadState == LecturesLoadState.loading;
+  bool get hasError => _loadState == LecturesLoadState.error;
+  String? get errorMessage => _error?.message;
+  String? get errorDetails => _error?.details;
+  bool get isRetryable => _error?.isRetryable ?? false;
+
+  // Semester management
+  List<SemesterInfo> get availableSemesters => _semesterService.availableSemesters;
+  SemesterInfo get selectedSemester => SemesterInfo(
+        termId: _termId,
+        year: _year,
+        displayName: _semesterService.getSemesterInfo(_termId, _year).displayName,
+        isCurrent: _semesterService.getSemesterInfo(_termId, _year).isCurrent,
+      );
+
+  void changeSemester(SemesterInfo semester) {
+    if (_termId == semester.termId && _year == semester.year) return;
+
+    _termId = semester.termId;
+    _year = semester.year;
+    _invalidateCaches();
+
+    // Reload data for new semester
+    if (_facultyId != null) {
+      load();
+    }
+  }
+
+  void setFacultyId(int facultyId, {int? termId, int? year}) {
+    final actualTermId = termId ?? _defaultTermId;
+    final actualYear = year ?? _defaultYear;
+    // Input validation
+    if (facultyId <= 0) {
+      // TODO: Use proper logging framework instead of debugPrint
+      debugPrint('Invalid faculty ID: $facultyId');
+      return;
+    }
+    if (actualTermId < 1 || actualTermId > 2) {
+      // TODO: Use proper logging framework instead of debugPrint
+      debugPrint('Invalid term ID: $actualTermId');
+      return;
+    }
+    if (actualYear < 2000 || actualYear > 2100) {
+      // TODO: Use proper logging framework instead of debugPrint
+      debugPrint('Invalid year: $actualYear');
+      return;
+    }
+
     final previousFacultyId = _facultyId;
     _facultyId = facultyId;
-    _termId = termId;
-    _year = year;
+    _termId = actualTermId;
+    _year = actualYear;
 
     // If faculty ID changed, reset state and load new data
     if (previousFacultyId != facultyId) {
       _loadState = LecturesLoadState.initial;
       _data = [];
+      _error = null;
       loadStateNotifier.value = _loadState;
       dataNotifier.value = _data;
+      errorNotifier.value = _error;
       load();
     }
   }
 
   Future<void> load() async {
-    if (_facultyId == null) return;
+    if (_isDisposed || _facultyId == null) return;
 
     if (_loadState == LecturesLoadState.loading || _loadState == LecturesLoadState.loadingWithCache) {
       return;
@@ -64,6 +143,7 @@ class GetLecturesUsecase {
       if (cachedLectures.isNotEmpty) {
         _loadState = LecturesLoadState.loadingWithCache;
         _data = cachedLectures;
+        _invalidateCaches();
         loadStateNotifier.value = _loadState;
         dataNotifier.value = _data;
 
@@ -79,8 +159,10 @@ class GetLecturesUsecase {
     } catch (e) {
       _loadState = LecturesLoadState.loading;
       _data = [];
+      _error = null;
       loadStateNotifier.value = _loadState;
       dataNotifier.value = _data;
+      errorNotifier.value = _error;
     }
 
     // Load from API
@@ -88,19 +170,26 @@ class GetLecturesUsecase {
   }
 
   Future<void> _loadFreshDataInBackground() async {
+    if (_isDisposed) return;
+
     try {
       final currentFacultyId = _facultyId;
       final freshLectures = await _repository.getLecturesByFaculty(currentFacultyId!, termId: _termId, year: _year);
 
-      // Only update if we still have the same faculty ID (user hasn't navigated away)
-      if (_facultyId == currentFacultyId) {
+      // Only update if we still have the same faculty ID and not disposed
+      if (!_isDisposed && _facultyId == currentFacultyId) {
         _data = freshLectures;
         _loadState = LecturesLoadState.success;
+        _invalidateCaches();
         loadStateNotifier.value = _loadState;
         dataNotifier.value = _data;
       }
+    } on LecturesGenericException catch (e) {
+      // Log API error but keep showing cached data
+      debugPrint('Background refresh failed: ${e.message}');
     } catch (e) {
-      // Keep showing cached data, don't change state
+      // Log unexpected error but keep showing cached data
+      debugPrint('Unexpected error during background refresh: $e');
     }
   }
 
@@ -108,52 +197,115 @@ class GetLecturesUsecase {
     try {
       _data = await _repository.getLecturesByFaculty(_facultyId!, termId: _termId, year: _year);
       _loadState = LecturesLoadState.success;
-    } on LecturesGenericException {
+      _error = null;
+    } on LecturesGenericException catch (e) {
       // If API fails and we have no cached data, show error
       if (_data.isEmpty) {
         _loadState = LecturesLoadState.error;
-        // TODO: Add proper error logging with context
+        _error = LecturesError(
+          message: 'Failed to load lectures',
+          details: e.message,
+          isRetryable: true,
+        );
+        debugPrint('API failed with no cached data: ${e.message}');
       } else {
         // Keep cached data and show success state
         _loadState = LecturesLoadState.success;
-        // TODO: Log that we're showing cached data due to API error
+        _error = null;
+        debugPrint('API failed, showing cached data: ${e.message}');
       }
     } catch (e) {
       // Handle unexpected errors
       if (_data.isEmpty) {
         _loadState = LecturesLoadState.error;
-        // TODO: Add proper error logging
+        _error = LecturesError(
+          message: 'An unexpected error occurred',
+          details: e.toString(),
+          isRetryable: true,
+        );
+        debugPrint('Unexpected error with no cached data: $e');
       } else {
         _loadState = LecturesLoadState.success;
-        // TODO: Log that we're showing cached data due to unexpected error
+        _error = null;
+        debugPrint('Unexpected error, showing cached data: $e');
       }
     }
 
     loadStateNotifier.value = _loadState;
     dataNotifier.value = _data;
+    errorNotifier.value = _error;
   }
 
+  // Memoization cache for expensive operations
+  List<Lecture>? _cachedFavoriteLectures;
+  List<Lecture>? _cachedFilteredLectures;
+  bool? _lastShowOnlyFavorites;
+  Set<String>? _lastFavoriteIds;
+
   List<Lecture> get filteredLectures {
-    if (_showOnlyFavorites) {
-      return favoriteLectures;
+    final currentShowOnlyFavorites = _showOnlyFavorites;
+
+    // Return cached result if filter state hasn't changed
+    if (_cachedFilteredLectures != null && _lastShowOnlyFavorites == currentShowOnlyFavorites) {
+      return _cachedFilteredLectures!;
     }
-    return _data;
+
+    final filtered = currentShowOnlyFavorites ? favoriteLectures : _data;
+
+    // Cache the result
+    _cachedFilteredLectures = filtered;
+    _lastShowOnlyFavorites = currentShowOnlyFavorites;
+
+    return filtered;
   }
 
   List<Lecture> get favoriteLectures {
-    return _data.where((lecture) => _favoritesUsecase.isFavorite(lecture.id)).toList();
+    final currentFavoriteIds = _favoritesUsecase.favoriteIds;
+
+    // Return cached result if favorites haven't changed
+    if (_cachedFavoriteLectures != null &&
+        _lastFavoriteIds != null &&
+        _lastFavoriteIds!.length == currentFavoriteIds.length &&
+        _lastFavoriteIds!.containsAll(currentFavoriteIds) &&
+        currentFavoriteIds.containsAll(_lastFavoriteIds!)) {
+      return _cachedFavoriteLectures!;
+    }
+
+    final favorites = _data.where((lecture) => _favoritesUsecase.isFavorite(lecture.id)).toList();
+
+    // Cache the result
+    _cachedFavoriteLectures = favorites;
+    _lastFavoriteIds = Set.from(currentFavoriteIds);
+
+    return favorites;
   }
 
   void toggleFavoritesFilter() {
     _showOnlyFavorites = !_showOnlyFavorites;
+    _invalidateCaches();
     showOnlyFavoritesNotifier.value = _showOnlyFavorites;
+  }
+
+  void toggleShowOnlyFavorites() {
+    toggleFavoritesFilter();
+  }
+
+  // Invalidate all memoization caches
+  void _invalidateCaches() {
+    _cachedFavoriteLectures = null;
+    _cachedFilteredLectures = null;
+    _lastShowOnlyFavorites = null;
+    _lastFavoriteIds = null;
   }
 
   Future<void> reload() async {
     _loadState = LecturesLoadState.initial;
     _data = [];
+    _error = null;
+    _invalidateCaches();
     loadStateNotifier.value = _loadState;
     dataNotifier.value = _data;
+    errorNotifier.value = _error;
     await load();
   }
 
@@ -177,9 +329,46 @@ class GetLecturesUsecase {
   // Configuration constants
   static const int _preloadFacultyCount = 5;
 
+  // Add listener with automatic cleanup tracking
+  void addListener(VoidCallback listener) {
+    if (_isDisposed) return;
+
+    _activeListeners.add(listener);
+    loadStateNotifier.addListener(listener);
+    dataNotifier.addListener(listener);
+    showOnlyFavoritesNotifier.addListener(listener);
+    errorNotifier.addListener(listener);
+  }
+
+  // Remove listener and clean up if no more listeners
+  void removeListener(VoidCallback listener) {
+    if (_isDisposed) return;
+
+    _activeListeners.remove(listener);
+    loadStateNotifier.removeListener(listener);
+    dataNotifier.removeListener(listener);
+    showOnlyFavoritesNotifier.removeListener(listener);
+    errorNotifier.removeListener(listener);
+  }
+
+  // Clean up all listeners (called when use case is no longer needed)
   void dispose() {
+    if (_isDisposed) return;
+    _isDisposed = true;
+
+    // Remove all tracked listeners
+    for (final listener in _activeListeners.toList()) {
+      loadStateNotifier.removeListener(listener);
+      dataNotifier.removeListener(listener);
+      showOnlyFavoritesNotifier.removeListener(listener);
+      errorNotifier.removeListener(listener);
+    }
+    _activeListeners.clear();
+
+    // Dispose notifiers
     loadStateNotifier.dispose();
     dataNotifier.dispose();
     showOnlyFavoritesNotifier.dispose();
+    errorNotifier.dispose();
   }
 }

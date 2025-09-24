@@ -29,7 +29,7 @@ Future<void> testCompleteData() async {
   };
 
   final dto = LectureDto.fromJson(jsonResponse);
-  final lecture = dto.toDomain(facultyId: 1);
+  final lecture = dto.toDomain(facultyId: 1, termId: 1, year: 2025);
 
   print('✅ Input: ${jsonEncode(jsonResponse)}');
   print('✅ DTO: id=${dto.id}, name=${dto.name}, sws=${dto.sws}');
@@ -47,7 +47,7 @@ Future<void> testPartialData() async {
   };
 
   final dto = LectureDto.fromJson(jsonResponse);
-  final lecture = dto.toDomain(facultyId: 2);
+  final lecture = dto.toDomain(facultyId: 2, termId: 1, year: 2025);
 
   print('✅ Input: ${jsonEncode(jsonResponse)}');
   print('✅ DTO: id=${dto.id}, name=${dto.name}, sws=${dto.sws}');
@@ -60,7 +60,7 @@ Future<void> testMinimalData() async {
   final jsonResponse = {"id": "lecture_003", "name": "Introduction to Computer Science"};
 
   final dto = LectureDto.fromJson(jsonResponse);
-  final lecture = dto.toDomain(facultyId: 3);
+  final lecture = dto.toDomain(facultyId: 3, termId: 1, year: 2025);
 
   print('✅ Input: ${jsonEncode(jsonResponse)}');
   print('✅ DTO: id=${dto.id}, name=${dto.name}, facultyId=${dto.facultyId}');
@@ -73,7 +73,7 @@ Future<void> testMalformedData() async {
   final jsonResponse = {"id": 123, "name": "Data Structures", "sws": "5", "semester": 2024, "tags": "algorithm,data"};
 
   final dto = LectureDto.fromJson(jsonResponse);
-  final lecture = dto.toDomain(facultyId: 4);
+  final lecture = dto.toDomain(facultyId: 4, termId: 1, year: 2025);
 
   print('✅ Input: ${jsonEncode(jsonResponse)}');
   print('✅ DTO: id=${dto.id}, name=${dto.name}, sws=${dto.sws}');
@@ -86,17 +86,17 @@ Future<void> testEdgeCases() async {
 
   // Empty JSON
   final emptyDto = LectureDto.fromJson({});
-  final emptyLecture = emptyDto.toDomain(facultyId: 5);
+  final emptyLecture = emptyDto.toDomain(facultyId: 5, termId: 1, year: 2025);
   print('✅ Empty JSON: ${emptyLecture.id} - ${emptyLecture.title}');
 
   // Null values
   final nullDto = LectureDto.fromJson({"id": null, "name": null});
-  final nullLecture = nullDto.toDomain(facultyId: 6);
+  final nullLecture = nullDto.toDomain(facultyId: 6, termId: 1, year: 2025);
   print('✅ Null values: ${nullLecture.id} - ${nullLecture.title}');
 
   // Empty strings
   final emptyStringDto = LectureDto.fromJson({"id": "", "name": ""});
-  final emptyStringLecture = emptyStringDto.toDomain(facultyId: 7);
+  final emptyStringLecture = emptyStringDto.toDomain(facultyId: 7, termId: 1, year: 2025);
   print('✅ Empty strings: ${emptyStringLecture.id} - ${emptyStringLecture.title}');
   print('');
 }

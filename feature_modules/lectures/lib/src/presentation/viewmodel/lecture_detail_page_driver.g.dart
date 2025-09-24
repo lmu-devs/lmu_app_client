@@ -55,14 +55,14 @@ class _$TestLectureDetailPageDriver extends TestDriver
 
 class $LectureDetailPageDriverProvider
     extends WidgetDriverProvider<LectureDetailPageDriver> {
-  final String _lectureId;
-  final String _lectureTitle;
-
   $LectureDetailPageDriverProvider({
     required String lectureId,
     required String lectureTitle,
   })  : _lectureId = lectureId,
         _lectureTitle = lectureTitle;
+
+  final String _lectureId;
+  final String _lectureTitle;
 
   @override
   LectureDetailPageDriver buildDriver() {

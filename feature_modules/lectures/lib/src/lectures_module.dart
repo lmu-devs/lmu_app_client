@@ -7,6 +7,7 @@ import 'package:shared_api/lectures.dart';
 import 'application/usecase/favorite_lectures_usecase.dart';
 import 'application/usecase/get_lectures_usecase.dart';
 import 'domain/interface/lectures_repository_interface.dart';
+import 'domain/service/semester_config_service.dart';
 import 'infrastructure/primary/api/lectures_api.dart';
 import 'infrastructure/primary/router/lectures_router.dart';
 import 'infrastructure/secondary/data/api/lectures_api_client.dart';
@@ -23,8 +24,9 @@ class LecturesModule extends AppModule with LocalDependenciesProvidingAppModule,
     final storage = LecturesStorage();
     final repository = LecturesRepository(LecturesApiClient(baseApiClient), storage);
     final favoritesUsecase = FavoriteLecturesUsecase(storage);
-    final getUsecase = GetLecturesUsecase(repository, favoritesUsecase);
-    
+    const semesterService = SemesterConfigService();
+    final getUsecase = GetLecturesUsecase(repository, favoritesUsecase, semesterService);
+
     GetIt.I.registerSingleton<LecturesRepositoryInterface>(repository);
     GetIt.I.registerSingleton<GetLecturesUsecase>(getUsecase);
     GetIt.I.registerSingleton<FavoriteLecturesUsecase>(favoritesUsecase);

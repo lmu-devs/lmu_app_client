@@ -10,13 +10,12 @@ part of 'lecture_list_page_driver.dart';
 
 // This file was generated with widget_driver_generator version "1.3.6"
 
-class _$TestLectureListPageDriver extends TestDriver
-    implements LectureListPageDriver {
+class _$TestLectureListPageDriver extends TestDriver implements LectureListPageDriver {
   @override
   int get facultyId => 0;
 
   @override
-  FavoriteLecturesUsecase? get favoritesUsecase => null;
+  FavoritesUsecaseInterface? get favoritesUsecase => null;
 
   @override
   String get facultyName => ' ';
@@ -31,16 +30,32 @@ class _$TestLectureListPageDriver extends TestDriver
   bool get hasData => false;
 
   @override
+  String? get errorMessage => ' ';
+
+  @override
+  String? get errorDetails => ' ';
+
+  @override
+  bool get isRetryable => false;
+
+  @override
   List<Lecture> get lectures => [];
+
+  @override
+  bool get showOnlyFavorites => false;
+
+  @override
+  List<SemesterInfo> get availableSemesters => [];
+
+  @override
+  SemesterInfo get selectedSemester =>
+      SemesterInfo(termId: 1, year: 2025, displayName: 'Winter 24/25', isCurrent: true);
 
   @override
   List<Lecture> get favoriteLectures => [];
 
   @override
   List<Lecture> get filteredLectures => [];
-
-  @override
-  bool get showOnlyFavorites => false;
 
   @override
   int get lectureCount => 0;
@@ -61,8 +76,10 @@ class _$TestLectureListPageDriver extends TestDriver
   void dispose() {}
 
   @override
-  void onLectureCardPressed(
-      BuildContext context, String lectureId, String lectureTitle) {}
+  void changeSemester(SemesterInfo semester) {}
+
+  @override
+  void onLectureCardPressed(BuildContext context, String lectureId, String lectureTitle) {}
 
   @override
   void onLectureFavoriteToggle(String lectureId) {}
@@ -80,19 +97,16 @@ class _$TestLectureListPageDriver extends TestDriver
   void retry() {}
 }
 
-class $LectureListPageDriverProvider
-    extends WidgetDriverProvider<LectureListPageDriver> {
-  final int _facultyId;
-
+class $LectureListPageDriverProvider extends WidgetDriverProvider<LectureListPageDriver> {
   $LectureListPageDriverProvider({
     required int facultyId,
   }) : _facultyId = facultyId;
 
+  final int _facultyId;
+
   @override
   LectureListPageDriver buildDriver() {
-    return LectureListPageDriver(
-      facultyId: _facultyId,
-    );
+    return LecturesDriverFactory.fromGetIt().createDriver(_facultyId);
   }
 
   @override

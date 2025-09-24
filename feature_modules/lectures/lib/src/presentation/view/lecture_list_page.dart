@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:widget_driver/widget_driver.dart';
 
+import '../../domain/service/semester_config_service.dart';
+import '../../infrastructure/primary/factory/lectures_driver_factory.dart';
 import '../component/lecture_card.dart';
 import '../viewmodel/lecture_list_page_driver.dart';
 
@@ -45,7 +47,16 @@ class LectureListPage extends DrivableWidget<LectureListPageDriver> {
 
   Widget _buildContent(BuildContext context) {
     if (driver.isLoading) {
-      return Center(child: CircularProgressIndicator());
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(),
+            const SizedBox(height: LmuSizes.size_16),
+            Text(context.locals.lectures.loading),
+          ],
+        ),
+      );
     }
 
     if (driver.hasError) {
@@ -53,11 +64,28 @@ class LectureListPage extends DrivableWidget<LectureListPageDriver> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(context.locals.lectures.errorLoadingLectures),
+            Icon(
+              Icons.error_outline,
+              size: 64,
+              color: context.colors.neutralColors.textColors.mediumColors.base,
+            ),
             const SizedBox(height: LmuSizes.size_16),
-            ElevatedButton(
-              onPressed: driver.retry,
-              child: Text(context.locals.lectures.retry),
+            LmuText.body(
+              driver.errorMessage ?? context.locals.lectures.errorLoadingLectures,
+              textAlign: TextAlign.center,
+            ),
+            if (driver.errorDetails != null) ...[
+              const SizedBox(height: LmuSizes.size_8),
+              LmuText.bodySmall(
+                driver.errorDetails!,
+                textAlign: TextAlign.center,
+              ),
+            ],
+            const SizedBox(height: LmuSizes.size_24),
+            LmuButton(
+              title: context.locals.lectures.retry,
+              emphasis: ButtonEmphasis.primary,
+              onTap: driver.retry,
             ),
           ],
         ),
@@ -85,40 +113,39 @@ class LectureListPage extends DrivableWidget<LectureListPageDriver> {
         LmuIconButton(
           icon: LucideIcons.search,
           onPressed: () {
-            // TODO: implement search functionality
+            // TODO: implement search functionality - add search bar with filtering
           },
         ),
         const SizedBox(width: LmuSizes.size_8),
         // Favorites filter button
-        ValueListenableBuilder<Set<String>>(
-          valueListenable: driver.favoritesUsecase?.favoriteIdsNotifier ?? ValueNotifier(<String>{}),
-          builder: (context, favoriteIds, _) {
-            return GestureDetector(
-              onTap: driver.onFavoritesFilterToggle,
-              child: Container(
-                padding: const EdgeInsets.all(LmuSizes.size_8),
-                decoration: BoxDecoration(
-                  color: context.colors.neutralColors.backgroundColors.mediumColors.base,
-                  borderRadius: BorderRadius.circular(LmuSizes.size_8),
-                ),
-                child: StarIcon(
-                  isActive: driver.showOnlyFavorites,
-                  size: LmuIconSizes.mediumSmall * MediaQuery.of(context).textScaler.textScaleFactor,
-                ),
-              ),
-            );
-          },
+        GestureDetector(
+          onTap: driver.onFavoritesFilterToggle,
+          child: Container(
+            padding: const EdgeInsets.all(LmuSizes.size_8),
+            decoration: BoxDecoration(
+              color: context.colors.neutralColors.backgroundColors.mediumColors.base,
+              borderRadius: BorderRadius.circular(LmuSizes.size_8),
+            ),
+            child: StarIcon(
+              isActive: driver.showOnlyFavorites,
+              size: LmuIconSizes.mediumSmall,
+            ),
+          ),
         ),
         const SizedBox(width: LmuSizes.size_8),
         // Semester dropdown button
         LmuButton(
-          title: 'Winter 24/25',
+          title: driver.selectedSemester.displayName,
           emphasis: ButtonEmphasis.secondary,
           trailingIcon: LucideIcons.chevron_down,
           onTap: () {
             LmuBottomSheet.show(
               context,
-              content: _SemesterSelectionSheet(),
+              content: _SemesterSelectionSheet(
+                availableSemesters: driver.availableSemesters,
+                selectedSemester: driver.selectedSemester,
+                onSemesterSelected: driver.changeSemester,
+              ),
             );
           },
         ),
@@ -156,9 +183,8 @@ class LectureListPage extends DrivableWidget<LectureListPageDriver> {
 
   List<Widget> _buildGroupedLectureCards(BuildContext context, LectureListPageDriver driver) {
     return [
-      ValueListenableBuilder<Set<String>>(
-        valueListenable: driver.favoritesUsecase?.favoriteIdsNotifier ?? ValueNotifier(<String>{}),
-        builder: (context, favoriteIds, _) {
+      Builder(
+        builder: (context) {
           // Get lectures from driver
           final lectures = driver.filteredLectures;
 
@@ -178,7 +204,7 @@ class LectureListPage extends DrivableWidget<LectureListPageDriver> {
                   children: entry.value.asMap().entries.map((lectureEntry) {
                     final index = lectureEntry.key;
                     final lecture = lectureEntry.value;
-                    final isFavorite = favoriteIds.contains(lecture.id);
+                    final isFavorite = driver.favoritesUsecase?.isFavorite(lecture.id) ?? false;
 
                     return Column(
                       children: [
@@ -221,23 +247,43 @@ class LectureListPage extends DrivableWidget<LectureListPageDriver> {
 }
 
 class _SemesterSelectionSheet extends StatelessWidget {
+  const _SemesterSelectionSheet({
+    required this.availableSemesters,
+    required this.selectedSemester,
+    required this.onSemesterSelected,
+  });
+
+  final List<SemesterInfo> availableSemesters;
+  final SemesterInfo selectedSemester;
+  final void Function(SemesterInfo) onSemesterSelected;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        LmuListItem.base(
-          title: 'Winter 24/25',
-          leadingArea: LmuIcon(
-            icon: LucideIcons.calendar,
-            size: LmuIconSizes.medium,
-            color: context.colors.brandColors.textColors.strongColors.base,
+        for (final semester in availableSemesters) ...[
+          LmuListItem.base(
+            title: semester.displayName,
+            leadingArea: LmuIcon(
+              icon: LucideIcons.calendar,
+              size: LmuIconSizes.medium,
+              color: context.colors.brandColors.textColors.strongColors.base,
+            ),
+            trailingArea: semester == selectedSemester
+                ? LmuIcon(
+                    icon: LucideIcons.check,
+                    size: LmuIconSizes.medium,
+                    color: context.colors.brandColors.textColors.strongColors.base,
+                  )
+                : null,
+            onTap: () {
+              Navigator.of(context, rootNavigator: true).pop();
+              onSemesterSelected(semester);
+            },
           ),
-          onTap: () {
-            Navigator.of(context, rootNavigator: true).pop();
-            // TODO: implement semester selection
-          },
-        ),
+          if (semester != availableSemesters.last) const Divider(height: 1),
+        ],
       ],
     );
   }
@@ -250,15 +296,11 @@ class _LectureListPageDriverProvider extends WidgetDriverProvider<LectureListPag
 
   @override
   LectureListPageDriver buildDriver() {
-    return LectureListPageDriver(
-      facultyId: facultyId,
-    );
+    return LecturesDriverFactory.fromGetIt().createDriver(facultyId);
   }
 
   @override
   LectureListPageDriver buildTestDriver() {
-    return LectureListPageDriver(
-      facultyId: 1,
-    );
+    return LecturesDriverFactory.fromGetIt().createDriver(1);
   }
 }
