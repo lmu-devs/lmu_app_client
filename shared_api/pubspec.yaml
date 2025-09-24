@@ -8,6 +8,8 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
+  core:
+    path: ../core
   equatable: ^2.0.7
   flutter:
     sdk: flutter
