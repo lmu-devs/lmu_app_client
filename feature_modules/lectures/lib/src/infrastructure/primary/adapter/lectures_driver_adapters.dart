@@ -43,6 +43,9 @@ class GetLecturesUsecaseAdapter implements LecturesUsecaseInterface {
   @override
   void toggleShowOnlyFavorites() => _usecase.toggleShowOnlyFavorites();
 
+  @override
+  void setFacultyId(int facultyId, {int? termId, int? year}) => _usecase.setFacultyId(facultyId, termId: termId, year: year);
+
   // Semester management
   List<SemesterInfo> get availableSemesters => _usecase.availableSemesters;
   SemesterInfo get selectedSemester => _usecase.selectedSemester;

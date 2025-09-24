@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../domain/model/lecture.dart';
@@ -21,7 +22,7 @@ class LectureDto extends Equatable {
     // Use the generated method for standard fields
     final dto = _$LectureDtoFromJson(json);
     // Extract tags separately as they're not in the standard JSON
-    return LectureDto(
+    final result = LectureDto(
       id: dto.id,
       name: dto.name,
       facultyId: dto.facultyId,
@@ -30,6 +31,13 @@ class LectureDto extends Equatable {
       semester: dto.semester,
       tags: _extractTags(json),
     );
+    
+    // Debug logging
+    if (kDebugMode) {
+      debugPrint('Parsed lecture: ${result.name} (ID: ${result.id})');
+    }
+    
+    return result;
   }
 
   static List<String> _extractTags(Map<String, dynamic> json) {

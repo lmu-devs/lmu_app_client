@@ -18,6 +18,7 @@ abstract class LecturesUsecaseInterface {
   Future<void> load();
   Future<void> reload();
   void toggleShowOnlyFavorites();
+  void setFacultyId(int facultyId, {int? termId, int? year});
 
   // Semester management
   List<SemesterInfo> get availableSemesters;

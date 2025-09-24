@@ -31,7 +31,7 @@ class FacultiesPage extends DrivableWidget<FacultiesPageDriver> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            LmuTileHeadline.base(title: studiesLocalizations.facultiesTitle),
+            LmuTileHeadline.base(title: studiesLocalizations.allFacultiesTitle),
             const SizedBox(height: LmuSizes.size_2),
             LmuContentTile(
               contentList: driver.faculties.mapIndexed((index, faculty) {

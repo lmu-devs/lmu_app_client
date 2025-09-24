@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/studies.dart';
 
+import '../../domain/base/base_usecase.dart';
 import '../../domain/exception/lectures_generic_exception.dart';
 import '../../domain/interface/lectures_repository_interface.dart';
 import '../../domain/model/lecture.dart';
@@ -22,7 +23,7 @@ class LecturesError {
   final bool isRetryable;
 }
 
-class GetLecturesUsecase {
+class GetLecturesUsecase extends BaseUsecase {
   GetLecturesUsecase(this._repository, this._favoritesUsecase, this._semesterService) {
     // Initialize with current semester
     _termId = _defaultTermId;
@@ -32,9 +33,6 @@ class GetLecturesUsecase {
   final LecturesRepositoryInterface _repository;
   final FavoriteLecturesUsecase _favoritesUsecase;
   final SemesterConfigService _semesterService;
-
-  // Track active listeners to prevent memory leaks
-  final Set<VoidCallback> _activeListeners = <VoidCallback>{};
 
   // Flag to prevent operations after disposal
   bool _isDisposed = false;
@@ -195,7 +193,9 @@ class GetLecturesUsecase {
 
   Future<void> _loadFromApi() async {
     try {
+      debugPrint('Loading lectures for faculty $_facultyId, term: $_termId, year: $_year');
       _data = await _repository.getLecturesByFaculty(_facultyId!, termId: _termId, year: _year);
+      debugPrint('Loaded ${_data.length} lectures for faculty $_facultyId');
       _loadState = LecturesLoadState.success;
       _error = null;
     } on LecturesGenericException catch (e) {
@@ -329,43 +329,24 @@ class GetLecturesUsecase {
   // Configuration constants
   static const int _preloadFacultyCount = 5;
 
-  // Add listener with automatic cleanup tracking
-  void addListener(VoidCallback listener) {
-    if (_isDisposed) return;
-
-    _activeListeners.add(listener);
+  @override
+  void addListenersToNotifiers(VoidCallback listener) {
     loadStateNotifier.addListener(listener);
     dataNotifier.addListener(listener);
     showOnlyFavoritesNotifier.addListener(listener);
     errorNotifier.addListener(listener);
   }
 
-  // Remove listener and clean up if no more listeners
-  void removeListener(VoidCallback listener) {
-    if (_isDisposed) return;
-
-    _activeListeners.remove(listener);
+  @override
+  void removeListenersFromNotifiers(VoidCallback listener) {
     loadStateNotifier.removeListener(listener);
     dataNotifier.removeListener(listener);
     showOnlyFavoritesNotifier.removeListener(listener);
     errorNotifier.removeListener(listener);
   }
 
-  // Clean up all listeners (called when use case is no longer needed)
-  void dispose() {
-    if (_isDisposed) return;
-    _isDisposed = true;
-
-    // Remove all tracked listeners
-    for (final listener in _activeListeners.toList()) {
-      loadStateNotifier.removeListener(listener);
-      dataNotifier.removeListener(listener);
-      showOnlyFavoritesNotifier.removeListener(listener);
-      errorNotifier.removeListener(listener);
-    }
-    _activeListeners.clear();
-
-    // Dispose notifiers
+  @override
+  void disposeNotifiers() {
     loadStateNotifier.dispose();
     dataNotifier.dispose();
     showOnlyFavoritesNotifier.dispose();

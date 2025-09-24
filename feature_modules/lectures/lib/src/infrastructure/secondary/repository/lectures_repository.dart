@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 
-import '../../../domain/exception/lectures_generic_exception.dart';
 import '../../../domain/interface/lectures_repository_interface.dart';
 import '../../../domain/model/lecture.dart';
+import '../../../domain/model/pagination.dart';
+import '../../../domain/utils/error_handler.dart';
 import '../data/api/lectures_api_client.dart';
 import '../data/storage/lectures_storage.dart';
 
@@ -28,6 +29,8 @@ class LecturesRepository implements LecturesRepositoryInterface {
 
       return lecturesData.map((dto) => dto.toDomain(facultyId: facultyId, termId: termId, year: year)).toList();
     } catch (e) {
+      ErrorHandler.logError(e, 'API call for faculty $facultyId');
+
       // If API fails, try to get from cache
       try {
         final cachedData = await _storage.getLecturesByFaculty(facultyId);
@@ -35,15 +38,51 @@ class LecturesRepository implements LecturesRepositoryInterface {
           return cachedData.map((dto) => dto.toDomain(facultyId: facultyId, termId: termId, year: year)).toList();
         }
       } catch (cacheError) {
-        // Log cache error but continue with API error
-        debugPrint('Failed to load cached lectures for faculty $facultyId: $cacheError');
+        ErrorHandler.logError(cacheError, 'Cache retrieval for faculty $facultyId');
       }
+
+      // Re-throw with consistent error handling
+      throw ErrorHandler.handleApiError(e, 'Failed to load lectures for faculty $facultyId');
+    }
+  }
+
+  // ============================================================================
+  // FUTURE IMPROVEMENT: Pagination Support
+  // ============================================================================
+  // The following methods are implemented but currently UNUSED.
+  // They are prepared for future UI integration when pagination controls are added.
+  // Currently, the UI loads all lectures at once using getLecturesByFaculty().
+  // ============================================================================
+
+  @override
+  Future<PaginatedResult<Lecture>> getLecturesByFacultyPaginated(
+    int facultyId, {
+    PaginationConfig pagination = const PaginationConfig(),
+    int termId = 1,
+    int year = 2025,
+  }) async {
+    try {
+      // FUTURE IMPROVEMENT: Currently unused - UI integration pending
+      // For now, get all lectures and paginate locally
+      // TODO: Implement server-side pagination when API supports it
+      final allLectures = await getLecturesByFaculty(facultyId, termId: termId, year: year);
       
-      // Re-throw the original API error with more context
-      if (e is LecturesGenericException) {
-        rethrow;
-      }
-      throw LecturesGenericException('Failed to load lectures for faculty $facultyId: ${e.toString()}');
+      final startIndex = pagination.offset;
+      final endIndex = (startIndex + pagination.pageSize).clamp(0, allLectures.length);
+      
+      final paginatedData = allLectures.sublist(
+        startIndex.clamp(0, allLectures.length),
+        endIndex,
+      );
+      
+      return PaginatedResult<Lecture>(
+        data: paginatedData,
+        pagination: pagination,
+        hasMore: endIndex < allLectures.length,
+        totalCount: allLectures.length,
+      );
+    } catch (e) {
+      throw ErrorHandler.handleApiError(e, 'Failed to load paginated lectures for faculty $facultyId');
     }
   }
 
@@ -52,5 +91,37 @@ class LecturesRepository implements LecturesRepositoryInterface {
     final cachedData = await _storage.getLecturesByFaculty(facultyId);
     if (cachedData == null) return [];
     return cachedData.map((dto) => dto.toDomain(facultyId: facultyId, termId: termId, year: year)).toList();
+  }
+
+  @override
+  Future<PaginatedResult<Lecture>?> getCachedLecturesByFacultyPaginated(
+    int facultyId, {
+    PaginationConfig pagination = const PaginationConfig(),
+    int termId = 1,
+    int year = 2025,
+  }) async {
+    try {
+      // FUTURE IMPROVEMENT: Currently unused - UI integration pending
+      final allCachedLectures = await getCachedLecturesByFaculty(facultyId, termId: termId, year: year);
+      if (allCachedLectures.isEmpty) return null;
+      
+      final startIndex = pagination.offset;
+      final endIndex = (startIndex + pagination.pageSize).clamp(0, allCachedLectures.length);
+      
+      final paginatedData = allCachedLectures.sublist(
+        startIndex.clamp(0, allCachedLectures.length),
+        endIndex,
+      );
+      
+      return PaginatedResult<Lecture>(
+        data: paginatedData,
+        pagination: pagination,
+        hasMore: endIndex < allCachedLectures.length,
+        totalCount: allCachedLectures.length,
+      );
+    } catch (e) {
+      ErrorHandler.logError(e, 'Cache pagination for faculty $facultyId');
+      return null;
+    }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:core_routes/lectures.dart';
+import 'package:flutter/foundation.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../domain/interface/lectures_driver_dependencies.dart';
@@ -37,8 +38,9 @@ class LectureListPageDriver extends WidgetDriver implements _$DriverProvidedProp
     _lecturesUsecase.addListener(_onStateChanged);
     _favoritesUsecase.addListener(_onStateChanged);
 
-    // Load data for the faculty
-    _lecturesUsecase.load();
+    // Set faculty ID and load data
+    debugPrint('Initializing driver for faculty ID: $_facultyId');
+    _lecturesUsecase.setFacultyId(_facultyId);
   }
 
   @override
@@ -100,31 +102,16 @@ class LectureListPageDriver extends WidgetDriver implements _$DriverProvidedProp
 
   void changeSemester(SemesterInfo semester) => _lecturesUsecase.changeSemester(semester);
 
-  // Memoization cache for expensive operations
+  // Simple cache for expensive operations
   Map<String, List<Lecture>>? _cachedGroupedLectures;
-  List<Lecture>? _cachedFavoriteLectures;
   List<Lecture>? _cachedFilteredLectures;
   bool? _lastShowOnlyFavorites;
   int? _lastLectureCount;
-  int? _lastDataHash;
 
-  /// Gets the list of favorite lectures with memoization for performance
+  /// Gets the list of favorite lectures
   List<Lecture> get favoriteLectures {
     final currentLectures = _lecturesUsecase.lectures;
-    final currentShowOnlyFavorites = _lecturesUsecase.showOnlyFavorites;
-
-    // Return cached result if data hasn't changed
-    if (_cachedFavoriteLectures != null && _lastShowOnlyFavorites == currentShowOnlyFavorites) {
-      return _cachedFavoriteLectures!;
-    }
-
-    final favorites = currentLectures.where((lecture) => _favoritesUsecase.isFavorite(lecture.id)).toList();
-
-    // Cache the result
-    _cachedFavoriteLectures = favorites;
-    _lastShowOnlyFavorites = currentShowOnlyFavorites;
-
-    return favorites;
+    return currentLectures.where((lecture) => _favoritesUsecase.isFavorite(lecture.id)).toList();
   }
 
   /// Gets the filtered lectures based on favorites filter with memoization
@@ -161,14 +148,12 @@ class LectureListPageDriver extends WidgetDriver implements _$DriverProvidedProp
     return count;
   }
 
-  /// Gets lectures grouped by first letter for display with optimized memoization
-  /// Uses hash-based comparison for O(1) performance instead of O(n) list comparison
+  /// Gets lectures grouped by first letter for display
   Map<String, List<Lecture>> get groupedLectures {
     final currentFilteredLectures = filteredLectures;
-    final currentHash = _calculateDataHash(currentFilteredLectures);
 
-    // Return cached result if data hasn't changed (using hash for O(1) comparison)
-    if (_cachedGroupedLectures != null && _lastDataHash == currentHash) {
+    // Return cached result if data hasn't changed
+    if (_cachedGroupedLectures != null && _lastShowOnlyFavorites == _lecturesUsecase.showOnlyFavorites) {
       return _cachedGroupedLectures!;
     }
 
@@ -190,18 +175,9 @@ class LectureListPageDriver extends WidgetDriver implements _$DriverProvidedProp
 
     // Cache the result
     _cachedGroupedLectures = sortedGrouped;
-    _lastDataHash = currentHash;
+    _lastShowOnlyFavorites = _lecturesUsecase.showOnlyFavorites;
 
     return sortedGrouped;
-  }
-
-  // Helper method to calculate hash for efficient comparison
-  int _calculateDataHash(List<Lecture> lectures) {
-    int hash = 0;
-    for (final lecture in lectures) {
-      hash = hash ^ lecture.id.hashCode;
-    }
-    return hash;
   }
 
   // State change handling
@@ -211,14 +187,12 @@ class LectureListPageDriver extends WidgetDriver implements _$DriverProvidedProp
     notifyWidget();
   }
 
-  // Invalidate all memoization caches
+  // Invalidate all caches
   void _invalidateCaches() {
     _cachedGroupedLectures = null;
-    _cachedFavoriteLectures = null;
     _cachedFilteredLectures = null;
     _lastShowOnlyFavorites = null;
     _lastLectureCount = null;
-    _lastDataHash = null;
   }
 
   // Actions

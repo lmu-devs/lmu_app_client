@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 
+import '../../domain/base/base_usecase.dart';
 import '../../infrastructure/secondary/data/storage/lectures_storage.dart';
 
-class FavoriteLecturesUsecase {
+class FavoriteLecturesUsecase extends BaseUsecase {
   FavoriteLecturesUsecase(this._storage) {
     _loadFavorites();
   }
@@ -11,8 +12,6 @@ class FavoriteLecturesUsecase {
   final Set<String> _favoriteIds = <String>{};
   final ValueNotifier<Set<String>> favoriteIdsNotifier = ValueNotifier<Set<String>>(<String>{});
 
-  // Track active listeners to prevent memory leaks
-  final Set<VoidCallback> _activeListeners = <VoidCallback>{};
   bool _isDisposed = false;
 
   Set<String> get favoriteIds => _favoriteIds;
@@ -98,32 +97,18 @@ class FavoriteLecturesUsecase {
     }
   }
 
-  // Add listener with automatic cleanup tracking
-  void addListener(VoidCallback listener) {
-    if (_isDisposed) return;
-
-    _activeListeners.add(listener);
+  @override
+  void addListenersToNotifiers(VoidCallback listener) {
     favoriteIdsNotifier.addListener(listener);
   }
 
-  // Remove listener and clean up if no more listeners
-  void removeListener(VoidCallback listener) {
-    if (_isDisposed) return;
-
-    _activeListeners.remove(listener);
+  @override
+  void removeListenersFromNotifiers(VoidCallback listener) {
     favoriteIdsNotifier.removeListener(listener);
   }
 
-  void dispose() {
-    if (_isDisposed) return;
-    _isDisposed = true;
-
-    // Remove all tracked listeners
-    for (final listener in _activeListeners.toList()) {
-      favoriteIdsNotifier.removeListener(listener);
-    }
-    _activeListeners.clear();
-
+  @override
+  void disposeNotifiers() {
     favoriteIdsNotifier.dispose();
   }
 }

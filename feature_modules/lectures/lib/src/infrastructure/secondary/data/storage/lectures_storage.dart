@@ -4,23 +4,31 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../domain/exception/lectures_generic_exception.dart';
+import '../../../../domain/utils/cache_manager.dart';
 import '../dto/lecture_dto.dart';
 
 class LecturesStorage {
+  LecturesStorage() : _cacheManager = LecturesCacheManager();
+
+  final LecturesCacheManager _cacheManager;
   final _lecturesKey = 'lectures_data_key';
   final _lecturesTimestampKey = 'lectures_timestamp_key';
   final _favoritesKey = 'favorite_lectures_key';
 
-  // Cache expires after 1 hour
-  static const Duration _cacheExpiration = Duration(hours: 1);
+  // Cache expires after 2 hours
+  static const Duration _cacheExpiration = Duration(hours: 2);
 
   // Cache lectures by faculty
   Future<void> saveLecturesByFaculty(int facultyId, List<LectureDto> lectures) async {
     try {
+      // Update in-memory cache first
+      final lecturesJson = lectures.map((lecture) => lecture.toJson()).toList();
+      _cacheManager.cacheLecturesForFaculty(facultyId, lecturesJson);
+
+      // Persist to SharedPreferences
       final prefs = await SharedPreferences.getInstance();
       final key = '${_lecturesKey}_$facultyId';
       final timestampKey = '${_lecturesTimestampKey}_$facultyId';
-      final lecturesJson = lectures.map((lecture) => lecture.toJson()).toList();
 
       await prefs.setString(key, jsonEncode(lecturesJson));
       await prefs.setInt(timestampKey, DateTime.now().millisecondsSinceEpoch);
@@ -33,6 +41,13 @@ class LecturesStorage {
 
   Future<List<LectureDto>?> getLecturesByFaculty(int facultyId) async {
     try {
+      // Check in-memory cache first
+      final cachedLectures = _cacheManager.getLecturesForFaculty(facultyId);
+      if (cachedLectures != null) {
+        return cachedLectures.map((json) => LectureDto.fromJson(json)).toList();
+      }
+
+      // Fallback to SharedPreferences
       final prefs = await SharedPreferences.getInstance();
       final key = '${_lecturesKey}_$facultyId';
       final timestampKey = '${_lecturesTimestampKey}_$facultyId';
@@ -51,7 +66,12 @@ class LecturesStorage {
 
       try {
         final List<dynamic> lecturesList = jsonDecode(lecturesJson);
-        return lecturesList.map((json) => LectureDto.fromJson(json)).toList();
+        final lectures = lecturesList.map((json) => LectureDto.fromJson(json)).toList();
+
+        // Update in-memory cache
+        _cacheManager.cacheLecturesForFaculty(facultyId, lecturesList);
+
+        return lectures;
       } catch (e) {
         // Cache data is corrupted, return null to force fresh fetch
         debugPrint('Cache data corrupted for faculty $facultyId: $e');
@@ -65,6 +85,10 @@ class LecturesStorage {
   }
 
   Future<void> deleteLecturesByFaculty(int facultyId) async {
+    // Remove from in-memory cache
+    _cacheManager.removeFacultyData(facultyId);
+
+    // Remove from SharedPreferences
     final prefs = await SharedPreferences.getInstance();
     final key = '${_lecturesKey}_$facultyId';
     final timestampKey = '${_lecturesTimestampKey}_$facultyId';
@@ -85,6 +109,10 @@ class LecturesStorage {
   }
 
   Future<void> clearAllData() async {
+    // Clear in-memory cache
+    _cacheManager.clearAll();
+
+    // Clear SharedPreferences
     final prefs = await SharedPreferences.getInstance();
     final keys = prefs
         .getKeys()
@@ -92,5 +120,15 @@ class LecturesStorage {
     for (final key in keys) {
       await prefs.remove(key);
     }
+  }
+
+  /// Get cache statistics for debugging
+  Map<String, dynamic> getCacheStats() {
+    return _cacheManager.getStats();
+  }
+
+  /// Clean expired entries from cache
+  void cleanExpiredCache() {
+    _cacheManager.cleanExpired();
   }
 }
