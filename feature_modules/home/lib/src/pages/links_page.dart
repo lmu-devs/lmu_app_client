@@ -1,4 +1,3 @@
-import 'package:core/components.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/studies.dart';
@@ -12,14 +11,8 @@ class LinksPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final selectedFaculties = GetIt.I.get<FacultiesApi>().selectedFaculties;
 
-    return LmuScaffold(
-      appBar: LmuAppBarData(
-        largeTitle: "Links",
-        leadingAction: LeadingAction.back,
-      ),
-      body: selectedFaculties.length == 1
+    return selectedFaculties.length == 1
           ? LinksOverviewPage(facultyId: selectedFaculties.first.id)
-          : const LinksFacultiesPage(),
-    );
+          : const LinksFacultiesPage();
   }
 }

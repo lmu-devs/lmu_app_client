@@ -30,31 +30,42 @@ class _LinksOverviewPageState extends State<LinksOverviewPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LinksCubit, LinksState>(
-      bloc: GetIt.I.get<LinksCubit>(),
-      builder: (context, state) {
-        Widget child = const LinksLoadingView(key: ValueKey("linksLoading"));
-        if (state is LinksLoadInProgress && state.links != null) {
-          child = LinksContentView(
-              key: const ValueKey("linksContent"), facultyId: widget.facultyId, links: state.links!);
-        } else if (state is LinksLoadSuccess) {
-          child = LinksContentView(
-              key: const ValueKey("linksContent"), facultyId: widget.facultyId, links: state.links);
-        } else if (state is LinksLoadFailure) {
-          final isNoNetworkError = state.loadState.isNoNetworkError;
-          child = LmuEmptyState(
-            key: ValueKey(
-                "links${isNoNetworkError ? 'NoNetwork' : 'GenericError'}"),
-            type: isNoNetworkError
-                ? EmptyStateType.noInternet
-                : EmptyStateType.generic,
-            hasVerticalPadding: true,
-            onRetry: () => _linksCubit.getLinks(),
-          );
-        }
+    return LmuScaffold(
+      appBar: LmuAppBarData(
+        largeTitle: "Links",
+        leadingAction: LeadingAction.back,
+      ),
+      body: BlocBuilder<LinksCubit, LinksState>(
+        bloc: GetIt.I.get<LinksCubit>(),
+        builder: (context, state) {
+          Widget child = const LinksLoadingView(key: ValueKey("linksLoading"));
+          if (state is LinksLoadInProgress && state.links != null) {
+            child = LinksContentView(
+                key: const ValueKey("linksContent"),
+                facultyId: widget.facultyId,
+                links: state.links!,
+            );
+          } else if (state is LinksLoadSuccess) {
+            child = LinksContentView(
+                key: const ValueKey("linksContent"),
+                facultyId: widget.facultyId,
+                links: state.links,
+            );
+          } else if (state is LinksLoadFailure) {
+            final isNoNetworkError = state.loadState.isNoNetworkError;
+            child = LmuEmptyState(
+              key: ValueKey("links${isNoNetworkError ? 'NoNetwork' : 'GenericError'}"),
+              type: isNoNetworkError
+                  ? EmptyStateType.noInternet
+                  : EmptyStateType.generic,
+              hasVerticalPadding: true,
+              onRetry: () => _linksCubit.getLinks(),
+            );
+          }
 
-        return child;
-      },
+          return child;
+        },
+      ),
     );
   }
 }

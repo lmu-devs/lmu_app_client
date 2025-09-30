@@ -27,7 +27,7 @@ class LinkButtonSection extends StatelessWidget {
           buttons: [
             LmuIconButton(
               icon: LucideIcons.search,
-              onPressed: () => LinksSearchRoute(facultyId: facultyId).go(context),
+              onPressed: () => LinksSearchRoute(facultyId: facultyId).push(context),
             ),
             /**LmuButton(
               title: context.locals.home.linksFilterInternal,
