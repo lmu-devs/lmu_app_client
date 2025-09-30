@@ -4,20 +4,15 @@ import 'package:core_routes/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
-class LinkFilterKeys {
-  LinkFilterKeys(_);
-
-  static const String internal = 'internal';
-  static const String external = 'external';
-}
-
 class LinkButtonSection extends StatelessWidget {
   const LinkButtonSection({
     super.key,
+    required this.facultyId,
     this.activeFilter,
     required this.onFilterSelected,
   });
 
+  final int facultyId;
   final String? activeFilter;
   final ValueChanged<String?> onFilterSelected;
 
@@ -32,9 +27,9 @@ class LinkButtonSection extends StatelessWidget {
           buttons: [
             LmuIconButton(
               icon: LucideIcons.search,
-              onPressed: () => const LinksSearchRoute().go(context),
+              onPressed: () => LinksSearchRoute(facultyId: facultyId).go(context),
             ),
-            LmuButton(
+            /**LmuButton(
               title: context.locals.home.linksFilterInternal,
               emphasis: activeFilter == LinkFilterKeys.internal ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
               action: activeFilter == LinkFilterKeys.internal ? ButtonAction.contrast : ButtonAction.base,
@@ -45,7 +40,7 @@ class LinkButtonSection extends StatelessWidget {
               emphasis: activeFilter == LinkFilterKeys.external ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
               action: activeFilter == LinkFilterKeys.external ? ButtonAction.contrast : ButtonAction.base,
               onTap: () => _onButtonTap(LinkFilterKeys.external),
-            ),
+            ),**/
           ],
         ),
       ],

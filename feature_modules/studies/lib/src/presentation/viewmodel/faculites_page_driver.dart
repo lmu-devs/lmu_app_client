@@ -31,7 +31,7 @@ class FaculitesPageDriver extends WidgetDriver {
   @override
   void didInitDriver() {
     super.didInitDriver();
-    _allFaculites = _getFacultiesUseCase.allFaculites;
+    _allFaculites = _getFacultiesUseCase.allFaculties;
     _selectedFaculites = _getFacultiesUseCase.selectedFaculties;
   }
 

@@ -1,10 +1,12 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
+import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/feedback.dart';
+import 'package:shared_api/studies.dart';
 
 import '../../repository/api/models/links/link_model.dart';
 import 'favorite_link_section.dart';
@@ -12,8 +14,9 @@ import 'link_button_section.dart';
 import 'link_card.dart';
 
 class LinksContentView extends StatefulWidget {
-  const LinksContentView({super.key, required this.links});
+  const LinksContentView({super.key, required this.facultyId, required this.links});
 
+  final int facultyId;
   final List<LinkModel> links;
 
   @override
@@ -21,7 +24,9 @@ class LinksContentView extends StatefulWidget {
 }
 
 class _LinksContentViewState extends State<LinksContentView> {
+  int get facultyId => widget.facultyId;
   List<LinkModel> get links => widget.links;
+  final allFaculties = GetIt.I.get<FacultiesApi>().allFaculties;
   final ValueNotifier<String?> _activeFilterNotifier = ValueNotifier<String?>(null);
 
   @override
@@ -36,10 +41,17 @@ class _LinksContentViewState extends State<LinksContentView> {
             Map<String, List<LinkModel>> groupedLinks = _groupLinks(links, activeFilter);
 
             return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: LmuSizes.size_16),
+                LmuText(
+                  context.locals.studies.facultiesSubtitle(
+                    allFaculties.firstWhere((faculty) => faculty.id == facultyId).name),
+                  color: context.colors.neutralColors.textColors.mediumColors.base,
+                ),
+                const SizedBox(height: LmuSizes.size_32),
                 FavoriteLinkSection(links: widget.links),
                 LinkButtonSection(
+                  facultyId: facultyId,
                   activeFilter: activeFilter,
                   onFilterSelected: (filter) => _activeFilterNotifier.value = filter,
                 ),
@@ -92,15 +104,7 @@ class _LinksContentViewState extends State<LinksContentView> {
   }
 
   Map<String, List<LinkModel>> _groupLinks(List<LinkModel> links, String? activeFilter) {
-    List<LinkModel> filteredLinks;
-
-    if (activeFilter == LinkFilterKeys.internal) {
-      filteredLinks = links.where((link) => link.types.contains(LinkFilterKeys.internal.toUpperCase())).toList();
-    } else if (activeFilter == LinkFilterKeys.external) {
-      filteredLinks = links.where((link) => link.types.contains(LinkFilterKeys.external.toUpperCase())).toList();
-    } else {
-      filteredLinks = links;
-    }
+    List<LinkModel> filteredLinks = links.where((link) => link.faculties.contains(facultyId.toString()) || link.faculties.isEmpty).toList();
 
     final sortedLinks = List.from(filteredLinks)..sort((a, b) => a.title.compareTo(b.title));
     final Map<String, List<LinkModel>> groupedLinks = {};

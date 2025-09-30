@@ -87,6 +87,12 @@ class LaunchFlowShellRoute extends ShellRouteData {
             TypedGoRoute<LinksRoute>(
               path: LinksRoute.path,
               routes: <TypedGoRoute<GoRouteData>>[
+                TypedGoRoute<LinksFacultiesRoute>(
+                  path: LinksFacultiesRoute.path,
+                ),
+                TypedGoRoute<LinksOverviewRoute>(
+                  path: LinksOverviewRoute.path,
+                ),
                 TypedGoRoute<LinksSearchRoute>(
                   path: LinksSearchRoute.path,
                 ),

@@ -13,7 +13,7 @@ class FacultiesApiImpl implements FacultiesApi {
   final StreamController<List<Faculty>> _selectedFacultiesController = StreamController<List<Faculty>>.broadcast();
 
   @override
-  List<Faculty> get allFaculties => _getFacultiesUsecase.allFaculites;
+  List<Faculty> get allFaculties => _getFacultiesUsecase.allFaculties;
 
   @override
   List<Faculty> get selectedFaculties => _getFacultiesUsecase.selectedFaculties;
