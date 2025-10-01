@@ -73,8 +73,18 @@ extension DateTimeExtension on DateTime {
     return DateTime(newYear);
   }
 
+  bool get isToday {
+    final now = DateTime.now();
+    return year == now.year && month == now.month && day == now.day;
+  }
+
   bool isSameDay(DateTime dateTime) {
     return DateTime(year, month, day) == DateTime(dateTime.year, dateTime.month, dateTime.day);
+  }
+
+  bool isNextDay(DateTime dateTime) {
+    final nextDay = DateTime(year, month, day).add(const Duration(days: 1));
+    return nextDay.year == dateTime.year && nextDay.month == dateTime.month && nextDay.day == dateTime.day;
   }
 
   bool isSameMonth(DateTime dateTime) {
@@ -139,9 +149,8 @@ extension DateTimeExtension on DateTime {
     DateTime fromDateTime,
     DateTime toDateTime,
   ) {
-    final date = this;
-    final isAfter = date.isAfterOrEqualTo(fromDateTime);
-    final isBefore = date.isBeforeOrEqualTo(toDateTime);
+    final isAfter = isAfterOrEqualTo(fromDateTime);
+    final isBefore = isBeforeOrEqualTo(toDateTime);
     return isAfter && isBefore;
   }
 
@@ -177,11 +186,19 @@ extension DateTimeExtension on DateTime {
     return DateTime(year, month, day, hour, minute, second, millisecond, newMicrosecond);
   }
 
+  /// Returns the number of days in the month of the given [DateTime].
+  static int daysInMonth(DateTime date) {
+    return DateTime(date.year, date.month + 1, 0).day;
+  }
+
+  /// Returns the weekday of the first day of the month of the given [DateTime].
+  static int firstDayWeekday(DateTime date) {
+    return DateTime(date.year, date.month, 1).weekday;
+  }
+
   /// Converts a [DateTime] to a [DateTimeRange] covering the entire day.
   /// The range starts at 00:00:01 and ends at 23:59:59 of the given day.
   DateTimeRange get dateTimeRangeFromDateTime {
-    final start = DateTime(year, month, day, 0, 0, 1);
-    final end = DateTime(year, month, day, 23, 59, 59);
-    return DateTimeRange(start: start, end: end);
+    return DateTimeRange(start: startOfDay, end: endOfDay);
   }
 }

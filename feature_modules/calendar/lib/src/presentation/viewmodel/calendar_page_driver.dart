@@ -1,13 +1,14 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
 import 'package:core/utils.dart';
+import 'package:core_routes/calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../../application/usecase/get_events_by_date_usecase.dart';
+import '../../application/usecase/get_entries_by_date_usecase.dart';
 import '../../domain/model/calendar_entry.dart';
-import '../../domain/model/calendar_view_mode.dart';
+import '../../domain/model/calendar_view_type.dart';
 import '../view/calendar_event_contentsheet.dart';
 
 part 'calendar_page_driver.g.dart';
@@ -25,15 +26,19 @@ class CalendarPageDriver extends WidgetDriver {
   bool get isLoadingEvents => _calendarEntriesLoadState != CalendarEntriesLoadState.success;
   String get largeTitle => "Calendar"; // TODO: Replace with localized title
 
-  CalendarViewMode _viewMode = CalendarViewMode.list;
-  DateTimeRange _selectedDateTimeRange = DateTimeRange(
-    start: DateTime.now(),
-    end: DateTime.now().add(const Duration(days: 365)),
-  );
+  CalendarViewType _viewType = CalendarViewType.list;
+  bool _isDatePickerExpanded = false;
+  DateTimeRange _selectedDateTimeRange = DateTime.now().dateTimeRangeFromDateTime;
+  int _scrollToDateRequest = 0;
 
-  CalendarViewMode get viewMode => _viewMode;
+  @TestDriverDefaultValue(false)
+  bool get isDatePickerExpanded => _isDatePickerExpanded;
+  @TestDriverDefaultValue(CalendarViewType.list)
+  CalendarViewType get viewType => _viewType;
   @TestDriverDefaultValue('2025-01-01')
-  DateTimeRange get selectedDate => _selectedDateTimeRange;
+  DateTimeRange get selectedDateTimeRange => _selectedDateTimeRange;
+  @TestDriverDefaultValue(0)
+  int get scrollToDateRequest => _scrollToDateRequest;
 
   // Getter for the current date range
   // This code is only used for testing purposes as it is not very efficient to compute the date range every time
@@ -41,47 +46,43 @@ class CalendarPageDriver extends WidgetDriver {
     _calendarEntriesLoadState = CalendarEntriesLoadState.loading;
     notifyWidget();
 
-    await _getCalendarEntriesByDateUsecase.load(dateRange: _selectedDateTimeRange);
+    await _getCalendarEntriesByDateUsecase.load();
+    // await _getCalendarEntriesByDateUsecase.load(dateRange: _selectedDateTimeRange);
 
     _allCalendarEntries = _getCalendarEntriesByDateUsecase.data;
 
     _calendarEntriesLoadState = CalendarEntriesLoadState.success;
-    notifyWidget(); // This will trigger recompute of `calendarEntries`
+    notifyWidget();
   }
 
   late List<CalendarEntry>? _allCalendarEntries;
 
   List<CalendarEntry>? get calendarEntries {
     if (_allCalendarEntries == null) return null;
-
-    print('Loaded events inside ---: ${_selectedDateTimeRange.toString()}');
     return _allCalendarEntries!.where((entry) {
-      print('entry.title: ${entry.title}, '
-          'overlaps: ${entry.overlapsWithRange(_selectedDateTimeRange)}');
       return entry.overlapsWithRange(_selectedDateTimeRange);
     }).toList();
   }
 
-  void onViewModeChanged(CalendarViewMode mode) {
-    if (_viewMode != mode) {
-      if (mode == CalendarViewMode.list) {
-        final weekStart = _selectedDateTimeRange.start.startOfWeek;
-        final weekEnd = weekStart.add(const Duration(days: 6));
-        _selectedDateTimeRange = DateTimeRange(start: weekStart, end: weekEnd);
-      } else if (mode == CalendarViewMode.day) {
-        final day = _selectedDateTimeRange.start;
-        _selectedDateTimeRange = DateTimeRange(start: day.startOfDay, end: day.endOfDay);
-      }
-    }
-    _viewMode = mode;
+  void onCalendarViewTypeChanged(CalendarViewType mode) {
+    _viewType = mode;
     loadEvents();
   }
 
-  void onDateSelected(DateTimeRange dateRange) {
+  void onDateTimeRangeSelected(DateTimeRange dateRange) {
     _selectedDateTimeRange = dateRange;
-    if (_viewMode == CalendarViewMode.day) {
-      loadEvents();
-    }
+    notifyWidget();
+  }
+
+  void onExpandDatePickerPressed() {
+    _isDatePickerExpanded = !_isDatePickerExpanded;
+    notifyWidget();
+  }
+
+  void onChangeToTodayPressed() {
+    _selectedDateTimeRange = DateTime.now().dateTimeRangeFromDateTime;
+    _scrollToDateRequest++;
+    notifyWidget();
   }
 
   void onEventTap(CalendarEntry event, BuildContext context) {
@@ -90,6 +91,20 @@ class CalendarPageDriver extends WidgetDriver {
 
   void onAddEventPressed() {
     // navigation or modal logic
+  }
+
+  void onTestScreenPressed(BuildContext context) {
+    const CalendarTestRoute().go(context);
+  }
+
+  void _onCalendarEntriesStateChanged() {
+    _calendarEntriesLoadState = _getCalendarEntriesByDateUsecase.loadState;
+    _calendarEntries = _getCalendarEntriesByDateUsecase.data;
+    notifyWidget();
+
+    if (_calendarEntriesLoadState == CalendarEntriesLoadState.error) {
+      _showErrorToast();
+    }
   }
 
   void _onCalendarEntriesStateChanged() {
