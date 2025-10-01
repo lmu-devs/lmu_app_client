@@ -21,7 +21,7 @@ class HomePreferencesService {
 
   ValueNotifier<List<String>> get likedLinksNotifier => _likedLinksNotifier;
 
-  final _linksSortOptionNotifier = ValueNotifier<SortOption>(SortOption.alphabetically);
+  final _linksSortOptionNotifier = ValueNotifier<SortOption>(SortOption.rating);
 
   ValueNotifier<SortOption> get linksSortOptionNotifier => _linksSortOptionNotifier;
 
