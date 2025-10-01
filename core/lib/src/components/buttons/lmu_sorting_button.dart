@@ -97,11 +97,7 @@ class _SortOptionBottomSheetContent<T extends Enum> extends StatelessWidget {
                         size: LmuIconSizes.medium,
                         color: textColor,
                       ),
-                      onTap: () async {
-                        // The parent widget is responsible for all logic,
-                        // including updating the notifier.
-                        await onOptionSelected(sortOption, context);
-                      },
+                      onTap: () async => await onOptionSelected(sortOption, context),
                     ),
                     if (sortOption != options.last) const SizedBox(height: LmuSizes.size_8),
                   ],

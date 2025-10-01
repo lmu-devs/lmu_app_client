@@ -96,6 +96,7 @@ class HomePreferencesService {
   Future<void> updateLinksSorting(SortOption sortOption) async {
     _linksSortOptionNotifier.value = sortOption;
     await _homeRepository.setSortOption(sortOption);
+    _appLogger.logMessage('[HomePreferencesService]: Saved sort option: $sortOption');
   }
 
   Future reset() {
