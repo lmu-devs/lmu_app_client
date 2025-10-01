@@ -21,7 +21,7 @@ class FavoriteLinkSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder<List<String>>(
       valueListenable: GetIt.I<HomePreferencesService>().likedLinksNotifier,
-      builder: (context, likedLinkTitles, child) {
+      builder: (context, likedLinkIds, child) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -36,12 +36,12 @@ class FavoriteLinkSection extends StatelessWidget {
                 opacity: animation,
                 child: child,
               ),
-              child: likedLinkTitles.isNotEmpty
+              child: likedLinkIds.isNotEmpty
                   ? LmuContentTile(
                       key: const ValueKey("favorite_list"),
                       contentList: [
-                        ...links.where((link) => likedLinkTitles.contains(link.id)).toList()
-                          ..sort((a, b) => likedLinkTitles.indexOf(a.id).compareTo(likedLinkTitles.indexOf(b.id)))
+                        ...links.where((link) => likedLinkIds.contains(link.id)).toList()
+                          ..sort((a, b) => likedLinkIds.indexOf(a.id).compareTo(likedLinkIds.indexOf(b.id)))
                       ].map((link) => LinkCard(link: link)).toList(),
                     )
                   : Padding(
