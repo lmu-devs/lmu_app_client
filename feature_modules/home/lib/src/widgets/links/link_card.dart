@@ -80,6 +80,8 @@ class LinkCard extends StatelessWidget {
               context: context,
               mode: LmuUrlLauncherMode.externalApplication,
             );
+
+            GetIt.I<AnalyticsClient>().logClick(eventName: "link_clicked", parameters: {"link_title": link.title});
           },
           onLongPress: () => CopyToClipboardUtil.copyToClipboard(
             context: context,
@@ -87,7 +89,6 @@ class LinkCard extends StatelessWidget {
             message: context.locals.home.linkCopiedToClipboard,
           ),
         );
-        GetIt.I<AnalyticsClient>().logClick(eventName: "link_clicked", parameters: {"link_title": link.title});
       },
     );
   }

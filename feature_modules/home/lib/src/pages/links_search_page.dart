@@ -30,7 +30,9 @@ class LinksSearchEntry extends SearchEntry {
 }
 
 class LinksSearchPage extends StatefulWidget {
-  const LinksSearchPage({super.key});
+  const LinksSearchPage({super.key, required this.facultyId});
+
+  final int facultyId;
 
   @override
   State<LinksSearchPage> createState() => _LinksSearchPageState();
@@ -50,6 +52,10 @@ class _LinksSearchPageState extends State<LinksSearchPage> {
 
     _recentSearchController = LmuRecentSearchController<LinksSearchEntry>();
     final links = _searchService.links
+        .where((link) =>
+            link.faculties.contains(widget.facultyId.toString()) ||
+            link.faculties.isEmpty)
+        .toList()
         .map((link) => LinksSearchEntry(
               id: link.id,
               title: link.title,

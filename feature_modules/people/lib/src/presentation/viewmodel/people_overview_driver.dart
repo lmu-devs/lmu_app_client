@@ -30,7 +30,7 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
   bool _isProfessorFilterActive = false;
   bool get isProfessorFilterActive => _isProfessorFilterActive;
 
-  String get showAllFacultiesText => _localizations.people.showAllFaculties;
+  String get showAllFacultiesText => _localizations.studies.showAllFaculties;
 
   List<Faculty> get selectedFaculties => _facultiesApi.selectedFaculties;
   List<Faculty> get allFaculties => _facultiesApi.allFaculties;
@@ -41,7 +41,7 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
 
   String get largeTitle {
     final faculty = allFaculties.firstWhere((f) => f.id == facultyId);
-    return '${_localizations.people.people_subtitleTile}${faculty.name}';
+    return _localizations.studies.facultiesSubtitle(faculty.name);
   }
 
   List<People> get people => _usecase.data;

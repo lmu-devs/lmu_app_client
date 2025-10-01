@@ -18,8 +18,8 @@ class PeopleFacultyOverviewDriver extends WidgetDriver {
   late LmuToast _toast;
 
   String get contactsText => _localizations.people.contacts;
-  String get myFacultiesText => _localizations.people.myFaculties;
-  String get allFacultiesText => _localizations.people.allFaculties;
+  String get myFacultiesText => _localizations.studies.myFaculties;
+  String get allFacultiesText => _localizations.studies.allFaculties;
 
   List<Faculty> get selectedFaculties => _facultiesApi.selectedFaculties;
 
