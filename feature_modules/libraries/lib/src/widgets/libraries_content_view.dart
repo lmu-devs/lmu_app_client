@@ -93,8 +93,7 @@ class _LibrariesContentViewState extends State<LibrariesContentView> {
                             }
 
                             return LmuAnimatedListView(
-                              valueKey:
-                                  "${userPreferencesService.sortOptionNotifier.value} • ${filteredLibraries.map((library) => library.id).join()}",
+                              valueKey: "${userPreferencesService.sortOptionNotifier.value} • ${filteredLibraries.map((library) => library.id).join()}",
                               itemCount: filteredLibraries.length,
                               itemBuilder: (context, index) {
                                 return ValueListenableBuilder(

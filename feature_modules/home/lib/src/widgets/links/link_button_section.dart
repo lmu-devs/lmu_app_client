@@ -1,20 +1,23 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
 import 'package:core_routes/home.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
+
+import '../../extensions/extensions.dart';
+import '../../repository/api/enums/link_sort_options.dart';
 
 class LinkButtonSection extends StatelessWidget {
   const LinkButtonSection({
     super.key,
     required this.facultyId,
-    this.activeFilter,
-    required this.onFilterSelected,
+    required this.sortOptionNotifier,
+    required this.onSortOptionChanged,
   });
 
   final int facultyId;
-  final String? activeFilter;
-  final ValueChanged<String?> onFilterSelected;
+  final ValueNotifier<SortOption> sortOptionNotifier;
+  final Future<void> Function(SortOption newOption) onSortOptionChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -29,29 +32,21 @@ class LinkButtonSection extends StatelessWidget {
               icon: LucideIcons.search,
               onPressed: () => LinksSearchRoute(facultyId: facultyId).push(context),
             ),
-            /**LmuButton(
-              title: context.locals.home.linksFilterInternal,
-              emphasis: activeFilter == LinkFilterKeys.internal ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
-              action: activeFilter == LinkFilterKeys.internal ? ButtonAction.contrast : ButtonAction.base,
-              onTap: () => _onButtonTap(LinkFilterKeys.internal),
+            LmuSortingButton<SortOption>(
+              sortOptionNotifier: sortOptionNotifier,
+              options: SortOption.values,
+              titleBuilder: (option, context) => option.title(context.locals.canteen),
+              iconBuilder: (option) => option.icon,
+              onOptionSelected: (newOption, context) async {
+                await onSortOptionChanged(newOption);
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                }
+              },
             ),
-            LmuButton(
-              title: context.locals.home.linksFilterExternal,
-              emphasis: activeFilter == LinkFilterKeys.external ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
-              action: activeFilter == LinkFilterKeys.external ? ButtonAction.contrast : ButtonAction.base,
-              onTap: () => _onButtonTap(LinkFilterKeys.external),
-            ),**/
           ],
         ),
       ],
     );
-  }
-
-  void _onButtonTap(String filter) {
-    if (activeFilter == filter) {
-      onFilterSelected(null);
-    } else {
-      onFilterSelected(filter);
-    }
   }
 }

@@ -5,6 +5,7 @@ import 'package:core/logging.dart';
 import 'package:core/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'api/enums/link_sort_options.dart';
 import 'api/home_api_client.dart';
 import 'api/models/home/home_data.dart';
 import 'api/models/links/link_model.dart';
@@ -22,6 +23,8 @@ class HomeRepository {
 
   static const String _likedLinksKey = 'liked_links_key';
   static const String _likedLinksTitleToIdMigrationKey = 'liked_links_migrated_v1_key';
+
+  static const String _linksSortOptionKey = 'links_sort_option_key';
 
   static const _recentLinkSearchesKey = 'links_recentSearches';
 
@@ -128,6 +131,28 @@ class HomeRepository {
     return recentLinkSearches;
   }
 
+  Future<SortOption?> getSortOption() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final cachedSortOption = prefs.getString(_linksSortOptionKey);
+
+    if (cachedSortOption == null) {
+      return null;
+    }
+
+    for (var element in SortOption.values) {
+      if (element.name == cachedSortOption) {
+        return element;
+      }
+    }
+    return null;
+  }
+
+  Future<void> setSortOption(SortOption sortOption) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_linksSortOptionKey, sortOption.name);
+  }
+
   Future<void> updateClosedFeaturedTiles(String id) async {
     final prefs = await SharedPreferences.getInstance();
     final closedTiles = prefs.getStringList(_featuredTilesClosedKey) ?? [];
@@ -150,6 +175,7 @@ class HomeRepository {
     await prefs.remove(_homeDataKey);
     await prefs.remove(_cachedLinksKey);
     await prefs.remove(_cachedLinksTimestampKey);
+    await prefs.remove(_linksSortOptionKey);
     await prefs.remove(_featuredTilesClosedKey);
   }
 }
