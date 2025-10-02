@@ -45,6 +45,7 @@ class LinksContentView extends StatelessWidget {
             ),
             const SizedBox(height: LmuSizes.size_32),
             FavoriteLinkSection(links: links),
+            const SizedBox(height: LmuSizes.size_32),
             LinkButtonSection(
               facultyId: facultyId,
               sortOptionNotifier: homePreferencesService.linksSortOptionNotifier,
