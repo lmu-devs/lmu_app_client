@@ -114,7 +114,7 @@ class _FavoriteLinkSectionState extends State<FavoriteLinkSection> {
               ),
               child: likedLinkIds.isNotEmpty
                   ? LmuContentTile(
-                      key: ValueKey("favorite_list • $likedLinkIds"),
+                      key: const ValueKey("favorite_list"),
                       content: AnimatedList(
                         key: _listKey,
                         shrinkWrap: true,
