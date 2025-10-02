@@ -128,6 +128,8 @@ class LmuCard extends StatelessWidget {
                                           backgroundColor: customTagColor,
                                         ),
                                       ],
+                                      if (hasFavoriteStar && favoriteCount == null)
+                                        const SizedBox(width: LmuSizes.size_24), //placeholder for star
                                     ],
                                   ),
                                 ),
@@ -142,8 +144,7 @@ class LmuCard extends StatelessWidget {
                                           weight: FontWeight.w400,
                                           color: context.colors.neutralColors.textColors.weakColors.base,
                                         ),
-                                        const SizedBox(width: LmuSizes.size_4),
-                                        const SizedBox(width: LmuSizes.size_20), //placeholder for star
+                                        const SizedBox(width: LmuSizes.size_24), //placeholder for star
                                       ],
                                     ),
                                   )
