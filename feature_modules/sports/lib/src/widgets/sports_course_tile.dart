@@ -49,6 +49,7 @@ class SportsCourseTile extends StatelessWidget {
         );
       },
       child: Container(
+        width: double.infinity,
         margin: EdgeInsets.only(
             bottom: hasDivider ? LmuSizes.size_12 : LmuSizes.none),
         decoration: BoxDecoration(
