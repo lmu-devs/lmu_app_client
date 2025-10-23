@@ -56,7 +56,7 @@ class ScaffoldWithNavBar extends StatelessWidget {
               BottomNavigationBarItem(icon: const Icon(LucideIcons.utensils), label: locals.canteen.tabTitle),
               BottomNavigationBarItem(icon: const Icon(LucideIcons.map), label: locals.explore.tabTitle),
               BottomNavigationBarItem(icon: const Icon(LucideIcons.party_popper), label: locals.wishlist.tabTitle),
-              BottomNavigationBarItem(icon: const Icon(LucideIcons.graduation_cap), label: locals.studies.studiesTitle),
+              //BottomNavigationBarItem(icon: const Icon(LucideIcons.graduation_cap), label: locals.studies.studiesTitle),
             ],
             currentIndex: navigationShell.currentIndex,
             onTap: (int index) => _onTap(context, index),
