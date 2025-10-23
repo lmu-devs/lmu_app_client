@@ -7,14 +7,12 @@ part of 'sports_model.dart';
 // **************************************************************************
 
 SportsModel _$SportsModelFromJson(Map<String, dynamic> json) => SportsModel(
-      baseUrl: json['base_url'] as String,
-      basicTicket: SportsType.fromJson(json['basic_ticket'] as Map<String, dynamic>),
-      sportTypes:
-          (json['sport_types'] as List<dynamic>).map((e) => SportsType.fromJson(e as Map<String, dynamic>)).toList(),
+      sportTypes: (json['sport_types'] as List<dynamic>)
+          .map((e) => SportsType.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
-Map<String, dynamic> _$SportsModelToJson(SportsModel instance) => <String, dynamic>{
-      'base_url': instance.baseUrl,
-      'basic_ticket': instance.basicTicket,
+Map<String, dynamic> _$SportsModelToJson(SportsModel instance) =>
+    <String, dynamic>{
       'sport_types': instance.sportTypes,
     };

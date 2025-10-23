@@ -1,8 +1,7 @@
-// course.dart
+import 'package:core/api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'sports_location.dart';
 import 'sports_price.dart';
 import 'sports_time_slot.dart';
 
@@ -19,6 +18,7 @@ class SportsCourse extends Equatable {
     required this.instructor,
     required this.timeSlots,
     required this.price,
+    required this.url,
     this.location,
   });
 
@@ -36,7 +36,8 @@ class SportsCourse extends Equatable {
   @JsonKey(name: 'time_slots')
   final List<SportsTimeSlot> timeSlots;
   final SportsPrice price;
-  final SportsLocation? location;
+  final String url;
+  final LocationModel? location;
 
   Map<String, dynamic> toJson() => _$SportsCourseToJson(this);
 

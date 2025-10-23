@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:core/api.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
@@ -7,7 +5,6 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 
 import '../repository/api/models/sports_course.dart';
@@ -34,7 +31,8 @@ class SportsCourseTile extends StatelessWidget {
     final appLocals = locals.app;
     final sportsLocals = locals.sports;
     final subtitleColor = colors.neutralColors.textColors.mediumColors.base;
-    final isCourseInPast = DateTime.parse(course.endDate).isBefore(DateTime.now());
+    final isCourseInPast =
+        DateTime.parse(course.endDate).isBefore(DateTime.now());
 
     final instructor = course.instructor;
     final timeSlots = course.timeSlots;
@@ -44,15 +42,15 @@ class SportsCourseTile extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        final url = GetIt.I.get<SportsStateService>().constructUrl(sportType);
         LmuUrlLauncher.launchWebsite(
           context: context,
-          url: url,
+          url: course.url,
           mode: LmuUrlLauncherMode.inAppWebView,
         );
       },
       child: Container(
-        margin: EdgeInsets.only(bottom: hasDivider ? LmuSizes.size_12 : LmuSizes.none),
+        margin: EdgeInsets.only(
+            bottom: hasDivider ? LmuSizes.size_12 : LmuSizes.none),
         decoration: BoxDecoration(
           color: colors.neutralColors.backgroundColors.tile,
           borderRadius: BorderRadius.circular(LmuSizes.size_12),
@@ -80,22 +78,24 @@ class SportsCourseTile extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: LmuSizes.size_8),
-                  LmuText.body(course.title.isEmpty ? sportsLocals.course : course.title, weight: FontWeight.w600),
-                  if (timeSlots.isNotEmpty || instructor.isNotEmpty) const SizedBox(height: LmuSizes.size_4),
+                  LmuText.body(
+                      course.title.isEmpty ? sportsLocals.course : course.title,
+                      weight: FontWeight.w600),
+                  if (timeSlots.isNotEmpty || instructor.isNotEmpty)
+                    const SizedBox(height: LmuSizes.size_4),
                   if (timeSlots.isNotEmpty)
-                    LmuText.body(formatSportsTimeSlots(appLocals, timeSlots), color: subtitleColor),
-                  if (instructor.isNotEmpty) LmuText.body("${appLocals.withPerson} $instructor", color: subtitleColor),
+                    LmuText.body(formatSportsTimeSlots(appLocals, timeSlots),
+                        color: subtitleColor),
+                  if (instructor.isNotEmpty)
+                    LmuText.body("${appLocals.withPerson} $instructor",
+                        color: subtitleColor),
                   if (location != null)
-                    LmuText.body("${appLocals.atLocation} ${location.address}", color: subtitleColor),
-                  const SizedBox(height: LmuSizes.size_8),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(_ticketAsset, package: "sports"),
-                      const SizedBox(width: LmuSizes.size_8),
-                      if (price > 0) LmuText.body("+ $price €", color: subtitleColor),
-                    ],
-                  ),
+                    LmuText.body("${appLocals.atLocation} ${location.address}",
+                        color: subtitleColor),
+                  if (price > 0) ...[
+                    const SizedBox(height: LmuSizes.size_8),
+                    LmuText.body("$price €", color: subtitleColor),
+                  ],
                 ],
               ),
             ),
@@ -103,17 +103,21 @@ class SportsCourseTile extends StatelessWidget {
               right: LmuSizes.size_6,
               top: LmuSizes.size_8,
               child: ValueListenableBuilder(
-                valueListenable: sportsStateService.favoriteSportsCoursesNotifier,
+                valueListenable:
+                    sportsStateService.favoriteSportsCoursesNotifier,
                 builder: (context, favoriteSports, _) {
                   final isFavorite = favoriteSports.any(
-                    (entry) => entry.category == sportType && entry.favorites.contains(course.id),
+                    (entry) =>
+                        entry.category == sportType &&
+                        entry.favorites.contains(course.id),
                   );
 
                   return GestureDetector(
                     behavior: HitTestBehavior.opaque,
                     onTap: () {
                       LmuVibrations.secondary();
-                      sportsStateService.toggleFavoriteSport(course.id, sportType);
+                      sportsStateService.toggleFavoriteSport(
+                          course.id, sportType);
                       if (isFavorite) {
                         LmuToast.show(
                           context: context,
@@ -121,7 +125,8 @@ class SportsCourseTile extends StatelessWidget {
                           message: appLocals.favoriteRemoved,
                           actionText: appLocals.undo,
                           onActionPressed: () {
-                            sportsStateService.toggleFavoriteSport(course.id, sportType);
+                            sportsStateService.toggleFavoriteSport(
+                                course.id, sportType);
                           },
                         );
                       } else {
@@ -148,19 +153,17 @@ class SportsCourseTile extends StatelessWidget {
       ),
     );
   }
-
-  String get _ticketAsset => PlatformDispatcher.instance.platformBrightness == Brightness.light
-      ? 'assets/basisticket_light.svg'
-      : 'assets/basisticket_dark.svg';
 }
 
-String formatSportsTimeSlots(AppLocalizations locals, List<SportsTimeSlot> slots) {
+String formatSportsTimeSlots(
+    AppLocalizations locals, List<SportsTimeSlot> slots) {
   if (slots.isEmpty) return '';
 
   final groupedByTime = <String, List<Weekday>>{};
 
   for (final slot in slots) {
-    final timeKey = '${slot.startTime.substring(0, 5)} - ${slot.endTime.substring(0, 5)}';
+    final timeKey =
+        '${slot.startTime.substring(0, 5)} - ${slot.endTime.substring(0, 5)}';
     groupedByTime.putIfAbsent(timeKey, () => []).add(slot.day);
   }
 
@@ -185,7 +188,9 @@ String formatSportsTimeSlots(AppLocalizations locals, List<SportsTimeSlot> slots
     groupedRanges.add(currentGroup);
 
     return groupedRanges
-        .map((group) => group.length > 1 ? '${group.first.name} - ${group.last.name}' : group.first.name)
+        .map((group) => group.length > 1
+            ? '${group.first.name} - ${group.last.name}'
+            : group.first.name)
         .join(', ');
   }
 

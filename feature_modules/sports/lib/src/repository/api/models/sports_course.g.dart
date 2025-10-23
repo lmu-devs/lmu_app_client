@@ -13,13 +13,18 @@ SportsCourse _$SportsCourseFromJson(Map<String, dynamic> json) => SportsCourse(
       startDate: json['start_date'] as String,
       endDate: json['end_date'] as String,
       instructor: json['instructor'] as String,
-      timeSlots:
-          (json['time_slots'] as List<dynamic>).map((e) => SportsTimeSlot.fromJson(e as Map<String, dynamic>)).toList(),
+      timeSlots: (json['time_slots'] as List<dynamic>)
+          .map((e) => SportsTimeSlot.fromJson(e as Map<String, dynamic>))
+          .toList(),
       price: SportsPrice.fromJson(json['price'] as Map<String, dynamic>),
-      location: json['location'] == null ? null : SportsLocation.fromJson(json['location'] as Map<String, dynamic>),
+      url: json['url'] as String,
+      location: json['location'] == null
+          ? null
+          : LocationModel.fromJson(json['location'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$SportsCourseToJson(SportsCourse instance) => <String, dynamic>{
+Map<String, dynamic> _$SportsCourseToJson(SportsCourse instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'is_available': instance.isAvailable,
@@ -28,5 +33,6 @@ Map<String, dynamic> _$SportsCourseToJson(SportsCourse instance) => <String, dyn
       'instructor': instance.instructor,
       'time_slots': instance.timeSlots,
       'price': instance.price,
+      'url': instance.url,
       'location': instance.location,
     };
