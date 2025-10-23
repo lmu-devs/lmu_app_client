@@ -92,10 +92,8 @@ class SportsCourseTile extends StatelessWidget {
                   if (location != null)
                     LmuText.body("${appLocals.atLocation} ${location.address}",
                         color: subtitleColor),
-                  if (price > 0) ...[
-                    const SizedBox(height: LmuSizes.size_8),
-                    LmuText.body("$price €", color: subtitleColor),
-                  ],
+                  const SizedBox(height: LmuSizes.size_8),
+                  LmuText.body("$price €", color: subtitleColor),
                 ],
               ),
             ),
