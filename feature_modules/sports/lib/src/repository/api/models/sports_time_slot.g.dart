@@ -6,13 +6,15 @@ part of 'sports_time_slot.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SportsTimeSlot _$SportsTimeSlotFromJson(Map<String, dynamic> json) => SportsTimeSlot(
+SportsTimeSlot _$SportsTimeSlotFromJson(Map<String, dynamic> json) =>
+    SportsTimeSlot(
       day: $enumDecode(_$WeekdayEnumMap, json['day']),
       startTime: json['start_time'] as String,
       endTime: json['end_time'] as String,
     );
 
-Map<String, dynamic> _$SportsTimeSlotToJson(SportsTimeSlot instance) => <String, dynamic>{
+Map<String, dynamic> _$SportsTimeSlotToJson(SportsTimeSlot instance) =>
+    <String, dynamic>{
       'day': _$WeekdayEnumMap[instance.day]!,
       'start_time': instance.startTime,
       'end_time': instance.endTime,

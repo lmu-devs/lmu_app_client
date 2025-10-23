@@ -4,35 +4,28 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class SportsLoadingView extends StatelessWidget {
   const SportsLoadingView({super.key});
 
   final loadingTileCount = const [6, 4, 2, 3];
+
   @override
   Widget build(BuildContext context) {
     final starColor = context.colors.neutralColors.textColors.weakColors.base;
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                LmuListItemLoading(
-                  leadingArea: Center(child: LmuText.body("🎟️")),
-                  subtitleLength: 5,
-                  hasHorizontalPadding: false,
-                  hasDivier: true,
-                ),
-                LmuListItemLoading(
-                  leadingArea: Center(child: LmuText.body("🥇")),
-                  subtitleLength: 4,
-                  hasHorizontalPadding: false,
-                  hasDivier: true,
-                ),
-              ],
+          LmuSkeleton(
+            child: Padding(
+              padding: const EdgeInsets.only(left: LmuSizes.size_16),
+              child: LmuText(
+                BoneMock.subtitle,
+                color:
+                    context.colors.neutralColors.textColors.mediumColors.base,
+              ),
             ),
           ),
           const SizedBox(height: LmuSizes.size_16),
@@ -43,7 +36,10 @@ class SportsLoadingView extends StatelessWidget {
               children: [
                 SizedBox(
                   height: LmuSizes.size_24,
-                  child: StarIcon(isActive: false, size: LmuIconSizes.small, disabledColor: starColor),
+                  child: StarIcon(
+                      isActive: false,
+                      size: LmuIconSizes.small,
+                      disabledColor: starColor),
                 ),
                 const SizedBox(height: LmuSizes.size_12),
                 LmuContentTile(

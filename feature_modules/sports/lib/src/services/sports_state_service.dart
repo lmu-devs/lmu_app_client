@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 
 import '../cubit/sports_cubit/cubit.dart';
-import '../extensions/sports_url_constructor_extension.dart';
 import '../repository/api/models/sports_favorites.dart';
 import '../repository/api/models/sports_type.dart';
 import '../repository/sports_repository.dart';
@@ -35,14 +34,12 @@ class SportsStateService {
         if (state is SportsLoadInProgress && state.sports != null) {
           _initialSportTypes = groupBy(state.sports!.sportTypes, (sport) => sport.title[0].toUpperCase());
           _filteredGroupedSportsNotifier.value = _initialSportTypes;
-          _baseUrl = state.sports!.baseUrl;
           _sportsRepo.getFavoriteSports().then((value) {
             _favoriteSportsCoursesNotifier.value = value;
           });
         } else if (state is SportsLoadSuccess) {
           _initialSportTypes = groupBy(state.sports.sportTypes, (sport) => sport.title[0].toUpperCase());
           _filteredGroupedSportsNotifier.value = _initialSportTypes;
-          _baseUrl = state.sports.baseUrl;
           _sportsRepo.getFavoriteSports().then((value) {
             _favoriteSportsCoursesNotifier.value = value;
           });
@@ -77,9 +74,6 @@ class SportsStateService {
     _favoriteSportsCoursesNotifier.value = currentFavorites;
     await _sportsRepo.saveFavoriteSports(currentFavorites);
   }
-
-  String _baseUrl = "";
-  String constructUrl(String title) => _baseUrl.constructSportsUrl(title);
 
   void _updateFilteredSports() {
     final currentFilterOptions = _filterOptionsNotifier.value;
