@@ -29,7 +29,6 @@ dependencies:
   scrollable_positioned_list: ^0.3.8
   skeletonizer: ^2.0.1
   flutter_native_splash: ^2.3.1
-  share_plus: ^10.1.2
   flutter_sticky_header: ^0.8.0
   modal_bottom_sheet: ^3.0.0
   expandable_page_view: ^1.0.17

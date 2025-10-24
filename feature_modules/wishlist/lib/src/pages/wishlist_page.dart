@@ -71,7 +71,8 @@ class _WishlistPageState extends State<WishlistPage> {
                 LmuButton(
                   title: context.locals.wishlist.shareApp,
                   onTap: () {
-                    Share.share(LmuDevStrings.shareAppUrl);
+                    final params = ShareParams(uri: Uri.parse(LmuDevStrings.shareAppUrl));
+                    SharePlus.instance.share(params);
                     GetIt.I<AnalyticsClient>().logClick(eventName: "app_share_event");
                   },
                 ),

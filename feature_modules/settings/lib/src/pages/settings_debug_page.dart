@@ -20,7 +20,10 @@ class SettingsDebugPage extends StatelessWidget {
         trailingWidgets: [
           GestureDetector(
             onTap: () {
-              Share.shareXFiles([XFile(appLogger.logFilePath)]);
+              final params = ShareParams(
+                files: [XFile(appLogger.logFilePath)],
+              );
+              SharePlus.instance.share(params);
             },
             child: const LmuIcon(
               icon: LucideIcons.share,

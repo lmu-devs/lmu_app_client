@@ -20,7 +20,7 @@ dependencies:
   shared_api:
     path: ../../shared_api
   flutter_lucide: ^1.6.1
-  share_plus: ^10.1.3
+  share_plus: ^12.0.1
   widget_driver: ^1.0.10
   shared_preferences: ^2.5.3
   permission_handler: ^11.3.1

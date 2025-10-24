@@ -24,7 +24,7 @@ dependencies:
   flutter_lucide: ^1.2.0
   get_it: ^8.0.1
   intl: any
-  share_plus: ^10.1.2
+  share_plus: ^12.0.1
   skeletonizer: ^2.0.1
   collection: ^1.18.0
 
