@@ -92,9 +92,35 @@ class CalendarApiClient {
       throw Exception('calendar API response body is empty.');
     }
 
+    // try {
+    //   final List<dynamic> jsonList = json.decode(response.body) as List<dynamic>;
+    //   return jsonList.map((json) => CalendarEntryDto.fromJson(json)).toList();
+    // } on TypeError catch (e) {
+    //   _appLogger.logMessage("Error during calendar JSON decoding/casting: $e");
+    //   throw Exception(
+    //       'Unexpected calendar API response format. Expected a list but got a map or other type. Error: $e');
+    // } on FormatException catch (e) {
+    //   _appLogger.logMessage("Error parsing JSON calendarresponse: $e");
+    //   throw Exception('Invalid JSON response from API. Error: $e');
+    // }
     try {
       final List<dynamic> jsonList = json.decode(response.body) as List<dynamic>;
-      return jsonList.map((json) => CalendarEntryDto.fromJson(json)).toList();
+
+      // NEUER, DETAILLIERTER LOGGING-BLOCK
+      return jsonList.map((jsonItem) {
+        try {
+          // Versuchen, jedes einzelne JSON-Element zu konvertieren
+          return CalendarEntryDto.fromJson(jsonItem as Map<String, dynamic>);
+        } catch (e) {
+          // Protokolliere das spezifische JSON-Objekt, das den Fehler verursacht hat.
+          // Das hilft Ihnen, das fehlende/null-Feld zu identifizieren.
+          _appLogger.logMessage("🛑 [DECODING ERROR] Failed to parse item: $jsonItem. Error: $e");
+          // Da der Fehler unvorhergesehen ist, werfen wir ihn erneut,
+          // um den Aufruf-Stack zu erhalten.
+          rethrow;
+        }
+      }).toList();
+      // ENDE NEUER BLOCK
     } on TypeError catch (e) {
       _appLogger.logMessage("Error during calendar JSON decoding/casting: $e");
       throw Exception(

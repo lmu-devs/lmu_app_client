@@ -20,9 +20,11 @@ class CalendarEntryDto extends Equatable {
     required this.eventType,
     required this.startTime,
     required this.endTime,
-    required this.color,
-    required this.location,
+    this.color,
     required this.allDay,
+    this.location,
+    this.onlineLink,
+    this.accessScope,
     this.description,
     this.rule,
     this.recurrenceId,
@@ -34,17 +36,22 @@ class CalendarEntryDto extends Equatable {
   final String title;
   @JsonKey(name: 'event_type')
   final EventType eventType;
-  @JsonKey(name: 'start_date')
+  @JsonKey(name: 'start_time')
   final DateTime startTime;
-  @JsonKey(name: 'end_date')
+  @JsonKey(name: 'end_time')
   final DateTime endTime;
   @JsonKey(name: 'all_day')
   final bool allDay;
 
   @ColorConverter()
-  final Color color;
+  final Color? color;
 
-  final LocationModel location;
+  final LocationModel? location;
+  @JsonKey(name: 'online_link')
+  final String? onlineLink;
+
+  @JsonKey(name: 'access_scope')
+  final int? accessScope;
 
   final String? description;
   final CalendarRuleDto? rule;
@@ -67,6 +74,8 @@ class CalendarEntryDto extends Equatable {
         allDay,
         color,
         location,
+        onlineLink,
+        accessScope,
         description,
         rule,
         recurrenceId,
