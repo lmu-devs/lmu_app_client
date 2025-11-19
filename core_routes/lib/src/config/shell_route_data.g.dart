@@ -356,16 +356,6 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                   factory: $CalendarMainRouteExtension._fromState,
                 ),
                 GoRouteData.$route(
-                  path: 'lectures',
-                  factory: $LecturesMainRouteExtension._fromState,
-                  routes: [
-                    GoRouteData.$route(
-                      path: 'lecture-list',
-                      factory: $LectureListRouteExtension._fromState,
-                    ),
-                  ],
-                ),
-                GoRouteData.$route(
                   path: 'courses',
                   factory: $CoursesOverviewRouteExtension._fromState,
                   routes: [
@@ -1219,45 +1209,6 @@ extension $CalendarMainRouteExtension on CalendarMainRoute {
       context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
-}
-
-extension $LecturesMainRouteExtension on LecturesMainRoute {
-  static LecturesMainRoute _fromState(GoRouterState state) =>
-      const LecturesMainRoute();
-
-  String get location => GoRouteData.$location(
-        '/studies/lectures',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
-extension $LectureListRouteExtension on LectureListRoute {
-  static LectureListRoute _fromState(GoRouterState state) => LectureListRoute(
-        state.extra as Map<String, dynamic>,
-      );
-
-  String get location => GoRouteData.$location(
-        '/studies/lectures/lecture-list',
-      );
-
-  void go(BuildContext context) => context.go(location, extra: $extra);
-
-  Future<T?> push<T>(BuildContext context) =>
-      context.push<T>(location, extra: $extra);
-
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location, extra: $extra);
-
-  void replace(BuildContext context) =>
-      context.replace(location, extra: $extra);
 }
 
 extension $CoursesOverviewRouteExtension on CoursesOverviewRoute {

@@ -18,7 +18,7 @@ class CoursesEntryPoint extends StatelessWidget {
       content: LmuListItem.action(
         actionType: LmuListItemAction.chevron,
         title: context.locals.courses.coursesTitle,
-        leadingArea: const LmuInListBlurEmoji(emoji: "🎓"),
+        leadingArea: const LmuInListBlurEmoji(emoji: "🧑‍🏫"),
         onTap: () {
           if (selectedFaculties.length == 1) {
             CoursesOverviewRoute(facultyId: selectedFaculties.first.id).go(context);
