@@ -27,9 +27,6 @@ class CoursesOverviewDriver extends WidgetDriver implements _$DriverProvidedProp
   late LmuLocalizations _localizations;
   late LmuToast _toast;
 
-  bool _isProfessorFilterActive = false;
-  bool get isProfessorFilterActive => _isProfessorFilterActive;
-
   String get showAllFacultiesText => _localizations.studies.showAllFaculties;
 
   List<Faculty> get selectedFaculties => _facultiesApi.selectedFaculties;
@@ -44,6 +41,14 @@ class CoursesOverviewDriver extends WidgetDriver implements _$DriverProvidedProp
     return _localizations.studies.facultiesSubtitle(faculty.name);
   }
 
+  Future<void> toggleFavorite(int id) async {
+    await _favoritesUsecase.toggleFavorite(id);
+  }
+
+  bool isFavorite(int id) => _favoritesUsecase.isFavorite(id);
+
+  String get allCourses => _localizations.courses.allCourses;
+
   List<CourseModel> get courses => _usecase.data;
 
   List<CourseModel> get favoriteCourses => courses.where((course) => _favoritesUsecase.isFavorite(course.publishId)).toList();
@@ -52,26 +57,10 @@ class CoursesOverviewDriver extends WidgetDriver implements _$DriverProvidedProp
 
   bool get hasFavorites => _favoritesUsecase.favoriteIds.isNotEmpty;
 
-  List<CourseModel> get filteredCourses {
-    var filtered = courses;
-
-    return courses;
-
-    if (_isProfessorFilterActive) {
-      filtered = filtered.where((course) {
-        final title = course.name.toLowerCase();
-        return title.contains('professor') || title.contains('prof');
-      }).toList();
-    }
-
-    filtered.sort((a, b) => a.name.compareTo(b.name));
-    return filtered;
-  }
-
   Map<String, List<CourseModel>> get groupedCourses {
     final grouped = <String, List<CourseModel>>{};
 
-    for (final course in filteredCourses) {
+    for (final course in courses) {
       final firstLetter = course.name.isNotEmpty ? course.name[0].toUpperCase() : '#';
       if (!grouped.containsKey(firstLetter)) {
         grouped[firstLetter] = [];
@@ -88,7 +77,7 @@ class CoursesOverviewDriver extends WidgetDriver implements _$DriverProvidedProp
     return sortedGrouped;
   }
 
-  void onPersonPressed(BuildContext context, CourseModel course) {
+  void onCoursePressed(BuildContext context, CourseModel course) {
     CourseDetailsRoute(facultyId: facultyId, courseId: course.publishId).push(context);
   }
 
@@ -98,11 +87,6 @@ class CoursesOverviewDriver extends WidgetDriver implements _$DriverProvidedProp
 
   void onSearchPressed(BuildContext context) {
     CoursesSearchRoute(facultyId: facultyId).push(context);
-  }
-
-  void toggleProfessorFilter() {
-    _isProfessorFilterActive = !_isProfessorFilterActive;
-    notifyWidget();
   }
 
   void _onStateChanged() {

@@ -8,7 +8,7 @@ import 'package:get_it/get_it.dart';
 
 import 'package:flutter_lucide/flutter_lucide.dart';
 
-import '../component/course_list_item.dart';
+import '../component/course_card.dart';
 
 import '../viewmodel/courses_overview_driver.dart';
 import '../../application/usecase/favorite_courses_usecase.dart';
@@ -73,19 +73,13 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-          child: LmuTileHeadline.base(title: "TBD"),
+          child: LmuTileHeadline.base(title: "${driver.allCourses}: ${driver.courses.length}"),
         ),
         LmuButtonRow(
           buttons: [
             LmuIconButton(
               icon: LucideIcons.search,
               onPressed: () => driver.onSearchPressed(context),
-            ),
-            LmuButton(
-              title: "TBD",
-              emphasis: driver.isProfessorFilterActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
-              action: driver.isProfessorFilterActive ? ButtonAction.contrast : ButtonAction.base,
-              onTap: driver.toggleProfessorFilter,
             ),
           ],
         ),
@@ -99,7 +93,7 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ..._buildGroupedCourses(context),
-        const SizedBox(height: LmuSizes.size_32),
+        const SizedBox(height: LmuSizes.size_16),
         _buildShowAllFacultiesButton(context),
         const SizedBox(height: LmuSizes.size_96),
       ],
@@ -124,11 +118,13 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
             ),
             const SizedBox(height: LmuSizes.size_12),
             if (favoriteCourses.isNotEmpty)
-              LmuContentTile(
-                contentList: favoriteCourses
-                    .map((course) => CourseListItem(
+              Column(
+                children: favoriteCourses
+                    .map((course) => CourseCard(
                           course: course,
-                          onTap: () => driver.onPersonPressed(context, course),
+                          isFavorite: driver.isFavorite(course.publishId),
+                          onTap: () => driver.onCoursePressed(context, course),
+                          onFavoriteTap: () => driver.toggleFavorite(course.publishId),
                         ))
                     .toList(),
               )
@@ -147,9 +143,9 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
     return PlaceholderTile(
       minHeight: 56,
       content: [
-        LmuText.bodySmall("TBD", color: placeholderTextColor),
+        LmuText.bodySmall(context.locals.courses.favoritesBefore, color: placeholderTextColor),
         StarIcon(isActive: false, disabledColor: starColor, size: LmuIconSizes.small),
-        LmuText.bodySmall("TBD", color: placeholderTextColor),
+        LmuText.bodySmall(context.locals.courses.favoritesAfter, color: placeholderTextColor),
       ],
     );
   }
@@ -167,11 +163,13 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
       );
 
       widgets.add(
-        LmuContentTile(
-          contentList: coursesInGroup
-              .map((course) => CourseListItem(
+        Column(
+          children: coursesInGroup
+              .map((course) => CourseCard(
                     course: course,
-                    onTap: () => driver.onPersonPressed(context, course),
+                    isFavorite: driver.isFavorite(course.publishId),
+                    onTap: () => driver.onCoursePressed(context, course),
+                    onFavoriteTap: () => driver.toggleFavorite(course.publishId),
                   ))
               .toList(),
         ),

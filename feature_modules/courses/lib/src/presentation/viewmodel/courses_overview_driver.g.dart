@@ -16,9 +16,6 @@ class _$TestCoursesOverviewDriver extends TestDriver
   int get facultyId => 0;
 
   @override
-  bool get isProfessorFilterActive => false;
-
-  @override
   String get showAllFacultiesText => ' ';
 
   @override
@@ -35,6 +32,9 @@ class _$TestCoursesOverviewDriver extends TestDriver
 
   @override
   String get largeTitle => ' ';
+
+  @override
+  String get allCourses => ' ';
 
   @override
   List<CourseModel> get courses => [];
@@ -55,7 +55,7 @@ class _$TestCoursesOverviewDriver extends TestDriver
   Map<String, List<CourseModel>> get groupedCourses => {};
 
   @override
-  void onPersonPressed(BuildContext context, CourseModel course) {}
+  void onCoursePressed(BuildContext context, CourseModel course) {}
 
   @override
   void onShowAllFacultiesPressed(BuildContext context) {}
