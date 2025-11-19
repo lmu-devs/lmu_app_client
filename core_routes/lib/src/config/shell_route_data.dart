@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../calendar.dart';
+import '../../courses.dart';
 import '../../launch_flow.dart';
 import '../../lectures.dart';
 import '../../libraries.dart';
@@ -224,6 +225,20 @@ class LaunchFlowShellRoute extends ShellRouteData {
                   path: LectureListRoute.path,
                 ),
               ],
+            ),
+            TypedGoRoute<CoursesOverviewRoute>(
+              path: CoursesOverviewRoute.path,
+              routes: <TypedGoRoute<GoRouteData>>[
+                TypedGoRoute<CourseDetailsRoute>(
+                  path: CourseDetailsRoute.path,
+                ),
+                TypedGoRoute<CoursesSearchRoute>(
+                  path: CoursesSearchRoute.path,
+                ),
+              ],
+            ),
+            TypedGoRoute<CoursesFacultyOverviewRoute>(
+              path: CoursesFacultyOverviewRoute.path,
             ),
             TypedGoRoute<PeopleOverviewRoute>(
               path: PeopleOverviewRoute.path,

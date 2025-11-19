@@ -50,6 +50,8 @@ dependencies:
     path: ./feature_modules/calendar
   lectures:
     path: ./feature_modules/lectures
+  courses:
+    path: ./feature_modules/courses
   people:
     path: ./feature_modules/people
   developerdex:

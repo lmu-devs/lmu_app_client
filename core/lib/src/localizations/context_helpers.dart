@@ -26,6 +26,7 @@ class LmuLocalizations {
   BenefitsLocatizations get benefits => BenefitsLocatizations.of(_context)!;
   LaunchFlowLocatizations get launchFlow => LaunchFlowLocatizations.of(_context)!;
   StudiesLocatizations get studies => StudiesLocatizations.of(_context)!;
+  CoursesLocatizations get courses => CoursesLocatizations.of(_context)!;
   LecturesLocatizations get lectures => LecturesLocatizations.of(_context)!;
   PeopleLocatizations get people => PeopleLocatizations.of(_context)!;
   DeveloperdexLocatizations get developerdex => DeveloperdexLocatizations.of(_context)!;
@@ -49,6 +50,7 @@ class LmuLocalizations {
         LaunchFlowLocatizations.delegate,
         StudiesLocatizations.delegate,
         LecturesLocatizations.delegate,
+        CoursesLocatizations.delegate,
         PeopleLocatizations.delegate,
         DeveloperdexLocatizations.delegate,
         // Add other localizations delegates

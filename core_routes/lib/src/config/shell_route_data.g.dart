@@ -366,6 +366,24 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                   ],
                 ),
                 GoRouteData.$route(
+                  path: 'courses',
+                  factory: $CoursesOverviewRouteExtension._fromState,
+                  routes: [
+                    GoRouteData.$route(
+                      path: 'details',
+                      factory: $CourseDetailsRouteExtension._fromState,
+                    ),
+                    GoRouteData.$route(
+                      path: 'courses-search',
+                      factory: $CoursesSearchRouteExtension._fromState,
+                    ),
+                  ],
+                ),
+                GoRouteData.$route(
+                  path: 'courses-faculties',
+                  factory: $CoursesFacultyOverviewRouteExtension._fromState,
+                ),
+                GoRouteData.$route(
                   path: 'people',
                   factory: $PeopleOverviewRouteExtension._fromState,
                   routes: [
@@ -1240,6 +1258,95 @@ extension $LectureListRouteExtension on LectureListRoute {
 
   void replace(BuildContext context) =>
       context.replace(location, extra: $extra);
+}
+
+extension $CoursesOverviewRouteExtension on CoursesOverviewRoute {
+  static CoursesOverviewRoute _fromState(GoRouterState state) =>
+      CoursesOverviewRoute(
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/studies/courses',
+        queryParams: {
+          'faculty-id': facultyId.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $CourseDetailsRouteExtension on CourseDetailsRoute {
+  static CourseDetailsRoute _fromState(GoRouterState state) =>
+      CourseDetailsRoute(
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
+        courseId: int.parse(state.uri.queryParameters['course-id']!)!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/studies/courses/details',
+        queryParams: {
+          'faculty-id': facultyId.toString(),
+          'course-id': courseId.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $CoursesSearchRouteExtension on CoursesSearchRoute {
+  static CoursesSearchRoute _fromState(GoRouterState state) =>
+      CoursesSearchRoute(
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/studies/courses/courses-search',
+        queryParams: {
+          'faculty-id': facultyId.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $CoursesFacultyOverviewRouteExtension on CoursesFacultyOverviewRoute {
+  static CoursesFacultyOverviewRoute _fromState(GoRouterState state) =>
+      const CoursesFacultyOverviewRoute();
+
+  String get location => GoRouteData.$location(
+        '/studies/courses-faculties',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
 }
 
 extension $PeopleOverviewRouteExtension on PeopleOverviewRoute {
