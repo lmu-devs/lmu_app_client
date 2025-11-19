@@ -48,7 +48,6 @@ class _$TestCoursesOverviewDriver extends TestDriver
   @override
   bool get hasFavorites => false;
 
-  @override
   List<CourseModel> get filteredCourses => [];
 
   @override
@@ -62,9 +61,6 @@ class _$TestCoursesOverviewDriver extends TestDriver
 
   @override
   void onSearchPressed(BuildContext context) {}
-
-  @override
-  void toggleProfessorFilter() {}
 
   @override
   void didInitDriver() {}

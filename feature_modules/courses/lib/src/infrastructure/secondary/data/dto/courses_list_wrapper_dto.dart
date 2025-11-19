@@ -7,6 +7,8 @@ part 'courses_list_wrapper_dto.g.dart';
 
 @JsonSerializable()
 class CoursesListWrapperDto extends Equatable {
+  factory CoursesListWrapperDto.fromJson(Map<String, dynamic> json) => _$CoursesListWrapperDtoFromJson(json);
+
   const CoursesListWrapperDto({
     required this.courses,
     this.totalCount,
@@ -18,8 +20,6 @@ class CoursesListWrapperDto extends Equatable {
   final int? totalCount;
   final int? pageSize;
   final int? currentPage;
-
-  factory CoursesListWrapperDto.fromJson(Map<String, dynamic> json) => _$CoursesListWrapperDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$CoursesListWrapperDtoToJson(this);
 

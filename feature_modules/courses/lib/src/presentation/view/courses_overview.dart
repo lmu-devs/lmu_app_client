@@ -18,7 +18,6 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
 
   final int facultyId;
 
-  @override
   CoursesOverviewDriver createDriver() => GetIt.I<CoursesOverviewDriver>(param1: facultyId);
 
   @override
