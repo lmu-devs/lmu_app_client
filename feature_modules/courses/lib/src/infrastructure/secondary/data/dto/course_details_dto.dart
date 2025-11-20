@@ -21,7 +21,7 @@ class CourseDetailsDto extends Equatable {
 
   final List<SessionDto> sessions;
   final List<PersonDto> persons;
-  @JsonKey(name: 'addtional_information')
+  @JsonKey(name: 'additional_information')
   final String additionalInformation;
   @JsonKey(name: 'last_updated')
   final String lastUpdated;

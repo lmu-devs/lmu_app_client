@@ -77,5 +77,5 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
   @override
   WidgetDriverProvider<CourseDetailsPageDriver> get driverProvider =>
       $CourseDetailsPageDriverProvider(
-          courseId: courseId, courseName: courseName);
+          courseId: courseId);
 }

@@ -31,7 +31,7 @@ class SessionModel extends Equatable {
   final String endingTime;
   @JsonKey(name: 'timing_type')
   final String? timingType;
-  @JsonKey(name: 'rythm')
+  @JsonKey(name: 'rhythm')
   final String rhythm;
   @JsonKey(name: 'duration_start')
   final String? durationStart;

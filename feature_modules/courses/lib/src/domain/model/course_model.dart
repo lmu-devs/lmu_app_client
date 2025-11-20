@@ -10,6 +10,7 @@ class CourseModel extends Equatable {
     required this.name,
     required this.type,
     required this.language,
+    this.degree,
     this.sws,
   });
 
@@ -18,6 +19,7 @@ class CourseModel extends Equatable {
   @JsonKey(name: 'publish_id')
   final int publishId;
   final String name;
+  final String? degree;
   final int? sws;
   final String type;
   final String language;
@@ -26,6 +28,7 @@ class CourseModel extends Equatable {
   List<Object?> get props => [
     publishId,
     name,
+    degree,
     sws,
     type,
     language,

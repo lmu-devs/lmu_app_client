@@ -34,9 +34,6 @@ class _$TestCoursesOverviewDriver extends TestDriver
   String get largeTitle => ' ';
 
   @override
-  String get allCourses => ' ';
-
-  @override
   List<CourseModel> get courses => [];
 
   @override

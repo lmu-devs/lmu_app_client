@@ -2,7 +2,6 @@
   "@@locale": "en",
   "@@context": "Courses",
   "coursesTitle": "Courses",
-  "allCourses": "All Courses",
   "favoritesBefore": "Tap the ",
   "favoritesAfter": " icon to add courses here"
 }

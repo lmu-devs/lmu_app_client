@@ -2,7 +2,6 @@
   "@@locale": "de",
   "@@context": "Courses",
   "coursesTitle": "Kurse",
-  "allCourses": "Alle Kurse",
   "favoritesBefore": "Füge Kurse mit dem ",
   "favoritesAfter": " Symbol hinzu"
 }

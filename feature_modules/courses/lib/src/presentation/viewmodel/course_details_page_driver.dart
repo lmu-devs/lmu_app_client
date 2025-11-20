@@ -16,7 +16,6 @@ class CourseDetailsPageDriver extends WidgetDriver
       : _courseId = courseId;
 
   late int _courseId;
-
   int get courseId => _courseId;
 
   final _usecase = GetIt.I.get<GetCourseDetailsUsecase>();

@@ -14,7 +14,7 @@ CourseDetailsModel _$CourseDetailsModelFromJson(Map<String, dynamic> json) =>
       persons: (json['persons'] as List<dynamic>)
           .map((e) => PersonModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      additionalInformation: json['addtional_information'] as String,
+      additionalInformation: json['additional_information'] as String,
       lastUpdated: json['last_updated'] as String,
     );
 
@@ -22,6 +22,6 @@ Map<String, dynamic> _$CourseDetailsModelToJson(CourseDetailsModel instance) =>
     <String, dynamic>{
       'sessions': instance.sessions,
       'persons': instance.persons,
-      'addtional_information': instance.additionalInformation,
+      'additional_information': instance.additionalInformation,
       'last_updated': instance.lastUpdated,
     };

@@ -19,7 +19,7 @@ class CourseDetailsModel extends Equatable {
 
   final List<SessionModel> sessions;
   final List<PersonModel> persons;
-  @JsonKey(name: 'addtional_information')
+  @JsonKey(name: 'additional_information')
   final String additionalInformation;
   @JsonKey(name: 'last_updated')
   final String lastUpdated;

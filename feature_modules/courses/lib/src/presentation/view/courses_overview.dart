@@ -72,13 +72,19 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-          child: LmuTileHeadline.base(title: "${driver.allCourses}: ${driver.courses.length}"),
+          child: LmuTileHeadline.base(title: "${driver.courses.length} ${driver.pageTitle}"),
         ),
         LmuButtonRow(
           buttons: [
             LmuIconButton(
               icon: LucideIcons.search,
               onPressed: () => driver.onSearchPressed(context),
+            ),
+            LmuButton(
+              title: "All Degrees",
+              emphasis: ButtonEmphasis.secondary,
+              trailingIcon: LucideIcons.chevron_down,
+              onTap: () => {},
             ),
           ],
         ),

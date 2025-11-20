@@ -47,8 +47,6 @@ class CoursesOverviewDriver extends WidgetDriver implements _$DriverProvidedProp
 
   bool isFavorite(int id) => _favoritesUsecase.isFavorite(id);
 
-  String get allCourses => _localizations.courses.allCourses;
-
   List<CourseModel> get courses => _usecase.data;
 
   List<CourseModel> get favoriteCourses => courses.where((course) => _favoritesUsecase.isFavorite(course.publishId)).toList();

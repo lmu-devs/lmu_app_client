@@ -25,6 +25,11 @@ class _$TestCourseDetailsPageDriver extends TestDriver
   bool get isFavorite => false;
 
   @override
+  Future<void> toggleFavorite(int id) {
+    return Future.value();
+  }
+
+  @override
   void didInitDriver() {}
 
   @override
@@ -42,7 +47,7 @@ class $CourseDetailsPageDriverProvider
   final int _courseId;
 
   $CourseDetailsPageDriverProvider({
-    required int courseId, required String courseName,
+    required int courseId,
   }) : _courseId = courseId;
 
   @override

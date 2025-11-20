@@ -12,6 +12,7 @@ class CourseDto extends Equatable {
     required this.name,
     required this.type,
     required this.language,
+    this.degree,
     this.sws,
   });
 
@@ -21,6 +22,7 @@ class CourseDto extends Equatable {
   @JsonKey(name: 'publish_id')
   final int publishId;
   final String name;
+  final String? degree;
   final int? sws;
   final String type;
   final String language;
@@ -30,6 +32,7 @@ class CourseDto extends Equatable {
   CourseModel toDomain() => CourseModel(
     publishId: publishId,
     name: name,
+    degree: degree,
     sws: sws,
     type: type,
     language: language,
@@ -41,6 +44,7 @@ class CourseDto extends Equatable {
   List<Object?> get props => [
     publishId,
     name,
+    degree,
     sws,
     type,
     language,
