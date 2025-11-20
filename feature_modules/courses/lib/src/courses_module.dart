@@ -3,6 +3,7 @@ import 'package:core/module.dart';
 import 'package:core_routes/courses.dart';
 import 'package:get_it/get_it.dart';
 
+import 'application/usecase/get_course_details_usecase.dart';
 import 'application/usecase/get_courses_usecase.dart';
 import 'application/usecase/favorite_courses_usecase.dart';
 import 'application/usecase/recent_searches_usecase.dart';
@@ -23,14 +24,16 @@ class CoursesModule extends AppModule with LocalDependenciesProvidingAppModule, 
     final favoritesStorage = CoursesFavoritesStorage();
     final recentSearchesStorage = CoursesRecentSearchesStorage();
     final repository = CoursesRepository(CoursesApiClient(baseApiClient));
-    final getUsecase = GetCoursesUsecase(repository);
+    final getCourseUsecase = GetCoursesUsecase(repository);
+    final getCourseDetailsUsecase = GetCourseDetailsUsecase(repository);
     final favoritesUsecase = FavoriteCoursesUsecase(favoritesStorage);
-    final recentSearchesUsecase = RecentSearchesUsecase(recentSearchesStorage, getUsecase);
+    final recentSearchesUsecase = RecentSearchesUsecase(recentSearchesStorage, getCourseUsecase);
 
     GetIt.I.registerSingleton<CoursesFavoritesStorage>(favoritesStorage);
     GetIt.I.registerSingleton<CoursesRecentSearchesStorage>(recentSearchesStorage);
     GetIt.I.registerSingleton<CoursesRepositoryInterface>(repository);
-    GetIt.I.registerSingleton<GetCoursesUsecase>(getUsecase);
+    GetIt.I.registerSingleton<GetCoursesUsecase>(getCourseUsecase);
+    GetIt.I.registerSingleton<GetCourseDetailsUsecase>(getCourseDetailsUsecase);
     GetIt.I.registerSingleton<FavoriteCoursesUsecase>(favoritesUsecase);
     GetIt.I.registerSingleton<RecentSearchesUsecase>(recentSearchesUsecase);
   }

@@ -1239,6 +1239,7 @@ extension $CourseDetailsRouteExtension on CourseDetailsRoute {
       CourseDetailsRoute(
         facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
         courseId: int.parse(state.uri.queryParameters['course-id']!)!,
+        courseName: state.uri.queryParameters['course-name']!,
       );
 
   String get location => GoRouteData.$location(
@@ -1246,6 +1247,7 @@ extension $CourseDetailsRouteExtension on CourseDetailsRoute {
         queryParams: {
           'faculty-id': facultyId.toString(),
           'course-id': courseId.toString(),
+          'course-name': courseName,
         },
       );
 

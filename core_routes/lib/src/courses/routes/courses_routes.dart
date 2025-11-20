@@ -30,15 +30,16 @@ class CoursesFacultyOverviewRoute extends GoRouteData {
 
 class CourseDetailsRoute extends GoRouteData {
 
-  const CourseDetailsRoute({required this.facultyId, required this.courseId});
+  const CourseDetailsRoute({required this.facultyId, required this.courseId, required this.courseName});
   final int facultyId;
   final int courseId;
+  final String courseName;
 
   static const String path = 'details';
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return _router.buildDetails(context, facultyId: facultyId, courseId: courseId);
+    return _router.buildDetails(context, facultyId: facultyId, courseId: courseId, courseName: courseName);
   }
 }
 

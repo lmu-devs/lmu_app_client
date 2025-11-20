@@ -18,9 +18,10 @@ class CoursesRouterImpl extends CoursesRouter {
 
   @override
   Widget buildDetails(BuildContext context,
-          {required int facultyId, required int courseId}) =>
+          {required int facultyId, required int courseId, required String courseName}) =>
       CourseDetailsPage(
         courseId: courseId,
+        courseName: courseName,
       );
 
   @override

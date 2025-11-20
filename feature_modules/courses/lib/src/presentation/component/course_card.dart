@@ -32,7 +32,8 @@ class CourseCard extends StatelessWidget {
           spacing: LmuSizes.size_4,
           runSpacing: LmuSizes.size_4,
           children: [
-            LmuInTextVisual.text(title: course.type),
+            if (course.type != "n/a")
+              LmuInTextVisual.text(title: course.type),
             if (course.sws != null)
               LmuInTextVisual.text(title: '${course.sws!} SWS'),
             LmuInTextVisual.text(title: course.language),

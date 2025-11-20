@@ -16,7 +16,7 @@ class _$TestCourseDetailsPageDriver extends TestDriver
   int get courseId => 0;
 
   @override
-  CourseModel? get course => null;
+  CourseDetailsModel? get courseDetails => null;
 
   @override
   bool get isLoading => false;
@@ -42,7 +42,7 @@ class $CourseDetailsPageDriverProvider
   final int _courseId;
 
   $CourseDetailsPageDriverProvider({
-    required int courseId,
+    required int courseId, required String courseName,
   }) : _courseId = courseId;
 
   @override

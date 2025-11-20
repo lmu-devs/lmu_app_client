@@ -78,7 +78,7 @@ class CoursesOverviewDriver extends WidgetDriver implements _$DriverProvidedProp
   }
 
   void onCoursePressed(BuildContext context, CourseModel course) {
-    CourseDetailsRoute(facultyId: facultyId, courseId: course.publishId).push(context);
+    CourseDetailsRoute(facultyId: facultyId, courseId: course.publishId, courseName: course.name).push(context);
   }
 
   void onShowAllFacultiesPressed(BuildContext context) {

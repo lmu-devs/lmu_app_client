@@ -1,26 +1,28 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
-import 'package:core/themes.dart';
-import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../viewmodel/course_details_page_driver.dart';
 
 class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
-  CourseDetailsPage({super.key, required this.courseId});
+  CourseDetailsPage({
+    super.key,
+    required this.courseId,
+    required this.courseName,
+  });
 
   final int courseId;
+  final String courseName;
 
   @override
   Widget build(BuildContext context) {
-    final course = driver.course;
+    final courseDetails = driver.courseDetails;
 
     if (driver.isLoading) {
       return LmuScaffold(
         appBar: LmuAppBarData(
-          largeTitle: "TBD",
+          largeTitle: courseName,
           leadingAction: LeadingAction.back,
         ),
         body: const Center(
@@ -29,10 +31,10 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
       );
     }
 
-    if (course == null) {
+    if (courseDetails == null) {
       return LmuScaffold(
         appBar: LmuAppBarData(
-          largeTitle: "TBD",
+          largeTitle: courseName,
           leadingAction: LeadingAction.back,
         ),
         body: Center(
@@ -43,13 +45,13 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
 
     return LmuScaffold(
       appBar: LmuAppBarData(
-        largeTitle: course.name,
+        largeTitle: courseName,
         leadingAction: LeadingAction.back,
         trailingWidgets: [
           LmuFavoriteButton(
-            isFavorite: driver.isFavorite,
-            onTap: () => {} //driver.onFavoriteTap(context),
-          ),
+              isFavorite: driver.isFavorite,
+              onTap: () => driver.toggleFavorite(courseId),
+              ),
         ],
       ),
       body: SingleChildScrollView(
@@ -63,86 +65,8 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /**
-              if (driver.facultyAndRole.isNotEmpty) ...[
-                LmuText.body(
-                  driver.facultyAndRole,
-                  color: context.colors.neutralColors.textColors.mediumColors.base,
-                ),
-                const SizedBox(height: LmuSizes.size_2),
-              ],
-              const SizedBox(height: LmuSizes.size_32),
-              LmuTileHeadline.base(title: driver.contactText),
-              LmuContentTile(
-                contentList: [
-                  if (driver.email.isNotEmpty)
-                    LmuListItem.base(
-                      title: driver.emailText,
-                      subtitle: driver.email,
-                      leadingArea: const Icon(LucideIcons.mail),
-                      trailingArea: LmuIconButton(
-                        icon: LucideIcons.copy,
-                        onPressed: () => CopyToClipboardUtil.copyToClipboard(
-                          context: context,
-                          copiedText: driver.email,
-                          message: driver.copiedEmailText,
-                        ),
-                      ),
-                      onTap: () => driver.onEmailTap(context),
-                    ),
-                  if (driver.phone.isNotEmpty)
-                    LmuListItem.base(
-                      title: driver.phoneText,
-                      subtitle: driver.phone,
-                      leadingArea: const Icon(LucideIcons.phone),
-                      trailingArea: LmuIconButton(
-                        icon: LucideIcons.copy,
-                        onPressed: () => CopyToClipboardUtil.copyToClipboard(
-                          context: context,
-                          copiedText: driver.phone,
-                          message: driver.copiedPhoneText,
-                        ),
-                      ),
-                      onTap: () => driver.onPhoneTap(context),
-                    ),
-                  if (driver.website.isNotEmpty)
-                    LmuListItem.base(
-                      title: driver.websiteText,
-                      subtitle: driver.website,
-                      leadingArea: const Icon(LucideIcons.globe),
-                      trailingArea: LmuIconButton(
-                        icon: LucideIcons.copy,
-                        onPressed: () => CopyToClipboardUtil.copyToClipboard(
-                          context: context,
-                          copiedText: driver.website,
-                          message: driver.copiedWebsiteText,
-                        ),
-                      ),
-                      onTap: () => driver.onWebsiteTap(context),
-                    ),
-                ],
-              ),
-              const SizedBox(height: LmuSizes.size_16),
-              LmuContentTile(
-                contentList: [
-                  if (driver.room.isNotEmpty)
-                    LmuListItem.base(
-                      title: driver.roomText,
-                      subtitle: driver.room,
-                      trailingArea: LmuIconButton(
-                        icon: LucideIcons.map,
-                        onPressed: () => driver.onRoomTap(),
-                      ),
-                    ),
-                  if (driver.consultation.isNotEmpty)
-                    LmuListItem.base(
-                      title: driver.consultationHoursText,
-                      subtitle: driver.consultation,
-                    ),
-                ],
-              ),
-              const SizedBox(height: LmuSizes.size_96),
-                  **/
+              if (driver.courseDetails!.additionalInformation.isNotEmpty)
+              LmuText.body(driver.courseDetails!.additionalInformation),
             ],
           ),
         ),
@@ -152,5 +76,6 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
 
   @override
   WidgetDriverProvider<CourseDetailsPageDriver> get driverProvider =>
-      $CourseDetailsPageDriverProvider(courseId: courseId);
+      $CourseDetailsPageDriverProvider(
+          courseId: courseId, courseName: courseName);
 }

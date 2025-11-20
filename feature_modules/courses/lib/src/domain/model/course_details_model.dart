@@ -7,19 +7,19 @@ import 'session_model.dart';
 part 'course_details_model.g.dart';
 
 @JsonSerializable()
-class CourseDetailsModelModel extends Equatable {
-  const CourseDetailsModelModel({
+class CourseDetailsModel extends Equatable {
+  const CourseDetailsModel({
     required this.sessions,
     required this.persons,
     required this.additionalInformation,
     required this.lastUpdated,
   });
 
-  factory CourseDetailsModelModel.fromJson(Map<String, dynamic> json) => _$CourseDetailsModelModelFromJson(json);
+  factory CourseDetailsModel.fromJson(Map<String, dynamic> json) => _$CourseDetailsModelFromJson(json);
 
   final List<SessionModel> sessions;
   final List<PersonModel> persons;
-  @JsonKey(name: 'additional_information')
+  @JsonKey(name: 'addtional_information')
   final String additionalInformation;
   @JsonKey(name: 'last_updated')
   final String lastUpdated;
@@ -32,5 +32,5 @@ class CourseDetailsModelModel extends Equatable {
     lastUpdated,
   ];
 
-  Map<String, dynamic> toJson() => _$CourseDetailsModelModelToJson(this);
+  Map<String, dynamic> toJson() => _$CourseDetailsModelToJson(this);
 }

@@ -1,24 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'course_details_model.dart';
+part of 'course_details_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-CourseDetailsModel _$CourseDetailsModelFromJson(Map<String, dynamic> json) =>
-    CourseDetailsModel(
+CourseDetailsDto _$CourseDetailsDtoFromJson(Map<String, dynamic> json) =>
+    CourseDetailsDto(
       sessions: (json['sessions'] as List<dynamic>)
-          .map((e) => SessionModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => SessionDto.fromJson(e as Map<String, dynamic>))
           .toList(),
       persons: (json['persons'] as List<dynamic>)
-          .map((e) => PersonModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => PersonDto.fromJson(e as Map<String, dynamic>))
           .toList(),
       additionalInformation: json['addtional_information'] as String,
       lastUpdated: json['last_updated'] as String,
     );
 
-Map<String, dynamic> _$CourseDetailsModelToJson(CourseDetailsModel instance) =>
+Map<String, dynamic> _$CourseDetailsDtoToJson(CourseDetailsDto instance) =>
     <String, dynamic>{
       'sessions': instance.sessions,
       'persons': instance.persons,

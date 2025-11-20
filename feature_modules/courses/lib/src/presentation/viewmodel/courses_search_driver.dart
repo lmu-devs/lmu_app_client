@@ -66,7 +66,7 @@ class CoursesSearchDriver extends WidgetDriver implements _$DriverProvidedProper
 
   void onPersonPressed(BuildContext context, CourseModel course) {
     addRecentSearch(course);
-    CourseDetailsRoute(facultyId: facultyId, courseId: course.publishId).push(context);
+    CourseDetailsRoute(facultyId: facultyId, courseId: course.publishId, courseName: course.name).push(context);
   }
 
   void updateRecentSearch(List<CourseSearchEntry> recentSearchEntries) {

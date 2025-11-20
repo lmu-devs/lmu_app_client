@@ -48,10 +48,18 @@ class _$TestCoursesOverviewDriver extends TestDriver
   @override
   bool get hasFavorites => false;
 
-  List<CourseModel> get filteredCourses => [];
-
   @override
   Map<String, List<CourseModel>> get groupedCourses => {};
+
+  @override
+  Future<void> toggleFavorite(int id) {
+    return Future.value();
+  }
+
+  @override
+  bool isFavorite(int id) {
+    return false;
+  }
 
   @override
   void onCoursePressed(BuildContext context, CourseModel course) {}
