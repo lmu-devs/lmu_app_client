@@ -18,8 +18,8 @@ class PeopleFacultyOverviewDriver extends WidgetDriver {
   late LmuToast _toast;
 
   String get contactsText => _localizations.people.contacts;
-  String get myFacultiesText => _localizations.people.myFaculties;
-  String get allFacultiesText => _localizations.people.allFaculties;
+  String get myFacultiesText => _localizations.studies.myFaculties;
+  String get allFacultiesText => _localizations.studies.allFaculties;
 
   List<Faculty> get selectedFaculties => _facultiesApi.selectedFaculties;
 
@@ -30,7 +30,7 @@ class PeopleFacultyOverviewDriver extends WidgetDriver {
   String get largeTitle => contactsText;
 
   void onFacultyPressed(BuildContext context, Faculty faculty) {
-    PeopleOverviewRoute(facultyId: faculty.id).go(context);
+    PeopleOverviewRoute(facultyId: faculty.id).push(context);
   }
 
   void _onStateChanged() {

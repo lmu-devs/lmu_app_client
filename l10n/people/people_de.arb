@@ -10,13 +10,10 @@
   "phone": "Telefon",
   "room": "Raum",
   "consultationHours": "Sprechstunde",
-  "myFaculties": "Meine Fakultäten",
-  "allFaculties": "Alle Fakultäten",
-  "showAllFaculties": "Alle Fakultäten anzeigen",
   "favoritesA": "Füge Favoriten mit dem ",
   "favoritesB": " Symbol hinzu",
-  "people_subtitleTile": "aus der ",
   "copiedEmail": "E-Mail kopiert",
   "copiedWebsite": "Website kopiert",
-  "copiedPhone": "Telefonnummer kopiert"
+  "allPeople": "Alle Personen",
+  "professorFilter": "Professor:in"
 }

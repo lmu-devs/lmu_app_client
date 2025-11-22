@@ -25,5 +25,5 @@ class FaculitesMainRoute extends GoRouteData {
   static const String path = 'faculites';
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => _router.buildFaculites(context);
+  Widget build(BuildContext context, GoRouterState state) => _router.buildFaculties(context);
 }

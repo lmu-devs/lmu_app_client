@@ -30,8 +30,8 @@ class FavoriteLinkRow extends StatelessWidget {
           return ValueListenableBuilder<List<String>>(
             valueListenable: GetIt.I<HomePreferencesService>().likedLinksNotifier,
             builder: (context, likedLinks, child) {
-              final favoriteLinks = fetchedLinks.where((link) => likedLinks.contains(link.title)).toList()
-                ..sort((a, b) => likedLinks.indexOf(a.title).compareTo(likedLinks.indexOf(b.title)));
+              final favoriteLinks = fetchedLinks.where((link) => likedLinks.contains(link.id)).toList()
+                ..sort((a, b) => likedLinks.indexOf(a.id).compareTo(likedLinks.indexOf(b.id)));
 
               return likedLinks.isNotEmpty
                   ? Padding(

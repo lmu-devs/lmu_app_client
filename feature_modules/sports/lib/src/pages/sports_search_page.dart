@@ -38,7 +38,7 @@ class _SportsSearchPageState extends State<SportsSearchPage> {
   Widget build(BuildContext context) {
     return LmuSearchPage<SportsSearchEntry>(
       searchEntries: _searchEntries,
-      emptySearchEntriesTitle: context.locals.sports.reccommendations,
+      emptySearchEntriesTitle: context.locals.sports.recommendations,
       emptySearchEntries:
           _searchService.sportsRecommendations.map((sport) => SportsSearchEntry(title: sport.title)).toList(),
       recentSearchEntries: _recentSearchEntries,

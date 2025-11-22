@@ -7,23 +7,15 @@ part 'sports_model.g.dart';
 
 @JsonSerializable()
 class SportsModel extends Equatable {
-  const SportsModel({
-    required this.baseUrl,
-    required this.basicTicket,
-    required this.sportTypes,
-  });
+  const SportsModel({required this.sportTypes});
 
   factory SportsModel.fromJson(Map<String, dynamic> json) => _$SportsModelFromJson(json);
 
-  @JsonKey(name: 'base_url')
-  final String baseUrl;
-  @JsonKey(name: 'basic_ticket')
-  final SportsType basicTicket;
   @JsonKey(name: 'sport_types')
   final List<SportsType> sportTypes;
 
   Map<String, dynamic> toJson() => _$SportsModelToJson(this);
 
   @override
-  List<Object?> get props => [baseUrl, basicTicket, sportTypes];
+  List<Object?> get props => [sportTypes];
 }

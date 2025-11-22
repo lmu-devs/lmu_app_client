@@ -52,6 +52,7 @@ class FeedbackPage extends DrivableWidget<FeedbackPageDriver> {
                       controller: driver.textEditingController,
                       isAutocorrect: true,
                     ),
+                    const SizedBox(height: LmuSizes.size_72 + LmuSizes.size_8),
                   ],
                 ),
               ),

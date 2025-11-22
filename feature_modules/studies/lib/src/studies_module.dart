@@ -19,7 +19,7 @@ class StudiesModule extends AppModule
 
   @override
   Future onAppStartWaiting() {
-    return GetIt.I.get<GetFacultiesUsecase>().initFaculites();
+    return GetIt.I.get<GetFacultiesUsecase>().initFaculties();
   }
 
   @override

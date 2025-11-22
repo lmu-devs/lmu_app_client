@@ -4,27 +4,39 @@ import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 
 import '../cubit/sports_cubit/cubit.dart';
-import '../extensions/sports_url_constructor_extension.dart';
+import '../extensions/extensions.dart';
 import '../repository/api/models/sports_favorites.dart';
 import '../repository/api/models/sports_type.dart';
 import '../repository/sports_repository.dart';
 
-enum SportsFilterOption { all, available }
+enum SportsFilterOption { available, today }
 
 class SportsStateService {
   final _sportsCubit = GetIt.I.get<SportsCubit>();
   final _sportsRepo = GetIt.I.get<SportsRepository>();
 
-  final ValueNotifier<Map<String, List<SportsType>>> _filteredGroupedSportsNotifier = ValueNotifier({});
-  ValueNotifier<Map<String, List<SportsType>>> get filteredGroupedSportsNotifier => _filteredGroupedSportsNotifier;
+  final ValueNotifier<Map<String, List<SportsType>>>
+      _filteredGroupedSportsNotifier = ValueNotifier({});
 
-  final _filterOptionsNotifier = ValueNotifier({SportsFilterOption.all: true, SportsFilterOption.available: false});
-  ValueNotifier<Map<SportsFilterOption, bool>> get filterOptionsNotifier => _filterOptionsNotifier;
+  ValueNotifier<Map<String, List<SportsType>>>
+      get filteredGroupedSportsNotifier => _filteredGroupedSportsNotifier;
 
-  final _favoriteSportsCoursesNotifier = ValueNotifier<List<SportsFavorites>>([]);
-  ValueNotifier<List<SportsFavorites>> get favoriteSportsCoursesNotifier => _favoriteSportsCoursesNotifier;
+  final _filterOptionsNotifier = ValueNotifier({
+    SportsFilterOption.available: false,
+    SportsFilterOption.today: false,
+  });
+
+  ValueNotifier<Map<SportsFilterOption, bool>> get filterOptionsNotifier =>
+      _filterOptionsNotifier;
+
+  final _favoriteSportsCoursesNotifier =
+      ValueNotifier<List<SportsFavorites>>([]);
+
+  ValueNotifier<List<SportsFavorites>> get favoriteSportsCoursesNotifier =>
+      _favoriteSportsCoursesNotifier;
 
   final _isSearchActiveNotifier = ValueNotifier(false);
+
   ValueNotifier<bool> get isSearchActiveNotifier => _isSearchActiveNotifier;
 
   Map<String, List<SportsType>> _initialSportTypes = {};
@@ -33,16 +45,16 @@ class SportsStateService {
     _sportsCubit.stream.withInitialValue(_sportsCubit.state).listen(
       (state) {
         if (state is SportsLoadInProgress && state.sports != null) {
-          _initialSportTypes = groupBy(state.sports!.sportTypes, (sport) => sport.title[0].toUpperCase());
-          _filteredGroupedSportsNotifier.value = _initialSportTypes;
-          _baseUrl = state.sports!.baseUrl;
+          _initialSportTypes = groupBy(state.sports!.sportTypes,
+              (sport) => sport.title[0].toUpperCase());
+          _updateFilteredSports();
           _sportsRepo.getFavoriteSports().then((value) {
             _favoriteSportsCoursesNotifier.value = value;
           });
         } else if (state is SportsLoadSuccess) {
-          _initialSportTypes = groupBy(state.sports.sportTypes, (sport) => sport.title[0].toUpperCase());
-          _filteredGroupedSportsNotifier.value = _initialSportTypes;
-          _baseUrl = state.sports.baseUrl;
+          _initialSportTypes = groupBy(
+              state.sports.sportTypes, (sport) => sport.title[0].toUpperCase());
+          _updateFilteredSports();
           _sportsRepo.getFavoriteSports().then((value) {
             _favoriteSportsCoursesNotifier.value = value;
           });
@@ -69,7 +81,8 @@ class SportsStateService {
         existingEntry.favorites.add(courseId);
       }
     } else {
-      currentFavorites.add(SportsFavorites(category: sportType, favorites: [courseId]));
+      currentFavorites
+          .add(SportsFavorites(category: sportType, favorites: [courseId]));
     }
 
     currentFavorites.sort((a, b) => a.category.compareTo(b.category));
@@ -78,32 +91,41 @@ class SportsStateService {
     await _sportsRepo.saveFavoriteSports(currentFavorites);
   }
 
-  String _baseUrl = "";
-  String constructUrl(String title) => _baseUrl.constructSportsUrl(title);
-
   void _updateFilteredSports() {
-    final currentFilterOptions = _filterOptionsNotifier.value;
-    final currentAllValue = currentFilterOptions[SportsFilterOption.all]!;
-    final currentAvailableValue = currentFilterOptions[SportsFilterOption.available]!;
+    final activeFilters = _filterOptionsNotifier.value;
+    final isAvailableFilterActive =
+        activeFilters[SportsFilterOption.available] ?? false;
+    final isTodayFilterActive =
+        activeFilters[SportsFilterOption.today] ?? false;
 
-    final filteredSports = _initialSportTypes.entries.fold<Map<String, List<SportsType>>>(
+    if (!isAvailableFilterActive && !isTodayFilterActive) {
+      _filteredGroupedSportsNotifier.value = _initialSportTypes;
+      return;
+    }
+
+    final filteredSports =
+        _initialSportTypes.entries.fold<Map<String, List<SportsType>>>(
       {},
       (acc, entry) {
         final key = entry.key;
-        final value = entry.value;
+        final sportsList = entry.value;
 
-        final filteredValue = value.where((sport) {
-          if (currentAllValue) {
-            return true;
-          } else if (currentAvailableValue) {
-            return sport.courses.any((course) => course.isAvailable);
-          }
+        final filteredSportsList = sportsList
+            .map((sport) {
+              final filteredCourses = sport.courses.where((course) {
+                final availableCondition =
+                    !isAvailableFilterActive || course.isAvailable;
+                final todayCondition = !isTodayFilterActive || course.runsToday;
+                return availableCondition && todayCondition;
+              }).toList();
 
-          return false;
-        }).toList();
+              return SportsType(title: sport.title, courses: filteredCourses);
+            })
+            .where((sport) => sport.courses.isNotEmpty)
+            .toList();
 
-        if (filteredValue.isNotEmpty) {
-          acc[key] = filteredValue;
+        if (filteredSportsList.isNotEmpty) {
+          acc[key] = filteredSportsList;
         }
 
         return acc;
@@ -113,21 +135,20 @@ class SportsStateService {
     _filteredGroupedSportsNotifier.value = filteredSports;
   }
 
-  void applyFilter(SportsFilterOption filterOption) {
-    final currentFilterOptions = _filterOptionsNotifier.value;
-    final currentAllValue = currentFilterOptions[SportsFilterOption.all]!;
-    final currentAvailableValue = currentFilterOptions[SportsFilterOption.available]!;
+  void toggleFilter(SportsFilterOption filterOption) {
+    final newFilterState =
+        Map<SportsFilterOption, bool>.from(_filterOptionsNotifier.value);
+    newFilterState[filterOption] = !(newFilterState[filterOption] ?? false);
 
-    _filterOptionsNotifier.value = {
-      SportsFilterOption.all: !currentAllValue,
-      SportsFilterOption.available: !currentAvailableValue,
-    };
-
+    _filterOptionsNotifier.value = newFilterState;
     _updateFilteredSports();
   }
 
   void resetFilter() {
-    _filterOptionsNotifier.value = {SportsFilterOption.all: true, SportsFilterOption.available: false};
-    _filteredGroupedSportsNotifier.value = _initialSportTypes;
+    _filterOptionsNotifier.value = {
+      SportsFilterOption.available: false,
+      SportsFilterOption.today: false,
+    };
+    _updateFilteredSports();
   }
 }

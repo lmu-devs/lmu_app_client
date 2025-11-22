@@ -153,7 +153,7 @@ class ScreeningCard extends StatelessWidget {
                         LmuText.bodySmall(
                           screening.isOv == true
                               ? context.locals.cinema.ov
-                              : (screening.isOv == false ? context.locals.cinema.germanTranslation : '-'),
+                              : (screening.isOv == false ? context.locals.cinema.germanTranslation : ''),
                           color: context.colors.neutralColors.textColors.mediumColors.base,
                         ),
                       ],

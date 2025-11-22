@@ -13,15 +13,15 @@ class GetFacultiesUsecase extends ChangeNotifier {
   List<Faculty> _faculties = [];
   List<Faculty> _selectedFaculties = [];
 
-  List<Faculty> get allFaculites => _faculties;
+  List<Faculty> get allFaculties => _faculties;
   List<Faculty> get selectedFaculties => _selectedFaculties;
 
-  void selectFaculties(List<Faculty> faculites) {
-    _selectedFaculties = faculites;
-    _repository.saveSelectedFacultyIds(faculites.map((f) => f.id).toList());
+  void selectFaculties(List<Faculty> faculties) {
+    _selectedFaculties = faculties;
+    _repository.saveSelectedFacultyIds(faculties.map((f) => f.id).toList());
   }
 
-  Future<void> initFaculites() async {
+  Future<void> initFaculties() async {
     try {
       final faculties = await _repository.getFaculties();
       _faculties = faculties;

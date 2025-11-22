@@ -2,5 +2,9 @@
   "@@locale": "en",
   "@@context": "Studies",
   "studiesTitle": "Studies",
-  "facultiesTitle": "Faculites"
+  "facultiesTitle": "Faculties",
+  "myFaculties": "My Faculties",
+  "allFaculties": "All Faculties",
+  "showAllFaculties": "Show All Faculties",
+  "facultiesSubtitle": "from the {facultyName}"
 }

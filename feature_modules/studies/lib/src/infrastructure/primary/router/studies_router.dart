@@ -9,5 +9,5 @@ class StudiesRouterImpl extends StudiesRouter {
   Widget buildMain(BuildContext context) => StudiesPage();
 
   @override
-  Widget buildFaculites(BuildContext context) => FaculitesPage();
+  Widget buildFaculties(BuildContext context) => FacultiesPage();
 }

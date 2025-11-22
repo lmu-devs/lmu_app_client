@@ -1,7 +1,10 @@
 import 'package:core/logging.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
+import '../bloc/links/links.dart';
+import '../repository/api/enums/link_sort_options.dart';
 import '../repository/home_repository.dart';
 
 class HomePreferencesService {
@@ -10,15 +13,22 @@ class HomePreferencesService {
   final _homeRepository = GetIt.I.get<HomeRepository>();
   final _appLogger = AppLogger();
 
+  final ValueNotifier<bool> _isFeaturedClosedNotifier = ValueNotifier<bool>(false);
+
+  ValueNotifier<bool> get isFeaturedClosedNotifier => _isFeaturedClosedNotifier;
+
   final _likedLinksNotifier = ValueNotifier<List<String>>([]);
+
   ValueNotifier<List<String>> get likedLinksNotifier => _likedLinksNotifier;
 
-  final ValueNotifier<bool> _isFeaturedClosedNotifier = ValueNotifier<bool>(false);
-  ValueNotifier<bool> get isFeaturedClosedNotifier => _isFeaturedClosedNotifier;
+  final _linksSortOptionNotifier = ValueNotifier<SortOption>(SortOption.rating);
+
+  ValueNotifier<SortOption> get linksSortOptionNotifier => _linksSortOptionNotifier;
 
   Future init() {
     return Future.wait([
       initLikedLinks(),
+      _initLinksSorting(),
     ]);
   }
 
@@ -31,6 +41,31 @@ class HomePreferencesService {
     final likedLinks = await _homeRepository.getLikedLinks() ?? [];
     _likedLinksNotifier.value = likedLinks;
     _appLogger.logMessage('[HomePreferenceService]: Local liked links: $likedLinks');
+
+    final linksCubit = GetIt.I<LinksCubit>();
+    final linksCubitState = linksCubit.state;
+    linksCubit.stream.withInitialValue(linksCubitState).listen((state) async {
+      if (state is LinksLoadSuccess) {
+        final retrievedLikedLinks = state.links
+            .where((link) => link.rating.isLiked)
+            .map((link) => link.id)
+            .toList();
+        _appLogger.logMessage('[HomePreferencesService]: Retrieved favorite link ids: $retrievedLikedLinks');
+
+        final unsyncedLikedLinks = likedLinks
+            .where((id) => !retrievedLikedLinks.contains(id))
+            .toList();
+
+        final unsyncedUnlikedLinks = retrievedLikedLinks
+            .where((id) => !likedLinks.contains(id))
+            .toList();
+
+        final missingSyncLinks = unsyncedLikedLinks + unsyncedUnlikedLinks;
+        for (final missingSyncLink in missingSyncLinks) {
+          await _homeRepository.toggleFavoriteLinks(missingSyncLink);
+        }
+      }
+    });
   }
 
   Future<void> toggleLikedLinks(String id) async {
@@ -49,6 +84,19 @@ class HomePreferencesService {
   Future<void> updateLikedLinks(List<String> likedLinks) async {
     _likedLinksNotifier.value = likedLinks;
     await _homeRepository.saveLikedLinks(likedLinks);
+  }
+
+  Future<void> _initLinksSorting() async {
+    final loadedSortOption = await _homeRepository.getSortOption();
+    if (loadedSortOption != null) {
+      _linksSortOptionNotifier.value = loadedSortOption;
+    }
+  }
+
+  Future<void> updateLinksSorting(SortOption sortOption) async {
+    _linksSortOptionNotifier.value = sortOption;
+    await _homeRepository.setSortOption(sortOption);
+    _appLogger.logMessage('[HomePreferencesService]: Saved sort option: $sortOption');
   }
 
   Future reset() {

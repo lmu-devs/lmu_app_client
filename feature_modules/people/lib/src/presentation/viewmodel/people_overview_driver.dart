@@ -27,7 +27,10 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
   late LmuLocalizations _localizations;
   late LmuToast _toast;
 
-  String get showAllFacultiesText => _localizations.people.showAllFaculties;
+  bool _isProfessorFilterActive = false;
+  bool get isProfessorFilterActive => _isProfessorFilterActive;
+
+  String get showAllFacultiesText => _localizations.studies.showAllFaculties;
 
   List<Faculty> get selectedFaculties => _facultiesApi.selectedFaculties;
   List<Faculty> get allFaculties => _facultiesApi.allFaculties;
@@ -38,7 +41,7 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
 
   String get largeTitle {
     final faculty = allFaculties.firstWhere((f) => f.id == facultyId);
-    return '${_localizations.people.people_subtitleTile}${faculty.name}';
+    return _localizations.studies.facultiesSubtitle(faculty.name);
   }
 
   List<People> get people => _usecase.data;
@@ -50,7 +53,15 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
   bool get hasFavorites => _favoritesUsecase.favoriteIds.isNotEmpty;
 
   List<People> get filteredPeople {
-    var filtered = nonFavoritePeople;
+    var filtered = people;
+
+    if (_isProfessorFilterActive) {
+      filtered = filtered.where((person) {
+        final title = person.title.toLowerCase();
+        return title.contains('professor') || title.contains('prof');
+      }).toList();
+    }
+
     filtered.sort((a, b) => a.surname.compareTo(b.surname));
     return filtered;
   }
@@ -76,11 +87,20 @@ class PeopleOverviewDriver extends WidgetDriver implements _$DriverProvidedPrope
   }
 
   void onPersonPressed(BuildContext context, People person) {
-    PeopleDetailsRoute(facultyId: facultyId, personId: person.id).go(context);
+    PeopleDetailsRoute(facultyId: facultyId, personId: person.id).push(context);
   }
 
   void onShowAllFacultiesPressed(BuildContext context) {
-    const PeopleFacultyOverviewRoute().go(context);
+    const PeopleFacultyOverviewRoute().push(context);
+  }
+
+  void onSearchPressed(BuildContext context) {
+    PeopleSearchRoute(facultyId: facultyId).push(context);
+  }
+
+  void toggleProfessorFilter() {
+    _isProfessorFilterActive = !_isProfessorFilterActive;
+    notifyWidget();
   }
 
   void _onStateChanged() {

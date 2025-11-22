@@ -31,6 +31,7 @@ class HomeModule extends AppModule
 
   @override
   void onAppStartNotice() {
+    GetIt.I.get<HomeRepository>().performLikedLinksMigrationV1();
     GetIt.I.get<HomePreferencesService>().init();
     GetIt.I.get<HomeCubit>().loadHomeData();
     GetIt.I.get<LinksCubit>().getLinks();

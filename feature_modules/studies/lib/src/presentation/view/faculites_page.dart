@@ -1,12 +1,13 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_api/studies.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../viewmodel/faculites_page_driver.dart';
 
-class FaculitesPage extends DrivableWidget<FaculitesPageDriver> {
-  FaculitesPage({super.key});
+class FacultiesPage extends DrivableWidget<FaculitesPageDriver> {
+  FacultiesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class FaculitesPage extends DrivableWidget<FaculitesPageDriver> {
               contentList: driver.allFaculties
                   .map(
                     (faculty) => LmuListItem.action(
-                      leadingArea: LmuText.h2(faculty.id.toString()),
+                      leadingArea: FacultyNumberWidget(facultyId: faculty.id),
                       actionType: LmuListItemAction.checkbox,
                       title: faculty.name,
                       onChange: (val) => driver.onFacultySelected(faculty, val),

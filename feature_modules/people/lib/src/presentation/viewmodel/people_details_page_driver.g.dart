@@ -10,7 +10,8 @@ part of 'people_details_page_driver.dart';
 
 // This file was generated with widget_driver_generator version "1.3.5"
 
-class _$TestPeopleDetailsPageDriver extends TestDriver implements PeopleDetailsPageDriver {
+class _$TestPeopleDetailsPageDriver extends TestDriver
+    implements PeopleDetailsPageDriver {
   @override
   int get personId => 0;
 
@@ -132,7 +133,8 @@ class _$TestPeopleDetailsPageDriver extends TestDriver implements PeopleDetailsP
   void dispose() {}
 }
 
-class $PeopleDetailsPageDriverProvider extends WidgetDriverProvider<PeopleDetailsPageDriver> {
+class $PeopleDetailsPageDriverProvider
+    extends WidgetDriverProvider<PeopleDetailsPageDriver> {
   final int _personId;
 
   $PeopleDetailsPageDriverProvider({
