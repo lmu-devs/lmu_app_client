@@ -13,15 +13,17 @@ class CalendarEntry extends Equatable {
     required this.eventType,
     required this.startTime,
     required this.endTime,
-    required this.color,
-    required this.location,
+    this.color,
     required this.allDay,
+    this.location,
+    this.onlineLink,
     this.description,
     this.address,
     this.rule,
     this.recurrenceId,
     this.createdAt,
     this.updatedAt,
+    this.accessScope,
   });
 
   // All nested values with custom types need to extend Equatable for some operations to work efficiently!
@@ -31,15 +33,17 @@ class CalendarEntry extends Equatable {
   final DateTime startTime;
   final DateTime endTime;
   final bool allDay;
-  final Color color;
-  final LocationModel location;
+  final Color? color;
 
+  final LocationModel? location;
+  final String? onlineLink;
   final String? description;
   final String? address;
   final CalendarRule? rule;
   final int? recurrenceId;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final int? accessScope;
 
   @override
   List<Object?> get props => [
@@ -51,12 +55,14 @@ class CalendarEntry extends Equatable {
         allDay,
         color,
         location,
+        onlineLink,
         description,
         address,
         rule,
         recurrenceId,
         createdAt,
         updatedAt,
+        accessScope,
       ];
 
   /// Checks if the event occurs on the given date
@@ -107,28 +113,32 @@ class CalendarEntry extends Equatable {
     bool? allDay,
     Color? color,
     LocationModel? location,
+    String? onlineLink,
     String? description,
     String? address,
     CalendarRule? rule,
     int? recurrenceId,
     DateTime? createdAt,
     DateTime? updatedAt,
+    int? accessScope,
   }) {
     return CalendarEntry(
       id: id ?? this.id,
       title: title ?? this.title,
-      eventType: type ?? this.eventType,
+      eventType: type ?? eventType,
       startTime: startTime ?? this.startTime,
       endTime: endTime ?? this.endTime,
       allDay: allDay ?? this.allDay,
       color: color ?? this.color,
       location: location ?? this.location,
+      onlineLink: onlineLink ?? onlineLink,
       description: description ?? this.description,
       address: address ?? this.address,
       rule: rule ?? this.rule,
       recurrenceId: recurrenceId ?? this.recurrenceId,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      accessScope: accessScope ?? this.accessScope,
     );
   }
 }

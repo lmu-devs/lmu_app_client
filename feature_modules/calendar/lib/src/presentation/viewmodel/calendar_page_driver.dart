@@ -20,7 +20,8 @@ class CalendarPageDriver extends WidgetDriver {
   late AppLocalizations _appLocalizations;
   late LmuToast _toast;
 
-  late List<CalendarEntry>? _calendarEntries;
+  late List<CalendarEntry> _calendarEntries = [];
+  late List<CalendarEntry> _allCalendarEntries = [];
   late CalendarEntriesLoadState _calendarEntriesLoadState;
 
   bool get isLoadingEvents => _calendarEntriesLoadState != CalendarEntriesLoadState.success;
@@ -28,45 +29,39 @@ class CalendarPageDriver extends WidgetDriver {
 
   CalendarViewType _viewType = CalendarViewType.list;
   bool _isDatePickerExpanded = false;
-  DateTimeRange _selectedDateTimeRange = DateTime.now().dateTimeRangeFromDateTime;
+  DateTimeRange _selectedDateTimeRange = DateTime.now().monthRangeFromDateTime;
   int _scrollToDateRequest = 0;
 
   @TestDriverDefaultValue(false)
   bool get isDatePickerExpanded => _isDatePickerExpanded;
   @TestDriverDefaultValue(CalendarViewType.list)
   CalendarViewType get viewType => _viewType;
-  @TestDriverDefaultValue('2025-01-01')
-  DateTimeRange get selectedDateTimeRange => _selectedDateTimeRange;
+  @TestDriverDefaultValue(null)
+  DateTimeRange? get selectedDateTimeRange => _selectedDateTimeRange;
   @TestDriverDefaultValue(0)
   int get scrollToDateRequest => _scrollToDateRequest;
 
-  // Getter for the current date range
-  // This code is only used for testing purposes as it is not very efficient to compute the date range every time
   Future<void> loadEvents() async {
     _calendarEntriesLoadState = CalendarEntriesLoadState.loading;
     notifyWidget();
 
     await _getCalendarEntriesByDateUsecase.load();
     // await _getCalendarEntriesByDateUsecase.load(dateRange: _selectedDateTimeRange);
-
     _allCalendarEntries = _getCalendarEntriesByDateUsecase.data;
 
     _calendarEntriesLoadState = CalendarEntriesLoadState.success;
     notifyWidget();
   }
 
-  late List<CalendarEntry>? _allCalendarEntries;
-
-  List<CalendarEntry>? get calendarEntries {
-    if (_allCalendarEntries == null) return null;
-    return _allCalendarEntries!.where((entry) {
+  List<CalendarEntry> get calendarEntries {
+    return _allCalendarEntries.where((entry) {
       return entry.overlapsWithRange(_selectedDateTimeRange);
     }).toList();
   }
 
   void onCalendarViewTypeChanged(CalendarViewType mode) {
     _viewType = mode;
-    loadEvents();
+    notifyWidget();
   }
 
   void onDateTimeRangeSelected(DateTimeRange dateRange) {
@@ -97,14 +92,12 @@ class CalendarPageDriver extends WidgetDriver {
     const CalendarTestRoute().go(context);
   }
 
-  void _onCalendarEntriesStateChanged() {
-    _calendarEntriesLoadState = _getCalendarEntriesByDateUsecase.loadState;
-    _calendarEntries = _getCalendarEntriesByDateUsecase.data;
-    notifyWidget();
+  void onSearchPressed(BuildContext context) {
+    const CalendarSearchRoute().go(context);
+  }
 
-    if (_calendarEntriesLoadState == CalendarEntriesLoadState.error) {
-      _showErrorToast();
-    }
+  void onCreatePressed(BuildContext context) {
+    const CalendarCreateRoute().go(context);
   }
 
   void _onCalendarEntriesStateChanged() {
@@ -129,11 +122,8 @@ class CalendarPageDriver extends WidgetDriver {
   @override
   void didInitDriver() {
     super.didInitDriver();
-    _calendarEntriesLoadState = _getCalendarEntriesByDateUsecase.loadState;
-    _calendarEntries = _getCalendarEntriesByDateUsecase.data;
-    loadEvents();
     _getCalendarEntriesByDateUsecase.addListener(_onCalendarEntriesStateChanged);
-    _getCalendarEntriesByDateUsecase.load(dateRange: _selectedDateTimeRange);
+    loadEvents();
   }
 
   @override

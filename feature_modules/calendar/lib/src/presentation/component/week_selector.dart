@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../domain/model/calendar_entry.dart';
+import '../../domain/model/event_type.dart';
 
 class WeekdaySelector extends StatefulWidget {
   const WeekdaySelector({
@@ -44,7 +45,7 @@ class _WeekdaySelectorState extends State<WeekdaySelector> {
             entry.startTime.year == day.year && entry.startTime.month == day.month && entry.startTime.day == day.day)
         .toList();
 
-    return events.map((e) => e.color).toSet().toList();
+    return events.map((e) => e.color ?? e.eventType.defaultColor).toSet().toList();
   }
 
   @override

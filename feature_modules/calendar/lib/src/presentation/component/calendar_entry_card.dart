@@ -18,6 +18,7 @@ class CalendarCard extends StatelessWidget {
     super.key,
     required this.entry,
     this.fontSizeOverride,
+    this.noBorder = true,
     required this.onTap,
   }) : _isUnbounded = true;
 
@@ -30,12 +31,14 @@ class CalendarCard extends StatelessWidget {
     required this.entry,
     this.fontSizeOverride,
     required this.onTap,
+    this.noBorder = false,
   }) : _isUnbounded = false;
 
   final CalendarEntry entry;
   final double? fontSizeOverride;
   final void Function() onTap;
   final bool _isUnbounded;
+  final bool noBorder;
 
   static const double _verticalTextSpacing = LmuSizes.size_2;
 
@@ -43,13 +46,10 @@ class CalendarCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final Widget cardContent = _isUnbounded ? _buildUnboundedLayout(context) : _buildBoundedLayout(context);
 
-    // The GestureDetector and basic card shell are shared between both layouts.
+    // The GestureDetector is shared between both layouts.
     return GestureDetector(
       onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_2),
-        child: _isUnbounded ? IntrinsicWidth(child: cardContent) : cardContent,
-      ),
+      child: _isUnbounded ? IntrinsicWidth(child: cardContent) : cardContent,
     );
   }
 
@@ -69,37 +69,42 @@ class CalendarCard extends StatelessWidget {
 
         return ClipRRect(
           clipBehavior: Clip.antiAlias,
-          borderRadius: BorderRadius.circular(8.0),
-          child: Container(
-            decoration: _getCardStyle(context, entry),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                CalendarCardVerticalColorBar(color: entry.color),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, LmuSizes.size_8, LmuSizes.size_8, LmuSizes.size_8),
-                    child: Wrap(
-                      children: [
-                        CalendarCardTitleWithTags(
-                          entry: entry,
-                          titleMaxLines: titleMaxLines,
-                          verticalTextSpacing: _verticalTextSpacing,
-                          wrapTags: wrapTags,
-                        ),
-                        CalendarCardTimeAndLocationColumn(
-                          startTime: entry.startTime,
-                          endTime: entry.endTime,
-                          location: entry.location.address,
-                          timeMaxLines: timeMaxLines,
-                          locationMaxLines: locationMaxLines,
-                          verticalTextSpacing: _verticalTextSpacing,
-                        ),
-                      ],
+          borderRadius: BorderRadius.circular(LmuSizes.size_8),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_2),
+            child: Container(
+              decoration: _getCardStyle(context, entry, noBorder),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  CalendarCardVerticalColorBar(
+                    color: entry.color ?? entry.eventType.defaultColor,
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, LmuSizes.size_8, LmuSizes.size_8, LmuSizes.size_8),
+                      child: Wrap(
+                        children: [
+                          CalendarCardTitleWithTags(
+                            entry: entry,
+                            titleMaxLines: titleMaxLines,
+                            verticalTextSpacing: _verticalTextSpacing,
+                            wrapTags: wrapTags,
+                          ),
+                          CalendarCardTimeAndLocationColumn(
+                            startTime: entry.startTime,
+                            endTime: entry.endTime,
+                            location: entry.location?.address ?? entry.onlineLink ?? '',
+                            timeMaxLines: timeMaxLines,
+                            locationMaxLines: locationMaxLines,
+                            verticalTextSpacing: _verticalTextSpacing,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
@@ -109,12 +114,14 @@ class CalendarCard extends StatelessWidget {
 
   Widget _buildUnboundedLayout(BuildContext context) {
     return Container(
-      decoration: _getCardStyle(context, entry),
+      decoration: _getCardStyle(context, entry, noBorder),
       child: IntrinsicHeight(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            CalendarCardVerticalColorBar(color: entry.color),
+            CalendarCardVerticalColorBar(
+              color: entry.color ?? entry.eventType.defaultColor,
+            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(0, LmuSizes.size_8, LmuSizes.size_8, LmuSizes.size_8),
@@ -133,7 +140,7 @@ class CalendarCard extends StatelessWidget {
                       endTime: entry.endTime,
                       timeMaxLines: 2,
                       locationMaxLines: 2,
-                      location: entry.location.address,
+                      location: entry.location?.address ?? entry.onlineLink ?? '',
                       verticalTextSpacing: _verticalTextSpacing,
                     ),
                   ],
@@ -147,14 +154,20 @@ class CalendarCard extends StatelessWidget {
   }
 }
 
-BoxDecoration _getCardStyle(BuildContext context, CalendarEntry entry) {
+BoxDecoration _getCardStyle(BuildContext context, CalendarEntry entry, bool noBorder) {
   return BoxDecoration(
-    borderRadius: BorderRadius.circular(8.0),
-    border: Border.all(
-      color: context.colors.neutralColors.textColors.mediumColors.base.withAlpha(40),
-      width: 0.5,
-      strokeAlign: BorderSide.strokeAlignInside,
-    ),
+    borderRadius: BorderRadius.circular(LmuSizes.size_8),
+    border: noBorder
+        ? Border.all(
+            color: Colors.transparent,
+            width: 0.5,
+            strokeAlign: BorderSide.strokeAlignInside,
+          )
+        : Border.all(
+            color: context.colors.neutralColors.textColors.mediumColors.base.withAlpha(40),
+            width: 0.5,
+            strokeAlign: BorderSide.strokeAlignInside,
+          ),
     gradient: entry.eventType == EventType.exam || entry.eventType == EventType.movie
         ? LinearGradient(
             colors: [
@@ -246,7 +259,7 @@ class CalendarCardTitleWithTags extends StatelessWidget {
         LmuInTextVisual.icon(icon: LucideIcons.clapperboard),
         LmuInTextVisual.icon(icon: LucideIcons.star),
       ],
-      if (entry.location != null && entry.location!.isOnline && entry.eventType != EventType.movie)
+      if (entry.onlineLink != null && entry.eventType != EventType.movie)
         LmuInTextVisual.icon(icon: LucideIcons.external_link),
       if (entry.rule != null && entry.rule!.isRecurring) LmuInTextVisual.icon(icon: LucideIcons.repeat),
     ];

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../domain/model/calendar_entry.dart';
+import '../../domain/model/event_type.dart';
 
 class MonthDaySelector extends StatefulWidget {
   const MonthDaySelector({
@@ -41,7 +42,7 @@ class _MonthDaySelectorState extends State<MonthDaySelector> {
 
   List<Color> _getEventColorsForDay(DateTime day) {
     final events = widget.entries.where((entry) => day.isSameDay(entry.startTime)).toList();
-    return events.map((e) => e.color).toSet().toList();
+    return events.map((e) => e.color ?? e.eventType.defaultColor).toSet().toList();
   }
 
   @override
@@ -53,7 +54,7 @@ class _MonthDaySelectorState extends State<MonthDaySelector> {
         final firstDayWeekday = DateTimeExtension.firstDayWeekday(widget.selectedDate);
         final numRows = ((daysInMonth + firstDayWeekday - 1) / 7).ceil();
         final cellHeight = constraints.maxWidth / 7;
-        final totalHeight = (cellHeight * numRows) + LmuSizes.size_32; // LmuSizes.size_32 for the weekday names
+        final totalHeight = (cellHeight * numRows) + LmuSizes.size_32;
 
         return SizedBox(
           height: totalHeight,
@@ -65,7 +66,7 @@ class _MonthDaySelectorState extends State<MonthDaySelector> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: List.generate(7, (index) {
-                    // Adjust index to start on Monday
+                    // Adjusting index to start on Monday
                     // TODO: if locale starts on Sunday, this might need a check
                     final weekday = (index + 1) % 7;
                     final day = DateTime(2025, 1, 6 + weekday); // A Monday date
@@ -152,7 +153,7 @@ class _MonthDaySelectorState extends State<MonthDaySelector> {
                                           .take(3)
                                           .map((color) => Padding(
                                                 padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_2),
-                                                child: Icon(Icons.circle, size: 6, color: color),
+                                                child: Icon(Icons.circle, size: LmuSizes.size_6, color: color),
                                               ))
                                           .toList(),
                                     ),

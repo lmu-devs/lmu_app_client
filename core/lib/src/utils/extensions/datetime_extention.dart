@@ -121,6 +121,14 @@ extension DateTimeExtension on DateTime {
     return true;
   }
 
+  DateTime addDays(int days) {
+    return add(Duration(days: days));
+  }
+
+  DateTime subtractDays(int days) {
+    return subtract(Duration(days: days));
+  }
+
   DateTime addMonth() {
     return DateTime(year, month + 1, day, hour, minute, second, millisecond, microsecond);
   }
@@ -200,5 +208,21 @@ extension DateTimeExtension on DateTime {
   /// The range starts at 00:00:01 and ends at 23:59:59 of the given day.
   DateTimeRange get dateTimeRangeFromDateTime {
     return DateTimeRange(start: startOfDay, end: endOfDay);
+  }
+
+  /// Converts a [DateTime] to a [DateTimeRange] covering the entire week that the day is part of.
+  /// The range starts at 00:00:01 on the Monday of the week and ends at 23:59:59 on the Sunday of the week.
+  DateTimeRange get weekRangeFromDateTime {
+    final startOfWeek = subtractDays(weekday - 1).startOfDay;
+    final endOfWeek = addDays(7 - weekday).endOfDay;
+    return DateTimeRange(start: startOfWeek, end: endOfWeek);
+  }
+
+  /// Converts a [DateTime] to a [DateTimeRange] covering the entire month that the day is part of.
+  /// The range starts at 00:00:01 on the first day of the month and ends at 23:59:59 on the last day of the month.
+  DateTimeRange get monthRangeFromDateTime {
+    final startOfMonth = DateTime(year, month, 1).startOfDay;
+    final endOfMonth = DateTime(year, month + 1, 0).endOfDay;
+    return DateTimeRange(start: startOfMonth, end: endOfMonth);
   }
 }

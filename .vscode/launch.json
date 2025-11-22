@@ -10,7 +10,6 @@
                 "--flavor",
                 "dev",
                 "--dart-define=FLAVOR=dev",
-                "--dart-define=API_KEY=bc322e6115c15ac6c5db877337a9270bb883a63c3b65afe4f705db0c8e5eb038"
             ]
         },
         {
@@ -23,7 +22,6 @@
                 "dev",
                 "--profile",
                 "--dart-define=FLAVOR=dev",
-                "--dart-define=API_KEY=bc322e6115c15ac6c5db877337a9270bb883a63c3b65afe4f705db0c8e5eb038"
             ]
         },
         {
@@ -36,7 +34,6 @@
                 "dev",
                 "--release",
                 "--dart-define=FLAVOR=dev",
-                "--dart-define=API_KEY=bc322e6115c15ac6c5db877337a9270bb883a63c3b65afe4f705db0c8e5eb038"
             ]
         },
         {

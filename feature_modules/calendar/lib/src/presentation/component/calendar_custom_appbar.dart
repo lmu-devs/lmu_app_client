@@ -94,17 +94,17 @@ class CustomCalendarAppBar extends StatelessWidget implements PreferredSizeWidge
                 ),
                 LmuIconButton(
                   icon: LucideIcons.search,
-                  onPressed: () => onSearchPressed,
+                  onPressed: () => onSearchPressed?.call(),
                 ),
                 const SizedBox(width: LmuSizes.size_8),
                 LmuIconButton(
                   icon: LucideIcons.plus,
-                  onPressed: () => onAddCalendarEntryPressed,
+                  onPressed: () => onAddCalendarEntryPressed?.call(),
                 ),
                 const SizedBox(width: LmuSizes.size_8),
                 LmuIconButton(
                   icon: LucideIcons.calendar_cog,
-                  onPressed: () => onOpenCalendarSettingsPressed,
+                  onPressed: () => onOpenCalendarSettingsPressed?.call(),
                 ),
               ],
             ),

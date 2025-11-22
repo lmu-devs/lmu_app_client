@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../../domain/model/mock_events.dart';
 import '../component/calendar_custom_appbar.dart';
 import '../component/calender_content.dart';
 import '../component/date_picker_content.dart';
@@ -9,44 +8,36 @@ import '../viewmodel/calendar_page_driver.dart';
 
 class CalendarPage extends DrivableWidget<CalendarPageDriver> {
   CalendarPage({super.key});
-  // Switch between mock and real data
-  static const _useMockData = true;
 
   @override
   Widget build(BuildContext context) {
-    // driver.calendarEntries;
-    // if (driver.calendarEntries!.isNotEmpty) {
-    //   for (final entry in driver.calendarEntries!) {
-    //     print('Entry: ${entry.title}, Start: ${entry.startTime}, End: ${entry.endTime}');
-    //   }
-    // } else {
-    //   print('No calendar entries found.');
-    // }
-
     return Scaffold(
       appBar: CustomCalendarAppBar(
         currentViewType: driver.viewType,
         onViewTypeSelected: (viewType) => driver.onCalendarViewTypeChanged(viewType),
-        currentSelectedDateTimeRange: driver.selectedDateTimeRange,
+        currentSelectedDateTimeRange: driver.selectedDateTimeRange!,
         isExpanded: driver.isDatePickerExpanded,
         onExpandDatePickerPressed: () => driver.onExpandDatePickerPressed(),
         onChangeToTodayPressed: () => driver.onChangeToTodayPressed(),
+        onSearchPressed: () => driver.onSearchPressed(context),
+        onAddCalendarEntryPressed: () => driver.onCreatePressed(context),
       ),
       body: Column(
         children: [
           DatePickerSection(
             isExpanded: driver.isDatePickerExpanded,
             viewType: driver.viewType,
-            selectedDateTimeRange: driver.selectedDateTimeRange,
+            selectedDateTimeRange: driver.selectedDateTimeRange!,
             onDateSelected: (date) => driver.onDateTimeRangeSelected(date),
+            entries: driver.calendarEntries,
           ),
           Expanded(
             child: CalendarContent(
-              entries: _useMockData ? mockCalendarEntries : driver.calendarEntries,
+              entries: driver.calendarEntries,
               viewType: driver.viewType,
               isLoading: driver.isLoadingEvents,
               hasError: false, // TODO: driver.hasErrorLoadingEvents state
-              selectedDateTimeRange: driver.selectedDateTimeRange,
+              selectedDateTimeRange: driver.selectedDateTimeRange!,
               scrollToDateRequest: driver.scrollToDateRequest,
             ),
           ),

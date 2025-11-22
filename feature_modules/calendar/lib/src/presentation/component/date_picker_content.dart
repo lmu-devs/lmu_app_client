@@ -1,8 +1,8 @@
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
+import '../../domain/model/calendar_entry.dart';
 import '../../domain/model/calendar_view_type.dart';
-import '../../domain/model/mock_events.dart';
 import '../component/week_selector.dart';
 import 'month_selector.dart';
 
@@ -13,11 +13,13 @@ class DatePickerSection extends StatelessWidget {
     required this.viewType,
     required this.selectedDateTimeRange,
     required this.onDateSelected,
+    required this.entries,
   });
   final bool isExpanded;
   final CalendarViewType viewType;
   final DateTimeRange selectedDateTimeRange;
   final ValueChanged<DateTimeRange> onDateSelected;
+  final List<CalendarEntry> entries;
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +45,14 @@ class DatePickerSection extends StatelessWidget {
       return MonthDaySelector(
           selectedDate: selectedDateTimeRange.start,
           onDateTimeRangeSelected: (dateRange) => onDateSelected(dateRange),
-          entries: mockCalendarEntries);
+          entries: entries);
     } else if (viewType == CalendarViewType.week) {
       return const Text('Date picker in WeekView is WIP');
     } else {
       return WeekdaySelector(
         selectedDate: selectedDateTimeRange.start,
         onDateTimeRangeSelected: (dateRange) => onDateSelected(dateRange),
-        entries: mockCalendarEntries,
+        entries: entries,
       );
     }
   }

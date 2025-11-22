@@ -23,3 +23,21 @@ class CalendarTestRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) => _router.buildTestScreen(context);
 }
+
+class CalendarSearchRoute extends GoRouteData {
+  const CalendarSearchRoute();
+
+  static const String path = 'search';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => _router.buildSearch(context);
+}
+
+class CalendarCreateRoute extends GoRouteData {
+  const CalendarCreateRoute();
+
+  static const String path = 'create';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => _router.buildCreate(context);
+}

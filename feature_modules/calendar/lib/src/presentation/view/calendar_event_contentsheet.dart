@@ -58,8 +58,14 @@ class CalendarEventBottomSheet extends StatelessWidget {
                 end: event.endTime,
                 allDay: event.allDay,
               ),
-              const SizedBox(height: LmuSizes.size_8),
-              LmuText(event.location.address),
+              if (event.location != null) ...[
+                const SizedBox(height: LmuSizes.size_8),
+                LmuText(event.location!.address),
+              ],
+              if (event.onlineLink != null) ...[
+                const SizedBox(height: LmuSizes.size_8),
+                LmuText(event.onlineLink!),
+              ],
               const SizedBox(height: LmuSizes.size_16),
               event.description != null ? LmuText.body(event.description!) : const SizedBox.shrink(),
             ],

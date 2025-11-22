@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+
+import 'calendar_search_page.dart';
 // import 'package:widget_driver/widget_driver.dart';
 
-// TestPage for Testing-purposes,
+// TestPage for Testing-purposes, will be removed before deployment!!
 //currently static widget, but could implement drivable widget in the future
 
 class CalendarTestPage extends StatelessWidget
@@ -11,7 +13,10 @@ class CalendarTestPage extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Text('Test Calendar Page'));
+    return Scaffold(
+        body:
+            // Text('Test Calendar Page')
+            CalendarSearchPage());
   }
 
   // @override

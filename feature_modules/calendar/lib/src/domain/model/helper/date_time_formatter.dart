@@ -59,7 +59,7 @@ class DateTimeFormatter {
   static String formatShorterDate(DateTime date, {bool? withYearIfDifferent}) {
     final bool sameYear = date.year == DateTime.now().year;
     withYearIfDifferent ??= false;
-    final String format = (!sameYear && withYearIfDifferent) ? "EEEE, d. MMM ''yy" : "EEEE, d. MMM";
+    final String format = (!sameYear && withYearIfDifferent) ? "EE, d. MMM ''yy" : "EE, d. MMM";
     return DateFormat(format, _currentLocale).format(date);
   }
 

@@ -19,6 +19,9 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'www.online.de', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der Vergangenheit liegt egal was!',
     allDay: false,
+    createdAt: DateTime.now().subtract(const Duration(days: 1)),
+    onlineLink: 'Glatze',
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo1',
@@ -28,8 +31,11 @@ final mockCalendarEntries = [
     startTime: DateTime.now().add(const Duration(minutes: 20)),
     endTime: DateTime.now().add(const Duration(minutes: 60)),
     location: const LocationModel(address: 'www.online.de', latitude: 48.1500, longitude: 11.5800),
-    description: 'Ein Event, dass immer in der zukunft liegt egal was!',
+    description: 'Ein Event, dass immer in der zukunft liegt egal was! Pipi Pipi',
     allDay: false,
+    createdAt: DateTime.now().subtract(const Duration(days: 2)),
+    onlineLink: 'www.online.de',
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo2',
@@ -41,6 +47,8 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Die zUkuNfT 1', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    createdAt: DateTime.now().subtract(const Duration(days: 3)),
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo3',
@@ -52,6 +60,8 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Die zUkuNfT 1', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    createdAt: DateTime.now().subtract(const Duration(days: 4)),
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo2',
@@ -63,6 +73,8 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Die zUkuNfT 1', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    createdAt: DateTime.now().subtract(const Duration(days: 5)),
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo3',
@@ -74,6 +86,8 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Die zUkuNfT 1', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    createdAt: DateTime.now().subtract(const Duration(days: 6)),
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo2',
@@ -85,6 +99,8 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Die zUkuNfT 1', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    createdAt: DateTime.now().subtract(const Duration(days: 7)),
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo3',
@@ -96,6 +112,8 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Die zUkuNfT 1', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    createdAt: DateTime.now().subtract(const Duration(days: 8)),
+    accessScope: 1,
   ),
 
   CalendarEntry(
@@ -113,6 +131,7 @@ final mockCalendarEntries = [
       interval: 2,
       untilTime: DateTime.now().add(const Duration(days: 10)),
     ),
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_noo1',
@@ -132,6 +151,7 @@ final mockCalendarEntries = [
       interval: 2,
       untilTime: DateTime.now().add(const Duration(days: 10)),
     ),
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo2',
@@ -143,6 +163,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Die zUkuNfT 1', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo2',
@@ -154,6 +175,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'https://www.test.de', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo2',
@@ -165,6 +187,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'https://www.test.de', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo2',
@@ -176,6 +199,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'https://www.test.de', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo2',
@@ -187,6 +211,8 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'https://www.test.de', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    onlineLink: 'www.filme.de',
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo2',
@@ -198,6 +224,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'https://www.test.de', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo2',
@@ -209,6 +236,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'https://www.test.de', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo2',
@@ -220,6 +248,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'https://www.test.de', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo32',
@@ -231,6 +260,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Die zUkuNfT 1', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo32',
@@ -242,6 +272,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Die zUkuNfT 1', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo32',
@@ -253,6 +284,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Die zUkuNfT 1', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo32',
@@ -264,6 +296,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Die zUkuNfT 1', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo32',
@@ -275,6 +308,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Die zUkuNfT 1', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo32',
@@ -286,6 +320,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Die zUkuNfT 1', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo32',
@@ -297,6 +332,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Die zUkuNfT 1', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo32',
@@ -308,6 +344,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Die zUkuNfT 1', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo32',
@@ -319,6 +356,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Die zUkuNfT 1', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo32',
@@ -330,6 +368,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Die zUkuNfT 1', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo32',
@@ -341,6 +380,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Die zUkuNfT 1', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo32',
@@ -352,6 +392,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Die zUkuNfT 1', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo32',
@@ -363,6 +404,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Die zUkuNfT 1', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_ooo32',
@@ -374,6 +416,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Die zUkuNfT 1', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_morgen1',
@@ -385,6 +428,7 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'Zukunftsstraße 12', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_morgen2',
@@ -396,28 +440,31 @@ final mockCalendarEntries = [
     location: const LocationModel(address: 'www.diezukunft.de/23235235', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_in_3_tagen',
     title: 'Event in 3 Tagen',
     eventType: EventType.lecture,
     color: const Color.fromARGB(255, 225, 9, 214),
-    startTime: DateTime.now().add(const Duration(days: 3, hours: 22, minutes: 120)),
-    endTime: DateTime.now().add(const Duration(days: 3, hours: 22, minutes: 130)),
+    startTime: DateTime.now().add(const Duration(days: 3, hours: 22, minutes: 100)),
+    endTime: DateTime.now().add(const Duration(days: 3, hours: 22, minutes: 125)),
     location: const LocationModel(address: 'www.diezukunft.de/23235235', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   CalendarEntry(
     id: 'event_in_4_tagen',
     title: 'Event in 4 Tagen',
     eventType: EventType.lecture,
     color: const Color.fromARGB(255, 225, 9, 214),
-    startTime: DateTime.now().add(const Duration(days: 4, hours: 22, minutes: 120)),
-    endTime: DateTime.now().add(const Duration(days: 4, hours: 22, minutes: 130)),
+    startTime: DateTime.now().add(const Duration(days: 4, hours: 22, minutes: 14)),
+    endTime: DateTime.now().add(const Duration(days: 4, hours: 22, minutes: 50)),
     location: const LocationModel(address: 'www.diezukunft.de/23235235', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   // CalendarEntry(
   //   id: 'event_in_31_tagen',
@@ -435,11 +482,12 @@ final mockCalendarEntries = [
     title: 'Event in einem neuen Jahr',
     eventType: EventType.lecture,
     color: const Color.fromARGB(255, 44, 203, 97),
-    startTime: DateTime.now().add(const Duration(days: 366, hours: 21, minutes: 120)),
-    endTime: DateTime.now().add(const Duration(days: 366, hours: 21, minutes: 130)),
+    startTime: DateTime.now().add(const Duration(days: 366, hours: 18, minutes: 90)),
+    endTime: DateTime.now().add(const Duration(days: 366, hours: 18, minutes: 110)),
     location: const LocationModel(address: 'www.diezukunft.de/23235235', latitude: 48.1500, longitude: 11.5800),
     description: 'Ein Event, dass immer in der zukunft liegt egal was!',
     allDay: false,
+    accessScope: 1,
   ),
   // CalendarEntry(
   //   id: 'event_morgen1',
@@ -484,6 +532,8 @@ List<CalendarEntryDto> createMockCalendarEntryDtos() {
       recurrenceId: dto.recurrenceId,
       createdAt: dto.createdAt,
       updatedAt: dto.updatedAt,
+      onlineLink: dto.onlineLink,
+      accessScope: dto.accessScope,
     );
   }).toList();
 }

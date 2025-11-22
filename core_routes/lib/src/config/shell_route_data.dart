@@ -214,6 +214,12 @@ class LaunchFlowShellRoute extends ShellRouteData {
                 TypedGoRoute<CalendarTestRoute>(
                   path: CalendarTestRoute.path,
                 ),
+                TypedGoRoute<CalendarSearchRoute>(
+                  path: CalendarSearchRoute.path,
+                ),
+                TypedGoRoute<CalendarCreateRoute>(
+                  path: CalendarCreateRoute.path,
+                ),
               ],
             ),
             TypedGoRoute<LecturesMainRoute>(
