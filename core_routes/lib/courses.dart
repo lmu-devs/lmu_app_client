@@ -5,5 +5,7 @@ export 'src/config/shell_route_data.dart'
     $CoursesOverviewRouteExtension,
     $CoursesFacultyOverviewRouteExtension,
     $CourseDetailsRouteExtension,
+    $CourseDetailsPersonsRouteExtension,
+    $CourseDetailsContentRouteExtension,
     $CoursesSearchRouteExtension;
 export 'src/courses/courses.dart';

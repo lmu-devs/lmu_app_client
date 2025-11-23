@@ -3,5 +3,10 @@
   "@@context": "Courses",
   "coursesTitle": "Kurse",
   "favoritesBefore": "Füge Kurse mit dem ",
-  "favoritesAfter": " Symbol hinzu"
+  "favoritesAfter": " Symbol hinzu",
+  "courseTime": "Zeit",
+  "courseDuration": "Dauer",
+  "courseRoom": "Raum",
+  "persons": "Lehrpersonen",
+  "content": "Inhalt"
 }

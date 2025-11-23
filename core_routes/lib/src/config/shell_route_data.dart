@@ -8,6 +8,7 @@ import '../../libraries.dart';
 import '../../studies.dart';
 import '../benefits/benefits.dart';
 import '../cinema/cinema.dart';
+import '../courses/models/person_details_data.dart';
 import '../developerdex/developerdex.dart';
 import '../explore/explore.dart';
 import '../home/home.dart';
@@ -222,6 +223,14 @@ class LaunchFlowShellRoute extends ShellRouteData {
               routes: <TypedGoRoute<GoRouteData>>[
                 TypedGoRoute<CourseDetailsRoute>(
                   path: CourseDetailsRoute.path,
+                  routes: <TypedGoRoute<GoRouteData>>[
+                    TypedGoRoute<CourseDetailsPersonsRoute>(
+                        path: CourseDetailsPersonsRoute.path,
+                    ),
+                    TypedGoRoute<CourseDetailsContentRoute>(
+                      path: CourseDetailsContentRoute.path,
+                    ),
+                  ],
                 ),
                 TypedGoRoute<CoursesSearchRoute>(
                   path: CoursesSearchRoute.path,

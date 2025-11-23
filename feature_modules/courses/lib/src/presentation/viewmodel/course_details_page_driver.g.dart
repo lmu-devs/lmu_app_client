@@ -13,7 +13,25 @@ part of 'course_details_page_driver.dart';
 class _$TestCourseDetailsPageDriver extends TestDriver
     implements CourseDetailsPageDriver {
   @override
+  String name = ' ';
+
+  @override
+  String language = ' ';
+
+  @override
+  String? degree = ' ';
+
+  @override
+  int? sws = 0;
+
+  @override
+  int get facultyId => 0;
+
+  @override
   int get courseId => 0;
+
+  @override
+  String get pageTitle => ' ';
 
   @override
   CourseDetailsModel? get courseDetails => null;
@@ -25,9 +43,37 @@ class _$TestCourseDetailsPageDriver extends TestDriver
   bool get isFavorite => false;
 
   @override
+  String get quickfactText => ' ';
+
+  @override
+  List<CourseSessionData> get sessions => [];
+
+  @override
+  String get courseTime => ' ';
+
+  @override
+  String get courseDuration => ' ';
+
+  @override
+  String get courseRoom => ' ';
+
+  @override
+  String get persons => ' ';
+
+  @override
+  String get content => ' ';
+
+  @override
   Future<void> toggleFavorite(int id) {
     return Future.value();
   }
+
+  @override
+  void onPersonsDetailsPressed(
+      BuildContext context, List<PersonModel> persons) {}
+
+  @override
+  void onContentDetailsPressed(BuildContext context, String content) {}
 
   @override
   void didInitDriver() {}
@@ -36,7 +82,13 @@ class _$TestCourseDetailsPageDriver extends TestDriver
   void didUpdateBuildContext(BuildContext context) {}
 
   @override
-  void didUpdateProvidedProperties({required int newCourseId}) {}
+  void didUpdateProvidedProperties(
+      {required int newFacultyId,
+      required int newCourseId,
+      required String newName,
+      required String newLanguage,
+      String? newDegree,
+      int? newSws}) {}
 
   @override
   void dispose() {}
@@ -44,16 +96,36 @@ class _$TestCourseDetailsPageDriver extends TestDriver
 
 class $CourseDetailsPageDriverProvider
     extends WidgetDriverProvider<CourseDetailsPageDriver> {
+  final int _facultyId;
   final int _courseId;
+  final String _name;
+  final String _language;
+  final String? _degree;
+  final int? _sws;
 
   $CourseDetailsPageDriverProvider({
+    required int facultyId,
     required int courseId,
-  }) : _courseId = courseId;
+    required String name,
+    required String language,
+    String? degree,
+    int? sws,
+  })  : _facultyId = facultyId,
+        _courseId = courseId,
+        _name = name,
+        _language = language,
+        _degree = degree,
+        _sws = sws;
 
   @override
   CourseDetailsPageDriver buildDriver() {
     return CourseDetailsPageDriver(
+      facultyId: _facultyId,
       courseId: _courseId,
+      name: _name,
+      language: _language,
+      degree: _degree,
+      sws: _sws,
     );
   }
 
@@ -76,7 +148,12 @@ class $CourseDetailsPageDriverProvider
     //    }
     //  }
     driver.didUpdateProvidedProperties(
+      newFacultyId: _facultyId,
       newCourseId: _courseId,
+      newName: _name,
+      newLanguage: _language,
+      newDegree: _degree,
+      newSws: _sws,
     );
   }
 }
@@ -99,6 +176,11 @@ abstract class _$DriverProvidedProperties {
   /// it is NOT the place to run time consuming or blocking tasks etc. (like calling Api-Endpoints)
   /// This could greatly impact your apps performance.
   void didUpdateProvidedProperties({
+    required int newFacultyId,
     required int newCourseId,
+    required String newName,
+    required String newLanguage,
+    required String? newDegree,
+    required int? newSws,
   });
 }

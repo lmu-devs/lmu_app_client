@@ -3,5 +3,10 @@
   "@@context": "Courses",
   "coursesTitle": "Courses",
   "favoritesBefore": "Tap the ",
-  "favoritesAfter": " icon to add courses here"
+  "favoritesAfter": " icon to add courses here",
+  "courseTime": "Time",
+  "courseDuration": "Duration",
+  "courseRoom": "Room",
+  "persons": "Educators",
+  "content": "Content"
 }

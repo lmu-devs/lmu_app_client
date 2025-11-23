@@ -12,12 +12,14 @@ import '../../domain/model/course_model.dart';
 part 'courses_overview_driver.g.dart';
 
 @GenerateTestDriver()
-class CoursesOverviewDriver extends WidgetDriver implements _$DriverProvidedProperties {
+class CoursesOverviewDriver extends WidgetDriver
+    implements _$DriverProvidedProperties {
   CoursesOverviewDriver({
     @driverProvidableProperty required int facultyId,
   }) : _facultyId = facultyId;
 
   late int _facultyId;
+
   int get facultyId => _facultyId;
 
   final _usecase = GetIt.I.get<GetCoursesUsecase>();
@@ -30,6 +32,7 @@ class CoursesOverviewDriver extends WidgetDriver implements _$DriverProvidedProp
   String get showAllFacultiesText => _localizations.studies.showAllFaculties;
 
   List<Faculty> get selectedFaculties => _facultiesApi.selectedFaculties;
+
   List<Faculty> get allFaculties => _facultiesApi.allFaculties;
 
   bool get isLoading => _usecase.loadState != CoursesLoadState.success;
@@ -49,9 +52,13 @@ class CoursesOverviewDriver extends WidgetDriver implements _$DriverProvidedProp
 
   List<CourseModel> get courses => _usecase.data;
 
-  List<CourseModel> get favoriteCourses => courses.where((course) => _favoritesUsecase.isFavorite(course.publishId)).toList();
+  List<CourseModel> get favoriteCourses => courses
+      .where((course) => _favoritesUsecase.isFavorite(course.publishId))
+      .toList();
 
-  List<CourseModel> get nonFavoriteCourses => courses.where((course) => !_favoritesUsecase.isFavorite(course.publishId)).toList();
+  List<CourseModel> get nonFavoriteCourses => courses
+      .where((course) => !_favoritesUsecase.isFavorite(course.publishId))
+      .toList();
 
   bool get hasFavorites => _favoritesUsecase.favoriteIds.isNotEmpty;
 
@@ -59,7 +66,8 @@ class CoursesOverviewDriver extends WidgetDriver implements _$DriverProvidedProp
     final grouped = <String, List<CourseModel>>{};
 
     for (final course in courses) {
-      final firstLetter = course.name.isNotEmpty ? course.name[0].toUpperCase() : '#';
+      final firstLetter =
+          course.name.isNotEmpty ? course.name[0].toUpperCase() : '#';
       if (!grouped.containsKey(firstLetter)) {
         grouped[firstLetter] = [];
       }
@@ -76,7 +84,14 @@ class CoursesOverviewDriver extends WidgetDriver implements _$DriverProvidedProp
   }
 
   void onCoursePressed(BuildContext context, CourseModel course) {
-    CourseDetailsRoute(facultyId: facultyId, courseId: course.publishId, courseName: course.name).push(context);
+    CourseDetailsRoute(
+      facultyId: facultyId,
+      courseId: course.publishId,
+      name: course.name,
+      language: course.language,
+      degree: course.degree,
+      sws: course.sws,
+    ).push(context);
   }
 
   void onShowAllFacultiesPressed(BuildContext context) {

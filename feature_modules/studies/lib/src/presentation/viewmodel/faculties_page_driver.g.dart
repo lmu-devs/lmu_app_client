@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'faculites_page_driver.dart';
+part of 'faculties_page_driver.dart';
 
 // **************************************************************************
 // WidgetDriverGenerator
@@ -10,7 +10,7 @@ part of 'faculites_page_driver.dart';
 
 // This file was generated with widget_driver_generator version "1.3.5"
 
-class _$TestFaculitesPageDriver extends TestDriver implements FaculitesPageDriver {
+class _$TestFacultiesPageDriver extends TestDriver implements FacultiesPageDriver {
   @override
   String get pageTitle => ' ';
 
@@ -24,14 +24,14 @@ class _$TestFaculitesPageDriver extends TestDriver implements FaculitesPageDrive
   void didUpdateBuildContext(BuildContext context) {}
 }
 
-class $FaculitesPageDriverProvider extends WidgetDriverProvider<FaculitesPageDriver> {
+class $FacultiesPageDriverProvider extends WidgetDriverProvider<FacultiesPageDriver> {
   @override
-  FaculitesPageDriver buildDriver() {
-    return FaculitesPageDriver();
+  FacultiesPageDriver buildDriver() {
+    return FacultiesPageDriver();
   }
 
   @override
-  FaculitesPageDriver buildTestDriver() {
-    return _$TestFaculitesPageDriver();
+  FacultiesPageDriver buildTestDriver() {
+    return _$TestFacultiesPageDriver();
   }
 }

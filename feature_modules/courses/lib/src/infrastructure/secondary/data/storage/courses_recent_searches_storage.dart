@@ -2,7 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CoursesRecentSearchesStorage {
   static const String _recentSearchesKey = 'courses_recent_searches';
-  static const int _maxRecentSearches = 10;
+  static const int _maxRecentSearches = 6;
 
   Future<List<String>> getRecentSearches() async {
     final prefs = await SharedPreferences.getInstance();

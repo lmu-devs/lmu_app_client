@@ -17,13 +17,19 @@ class GetCourseDetailsUsecase extends ChangeNotifier {
   CourseDetailsModel? _data;
 
   CourseDetailsLoadState get loadState => _loadState;
-
   CourseDetailsModel? get data => _data;
+  int? _lastLoadedCourseId;
 
   Future<void> load(int courseId) async {
-    if (_loadState == CourseDetailsLoadState.loading || _loadState == CourseDetailsLoadState.success) {
+    if (_loadState == CourseDetailsLoadState.loading) {
       return;
     }
+
+    if (_lastLoadedCourseId == courseId && _loadState == CourseDetailsLoadState.success) {
+      return;
+    }
+
+    _lastLoadedCourseId = courseId;
 
     _loadState = CourseDetailsLoadState.loading;
     _data = null;

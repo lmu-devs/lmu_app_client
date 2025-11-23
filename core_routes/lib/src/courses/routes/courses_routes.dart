@@ -2,13 +2,14 @@ import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
+import '../models/person_details_data.dart';
 import '../router/courses_router.dart';
 
 CoursesRouter get _router => GetIt.I.get<CoursesRouter>();
 
 class CoursesOverviewRoute extends GoRouteData {
-
   const CoursesOverviewRoute({required this.facultyId});
+
   final int facultyId;
 
   static const String path = 'courses';
@@ -25,27 +26,110 @@ class CoursesFacultyOverviewRoute extends GoRouteData {
   static const String path = 'courses-faculties';
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => _router.buildFacultyOverview(context);
+  Widget build(BuildContext context, GoRouterState state) =>
+      _router.buildFacultyOverview(context);
 }
 
 class CourseDetailsRoute extends GoRouteData {
+  const CourseDetailsRoute({
+    required this.facultyId,
+    required this.courseId,
+    required this.name,
+    required this.language,
+    this.degree,
+    this.sws,
+  });
 
-  const CourseDetailsRoute({required this.facultyId, required this.courseId, required this.courseName});
   final int facultyId;
   final int courseId;
-  final String courseName;
+  final String name;
+  final String language;
+  final String? degree;
+  final int? sws;
 
   static const String path = 'details';
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return _router.buildDetails(context, facultyId: facultyId, courseId: courseId, courseName: courseName);
+    return _router.buildDetails(
+      context,
+      facultyId: facultyId,
+      courseId: courseId,
+      name: name,
+      language: language,
+      degree: degree,
+      sws: sws,
+    );
+  }
+}
+
+class CourseDetailsPersonsRoute extends GoRouteData {
+  const CourseDetailsPersonsRoute({
+    required this.facultyId,
+    required this.courseId,
+    required this.name,
+    required this.language,
+    required this.$extra,
+    this.degree,
+    this.sws,
+  });
+
+  final int facultyId;
+  final int courseId;
+  final String name;
+  final String language;
+  final String? degree;
+  final int? sws;
+
+  final RPersonDetailsData $extra;
+
+  static const String path = 'persons';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return _router.buildPersonsDetails(context, $extra);
+  }
+}
+
+class CourseDetailsContentRoute extends GoRouteData {
+  const CourseDetailsContentRoute({
+    required this.facultyId,
+    required this.courseId,
+    required this.name,
+    required this.language,
+    required this.content,
+    this.degree,
+    this.sws,
+  });
+
+  final int facultyId;
+  final int courseId;
+  final String name;
+  final String language;
+  final String content;
+  final String? degree;
+  final int? sws;
+
+  static const String path = 'content';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return _router.buildContentDetails(
+      context,
+      facultyId: facultyId,
+      courseId: courseId,
+      name: name,
+      language: language,
+      content: content,
+      degree: degree,
+      sws: sws,
+    );
   }
 }
 
 class CoursesSearchRoute extends GoRouteData {
-
   const CoursesSearchRoute({required this.facultyId});
+
   final int facultyId;
 
   static const String path = 'courses-search';

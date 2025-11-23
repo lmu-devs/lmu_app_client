@@ -21,16 +21,19 @@ class CourseSearchEntry extends SearchEntry {
 }
 
 @GenerateTestDriver()
-class CoursesSearchDriver extends WidgetDriver implements _$DriverProvidedProperties {
+class CoursesSearchDriver extends WidgetDriver
+    implements _$DriverProvidedProperties {
   CoursesSearchDriver({
     @driverProvidableProperty required int facultyId,
   }) : _facultyId = facultyId;
 
   late int _facultyId;
+
   int get facultyId => _facultyId;
 
   final _usecase = GetIt.I.get<GetCoursesUsecase>();
-  final _recentSearchController = LmuRecentSearchController<CourseSearchEntry>();
+  final _recentSearchController =
+      LmuRecentSearchController<CourseSearchEntry>();
   final _recentSearchesUsecase = GetIt.I.get<RecentSearchesUsecase>();
 
   late LmuLocalizations _localizations;
@@ -38,13 +41,13 @@ class CoursesSearchDriver extends WidgetDriver implements _$DriverProvidedProper
   List<CourseModel> get recentSearches => _recentSearchesUsecase.recentSearches;
 
   @TestDriverDefaultValue(_TestLmuRecentSearchController())
-  LmuRecentSearchController<CourseSearchEntry> get recentSearchController => _recentSearchController;
-
-
+  LmuRecentSearchController<CourseSearchEntry> get recentSearchController =>
+      _recentSearchController;
 
   List<CourseModel> get courses => _usecase.data;
 
-  List<CourseModel> get facultyCourses => courses.where((course) => course.publishId == facultyId).toList();
+  List<CourseModel> get facultyCourses =>
+      courses.where((course) => course.publishId == facultyId).toList();
 
   String get pageTitle => _localizations.app.search;
 
@@ -62,11 +65,16 @@ class CoursesSearchDriver extends WidgetDriver implements _$DriverProvidedProper
           ))
       .toList();
 
-
-
   void onPersonPressed(BuildContext context, CourseModel course) {
     addRecentSearch(course);
-    CourseDetailsRoute(facultyId: facultyId, courseId: course.publishId, courseName: course.name).push(context);
+    CourseDetailsRoute(
+      facultyId: facultyId,
+      courseId: course.publishId,
+      name: course.name,
+      language: course.language,
+      degree: course.degree,
+      sws: course.sws,
+    ).push(context);
   }
 
   void updateRecentSearch(List<CourseSearchEntry> recentSearchEntries) {
@@ -121,6 +129,7 @@ class CoursesSearchDriver extends WidgetDriver implements _$DriverProvidedProper
   }
 }
 
-class _TestLmuRecentSearchController extends EmptyDefault implements LmuRecentSearchController<CourseSearchEntry> {
+class _TestLmuRecentSearchController extends EmptyDefault
+    implements LmuRecentSearchController<CourseSearchEntry> {
   const _TestLmuRecentSearchController();
 }
