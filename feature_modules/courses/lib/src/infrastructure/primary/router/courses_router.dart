@@ -8,7 +8,6 @@ import '../../../presentation/view/courses_faculty_overview.dart';
 import '../../../presentation/view/courses_overview.dart';
 import '../../../presentation/view/courses_search_page.dart';
 import '../../../presentation/view/persons_details_page.dart';
-import 'person_details_data.dart';
 
 class CoursesRouterImpl extends CoursesRouter {
   @override
@@ -40,8 +39,8 @@ class CoursesRouterImpl extends CoursesRouter {
       );
 
   @override
-  Widget buildPersonsDetails(BuildContext context, RPersonDetailsData $extra) =>
-      PersonsDetailsPage(personDetailsData: $extra as PersonDetailsData);
+  Widget buildPersonsDetails(BuildContext context, List<RPersonModel> $extra) =>
+      PersonsDetailsPage(persons: $extra as List<PersonModel>);
 
   @override
   Widget buildContentDetails(

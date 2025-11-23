@@ -9,7 +9,6 @@ import '../../application/usecase/get_courses_usecase.dart';
 import '../../domain/model/course_details_model.dart';
 import '../../domain/model/person_model.dart';
 import '../../domain/model/session_model.dart';
-import '../../infrastructure/primary/router/person_details_data.dart';
 
 part 'course_details_page_driver.g.dart';
 
@@ -197,7 +196,7 @@ class CourseDetailsPageDriver extends WidgetDriver
       language: language,
       degree: degree,
       sws: sws,
-      $extra: PersonDetailsData(persons: persons),
+      $extra: persons,
     ).push(context);
   }
 

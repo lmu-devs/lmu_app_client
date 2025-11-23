@@ -8,7 +8,7 @@ import '../../libraries.dart';
 import '../../studies.dart';
 import '../benefits/benefits.dart';
 import '../cinema/cinema.dart';
-import '../courses/models/person_details_data.dart';
+import '../courses/models/person_model.dart';
 import '../developerdex/developerdex.dart';
 import '../explore/explore.dart';
 import '../home/home.dart';

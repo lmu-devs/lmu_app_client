@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../models/person_details_data.dart';
+import '../models/person_model.dart';
 
 abstract class CoursesRouter {
   Widget buildOverview(BuildContext context, {required int facultyId});
@@ -17,7 +17,7 @@ abstract class CoursesRouter {
     int? sws,
   });
 
-  Widget buildPersonsDetails(BuildContext context, RPersonDetailsData $extra);
+  Widget buildPersonsDetails(BuildContext context, List<RPersonModel> $extra);
 
   Widget buildContentDetails(
     BuildContext context, {

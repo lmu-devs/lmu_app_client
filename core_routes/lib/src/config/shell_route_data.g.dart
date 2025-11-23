@@ -1288,7 +1288,7 @@ extension $CourseDetailsPersonsRouteExtension on CourseDetailsPersonsRoute {
         language: state.uri.queryParameters['language']!,
         degree: state.uri.queryParameters['degree'],
         sws: _$convertMapValue('sws', state.uri.queryParameters, int.tryParse),
-        $extra: state.extra as RPersonDetailsData,
+        $extra: state.extra as List<RPersonModel>,
       );
 
   String get location => GoRouteData.$location(

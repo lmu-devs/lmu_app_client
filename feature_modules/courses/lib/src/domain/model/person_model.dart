@@ -1,10 +1,11 @@
+import 'package:core_routes/courses.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'person_model.g.dart';
 
 @JsonSerializable()
-class PersonModel extends Equatable {
+class PersonModel extends Equatable implements RPersonModel {
   const PersonModel({
     required this.firstName,
     required this.lastName,

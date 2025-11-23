@@ -1,7 +1,7 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
-import 'package:core_routes/src/courses/models/person_details_data.dart';
+import 'package:core_routes/src/courses/models/person_model.dart';
 import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 

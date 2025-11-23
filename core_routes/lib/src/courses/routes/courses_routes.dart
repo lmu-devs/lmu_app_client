@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
-import '../models/person_details_data.dart';
+import '../models/person_model.dart';
 import '../router/courses_router.dart';
 
 CoursesRouter get _router => GetIt.I.get<CoursesRouter>();
@@ -81,7 +81,7 @@ class CourseDetailsPersonsRoute extends GoRouteData {
   final String? degree;
   final int? sws;
 
-  final RPersonDetailsData $extra;
+  final List<RPersonModel> $extra;
 
   static const String path = 'persons';
 
