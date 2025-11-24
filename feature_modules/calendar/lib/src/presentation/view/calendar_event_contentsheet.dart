@@ -34,7 +34,7 @@ class CalendarEventBottomSheet extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               LmuInTextVisual.text(
-                title: (event.type.name),
+                title: (event.eventType.name),
                 size: InTextVisualSize.large,
               ),
               const SizedBox(height: LmuSizes.size_8),
@@ -43,8 +43,8 @@ class CalendarEventBottomSheet extends StatelessWidget {
                   LmuText.h1(event.title),
                   const SizedBox(width: LmuSizes.size_8),
                   Container(
-                    width: 16,
-                    height: 16,
+                    width: LmuSizes.size_8,
+                    height: LmuSizes.size_16,
                     decoration: BoxDecoration(
                       color: event.color,
                       shape: BoxShape.circle,
@@ -54,12 +54,18 @@ class CalendarEventBottomSheet extends StatelessWidget {
               ),
               const SizedBox(height: LmuSizes.size_8),
               DateRangeDisplay(
-                start: event.startDate,
-                end: event.endDate,
+                start: event.startTime,
+                end: event.endTime,
                 allDay: event.allDay,
               ),
-              const SizedBox(height: LmuSizes.size_8),
-              LmuText(event.location.address),
+              if (event.location != null) ...[
+                const SizedBox(height: LmuSizes.size_8),
+                LmuText(event.location!.address),
+              ],
+              if (event.onlineLink != null) ...[
+                const SizedBox(height: LmuSizes.size_8),
+                LmuText(event.onlineLink!),
+              ],
               const SizedBox(height: LmuSizes.size_16),
               event.description != null ? LmuText.body(event.description!) : const SizedBox.shrink(),
             ],

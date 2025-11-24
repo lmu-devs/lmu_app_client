@@ -10,7 +10,8 @@ part of 'calendar_page_driver.dart';
 
 // This file was generated with widget_driver_generator version "1.3.5"
 
-class _$TestCalendarPageDriver extends TestDriver implements CalendarPageDriver {
+class _$TestCalendarPageDriver extends TestDriver
+    implements CalendarPageDriver {
   @override
   bool get isLoadingEvents => false;
 
@@ -18,13 +19,19 @@ class _$TestCalendarPageDriver extends TestDriver implements CalendarPageDriver 
   String get largeTitle => ' ';
 
   @override
-  CalendarViewMode get viewMode => CalendarViewMode.values[0];
+  bool get isDatePickerExpanded => false;
 
   @override
-  DateTimeRange<DateTime> get selectedDate => DateTime.now().dateTimeRangeFromDateTime;
+  CalendarViewType get viewType => CalendarViewType.list;
 
   @override
-  List<CalendarEntry>? get calendarEntries => [];
+  DateTimeRange<DateTime>? get selectedDateTimeRange => null;
+
+  @override
+  int get scrollToDateRequest => 0;
+
+  @override
+  List<CalendarEntry> get calendarEntries => [];
 
   @override
   Future<void> loadEvents() {
@@ -32,16 +39,31 @@ class _$TestCalendarPageDriver extends TestDriver implements CalendarPageDriver 
   }
 
   @override
-  void onViewModeChanged(CalendarViewMode mode) {}
+  void onCalendarViewTypeChanged(CalendarViewType mode) {}
 
   @override
-  void onDateSelected(DateTimeRange<DateTime> dateRange) {}
+  void onDateTimeRangeSelected(DateTimeRange<DateTime> dateRange) {}
+
+  @override
+  void onExpandDatePickerPressed() {}
+
+  @override
+  void onChangeToTodayPressed() {}
 
   @override
   void onEventTap(CalendarEntry event, BuildContext context) {}
 
   @override
   void onAddEventPressed() {}
+
+  @override
+  void onTestScreenPressed(BuildContext context) {}
+
+  @override
+  void onSearchPressed(BuildContext context) {}
+
+  @override
+  void onCreatePressed(BuildContext context) {}
 
   @override
   void didInitDriver() {}
@@ -53,7 +75,8 @@ class _$TestCalendarPageDriver extends TestDriver implements CalendarPageDriver 
   void dispose() {}
 }
 
-class $CalendarPageDriverProvider extends WidgetDriverProvider<CalendarPageDriver> {
+class $CalendarPageDriverProvider
+    extends WidgetDriverProvider<CalendarPageDriver> {
   @override
   CalendarPageDriver buildDriver() {
     return CalendarPageDriver();

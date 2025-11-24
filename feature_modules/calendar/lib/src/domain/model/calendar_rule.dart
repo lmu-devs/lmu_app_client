@@ -1,12 +1,16 @@
-// Assuming Frequency is also a domain enum
-import 'frequency.dart'; // Your Frequency enum
+import 'package:equatable/equatable.dart';
 
-class CalendarRule {
-  CalendarRule({
+import 'frequency.dart';
+
+class CalendarRule extends Equatable {
+  const CalendarRule({
     required this.frequency,
     required this.interval,
     this.untilTime,
   });
+
+  @override
+  List<Object?> get props => [frequency, interval, untilTime];
 
   final Frequency frequency;
   final int interval;

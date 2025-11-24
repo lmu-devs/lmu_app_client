@@ -10,7 +10,6 @@
                 "--flavor",
                 "dev",
                 "--dart-define=FLAVOR=dev",
-                "--dart-define=API_KEY="
             ]
         },
         {
@@ -23,7 +22,6 @@
                 "dev",
                 "--profile",
                 "--dart-define=FLAVOR=dev",
-                "--dart-define=API_KEY="
             ]
         },
         {
@@ -36,7 +34,6 @@
                 "dev",
                 "--release",
                 "--dart-define=FLAVOR=dev",
-                "--dart-define=API_KEY="
             ]
         },
         {

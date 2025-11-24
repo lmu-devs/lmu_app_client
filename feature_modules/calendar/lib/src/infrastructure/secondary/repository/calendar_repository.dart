@@ -41,6 +41,8 @@ class CalendarRepository implements CalendarRepositoryInterface {
       final List<CalendarEntry> fetchedEventData =
           fetchedEventDtos.map((dto) => CalendarEntryMapper.fromDto(dto)).toList();
       return fetchedEventData;
+    } on FormatException catch (e) {
+      throw CalendarGenericException('Format error: ${e.message}');
     } catch (e) {
       throw CalendarGenericException(e.toString());
     }
