@@ -20,16 +20,25 @@ class CalendarPageDriver extends WidgetDriver {
   late AppLocalizations _appLocalizations;
   late LmuToast _toast;
 
+  CalendarEntriesLoadState? _lastLoadState;
+
   late List<CalendarEntry> _calendarEntries = [];
   late List<CalendarEntry> _allCalendarEntries = [];
-  late CalendarEntriesLoadState _calendarEntriesLoadState;
 
-  bool get isLoadingEvents => _calendarEntriesLoadState != CalendarEntriesLoadState.success;
+  bool get isLoadingEvents =>
+      _getCalendarEntriesByDateUsecase.loadState == CalendarEntriesLoadState.loading ||
+      _getCalendarEntriesByDateUsecase.loadState == CalendarEntriesLoadState.loadingWithCache;
+
+  bool get hasErrorLoadingEvents => _getCalendarEntriesByDateUsecase.loadState == CalendarEntriesLoadState.error;
+
+  bool get loadedFromStaleCache =>
+      _getCalendarEntriesByDateUsecase.loadState == CalendarEntriesLoadState.successButStaleCache;
+
   String get largeTitle => "Calendar"; // TODO: Replace with localized title
 
   CalendarViewType _viewType = CalendarViewType.list;
   bool _isDatePickerExpanded = false;
-  DateTimeRange _selectedDateTimeRange = DateTime.now().monthRangeFromDateTime;
+  DateTimeRange _selectedDateTimeRange = DateTime.now().dateTimeRangeFromDateTime;
   int _scrollToDateRequest = 0;
 
   @TestDriverDefaultValue(false)
@@ -42,21 +51,14 @@ class CalendarPageDriver extends WidgetDriver {
   int get scrollToDateRequest => _scrollToDateRequest;
 
   Future<void> loadEvents() async {
-    _calendarEntriesLoadState = CalendarEntriesLoadState.loading;
-    notifyWidget();
-
     await _getCalendarEntriesByDateUsecase.load();
-    // await _getCalendarEntriesByDateUsecase.load(dateRange: _selectedDateTimeRange);
-    _allCalendarEntries = _getCalendarEntriesByDateUsecase.data;
-
-    _calendarEntriesLoadState = CalendarEntriesLoadState.success;
-    notifyWidget();
   }
 
   List<CalendarEntry> get calendarEntries {
-    return _allCalendarEntries.where((entry) {
-      return entry.overlapsWithRange(_selectedDateTimeRange);
-    }).toList();
+    return _allCalendarEntries;
+    // .where((entry) {
+    //   return entry.overlapsWithRange(_selectedDateTimeRange);
+    // }).toList();
   }
 
   void onCalendarViewTypeChanged(CalendarViewType mode) {
@@ -100,29 +102,71 @@ class CalendarPageDriver extends WidgetDriver {
     const CalendarCreateRoute().go(context);
   }
 
-  void _onCalendarEntriesStateChanged() {
-    _calendarEntriesLoadState = _getCalendarEntriesByDateUsecase.loadState;
-    _calendarEntries = _getCalendarEntriesByDateUsecase.data;
-    notifyWidget();
+  void _onUseCaseUpdate() {
+    final currentState = _getCalendarEntriesByDateUsecase.loadState;
 
-    if (_calendarEntriesLoadState == CalendarEntriesLoadState.error) {
-      _showErrorToast();
+    // 1. Update Data
+    _calendarEntries = _getCalendarEntriesByDateUsecase.data;
+    _allCalendarEntries = _calendarEntries;
+
+    // 2. Handle Side Effects (Toasts) ONLY if state actually changed
+    if (currentState != _lastLoadState) {
+      if (currentState == CalendarEntriesLoadState.error) {
+        _showErrorToast();
+      } else if (currentState == CalendarEntriesLoadState.successButStaleCache) {
+        _showStaleCacheToast();
+      }
+      _lastLoadState = currentState;
     }
+
+    // 3. Update UI
+    notifyWidget();
   }
+
+  // void _onCalendarEntriesStateChanged() {
+  //   _calendarEntries = _getCalendarEntriesByDateUsecase.data;
+  //   _allCalendarEntries = _calendarEntries;
+
+  //   notifyWidget();
+
+  //   if (_getCalendarEntriesByDateUsecase.loadState == CalendarEntriesLoadState.error) {
+  //     _showErrorToast();
+  //   }
+  // }
 
   void _showErrorToast() {
     _toast.showToast(
       message: _appLocalizations.somethingWentWrong,
       type: ToastType.error,
       actionText: _appLocalizations.tryAgain,
-      onActionPressed: () => _getCalendarEntriesByDateUsecase.load(),
+      onActionPressed: () => _getCalendarEntriesByDateUsecase.load(force: true),
+      duration: const Duration(seconds: 5),
     );
   }
+
+  void _showStaleCacheToast() {
+    _toast.showToast(
+      message: 'Daten aus dem Cache geladen.',
+      // message: '${_appLocalizations.loadedFromCache}\n${_appLocalizations.tryRefreshingData}',
+      type: ToastType.warning,
+      actionText: _appLocalizations.tryAgain,
+      onActionPressed: () => _getCalendarEntriesByDateUsecase.load(force: true),
+      duration: const Duration(seconds: 5),
+    );
+  }
+
+  // void notifyListeners() {
+  //   super.notifyWidget();
+
+  //   if (loadedFromStaleCache) {
+  //   }
+  // }
 
   @override
   void didInitDriver() {
     super.didInitDriver();
-    _getCalendarEntriesByDateUsecase.addListener(_onCalendarEntriesStateChanged);
+    // Add ONLY one listener
+    _getCalendarEntriesByDateUsecase.addListener(_onUseCaseUpdate);
     loadEvents();
   }
 
@@ -135,7 +179,7 @@ class CalendarPageDriver extends WidgetDriver {
 
   @override
   void dispose() {
-    _getCalendarEntriesByDateUsecase.removeListener(_onCalendarEntriesStateChanged);
+    _getCalendarEntriesByDateUsecase.removeListener(_onUseCaseUpdate);
     super.dispose();
   }
 }
