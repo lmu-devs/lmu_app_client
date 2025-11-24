@@ -1,4 +1,5 @@
 import '../../../../domain/model/calendar_entry.dart';
+import '../../../../domain/model/frequency.dart';
 import 'calendar_entry_dto.dart';
 import 'calendar_rule_dto.dart';
 
@@ -15,7 +16,8 @@ class CalendarEntryMapper {
       onlineLink: dto.onlineLink,
       allDay: dto.allDay,
       description: dto.description,
-      rule: dto.rule?.toDomain(),
+      rule:
+          dto.rule != null ? dto.rule?.toDomain() : CalendarRuleDto(frequency: Frequency.once, interval: 1).toDomain(),
       recurrenceId: dto.recurrenceId,
       createdAt: dto.createdAt,
       updatedAt: dto.updatedAt,
@@ -34,7 +36,10 @@ class CalendarEntryMapper {
       onlineLink: domain.onlineLink,
       allDay: domain.allDay,
       description: domain.description,
-      rule: domain.rule != null ? CalendarRuleDto.fromDomain(domain.rule!) : null,
+      rule: domain.rule != null
+          ? CalendarRuleDto.fromDomain(domain.rule!)
+          : CalendarRuleDto(frequency: Frequency.once, interval: 1),
+      accessScope: domain.accessScope ?? 0,
       recurrenceId: domain.recurrenceId,
       createdAt: domain.createdAt,
       updatedAt: domain.updatedAt,

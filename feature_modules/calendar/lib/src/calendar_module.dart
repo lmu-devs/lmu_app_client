@@ -4,6 +4,7 @@ import 'package:core_routes/calendar.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/calendar.dart';
 
+import 'application/usecase/create_calendar_entry_usecase.dart';
 import 'application/usecase/get_calendar_usecase.dart';
 import 'application/usecase/get_entries_by_date_usecase.dart';
 import 'domain/interface/calendar_repository_interface.dart';
@@ -27,11 +28,13 @@ class CalendarModule extends AppModule with LocalDependenciesProvidingAppModule,
     final getCalendarUseCase = GetCalendarUsecase(calendarRepository);
     final getEventsByDateUsecase = GetCalendarEntriesByDateUsecase(calendarRepository, calendarConfig);
     final calendarSearchService = CalendarSearchService(getCalendarEntriesByDateUsecase: getEventsByDateUsecase);
+    final createCalendarEntryUseCase = CreateCalendarEntryUsecase(calendarRepository);
 
     GetIt.I.registerSingleton<CalendarRepositoryInterface>(calendarRepository);
     GetIt.I.registerSingleton<GetCalendarUsecase>(getCalendarUseCase);
     GetIt.I.registerSingleton<GetCalendarEntriesByDateUsecase>(getEventsByDateUsecase);
     GetIt.I.registerLazySingleton<CalendarSearchService>(() => calendarSearchService);
+    GetIt.I.registerSingleton<CreateCalendarEntryUsecase>(createCalendarEntryUseCase);
   }
 
   @override

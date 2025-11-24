@@ -60,6 +60,24 @@ class CalendarRepository implements CalendarRepositoryInterface {
   }
 
   @override
+  Future<void> createCalendarEntry(CalendarEntry entry) async {
+    print("Creating calendar entry: $entry");
+    try {
+      final dto = CalendarEntryMapper.toDto(entry);
+
+      try {
+        print("DTO to be sent to API: $dto");
+        await _apiClient.createCalendarEntry(dto);
+      } catch (e) {
+        print("Error with DTO: $e");
+      }
+      await _storage.deleteCalendarEntries();
+    } catch (e) {
+      throw CalendarGenericException(' 😡 Failed to create entry: ${e.toString()}');
+    }
+  }
+
+  @override
   Future<void> deleteCalendar() async {
     await _storage.deleteCalendar();
   }

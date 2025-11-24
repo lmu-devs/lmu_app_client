@@ -11,4 +11,6 @@ abstract class CalendarRepositoryInterface {
   Future<List<CalendarEntry>?> getCachedCalendarEntries();
 
   Future<void> deleteCalendar();
+
+  Future<void> createCalendarEntry(CalendarEntry entry);
 }

@@ -16,3 +16,48 @@ subprojects {
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
+
+
+
+
+
+
+
+// buildscript {
+//     ext {
+//         // --- ADD OR UPDATE THIS LINE ---
+//         kotlin_version = '1.9.20'
+//          // Recommended minimum is 1.8.0, 1.9.20 is a safe modern version
+//         // --------------------------------
+//     }
+
+//     repositories {
+//         google()
+//         mavenCentral()
+//     }
+
+//     dependencies {
+//         // Change the Android Gradle Plugin (AGP) version as well if you're on a very old one
+//         classpath 'com.android.tools.build:gradle:8.1.0' // Use 7.3.0 or higher (8.1.0 is modern)
+//         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+//         // ...
+//     }
+// }
+// allprojects {
+//     repositories {
+//         google()
+//         mavenCentral()
+//     }
+// }
+
+// rootProject.buildDir = '../build'
+// subprojects {
+//     project.buildDir = "${rootProject.buildDir}/${project.name}"
+// }
+// subprojects {
+//     project.evaluationDependsOn(':app')
+// }
+
+// tasks.register("clean", Delete) {
+//     delete rootProject.buildDir
+// }

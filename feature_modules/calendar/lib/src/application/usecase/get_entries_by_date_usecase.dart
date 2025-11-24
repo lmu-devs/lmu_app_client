@@ -70,4 +70,9 @@ class GetCalendarEntriesByDateUsecase extends ChangeNotifier {
       }
     }
   }
+
+  Future<void> refresh({DateTimeRange? dateRange}) async {
+    _loadState = CalendarEntriesLoadState.initial;
+    await load(dateRange: dateRange);
+  }
 }

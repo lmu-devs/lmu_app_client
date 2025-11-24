@@ -34,25 +34,34 @@ CalendarEntryDto _$CalendarEntryDtoFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$CalendarEntryDtoToJson(CalendarEntryDto instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'title': instance.title,
-      'event_type': _$EventTypeEnumMap[instance.eventType]!,
-      'start_time': instance.startTime.toIso8601String(),
-      'end_time': instance.endTime.toIso8601String(),
-      'all_day': instance.allDay,
-      'color': _$JsonConverterToJson<int, Color>(
-          instance.color, const ColorConverter().toJson),
-      'location': instance.location,
-      'online_link': instance.onlineLink,
-      'access_scope': instance.accessScope,
-      'description': instance.description,
-      'rule': instance.rule,
-      'recurrence_id': instance.recurrenceId,
-      'created_at': instance.createdAt?.toIso8601String(),
-      'updated_at': instance.updatedAt?.toIso8601String(),
-    };
+Map<String, dynamic> _$CalendarEntryDtoToJson(CalendarEntryDto instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'title': instance.title,
+    'event_type': _$EventTypeEnumMap[instance.eventType]!,
+    'start_time': instance.startTime.toIso8601String(),
+    'end_time': instance.endTime.toIso8601String(),
+    'all_day': instance.allDay,
+    'color': _$JsonConverterToJson<int, Color>(
+        instance.color, const ColorConverter().toJson),
+    'location': instance.location,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('online_link', instance.onlineLink);
+  val['access_scope'] = instance.accessScope;
+  writeNotNull('description', instance.description);
+  val['rule'] = instance.rule;
+  writeNotNull('recurrence_id', instance.recurrenceId);
+  val['created_at'] = instance.createdAt?.toIso8601String();
+  val['updated_at'] = instance.updatedAt?.toIso8601String();
+  return val;
+}
 
 const _$EventTypeEnumMap = {
   EventType.movie: 'MOVIE',

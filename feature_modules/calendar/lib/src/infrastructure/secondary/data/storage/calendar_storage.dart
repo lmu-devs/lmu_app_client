@@ -34,4 +34,9 @@ class CalendarStorage {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(_calendarKey);
   }
+
+  Future<void> deleteCalendarEntries() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove(_calendarEventsKey);
+  }
 }

@@ -23,12 +23,11 @@ class CalendarApiClient {
     );
 
     if (response.statusCode != 200) {
-      throw Exception('Failed to create calendar entry - ${response.statusCode}');
+      throw Exception('Failed to create calendar entry - ${response.statusCode}: ${response.body}');
     }
 
     final jsonList = json.decode(response.body) as List<dynamic>;
-    return CalendarEntryDto.fromJson(
-        {'entries': jsonList}); // Assuming CalendarEntriesModel expects a list under 'entries'
+    return CalendarEntryDto.fromJson({'entries': jsonList});
   }
 
   /// Deletes a calendar entry by its ID.

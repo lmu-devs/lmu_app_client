@@ -127,8 +127,14 @@ class ScreeningDetailsPage extends StatelessWidget {
                           title: context.locals.cinema.share,
                           emphasis: ButtonEmphasis.secondary,
                           onTap: () {
-                            final params = ShareParams(uri: Uri.parse(screening.externalLink!));
-                            SharePlus.instance.share(params);
+                            //   final params = ShareParams(uri: Uri.parse(screening.externalLink!));
+                            //   SharePlus.instance.share(params);
+                            if (screening.externalLink != null) {
+                              Share.share(
+                                screening.externalLink!,
+                                subject: context.locals.cinema.share,
+                              );
+                            }
                           },
                         ),
                       ],
