@@ -17,14 +17,15 @@ class CalendarEntryDto extends Equatable {
   const CalendarEntryDto({
     required this.id,
     required this.title,
-    required this.type,
-    required this.startDate,
-    required this.endDate,
-    required this.color,
-    required this.location,
+    required this.eventType,
+    required this.startTime,
+    required this.endTime,
+    this.color,
     required this.allDay,
+    this.location,
+    this.onlineLink,
+    this.accessScope,
     this.description,
-    this.address,
     this.rule,
     this.recurrenceId,
     this.createdAt,
@@ -33,21 +34,32 @@ class CalendarEntryDto extends Equatable {
 
   final String id;
   final String title;
-  final EventType type;
-  final DateTime startDate;
-  final DateTime endDate;
+  @JsonKey(name: 'event_type')
+  final EventType eventType;
+  @JsonKey(name: 'start_time')
+  final DateTime startTime;
+  @JsonKey(name: 'end_time')
+  final DateTime endTime;
+  @JsonKey(name: 'all_day')
   final bool allDay;
 
   @ColorConverter()
-  final Color color;
+  final Color? color;
 
-  final LocationModel location;
+  final LocationModel? location;
+  @JsonKey(name: 'online_link')
+  final String? onlineLink;
+
+  @JsonKey(name: 'access_scope')
+  final int? accessScope;
 
   final String? description;
-  final String? address;
   final CalendarRuleDto? rule;
+  @JsonKey(name: 'recurrence_id')
   final int? recurrenceId;
+  @JsonKey(name: 'created_at')
   final DateTime? createdAt;
+  @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
 
   Map<String, dynamic> toJson() => _$CalendarEntryDtoToJson(this);
@@ -56,14 +68,15 @@ class CalendarEntryDto extends Equatable {
   List<Object?> get props => [
         id,
         title,
-        type,
-        startDate,
-        endDate,
+        eventType,
+        startTime,
+        endTime,
         allDay,
         color,
         location,
+        onlineLink,
+        accessScope,
         description,
-        address,
         rule,
         recurrenceId,
         createdAt,

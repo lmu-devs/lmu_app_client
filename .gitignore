@@ -60,3 +60,6 @@ app.*.map.json
 # Firebase
 /firebase.json
 /lib/firebase_options.dart
+
+# Launch JSON
+.vscode/launch.json

@@ -354,6 +354,20 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                 GoRouteData.$route(
                   path: 'calendar',
                   factory: $CalendarMainRouteExtension._fromState,
+                  routes: [
+                    GoRouteData.$route(
+                      path: 'calendar/test',
+                      factory: $CalendarTestRouteExtension._fromState,
+                    ),
+                    GoRouteData.$route(
+                      path: 'search',
+                      factory: $CalendarSearchRouteExtension._fromState,
+                    ),
+                    GoRouteData.$route(
+                      path: 'create',
+                      factory: $CalendarCreateRouteExtension._fromState,
+                    ),
+                  ],
                 ),
                 GoRouteData.$route(
                   path: 'courses',
@@ -1216,6 +1230,60 @@ extension $CalendarMainRouteExtension on CalendarMainRoute {
 
   String get location => GoRouteData.$location(
         '/studies/calendar',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $CalendarTestRouteExtension on CalendarTestRoute {
+  static CalendarTestRoute _fromState(GoRouterState state) =>
+      const CalendarTestRoute();
+
+  String get location => GoRouteData.$location(
+        '/studies/calendar/calendar/test',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $CalendarSearchRouteExtension on CalendarSearchRoute {
+  static CalendarSearchRoute _fromState(GoRouterState state) =>
+      const CalendarSearchRoute();
+
+  String get location => GoRouteData.$location(
+        '/studies/calendar/search',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $CalendarCreateRouteExtension on CalendarCreateRoute {
+  static CalendarCreateRoute _fromState(GoRouterState state) =>
+      const CalendarCreateRoute();
+
+  String get location => GoRouteData.$location(
+        '/studies/calendar/create',
       );
 
   void go(BuildContext context) => context.go(location);

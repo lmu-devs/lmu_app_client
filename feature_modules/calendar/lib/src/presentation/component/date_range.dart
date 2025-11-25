@@ -22,14 +22,15 @@ class DateRangeDisplay extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     if (isSameDay) {
-      final prefix = DateTimeFormatter.formatShortDate(start);
-      final dateLmuText = DateTimeFormatter.formatFullDate(start, context);
+      final prefix = DateTimeFormatter.formatShortDateRelative(start);
+      final dateLmuText = DateTimeFormatter.formatFullDate(start);
 
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           LmuText('$prefix$dateLmuText', textStyle: textTheme.bodyMedium),
           if (allDay)
+            // TODO: locale
             LmuText('(ganztags)', textStyle: textTheme.bodySmall) // TODO: use localization
           else
             LmuText('${DateTimeFormatter.formatTime24h(start)} - ${DateTimeFormatter.formatTime24h(end)}',
@@ -40,8 +41,8 @@ class DateRangeDisplay extends StatelessWidget {
       final startPrefix = allDay ? '' : DateTimeFormatter.formatTime24h(start);
       final endPrefix = allDay ? '' : DateTimeFormatter.formatTime24h(end);
 
-      final startDate = DateTimeFormatter.formatShortDate(start);
-      final endDate = DateTimeFormatter.formatShortDate(end);
+      final startDate = DateTimeFormatter.formatShortDateRelative(start);
+      final endDate = DateTimeFormatter.formatShortDateRelative(end);
 
       return Wrap(
         crossAxisAlignment: WrapCrossAlignment.center,
