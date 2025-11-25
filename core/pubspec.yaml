@@ -55,6 +55,7 @@ dependencies:
   firebase_messaging: ^15.2.7
   flutter_local_notifications: ^19.3.0
   timezone: ^0.10.1
+  flutter_markdown_plus: ^1.0.5
 
 dev_dependencies:
   flutter_lints: ^2.0.0

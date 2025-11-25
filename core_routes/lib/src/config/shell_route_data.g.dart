@@ -370,14 +370,39 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                   ],
                 ),
                 GoRouteData.$route(
-                  path: 'lectures',
-                  factory: $LecturesMainRouteExtension._fromState,
+                  path: 'courses',
+                  factory: $CoursesOverviewRouteExtension._fromState,
                   routes: [
                     GoRouteData.$route(
-                      path: 'lecture-list',
-                      factory: $LectureListRouteExtension._fromState,
+                      path: 'details',
+                      factory: $CourseDetailsRouteExtension._fromState,
+                      routes: [
+                        GoRouteData.$route(
+                          path: 'sessions',
+                          factory:
+                              $CourseDetailsSessionsRouteExtension._fromState,
+                        ),
+                        GoRouteData.$route(
+                          path: 'persons',
+                          factory:
+                              $CourseDetailsPersonsRouteExtension._fromState,
+                        ),
+                        GoRouteData.$route(
+                          path: 'content',
+                          factory:
+                              $CourseDetailsContentRouteExtension._fromState,
+                        ),
+                      ],
+                    ),
+                    GoRouteData.$route(
+                      path: 'courses-search',
+                      factory: $CoursesSearchRouteExtension._fromState,
                     ),
                   ],
+                ),
+                GoRouteData.$route(
+                  path: 'courses-faculties',
+                  factory: $CoursesFacultyOverviewRouteExtension._fromState,
                 ),
                 GoRouteData.$route(
                   path: 'people',
@@ -1218,59 +1243,11 @@ extension $CalendarMainRouteExtension on CalendarMainRoute {
 }
 
 extension $CalendarTestRouteExtension on CalendarTestRoute {
-  static CalendarTestRoute _fromState(GoRouterState state) => const CalendarTestRoute();
+  static CalendarTestRoute _fromState(GoRouterState state) =>
+      const CalendarTestRoute();
 
   String get location => GoRouteData.$location(
         '/studies/calendar/calendar/test',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) => context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
-extension $CalendarSearchRouteExtension on CalendarSearchRoute {
-  static CalendarSearchRoute _fromState(GoRouterState state) => const CalendarSearchRoute();
-
-  String get location => GoRouteData.$location(
-        '/studies/calendar/search',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) => context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
-extension $CalendarCreateRouteExtension on CalendarCreateRoute {
-  static CalendarCreateRoute _fromState(GoRouterState state) => const CalendarCreateRoute();
-
-  String get location => GoRouteData.$location(
-        '/studies/calendar/create',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) => context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
-extension $LecturesMainRouteExtension on LecturesMainRoute {
-  static LecturesMainRoute _fromState(GoRouterState state) =>
-      const LecturesMainRoute();
-
-  String get location => GoRouteData.$location(
-        '/studies/lectures',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -1283,13 +1260,120 @@ extension $LecturesMainRouteExtension on LecturesMainRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $LectureListRouteExtension on LectureListRoute {
-  static LectureListRoute _fromState(GoRouterState state) => LectureListRoute(
-        state.extra as Map<String, dynamic>,
+extension $CalendarSearchRouteExtension on CalendarSearchRoute {
+  static CalendarSearchRoute _fromState(GoRouterState state) =>
+      const CalendarSearchRoute();
+
+  String get location => GoRouteData.$location(
+        '/studies/calendar/search',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $CalendarCreateRouteExtension on CalendarCreateRoute {
+  static CalendarCreateRoute _fromState(GoRouterState state) =>
+      const CalendarCreateRoute();
+
+  String get location => GoRouteData.$location(
+        '/studies/calendar/create',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $CoursesOverviewRouteExtension on CoursesOverviewRoute {
+  static CoursesOverviewRoute _fromState(GoRouterState state) =>
+      CoursesOverviewRoute(
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
       );
 
   String get location => GoRouteData.$location(
-        '/studies/lectures/lecture-list',
+        '/studies/courses',
+        queryParams: {
+          'faculty-id': facultyId.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $CourseDetailsRouteExtension on CourseDetailsRoute {
+  static CourseDetailsRoute _fromState(GoRouterState state) =>
+      CourseDetailsRoute(
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
+        courseId: int.parse(state.uri.queryParameters['course-id']!)!,
+        name: state.uri.queryParameters['name']!,
+        language: state.uri.queryParameters['language']!,
+        degree: state.uri.queryParameters['degree'],
+        sws: _$convertMapValue('sws', state.uri.queryParameters, int.tryParse),
+      );
+
+  String get location => GoRouteData.$location(
+        '/studies/courses/details',
+        queryParams: {
+          'faculty-id': facultyId.toString(),
+          'course-id': courseId.toString(),
+          'name': name,
+          'language': language,
+          if (degree != null) 'degree': degree,
+          if (sws != null) 'sws': sws!.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $CourseDetailsSessionsRouteExtension on CourseDetailsSessionsRoute {
+  static CourseDetailsSessionsRoute _fromState(GoRouterState state) =>
+      CourseDetailsSessionsRoute(
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
+        courseId: int.parse(state.uri.queryParameters['course-id']!)!,
+        name: state.uri.queryParameters['name']!,
+        language: state.uri.queryParameters['language']!,
+        degree: state.uri.queryParameters['degree'],
+        sws: _$convertMapValue('sws', state.uri.queryParameters, int.tryParse),
+        $extra: state.extra as List<RSessionModel>,
+      );
+
+  String get location => GoRouteData.$location(
+        '/studies/courses/details/sessions',
+        queryParams: {
+          'faculty-id': facultyId.toString(),
+          'course-id': courseId.toString(),
+          'name': name,
+          'language': language,
+          if (degree != null) 'degree': degree,
+          if (sws != null) 'sws': sws!.toString(),
+        },
       );
 
   void go(BuildContext context) => context.go(location, extra: $extra);
@@ -1302,6 +1386,118 @@ extension $LectureListRouteExtension on LectureListRoute {
 
   void replace(BuildContext context) =>
       context.replace(location, extra: $extra);
+}
+
+extension $CourseDetailsPersonsRouteExtension on CourseDetailsPersonsRoute {
+  static CourseDetailsPersonsRoute _fromState(GoRouterState state) =>
+      CourseDetailsPersonsRoute(
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
+        courseId: int.parse(state.uri.queryParameters['course-id']!)!,
+        name: state.uri.queryParameters['name']!,
+        language: state.uri.queryParameters['language']!,
+        degree: state.uri.queryParameters['degree'],
+        sws: _$convertMapValue('sws', state.uri.queryParameters, int.tryParse),
+        $extra: state.extra as List<RPersonModel>,
+      );
+
+  String get location => GoRouteData.$location(
+        '/studies/courses/details/persons',
+        queryParams: {
+          'faculty-id': facultyId.toString(),
+          'course-id': courseId.toString(),
+          'name': name,
+          'language': language,
+          if (degree != null) 'degree': degree,
+          if (sws != null) 'sws': sws!.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
+}
+
+extension $CourseDetailsContentRouteExtension on CourseDetailsContentRoute {
+  static CourseDetailsContentRoute _fromState(GoRouterState state) =>
+      CourseDetailsContentRoute(
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
+        courseId: int.parse(state.uri.queryParameters['course-id']!)!,
+        name: state.uri.queryParameters['name']!,
+        language: state.uri.queryParameters['language']!,
+        content: state.uri.queryParameters['content']!,
+        degree: state.uri.queryParameters['degree'],
+        sws: _$convertMapValue('sws', state.uri.queryParameters, int.tryParse),
+      );
+
+  String get location => GoRouteData.$location(
+        '/studies/courses/details/content',
+        queryParams: {
+          'faculty-id': facultyId.toString(),
+          'course-id': courseId.toString(),
+          'name': name,
+          'language': language,
+          'content': content,
+          if (degree != null) 'degree': degree,
+          if (sws != null) 'sws': sws!.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $CoursesSearchRouteExtension on CoursesSearchRoute {
+  static CoursesSearchRoute _fromState(GoRouterState state) =>
+      CoursesSearchRoute(
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/studies/courses/courses-search',
+        queryParams: {
+          'faculty-id': facultyId.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $CoursesFacultyOverviewRouteExtension on CoursesFacultyOverviewRoute {
+  static CoursesFacultyOverviewRoute _fromState(GoRouterState state) =>
+      const CoursesFacultyOverviewRoute();
+
+  String get location => GoRouteData.$location(
+        '/studies/courses-faculties',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
 }
 
 extension $PeopleOverviewRouteExtension on PeopleOverviewRoute {
@@ -1390,4 +1586,13 @@ extension $PeopleFacultyOverviewRouteExtension on PeopleFacultyOverviewRoute {
       context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
+}
+
+T? _$convertMapValue<T>(
+  String key,
+  Map<String, String> map,
+  T? Function(String) converter,
+) {
+  final value = map[key];
+  return value == null ? null : converter(value);
 }

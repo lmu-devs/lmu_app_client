@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../calendar.dart';
+import '../../courses.dart';
 import '../../launch_flow.dart';
-import '../../lectures.dart';
 import '../../libraries.dart';
 import '../../studies.dart';
 import '../benefits/benefits.dart';
 import '../cinema/cinema.dart';
+import '../courses/models/person_model.dart';
 import '../developerdex/developerdex.dart';
 import '../explore/explore.dart';
 import '../home/home.dart';
@@ -228,13 +229,30 @@ class LaunchFlowShellRoute extends ShellRouteData {
                 ),
               ],
             ),
-            TypedGoRoute<LecturesMainRoute>(
-              path: LecturesMainRoute.path,
+            TypedGoRoute<CoursesOverviewRoute>(
+              path: CoursesOverviewRoute.path,
               routes: <TypedGoRoute<GoRouteData>>[
-                TypedGoRoute<LectureListRoute>(
-                  path: LectureListRoute.path,
+                TypedGoRoute<CourseDetailsRoute>(
+                  path: CourseDetailsRoute.path,
+                  routes: <TypedGoRoute<GoRouteData>>[
+                    TypedGoRoute<CourseDetailsSessionsRoute>(
+                      path: CourseDetailsSessionsRoute.path,
+                    ),
+                    TypedGoRoute<CourseDetailsPersonsRoute>(
+                        path: CourseDetailsPersonsRoute.path,
+                    ),
+                    TypedGoRoute<CourseDetailsContentRoute>(
+                      path: CourseDetailsContentRoute.path,
+                    ),
+                  ],
+                ),
+                TypedGoRoute<CoursesSearchRoute>(
+                  path: CoursesSearchRoute.path,
                 ),
               ],
+            ),
+            TypedGoRoute<CoursesFacultyOverviewRoute>(
+              path: CoursesFacultyOverviewRoute.path,
             ),
             TypedGoRoute<PeopleOverviewRoute>(
               path: PeopleOverviewRoute.path,
