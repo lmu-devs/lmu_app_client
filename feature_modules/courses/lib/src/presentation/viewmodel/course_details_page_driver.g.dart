@@ -34,6 +34,15 @@ class _$TestCourseDetailsPageDriver extends TestDriver
   String get pageTitle => ' ';
 
   @override
+  String get sessionsText => ' ';
+
+  @override
+  String get personsText => ' ';
+
+  @override
+  String get contentText => ' ';
+
+  @override
   CourseDetailsModel? get courseDetails => null;
 
   @override
@@ -46,27 +55,13 @@ class _$TestCourseDetailsPageDriver extends TestDriver
   String get quickfactText => ' ';
 
   @override
-  List<CourseSessionData> get sessions => [];
-
-  @override
-  String get courseTime => ' ';
-
-  @override
-  String get courseDuration => ' ';
-
-  @override
-  String get courseRoom => ' ';
-
-  @override
-  String get persons => ' ';
-
-  @override
-  String get content => ' ';
-
-  @override
   Future<void> toggleFavorite(int id) {
     return Future.value();
   }
+
+  @override
+  void onSessionsDetailsPressed(
+      BuildContext context, List<SessionModel> sessions) {}
 
   @override
   void onPersonsDetailsPressed(

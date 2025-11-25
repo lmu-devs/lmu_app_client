@@ -6,7 +6,12 @@
   "favoritesAfter": " icon to add courses here",
   "courseTime": "Time",
   "courseDuration": "Duration",
+  "courseStart": "Start",
+  "courseEnd": "End",
   "courseRoom": "Room",
+  "sessions": "Appointments & Locations",
   "persons": "Educators",
-  "content": "Content"
+  "content": "Content",
+  "weeklyRhythm": "weekly",
+  "singleDate": "Single Appointment"
 }

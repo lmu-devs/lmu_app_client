@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
-import '../models/person_model.dart';
+import '../models/models.dart';
 import '../router/courses_router.dart';
 
 CoursesRouter get _router => GetIt.I.get<CoursesRouter>();
@@ -60,6 +60,34 @@ class CourseDetailsRoute extends GoRouteData {
       degree: degree,
       sws: sws,
     );
+  }
+}
+
+class CourseDetailsSessionsRoute extends GoRouteData {
+  const CourseDetailsSessionsRoute({
+    required this.facultyId,
+    required this.courseId,
+    required this.name,
+    required this.language,
+    required this.$extra,
+    this.degree,
+    this.sws,
+  });
+
+  final int facultyId;
+  final int courseId;
+  final String name;
+  final String language;
+  final String? degree;
+  final int? sws;
+
+  final List<RSessionModel> $extra;
+
+  static const String path = 'sessions';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return _router.buildSessionsDetails(context, $extra);
   }
 }
 

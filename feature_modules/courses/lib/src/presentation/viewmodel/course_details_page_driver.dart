@@ -12,18 +12,6 @@ import '../../domain/model/session_model.dart';
 
 part 'course_details_page_driver.g.dart';
 
-class CourseSessionData {
-  CourseSessionData({
-    required this.time,
-    required this.duration,
-    this.room,
-  });
-
-  final String time;
-  final String duration;
-  final String? room;
-}
-
 @GenerateTestDriver()
 class CourseDetailsPageDriver extends WidgetDriver
     implements _$DriverProvidedProperties {
@@ -55,6 +43,9 @@ class CourseDetailsPageDriver extends WidgetDriver
   late LmuLocalizations _localizations;
 
   String get pageTitle => name;
+  String get sessionsText => _localizations.courses.sessions;
+  String get personsText => _localizations.courses.persons;
+  String get contentText => _localizations.courses.content;
 
   CourseDetailsModel? get courseDetails => _usecase.data;
 
@@ -84,108 +75,18 @@ class CourseDetailsPageDriver extends WidgetDriver
     return parts.join(" • ");
   }
 
-  List<CourseSessionData> get sessions {
-    final details = _usecase.data;
-    if (details == null || details.sessions.isEmpty) {
-      return [];
-    }
-
-    return details.sessions.map((session) {
-      return CourseSessionData(
-        time: _formatTime(session),
-        duration: _formatDuration(session),
-        room: session.room,
-      );
-    }).toList();
+  void onSessionsDetailsPressed(
+      BuildContext context, List<SessionModel> sessions) {
+    CourseDetailsSessionsRoute(
+      facultyId: _facultyId,
+      courseId: _courseId,
+      name: name,
+      language: language,
+      degree: degree,
+      sws: sws,
+      $extra: sessions,
+    ).push(context);
   }
-
-  String _formatTime(SessionModel session) {
-    final List<String> parts = [];
-
-    parts.add(_mapRhythm(session.rhythm));
-
-    if (session.weekday != null) {
-      parts.add(_mapWeekday(session.weekday!));
-    }
-
-    final start = _cleanTime(session.startingTime);
-    final end = _cleanTime(session.endingTime);
-
-    if (start.isNotEmpty && end.isNotEmpty) {
-      parts.add("$start-$end");
-    }
-
-    return parts.join(", ");
-  }
-
-  String _formatDuration(SessionModel session) {
-    final start = _formatDate(session.durationStart);
-    final end = _formatDate(session.durationEnd);
-
-    if (start.isEmpty && end.isEmpty) return "-";
-    if (start.isNotEmpty && end.isEmpty) return start;
-    return "$start - $end";
-  }
-
-  String _cleanTime(String? time) {
-    if (time == null) return "";
-    final parts = time.split(':');
-    if (parts.length >= 2) {
-      return "${parts[0]}:${parts[1]}";
-    }
-    return time;
-  }
-
-  String _formatDate(String? dateStr) {
-    if (dateStr == null || dateStr.isEmpty) return "";
-    try {
-      final parts = dateStr.split('-');
-      if (parts.length == 3) {
-        return "${parts[2]}.${parts[1]}.${parts[0]}";
-      }
-      return dateStr;
-    } catch (e) {
-      return dateStr;
-    }
-  }
-
-  String _mapWeekday(String day) {
-    switch (day.toUpperCase()) {
-      case 'MONDAY':
-        return 'Mo';
-      case 'TUESDAY':
-        return 'Di';
-      case 'WEDNESDAY':
-        return 'Mi';
-      case 'THURSDAY':
-        return 'Do';
-      case 'FRIDAY':
-        return 'Fr';
-      case 'SATURDAY':
-        return 'Sa';
-      case 'SUNDAY':
-        return 'So';
-      default:
-        return day;
-    }
-  }
-
-  String _mapRhythm(String rhythm) {
-    final r = rhythm.toLowerCase();
-    if (r.contains('woch')) return 'wöchtl.';
-    if (r.contains('einzel')) return 'Einzelterm.';
-    return rhythm;
-  }
-
-  String get courseTime => _localizations.courses.courseTime;
-
-  String get courseDuration => _localizations.courses.courseDuration;
-
-  String get courseRoom => _localizations.courses.courseRoom;
-
-  String get persons => _localizations.courses.persons;
-
-  String get content => _localizations.courses.content;
 
   void onPersonsDetailsPressed(
       BuildContext context, List<PersonModel> persons) {

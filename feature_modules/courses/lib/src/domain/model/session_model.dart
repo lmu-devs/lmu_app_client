@@ -1,10 +1,11 @@
+import 'package:core_routes/courses.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'session_model.g.dart';
 
 @JsonSerializable()
-class SessionModel extends Equatable {
+class SessionModel extends Equatable implements RSessionModel {
   const SessionModel({
     required this.caption,
     required this.startingTime,

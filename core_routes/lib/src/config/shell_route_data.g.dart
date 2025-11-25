@@ -364,6 +364,11 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
                       factory: $CourseDetailsRouteExtension._fromState,
                       routes: [
                         GoRouteData.$route(
+                          path: 'sessions',
+                          factory:
+                              $CourseDetailsSessionsRouteExtension._fromState,
+                        ),
+                        GoRouteData.$route(
                           path: 'persons',
                           factory:
                               $CourseDetailsPersonsRouteExtension._fromState,
@@ -1277,6 +1282,42 @@ extension $CourseDetailsRouteExtension on CourseDetailsRoute {
       context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
+}
+
+extension $CourseDetailsSessionsRouteExtension on CourseDetailsSessionsRoute {
+  static CourseDetailsSessionsRoute _fromState(GoRouterState state) =>
+      CourseDetailsSessionsRoute(
+        facultyId: int.parse(state.uri.queryParameters['faculty-id']!)!,
+        courseId: int.parse(state.uri.queryParameters['course-id']!)!,
+        name: state.uri.queryParameters['name']!,
+        language: state.uri.queryParameters['language']!,
+        degree: state.uri.queryParameters['degree'],
+        sws: _$convertMapValue('sws', state.uri.queryParameters, int.tryParse),
+        $extra: state.extra as List<RSessionModel>,
+      );
+
+  String get location => GoRouteData.$location(
+        '/studies/courses/details/sessions',
+        queryParams: {
+          'faculty-id': facultyId.toString(),
+          'course-id': courseId.toString(),
+          'name': name,
+          'language': language,
+          if (degree != null) 'degree': degree,
+          if (sws != null) 'sws': sws!.toString(),
+        },
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
 }
 
 extension $CourseDetailsPersonsRouteExtension on CourseDetailsPersonsRoute {

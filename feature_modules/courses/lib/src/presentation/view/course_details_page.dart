@@ -1,11 +1,10 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
-import 'package:core_routes/src/courses/models/person_model.dart';
 import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../../domain/model/person_model.dart';
+import '../component/session_tile.dart';
 import '../viewmodel/course_details_page_driver.dart';
 
 class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
@@ -54,6 +53,8 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
       );
     }
 
+    final sessions = driver.courseDetails!.sessions;
+
     return LmuScaffold(
       appBar: LmuAppBarData(
         largeTitle: driver.pageTitle,
@@ -75,34 +76,31 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              LmuText(driver.quickfactText,
-                  color: context
-                      .colors.neutralColors.textColors.mediumColors.base),
-              ...driver.sessions.map(
-                (session) => Padding(
-                  padding: const EdgeInsets.only(top: LmuSizes.size_16),
-                  child: LmuContentTile(
-                    contentList: [
-                      LmuListItem.base(
-                        title: driver.courseTime,
-                        trailingSubtitle: session.time,
-                        maximizeTrailingTitleArea: true,
-                      ),
-                      LmuListItem.base(
-                        title: driver.courseDuration,
-                        trailingSubtitle: session.duration,
-                        maximizeTrailingTitleArea: true,
-                      ),
-                      if (session.room != null && session.room!.isNotEmpty)
-                        LmuListItem.base(
-                          title: driver.courseRoom,
-                          trailingSubtitle: session.room!,
-                          maximizeTrailingTitleArea: true,
-                        ),
-                    ],
-                  ),
-                ),
+              LmuText(
+                driver.quickfactText,
+                color:
+                    context.colors.neutralColors.textColors.mediumColors.base,
               ),
+              sessions.isNotEmpty
+                  ? Column(
+                      children: [
+                        const SizedBox(height: LmuSizes.size_16),
+                        sessions.length == 1
+                            ? SessionTile(session: sessions.first)
+                            : LmuContentTile(
+                                content: LmuListItem.action(
+                                  subtitle:
+                                      "${sessions.length} ${driver.sessionsText}",
+                                  actionType: LmuListItemAction.chevron,
+                                  onTap: () => driver.onSessionsDetailsPressed(
+                                    context,
+                                    courseDetails.sessions,
+                                  ),
+                                ),
+                              ),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
               if (driver.courseDetails!.persons.isNotEmpty ||
                   driver.courseDetails!.additionalInformation.isNotEmpty) ...[
                 const SizedBox(height: LmuSizes.size_16),
@@ -110,7 +108,7 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
                   contentList: [
                     if (driver.courseDetails!.persons.isNotEmpty)
                       LmuListItem.action(
-                        title: driver.persons,
+                        subtitle: driver.personsText,
                         actionType: LmuListItemAction.chevron,
                         onTap: () => driver.onPersonsDetailsPressed(
                           context,
@@ -119,10 +117,12 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
                       ),
                     if (driver.courseDetails!.additionalInformation.isNotEmpty)
                       LmuListItem.action(
-                        title: driver.content,
+                        subtitle: driver.contentText,
                         actionType: LmuListItemAction.chevron,
                         onTap: () => driver.onContentDetailsPressed(
-                            context, courseDetails.additionalInformation),
+                          context,
+                          courseDetails.additionalInformation,
+                        ),
                       ),
                   ],
                 ),
