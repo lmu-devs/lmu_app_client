@@ -4,6 +4,7 @@ import 'package:cinema/cinema.dart';
 import 'package:developerdex/developerdex.dart';
 import 'package:explore/explore.dart';
 import 'package:feedback/feedback.dart';
+import 'package:grades/grades.dart';
 import 'package:home/home.dart';
 import 'package:launch_flow/launch_flow.dart';
 import 'package:lectures/lectures.dart';
@@ -38,4 +39,5 @@ final modules = [
   LecturesModule(),
   PeopleModule(),
   DeveloperdexModule(),
+  GradesModule(),
 ];
