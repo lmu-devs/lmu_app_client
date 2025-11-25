@@ -1,6 +1,7 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
 import 'package:core_routes/courses.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_api/studies.dart';
 import 'package:widget_driver/widget_driver.dart';
@@ -124,7 +125,9 @@ class CoursesOverviewDriver extends WidgetDriver
     super.didInitDriver();
     _usecase.addListener(_onStateChanged);
     _favoritesUsecase.addListener(_onStateChanged);
-    _usecase.load(_facultyId);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _usecase.load(_facultyId);
+    });
     _facultiesApi.selectedFacultiesStream.listen((_) => notifyWidget());
   }
 
