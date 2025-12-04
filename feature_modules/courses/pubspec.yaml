@@ -23,6 +23,8 @@ dependencies:
   widget_driver: ^1.0.10
   shared_preferences: ^2.5.3
   equatable: ^2.0.7
+  skeletonizer: ^2.0.1
+  intl: any
 
 dev_dependencies:
   json_serializable: ^6.6.2

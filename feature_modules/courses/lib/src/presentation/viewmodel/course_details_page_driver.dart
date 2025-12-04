@@ -1,6 +1,7 @@
 import 'package:core/localizations.dart';
 import 'package:core_routes/courses.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../application/usecase/favorite_courses_usecase.dart';
@@ -43,9 +44,21 @@ class CourseDetailsPageDriver extends WidgetDriver
   late LmuLocalizations _localizations;
 
   String get pageTitle => name;
+
   String get sessionsText => _localizations.courses.sessions;
+
   String get personsText => _localizations.courses.persons;
+
   String get contentText => _localizations.courses.content;
+
+  String lastUpdatedText() {
+    final raw = courseDetails!.lastUpdated.trim();
+    final date = DateTime.parse(raw);
+
+    final formatted = DateFormat('dd.MM.yyyy, HH:mm').format(date);
+
+    return '${_localizations.courses.lastUpdated} $formatted';
+  }
 
   CourseDetailsModel? get courseDetails => _usecase.data;
 
