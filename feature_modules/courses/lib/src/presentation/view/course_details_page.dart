@@ -3,6 +3,7 @@ import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../component/session_tile.dart';
 import '../viewmodel/course_details_page_driver.dart';
@@ -35,8 +36,37 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
           largeTitle: driver.pageTitle,
           leadingAction: LeadingAction.back,
         ),
-        body: const Center(
-          child: CircularProgressIndicator(),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: LmuSizes.size_16,
+              right: LmuSizes.size_16,
+              bottom: LmuSizes.size_96,
+            ),
+            child: LmuSkeleton(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  LmuText(BoneMock.subtitle),
+                  const SizedBox(height: LmuSizes.size_32),
+                  SessionTile.loading(),
+                  const SizedBox(height: LmuSizes.size_8),
+                  LmuContentTile(
+                    contentList: [
+                      LmuListItem.action(
+                        subtitle: BoneMock.title,
+                        actionType: LmuListItemAction.chevron,
+                      ),
+                      LmuListItem.action(
+                        subtitle: BoneMock.title,
+                        actionType: LmuListItemAction.chevron,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       );
     }
@@ -47,8 +77,37 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
           largeTitle: driver.pageTitle,
           leadingAction: LeadingAction.back,
         ),
-        body: Center(
-          child: LmuText.body("TBD"),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: LmuSizes.size_16,
+              right: LmuSizes.size_16,
+              bottom: LmuSizes.size_96,
+            ),
+            child: LmuSkeleton(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  LmuText(BoneMock.subtitle),
+                  const SizedBox(height: LmuSizes.size_32),
+                  SessionTile.loading(),
+                  const SizedBox(height: LmuSizes.size_8),
+                  LmuContentTile(
+                    contentList: [
+                      LmuListItem.action(
+                        subtitle: BoneMock.title,
+                        actionType: LmuListItemAction.chevron,
+                      ),
+                      LmuListItem.action(
+                        subtitle: BoneMock.title,
+                        actionType: LmuListItemAction.chevron,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       );
     }
@@ -81,6 +140,7 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
                 color:
                     context.colors.neutralColors.textColors.mediumColors.base,
               ),
+              const SizedBox(height: LmuSizes.size_16),
               sessions.isNotEmpty
                   ? Column(
                       children: [
@@ -103,7 +163,7 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
                   : const SizedBox.shrink(),
               if (driver.courseDetails!.persons.isNotEmpty ||
                   driver.courseDetails!.additionalInformation.isNotEmpty) ...[
-                const SizedBox(height: LmuSizes.size_16),
+                const SizedBox(height: LmuSizes.size_8),
                 LmuContentTile(
                   contentList: [
                     if (driver.courseDetails!.persons.isNotEmpty)
@@ -126,6 +186,14 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
                       ),
                   ],
                 ),
+                const SizedBox(height: LmuSizes.size_32),
+                Center(
+                  child: LmuText.bodyXSmall(
+                    driver.lastUpdatedText(),
+                    color: context.colors.neutralColors.textColors.weakColors.base,
+                  ),
+                ),
+                const SizedBox(height: LmuSizes.size_96),
               ],
             ],
           ),
