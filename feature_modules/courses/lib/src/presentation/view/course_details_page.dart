@@ -36,38 +36,7 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
           largeTitle: driver.pageTitle,
           leadingAction: LeadingAction.back,
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(
-              left: LmuSizes.size_16,
-              right: LmuSizes.size_16,
-              bottom: LmuSizes.size_96,
-            ),
-            child: LmuSkeleton(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  LmuText(BoneMock.subtitle),
-                  const SizedBox(height: LmuSizes.size_32),
-                  SessionTile.loading(),
-                  const SizedBox(height: LmuSizes.size_8),
-                  LmuContentTile(
-                    contentList: [
-                      LmuListItem.action(
-                        subtitle: BoneMock.title,
-                        actionType: LmuListItemAction.chevron,
-                      ),
-                      LmuListItem.action(
-                        subtitle: BoneMock.title,
-                        actionType: LmuListItemAction.chevron,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+        body: const CourseDetailsLoading(),
       );
     }
 
@@ -77,38 +46,7 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
           largeTitle: driver.pageTitle,
           leadingAction: LeadingAction.back,
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(
-              left: LmuSizes.size_16,
-              right: LmuSizes.size_16,
-              bottom: LmuSizes.size_96,
-            ),
-            child: LmuSkeleton(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  LmuText(BoneMock.subtitle),
-                  const SizedBox(height: LmuSizes.size_32),
-                  SessionTile.loading(),
-                  const SizedBox(height: LmuSizes.size_8),
-                  LmuContentTile(
-                    contentList: [
-                      LmuListItem.action(
-                        subtitle: BoneMock.title,
-                        actionType: LmuListItemAction.chevron,
-                      ),
-                      LmuListItem.action(
-                        subtitle: BoneMock.title,
-                        actionType: LmuListItemAction.chevron,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+        body: const CourseDetailsLoading(),
       );
     }
 
@@ -190,7 +128,8 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
                 Center(
                   child: LmuText.bodyXSmall(
                     driver.lastUpdatedText(),
-                    color: context.colors.neutralColors.textColors.weakColors.base,
+                    color:
+                        context.colors.neutralColors.textColors.weakColors.base,
                   ),
                 ),
                 const SizedBox(height: LmuSizes.size_96),
@@ -212,4 +151,53 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
         degree: degree,
         sws: sws,
       );
+}
+
+class CourseDetailsLoading extends StatelessWidget {
+  const CourseDetailsLoading({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(
+          left: LmuSizes.size_16,
+          right: LmuSizes.size_16,
+          bottom: LmuSizes.size_96,
+        ),
+        child: LmuSkeleton(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              LmuText(BoneMock.subtitle),
+              const SizedBox(height: LmuSizes.size_32),
+              SessionTile.loading(),
+              const SizedBox(height: LmuSizes.size_8),
+              LmuContentTile(
+                contentList: [
+                  LmuListItem.action(
+                    subtitle: BoneMock.title,
+                    actionType: LmuListItemAction.chevron,
+                  ),
+                  LmuListItem.action(
+                    subtitle: BoneMock.title,
+                    actionType: LmuListItemAction.chevron,
+                  ),
+                ],
+              ),
+              const SizedBox(height: LmuSizes.size_32),
+              Center(
+                child: LmuText.bodyXSmall(
+                  '${BoneMock.date} ${BoneMock.time}',
+                  color:
+                      context.colors.neutralColors.textColors.weakColors.base,
+                ),
+              ),
+              const SizedBox(height: LmuSizes.size_96),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
