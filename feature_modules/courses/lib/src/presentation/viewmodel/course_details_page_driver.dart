@@ -47,6 +47,8 @@ class CourseDetailsPageDriver extends WidgetDriver
 
   String get sessionsText => _localizations.courses.sessions;
 
+  String get personText => _localizations.courses.person;
+
   String get personsText => _localizations.courses.persons;
 
   String get contentText => _localizations.courses.content;

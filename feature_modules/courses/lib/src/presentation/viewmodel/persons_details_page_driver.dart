@@ -1,7 +1,6 @@
 import 'package:core/localizations.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../../domain/extension/person_model_extension.dart';
 import '../../domain/model/person_model.dart';
 
 part 'persons_details_page_driver.g.dart';
@@ -25,10 +24,6 @@ class PersonsDetailsPageDriver extends WidgetDriver
   late LmuLocalizations _localizations;
 
   String get pageTitle => _localizations.courses.persons;
-
-  String getFullName(PersonModel person) {
-    return [person.formattedTitle(), person.firstName, person.lastName].join(" ");
-  }
 
   @override
   void didUpdateBuildContext(BuildContext context) {

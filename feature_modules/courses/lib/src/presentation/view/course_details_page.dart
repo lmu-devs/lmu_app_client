@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../domain/extension/person_model_extension.dart';
 import '../component/session_tile.dart';
 import '../viewmodel/course_details_page_driver.dart';
 
@@ -104,15 +105,24 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
                 const SizedBox(height: LmuSizes.size_8),
                 LmuContentTile(
                   contentList: [
-                    if (driver.courseDetails!.persons.isNotEmpty)
-                      LmuListItem.action(
-                        subtitle: driver.personsText,
-                        actionType: LmuListItemAction.chevron,
-                        onTap: () => driver.onPersonsDetailsPressed(
-                          context,
-                          courseDetails.persons,
-                        ),
-                      ),
+                    driver.courseDetails!.persons.isNotEmpty
+                        ? driver.courseDetails!.persons.length == 1
+                            ? LmuListItem.base(
+                                subtitle: driver.personText,
+                                trailingTitle: driver
+                                    .courseDetails!.persons.first
+                                    .getFullName(),
+                                maximizeTrailingTitleArea: true,
+                              )
+                            : LmuListItem.action(
+                                subtitle: driver.personsText,
+                                actionType: LmuListItemAction.chevron,
+                                onTap: () => driver.onPersonsDetailsPressed(
+                                  context,
+                                  courseDetails.persons,
+                                ),
+                              )
+                        : const SizedBox.shrink(),
                     if (driver.courseDetails!.additionalInformation.isNotEmpty)
                       LmuListItem.action(
                         subtitle: driver.contentText,
