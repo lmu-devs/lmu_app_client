@@ -5,13 +5,12 @@
   "favoritesBefore": "Füge Kurse mit dem ",
   "favoritesAfter": " Symbol hinzu",
   "courseTime": "Zeit",
-  "courseDuration": "Dauer",
-  "courseStart": "Start",
-  "courseEnd": "Ende",
+  "courseDate": "Datum",
   "courseRoom": "Raum",
   "sessions": "Termine & Orte",
+  "person": "Lehrperson",
   "persons": "Lehrpersonen",
   "content": "Inhalt",
-  "weeklyRhythm": "wöchentlich",
-  "singleDate": "Einzeltermin"
+  "weeklyRhythm": "Wöchentlich",
+  "lastUpdated": "Zuletzt aktualisiert am"
 }

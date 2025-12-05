@@ -25,12 +25,6 @@ class PersonsDetailsPageDriver extends WidgetDriver
 
   String get pageTitle => _localizations.courses.persons;
 
-  String getFullName(PersonModel person) {
-    return [person.title, person.firstName, person.lastName]
-        .where((string) => string != null && string.isNotEmpty)
-        .join(" ");
-  }
-
   @override
   void didUpdateBuildContext(BuildContext context) {
     super.didUpdateBuildContext(context);

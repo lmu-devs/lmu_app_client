@@ -26,6 +26,7 @@ class ContentDetailsPage extends DrivableWidget<ContentDetailsPageDriver> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             LmuMarkdownViewer(data: content),
+            const SizedBox(height: LmuSizes.size_96),
           ],
         ),
       ),

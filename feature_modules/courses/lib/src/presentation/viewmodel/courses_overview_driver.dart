@@ -53,15 +53,9 @@ class CoursesOverviewDriver extends WidgetDriver
 
   List<CourseModel> get courses => _usecase.data;
 
-  List<CourseModel> get favoriteCourses => courses
-      .where((course) => _favoritesUsecase.isFavorite(course.publishId))
-      .toList();
-
   List<CourseModel> get nonFavoriteCourses => courses
       .where((course) => !_favoritesUsecase.isFavorite(course.publishId))
       .toList();
-
-  bool get hasFavorites => _favoritesUsecase.favoriteIds.isNotEmpty;
 
   Map<String, List<CourseModel>> get groupedCourses {
     final grouped = <String, List<CourseModel>>{};

@@ -5,12 +5,15 @@ import 'package:flutter/cupertino.dart';
 import '../model/session_model.dart';
 
 extension SessionModelExtension on SessionModel {
-
   String formattedTimeText(BuildContext context) {
     final localizations = context.locals;
     final List<String> parts = [];
 
-    parts.add(_mapRhythm(localizations, rhythm));
+    final rhythmString = _mapRhythm(localizations, rhythm);
+
+    if (rhythmString.isNotEmpty) {
+      parts.add(rhythmString);
+    }
 
     if (weekday != null) {
       parts.add(_mapWeekday(weekday!));
@@ -68,14 +71,22 @@ extension SessionModelExtension on SessionModel {
 
   int _getWeekdayNumber(String day) {
     switch (day.toUpperCase()) {
-      case 'MONDAY': return DateTime.monday;
-      case 'TUESDAY': return DateTime.tuesday;
-      case 'WEDNESDAY': return DateTime.wednesday;
-      case 'THURSDAY': return DateTime.thursday;
-      case 'FRIDAY': return DateTime.friday;
-      case 'SATURDAY': return DateTime.saturday;
-      case 'SUNDAY': return DateTime.sunday;
-      default: throw ArgumentError("Invalid weekday: $weekday");
+      case 'MONDAY':
+        return DateTime.monday;
+      case 'TUESDAY':
+        return DateTime.tuesday;
+      case 'WEDNESDAY':
+        return DateTime.wednesday;
+      case 'THURSDAY':
+        return DateTime.thursday;
+      case 'FRIDAY':
+        return DateTime.friday;
+      case 'SATURDAY':
+        return DateTime.saturday;
+      case 'SUNDAY':
+        return DateTime.sunday;
+      default:
+        throw ArgumentError("Invalid weekday: $weekday");
     }
   }
 
@@ -94,7 +105,7 @@ extension SessionModelExtension on SessionModel {
   String _mapRhythm(LmuLocalizations localizations, String rhythm) {
     final r = rhythm.toLowerCase();
     if (r.contains('woch')) return localizations.courses.weeklyRhythm;
-    if (r.contains('einzel')) return localizations.courses.singleDate;
+    if (r.contains('einzel')) return '';
     return rhythm;
   }
 }
