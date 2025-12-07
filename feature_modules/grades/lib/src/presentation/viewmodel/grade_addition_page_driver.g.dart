@@ -27,6 +27,12 @@ class _$TestGradeAdditionPageDriver extends TestDriver implements GradeAdditionP
   TextEditingController get ectsController => _TestTextEditingController();
 
   @override
+  double? get selectedGrade => 0.0;
+
+  @override
+  List<double> get availableGrades => [];
+
+  @override
   bool get isAddButtonEnabled => false;
 
   @override
@@ -43,6 +49,9 @@ class _$TestGradeAdditionPageDriver extends TestDriver implements GradeAdditionP
 
   @override
   void onGradeSemesterSelected(GradeSemester semester) {}
+
+  @override
+  void onGradeSelected(double? grade) {}
 }
 
 class $GradeAdditionPageDriverProvider extends WidgetDriverProvider<GradeAdditionPageDriver> {

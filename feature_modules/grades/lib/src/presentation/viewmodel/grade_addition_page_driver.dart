@@ -4,12 +4,15 @@ import 'package:widget_driver/widget_driver.dart';
 
 import '../../application/usecase/get_grades_usecase.dart';
 import '../../domain/model/grade.dart';
+import '../../domain/model/grade_semester.dart';
 
 part 'grade_addition_page_driver.g.dart';
 
 @GenerateTestDriver()
 class GradeAdditionPageDriver extends WidgetDriver {
   final _usecase = GetIt.I.get<GetGradesUsecase>();
+
+  double? _selectedGrade;
 
   GradeSemester _selectedGradeSemester = GradeSemester.values.last;
 
@@ -30,6 +33,10 @@ class GradeAdditionPageDriver extends WidgetDriver {
   @TestDriverDefaultValue(_TestTextEditingController())
   TextEditingController get ectsController => _ectsController;
 
+  double? get selectedGrade => _selectedGrade;
+
+  List<double> get availableGrades => [1.0, 1.3, 1.7, 2.0, 2.3, 2.7, 3.0, 3.3, 3.7, 4.0, 5.0];
+
   void onNameChanged(String value) {
     notifyWidget();
   }
@@ -44,21 +51,19 @@ class GradeAdditionPageDriver extends WidgetDriver {
 
   bool get isAddButtonEnabled {
     final name = _nameController.text;
-    final grade = double.tryParse(_gradeController.text);
     final ects = int.tryParse(_ectsController.text);
 
-    return name.isNotEmpty && grade != null && ects != null;
+    return name.isNotEmpty && ects != null;
   }
 
   void onAddGradePressed() {
     final name = _nameController.text;
-    final grade = double.tryParse(_gradeController.text) ?? 0.0;
     final ects = int.tryParse(_ectsController.text) ?? 0;
 
     final newGrade = Grade(
       id: UniqueKey().toString(),
       name: name,
-      grade: grade,
+      grade: _selectedGrade,
       ects: ects,
       semester: _selectedGradeSemester,
     );
@@ -69,6 +74,11 @@ class GradeAdditionPageDriver extends WidgetDriver {
 
   void onGradeSemesterSelected(GradeSemester semester) {
     _selectedGradeSemester = semester;
+    notifyWidget();
+  }
+
+  void onGradeSelected(double? grade) {
+    _selectedGrade = grade;
     notifyWidget();
   }
 }

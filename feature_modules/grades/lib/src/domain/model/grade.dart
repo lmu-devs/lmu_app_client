@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import 'grade_semester.dart';
+
 class Grade extends Equatable {
   const Grade({
     required this.id,
@@ -7,16 +9,18 @@ class Grade extends Equatable {
     required this.ects,
     required this.grade,
     required this.semester,
+    this.isActive = true,
   });
 
   final String id;
   final String name;
   final int ects;
-  final double grade;
+  final double? grade;
   final GradeSemester semester;
+  final bool isActive;
 
   @override
-  List<Object?> get props => [id, name, ects, grade, semester];
+  List<Object?> get props => [id, name, ects, grade, semester, isActive];
 
   Grade copyWith({
     String? id,
@@ -24,6 +28,7 @@ class Grade extends Equatable {
     int? ects,
     double? grade,
     GradeSemester? semester,
+    bool? isActive,
   }) {
     return Grade(
       id: id ?? this.id,
@@ -31,20 +36,7 @@ class Grade extends Equatable {
       ects: ects ?? this.ects,
       grade: grade ?? this.grade,
       semester: semester ?? this.semester,
+      isActive: isActive ?? this.isActive,
     );
   }
-}
-
-enum GradeSemester {
-  winter2020,
-  summer2021,
-  winter2021,
-  summer2022,
-  winter2022,
-  summer2023,
-  winter2023,
-  summer2024,
-  winter2024,
-  summer2025,
-  winter2025,
 }

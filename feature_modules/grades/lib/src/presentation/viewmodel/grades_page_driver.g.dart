@@ -18,25 +18,47 @@ class _$TestGradesPageDriver extends TestDriver implements GradesPageDriver {
   String get largeTitle => ' ';
 
   @override
-  String get averageGrade => ' ';
+  String get addGradeTitle => ' ';
 
   @override
-  String get ects => ' ';
-
-  @override
-  String get ectsProgress => ' ';
+  String get gradesCountTitle => ' ';
 
   @override
   List<Grade> get grades => [];
 
   @override
-  double get progressValue => 0.0;
+  bool get hasGrades => false;
+
+  @override
+  double get averageGrade => 0.0;
 
   @override
   Map<GradeSemester, List<Grade>> get groupedGrades => {};
 
   @override
+  double get archievedEcts => 0.0;
+
+  @override
+  double get maxEcts => 0.0;
+
+  @override
+  List<Grade> getOrderedGrades(List<Grade> gradesToOrdder) {
+    return [];
+  }
+
+  @override
+  void toggleGradeActiveState(Grade grade, bool isActive) {}
+
+  @override
+  String calculateSemesterAverage(List<Grade> grades) {
+    return ' ';
+  }
+
+  @override
   void didInitDriver() {}
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {}
 
   @override
   void dispose() {}

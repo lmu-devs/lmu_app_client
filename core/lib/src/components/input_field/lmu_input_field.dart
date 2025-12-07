@@ -43,6 +43,7 @@ class LmuInputField extends StatefulWidget {
     this.focusNode,
     this.onClearPressed,
     this.focusAfterClear = true,
+    this.errorText,
   });
   final String hintText;
   final TextEditingController controller;
@@ -72,6 +73,7 @@ class LmuInputField extends StatefulWidget {
   final bool closeKeyboardOnTapOutside;
   final FocusNode? focusNode;
   final bool focusAfterClear;
+  final String? errorText;
 
   @override
   State<LmuInputField> createState() => _LmuInputFieldState();
@@ -185,6 +187,13 @@ class _LmuInputFieldState extends State<LmuInputField> {
         prefix: widget.prefix,
         suffix: widget.suffix,
         suffixText: widget.suffixText,
+        disabledBorder: border,
+        errorText: widget.errorText,
+        errorMaxLines: 1,
+        errorBorder: border,
+        errorStyle: TextStyle(
+          color: colors.dangerColors.textColors.strongColors.base,
+        ),
       ),
       focusNode: _focusNode,
     );

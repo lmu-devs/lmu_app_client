@@ -23,6 +23,7 @@ localizations: check_fvm_info
 	$(FVM_FLUTTER) gen-l10n --arb-dir ./l10n/lectures --output-dir ./core/lib/src/localizations/generated --template-arb-file lectures_en.arb --output-localization-file lectures_localizations.dart --output-class LecturesLocatizations --no-synthetic-package
 	$(FVM_FLUTTER) gen-l10n --arb-dir ./l10n/people --output-dir ./core/lib/src/localizations/generated --template-arb-file people_en.arb --output-localization-file people_localizations.dart --output-class PeopleLocatizations --no-synthetic-package
 	$(FVM_FLUTTER) gen-l10n --arb-dir ./l10n/developerdex --output-dir ./core/lib/src/localizations/generated --template-arb-file developerdex_en.arb --output-localization-file developerdex_localizations.dart --output-class DeveloperdexLocatizations --no-synthetic-package
+	$(FVM_FLUTTER) gen-l10n --arb-dir ./l10n/grades --output-dir ./core/lib/src/localizations/generated --template-arb-file grades_en.arb --output-localization-file grades_localizations.dart --output-class GradesLocatizations --no-synthetic-package
 
 run_generator: check_fvm_info
 	$(FVM_DART) run build_runner build --delete-conflicting-outputs

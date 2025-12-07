@@ -29,6 +29,7 @@ class LmuLocalizations {
   LecturesLocatizations get lectures => LecturesLocatizations.of(_context)!;
   PeopleLocatizations get people => PeopleLocatizations.of(_context)!;
   DeveloperdexLocatizations get developerdex => DeveloperdexLocatizations.of(_context)!;
+  GradesLocatizations get grades => GradesLocatizations.of(_context)!;
   // Add other localizations
 
   /// List of all supported localizations delegates
@@ -51,6 +52,7 @@ class LmuLocalizations {
         LecturesLocatizations.delegate,
         PeopleLocatizations.delegate,
         DeveloperdexLocatizations.delegate,
+        GradesLocatizations.delegate,
         // Add other localizations delegates
 
         GlobalMaterialLocalizations.delegate,

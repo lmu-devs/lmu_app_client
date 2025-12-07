@@ -4,6 +4,7 @@ import 'package:widget_driver/widget_driver.dart';
 
 import '../../application/usecase/get_grades_usecase.dart';
 import '../../domain/model/grade.dart';
+import '../../domain/model/grade_semester.dart';
 
 part 'grade_edit_page_driver.g.dart';
 
@@ -16,6 +17,8 @@ class GradeEditPageDriver extends WidgetDriver implements _$DriverProvidedProper
   final _usecase = GetIt.I.get<GetGradesUsecase>();
 
   late final Grade _gradeToEdit;
+
+  late double? _selectedGrade;
 
   late GradeSemester _selectedGradeSemester;
 
@@ -35,6 +38,10 @@ class GradeEditPageDriver extends WidgetDriver implements _$DriverProvidedProper
 
   @TestDriverDefaultValue(_TestTextEditingController())
   TextEditingController get ectsController => _ectsController;
+
+  double? get selectedGrade => _selectedGrade;
+
+  List<double> get availableGrades => [1.0, 1.3, 1.7, 2.0, 2.3, 2.7, 3.0, 3.3, 3.7, 4.0, 5.0];
 
   void onNameChanged(String value) {
     notifyWidget();
@@ -59,25 +66,30 @@ class GradeEditPageDriver extends WidgetDriver implements _$DriverProvidedProper
 
   bool get isSaveButtonEnabled {
     final name = _nameController.text;
-    final grade = double.tryParse(_gradeController.text);
     final ects = int.tryParse(_ectsController.text);
 
     final valuesChanged = name != _gradeToEdit.name ||
-        grade != _gradeToEdit.grade ||
+        (_selectedGrade != null ? _selectedGrade != _gradeToEdit.grade : _gradeToEdit.grade != null) ||
         ects != _gradeToEdit.ects ||
         _selectedGradeSemester != _gradeToEdit.semester;
 
-    return name.isNotEmpty && grade != null && ects != null && valuesChanged;
+    return name.isNotEmpty && ects != null && valuesChanged;
   }
 
   void onSaveGradePressed() {
     final updatedGrade = _gradeToEdit.copyWith(
       name: _nameController.text,
-      grade: double.tryParse(_gradeController.text) ?? _gradeToEdit.grade,
+      grade: _selectedGrade,
       ects: int.tryParse(_ectsController.text) ?? _gradeToEdit.ects,
       semester: _selectedGradeSemester,
+      isActive: _gradeToEdit.isActive,
     );
     _usecase.updateGrade(updatedGrade);
+  }
+
+  void onGradeSelected(double? grade) {
+    _selectedGrade = grade;
+    notifyWidget();
   }
 
   @override
@@ -87,6 +99,7 @@ class GradeEditPageDriver extends WidgetDriver implements _$DriverProvidedProper
     _gradeController.text = _gradeToEdit.grade.toString();
     _ectsController.text = _gradeToEdit.ects.toString();
     _selectedGradeSemester = _gradeToEdit.semester;
+    _selectedGrade = _gradeToEdit.grade;
   }
 
   @override
