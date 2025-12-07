@@ -7,6 +7,7 @@ export 'generated/courses_localizations.dart';
 export 'generated/developerdex_localizations.dart';
 export 'generated/explore_localizations.dart';
 export 'generated/feedback_localizations.dart';
+export 'generated/grades_localizations.dart';
 export 'generated/home_localizations.dart';
 export 'generated/launch_flow_localizations.dart';
 export 'generated/libraries_localizations.dart';

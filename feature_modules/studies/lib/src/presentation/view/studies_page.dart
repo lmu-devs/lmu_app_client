@@ -5,6 +5,7 @@ import 'package:widget_driver/widget_driver.dart';
 
 import '../component/calendar_entry_point.dart';
 import '../component/courses_entry_point.dart';
+import '../component/grades_entry_point.dart';
 import '../component/people_entry_point.dart';
 import '../component/student_id.dart';
 import '../viewmodel/studies_page_driver.dart';
@@ -31,6 +32,8 @@ class StudiesPage extends DrivableWidget<StudiesPageDriver> {
             ),
             const SizedBox(height: LmuSizes.size_32),
             const CalenderEntryPoint(),
+            const SizedBox(height: LmuSizes.size_32),
+            const GradesEntryPoint(),
             const SizedBox(height: LmuSizes.size_32),
             const CoursesEntryPoint(),
             const SizedBox(height: LmuSizes.size_32),

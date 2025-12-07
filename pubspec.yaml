@@ -54,6 +54,8 @@ dependencies:
     path: ./feature_modules/people
   developerdex:
     path: ./feature_modules/developerdex
+  grades:
+    path: ./feature_modules/grades
   shared_api:
     path: ./shared_api
 

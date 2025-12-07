@@ -1,0 +1,10 @@
+{
+  "@@locale": "de",
+  "@@context": "Grades",
+  "gradesTitle": "Noten",
+  "ects": "ECTS",
+  "gradeSingular": "Note",
+  "addGrade": "Note hinzufügen",
+  "winter": "Winter",
+  "summer": "Sommer"
+}
