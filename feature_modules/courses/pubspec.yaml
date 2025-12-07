@@ -25,6 +25,7 @@ dependencies:
   equatable: ^2.0.7
   skeletonizer: ^2.0.1
   intl: any
+  super_sliver_list: ^0.4.1
 
 dev_dependencies:
   json_serializable: ^6.6.2

@@ -80,6 +80,7 @@
   "dieses": "dieses",
   "summerCaps": "SOMMER",
   "winterCaps": "WINTER",
+  "reset": "Reset",
   "unsavedChanges": "Nicht gespeicherte Änderungen",
   "unsavedChangesDescription": "Möchtest du die Änderungen weiter bearbeiten"
 }
