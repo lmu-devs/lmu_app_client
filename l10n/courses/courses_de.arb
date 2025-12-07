@@ -1,0 +1,16 @@
+{
+  "@@locale": "de",
+  "@@context": "Courses",
+  "coursesTitle": "Kurse",
+  "favoritesBefore": "Füge Kurse mit dem ",
+  "favoritesAfter": " Symbol hinzu",
+  "courseTime": "Zeit",
+  "courseDate": "Datum",
+  "courseRoom": "Raum",
+  "sessions": "Termine & Orte",
+  "person": "Lehrperson",
+  "persons": "Lehrpersonen",
+  "content": "Inhalt",
+  "weeklyRhythm": "Wöchentlich",
+  "lastUpdated": "Zuletzt aktualisiert am"
+}

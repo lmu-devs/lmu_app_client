@@ -1,0 +1,17 @@
+{
+  "@@locale": "en",
+  "@@context": "Courses",
+  "coursesTitle": "Courses",
+  "favoritesBefore": "Tap the ",
+  "favoritesAfter": " icon to add courses here",
+  "courseTime": "Time",
+  "courseDuration": "Duration",
+  "courseDate": "Date",
+  "courseRoom": "Room",
+  "sessions": "Appointments & Locations",
+  "person": "Educator",
+  "persons": "Educators",
+  "content": "Content",
+  "weeklyRhythm": "Weekly",
+  "lastUpdated": "Last updated on"
+}

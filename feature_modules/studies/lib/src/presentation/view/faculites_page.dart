@@ -4,9 +4,9 @@ import 'package:flutter/widgets.dart';
 import 'package:shared_api/studies.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../viewmodel/faculites_page_driver.dart';
+import '../viewmodel/faculties_page_driver.dart';
 
-class FacultiesPage extends DrivableWidget<FaculitesPageDriver> {
+class FacultiesPage extends DrivableWidget<FacultiesPageDriver> {
   FacultiesPage({super.key});
 
   @override
@@ -42,5 +42,5 @@ class FacultiesPage extends DrivableWidget<FaculitesPageDriver> {
   }
 
   @override
-  WidgetDriverProvider<FaculitesPageDriver> get driverProvider => $FaculitesPageDriverProvider();
+  WidgetDriverProvider<FacultiesPageDriver> get driverProvider => $FacultiesPageDriverProvider();
 }
