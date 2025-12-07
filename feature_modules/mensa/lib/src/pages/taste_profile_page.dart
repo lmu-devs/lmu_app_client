@@ -314,11 +314,10 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
     void Function()? onContinuePressed,
   }) async {
     final appLocals = context.locals.app;
-    final canteenLocals = context.locals.canteen;
     await LmuDialog.show(
       context: context,
-      title: canteenLocals.unsavedChanges,
-      description: canteenLocals.unsavedChangesDescription,
+      title: appLocals.unsavedChanges,
+      description: appLocals.unsavedChangesDescription,
       buttonActions: [
         LmuDialogAction(
           title: appLocals.discard,

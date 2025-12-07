@@ -305,14 +305,6 @@
   "@menuNotAvailableDescription": {
     "description": "Description for menu not available"
   },
-  "unsavedChanges": "You Have Unsaved Changes",
-  "@unsavedChanges": {
-    "description": "Unsaved changes"
-  },
-  "unsavedChangesDescription": "Do you want to continue editing?",
-  "@unsavedChangesDescription": {
-    "description": "Unsaved changes description"
-  },
   "canteens": "Canteens",
   "@canteens": {
     "description": "Canteens"

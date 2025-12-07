@@ -113,6 +113,7 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
                                     .courseDetails!.persons.first
                                     .getFullName(),
                                 maximizeTrailingTitleArea: true,
+                                mainContentAlignment: MainContentAlignment.top,
                               )
                             : LmuListItem.action(
                                 subtitle: driver.personsText,

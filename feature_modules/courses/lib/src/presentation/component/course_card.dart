@@ -36,9 +36,9 @@ class CourseCard extends StatelessWidget {
               LmuInTextVisual.text(title: course.degree!),
             if (course.type != "n/a")
               LmuInTextVisual.text(title: course.type),
+            LmuInTextVisual.text(title: course.language),
             if (course.sws != null)
               LmuInTextVisual.text(title: '${course.sws!} SWS'),
-            LmuInTextVisual.text(title: course.language),
           ],
         ),
       ),

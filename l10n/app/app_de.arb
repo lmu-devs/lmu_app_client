@@ -79,5 +79,7 @@
   "diese": "diese",
   "dieses": "dieses",
   "summerCaps": "SOMMER",
-  "winterCaps": "WINTER"
+  "winterCaps": "WINTER",
+  "unsavedChanges": "Nicht gespeicherte Änderungen",
+  "unsavedChangesDescription": "Möchtest du die Änderungen weiter bearbeiten"
 }

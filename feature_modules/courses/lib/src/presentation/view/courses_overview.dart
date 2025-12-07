@@ -10,6 +10,7 @@ import 'package:flutter_lucide/flutter_lucide.dart';
 
 import '../component/course_card.dart';
 
+import '../component/course_filter_bottom_sheet.dart';
 import '../viewmodel/courses_overview_driver.dart';
 import '../../application/usecase/favorite_courses_usecase.dart';
 
@@ -161,15 +162,38 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
               onPressed: () => driver.onSearchPressed(context),
             ),
             LmuButton(
-              title: "All Degrees",
-              emphasis: ButtonEmphasis.secondary,
-              trailingIcon: LucideIcons.chevron_down,
-              onTap: () => {},
+              title: "Filter",
+              emphasis: driver.isFilterActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
+              onTap: () => _showFilterBottomSheet(context),
             ),
           ],
         ),
         const SizedBox(height: LmuSizes.size_16),
       ],
+    );
+  }
+
+  void _showFilterBottomSheet(BuildContext context) {
+    LmuBottomSheet.showExtended(
+      context,
+      content: CourseFilterBottomSheet(
+        availableDegrees: driver.availableDegrees,
+        availableTypes: driver.availableTypes,
+        availableLanguages: driver.availableLanguages,
+        availableSws: driver.availableSws,
+        selectedDegrees: driver.selectedDegrees,
+        selectedTypes: driver.selectedTypes,
+        selectedLanguages: driver.selectedLanguages,
+        selectedSws: driver.selectedSws,
+        onApply: (degrees, types, languages, sws) {
+          driver.applyFilters(
+            degrees: degrees,
+            types: types,
+            languages: languages,
+            sws: sws,
+          );
+        },
+      ),
     );
   }
 

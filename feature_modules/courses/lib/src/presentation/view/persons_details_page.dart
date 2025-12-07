@@ -26,7 +26,12 @@ class PersonsDetailsPage extends DrivableWidget<PersonsDetailsPageDriver> {
         padding: const EdgeInsets.all(LmuSizes.size_16),
         child: LmuContentTile(
           contentList: persons
-              .map((person) => LmuListItem.base(title: person.getFullName()))
+              .map(
+                (person) => LmuListItem.base(
+                  title: person.getFullName(),
+                  mainContentAlignment: MainContentAlignment.top,
+                ),
+              )
               .toList(),
         ),
       ),

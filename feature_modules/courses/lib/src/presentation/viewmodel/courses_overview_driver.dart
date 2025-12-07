@@ -45,13 +45,102 @@ class CoursesOverviewDriver extends WidgetDriver
     return _localizations.studies.facultiesSubtitle(faculty.name);
   }
 
+  late Set<String> _selectedDegrees = {};
+  late Set<String> _selectedTypes = {};
+  late Set<String> _selectedLanguages = {};
+  late Set<int> _selectedSws = {};
+
+  Set<String> get selectedDegrees => _selectedDegrees;
+  Set<String> get selectedTypes => _selectedTypes;
+  Set<String> get selectedLanguages => _selectedLanguages;
+  Set<int> get selectedSws => _selectedSws;
+
+  List<String> get availableDegrees => _extractUniqueStrings((course) => course.degree).where((degree) => degree != "-").toList();
+  List<String> get availableTypes => _extractUniqueStrings((course) => course.type).where((type) => type != "n/a").toList();
+  List<String> get availableLanguages => _extractUniqueStrings((course) => course.language);
+
+  List<int> get availableSws {
+    final swsList = _usecase.data
+        .map((c) => c.sws)
+        .where((s) => s != null)
+        .cast<int>()
+        .toSet()
+        .toList();
+    swsList.sort();
+    return swsList;
+  }
+
+  List<String> _extractUniqueStrings(String? Function(CourseModel) selector) {
+    final list = _usecase.data
+        .map(selector)
+        .where((string) => string != null && string.isNotEmpty)
+        .cast<String>()
+        .toSet()
+        .toList();
+    list.sort();
+    return list;
+  }
+
+  bool get isFilterActive =>
+      _selectedDegrees.isNotEmpty ||
+          _selectedTypes.isNotEmpty ||
+          _selectedLanguages.isNotEmpty ||
+          _selectedSws.isNotEmpty;
+
+  List<CourseModel> get courses {
+    final rawData = _usecase.data;
+
+    if (!isFilterActive) {
+      return rawData;
+    }
+
+    return rawData.where((course) {
+      if (_selectedDegrees.isNotEmpty) {
+        if (course.degree == null || !_selectedDegrees.contains(course.degree)) {
+          return false;
+        }
+      }
+
+      if (_selectedTypes.isNotEmpty) {
+        if (!_selectedTypes.contains(course.type)) {
+          return false;
+        }
+      }
+
+      if (_selectedLanguages.isNotEmpty) {
+        if (!_selectedLanguages.contains(course.language)) {
+          return false;
+        }
+      }
+
+      if (_selectedSws.isNotEmpty) {
+        if (course.sws == null || !_selectedSws.contains(course.sws)) {
+          return false;
+        }
+      }
+
+      return true;
+    }).toList();
+  }
+
+  void applyFilters({
+    required Set<String> degrees,
+    required Set<String> types,
+    required Set<String> languages,
+    required Set<int> sws,
+  }) {
+    _selectedDegrees = Set.from(degrees);
+    _selectedTypes = Set.from(types);
+    _selectedLanguages = Set.from(languages);
+    _selectedSws = Set.from(sws);
+    notifyWidget();
+  }
+
   Future<void> toggleFavorite(int id) async {
     await _favoritesUsecase.toggleFavorite(id);
   }
 
   bool isFavorite(int id) => _favoritesUsecase.isFavorite(id);
-
-  List<CourseModel> get courses => _usecase.data;
 
   List<CourseModel> get nonFavoriteCourses => courses
       .where((course) => !_favoritesUsecase.isFavorite(course.publishId))

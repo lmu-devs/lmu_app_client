@@ -343,5 +343,13 @@
   "winterCaps": "WINTER",
   "@winterCaps": {
     "description": "Winter semester in caps"
+  },
+  "unsavedChanges": "You Have Unsaved Changes",
+  "@unsavedChanges": {
+    "description": "Unsaved changes"
+  },
+  "unsavedChangesDescription": "Do you want to continue editing?",
+  "@unsavedChangesDescription": {
+    "description": "Unsaved changes description"
   }
 }
