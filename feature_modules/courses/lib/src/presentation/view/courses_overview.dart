@@ -11,6 +11,7 @@ import 'package:flutter_lucide/flutter_lucide.dart';
 import '../component/course_card.dart';
 
 import '../component/course_filter_bottom_sheet.dart';
+import '../component/courses_empty_state.dart';
 import '../viewmodel/courses_overview_driver.dart';
 import '../../application/usecase/favorite_courses_usecase.dart';
 
@@ -63,7 +64,6 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ..._buildGroupedCourses(context),
-                    const SizedBox(height: LmuSizes.size_16),
                     _buildShowAllFacultiesButton(context),
                     const SizedBox(height: LmuSizes.size_96),
                   ],
@@ -163,7 +163,9 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
             ),
             LmuButton(
               title: "Filter",
-              emphasis: driver.isFilterActive ? ButtonEmphasis.primary : ButtonEmphasis.secondary,
+              emphasis: driver.isFilterActive
+                  ? ButtonEmphasis.primary
+                  : ButtonEmphasis.secondary,
               onTap: () => _showFilterBottomSheet(context),
             ),
           ],
@@ -200,6 +202,13 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
   List<Widget> _buildGroupedCourses(BuildContext context) {
     final groupedCourses = driver.groupedCourses;
     final List<Widget> widgets = [];
+
+    if (groupedCourses.isEmpty && driver.isFilterActive) {
+      return [
+        const CoursesEmptyState(
+            emptyStateType: CoursesEmptyStateType.noCoursesFound),
+      ];
+    }
 
     for (final entry in groupedCourses.entries) {
       final letter = entry.key;

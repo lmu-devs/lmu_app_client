@@ -9,6 +9,8 @@
   "courseFilterCategories": "Categories",
   "courseFilterFooter": "This data is retrieved from the LSF at regular intervals. Information may be incomplete or not up-to-date. Please verify details in the official LSF system.",
   "applyFilter": "Apply",
+  "noCoursesFoundTitle": "No courses found",
+  "noCoursesFoundDescription": "Your current filter selection matches no course. Try adjusting or resetting your filters.",
   "degree": "Degree",
   "courseType": "Course Type",
   "language": "Language",

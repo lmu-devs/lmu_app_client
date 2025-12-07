@@ -9,6 +9,8 @@
   "courseFilterCategories": "Kategorien",
   "courseFilterFooter": "Die Daten werden in regelmäßigen Abständen aus dem LSF abgerufen. Informationen können unvollständig oder nicht aktuell sein. Bitte überprüfe Details im offiziellen LSF-System.",
   "applyFilter": "Anwenden",
+  "noCoursesFoundTitle": "Keine Kurse gefunden",
+  "noCoursesFoundDescription": "Deine aktuelle Filterauswahl passt zu keinem Kurs. Versuche, deine Filter anzupassen oder zurückzusetzen.",
   "degree": "Abschluss",
   "courseType": "Veranstaltungsart",
   "language": "Sprache",
