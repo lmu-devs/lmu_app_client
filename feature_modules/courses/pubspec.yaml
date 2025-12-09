@@ -22,6 +22,7 @@ dependencies:
   flutter_lucide: ^1.2.0
   widget_driver: ^1.0.10
   shared_preferences: ^2.5.3
+  share_plus: ^12.0.1
   equatable: ^2.0.7
   skeletonizer: ^2.0.1
   intl: any

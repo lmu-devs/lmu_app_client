@@ -159,14 +159,14 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
           buttons: [
             LmuIconButton(
               icon: LucideIcons.search,
-              onPressed: () => driver.onSearchPressed(context),
+              onPressed: () => driver.isLoading ? {} : driver.onSearchPressed(context),
             ),
             LmuButton(
               title: "Filter",
               emphasis: driver.isFilterActive
                   ? ButtonEmphasis.primary
                   : ButtonEmphasis.secondary,
-              onTap: () => _showFilterBottomSheet(context),
+              onTap: () => driver.isLoading ? {} : _showFilterBottomSheet(context),
             ),
           ],
         ),
@@ -200,6 +200,15 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
   }
 
   List<Widget> _buildGroupedCourses(BuildContext context) {
+    if (driver.isLoading) {
+      return [
+        LmuTileHeadline.base(title: "A"),
+        ...List.filled(4, CourseCard.loading()),
+        LmuTileHeadline.base(title: "B"),
+        ...List.filled(4, CourseCard.loading()),
+      ];
+    }
+
     final groupedCourses = driver.groupedCourses;
     final List<Widget> widgets = [];
 

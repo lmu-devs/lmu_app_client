@@ -24,6 +24,7 @@
   "locationServiceDialogTitle": "Standortdienste deaktiviert",
   "locationServiceDialogText": "Um alle Funktionen der App nutzen zu können, aktiviere bitte deine Standortdienste. So können wir dir personalisierte und genauere Informationen bieten.",
   "ok": "OK",
+  "share": "Teilen",
   "locationPermissionDialogTitle": "Fehlende Berechtigung",
   "locationPermissionDialogText": "Diese Funktion benötigt deinen Standort. Öffne Einstellungen, um die Berechtigung zu erteilen.",
   "cancel": "Abbrechen",

@@ -15,23 +15,23 @@ RouteBase get $launchFlowShellRoute => ShellRouteData.$route(
       factory: $LaunchFlowShellRouteExtension._fromState,
       routes: [
         GoRouteData.$route(
-          path: '/welcome',
+          path: '/app/welcome',
           factory: $LaunchFlowWelcomeRouteExtension._fromState,
         ),
         GoRouteData.$route(
-          path: '/app_update',
+          path: '/app/app_update',
           factory: $LaunchFlowAppUpdateRouteExtension._fromState,
         ),
         GoRouteData.$route(
-          path: '/release_notes',
+          path: '/app/release_notes',
           factory: $LaunchFlowReleaseNotesRouteExtension._fromState,
         ),
         GoRouteData.$route(
-          path: '/faculty_selection',
+          path: '/app/faculty_selection',
           factory: $LaunchFlowFacultySelectionRouteExtension._fromState,
         ),
         GoRouteData.$route(
-          path: '/permissions_onboarding',
+          path: '/app/permissions_onboarding',
           factory: $LaunchFlowPermissionsOnboardingRouteExtension._fromState,
         ),
       ],
@@ -47,7 +47,7 @@ extension $LaunchFlowWelcomeRouteExtension on LaunchFlowWelcomeRoute {
       const LaunchFlowWelcomeRoute();
 
   String get location => GoRouteData.$location(
-        '/welcome',
+        '/app/welcome',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -65,7 +65,7 @@ extension $LaunchFlowAppUpdateRouteExtension on LaunchFlowAppUpdateRoute {
       const LaunchFlowAppUpdateRoute();
 
   String get location => GoRouteData.$location(
-        '/app_update',
+        '/app/app_update',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -83,7 +83,7 @@ extension $LaunchFlowReleaseNotesRouteExtension on LaunchFlowReleaseNotesRoute {
       const LaunchFlowReleaseNotesRoute();
 
   String get location => GoRouteData.$location(
-        '/release_notes',
+        '/app/release_notes',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -102,7 +102,7 @@ extension $LaunchFlowFacultySelectionRouteExtension
       const LaunchFlowFacultySelectionRoute();
 
   String get location => GoRouteData.$location(
-        '/faculty_selection',
+        '/app/faculty_selection',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -121,7 +121,7 @@ extension $LaunchFlowPermissionsOnboardingRouteExtension
       const LaunchFlowPermissionsOnboardingRoute();
 
   String get location => GoRouteData.$location(
-        '/permissions_onboarding',
+        '/app/permissions_onboarding',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -142,7 +142,7 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
         StatefulShellBranchData.$branch(
           routes: [
             GoRouteData.$route(
-              path: '/home',
+              path: '/app/home',
               factory: $HomeMainRouteExtension._fromState,
               routes: [
                 GoRouteData.$route(
@@ -302,7 +302,7 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
         StatefulShellBranchData.$branch(
           routes: [
             GoRouteData.$route(
-              path: '/mensa',
+              path: '/app/mensa',
               factory: $MensaMainRouteExtension._fromState,
               routes: [
                 GoRouteData.$route(
@@ -320,7 +320,7 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
         StatefulShellBranchData.$branch(
           routes: [
             GoRouteData.$route(
-              path: '/explore',
+              path: '/app/explore',
               factory: $ExploreMainRouteExtension._fromState,
               routes: [
                 GoRouteData.$route(
@@ -334,7 +334,7 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
         StatefulShellBranchData.$branch(
           routes: [
             GoRouteData.$route(
-              path: '/wishlist',
+              path: '/app/wishlist',
               factory: $WishlistMainRouteExtension._fromState,
               routes: [
                 GoRouteData.$route(
@@ -348,7 +348,7 @@ RouteBase get $mainShellRouteData => StatefulShellRouteData.$route(
         StatefulShellBranchData.$branch(
           routes: [
             GoRouteData.$route(
-              path: '/studies',
+              path: '/app/studies',
               factory: $StudiesMainRouteExtension._fromState,
               routes: [
                 GoRouteData.$route(
@@ -438,7 +438,7 @@ extension $HomeMainRouteExtension on HomeMainRoute {
   static HomeMainRoute _fromState(GoRouterState state) => const HomeMainRoute();
 
   String get location => GoRouteData.$location(
-        '/home',
+        '/app/home',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -456,7 +456,7 @@ extension $SettingsMainRouteExtension on SettingsMainRoute {
       const SettingsMainRoute();
 
   String get location => GoRouteData.$location(
-        '/home/settings',
+        '/app/home/settings',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -474,7 +474,7 @@ extension $SettingsAppearanceRouteExtension on SettingsAppearanceRoute {
       const SettingsAppearanceRoute();
 
   String get location => GoRouteData.$location(
-        '/home/settings/appearance',
+        '/app/home/settings/appearance',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -492,7 +492,7 @@ extension $SettingsLanguageRouteExtension on SettingsLanguageRoute {
       const SettingsLanguageRoute();
 
   String get location => GoRouteData.$location(
-        '/home/settings/language',
+        '/app/home/settings/language',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -510,7 +510,7 @@ extension $SettingsNotificationsRouteExtension on SettingsNotificationsRoute {
       const SettingsNotificationsRoute();
 
   String get location => GoRouteData.$location(
-        '/home/settings/notifications',
+        '/app/home/settings/notifications',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -528,7 +528,7 @@ extension $SettingsLicenceRouteExtension on SettingsLicenceRoute {
       const SettingsLicenceRoute();
 
   String get location => GoRouteData.$location(
-        '/home/settings/license',
+        '/app/home/settings/license',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -546,7 +546,7 @@ extension $SettingsAccountRouteExtension on SettingsAccountRoute {
       const SettingsAccountRoute();
 
   String get location => GoRouteData.$location(
-        '/home/settings/account',
+        '/app/home/settings/account',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -564,7 +564,7 @@ extension $SettingsAnalyticsRouteExtension on SettingsAnalyticsRoute {
       const SettingsAnalyticsRoute();
 
   String get location => GoRouteData.$location(
-        '/home/settings/account/analytics',
+        '/app/home/settings/account/analytics',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -582,7 +582,7 @@ extension $SettingsDebugRouteExtension on SettingsDebugRoute {
       const SettingsDebugRoute();
 
   String get location => GoRouteData.$location(
-        '/home/settings/debug',
+        '/app/home/settings/debug',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -600,7 +600,7 @@ extension $DeveloperdexMainRouteExtension on DeveloperdexMainRoute {
       const DeveloperdexMainRoute();
 
   String get location => GoRouteData.$location(
-        '/home/settings/developerdex',
+        '/app/home/settings/developerdex',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -618,7 +618,7 @@ extension $FaculitesMainRouteExtension on FaculitesMainRoute {
       const FaculitesMainRoute();
 
   String get location => GoRouteData.$location(
-        '/home/settings/faculites',
+        '/app/home/settings/faculites',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -635,7 +635,7 @@ extension $LinksRouteExtension on LinksRoute {
   static LinksRoute _fromState(GoRouterState state) => const LinksRoute();
 
   String get location => GoRouteData.$location(
-        '/home/links',
+        '/app/home/links',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -653,7 +653,7 @@ extension $LinksFacultiesRouteExtension on LinksFacultiesRoute {
       const LinksFacultiesRoute();
 
   String get location => GoRouteData.$location(
-        '/home/links/links_faculties',
+        '/app/home/links/links_faculties',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -673,7 +673,7 @@ extension $LinksOverviewRouteExtension on LinksOverviewRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/home/links/links_overview',
+        '/app/home/links/links_overview',
         queryParams: {
           'faculty-id': facultyId.toString(),
         },
@@ -695,7 +695,7 @@ extension $LinksSearchRouteExtension on LinksSearchRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/home/links/search',
+        '/app/home/links/search',
         queryParams: {
           'faculty-id': facultyId.toString(),
         },
@@ -716,7 +716,7 @@ extension $BenefitsMainRouteExtension on BenefitsMainRoute {
       const BenefitsMainRoute();
 
   String get location => GoRouteData.$location(
-        '/home/benefits',
+        '/app/home/benefits',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -736,7 +736,7 @@ extension $BenefitsDetailsRouteExtension on BenefitsDetailsRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/home/benefits/details',
+        '/app/home/benefits/details',
       );
 
   void go(BuildContext context) => context.go(location, extra: $extra);
@@ -756,7 +756,7 @@ extension $RoomfinderMainRouteExtension on RoomfinderMainRoute {
       const RoomfinderMainRoute();
 
   String get location => GoRouteData.$location(
-        '/home/roomfinder',
+        '/app/home/roomfinder',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -777,7 +777,7 @@ extension $RoomfinderBuildingDetailsRouteExtension
       );
 
   String get location => GoRouteData.$location(
-        '/home/roomfinder/details',
+        '/app/home/roomfinder/details',
         queryParams: {
           'building-id': buildingId,
         },
@@ -800,7 +800,7 @@ extension $RoomfinderRoomSearchRouteExtension on RoomfinderRoomSearchRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/home/roomfinder/details/search_room',
+        '/app/home/roomfinder/details/search_room',
         queryParams: {
           'building-id': buildingId,
         },
@@ -821,7 +821,7 @@ extension $RoomfinderSearchRouteExtension on RoomfinderSearchRoute {
       const RoomfinderSearchRoute();
 
   String get location => GoRouteData.$location(
-        '/home/roomfinder/search',
+        '/app/home/roomfinder/search',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -839,7 +839,7 @@ extension $TimelineMainRouteExtension on TimelineMainRoute {
       const TimelineMainRoute();
 
   String get location => GoRouteData.$location(
-        '/home/timeline',
+        '/app/home/timeline',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -857,7 +857,7 @@ extension $SportsMainRouteExtension on SportsMainRoute {
       const SportsMainRoute();
 
   String get location => GoRouteData.$location(
-        '/home/sports',
+        '/app/home/sports',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -877,7 +877,7 @@ extension $SportsDetailsRouteExtension on SportsDetailsRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/home/sports/details',
+        '/app/home/sports/details',
       );
 
   void go(BuildContext context) => context.go(location, extra: $extra);
@@ -897,7 +897,7 @@ extension $SportsSearchRouteExtension on SportsSearchRoute {
       const SportsSearchRoute();
 
   String get location => GoRouteData.$location(
-        '/home/sports/search',
+        '/app/home/sports/search',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -915,7 +915,7 @@ extension $CinemaMainRouteExtension on CinemaMainRoute {
       const CinemaMainRoute();
 
   String get location => GoRouteData.$location(
-        '/home/cinema',
+        '/app/home/cinema',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -935,7 +935,7 @@ extension $CinemaDetailsRouteExtension on CinemaDetailsRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/home/cinema/details',
+        '/app/home/cinema/details',
       );
 
   void go(BuildContext context) => context.go(location, extra: $extra);
@@ -957,7 +957,7 @@ extension $ScreeningDetailsRouteExtension on ScreeningDetailsRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/home/cinema/screening',
+        '/app/home/cinema/screening',
       );
 
   void go(BuildContext context) => context.go(location, extra: $extra);
@@ -979,7 +979,7 @@ extension $ScreeningsHistoryRouteExtension on ScreeningsHistoryRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/home/cinema/screenings_history',
+        '/app/home/cinema/screenings_history',
       );
 
   void go(BuildContext context) => context.go(location, extra: $extra);
@@ -999,7 +999,7 @@ extension $LibrariesMainRouteExtension on LibrariesMainRoute {
       const LibrariesMainRoute();
 
   String get location => GoRouteData.$location(
-        '/home/libraries',
+        '/app/home/libraries',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -1019,7 +1019,7 @@ extension $LibraryDetailsRouteExtension on LibraryDetailsRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/home/libraries/details',
+        '/app/home/libraries/details',
       );
 
   void go(BuildContext context) => context.go(location, extra: $extra);
@@ -1040,7 +1040,7 @@ extension $LibraryAreasRouteExtension on LibraryAreasRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/home/libraries/details/areas',
+        '/app/home/libraries/details/areas',
       );
 
   void go(BuildContext context) => context.go(location, extra: $extra);
@@ -1060,7 +1060,7 @@ extension $LibrariesSearchRouteExtension on LibrariesSearchRoute {
       const LibrariesSearchRoute();
 
   String get location => GoRouteData.$location(
-        '/home/libraries/search',
+        '/app/home/libraries/search',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -1078,7 +1078,7 @@ extension $MensaMainRouteExtension on MensaMainRoute {
       const MensaMainRoute();
 
   String get location => GoRouteData.$location(
-        '/mensa',
+        '/app/mensa',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -1097,7 +1097,7 @@ extension $MensaDetailsRouteExtension on MensaDetailsRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/mensa/details',
+        '/app/mensa/details',
       );
 
   void go(BuildContext context) => context.go(location, extra: $extra);
@@ -1117,7 +1117,7 @@ extension $MensaSearchRouteExtension on MensaSearchRoute {
       const MensaSearchRoute();
 
   String get location => GoRouteData.$location(
-        '/mensa/search',
+        '/app/mensa/search',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -1135,7 +1135,7 @@ extension $ExploreMainRouteExtension on ExploreMainRoute {
       const ExploreMainRoute();
 
   String get location => GoRouteData.$location(
-        '/explore',
+        '/app/explore',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -1153,7 +1153,7 @@ extension $ExploreSearchRouteExtension on ExploreSearchRoute {
       const ExploreSearchRoute();
 
   String get location => GoRouteData.$location(
-        '/explore/search',
+        '/app/explore/search',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -1171,7 +1171,7 @@ extension $WishlistMainRouteExtension on WishlistMainRoute {
       const WishlistMainRoute();
 
   String get location => GoRouteData.$location(
-        '/wishlist',
+        '/app/wishlist',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -1191,7 +1191,7 @@ extension $WishlistDetailsRouteExtension on WishlistDetailsRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/wishlist/details',
+        '/app/wishlist/details',
       );
 
   void go(BuildContext context) => context.go(location, extra: $extra);
@@ -1211,7 +1211,7 @@ extension $StudiesMainRouteExtension on StudiesMainRoute {
       const StudiesMainRoute();
 
   String get location => GoRouteData.$location(
-        '/studies',
+        '/app/studies',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -1229,7 +1229,7 @@ extension $CalendarMainRouteExtension on CalendarMainRoute {
       const CalendarMainRoute();
 
   String get location => GoRouteData.$location(
-        '/studies/calendar',
+        '/app/studies/calendar',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -1247,7 +1247,7 @@ extension $CalendarTestRouteExtension on CalendarTestRoute {
       const CalendarTestRoute();
 
   String get location => GoRouteData.$location(
-        '/studies/calendar/calendar/test',
+        '/app/studies/calendar/calendar/test',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -1265,7 +1265,7 @@ extension $CalendarSearchRouteExtension on CalendarSearchRoute {
       const CalendarSearchRoute();
 
   String get location => GoRouteData.$location(
-        '/studies/calendar/search',
+        '/app/studies/calendar/search',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -1283,7 +1283,7 @@ extension $CalendarCreateRouteExtension on CalendarCreateRoute {
       const CalendarCreateRoute();
 
   String get location => GoRouteData.$location(
-        '/studies/calendar/create',
+        '/app/studies/calendar/create',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -1303,7 +1303,7 @@ extension $CoursesOverviewRouteExtension on CoursesOverviewRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/studies/courses',
+        '/app/studies/courses',
         queryParams: {
           'faculty-id': facultyId.toString(),
         },
@@ -1331,7 +1331,7 @@ extension $CourseDetailsRouteExtension on CourseDetailsRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/studies/courses/details',
+        '/app/studies/courses/details',
         queryParams: {
           'faculty-id': facultyId.toString(),
           'course-id': courseId.toString(),
@@ -1365,7 +1365,7 @@ extension $CourseDetailsSessionsRouteExtension on CourseDetailsSessionsRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/studies/courses/details/sessions',
+        '/app/studies/courses/details/sessions',
         queryParams: {
           'faculty-id': facultyId.toString(),
           'course-id': courseId.toString(),
@@ -1401,7 +1401,7 @@ extension $CourseDetailsPersonsRouteExtension on CourseDetailsPersonsRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/studies/courses/details/persons',
+        '/app/studies/courses/details/persons',
         queryParams: {
           'faculty-id': facultyId.toString(),
           'course-id': courseId.toString(),
@@ -1437,7 +1437,7 @@ extension $CourseDetailsContentRouteExtension on CourseDetailsContentRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/studies/courses/details/content',
+        '/app/studies/courses/details/content',
         queryParams: {
           'faculty-id': facultyId.toString(),
           'course-id': courseId.toString(),
@@ -1466,7 +1466,7 @@ extension $CoursesSearchRouteExtension on CoursesSearchRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/studies/courses/courses-search',
+        '/app/studies/courses/courses-search',
         queryParams: {
           'faculty-id': facultyId.toString(),
         },
@@ -1487,7 +1487,7 @@ extension $CoursesFacultyOverviewRouteExtension on CoursesFacultyOverviewRoute {
       const CoursesFacultyOverviewRoute();
 
   String get location => GoRouteData.$location(
-        '/studies/courses-faculties',
+        '/app/studies/courses-faculties',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -1507,7 +1507,7 @@ extension $PeopleOverviewRouteExtension on PeopleOverviewRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/studies/people',
+        '/app/studies/people',
         queryParams: {
           'faculty-id': facultyId.toString(),
         },
@@ -1531,7 +1531,7 @@ extension $PeopleDetailsRouteExtension on PeopleDetailsRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/studies/people/details',
+        '/app/studies/people/details',
         queryParams: {
           'faculty-id': facultyId.toString(),
           'person-id': personId.toString(),
@@ -1554,7 +1554,7 @@ extension $PeopleSearchRouteExtension on PeopleSearchRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/studies/people/people-search',
+        '/app/studies/people/people-search',
         queryParams: {
           'faculty-id': facultyId.toString(),
         },
@@ -1575,7 +1575,7 @@ extension $PeopleFacultyOverviewRouteExtension on PeopleFacultyOverviewRoute {
       const PeopleFacultyOverviewRoute();
 
   String get location => GoRouteData.$location(
-        '/studies/people-faculties',
+        '/app/studies/people-faculties',
       );
 
   void go(BuildContext context) => context.go(location);

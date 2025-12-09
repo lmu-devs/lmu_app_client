@@ -127,10 +127,6 @@
   "@retry": {
     "description": "Retry"
   },
-  "share": "Share",
-  "@share": {
-    "description": "Share button"
-  },
   "openDetails": "Open from {openingTime}-{closingTime}",
   "@openDetails": {
     "description": "The state of closing soon",

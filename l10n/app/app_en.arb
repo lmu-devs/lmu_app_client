@@ -93,6 +93,10 @@
   "@ok": {
     "description": "OK"
   },
+  "share": "Share",
+  "@share": {
+    "description": "Share button"
+  },
   "locationPermissionDialogTitle": "Permission Required",
   "@locationPermissionDialogTitle": {
     "description": "Dialog title if permissions are required"

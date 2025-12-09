@@ -1,3 +1,4 @@
+import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core_routes/courses.dart';
 import 'package:get_it/get_it.dart';
@@ -45,6 +46,8 @@ class CourseDetailsPageDriver extends WidgetDriver
 
   String get pageTitle => name;
 
+  String get shareButtonText => _localizations.app.share;
+
   String get sessionsText => _localizations.courses.sessions;
 
   String get personText => _localizations.courses.person;
@@ -52,6 +55,20 @@ class CourseDetailsPageDriver extends WidgetDriver
   String get personsText => _localizations.courses.persons;
 
   String get contentText => _localizations.courses.content;
+
+  Uri get shareUri {
+    final route = CourseDetailsRoute(
+      facultyId: _facultyId,
+      courseId: _courseId,
+      name: name,
+      language: language,
+      degree: degree,
+      sws: sws,
+    );
+
+    final String host = LmuDevStrings.lmuDevWebsite.substring(0, LmuDevStrings.lmuDevWebsite.length - 1);
+    return Uri.parse('$host${route.location}');
+  }
 
   String lastUpdatedText() {
     final raw = courseDetails!.lastUpdated.trim();

@@ -1,3 +1,4 @@
+import 'package:core/themes.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../infrastructure/secondary/data/storage/courses_favorites_storage.dart';
@@ -23,6 +24,7 @@ class FavoriteCoursesUsecase extends ChangeNotifier {
       await _storage.saveFavoriteIds(_favoriteIds.toList());
     }
     favoriteIdsNotifier.value = Set.from(_favoriteIds);
+    LmuVibrations.secondary();
     notifyListeners();
   }
 

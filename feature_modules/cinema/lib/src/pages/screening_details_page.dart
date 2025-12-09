@@ -124,7 +124,7 @@ class ScreeningDetailsPage extends StatelessWidget {
                           ),
                         ),
                         LmuButton(
-                          title: context.locals.cinema.share,
+                          title: context.locals.app.share,
                           emphasis: ButtonEmphasis.secondary,
                           onTap: () {
                             final params = ShareParams(uri: Uri.parse(screening.externalLink!));
