@@ -19,11 +19,6 @@ class _$TestPersonsDetailsPageDriver extends TestDriver
   String get pageTitle => ' ';
 
   @override
-  String getFullName(PersonModel person) {
-    return ' ';
-  }
-
-  @override
   void didUpdateBuildContext(BuildContext context) {}
 
   @override

@@ -108,7 +108,7 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
                         isFavorite: driver.isFavorite(course.publishId),
                         onTap: () => driver.onCoursePressed(context, course),
                         onFavoriteTap: () =>
-                            driver.toggleFavorite(course.publishId),
+                            driver.toggleFavorite(context, course.publishId),
                       ),
                     )
                     .toList(),
@@ -159,14 +159,16 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
           buttons: [
             LmuIconButton(
               icon: LucideIcons.search,
-              onPressed: () => driver.isLoading ? {} : driver.onSearchPressed(context),
+              onPressed: () =>
+                  driver.isLoading ? {} : driver.onSearchPressed(context),
             ),
             LmuButton(
               title: "Filter",
               emphasis: driver.isFilterActive
                   ? ButtonEmphasis.primary
                   : ButtonEmphasis.secondary,
-              onTap: () => driver.isLoading ? {} : _showFilterBottomSheet(context),
+              onTap: () =>
+                  driver.isLoading ? {} : _showFilterBottomSheet(context),
             ),
           ],
         ),
@@ -235,7 +237,8 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
                   course: course,
                   isFavorite: driver.isFavorite(course.publishId),
                   onTap: () => driver.onCoursePressed(context, course),
-                  onFavoriteTap: () => driver.toggleFavorite(course.publishId),
+                  onFavoriteTap: () =>
+                      driver.toggleFavorite(context, course.publishId),
                 ),
               )
               .toList(),

@@ -69,8 +69,10 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
                     emphasis: ButtonEmphasis.secondary,
                     onTap: pageNotReady
                         ? () => {}
-                        : () => SharePlus.instance
-                            .share(ShareParams(uri: driver.shareUri)),
+                        : () {
+                            final params = ShareParams(uri: Uri.parse(driver.shareUrl));
+                            SharePlus.instance.share(params);
+                          },
                   ),
                 ],
               ),

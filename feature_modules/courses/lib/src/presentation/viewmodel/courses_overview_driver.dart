@@ -51,13 +51,25 @@ class CoursesOverviewDriver extends WidgetDriver
   late Set<int> _selectedSws = {};
 
   Set<String> get selectedDegrees => _selectedDegrees;
+
   Set<String> get selectedTypes => _selectedTypes;
+
   Set<String> get selectedLanguages => _selectedLanguages;
+
   Set<int> get selectedSws => _selectedSws;
 
-  List<String> get availableDegrees => _extractUniqueStrings((course) => course.degree).where((degree) => degree != "-").toList();
-  List<String> get availableTypes => _extractUniqueStrings((course) => course.type).where((type) => type != "n/a").toList();
-  List<String> get availableLanguages => _extractUniqueStrings((course) => course.language);
+  List<String> get availableDegrees =>
+      _extractUniqueStrings((course) => course.degree)
+          .where((degree) => degree != "-")
+          .toList();
+
+  List<String> get availableTypes =>
+      _extractUniqueStrings((course) => course.type)
+          .where((type) => type != "n/a")
+          .toList();
+
+  List<String> get availableLanguages =>
+      _extractUniqueStrings((course) => course.language);
 
   List<int> get availableSws {
     final swsList = _usecase.data
@@ -83,9 +95,9 @@ class CoursesOverviewDriver extends WidgetDriver
 
   bool get isFilterActive =>
       _selectedDegrees.isNotEmpty ||
-          _selectedTypes.isNotEmpty ||
-          _selectedLanguages.isNotEmpty ||
-          _selectedSws.isNotEmpty;
+      _selectedTypes.isNotEmpty ||
+      _selectedLanguages.isNotEmpty ||
+      _selectedSws.isNotEmpty;
 
   List<CourseModel> get courses {
     final rawData = _usecase.data;
@@ -96,7 +108,8 @@ class CoursesOverviewDriver extends WidgetDriver
 
     return rawData.where((course) {
       if (_selectedDegrees.isNotEmpty) {
-        if (course.degree == null || !_selectedDegrees.contains(course.degree)) {
+        if (course.degree == null ||
+            !_selectedDegrees.contains(course.degree)) {
           return false;
         }
       }
@@ -136,11 +149,29 @@ class CoursesOverviewDriver extends WidgetDriver
     notifyWidget();
   }
 
-  Future<void> toggleFavorite(int id) async {
-    await _favoritesUsecase.toggleFavorite(id);
-  }
-
   bool isFavorite(int id) => _favoritesUsecase.isFavorite(id);
+
+  Future<void> toggleFavorite(BuildContext context, int id) async {
+    await _favoritesUsecase.toggleFavorite(id);
+
+    if (context.mounted) {
+      if (!isFavorite(id)) {
+        LmuToast.show(
+          context: context,
+          type: ToastType.success,
+          message: context.locals.app.favoriteRemoved,
+          actionText: context.locals.app.undo,
+          onActionPressed: () => _favoritesUsecase.toggleFavorite(id),
+        );
+      } else {
+        LmuToast.show(
+          context: context,
+          type: ToastType.success,
+          message: context.locals.app.favoriteAdded,
+        );
+      }
+    }
+  }
 
   List<CourseModel> get nonFavoriteCourses => courses
       .where((course) => !_favoritesUsecase.isFavorite(course.publishId))

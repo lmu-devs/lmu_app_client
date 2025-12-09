@@ -24,7 +24,8 @@ class CourseDetailsPageDriver extends WidgetDriver
     @driverProvidableProperty required this.language,
     @driverProvidableProperty this.degree,
     @driverProvidableProperty this.sws,
-  })  : _facultyId = facultyId,
+  })
+      : _facultyId = facultyId,
         _courseId = courseId;
 
   late final int _facultyId;
@@ -56,7 +57,7 @@ class CourseDetailsPageDriver extends WidgetDriver
 
   String get contentText => _localizations.courses.content;
 
-  Uri get shareUri {
+  String get shareUrl {
     final route = CourseDetailsRoute(
       facultyId: _facultyId,
       courseId: _courseId,
@@ -66,8 +67,9 @@ class CourseDetailsPageDriver extends WidgetDriver
       sws: sws,
     );
 
-    final String host = LmuDevStrings.lmuDevWebsite.substring(0, LmuDevStrings.lmuDevWebsite.length - 1);
-    return Uri.parse('$host${route.location}');
+    final String host = LmuDevStrings.lmuDevWebsite.substring(
+        0, LmuDevStrings.lmuDevWebsite.length - 1);
+    return '$host${route.location}';
   }
 
   String lastUpdatedText() {
@@ -76,14 +78,14 @@ class CourseDetailsPageDriver extends WidgetDriver
 
     final formatted = DateFormat('dd.MM.yyyy, HH:mm').format(date);
 
-    return '${_localizations.courses.lastUpdated} $formatted';
+    return '${_localizations.courses.lastUpdated}$formatted';
   }
 
   CourseDetailsModel? get courseDetails => _usecase.data;
 
   bool get isLoading =>
       _usecase.loadState == CoursesLoadState.loading ||
-      _usecase.loadState == CoursesLoadState.initial;
+          _usecase.loadState == CoursesLoadState.initial;
 
   bool get isFavorite => _favoritesUsecase.isFavorite(courseId);
 
@@ -107,8 +109,8 @@ class CourseDetailsPageDriver extends WidgetDriver
     return parts.join(" • ");
   }
 
-  void onSessionsDetailsPressed(
-      BuildContext context, List<SessionModel> sessions) {
+  void onSessionsDetailsPressed(BuildContext context,
+      List<SessionModel> sessions) {
     CourseDetailsSessionsRoute(
       facultyId: _facultyId,
       courseId: _courseId,
@@ -120,8 +122,8 @@ class CourseDetailsPageDriver extends WidgetDriver
     ).push(context);
   }
 
-  void onPersonsDetailsPressed(
-      BuildContext context, List<PersonModel> persons) {
+  void onPersonsDetailsPressed(BuildContext context,
+      List<PersonModel> persons) {
     CourseDetailsPersonsRoute(
       facultyId: _facultyId,
       courseId: _courseId,
