@@ -1,3 +1,4 @@
+import 'package:core/logging.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/foundation.dart';
 
@@ -8,31 +9,68 @@ class FavoriteCoursesUsecase extends ChangeNotifier {
     _load();
   }
 
+  final _appLogger = AppLogger();
   final CoursesFavoritesStorage _storage;
-  final Set<int> _favoriteIds = {};
-  final ValueNotifier<Set<int>> favoriteIdsNotifier = ValueNotifier<Set<int>>({});
+  final Map<int, List<int>> _favoritesMap = {};
+  final Set<int> _flatFavoritesSet = {};
+  final ValueNotifier<Map<int, List<int>>> favoritesMapNotifier =
+      ValueNotifier({});
 
-  Set<int> get favoriteIds => _favoriteIds;
+  Set<int> get flatFavoritesSet => _flatFavoritesSet;
 
-  bool isFavorite(int id) => _favoriteIds.contains(id);
+  bool isFavorite(int courseId) => _flatFavoritesSet.contains(courseId);
 
-  Future<void> toggleFavorite(int id) async {
-    if (_favoriteIds.remove(id)) {
-      await _storage.saveFavoriteIds(_favoriteIds.toList());
+  Future<void> toggleFavorite(int facultyId, int courseId) async {
+    List<int> facultyFavorites = _favoritesMap[facultyId] ?? [];
+
+    if (facultyFavorites.contains(courseId)) {
+      facultyFavorites.remove(courseId);
+      _flatFavoritesSet.remove(courseId);
+
+      _appLogger.logMessage("Course $courseId removed from favorites for faculty $facultyId");
+
+      if (facultyFavorites.isEmpty) {
+        _favoritesMap.remove(facultyId);
+      } else {
+        _favoritesMap[facultyId] = facultyFavorites;
+      }
     } else {
-      _favoriteIds.add(id);
-      await _storage.saveFavoriteIds(_favoriteIds.toList());
+      facultyFavorites.add(courseId);
+      _favoritesMap[facultyId] = facultyFavorites;
+      _flatFavoritesSet.add(courseId);
+
+      _appLogger.logMessage("Course $courseId added to favorites for faculty $facultyId");
     }
-    favoriteIdsNotifier.value = Set.from(_favoriteIds);
-    LmuVibrations.secondary();
+
+    favoritesMapNotifier.value = Map.from(_favoritesMap);
     notifyListeners();
+    LmuVibrations.secondary();
+
+    await _storage.saveFavoritesMap(_favoritesMap);
+  }
+
+  Future<void> updateFavoriteCoursesOrder(
+      int facultyId, List<int> newOrder) async {
+    _favoritesMap[facultyId] = newOrder;
+
+    favoritesMapNotifier.value = Map.from(_favoritesMap);
+    notifyListeners();
+
+    await _storage.saveFavoritesMap(_favoritesMap);
   }
 
   Future<void> _load() async {
-    _favoriteIds
-      ..clear()
-      ..addAll(await _storage.getFavoriteIds());
-    favoriteIdsNotifier.value = Set.from(_favoriteIds);
+    final loadedMap = await _storage.getFavoritesMap();
+
+    _favoritesMap.clear();
+    _favoritesMap.addAll(loadedMap);
+
+    _flatFavoritesSet.clear();
+    for (final list in _favoritesMap.values) {
+      _flatFavoritesSet.addAll(list);
+    }
+
+    favoritesMapNotifier.value = Map.from(_favoritesMap);
     notifyListeners();
   }
 }

@@ -152,7 +152,7 @@ class CoursesOverviewDriver extends WidgetDriver
   bool isFavorite(int id) => _favoritesUsecase.isFavorite(id);
 
   Future<void> toggleFavorite(BuildContext context, int id) async {
-    await _favoritesUsecase.toggleFavorite(id);
+    await _favoritesUsecase.toggleFavorite(facultyId, id);
 
     if (context.mounted) {
       if (!isFavorite(id)) {
@@ -161,7 +161,7 @@ class CoursesOverviewDriver extends WidgetDriver
           type: ToastType.success,
           message: context.locals.app.favoriteRemoved,
           actionText: context.locals.app.undo,
-          onActionPressed: () => _favoritesUsecase.toggleFavorite(id),
+          onActionPressed: () => _favoritesUsecase.toggleFavorite(facultyId, id),
         );
       } else {
         LmuToast.show(
@@ -171,6 +171,10 @@ class CoursesOverviewDriver extends WidgetDriver
         );
       }
     }
+  }
+
+  Future<void> updateFavoriteCoursesOrder(List<int> favoriteIds) async {
+    await _favoritesUsecase.updateFavoriteCoursesOrder(_facultyId, favoriteIds);
   }
 
   List<CourseModel> get nonFavoriteCourses => courses

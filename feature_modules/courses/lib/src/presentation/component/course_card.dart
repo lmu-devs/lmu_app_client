@@ -12,6 +12,7 @@ class CourseCard extends StatelessWidget {
     required this.isFavorite,
     required this.onTap,
     required this.onFavoriteTap,
+    this.hasDivider = true,
   });
 
   static Widget loading() => const _CourseCardLoading();
@@ -20,6 +21,7 @@ class CourseCard extends StatelessWidget {
   final bool isFavorite;
   final VoidCallback onTap;
   final VoidCallback onFavoriteTap;
+  final bool hasDivider;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class CourseCard extends StatelessWidget {
       hasFavoriteStar: true,
       isFavorite: isFavorite,
       onFavoriteTap: onFavoriteTap,
-      hasDivider: true,
+      hasDivider: hasDivider,
       customSubtitle: Padding(
         padding: const EdgeInsets.only(top: LmuSizes.size_12),
         child: Wrap(

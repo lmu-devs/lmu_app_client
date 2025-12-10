@@ -90,7 +90,7 @@ class CourseDetailsPageDriver extends WidgetDriver
   bool get isFavorite => _favoritesUsecase.isFavorite(courseId);
 
   Future<void> toggleFavorite(int id) async {
-    await _favoritesUsecase.toggleFavorite(id);
+    await _favoritesUsecase.toggleFavorite(facultyId, id);
   }
 
   String get quickfactText {
