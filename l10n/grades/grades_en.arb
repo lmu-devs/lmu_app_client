@@ -1,0 +1,10 @@
+{
+  "@@locale": "en",
+  "@@context": "Grades",
+  "gradesTitle": "Grades",
+  "ects": "ECTS",
+  "gradeSingular": "Grade",
+  "addGrade": "Add Grade",
+  "winter": "Winter",
+  "summer": "Summer"
+}

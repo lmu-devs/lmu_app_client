@@ -118,8 +118,8 @@ class LibraryDetailsPage extends StatelessWidget {
                           final details = library.areas.first.openingHours ?? [];
 
                           return LmuListDropdown(
-                            title: statusStyle.text,
-                            titleColor: statusStyle.color,
+                            subtitle: statusStyle.text,
+                            subtitleColor: statusStyle.color,
                             hasDivider: true,
                             items: details
                                 .asMap()
@@ -163,10 +163,10 @@ class LibraryDetailsPage extends StatelessWidget {
                       : null,
                   onTap: () => equipment.url != null && equipment.url!.isNotEmpty
                       ? LmuUrlLauncher.launchWebsite(
-                        url: equipment.url!,
-                        context: context,
-                        mode: LmuUrlLauncherMode.inAppWebView,
-                      )
+                          url: equipment.url!,
+                          context: context,
+                          mode: LmuUrlLauncherMode.inAppWebView,
+                        )
                       : null,
                 ),
               )

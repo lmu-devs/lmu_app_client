@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../calendar.dart';
 import '../../courses.dart';
+import '../../grades.dart';
 import '../../launch_flow.dart';
 import '../../libraries.dart';
 import '../../studies.dart';
@@ -239,7 +240,7 @@ class LaunchFlowShellRoute extends ShellRouteData {
                       path: CourseDetailsSessionsRoute.path,
                     ),
                     TypedGoRoute<CourseDetailsPersonsRoute>(
-                        path: CourseDetailsPersonsRoute.path,
+                      path: CourseDetailsPersonsRoute.path,
                     ),
                     TypedGoRoute<CourseDetailsContentRoute>(
                       path: CourseDetailsContentRoute.path,
@@ -267,6 +268,9 @@ class LaunchFlowShellRoute extends ShellRouteData {
             ),
             TypedGoRoute<PeopleFacultyOverviewRoute>(
               path: PeopleFacultyOverviewRoute.path,
+            ),
+            TypedGoRoute<GradesMainRoute>(
+              path: GradesMainRoute.path,
             ),
           ],
         ),
