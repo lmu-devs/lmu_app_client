@@ -86,7 +86,14 @@ class _CourseFilterBottomSheetState extends State<CourseFilterBottomSheet> {
     });
   }
 
-  bool get hasNoChanges {
+  bool get _areAllFiltersEmpty {
+    return _currentDegrees.isEmpty &&
+        _currentTypes.isEmpty &&
+        _currentLanguages.isEmpty &&
+        _currentSws.isEmpty;
+  }
+
+  bool get _hasNoChanges {
     return setEquals(_currentDegrees, widget.selectedDegrees) &&
         setEquals(_currentTypes, widget.selectedTypes) &&
         setEquals(_currentLanguages, widget.selectedLanguages) &&
@@ -111,6 +118,7 @@ class _CourseFilterBottomSheetState extends State<CourseFilterBottomSheet> {
           LmuButton(
             title: context.locals.courses.applyFilter,
             emphasis: ButtonEmphasis.link,
+            state: _hasNoChanges ? ButtonState.disabled : ButtonState.enabled,
             size: ButtonSize.large,
             increaseTouchTarget: true,
             textScaleFactorEnabled: false,
@@ -139,6 +147,7 @@ class _CourseFilterBottomSheetState extends State<CourseFilterBottomSheet> {
             child: LmuTileHeadline.action(
               title: context.locals.courses.courseFilterCategories,
               actionTitle: context.locals.app.reset,
+              isButtonDisabled: _areAllFiltersEmpty,
               onActionTap: () => _resetFilters(),
             ),
           ),
@@ -295,9 +304,9 @@ class _CourseFilterBottomSheetState extends State<CourseFilterBottomSheet> {
         right: LmuSizes.size_16,
       ),
       sliver: SliverToBoxAdapter(
-        child: LmuText.body(
+        child: LmuText.bodyXSmall(
           context.locals.courses.courseFilterFooter,
-          color: context.colors.neutralColors.textColors.mediumColors.base,
+          color: context.colors.neutralColors.textColors.weakColors.base,
         ),
       ),
     );
@@ -321,7 +330,7 @@ class _CourseFilterBottomSheetState extends State<CourseFilterBottomSheet> {
   }
 
   Future<bool> _onPopInvoked(BuildContext context) async {
-    if (hasNoChanges) return true;
+    if (_hasNoChanges) return true;
 
     bool shouldClose = false;
     await _showUnsavedChangesDialog(
@@ -336,7 +345,7 @@ class _CourseFilterBottomSheetState extends State<CourseFilterBottomSheet> {
   void _onLeadingClose(BuildContext context) async {
     final sheetNavigator = Navigator.of(context, rootNavigator: true);
 
-    if (hasNoChanges) {
+    if (_hasNoChanges) {
       sheetNavigator.pop();
       return;
     }

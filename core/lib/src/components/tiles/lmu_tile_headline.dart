@@ -13,6 +13,7 @@ class LmuTileHeadline extends StatelessWidget {
     this.onActionTap,
     this.bottomWidget,
     this.customBottomPadding,
+    this.isButtonDisabled,
   });
 
   factory LmuTileHeadline.base({
@@ -37,6 +38,7 @@ class LmuTileHeadline extends StatelessWidget {
     required void Function() onActionTap,
     Widget? bottomWidget,
     double? customBottomPadding,
+    bool isButtonDisabled = false,
   }) =>
       LmuTileHeadline._internal(
         key: key,
@@ -45,13 +47,16 @@ class LmuTileHeadline extends StatelessWidget {
         onActionTap: onActionTap,
         bottomWidget: bottomWidget,
         customBottomPadding: customBottomPadding,
+        isButtonDisabled: isButtonDisabled,
       );
+
   final String title;
   final String? trailingTitle;
   final String? actionTitle;
   final void Function()? onActionTap;
   final Widget? bottomWidget;
   final double? customBottomPadding;
+  final bool? isButtonDisabled;
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +89,9 @@ class LmuTileHeadline extends StatelessWidget {
             if (actionTitle != null)
               LmuButton(
                 title: actionTitle!,
+                state: isButtonDisabled!
+                    ? ButtonState.disabled
+                    : ButtonState.enabled,
                 onTap: onActionTap,
                 emphasis: ButtonEmphasis.link,
                 size: ButtonSize.large,

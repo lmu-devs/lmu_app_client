@@ -78,7 +78,7 @@ class CourseDetailsPageDriver extends WidgetDriver
 
     final formatted = DateFormat('dd.MM.yyyy, HH:mm').format(date);
 
-    return '${_localizations.courses.lastUpdated}$formatted';
+    return '${_localizations.courses.lastUpdated} $formatted';
   }
 
   CourseDetailsModel? get courseDetails => _usecase.data;
