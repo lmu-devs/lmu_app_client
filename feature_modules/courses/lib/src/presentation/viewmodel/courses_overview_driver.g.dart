@@ -34,28 +34,56 @@ class _$TestCoursesOverviewDriver extends TestDriver
   String get largeTitle => ' ';
 
   @override
-  List<CourseModel> get courses => [];
+  Set<String> get selectedDegrees => {};
 
   @override
-  List<CourseModel> get favoriteCourses => [];
+  Set<String> get selectedTypes => {};
+
+  @override
+  Set<String> get selectedLanguages => {};
+
+  @override
+  Set<int> get selectedSws => {};
+
+  @override
+  List<String> get availableDegrees => [];
+
+  @override
+  List<String> get availableTypes => [];
+
+  @override
+  List<String> get availableLanguages => [];
+
+  @override
+  List<int> get availableSws => [];
+
+  @override
+  bool get isFilterActive => false;
+
+  @override
+  List<CourseModel> get courses => [];
 
   @override
   List<CourseModel> get nonFavoriteCourses => [];
 
   @override
-  bool get hasFavorites => false;
-
-  @override
   Map<String, List<CourseModel>> get groupedCourses => {};
 
   @override
-  Future<void> toggleFavorite(int id) {
-    return Future.value();
-  }
+  void applyFilters(
+      {required Set<String> degrees,
+      required Set<String> types,
+      required Set<String> languages,
+      required Set<int> sws}) {}
 
   @override
   bool isFavorite(int id) {
     return false;
+  }
+
+  @override
+  Future<void> toggleFavorite(BuildContext context, int id) {
+    return Future.value();
   }
 
   @override

@@ -13,7 +13,7 @@ class HomeRouteData extends StatefulShellBranchData {
 class HomeMainRoute extends GoRouteData {
   const HomeMainRoute();
 
-  static const String path = '/home';
+  static const String path = '/app/home';
 
   @override
   CustomTransitionPage<void> buildPage(

@@ -37,7 +37,7 @@ part 'shell_route_data.g.dart';
 class LaunchFlowShellRoute extends ShellRouteData {
   const LaunchFlowShellRoute();
 
-  static const String path = '/launch';
+  static const String path = '/app/launch';
 
   @override
   Widget builder(BuildContext context, GoRouterState state, Widget navigator) {

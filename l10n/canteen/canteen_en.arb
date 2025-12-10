@@ -111,10 +111,6 @@
   "@presets": {
     "description": "Presets"
   },
-  "reset": "Reset",
-  "@reset": {
-    "description": "Reset"
-  },
   "tastePreferences": "I eat and tolerate",
   "@tastePreferences": {
     "description": "The user's taste preferences"
@@ -130,10 +126,6 @@
   "retry": "Retry",
   "@retry": {
     "description": "Retry"
-  },
-  "share": "Share",
-  "@share": {
-    "description": "Share button"
   },
   "openDetails": "Open from {openingTime}-{closingTime}",
   "@openDetails": {
@@ -304,14 +296,6 @@
   "menuNotAvailableDescription": "No menu available for this day yet. Please check back later.",
   "@menuNotAvailableDescription": {
     "description": "Description for menu not available"
-  },
-  "unsavedChanges": "You Have Unsaved Changes",
-  "@unsavedChanges": {
-    "description": "Unsaved changes"
-  },
-  "unsavedChangesDescription": "Do you want to continue editing?",
-  "@unsavedChangesDescription": {
-    "description": "Unsaved changes description"
   },
   "canteens": "Canteens",
   "@canteens": {

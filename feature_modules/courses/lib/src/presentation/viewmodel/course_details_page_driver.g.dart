@@ -34,13 +34,22 @@ class _$TestCourseDetailsPageDriver extends TestDriver
   String get pageTitle => ' ';
 
   @override
+  String get shareButtonText => ' ';
+
+  @override
   String get sessionsText => ' ';
+
+  @override
+  String get personText => ' ';
 
   @override
   String get personsText => ' ';
 
   @override
   String get contentText => ' ';
+
+  @override
+  String get shareUrl => ' ';
 
   @override
   CourseDetailsModel? get courseDetails => null;
@@ -53,6 +62,11 @@ class _$TestCourseDetailsPageDriver extends TestDriver
 
   @override
   String get quickfactText => ' ';
+
+  @override
+  String lastUpdatedText() {
+    return ' ';
+  }
 
   @override
   Future<void> toggleFavorite(int id) {

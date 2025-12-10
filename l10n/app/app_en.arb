@@ -93,6 +93,10 @@
   "@ok": {
     "description": "OK"
   },
+  "share": "Share",
+  "@share": {
+    "description": "Share button"
+  },
   "locationPermissionDialogTitle": "Permission Required",
   "@locationPermissionDialogTitle": {
     "description": "Dialog title if permissions are required"
@@ -343,5 +347,17 @@
   "winterCaps": "WINTER",
   "@winterCaps": {
     "description": "Winter semester in caps"
+  },
+  "reset": "Reset",
+  "@reset": {
+    "description": "Reset"
+  },
+  "unsavedChanges": "You Have Unsaved Changes",
+  "@unsavedChanges": {
+    "description": "Unsaved changes"
+  },
+  "unsavedChangesDescription": "Do you want to continue editing?",
+  "@unsavedChangesDescription": {
+    "description": "Unsaved changes description"
   }
 }

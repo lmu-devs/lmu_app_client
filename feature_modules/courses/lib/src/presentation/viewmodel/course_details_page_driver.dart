@@ -1,3 +1,4 @@
+import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core_routes/courses.dart';
 import 'package:get_it/get_it.dart';
@@ -23,7 +24,8 @@ class CourseDetailsPageDriver extends WidgetDriver
     @driverProvidableProperty required this.language,
     @driverProvidableProperty this.degree,
     @driverProvidableProperty this.sws,
-  })  : _facultyId = facultyId,
+  })
+      : _facultyId = facultyId,
         _courseId = courseId;
 
   late final int _facultyId;
@@ -45,6 +47,8 @@ class CourseDetailsPageDriver extends WidgetDriver
 
   String get pageTitle => name;
 
+  String get shareButtonText => _localizations.app.share;
+
   String get sessionsText => _localizations.courses.sessions;
 
   String get personText => _localizations.courses.person;
@@ -53,25 +57,40 @@ class CourseDetailsPageDriver extends WidgetDriver
 
   String get contentText => _localizations.courses.content;
 
+  String get shareUrl {
+    final route = CourseDetailsRoute(
+      facultyId: _facultyId,
+      courseId: _courseId,
+      name: name,
+      language: language,
+      degree: degree,
+      sws: sws,
+    );
+
+    final String host = LmuDevStrings.lmuDevWebsite.substring(
+        0, LmuDevStrings.lmuDevWebsite.length - 1);
+    return '$host${route.location}';
+  }
+
   String lastUpdatedText() {
     final raw = courseDetails!.lastUpdated.trim();
     final date = DateTime.parse(raw);
 
     final formatted = DateFormat('dd.MM.yyyy, HH:mm').format(date);
 
-    return '${_localizations.courses.lastUpdated} $formatted';
+    return '${_localizations.courses.lastUpdated}$formatted';
   }
 
   CourseDetailsModel? get courseDetails => _usecase.data;
 
   bool get isLoading =>
       _usecase.loadState == CoursesLoadState.loading ||
-      _usecase.loadState == CoursesLoadState.initial;
+          _usecase.loadState == CoursesLoadState.initial;
 
   bool get isFavorite => _favoritesUsecase.isFavorite(courseId);
 
   Future<void> toggleFavorite(int id) async {
-    await _favoritesUsecase.toggleFavorite(id);
+    await _favoritesUsecase.toggleFavorite(facultyId, id);
   }
 
   String get quickfactText {
@@ -90,8 +109,8 @@ class CourseDetailsPageDriver extends WidgetDriver
     return parts.join(" • ");
   }
 
-  void onSessionsDetailsPressed(
-      BuildContext context, List<SessionModel> sessions) {
+  void onSessionsDetailsPressed(BuildContext context,
+      List<SessionModel> sessions) {
     CourseDetailsSessionsRoute(
       facultyId: _facultyId,
       courseId: _courseId,
@@ -103,8 +122,8 @@ class CourseDetailsPageDriver extends WidgetDriver
     ).push(context);
   }
 
-  void onPersonsDetailsPressed(
-      BuildContext context, List<PersonModel> persons) {
+  void onPersonsDetailsPressed(BuildContext context,
+      List<PersonModel> persons) {
     CourseDetailsPersonsRoute(
       facultyId: _facultyId,
       courseId: _courseId,

@@ -314,11 +314,10 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
     void Function()? onContinuePressed,
   }) async {
     final appLocals = context.locals.app;
-    final canteenLocals = context.locals.canteen;
     await LmuDialog.show(
       context: context,
-      title: canteenLocals.unsavedChanges,
-      description: canteenLocals.unsavedChangesDescription,
+      title: appLocals.unsavedChanges,
+      description: appLocals.unsavedChangesDescription,
       buttonActions: [
         LmuDialogAction(
           title: appLocals.discard,
@@ -371,12 +370,11 @@ class _LabelsHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = context.locals.canteen;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
       child: LmuTileHeadline.action(
-        title: localizations.tastePreferences,
-        actionTitle: localizations.reset,
+        title: context.locals.canteen.tastePreferences,
+        actionTitle: context.locals.app.reset,
         onActionTap: GetIt.I.get<TasteProfileService>().reset,
       ),
     );

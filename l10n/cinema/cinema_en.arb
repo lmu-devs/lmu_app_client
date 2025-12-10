@@ -93,10 +93,6 @@
   "@yesterdayScreening": {
     "description": "If screening was yesterday"
   },
-  "share": "Share",
-  "@share": {
-    "description": "Share button"
-  },
   "entry": "Entry Time",
   "@entry": {
     "description": "Entry time of screening"

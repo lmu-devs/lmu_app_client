@@ -14,6 +14,11 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>de</string>
+	</array>
 	<key>CFBundleName</key>
 	<string>lmu_app</string>
 	<key>CFBundlePackageType</key>
@@ -24,14 +29,11 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
-	<key>CFBundleLocalizations</key>
-    <array>
-        <string>en</string>
-        <string>de</string>
-    </array>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-	    <string>app-settings</string>
+		<string>app-settings</string>
 		<string>http</string>
 		<string>https</string>
 		<string>maps</string>
@@ -39,14 +41,14 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationWhenInUseUsageDescription</key>
+	<key>MBXAccessToken</key>
+	<string>pk.eyJ1IjoibHVrYXNwbGVuayIsImEiOiJjbTJ4OWRvcXkwMmJoMmxyMzNreHJnemp0In0.Y2tZBr2Ek1F-s-yP2DxnNA</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Your location is needed to show distances to university buildings and cafeterias, and to display nearby facilities on the map.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Your location is needed to show distances to university buildings and cafeterias, and to display nearby facilities on the map.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Your location is needed to show distances to university buildings and cafeterias, and to display nearby facilities on the map.</string>
-	<key>MBXAccessToken</key>
-	<string>pk.eyJ1IjoibHVrYXNwbGVuayIsImEiOiJjbTJ4OWRvcXkwMmJoMmxyMzNreHJnemp0In0.Y2tZBr2Ek1F-s-yP2DxnNA</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
@@ -54,8 +56,6 @@
 		<string>fetch</string>
 		<string>remote-notification</string>
 	</array>
-	<key>FirebaseAppDelegateProxyEnabled</key>
-    <false/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

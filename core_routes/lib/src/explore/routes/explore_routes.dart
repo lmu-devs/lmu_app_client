@@ -13,7 +13,7 @@ class ExploreData extends StatefulShellBranchData {
 class ExploreMainRoute extends GoRouteData {
   const ExploreMainRoute();
 
-  static const String path = '/explore';
+  static const String path = '/app/explore';
 
   @override
   Widget build(BuildContext context, GoRouterState state) => _router.buildMain(context);
