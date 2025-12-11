@@ -9,7 +9,6 @@ import '../../../themes.dart';
 
 enum EmptyStateType {
   generic,
-  notFound,
   noInternet,
   noSearchResults,
   closed,
@@ -95,7 +94,6 @@ class _LmuEmptyStateState extends State<LmuEmptyState> {
   String get _assetName {
     return switch (widget.type) {
       EmptyStateType.generic => "lib/assets/generic_error.webp",
-      EmptyStateType.notFound => "lib/assets/404_error.webp",
       EmptyStateType.noInternet => "lib/assets/internet_error.webp",
       EmptyStateType.noSearchResults => "lib/assets/empty_search.webp",
       EmptyStateType.closed => "lib/assets/closed.webp",
@@ -108,7 +106,6 @@ class _LmuEmptyStateState extends State<LmuEmptyState> {
     final appLocals = locals.app;
     return switch (widget.type) {
       EmptyStateType.generic => appLocals.somethingWentWrong,
-      EmptyStateType.notFound => "",
       EmptyStateType.noInternet => appLocals.noInternetConnection,
       EmptyStateType.noSearchResults => appLocals.noSearchResults,
       EmptyStateType.closed => appLocals.allClosed,
@@ -121,7 +118,6 @@ class _LmuEmptyStateState extends State<LmuEmptyState> {
     final appLocals = locals.app;
     return switch (widget.type) {
       EmptyStateType.generic => appLocals.somethingWentWrongDescription,
-      EmptyStateType.notFound => "",
       EmptyStateType.noInternet => appLocals.noInternetConnectionDescription,
       EmptyStateType.noSearchResults => appLocals.noSearchResultsDescription,
       EmptyStateType.closed =>
