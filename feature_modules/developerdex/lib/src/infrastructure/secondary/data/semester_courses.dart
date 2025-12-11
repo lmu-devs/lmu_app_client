@@ -46,13 +46,89 @@ const List<SemesterCourse> semesterCourses = [
     ],
   ),
   SemesterCourse(
-    state: SemesterState.inProgress,
+    state: SemesterState.finished,
     semester: Semester.summer25,
+    developers: [
+      LmuDeveloper(
+        id: '4',
+        name: 'Ralf',
+        animal: Animal.hedgehog,
+        rarity: Rarity.epic,
+        tags: [
+          'Calendar',
+          'Backend Development',
+        ],
+      ),
+      LmuDeveloper(
+        id: '5',
+        name: 'Philipp',
+        animal: Animal.spaceCat,
+        rarity: Rarity.epic,
+        tags: [
+          'Calendar',
+          'Frontend Development',
+        ],
+      ),
+      LmuDeveloper(
+        id: '6',
+        name: 'Leonie',
+        animal: Animal.otter,
+        rarity: Rarity.epic,
+        tags: [
+          'Courses',
+          'UI/UX Design',
+        ],
+      ),
+      LmuDeveloper(
+        id: '7',
+        name: 'Ruben',
+        animal: Animal.duck,
+        rarity: Rarity.epic,
+        tags: [
+          'Courses',
+          'Backend Development',
+        ],
+      ),
+      LmuDeveloper(
+        id: '8',
+        name: 'Mehyar',
+        animal: Animal.fireHorse,
+        rarity: Rarity.epic,
+        tags: [
+          'Courses',
+          'Frontend Development',
+        ],
+      ),
+      LmuDeveloper(
+        id: '9',
+        name: 'Anton',
+        animal: Animal.platypus,
+        rarity: Rarity.epic,
+        tags: [
+          'People',
+          'Backend Development',
+        ],
+      ),
+      LmuDeveloper(
+        id: '10',
+        name: 'Leonie',
+        animal: Animal.leopard,
+        rarity: Rarity.epic,
+        tags: [
+          'People',
+          'Frontend Development',
+        ],
+      ),
+    ],
+  ),
+  SemesterCourse(
+    state: SemesterState.inProgress,
+    semester: Semester.winter25_26,
     developers: [],
   ),
   SemesterCourse(
     state: SemesterState.upcoming,
-    semester: Semester.winter25_26,
+    semester: Semester.summer26,
     developers: [],
   ),
 ];

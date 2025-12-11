@@ -25,11 +25,6 @@ class DeveloperdexApiImpl extends DeveloperdexApi {
   }
 
   LmuDeveloper? getEncounter<T>(List<LmuDeveloper> developers) {
-    final totalWeight = developers.fold<double>(0.0, (sum, developer) {
-      return sum + (developer.rarity.encounterProbability);
-    });
-    if (totalWeight == 0) return null;
-
     final rand = _random.nextDouble();
 
     double cumulative = 0.0;
