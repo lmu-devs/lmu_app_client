@@ -9,7 +9,7 @@ extension RarityEncouterProabilityExtension on Rarity {
     return switch (this) {
       Rarity.common => 0.5,
       Rarity.rare => 0.15,
-      Rarity.epic => 0.04,
+      Rarity.epic => 0.02,
       Rarity.legendary => 0.01,
     };
   }

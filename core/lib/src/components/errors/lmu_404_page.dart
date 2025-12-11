@@ -5,6 +5,7 @@ import '../../../components.dart';
 import '../../../constants.dart';
 import '../../../localizations.dart';
 import '../../../logging.dart';
+import '../../core.dart';
 
 class Lmu404Page extends StatelessWidget {
   const Lmu404Page({super.key, this.exception});
@@ -43,6 +44,7 @@ class Lmu404Page extends StatelessWidget {
               LmuText.body(
                 localizations.errorDescription404,
                 textAlign: TextAlign.center,
+                color: context.colors.neutralColors.textColors.mediumColors.base,
               ),
               const SizedBox(height: LmuSizes.size_64),
               Expanded(
