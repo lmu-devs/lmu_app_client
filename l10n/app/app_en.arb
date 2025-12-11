@@ -359,5 +359,17 @@
   "unsavedChangesDescription": "Do you want to continue editing?",
   "@unsavedChangesDescription": {
     "description": "Unsaved changes description"
+  },
+  "errorTitle404": "This page does not exist",
+  "@errorTitle404": {
+    "description": "Title of the 404 page"
+  },
+  "errorDescription404": "It seems you've got lost, much like a little puppy searching for its owner.",
+  "@errorDescription404": {
+    "description": "Description of the 404 page"
+  },
+  "errorButton404": "Go Home",
+  "@errorButton404": {
+    "description": "Button text of the 404 page"
   }
 }
