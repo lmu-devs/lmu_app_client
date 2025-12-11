@@ -7,7 +7,13 @@ import '../../../constants.dart';
 import '../../../localizations.dart';
 import '../../../themes.dart';
 
-enum EmptyStateType { generic, noInternet, noSearchResults, closed, custom }
+enum EmptyStateType {
+  generic,
+  noInternet,
+  noSearchResults,
+  closed,
+  custom
+}
 
 class LmuEmptyState extends StatefulWidget {
   const LmuEmptyState({
@@ -63,7 +69,8 @@ class _LmuEmptyStateState extends State<LmuEmptyState> {
                 package: "core",
               ),
           const SizedBox(height: LmuSizes.size_12),
-          LmuText.h3(widget.title ?? _getTitle(locals), textAlign: TextAlign.center),
+          LmuText.h3(widget.title ?? _getTitle(locals),
+              textAlign: TextAlign.center),
           const SizedBox(height: LmuSizes.size_6),
           LmuText.body(
             widget.description ?? _getDescription(locals),
@@ -90,7 +97,8 @@ class _LmuEmptyStateState extends State<LmuEmptyState> {
       EmptyStateType.noInternet => "lib/assets/internet_error.webp",
       EmptyStateType.noSearchResults => "lib/assets/empty_search.webp",
       EmptyStateType.closed => "lib/assets/closed.webp",
-      EmptyStateType.custom => throw ("Please provide a custom asset name for custom state"),
+      EmptyStateType.custom =>
+        throw ("Please provide a custom asset name for custom state"),
     };
   }
 
@@ -101,7 +109,8 @@ class _LmuEmptyStateState extends State<LmuEmptyState> {
       EmptyStateType.noInternet => appLocals.noInternetConnection,
       EmptyStateType.noSearchResults => appLocals.noSearchResults,
       EmptyStateType.closed => appLocals.allClosed,
-      EmptyStateType.custom => throw ("Please provide a custom title for custom state"),
+      EmptyStateType.custom =>
+        throw ("Please provide a custom title for custom state"),
     };
   }
 
@@ -111,8 +120,10 @@ class _LmuEmptyStateState extends State<LmuEmptyState> {
       EmptyStateType.generic => appLocals.somethingWentWrongDescription,
       EmptyStateType.noInternet => appLocals.noInternetConnectionDescription,
       EmptyStateType.noSearchResults => appLocals.noSearchResultsDescription,
-      EmptyStateType.closed => throw ("Please provide a custom description for allClosed state"),
-      EmptyStateType.custom => throw ("Please provide a custom description for custom state"),
+      EmptyStateType.closed =>
+        throw ("Please provide a custom description for allClosed state"),
+      EmptyStateType.custom =>
+        throw ("Please provide a custom description for custom state"),
     };
   }
 }

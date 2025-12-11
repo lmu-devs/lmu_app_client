@@ -83,5 +83,8 @@
   "winterCaps": "WINTER",
   "reset": "Reset",
   "unsavedChanges": "Nicht gespeicherte Änderungen",
-  "unsavedChangesDescription": "Möchtest du die Änderungen weiter bearbeiten"
+  "unsavedChangesDescription": "Möchtest du die Änderungen weiter bearbeiten",
+  "errorTitle404": "Diese Seite existiert nicht",
+  "errorDescription404": "Es scheint, dass du dich verirrt hast, genau wie ein kleiner Welpe auf der Suche nach seinem Herrchen.",
+  "errorButton404": "Zu Home"
 }
