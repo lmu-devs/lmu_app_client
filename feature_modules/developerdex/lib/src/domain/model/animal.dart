@@ -9,6 +9,7 @@ enum Animal {
   leopard,
   otter,
   platypus,
+  bear,
 }
 
 extension AnimalAssetExtension on Animal {
@@ -23,5 +24,6 @@ extension AnimalAssetExtension on Animal {
         Animal.leopard => "assets/leopard_leonie.webp",
         Animal.otter => "assets/otter_leonie.webp",
         Animal.platypus => "assets/platypus_anton.webp",
+        Animal.bear => "assets/bear_simon.webp",
       };
 }

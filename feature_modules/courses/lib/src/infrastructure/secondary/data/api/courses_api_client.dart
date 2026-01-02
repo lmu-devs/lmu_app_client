@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:core/api.dart';
 
+import '../dto/available_semesters_dto.dart';
 import '../dto/course_details_dto.dart';
 import '../dto/course_dto.dart';
 import '../dto/courses_list_wrapper_dto.dart';
@@ -11,6 +12,15 @@ class CoursesApiClient {
   const CoursesApiClient(this._baseApiClient);
 
   final BaseApiClient _baseApiClient;
+
+  Future<AvailableSemestersDto> getAvailableSemesters() async {
+    final response = await _baseApiClient.get(
+      CoursesApiEndpoints.availableSemesters(),
+    );
+
+    final Map<String, dynamic> data = json.decode(response.body);
+    return AvailableSemestersDto.fromJson(data);
+  }
 
   Future<CoursesListWrapperDto> getCourses(int facultyId) async {
     final response = await _baseApiClient

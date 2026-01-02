@@ -8,7 +8,7 @@ class StudiesStorage {
   final _facultiesKey = 'faculties';
   final _selectedFacultiesKey = 'selectedFaculties';
 
-  Future<void> saveFaculites(List<FacultyDto> faculties) async {
+  Future<void> saveFaculties(List<FacultyDto> faculties) async {
     final prefs = await SharedPreferences.getInstance();
     final facultyStrings = faculties.map((f) => jsonEncode(f.toJson())).toList();
     await prefs.setStringList(_facultiesKey, facultyStrings);

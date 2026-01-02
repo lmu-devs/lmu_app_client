@@ -124,7 +124,18 @@ const List<SemesterCourse> semesterCourses = [
   SemesterCourse(
     state: SemesterState.inProgress,
     semester: Semester.winter25_26,
-    developers: [],
+    developers: [
+      LmuDeveloper(
+        id: '11',
+        name: 'Simon',
+        animal: Animal.bear,
+        rarity: Rarity.epic,
+        tags: [
+          'University Clubs',
+          'Full-Stack Development',
+        ],
+      ),
+    ],
   ),
   SemesterCourse(
     state: SemesterState.upcoming,

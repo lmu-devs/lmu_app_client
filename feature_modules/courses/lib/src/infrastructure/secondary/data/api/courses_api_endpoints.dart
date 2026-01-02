@@ -1,15 +1,21 @@
 class CoursesApiEndpoints {
+  static const String _base = 'course';
+
   static const String _facultyIdQuery = 'faculty_id';
-  static const String _termIdQuery = 'term_id';
+  static const String _semesterTypeQuery = 'term_id';
   static const String _yearQuery = 'year';
 
   static const String _publishIdQuery = 'publish_id';
 
+  static String availableSemesters() {
+    return '/$_base/available-semesters';
+  }
+
   static String coursesByFaculty(int facultyId) {
-    return '/course-by-faculty?$_facultyIdQuery=$facultyId&term_id=1&year=2025';
+    return '/$_base/by-faculty?$_facultyIdQuery=$facultyId&semester_type=SUMMER&year=2025';
   }
 
   static String courseDetails(int publishId) {
-    return '/course-details?$_publishIdQuery=$publishId';
+    return '/$_base/details?$_publishIdQuery=$publishId';
   }
 }

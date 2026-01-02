@@ -20,7 +20,7 @@ class StudiesRepository implements StudiesRepositoryInterface {
         return cachedFaculties.map((facultyDto) => facultyDto.toDomain()).toList();
       }
       final retrievedFacultiesData = await _apiClient.getFaculties();
-      await _storage.saveFaculites(retrievedFacultiesData);
+      await _storage.saveFaculties(retrievedFacultiesData);
       return retrievedFacultiesData.map((facultyDto) => facultyDto.toDomain()).toList();
     } catch (e) {
       throw const StudiesGenericException();

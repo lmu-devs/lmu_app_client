@@ -9,6 +9,7 @@ enum Semester {
   summer25,
   winter25_26,
   summer26,
+  winter26_27,
 }
 
 enum SemesterState { finished, inProgress, upcoming }
@@ -21,6 +22,7 @@ extension SemesterLocalizedName on Semester {
       Semester.summer25 => "${locals.summerCaps} 25",
       Semester.winter25_26 => "${locals.winterCaps} 25/26",
       Semester.summer26 => "${locals.summerCaps} 26",
+      Semester.winter26_27 => "${locals.winterCaps} 26/27",
     };
   }
 
@@ -30,6 +32,7 @@ extension SemesterLocalizedName on Semester {
       Semester.summer25 => colors.customColors.backgroundColors.pink,
       Semester.winter25_26 => colors.customColors.backgroundColors.pink,
       Semester.summer26 => colors.customColors.backgroundColors.pink,
+      Semester.winter26_27 => colors.customColors.backgroundColors.pink,
     };
   }
 }
