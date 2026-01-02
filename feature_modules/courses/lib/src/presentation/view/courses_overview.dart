@@ -262,8 +262,10 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
       return [
         LmuTileHeadline.base(title: "A"),
         ...List.filled(4, CourseCard.loading()),
+        const SizedBox(height: LmuSizes.size_32),
         LmuTileHeadline.base(title: "B"),
         ...List.filled(4, CourseCard.loading()),
+        const SizedBox(height: LmuSizes.size_32),
       ];
     }
 
