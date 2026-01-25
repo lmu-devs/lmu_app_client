@@ -39,10 +39,10 @@ class SessionTile extends StatelessWidget {
             trailingTitle: session.formattedDurationText,
             maximizeTrailingTitleArea: true,
           ),
-        if (session.room != null && session.room!.isNotEmpty)
+        if (session.roomName != null && session.roomName!.isNotEmpty)
           LmuListItem.base(
             subtitle: localizations.courseRoom,
-            trailingTitle: session.room!,
+            trailingTitle: session.roomName!,
             maximizeTrailingTitleArea: true,
           ),
       ],

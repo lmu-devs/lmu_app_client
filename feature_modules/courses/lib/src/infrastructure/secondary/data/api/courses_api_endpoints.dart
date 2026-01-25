@@ -12,7 +12,7 @@ class CoursesApiEndpoints {
   }
 
   static String coursesByFaculty(int facultyId) {
-    return '/$_base/by-faculty?$_facultyIdQuery=$facultyId&semester_type=SUMMER&year=2025';
+    return '/$_base/by-faculty?$_facultyIdQuery=$facultyId&semester_type=WINTER&year=2025';
   }
 
   static String courseDetails(int publishId) {

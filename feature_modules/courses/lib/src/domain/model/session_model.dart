@@ -15,7 +15,9 @@ class SessionModel extends Equatable implements RSessionModel {
     this.timingType,
     this.durationStart,
     this.durationEnd,
-    this.room,
+    this.roomName,
+    this.buildingId,
+    this.location,
     this.lecturer,
     this.remark,
     this.cancelledDates,
@@ -38,7 +40,11 @@ class SessionModel extends Equatable implements RSessionModel {
   final String? durationStart;
   @JsonKey(name: 'duration_end')
   final String? durationEnd;
-  final String? room;
+  @JsonKey(name: 'room_name')
+  final String? roomName;
+  @JsonKey(name: 'building_id')
+  final String? buildingId;
+  final String? location;
   final String? lecturer;
   final String? remark;
   @JsonKey(name: 'cancelled_dates')
@@ -54,7 +60,9 @@ class SessionModel extends Equatable implements RSessionModel {
     rhythm,
     durationStart,
     durationEnd,
-    room,
+    roomName,
+    buildingId,
+    location,
     lecturer,
     remark,
     cancelledDates,
