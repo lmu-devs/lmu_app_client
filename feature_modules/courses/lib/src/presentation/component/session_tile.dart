@@ -39,10 +39,23 @@ class SessionTile extends StatelessWidget {
             trailingTitle: session.formattedDurationText,
             maximizeTrailingTitleArea: true,
           ),
-        if (session.room != null && session.room!.isNotEmpty)
+        if (session.location != null)
+          LmuListItem.base(
+            subtitle: localizations.courseAddress,
+            trailingTitle: session.location!.address,
+            maximizeTrailingTitleArea: true,
+            onTap: () {
+              LmuBottomSheet.show(
+                context,
+                content:
+                NavigationSheet(id: session.buildingId!, location: session.location!),
+              );
+            },
+          ),
+        if (session.roomName != null && session.roomName!.isNotEmpty)
           LmuListItem.base(
             subtitle: localizations.courseRoom,
-            trailingTitle: session.room!,
+            trailingTitle: session.roomName!,
             maximizeTrailingTitleArea: true,
           ),
       ],
@@ -59,12 +72,17 @@ class _SessionTileLoading extends StatelessWidget {
       contentList: [
         LmuListItem.base(
           subtitle: BoneMock.title,
+          trailingTitle: BoneMock.title,
+          maximizeTrailingTitleArea: true,
+        ),
+        LmuListItem.base(
+          subtitle: BoneMock.title,
           trailingTitle: BoneMock.subtitle,
           maximizeTrailingTitleArea: true,
         ),
         LmuListItem.base(
           subtitle: BoneMock.title,
-          trailingTitle: "${BoneMock.time} - ${BoneMock.time}",
+          trailingTitle: BoneMock.title,
           maximizeTrailingTitleArea: true,
         ),
         LmuListItem.base(

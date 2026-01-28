@@ -87,6 +87,11 @@ class _$TestCoursesOverviewDriver extends TestDriver
   }
 
   @override
+  Future<void> updateFavoriteCoursesOrder(List<int> favoriteIds) {
+    return Future.value();
+  }
+
+  @override
   void onCoursePressed(BuildContext context, CourseModel course) {}
 
   @override

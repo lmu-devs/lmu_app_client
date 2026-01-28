@@ -9,6 +9,7 @@ import 'package:get_it/get_it.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
 import '../../domain/model/course_model.dart';
+import '../../domain/model/semester_model.dart';
 import '../component/course_card.dart';
 
 import '../component/course_filter_bottom_sheet.dart';
@@ -226,6 +227,15 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
               onTap: () =>
                   driver.isLoading ? {} : _showFilterBottomSheet(context),
             ),
+            LmuButton(
+              title: driver.currentSemesterText(driver.selectedSemester!),
+              emphasis: ButtonEmphasis.secondary,
+              trailingIcon: LucideIcons.chevron_down,
+              state:
+                  driver.isLoading ? ButtonState.disabled : ButtonState.enabled,
+              onTap: () =>
+                  driver.isLoading ? {} : _showSemesterSelectionSheet(context),
+            ),
           ],
         ),
         const SizedBox(height: LmuSizes.size_16),
@@ -257,20 +267,56 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
     );
   }
 
+  void _showSemesterSelectionSheet(BuildContext context) {
+    LmuBottomSheet.show(
+      context,
+      content: ValueListenableBuilder<SemesterModel?>(
+        valueListenable: driver.selectedSemesterNotifier,
+        builder: (context, selectedSemester, _) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: driver.availableSemesters!.semesters.map(
+              (semester) {
+                final isActive = selectedSemester == semester;
+
+                final textColor = isActive
+                    ? context.colors.brandColors.textColors.strongColors.base
+                    : context.colors.neutralColors.textColors.mediumColors.base;
+
+                return LmuListItem.base(
+                  title: driver.currentSemesterText(semester),
+                  titleColor: textColor,
+                  onTap: () {
+                    driver.selectSemester(semester);
+                    if (context.mounted) {
+                      Navigator.of(context).pop();
+                    }
+                  },
+                );
+              },
+            ).toList(),
+          );
+        },
+      ),
+    );
+  }
+
   List<Widget> _buildGroupedCourses(BuildContext context) {
     if (driver.isLoading) {
       return [
         LmuTileHeadline.base(title: "A"),
         ...List.filled(4, CourseCard.loading()),
+        const SizedBox(height: LmuSizes.size_32),
         LmuTileHeadline.base(title: "B"),
         ...List.filled(4, CourseCard.loading()),
+        const SizedBox(height: LmuSizes.size_32),
       ];
     }
 
     final groupedCourses = driver.groupedCourses;
     final List<Widget> widgets = [];
 
-    if (groupedCourses.isEmpty && driver.isFilterActive) {
+    if (groupedCourses.isEmpty) {
       return [
         const CoursesEmptyState(
             emptyStateType: CoursesEmptyStateType.noCoursesFound),

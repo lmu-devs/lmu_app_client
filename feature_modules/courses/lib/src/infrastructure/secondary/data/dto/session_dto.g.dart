@@ -15,7 +15,11 @@ SessionDto _$SessionDtoFromJson(Map<String, dynamic> json) => SessionDto(
       timingType: json['timing_type'] as String?,
       durationStart: json['duration_start'] as String?,
       durationEnd: json['duration_end'] as String?,
-      room: json['room'] as String?,
+      roomName: json['room_name'] as String?,
+      buildingId: json['building_id'] as String?,
+      location: json['location'] == null
+          ? null
+          : LocationModel.fromJson(json['location'] as Map<String, dynamic>),
       lecturer: json['lecturer'] as String?,
       remark: json['remark'] as String?,
       cancelledDates: json['cancelled_dates'] as String?,
@@ -31,7 +35,9 @@ Map<String, dynamic> _$SessionDtoToJson(SessionDto instance) =>
       'rhythm': instance.rhythm,
       'duration_start': instance.durationStart,
       'duration_end': instance.durationEnd,
-      'room': instance.room,
+      'room_name': instance.roomName,
+      'building_id': instance.buildingId,
+      'location': instance.location,
       'lecturer': instance.lecturer,
       'remark': instance.remark,
       'cancelled_dates': instance.cancelledDates,
