@@ -149,14 +149,14 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
                 ),
             ],
           ),
-          const SizedBox(height: LmuSizes.size_32),
-          Center(
-            child: LmuText.bodyXSmall(
-              driver.lastUpdatedText(),
-              color: context.colors.neutralColors.textColors.weakColors.base,
-            ),
-          ),
         ],
+        const SizedBox(height: LmuSizes.size_32),
+        Center(
+          child: LmuText.bodyXSmall(
+            driver.lastUpdatedText(),
+            color: context.colors.neutralColors.textColors.weakColors.base,
+          ),
+        ),
       ],
     );
   }

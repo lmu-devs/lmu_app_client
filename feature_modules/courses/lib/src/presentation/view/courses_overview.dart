@@ -316,7 +316,7 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
     final groupedCourses = driver.groupedCourses;
     final List<Widget> widgets = [];
 
-    if (groupedCourses.isEmpty && driver.isFilterActive) {
+    if (groupedCourses.isEmpty) {
       return [
         const CoursesEmptyState(
             emptyStateType: CoursesEmptyStateType.noCoursesFound),
