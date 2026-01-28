@@ -40,8 +40,9 @@ class CoursesOverviewDriver extends WidgetDriver
 
   List<Faculty> get allFaculties => _facultiesApi.allFaculties;
 
+  late final ValueNotifier<SemesterModel?> selectedSemesterNotifier = ValueNotifier(null);
   AvailableSemestersModel? get availableSemesters => _semesterUsecase.data;
-  SemesterModel? selectedSemester;
+  SemesterModel? get selectedSemester => selectedSemesterNotifier.value;
 
   String currentSemesterText(SemesterModel semester) {
     String semesterType = semester.semesterType;
@@ -242,7 +243,7 @@ class CoursesOverviewDriver extends WidgetDriver
   }
 
   void selectSemester(SemesterModel semester) {
-    selectedSemester = semester;
+    selectedSemesterNotifier.value = semester;
     _reloadCourses(semester.semesterType, semester.year);
   }
 
@@ -254,7 +255,7 @@ class CoursesOverviewDriver extends WidgetDriver
   void _onStateChanged() {
     if (selectedSemester == null &&
         _semesterUsecase.data != null) {
-      selectedSemester = _semesterUsecase.data!.currentSemester;
+      selectedSemesterNotifier.value = _semesterUsecase.data!.currentSemester;
     }
 
     notifyWidget();
@@ -300,6 +301,7 @@ class CoursesOverviewDriver extends WidgetDriver
 
   @override
   void dispose() {
+    selectedSemesterNotifier.dispose();
     _coursesUsecase.removeListener(_onStateChanged);
     _favoritesUsecase.removeListener(_onStateChanged);
     super.dispose();

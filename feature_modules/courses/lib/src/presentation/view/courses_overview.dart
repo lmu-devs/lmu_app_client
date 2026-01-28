@@ -9,6 +9,7 @@ import 'package:get_it/get_it.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
 import '../../domain/model/course_model.dart';
+import '../../domain/model/semester_model.dart';
 import '../component/course_card.dart';
 
 import '../component/course_filter_bottom_sheet.dart';
@@ -232,36 +233,8 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
               trailingIcon: LucideIcons.chevron_down,
               state:
                   driver.isLoading ? ButtonState.disabled : ButtonState.enabled,
-              onTap: () => driver.isLoading
-                  ? {}
-                  : LmuBottomSheet.show(
-                      context,
-                      content: Builder(
-                        builder: (sheetContext) => Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: driver.availableSemesters!.semesters.map(
-                            (semester) {
-                              final isActive =
-                                  driver.selectedSemester == semester;
-                              final textColor = isActive
-                                  ? context.colors.brandColors.textColors
-                                      .strongColors.base
-                                  : context.colors.neutralColors.textColors
-                                      .mediumColors.base;
-
-                              return LmuListItem.base(
-                                title: driver.currentSemesterText(semester),
-                                titleColor: textColor,
-                                onTap: () {
-                                  driver.selectSemester(semester);
-                                  Navigator.of(sheetContext).pop();
-                                },
-                              );
-                            },
-                          ).toList(),
-                        ),
-                      ),
-                    ),
+              onTap: () =>
+                  driver.isLoading ? {} : _showSemesterSelectionSheet(context),
             ),
           ],
         ),
@@ -288,6 +261,40 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
             types: types,
             languages: languages,
             sws: sws,
+          );
+        },
+      ),
+    );
+  }
+
+  void _showSemesterSelectionSheet(BuildContext context) {
+    LmuBottomSheet.show(
+      context,
+      content: ValueListenableBuilder<SemesterModel?>(
+        valueListenable: driver.selectedSemesterNotifier,
+        builder: (context, selectedSemester, _) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: driver.availableSemesters!.semesters.map(
+              (semester) {
+                final isActive = selectedSemester == semester;
+
+                final textColor = isActive
+                    ? context.colors.brandColors.textColors.strongColors.base
+                    : context.colors.neutralColors.textColors.mediumColors.base;
+
+                return LmuListItem.base(
+                  title: driver.currentSemesterText(semester),
+                  titleColor: textColor,
+                  onTap: () {
+                    driver.selectSemester(semester);
+                    if (context.mounted) {
+                      Navigator.of(context).pop();
+                    }
+                  },
+                );
+              },
+            ).toList(),
           );
         },
       ),
