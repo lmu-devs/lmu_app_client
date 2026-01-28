@@ -17,7 +17,9 @@ SessionDto _$SessionDtoFromJson(Map<String, dynamic> json) => SessionDto(
       durationEnd: json['duration_end'] as String?,
       roomName: json['room_name'] as String?,
       buildingId: json['building_id'] as String?,
-      location: json['location'] as String?,
+      location: json['location'] == null
+          ? null
+          : LocationModel.fromJson(json['location'] as Map<String, dynamic>),
       lecturer: json['lecturer'] as String?,
       remark: json['remark'] as String?,
       cancelledDates: json['cancelled_dates'] as String?,

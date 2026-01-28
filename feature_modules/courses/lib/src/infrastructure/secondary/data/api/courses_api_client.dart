@@ -22,9 +22,9 @@ class CoursesApiClient {
     return AvailableSemestersDto.fromJson(data);
   }
 
-  Future<CoursesListWrapperDto> getCourses(int facultyId) async {
+  Future<CoursesListWrapperDto> getCourses(int facultyId, String semesterType, int year) async {
     final response = await _baseApiClient
-        .get(CoursesApiEndpoints.coursesByFaculty(facultyId));
+        .get(CoursesApiEndpoints.coursesByFaculty(facultyId, semesterType, year));
 
     final List<dynamic> data = json.decode(response.body);
     final courses = data.map((json) => CourseDto.fromJson(json)).toList();

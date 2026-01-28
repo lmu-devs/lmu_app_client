@@ -11,7 +11,7 @@ abstract class CoursesRepositoryInterface {
   /// Fetches courses data for a specified faculty.
   ///
   /// Throws a [DomainException] on failure.
-  Future<List<CourseModel>> getCourses(int facultyId);
+  Future<List<CourseModel>> getCourses(int facultyId, String semesterType, int year);
 
   /// Fetches course details data for a specified course using the course id.
   ///

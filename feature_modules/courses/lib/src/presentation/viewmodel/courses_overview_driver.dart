@@ -6,9 +6,12 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_api/studies.dart';
 import 'package:widget_driver/widget_driver.dart';
 
+import '../../application/usecase/get_available_semesters_usecase.dart';
 import '../../application/usecase/get_courses_usecase.dart';
 import '../../application/usecase/favorite_courses_usecase.dart';
+import '../../domain/model/available_semesters_model.dart';
 import '../../domain/model/course_model.dart';
+import '../../domain/model/semester_model.dart';
 
 part 'courses_overview_driver.g.dart';
 
@@ -23,7 +26,8 @@ class CoursesOverviewDriver extends WidgetDriver
 
   int get facultyId => _facultyId;
 
-  final _usecase = GetIt.I.get<GetCoursesUsecase>();
+  final _semesterUsecase = GetIt.I.get<GetAvailableSemestersUsecase>();
+  final _coursesUsecase = GetIt.I.get<GetCoursesUsecase>();
   final _favoritesUsecase = GetIt.I.get<FavoriteCoursesUsecase>();
   final _facultiesApi = GetIt.I.get<FacultiesApi>();
 
@@ -36,7 +40,23 @@ class CoursesOverviewDriver extends WidgetDriver
 
   List<Faculty> get allFaculties => _facultiesApi.allFaculties;
 
-  bool get isLoading => _usecase.loadState != CoursesLoadState.success;
+  AvailableSemestersModel? get availableSemesters => _semesterUsecase.data;
+  SemesterModel? selectedSemester;
+
+  String currentSemesterText(SemesterModel semester) {
+    String semesterType = semester.semesterType;
+    int year = semester.year;
+
+    if (semesterType == "WINTER") {
+      semesterType = _localizations.home.winter;
+    } else if (semesterType == "SUMMER") {
+      semesterType = _localizations.home.summer;
+    }
+
+    return "$semesterType $year";
+  }
+
+  bool get isLoading => _coursesUsecase.loadState != CoursesLoadState.success;
 
   String get pageTitle => _localizations.courses.coursesTitle;
 
@@ -72,7 +92,7 @@ class CoursesOverviewDriver extends WidgetDriver
       _extractUniqueStrings((course) => course.language);
 
   List<int> get availableSws {
-    final swsList = _usecase.data
+    final swsList = _coursesUsecase.data
         .map((c) => c.sws)
         .where((s) => s != null)
         .cast<int>()
@@ -83,7 +103,7 @@ class CoursesOverviewDriver extends WidgetDriver
   }
 
   List<String> _extractUniqueStrings(String? Function(CourseModel) selector) {
-    final list = _usecase.data
+    final list = _coursesUsecase.data
         .map(selector)
         .where((string) => string != null && string.isNotEmpty)
         .cast<String>()
@@ -100,7 +120,7 @@ class CoursesOverviewDriver extends WidgetDriver
       _selectedSws.isNotEmpty;
 
   List<CourseModel> get courses {
-    final rawData = _usecase.data;
+    final rawData = _coursesUsecase.data;
 
     if (!isFilterActive) {
       return rawData;
@@ -221,10 +241,25 @@ class CoursesOverviewDriver extends WidgetDriver
     CoursesSearchRoute(facultyId: facultyId).push(context);
   }
 
+  void selectSemester(SemesterModel semester) {
+    selectedSemester = semester;
+    _reloadCourses(semester.semesterType, semester.year);
+  }
+
+  void _reloadCourses(String semesterType, int year) {
+    _coursesUsecase.load(_facultyId, semesterType, year);
+    notifyWidget();
+  }
+
   void _onStateChanged() {
+    if (selectedSemester == null &&
+        _semesterUsecase.data != null) {
+      selectedSemester = _semesterUsecase.data!.currentSemester;
+    }
+
     notifyWidget();
 
-    if (_usecase.loadState == CoursesLoadState.error) {
+    if (_coursesUsecase.loadState == CoursesLoadState.error) {
       _showErrorToast();
     }
   }
@@ -234,17 +269,17 @@ class CoursesOverviewDriver extends WidgetDriver
       message: _localizations.app.somethingWentWrong,
       type: ToastType.error,
       actionText: _localizations.app.tryAgain,
-      onActionPressed: () => _usecase.load(_facultyId),
+      onActionPressed: () => _coursesUsecase.load(_facultyId),
     );
   }
 
   @override
   void didInitDriver() {
     super.didInitDriver();
-    _usecase.addListener(_onStateChanged);
+    _coursesUsecase.addListener(_onStateChanged);
     _favoritesUsecase.addListener(_onStateChanged);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _usecase.load(_facultyId);
+      _coursesUsecase.load(_facultyId);
     });
     _facultiesApi.selectedFacultiesStream.listen((_) => notifyWidget());
   }
@@ -265,7 +300,7 @@ class CoursesOverviewDriver extends WidgetDriver
 
   @override
   void dispose() {
-    _usecase.removeListener(_onStateChanged);
+    _coursesUsecase.removeListener(_onStateChanged);
     _favoritesUsecase.removeListener(_onStateChanged);
     super.dispose();
   }

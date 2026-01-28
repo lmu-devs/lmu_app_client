@@ -17,6 +17,7 @@
   "courseTime": "Zeit",
   "courseDate": "Datum",
   "courseRoom": "Raum",
+  "courseAddress": "Adresse",
   "sessions": "Termine & Orte",
   "person": "Lehrperson",
   "persons": "Lehrpersonen",

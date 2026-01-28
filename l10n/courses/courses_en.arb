@@ -18,6 +18,7 @@
   "courseDuration": "Duration",
   "courseDate": "Date",
   "courseRoom": "Room",
+  "courseAddress": "Address",
   "sessions": "Sessions & Locations",
   "person": "Educator",
   "persons": "Educators",

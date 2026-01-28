@@ -21,9 +21,9 @@ class CoursesRepository implements CoursesRepositoryInterface {
   }
 
   @override
-  Future<List<CourseModel>> getCourses(int facultyId) async {
+  Future<List<CourseModel>> getCourses(int facultyId, String semesterType, int year) async {
     try {
-      final wrapper = await _apiClient.getCourses(facultyId);
+      final wrapper = await _apiClient.getCourses(facultyId, semesterType, year);
       return wrapper.courses.map((dto) => dto.toDomain()).toList();
     } catch (e) {
       throw const CoursesGenericException();

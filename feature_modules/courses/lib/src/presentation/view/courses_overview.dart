@@ -226,6 +226,43 @@ class CoursesOverview extends DrivableWidget<CoursesOverviewDriver> {
               onTap: () =>
                   driver.isLoading ? {} : _showFilterBottomSheet(context),
             ),
+            LmuButton(
+              title: driver.currentSemesterText(driver.selectedSemester!),
+              emphasis: ButtonEmphasis.secondary,
+              trailingIcon: LucideIcons.chevron_down,
+              state:
+                  driver.isLoading ? ButtonState.disabled : ButtonState.enabled,
+              onTap: () => driver.isLoading
+                  ? {}
+                  : LmuBottomSheet.show(
+                      context,
+                      content: Builder(
+                        builder: (sheetContext) => Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: driver.availableSemesters!.semesters.map(
+                            (semester) {
+                              final isActive =
+                                  driver.selectedSemester == semester;
+                              final textColor = isActive
+                                  ? context.colors.brandColors.textColors
+                                      .strongColors.base
+                                  : context.colors.neutralColors.textColors
+                                      .mediumColors.base;
+
+                              return LmuListItem.base(
+                                title: driver.currentSemesterText(semester),
+                                titleColor: textColor,
+                                onTap: () {
+                                  driver.selectSemester(semester);
+                                  Navigator.of(sheetContext).pop();
+                                },
+                              );
+                            },
+                          ).toList(),
+                        ),
+                      ),
+                    ),
+            ),
           ],
         ),
         const SizedBox(height: LmuSizes.size_16),

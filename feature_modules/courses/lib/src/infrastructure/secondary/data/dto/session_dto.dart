@@ -1,3 +1,4 @@
+import 'package:core/api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -45,7 +46,7 @@ class SessionDto extends Equatable {
   final String? roomName;
   @JsonKey(name: 'building_id')
   final String? buildingId;
-  final String? location;
+  final LocationModel? location;
   final String? lecturer;
   final String? remark;
   @JsonKey(name: 'cancelled_dates')
