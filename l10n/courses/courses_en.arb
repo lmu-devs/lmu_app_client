@@ -11,6 +11,8 @@
   "applyFilter": "Apply",
   "noCoursesFoundTitle": "No courses found",
   "noCoursesFoundDescription": "Your current filter or semester selection matches no course. Try adjusting or resetting your filters.",
+  "noCourseDataTitle": "Missing course data",
+  "noCourseDataDescription": "This course appears to have no further information. Check the LSF to see if there are more up-to-date data.",
   "degree": "Degree",
   "courseType": "Course Type",
   "language": "Language",

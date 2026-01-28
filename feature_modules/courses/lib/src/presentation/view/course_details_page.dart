@@ -8,6 +8,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../domain/extension/person_model_extension.dart';
 import '../../domain/model/course_details_model.dart';
+import '../component/courses_empty_state.dart';
 import '../component/session_tile.dart';
 import '../viewmodel/course_details_page_driver.dart';
 
@@ -70,7 +71,8 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
                     onTap: pageNotReady
                         ? () => {}
                         : () {
-                            final params = ShareParams(uri: Uri.parse(driver.shareUrl));
+                            final params =
+                                ShareParams(uri: Uri.parse(driver.shareUrl));
                             SharePlus.instance.share(params);
                           },
                   ),
@@ -150,7 +152,12 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
             ],
           ),
         ],
-        const SizedBox(height: LmuSizes.size_32),
+        driver.courseDetails!.sessions.isEmpty &&
+                driver.courseDetails!.persons.isEmpty &&
+                driver.courseDetails!.additionalInformation.isEmpty
+            ? const CoursesEmptyState(
+                emptyStateType: CoursesEmptyStateType.noCourseData)
+            : const SizedBox(height: LmuSizes.size_32),
         Center(
           child: LmuText.bodyXSmall(
             driver.lastUpdatedText(),

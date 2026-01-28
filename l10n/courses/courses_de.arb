@@ -11,6 +11,8 @@
   "applyFilter": "Anwenden",
   "noCoursesFoundTitle": "Keine Kurse gefunden",
   "noCoursesFoundDescription": "Deine aktuelle Filter- oder Semesterauswahl passt zu keinem Kurs. Versuche, deine Filter anzupassen oder zurückzusetzen.",
+  "noCourseDataTitle": "Fehlende Kursdaten",
+  "noCourseDataDescription": "Dieser Kurs scheint keine weiteren Informationen zu enthalten. Schau gerne im LSF, ob es aktuellere Daten gibt.",
   "degree": "Abschluss",
   "courseType": "Veranstaltungsart",
   "language": "Sprache",
