@@ -23,7 +23,6 @@ class ClubDetailPage extends DrivableWidget<ClubDetailPageDriver> {
     return LmuScaffold(
       appBar: LmuAppBarData(
         largeTitle: club.title,
-        largeTitleTrailingWidget: club.logoUrl != null ? LmuInListImage(imageUrl: club.logoUrl!) : null,
         leadingAction: LeadingAction.back,
       ),
       body: SingleChildScrollView(
@@ -31,16 +30,23 @@ class ClubDetailPage extends DrivableWidget<ClubDetailPageDriver> {
           left: LmuSizes.size_16,
           right: LmuSizes.size_16,
           top: LmuSizes.size_16,
-          bottom: LmuSizes.size_96,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (club.description.isNotEmpty)
               Padding(
-                padding: const EdgeInsets.only(bottom: LmuSizes.size_16),
-                child: LmuText.body(
-                  club.description,
+                padding: const EdgeInsets.only(bottom: LmuSizes.size_24),
+                child: LmuContentTile(
+                  content: LmuListItem.base(
+                    mainContentAlignment: MainContentAlignment.top,
+                    subtitle: club.description,
+                    leadingArea: club.logoUrl != null
+                        ? LmuInListImage(
+                            imageUrl: club.logoUrl!,
+                          )
+                        : null,
+                  ),
                 ),
               ),
             if (_hasExternalLink)
@@ -82,11 +88,7 @@ class ClubDetailPage extends DrivableWidget<ClubDetailPageDriver> {
             if (club.content != null && club.content!.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(bottom: LmuSizes.size_24),
-                child: ExpandableText(
-                  text: club.content!,
-                  maxLines: 5,
-                  amountOfHorizontalPadding: LmuSizes.size_32,
-                ),
+                child: LmuHtmlViewer(data: club.content!),
               ),
             if (club.email != null && club.email!.isNotEmpty)
               LmuContentTile(
