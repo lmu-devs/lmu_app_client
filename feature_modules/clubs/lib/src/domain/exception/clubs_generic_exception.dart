@@ -1,0 +1,1 @@
+class ClubsGenericException implements Exception {}

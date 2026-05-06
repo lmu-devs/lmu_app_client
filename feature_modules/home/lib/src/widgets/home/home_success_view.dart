@@ -7,6 +7,7 @@ import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core_routes/benefits.dart';
 import 'package:core_routes/cinema.dart';
+import 'package:core_routes/clubs.dart';
 import 'package:core_routes/home.dart';
 import 'package:core_routes/libraries.dart';
 import 'package:core_routes/mensa.dart';
@@ -86,9 +87,9 @@ extension HomeTileMapper on HomeTile {
       HomeTileType.benefits => () => const BenefitsMainRoute().go(context),
       HomeTileType.cinemas => () => const CinemaMainRoute().go(context),
       HomeTileType.feedback => () => GetIt.I.get<FeedbackApi>().showFeedback(
-        context,
-        args: const FeedbackArgs(type: FeedbackType.general, origin: 'Home General'),
-      ),
+            context,
+            args: const FeedbackArgs(type: FeedbackType.general, origin: 'Home General'),
+          ),
       HomeTileType.roomfinder => () => const RoomfinderMainRoute().go(context),
       HomeTileType.sports => () => const SportsMainRoute().go(context),
       HomeTileType.timeline => () => const TimelineMainRoute().go(context),
@@ -98,6 +99,7 @@ extension HomeTileMapper on HomeTile {
       HomeTileType.events => () => _notYetImplemented(context),
       HomeTileType.mensa => () => const MensaMainRoute().go(context),
       HomeTileType.libraries => () => const LibrariesMainRoute().go(context),
+      HomeTileType.clubs => () => const ClubsMainRoute().go(context),
       HomeTileType.other => () => _notYetImplemented(context),
     };
 
@@ -123,9 +125,10 @@ extension HomeTileMapper on HomeTile {
       HomeTileType.wishlist => locals.wishlist.tabTitle,
       HomeTileType.links => "Links",
       HomeTileType.news => "News",
-      HomeTileType.events => "events",
+      HomeTileType.events => "Events",
       HomeTileType.mensa => locals.canteen.tabTitle,
       HomeTileType.libraries => locals.libraries.pageTitle,
+      HomeTileType.clubs => locals.clubs.clubsTitle,
       HomeTileType.other => "",
     };
   }
@@ -144,6 +147,7 @@ extension HomeTileMapper on HomeTile {
       HomeTileType.events => const HomeEmojiTile(emoji: "🎉"),
       HomeTileType.mensa => const HomeEmojiTile(emoji: "🍽️"),
       HomeTileType.libraries => const HomeEmojiTile(emoji: "📚"),
+      HomeTileType.clubs => const HomeEmojiTile(emoji: "🤝"),
       HomeTileType.other => Container(),
     };
   }

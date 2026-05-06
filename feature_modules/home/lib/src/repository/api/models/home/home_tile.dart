@@ -35,6 +35,7 @@ abstract class HomeTile extends Equatable {
       HomeTileType.other => HomeDefaultTile.fromJson(json),
       HomeTileType.mensa => HomeDefaultTile.fromJson(json),
       HomeTileType.libraries => HomeDefaultTile.fromJson(json),
+      HomeTileType.clubs => HomeDefaultTile.fromJson(json),
     };
   }
 
@@ -57,5 +58,6 @@ const $HomeTileTypeEnumMap = {
   HomeTileType.events: 'EVENTS',
   HomeTileType.mensa: 'MENSA',
   HomeTileType.libraries: 'LIBRARY',
+  HomeTileType.clubs: 'CLUBS',
   HomeTileType.other: 'OTHER',
 };
