@@ -1,6 +1,7 @@
 import 'package:benefits/benefits.dart';
 import 'package:calendar/calendar.dart';
 import 'package:cinema/cinema.dart';
+import 'package:clubs/clubs.dart';
 import 'package:courses/courses.dart';
 import 'package:developerdex/developerdex.dart';
 import 'package:explore/explore.dart';
@@ -33,6 +34,7 @@ final modules = [
   SportsModule(),
   TimelineModule(),
   BenefitsModule(),
+  ClubsModule(),
   StudiesModule(),
   LaunchFlowModule(),
   CalendarModule(),

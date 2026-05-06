@@ -33,13 +33,12 @@ class LinksFacultiesPage extends StatelessWidget {
                     contentList: facultiesApi.selectedFaculties
                         .map(
                           (faculty) => LmuListItem.action(
-                        leadingArea: FacultyNumberWidget(facultyId: faculty.id),
-                        actionType: LmuListItemAction.chevron,
-                        title: faculty.name,
-                        onTap: () =>
-                            LinksOverviewRoute(facultyId: faculty.id).push(context),
-                      ),
-                    )
+                            leadingArea: FacultyNumberWidget(facultyId: faculty.id),
+                            actionType: LmuListItemAction.chevron,
+                            title: faculty.name,
+                            onTap: () => LinksOverviewRoute(facultyId: faculty.id).push(context),
+                          ),
+                        )
                         .toList(),
                   ),
                   const SizedBox(height: LmuSizes.size_24),
@@ -50,13 +49,12 @@ class LinksFacultiesPage extends StatelessWidget {
                   contentList: facultiesApi.allFaculties
                       .map(
                         (faculty) => LmuListItem.action(
-                      leadingArea: FacultyNumberWidget(facultyId: faculty.id),
-                      actionType: LmuListItemAction.chevron,
-                      title: faculty.name,
-                      onTap: () =>
-                          LinksOverviewRoute(facultyId: faculty.id).push(context),
-                    ),
-                  )
+                          leadingArea: FacultyNumberWidget(facultyId: faculty.id),
+                          actionType: LmuListItemAction.chevron,
+                          title: faculty.name,
+                          onTap: () => LinksOverviewRoute(facultyId: faculty.id).push(context),
+                        ),
+                      )
                       .toList(),
                 ),
                 const SizedBox(height: LmuSizes.size_96),

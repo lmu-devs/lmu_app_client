@@ -26,8 +26,7 @@ class CoursesFacultyOverviewRoute extends GoRouteData {
   static const String path = 'courses-faculties';
 
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      _router.buildFacultyOverview(context);
+  Widget build(BuildContext context, GoRouterState state) => _router.buildFacultyOverview(context);
 }
 
 class CourseDetailsRoute extends GoRouteData {
