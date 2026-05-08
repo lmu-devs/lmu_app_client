@@ -1,26 +1,35 @@
+import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../application/usecase/get_grades_usecase.dart';
+import '../../application/usecase/grades_toast_service.dart';
 import '../../domain/model/grade.dart';
 import '../../domain/model/grade_semester.dart';
+import '../helpers/grade_form_constants.dart';
 
 part 'grade_addition_page_driver.g.dart';
 
 @GenerateTestDriver()
 class GradeAdditionPageDriver extends WidgetDriver {
   final _usecase = GetIt.I.get<GetGradesUsecase>();
+  final _toastService = GetIt.I.get<GradesToastService>();
 
-  double? _selectedGrade;
+  late GradesLocatizations _gradesLocalizations;
+
+  double _sliderGradeValue = 1.0;
+  int _sliderIndex = 0;
+  bool _noGradeReceived = false;
 
   GradeSemester _selectedGradeSemester = GradeSemester.values.last;
 
   final _nameController = TextEditingController();
-  final _gradeController = TextEditingController();
   final _ectsController = TextEditingController();
 
-  String get largeTitle => "Note hinzufügen";
+  String get largeTitle => _gradesLocalizations.addGrade;
+
+  String get addButtonTitle => _gradesLocalizations.addButton;
 
   GradeSemester get selectedGradeSemester => _selectedGradeSemester;
 
@@ -28,20 +37,19 @@ class GradeAdditionPageDriver extends WidgetDriver {
   TextEditingController get nameController => _nameController;
 
   @TestDriverDefaultValue(_TestTextEditingController())
-  TextEditingController get gradeController => _gradeController;
-
-  @TestDriverDefaultValue(_TestTextEditingController())
   TextEditingController get ectsController => _ectsController;
 
-  double? get selectedGrade => _selectedGrade;
+  double? get selectedGrade => _noGradeReceived ? null : _sliderGradeValue;
 
-  List<double> get availableGrades => [1.0, 1.3, 1.7, 2.0, 2.3, 2.7, 3.0, 3.3, 3.7, 4.0, 5.0];
+  double get sliderGradeValue => _sliderGradeValue;
+
+  int get sliderIndex => _sliderIndex;
+
+  bool get noGradeReceived => _noGradeReceived;
+
+  List<double> get grades => availableGrades;
 
   void onNameChanged(String value) {
-    notifyWidget();
-  }
-
-  void onGradeChanged(String value) {
     notifyWidget();
   }
 
@@ -51,24 +59,25 @@ class GradeAdditionPageDriver extends WidgetDriver {
 
   bool get isAddButtonEnabled {
     final name = _nameController.text;
-    final ects = int.tryParse(_ectsController.text);
+    final ects = parseEcts(_ectsController.text);
 
     return name.isNotEmpty && ects != null;
   }
 
   void onAddGradePressed() {
     final name = _nameController.text;
-    final ects = int.tryParse(_ectsController.text) ?? 0;
+    final ects = parseEcts(_ectsController.text) ?? 0;
 
     final newGrade = Grade(
       id: UniqueKey().toString(),
       name: name,
-      grade: _selectedGrade,
+      grade: selectedGrade,
       ects: ects,
       semester: _selectedGradeSemester,
     );
 
     _usecase.addGrade(newGrade);
+    _toastService.add(const GradeAddedEvent());
     notifyWidget();
   }
 
@@ -77,8 +86,20 @@ class GradeAdditionPageDriver extends WidgetDriver {
     notifyWidget();
   }
 
-  void onGradeSelected(double? grade) {
-    _selectedGrade = grade;
+  void onSliderIndexChanged(int index) {
+    _sliderIndex = index;
+    _sliderGradeValue = grades[index];
+    notifyWidget();
+  }
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {
+    super.didUpdateBuildContext(context);
+    _gradesLocalizations = context.locals.grades;
+  }
+
+  void onNoGradeReceivedChanged(bool value) {
+    _noGradeReceived = value;
     notifyWidget();
   }
 }

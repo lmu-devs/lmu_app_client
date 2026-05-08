@@ -19,6 +19,7 @@ export 'progress_indicators/progress_indicators.dart';
 export 'scaffolds/scaffolds.dart';
 export 'search/search.dart';
 export 'skeletons/skeletons.dart';
+export 'slider/slider.dart';
 export 'status/status.dart';
 export 'tab_bars/tab_bars.dart';
 export 'texts/texts.dart';

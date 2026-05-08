@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 
 class GradesEctsProgress extends StatefulWidget {
   const GradesEctsProgress({
-    required this.archievedEcts,
+    required this.achievedEcts,
     required this.maxEcts,
     super.key,
   });
 
-  final double archievedEcts;
+  final double achievedEcts;
   final double maxEcts;
 
   @override
@@ -35,7 +35,7 @@ class _GradesEctsProgressState extends State<GradesEctsProgress> with SingleTick
   @override
   void didUpdateWidget(GradesEctsProgress oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.archievedEcts != widget.archievedEcts || oldWidget.maxEcts != widget.maxEcts) {
+    if (oldWidget.achievedEcts != widget.achievedEcts || oldWidget.maxEcts != widget.maxEcts) {
       final newProgress = _calculateProgress();
       _progressAnimation = Tween<double>(
         begin: _previousProgress,
@@ -56,7 +56,7 @@ class _GradesEctsProgressState extends State<GradesEctsProgress> with SingleTick
   }
 
   double _calculateProgress() {
-    final progress = widget.maxEcts > 0 ? widget.archievedEcts / widget.maxEcts : 0.0;
+    final progress = widget.maxEcts > 0 ? widget.achievedEcts / widget.maxEcts : 0.0;
     return progress.clamp(0.0, 1.0);
   }
 
@@ -64,7 +64,7 @@ class _GradesEctsProgressState extends State<GradesEctsProgress> with SingleTick
     return value == value.roundToDouble() ? value.toInt().toString() : value.toStringAsFixed(1).replaceAll(".", ",");
   }
 
-  bool get _isOverMax => widget.archievedEcts > widget.maxEcts;
+  bool get _isOverMax => widget.achievedEcts > widget.maxEcts;
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +108,7 @@ class _GradesEctsProgressState extends State<GradesEctsProgress> with SingleTick
             ),
             children: [
               TextSpan(
-                text: _formatEcts(widget.archievedEcts),
+                text: _formatEcts(widget.achievedEcts),
                 style: TextStyle(
                   color: _isOverMax
                       ? context.colors.dangerColors.textColors.strongColors.base

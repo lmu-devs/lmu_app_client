@@ -1,4 +1,5 @@
 import 'package:core/components.dart';
+import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 
 class GradesEmptyState extends StatelessWidget {
@@ -6,12 +7,14 @@ class GradesEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final gradesL10n = context.locals.grades;
+
     return LmuEmptyState(
       hasVerticalPadding: true,
       type: EmptyStateType.custom,
-      title: "Keine Noten vorhanden",
+      title: gradesL10n.emptyStateTitle,
       assetName: "lib/assets/no_grades.webp",
-      description: "Füge deine ersten Noten hinzu, um deinen Durchschnitt zu berechnen.",
+      description: gradesL10n.emptyStateDescription,
     );
   }
 }

@@ -39,18 +39,17 @@ class GradesPageDriver extends WidgetDriver {
       groupBy(_grades, (g) => g.semester).entries.toList()..sort((a, b) => b.key.index.compareTo(a.key.index)));
 
   // ECTS
-  double get archievedEcts => _grades.activeGrades.totalEcts;
+  double get achievedEcts => _grades.activeGrades.totalEcts;
   double get maxEcts => _totalECTS;
 
   // Helpers
-  List<Grade> getOrderedGrades(List<Grade> gradesToOrdder) {
-    gradesToOrdder.sort((a, b) {
-      if (a.grade == null && b.grade == null) return 0;
-      if (a.grade == null) return 1;
-      if (b.grade == null) return -1;
-      return a.grade!.compareTo(b.grade!);
-    });
-    return gradesToOrdder;
+  List<Grade> getOrderedGrades(List<Grade> grades) {
+    return [...grades]..sort((a, b) {
+        if (a.grade == null && b.grade == null) return 0;
+        if (a.grade == null) return 1;
+        if (b.grade == null) return -1;
+        return a.grade!.compareTo(b.grade!);
+      });
   }
 
   void toggleGradeActiveState(Grade grade, bool isActive) {

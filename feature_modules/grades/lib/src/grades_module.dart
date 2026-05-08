@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_api/grades.dart';
 
 import 'application/usecase/get_grades_usecase.dart';
+import 'application/usecase/grades_toast_service.dart';
 import 'domain/interface/grades_repository_interface.dart';
 import 'infrastructure/primary/api/grades_api.dart';
 import 'infrastructure/primary/router/grades_router.dart';
@@ -19,9 +20,11 @@ class GradesModule extends AppModule with LocalDependenciesProvidingAppModule, P
     final storage = GradesStorage();
     final repository = GradesRepository(storage);
     final getUsecase = GetGradesUsecase(repository);
+    final toastService = GradesToastService();
 
     GetIt.I.registerSingleton<GradesRepositoryInterface>(repository);
     GetIt.I.registerSingleton<GetGradesUsecase>(getUsecase);
+    GetIt.I.registerSingleton<GradesToastService>(toastService);
   }
 
   @override

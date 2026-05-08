@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../constants.dart';
 import '../../../themes.dart';
@@ -44,6 +45,7 @@ class LmuInputField extends StatefulWidget {
     this.onClearPressed,
     this.focusAfterClear = true,
     this.errorText,
+    this.inputFormatters,
   });
   final String hintText;
   final TextEditingController controller;
@@ -74,6 +76,7 @@ class LmuInputField extends StatefulWidget {
   final FocusNode? focusNode;
   final bool focusAfterClear;
   final String? errorText;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   State<LmuInputField> createState() => _LmuInputFieldState();
@@ -142,6 +145,7 @@ class _LmuInputFieldState extends State<LmuInputField> {
       maxLength: widget.maxLength,
       minLines: widget.minLines,
       maxLines: widget.isMultiline ? widget.maxLines : 1,
+      inputFormatters: widget.inputFormatters,
       onChanged: (value) {
         _updateInputState();
         widget.onChanged?.call(value);
@@ -194,6 +198,7 @@ class _LmuInputFieldState extends State<LmuInputField> {
         errorStyle: TextStyle(
           color: colors.dangerColors.textColors.strongColors.base,
         ),
+        counterText: '',
       ),
       focusNode: _focusNode,
     );

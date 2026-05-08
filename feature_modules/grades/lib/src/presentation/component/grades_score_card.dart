@@ -40,12 +40,20 @@ class _GradesScoreCardState extends State<GradesScoreCard> with SingleTickerProv
   void didUpdateWidget(GradesScoreCard oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.averageGrade != widget.averageGrade) {
-      _previousGrade = oldWidget.averageGrade;
-      _gradeAnimation = Tween<double>(
-        begin: _previousGrade,
-        end: widget.averageGrade,
-      ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
-      _controller.forward(from: 0);
+      final wasEmpty = oldWidget.averageGrade < 1.0;
+      final isNowEmpty = widget.averageGrade < 1.0;
+
+      if (wasEmpty || isNowEmpty) {
+        _controller.reset();
+        _gradeAnimation = AlwaysStoppedAnimation(widget.averageGrade);
+      } else {
+        _previousGrade = oldWidget.averageGrade;
+        _gradeAnimation = Tween<double>(
+          begin: _previousGrade,
+          end: widget.averageGrade,
+        ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+        _controller.forward(from: 0);
+      }
     }
   }
 
@@ -111,7 +119,7 @@ class _GradesScoreCardState extends State<GradesScoreCard> with SingleTickerProv
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(
-                    isEmpty ? 12 : LmuSizes.size_16,
+                    isEmpty ? LmuSizes.size_12 : LmuSizes.size_16,
                     LmuSizes.size_16,
                     LmuSizes.size_16,
                     LmuSizes.size_16,

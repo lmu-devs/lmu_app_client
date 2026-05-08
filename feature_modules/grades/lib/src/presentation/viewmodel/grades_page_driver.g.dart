@@ -36,13 +36,13 @@ class _$TestGradesPageDriver extends TestDriver implements GradesPageDriver {
   Map<GradeSemester, List<Grade>> get groupedGrades => {};
 
   @override
-  double get archievedEcts => 0.0;
+  double get achievedEcts => 0.0;
 
   @override
   double get maxEcts => 0.0;
 
   @override
-  List<Grade> getOrderedGrades(List<Grade> gradesToOrdder) {
+  List<Grade> getOrderedGrades(List<Grade> grades) {
     return [];
   }
 

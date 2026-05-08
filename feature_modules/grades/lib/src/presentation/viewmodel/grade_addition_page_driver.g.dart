@@ -10,9 +10,13 @@ part of 'grade_addition_page_driver.dart';
 
 // This file was generated with widget_driver_generator version "1.3.6"
 
-class _$TestGradeAdditionPageDriver extends TestDriver implements GradeAdditionPageDriver {
+class _$TestGradeAdditionPageDriver extends TestDriver
+    implements GradeAdditionPageDriver {
   @override
   String get largeTitle => ' ';
+
+  @override
+  String get addButtonTitle => ' ';
 
   @override
   GradeSemester get selectedGradeSemester => GradeSemester.values[0];
@@ -21,25 +25,28 @@ class _$TestGradeAdditionPageDriver extends TestDriver implements GradeAdditionP
   TextEditingController get nameController => _TestTextEditingController();
 
   @override
-  TextEditingController get gradeController => _TestTextEditingController();
-
-  @override
   TextEditingController get ectsController => _TestTextEditingController();
 
   @override
   double? get selectedGrade => 0.0;
 
   @override
-  List<double> get availableGrades => [];
+  double get sliderGradeValue => 0.0;
+
+  @override
+  int get sliderIndex => 0;
+
+  @override
+  bool get noGradeReceived => false;
+
+  @override
+  List<double> get grades => [];
 
   @override
   bool get isAddButtonEnabled => false;
 
   @override
   void onNameChanged(String value) {}
-
-  @override
-  void onGradeChanged(String value) {}
 
   @override
   void onEctsChanged(String value) {}
@@ -51,10 +58,17 @@ class _$TestGradeAdditionPageDriver extends TestDriver implements GradeAdditionP
   void onGradeSemesterSelected(GradeSemester semester) {}
 
   @override
-  void onGradeSelected(double? grade) {}
+  void onSliderIndexChanged(int index) {}
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {}
+
+  @override
+  void onNoGradeReceivedChanged(bool value) {}
 }
 
-class $GradeAdditionPageDriverProvider extends WidgetDriverProvider<GradeAdditionPageDriver> {
+class $GradeAdditionPageDriverProvider
+    extends WidgetDriverProvider<GradeAdditionPageDriver> {
   @override
   GradeAdditionPageDriver buildDriver() {
     return GradeAdditionPageDriver();
