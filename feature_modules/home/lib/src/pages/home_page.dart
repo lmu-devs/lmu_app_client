@@ -18,22 +18,16 @@ class HomePage extends StatelessWidget {
     return LmuScaffold(
       appBar: LmuAppBarData(
         largeTitle: "Home",
-        largeTitleTrailingWidget: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () => const SettingsMainRoute().go(context),
-              child: const Padding(
-                padding: EdgeInsets.only(left: LmuSizes.size_16),
-                child: SizedBox(
-                  height: 40,
-                  child: LmuIcon(
-                      icon: LucideIcons.settings, size: LmuIconSizes.medium),
-                ),
-              ),
+        largeTitleTrailingWidget: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () => const SettingsMainRoute().go(context),
+          child: const Padding(
+            padding: EdgeInsets.only(left: LmuSizes.size_16),
+            child: SizedBox(
+              height: 40,
+              child: LmuIcon(icon: LucideIcons.settings, size: LmuIconSizes.medium),
             ),
-          ],
+          ),
         ),
       ),
       body: BlocBuilder<HomeCubit, HomeState>(
@@ -42,15 +36,9 @@ class HomePage extends StatelessWidget {
           Widget child = const HomeLoadingView(key: ValueKey("homeLoading"));
 
           if (state is HomeLoadInProgress && state.tiles != null) {
-            child = HomeSuccessView(
-                key: const ValueKey("homeContent"),
-                tiles: state.tiles!,
-                featured: state.featured);
+            child = HomeSuccessView(key: const ValueKey("homeContent"), tiles: state.tiles!, featured: state.featured);
           } else if (state is HomeLoadSuccess) {
-            child = HomeSuccessView(
-                key: const ValueKey("homeContent"),
-                tiles: state.tiles,
-                featured: state.featured);
+            child = HomeSuccessView(key: const ValueKey("homeContent"), tiles: state.tiles, featured: state.featured);
           }
 
           return LmuPageAnimationWrapper(child: child);
