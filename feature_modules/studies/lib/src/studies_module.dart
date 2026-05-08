@@ -5,10 +5,13 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_api/studies.dart';
 
 import 'application/usecase/get_faculties_usecase.dart';
+import 'application/usecase/get_student_id_data_usecase.dart';
+import 'application/usecase/get_student_id_theme_usecase.dart';
 import 'domain/interface/studies_repository_interface.dart';
 import 'infrastructure/primary/api/faculties_api.dart';
 import 'infrastructure/primary/router/studies_router.dart';
 import 'infrastructure/secondary/data/api/studies_api_client.dart';
+import 'infrastructure/secondary/data/storage/student_id_theme_storage.dart';
 import 'infrastructure/secondary/data/storage/studies_storage.dart';
 import 'infrastructure/secondary/repository/studies_repository.dart';
 
@@ -18,8 +21,12 @@ class StudiesModule extends AppModule
   String get moduleName => 'StudiesModule';
 
   @override
-  Future onAppStartWaiting() {
-    return GetIt.I.get<GetFacultiesUsecase>().initFaculties();
+  Future onAppStartWaiting() async {
+    await Future.wait([
+      GetIt.I.get<GetFacultiesUsecase>().initFaculties(),
+      GetIt.I.get<GetStudentIdThemeUsecase>().init(),
+      GetIt.I.get<GetStudentIdDataUsecase>().init(),
+    ]);
   }
 
   @override
@@ -29,8 +36,14 @@ class StudiesModule extends AppModule
     final studiesRepository = StudiesRepository(StudiesApiClient(baseApiClient), studiesStorage);
     final getFacultiesUsecase = GetFacultiesUsecase(studiesRepository);
 
+    final studentIdThemeStorage = StudentIdThemeStorage();
+    final getStudentIdThemeUsecase = GetStudentIdThemeUsecase(studentIdThemeStorage);
+    final getStudentIdDataUsecase = GetStudentIdDataUsecase();
+
     GetIt.I.registerSingleton<StudiesRepositoryInterface>(studiesRepository);
     GetIt.I.registerSingleton<GetFacultiesUsecase>(getFacultiesUsecase);
+    GetIt.I.registerSingleton<GetStudentIdThemeUsecase>(getStudentIdThemeUsecase);
+    GetIt.I.registerSingleton<GetStudentIdDataUsecase>(getStudentIdDataUsecase);
   }
 
   @override

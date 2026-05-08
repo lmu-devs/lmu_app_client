@@ -1,16 +1,8 @@
 import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 class HolographicWatermarks extends StatelessWidget {
-  final double width;
-  final double height;
-  final String name;
-  final String matrikelnr;
-  final Color hologramColor;
-  final bool enableHolographicEffects;
-  final double combinedX;
-  final double combinedY;
-
   const HolographicWatermarks({
     super.key,
     required this.width,
@@ -18,17 +10,20 @@ class HolographicWatermarks extends StatelessWidget {
     required this.name,
     required this.matrikelnr,
     required this.hologramColor,
-    required this.enableHolographicEffects,
     required this.combinedX,
     required this.combinedY,
   });
 
+  final double width;
+  final double height;
+  final String name;
+  final String matrikelnr;
+  final Color hologramColor;
+  final double combinedX;
+  final double combinedY;
+
   @override
   Widget build(BuildContext context) {
-    if (!enableHolographicEffects) {
-      return const SizedBox.shrink();
-    }
-
     final List<Widget> watermarks = [];
 
     // Define grid properties
@@ -39,8 +34,7 @@ class HolographicWatermarks extends StatelessWidget {
     const double rotation = math.pi / 2;
 
     // Calculate opacity based on left tilt with shimmer effect
-    final tiltOpacity =
-        combinedX < -0.15 ? ((-combinedX - 0.15) * 5).clamp(0.0, 0.9) : 0.0;
+    final tiltOpacity = combinedX < -0.15 ? ((-combinedX - 0.15) * 5).clamp(0.0, 0.9) : 0.0;
 
     // Create grid of watermarks
     for (int row = 0; row < rows; row++) {
@@ -51,19 +45,12 @@ class HolographicWatermarks extends StatelessWidget {
         final isName = (row + col) % 2 == 0;
 
         // Parallax offset based on tilt
-        final parallaxX =
-            combinedX *
-            30 *
-            (col / cols); // Horizontal parallax increases with column
-        final parallaxY =
-            combinedY *
-            20 *
-            (row / rows); // Vertical parallax increases with row
+        final parallaxX = combinedX * 30 * (col / cols); // Horizontal parallax increases with column
+        final parallaxY = combinedY * 20 * (row / rows); // Vertical parallax increases with row
 
         // Shimmer effect - varies with position and tilt
         final shimmerPhase = (col / cols + row / rows) * math.pi;
-        final shimmerIntensity =
-            (math.sin(shimmerPhase + combinedX * 5) + 1) / 2;
+        final shimmerIntensity = (math.sin(shimmerPhase + combinedX * 5) + 1) / 2;
 
         watermarks.add(
           Positioned(
@@ -81,16 +68,13 @@ class HolographicWatermarks extends StatelessWidget {
                     end: Alignment(1.5 + combinedX, 1.5 + combinedY),
                     colors: [
                       hologramColor.withOpacity(
-                        (tiltOpacity * 0.4 * (1 + shimmerIntensity * 0.3))
-                            .clamp(0.0, 0.9),
+                        (tiltOpacity * 0.4 * (1 + shimmerIntensity * 0.3)).clamp(0.0, 0.9),
                       ),
                       hologramColor.withOpacity(
-                        (tiltOpacity * 0.6 * (1 + shimmerIntensity * 0.5))
-                            .clamp(0.0, 0.9),
+                        (tiltOpacity * 0.6 * (1 + shimmerIntensity * 0.5)).clamp(0.0, 0.9),
                       ),
                       hologramColor.withOpacity(
-                        (tiltOpacity * 0.4 * (1 + shimmerIntensity * 0.3))
-                            .clamp(0.0, 0.9),
+                        (tiltOpacity * 0.4 * (1 + shimmerIntensity * 0.3)).clamp(0.0, 0.9),
                       ),
                     ],
                     stops: const [0.0, 0.5, 1.0],
