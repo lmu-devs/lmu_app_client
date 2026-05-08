@@ -14,4 +14,8 @@ extension GradesFormattingExtension on double {
     final rounded = (this * 10).round() / 10;
     return rounded.toStringAsFixed(1).replaceAll(".", ",");
   }
+
+  String get asEctsString {
+    return this == toInt().toDouble() ? toInt().toString() : toString().replaceAll('.', ',');
+  }
 }

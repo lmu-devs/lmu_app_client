@@ -11,7 +11,7 @@ extension GradesFilterExtension on List<Grade> {
     final gradesWithValue = where((grade) => grade.grade != null).toList();
     if (gradesWithValue.isEmpty) return 0.0;
 
-    final totalEctsWithGrade = gradesWithValue.fold<int>(0, (sum, grade) => sum + grade.ects);
+    final totalEctsWithGrade = gradesWithValue.fold<double>(0, (sum, grade) => sum + grade.ects);
     if (totalEctsWithGrade == 0) return 0.0;
 
     final weightedSum = gradesWithValue.fold<double>(
@@ -23,6 +23,6 @@ extension GradesFilterExtension on List<Grade> {
   }
 
   double get totalEcts {
-    return fold<int>(0, (sum, grade) => sum + grade.ects).toDouble();
+    return fold<double>(0, (sum, grade) => sum + grade.ects);
   }
 }

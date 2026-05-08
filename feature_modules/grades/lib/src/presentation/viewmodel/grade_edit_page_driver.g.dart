@@ -10,9 +10,16 @@ part of 'grade_edit_page_driver.dart';
 
 // This file was generated with widget_driver_generator version "1.3.6"
 
-class _$TestGradeEditPageDriver extends TestDriver implements GradeEditPageDriver {
+class _$TestGradeEditPageDriver extends TestDriver
+    implements GradeEditPageDriver {
   @override
   String get largeTitle => ' ';
+
+  @override
+  String get saveButtonTitle => ' ';
+
+  @override
+  String get deleteButtonTitle => ' ';
 
   @override
   GradeSemester get selectedGradeSemester => GradeSemester.values[0];
@@ -21,19 +28,28 @@ class _$TestGradeEditPageDriver extends TestDriver implements GradeEditPageDrive
   TextEditingController get nameController => _TestTextEditingController();
 
   @override
-  TextEditingController get gradeController => _TestTextEditingController();
+  TextEditingController get ectsController => _TestTextEditingController();
 
   @override
-  TextEditingController get ectsController => _TestTextEditingController();
+  double? get selectedGrade => 0.0;
+
+  @override
+  double get sliderGradeValue => 0.0;
+
+  @override
+  int get sliderIndex => 0;
+
+  @override
+  bool get noGradeReceived => false;
+
+  @override
+  List<double> get grades => [];
 
   @override
   bool get isSaveButtonEnabled => false;
 
   @override
   void onNameChanged(String value) {}
-
-  @override
-  void onGradeChanged(String value) {}
 
   @override
   void onEctsChanged(String value) {}
@@ -48,13 +64,23 @@ class _$TestGradeEditPageDriver extends TestDriver implements GradeEditPageDrive
   void onSaveGradePressed() {}
 
   @override
+  void onSliderIndexChanged(int index) {}
+
+  @override
+  void onNoGradeReceivedChanged(bool value) {}
+
+  @override
   void didInitDriver() {}
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {}
 
   @override
   void didUpdateProvidedProperties({required Grade newGradeToEdit}) {}
 }
 
-class $GradeEditPageDriverProvider extends WidgetDriverProvider<GradeEditPageDriver> {
+class $GradeEditPageDriverProvider
+    extends WidgetDriverProvider<GradeEditPageDriver> {
   final Grade _gradeToEdit;
 
   $GradeEditPageDriverProvider({

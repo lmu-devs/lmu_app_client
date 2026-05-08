@@ -2,6 +2,8 @@ import 'package:equatable/equatable.dart';
 
 import 'grade_semester.dart';
 
+const _sentinel = Object();
+
 class Grade extends Equatable {
   const Grade({
     required this.id,
@@ -14,7 +16,7 @@ class Grade extends Equatable {
 
   final String id;
   final String name;
-  final int ects;
+  final double ects;
   final double? grade;
   final GradeSemester semester;
   final bool isActive;
@@ -25,8 +27,8 @@ class Grade extends Equatable {
   Grade copyWith({
     String? id,
     String? name,
-    int? ects,
-    double? grade,
+    double? ects,
+    Object? grade = _sentinel,
     GradeSemester? semester,
     bool? isActive,
   }) {
@@ -34,7 +36,7 @@ class Grade extends Equatable {
       id: id ?? this.id,
       name: name ?? this.name,
       ects: ects ?? this.ects,
-      grade: grade ?? this.grade,
+      grade: grade == _sentinel ? this.grade : grade as double?,
       semester: semester ?? this.semester,
       isActive: isActive ?? this.isActive,
     );

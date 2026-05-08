@@ -9,7 +9,7 @@ part of 'grade_dto.dart';
 GradeDto _$GradeDtoFromJson(Map<String, dynamic> json) => GradeDto(
       id: json['id'] as String,
       name: json['name'] as String,
-      ects: (json['ects'] as num).toInt(),
+      ects: (json['ects'] as num).toDouble(),
       grade: (json['grade'] as num?)?.toDouble(),
       semester: json['semester'] as String,
       isActive: json['isActive'] as bool? ?? true,

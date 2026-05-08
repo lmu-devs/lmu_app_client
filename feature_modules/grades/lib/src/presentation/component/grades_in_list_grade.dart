@@ -1,6 +1,7 @@
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 
 import '../helpers/grades_formatting_extension.dart';
 import '../helpers/grades_gradient_set.dart';
@@ -21,7 +22,9 @@ class GradesInListGrade extends StatelessWidget {
       width: LmuSizes.size_48,
       height: LmuSizes.size_48,
       decoration: ShapeDecoration(
-        color: context.colors.neutralColors.backgroundColors.mediumColors.base,
+        color: grade != null
+            ? context.colors.neutralColors.backgroundColors.mediumColors.base
+            : context.colors.customColors.backgroundColors.green,
         shape: RoundedSuperellipseBorder(
           borderRadius: BorderRadius.circular(LmuSizes.size_6),
         ),
@@ -47,8 +50,9 @@ class GradesInListGrade extends StatelessWidget {
                   ),
                 )
               : Icon(
-                  Icons.check,
-                  color: context.colors.customColors.textColors.green,
+                  LucideIcons.check,
+                  size: LmuIconSizes.medium,
+                  color: context.colors.successColors.textColors.strongColors.base,
                 ),
         ),
       ),

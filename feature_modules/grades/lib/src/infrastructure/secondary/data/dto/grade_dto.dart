@@ -19,7 +19,7 @@ class GradeDto extends Equatable {
 
   final String id;
   final String name;
-  final int ects;
+  final double ects;
   final double? grade;
   final String semester;
   final bool isActive;

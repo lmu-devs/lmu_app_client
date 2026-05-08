@@ -1,11 +1,13 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 
 import '../../domain/model/grade.dart';
 import '../component/grades_in_list_grade.dart';
+import '../helpers/grades_formatting_extension.dart';
 import '../view/grade_edit_page.dart';
 
 class GradesToggleListItem extends StatefulWidget {
@@ -45,11 +47,16 @@ class _GradesToggleListItemState extends State<GradesToggleListItem> {
             child: LmuListItem.base(
               mainContentAlignment: MainContentAlignment.top,
               title: _grade.name,
-              subtitle: "${_grade.ects} ECTS",
+              subtitle: _grade.grade == null
+                  ? "${context.locals.grades.passed} · ${_grade.ects.asEctsString} ECTS"
+                  : "${_grade.ects.asEctsString} ECTS",
               hasHorizontalPadding: false,
               leadingArea: GradesInListGrade(grade: _grade.grade),
               hasVerticalPadding: false,
-              onTap: () => GradeEditPage.show(context, grade: _grade),
+              onTap: () => GradeEditPage.show(
+                context,
+                grade: _grade,
+              ),
             ),
           ),
         ),
