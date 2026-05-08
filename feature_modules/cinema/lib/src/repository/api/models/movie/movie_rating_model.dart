@@ -11,6 +11,8 @@ class MovieRatingModel extends Equatable {
     required this.rawRating,
   });
 
+  factory MovieRatingModel.fromJson(Map<String, dynamic> json) => _$MovieRatingModelFromJson(json);
+
   final String source;
   @JsonKey(name: 'normalized_rating')
   final double normalizedRating;
@@ -23,8 +25,6 @@ class MovieRatingModel extends Equatable {
         normalizedRating,
         rawRating,
       ];
-
-  factory MovieRatingModel.fromJson(Map<String, dynamic> json) => _$MovieRatingModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$MovieRatingModelToJson(this);
 }

@@ -1,0 +1,1 @@
+class CinemaGenericException implements Exception {}

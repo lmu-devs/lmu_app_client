@@ -1,3 +1,4 @@
+import 'package:core/utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
@@ -14,13 +15,21 @@ class CinemaCubit extends Cubit<CinemaState> {
     final cachedScreenings = await _repository.getCachedScreenings();
     emit(CinemaLoadInProgress(cinemas: cachedCinemas, screenings: cachedScreenings));
 
-    final cinemas = await _repository.getCinemas();
-    final screenings = await _repository.getScreenings();
+    try {
+      final cinemas = await _repository.getCinemas();
+      final screenings = await _repository.getScreenings();
 
-    if (cinemas == null && screenings == null && cachedCinemas == null && cachedScreenings == null) {
-      emit(const CinemaLoadFailure());
-      return;
+      emit(CinemaLoadSuccess(cinemas: cinemas, screenings: screenings));
+    } catch (e) {
+      if (cachedCinemas != null && cachedScreenings != null) {
+        emit(CinemaLoadSuccess(cinemas: cachedCinemas, screenings: cachedScreenings));
+      } else {
+        if (e is NoNetworkException) {
+          emit(const CinemaLoadFailure(loadState: LoadState.noNetworkError));
+        } else {
+          emit(const CinemaLoadFailure(loadState: LoadState.genericError));
+        }
+      }
     }
-    emit(CinemaLoadSuccess(cinemas: cinemas ?? cachedCinemas!, screenings: screenings ?? cachedScreenings!));
   }
 }

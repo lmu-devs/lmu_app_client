@@ -5,5 +5,10 @@
   "benefitSuggestion": "Suggest a benefit",
   "@benefitSuggestion": {
     "description": "Suggest a benefit"
-  }
+  },
+  "benefitSuggestionDescription": "Is there a benefit you enjoy that other students here should know about?",
+  "@benefitSuggestionDescription": {
+    "description": "Description for the benefit suggestion modal"
+  },
+  "benefitSuggestionHint": "Paste a link or describe your suggestion ..."
 }

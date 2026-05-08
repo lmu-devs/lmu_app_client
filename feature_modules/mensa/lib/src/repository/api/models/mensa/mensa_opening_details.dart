@@ -12,13 +12,13 @@ class MensaOpeningDetails extends Equatable {
     required this.endTime,
   });
 
+  factory MensaOpeningDetails.fromJson(Map<String, dynamic> json) => _$MensaOpeningDetailsFromJson(json);
+
   final Weekday day;
   @JsonKey(name: 'start_time')
   final String startTime;
   @JsonKey(name: 'end_time')
   final String endTime;
-
-  factory MensaOpeningDetails.fromJson(Map<String, dynamic> json) => _$MensaOpeningDetailsFromJson(json);
 
   Map<String, dynamic> toJson() => _$MensaOpeningDetailsToJson(this);
 

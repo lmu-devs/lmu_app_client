@@ -1,3 +1,4 @@
+import 'package:core/utils.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../repository/api/api.dart';
@@ -32,5 +33,10 @@ class SportsLoadSuccess extends SportsState {
 }
 
 class SportsLoadFailure extends SportsState {
-  const SportsLoadFailure();
+  const SportsLoadFailure({this.loadState = LoadState.genericError});
+
+  final LoadState loadState;
+
+  @override
+  List<Object> get props => [loadState];
 }

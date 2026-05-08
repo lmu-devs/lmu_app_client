@@ -1,13 +1,13 @@
-import 'package:core/src/themes/colors/university_colors.dart';
 import 'package:flutter/material.dart';
 
-import 'neutral_colors.dart';
-import 'custom_colors.dart';
 import 'brand_colors.dart';
-import 'success_colors.dart';
+import 'custom_colors.dart';
 import 'danger_colors.dart';
-import 'warning_colors.dart';
 import 'gradient_colors.dart';
+import 'neutral_colors.dart';
+import 'success_colors.dart';
+import 'university_colors.dart';
+import 'warning_colors.dart';
 
 class LmuColors extends ThemeExtension<LmuColors> {
   const LmuColors({
@@ -51,7 +51,7 @@ class LmuColors extends ThemeExtension<LmuColors> {
       dangerColors: dangerColors ?? this.dangerColors,
       warningColors: warningColors ?? this.warningColors,
       gradientColors: gradientColors ?? this.gradientColors,
-      universityColors:  universityColors ?? this.universityColors,
+      universityColors: universityColors ?? this.universityColors,
     );
   }
 

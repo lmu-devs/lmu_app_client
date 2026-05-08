@@ -21,12 +21,12 @@ class LinksSearchService {
   List<LinkModel> get links => _links;
 
   void _updateRecentSearch(List<String> recentSearch) {
-    _recentSearches = _links.where((link) => recentSearch.contains(link.title)).toList()
-      ..sort((a, b) => recentSearch.indexOf(a.title).compareTo(recentSearch.indexOf(b.title)));
+    _recentSearches = _links.where((link) => recentSearch.contains(link.id)).toList()
+      ..sort((a, b) => recentSearch.indexOf(a.id).compareTo(recentSearch.indexOf(b.id)));
   }
 
   Future<void> updateRecentSearch(List<String> recentSearch) async {
-    if (_recentSearches.map((link) => link.title).toList() == recentSearch) return;
+    if (_recentSearches.map((link) => link.id).toList() == recentSearch) return;
     _updateRecentSearch(recentSearch);
     await _homeRepository.saveRecentLinkSearches(recentSearch);
   }

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
@@ -23,6 +24,7 @@ class WishlistPage extends StatefulWidget {
 }
 
 class _WishlistPageState extends State<WishlistPage> {
+  final _feedbackApi = GetIt.I.get<FeedbackApi>();
   @override
   void initState() {
     final wishlistCubit = GetIt.I.get<WishlistCubit>();
@@ -68,12 +70,19 @@ class _WishlistPageState extends State<WishlistPage> {
               buttons: [
                 LmuButton(
                   title: context.locals.wishlist.shareApp,
-                  onTap: () => Share.share(LmuDevStrings.shareAppUrl),
+                  onTap: () {
+                    final params = ShareParams(uri: Uri.parse(LmuDevStrings.shareAppUrl));
+                    SharePlus.instance.share(params);
+                    GetIt.I<AnalyticsClient>().logClick(eventName: "app_share_event");
+                  },
                 ),
                 LmuButton(
                   title: context.locals.wishlist.rateApp,
                   emphasis: ButtonEmphasis.secondary,
-                  onTap: () => GetIt.I.get<FeedbackApi>().openStoreListing(),
+                  onTap: () {
+                    GetIt.I.get<FeedbackApi>().openStoreListing();
+                    GetIt.I<AnalyticsClient>().logClick(eventName: "app_rating_event");
+                  },
                 ),
                 LmuButton(
                   title: LmuDevStrings.devTeam,
@@ -87,16 +96,22 @@ class _WishlistPageState extends State<WishlistPage> {
                 LmuButton(
                   title: 'Instagram',
                   emphasis: ButtonEmphasis.secondary,
-                  onTap: () => _openInstagram(context),
+                  onTap: () {
+                    _openInstagram(context);
+                    GetIt.I<AnalyticsClient>().logClick(eventName: "social_clicked", parameters: {"platform": "Instagram"});
+                  },
                 ),
                 LmuButton(
                   title: 'LinkedIn',
                   emphasis: ButtonEmphasis.secondary,
-                  onTap: () => LmuUrlLauncher.launchWebsite(
-                    url: LmuDevStrings.linkedinWebUrl,
-                    context: context,
-                    mode: LmuUrlLauncherMode.externalApplication,
-                  ),
+                  onTap: () {
+                    LmuUrlLauncher.launchWebsite(
+                      url: LmuDevStrings.linkedinWebUrl,
+                      context: context,
+                      mode: LmuUrlLauncherMode.externalApplication,
+                    );
+                    GetIt.I<AnalyticsClient>().logClick(eventName: "social_clicked", parameters: {"platform": "LinkedIn"});
+                  },
                 ),
               ],
             ),
@@ -136,25 +151,19 @@ class _WishlistPageState extends State<WishlistPage> {
                         title: context.locals.app.suggestFeature,
                         mainContentAlignment: MainContentAlignment.center,
                         leadingArea: const LeadingFancyIcons(icon: LucideIcons.plus),
-                        onTap: () {
-                          GetIt.I.get<FeedbackApi>().showFeedback(
-                                context,
-                                type: FeedbackType.suggestion,
-                                origin: 'WishlistScreen',
-                              );
-                        },
+                        onTap: () => _feedbackApi.showFeedback(
+                          context,
+                          args: const FeedbackArgs(type: FeedbackType.suggestion, origin: 'WishlistScreen'),
+                        ),
                       ),
                       LmuListItem.base(
                         title: context.locals.app.reportBug,
                         mainContentAlignment: MainContentAlignment.center,
                         leadingArea: const LeadingFancyIcons(icon: LucideIcons.bug),
-                        onTap: () {
-                          GetIt.I.get<FeedbackApi>().showFeedback(
-                                context,
-                                type: FeedbackType.bug,
-                                origin: 'WishlistScreen',
-                              );
-                        },
+                        onTap: () => _feedbackApi.showFeedback(
+                          context,
+                          args: const FeedbackArgs(type: FeedbackType.bug, origin: 'WishlistScreen'),
+                        ),
                       ),
                     ],
                   ),

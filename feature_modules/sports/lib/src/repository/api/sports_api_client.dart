@@ -10,7 +10,7 @@ class SportsApiClient {
   final _baseApiClient = GetIt.I.get<BaseApiClient>();
 
   Future<SportsModel> getSports() async {
-    final response = await _baseApiClient.get(SportsApiEndpoints.sports);
+    final response = await _baseApiClient.get(SportsApiEndpoints.sports, version: 2);
 
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body) as Map<String, dynamic>;

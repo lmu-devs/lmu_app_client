@@ -11,7 +11,7 @@ class BenefitsApiClient {
 
   Future<BenefitsDto> getBenefits() async {
     final response = await _baseApiClient.get(BenefitsApiEndpoints.benefits, version: 2);
-    final reponseJson = json.decode(response.body) as Map<String, dynamic>;
-    return BenefitsDto.fromJson(reponseJson);
+    final responseJson = json.decode(response.body) as Map<String, dynamic>;
+    return BenefitsDto.fromJson(responseJson);
   }
 }

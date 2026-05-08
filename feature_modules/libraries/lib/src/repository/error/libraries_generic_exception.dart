@@ -1,0 +1,1 @@
+class LibrariesGenericException implements Exception {}

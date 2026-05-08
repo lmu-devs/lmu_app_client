@@ -1,6 +1,7 @@
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/widgets.dart';
+
+import '../../../constants.dart';
+import '../../../themes.dart';
 
 enum StatusColor {
   green,

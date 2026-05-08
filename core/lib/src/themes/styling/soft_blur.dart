@@ -1,12 +1,13 @@
-import 'package:flutter/material.dart';
 import 'dart:ui';
+
+import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 
 class SoftBlur extends StatelessWidget {
-  final Widget child;
+  const SoftBlur({super.key, required this.child});
 
-  const SoftBlur({Key? key, required this.child}) : super(key: key);
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {

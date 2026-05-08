@@ -1,7 +1,8 @@
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
+import '../../../constants.dart';
+import '../../../themes.dart';
 import 'helper/input_field_color_helper.dart';
 
 enum InputState {
@@ -13,35 +14,6 @@ enum InputState {
 }
 
 class LmuInputField extends StatefulWidget {
-  final String hintText;
-  final TextEditingController controller;
-  final bool isPassword;
-  final bool isMultiline;
-  final Widget? leadingIcon;
-  final Widget? trailingIcon;
-  final bool isDisabled;
-  final bool isAutocorrect;
-  final bool isAutofocus;
-  final TextInputType? keyboardType;
-  final InputState inputState;
-  final int? maxLength;
-  final int? minLines;
-  final int? maxLines;
-  final void Function(String)? onChanged;
-  final void Function(String)? onSubmitted;
-  final void Function()? onTap;
-  final void Function()? onTapOutside;
-  final void Function()? onClearPressed;
-  final Iterable<String>? autofillHints;
-  final EdgeInsetsGeometry? contentPadding;
-  final Widget? prefix;
-  final BoxConstraints? leadingIconConstraints;
-  final Widget? suffix;
-  final String? suffixText;
-  final bool closeKeyboardOnTapOutside;
-  final FocusNode? focusNode;
-  final bool focusAfterClear;
-
   const LmuInputField({
     super.key,
     required this.hintText,
@@ -72,7 +44,39 @@ class LmuInputField extends StatefulWidget {
     this.focusNode,
     this.onClearPressed,
     this.focusAfterClear = true,
+    this.errorText,
+    this.inputFormatters,
   });
+  final String hintText;
+  final TextEditingController controller;
+  final bool isPassword;
+  final bool isMultiline;
+  final Widget? leadingIcon;
+  final Widget? trailingIcon;
+  final bool isDisabled;
+  final bool isAutocorrect;
+  final bool isAutofocus;
+  final TextInputType? keyboardType;
+  final InputState inputState;
+  final int? maxLength;
+  final int? minLines;
+  final int? maxLines;
+  final void Function(String)? onChanged;
+  final void Function(String)? onSubmitted;
+  final void Function()? onTap;
+  final void Function()? onTapOutside;
+  final void Function()? onClearPressed;
+  final Iterable<String>? autofillHints;
+  final EdgeInsetsGeometry? contentPadding;
+  final Widget? prefix;
+  final BoxConstraints? leadingIconConstraints;
+  final Widget? suffix;
+  final String? suffixText;
+  final bool closeKeyboardOnTapOutside;
+  final FocusNode? focusNode;
+  final bool focusAfterClear;
+  final String? errorText;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   State<LmuInputField> createState() => _LmuInputFieldState();
@@ -142,6 +146,7 @@ class _LmuInputFieldState extends State<LmuInputField> {
       maxLength: widget.maxLength,
       minLines: widget.minLines,
       maxLines: widget.isMultiline ? widget.maxLines : 1,
+      inputFormatters: widget.inputFormatters,
       onChanged: (value) {
         _updateInputState();
         widget.onChanged?.call(value);
@@ -187,6 +192,14 @@ class _LmuInputFieldState extends State<LmuInputField> {
         prefix: widget.prefix,
         suffix: widget.suffix,
         suffixText: widget.suffixText,
+        disabledBorder: border,
+        errorText: widget.errorText,
+        errorMaxLines: 1,
+        errorBorder: border,
+        errorStyle: TextStyle(
+          color: colors.dangerColors.textColors.strongColors.base,
+        ),
+        counterText: '',
       ),
       focusNode: _focusNode,
     );

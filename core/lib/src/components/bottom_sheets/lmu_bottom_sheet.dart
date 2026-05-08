@@ -1,13 +1,13 @@
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+
+import '../../../constants.dart';
+import '../../../themes.dart';
 
 class LmuBottomSheet {
   static void show(
     BuildContext context, {
     required Widget content,
-    Color? barrierColor,
   }) {
     showMaterialModalBottomSheet(
       context: context,
@@ -15,22 +15,38 @@ class LmuBottomSheet {
       animationCurve: LmuAnimations.fastSmooth,
       duration: const Duration(milliseconds: 400),
       closeProgressThreshold: .9,
-      shape: const RoundedRectangleBorder(
+      shape: const RoundedSuperellipseBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(LmuSizes.size_24),
           topRight: Radius.circular(LmuSizes.size_24),
         ),
       ),
-      barrierColor: barrierColor ?? Colors.black.withOpacity(0.6),
+      barrierColor: Theme.of(context).brightness == Brightness.dark
+          ? Colors.black.withValues(alpha: 0.8)
+          : Colors.black.withValues(alpha: 0.6),
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
-      builder: (_) => Padding(
-        padding: const EdgeInsets.only(
-          top: LmuSizes.size_16,
-          left: LmuSizes.size_16,
-          right: LmuSizes.size_16,
-          bottom: LmuSizes.size_48,
+      builder: (_) => Container(
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(LmuSizes.size_24),
+            topRight: Radius.circular(LmuSizes.size_24),
+          ),
+          border: Border(
+            top: BorderSide(
+              color: context.colors.neutralColors.borderColors.highlight,
+              width: .8,
+            ),
+          ),
         ),
-        child: content,
+        child: Padding(
+          padding: const EdgeInsets.only(
+            top: LmuSizes.size_16,
+            left: LmuSizes.size_16,
+            right: LmuSizes.size_16,
+            bottom: LmuSizes.size_48,
+          ),
+          child: content,
+        ),
       ),
     );
   }
@@ -42,7 +58,7 @@ class LmuBottomSheet {
     showCupertinoModalBottomSheet(
       context: context,
       useRootNavigator: true,
-      shape: const RoundedRectangleBorder(
+      shape: const RoundedSuperellipseBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(LmuSizes.size_16),
           topRight: Radius.circular(LmuSizes.size_16),
@@ -50,9 +66,26 @@ class LmuBottomSheet {
       ),
       animationCurve: LmuAnimations.slowSmooth,
       duration: const Duration(milliseconds: 500),
+      barrierColor: Theme.of(context).brightness == Brightness.dark
+          ? Colors.black.withValues(alpha: 0.8)
+          : Colors.black.withValues(alpha: 0.6),
       closeProgressThreshold: .9,
       backgroundColor: context.colors.neutralColors.backgroundColors.base,
-      builder: (context) => content,
+      builder: (context) => Container(
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(LmuSizes.size_16),
+            topRight: Radius.circular(LmuSizes.size_16),
+          ),
+          border: Border(
+            top: BorderSide(
+              color: context.colors.neutralColors.borderColors.highlight,
+              width: .8,
+            ),
+          ),
+        ),
+        child: content,
+      ),
     ).whenComplete(LmuVibrations.secondary);
   }
 }

@@ -124,9 +124,12 @@ class ScreeningDetailsPage extends StatelessWidget {
                           ),
                         ),
                         LmuButton(
-                          title: context.locals.cinema.share,
+                          title: context.locals.app.share,
                           emphasis: ButtonEmphasis.secondary,
-                          onTap: () => Share.share(screening.externalLink!),
+                          onTap: () {
+                            final params = ShareParams(uri: Uri.parse(screening.externalLink!));
+                            SharePlus.instance.share(params);
+                          },
                         ),
                       ],
                     ),
@@ -172,7 +175,7 @@ class ScreeningDetailsPage extends StatelessWidget {
                     ),
                     onTap: () => LmuBottomSheet.show(
                       context,
-                      content: NavigationSheet(location: cinema.location),
+                      content: NavigationSheet(id: cinema.id, location: cinema.location),
                     ),
                   ),
                   const SizedBox(height: LmuSizes.size_24),

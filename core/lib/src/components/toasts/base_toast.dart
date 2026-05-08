@@ -1,15 +1,15 @@
-import 'package:core/components.dart';
-import 'package:core/src/constants/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
+import '../../../components.dart';
+import '../../../themes.dart';
+import '../../constants/constants.dart';
 
 enum ToastType { base, success, error, warning }
 
 class LmuToast {
-  final FToast _fToast;
-
   LmuToast._(BuildContext context) : _fToast = FToast()..init(context);
+  final FToast _fToast;
 
   static LmuToast of(BuildContext context) => LmuToast._(context);
 

@@ -1,15 +1,14 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_lucide/flutter_lucide.dart';
 
 import '../repository/api/api.dart';
 import '../routes/screenings_history_data.dart';
 import '../util/cinema_screenings.dart';
 import '../util/cinema_type.dart';
 import '../util/screening_sorting.dart';
+import '../widgets/cinema_empty_states.dart';
 import '../widgets/screening_card.dart';
 
 class ScreeningsHistoryPage extends StatefulWidget {
@@ -53,6 +52,7 @@ class _ScreeningsHistoryPageState extends State<ScreeningsHistoryPage> {
   @override
   Widget build(BuildContext context) {
     final localizations = context.locals.cinema;
+    final cinema = cinemas.first;
 
     return LmuScaffold(
       appBar: LmuAppBarData(
@@ -60,38 +60,30 @@ class _ScreeningsHistoryPageState extends State<ScreeningsHistoryPage> {
         leadingAction: LeadingAction.back,
         largeTitleTrailingWidgetAlignment: MainAxisAlignment.start,
         largeTitleTrailingWidget: cinemas.length == 1
-            ? Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: LmuSizes.size_4,
-                  vertical: LmuSizes.size_2,
-                ),
-                decoration: BoxDecoration(
-                  color: cinemas.first.type.getTextColor(context).withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(LmuRadiusSizes.small),
-                ),
-                child: LmuText.bodySmall(
-                  cinemas.first.type.getValue(),
-                  color: cinemas.first.type.getTextColor(context),
-                ),
+            ? LmuInTextVisual.text(
+                title: cinema.type.getValue(),
+                textColor: cinema.type.getTextColor(context),
+                backgroundColor: cinema.type.getBackgroundColor(context),
               )
             : null,
       ),
-      body: screenings.isNotEmpty
-          ? Padding(
-              padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-              child: SingleChildScrollView(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+        child: screenings.isNotEmpty
+            ? SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ValueListenableBuilder<SortOption>(
-                      valueListenable: _sortOptionNotifier,
-                      builder: (context, activeSortOption, _) {
-                        return LmuButton(
-                          title: activeSortOption.title(localizations),
-                          emphasis: ButtonEmphasis.secondary,
-                          trailingIcon: LucideIcons.chevron_down,
-                          onTap: () => _showSortOptionActionSheet(context),
-                        );
+                    const SizedBox(height: LmuSizes.size_16),
+                    LmuSortingButton<SortOption>(
+                      sortOptionNotifier: _sortOptionNotifier,
+                      options: SortOption.values,
+                      titleBuilder: (option, context) => option.title(context.locals.cinema),
+                      iconBuilder: (option) => option.icon,
+                      onOptionSelected: (sortOption, context) async {
+                        _sortOptionNotifier.value = sortOption;
+                        _sortedScreeningsNotifier.value = sortOption.sort(screenings);
+                        Navigator.of(context).pop();
                       },
                     ),
                     const SizedBox(height: LmuSizes.size_16),
@@ -131,68 +123,9 @@ class _ScreeningsHistoryPageState extends State<ScreeningsHistoryPage> {
                     const SizedBox(height: LmuSizes.size_96),
                   ],
                 ),
-              ),
-            )
-          : Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_32),
-                child: LmuText.body(context.locals.cinema.pastMoviesEmpty, textAlign: TextAlign.center),
-              ),
-            ),
-    );
-  }
-
-  void _showSortOptionActionSheet(BuildContext context) {
-    LmuBottomSheet.show(
-      context,
-      content: _SortOptionActionSheetContent(
-        sortOptionNotifier: _sortOptionNotifier,
-        sortedScreeningsNotifier: _sortedScreeningsNotifier,
-        screenings: screenings,
+              )
+            : const CinemaEmptyState(emptyStateType: CinemaEmptyStateType.pastMovies),
       ),
-    );
-  }
-}
-
-class _SortOptionActionSheetContent extends StatelessWidget {
-  const _SortOptionActionSheetContent({
-    required this.sortOptionNotifier,
-    required this.sortedScreeningsNotifier,
-    required this.screenings,
-  });
-
-  final ValueNotifier<SortOption> sortOptionNotifier;
-  final ValueNotifier<List<ScreeningModel>> sortedScreeningsNotifier;
-  final List<ScreeningModel> screenings;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: SortOption.values.map((sortOption) {
-        final isActive = sortOption == sortOptionNotifier.value;
-
-        return LmuListItem.base(
-          mainContentAlignment: MainContentAlignment.center,
-          title: isActive ? sortOption.title(context.locals.cinema) : null,
-          subtitle: isActive ? null : sortOption.title(context.locals.cinema),
-          titleColor: isActive
-              ? context.colors.brandColors.textColors.strongColors.base
-              : context.colors.neutralColors.textColors.mediumColors.base,
-          leadingArea: LmuIcon(
-            icon: sortOption.icon,
-            size: LmuIconSizes.medium,
-            color: isActive
-                ? context.colors.brandColors.textColors.strongColors.base
-                : context.colors.neutralColors.textColors.mediumColors.base,
-          ),
-          onTap: () {
-            sortOptionNotifier.value = sortOption;
-            sortedScreeningsNotifier.value = sortOption.sort(screenings);
-            Navigator.of(context).pop();
-          },
-        );
-      }).toList(),
     );
   }
 }

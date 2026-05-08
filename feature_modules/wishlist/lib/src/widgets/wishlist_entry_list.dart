@@ -1,4 +1,5 @@
 import 'package:core/components.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -12,23 +13,30 @@ class WishlistEntryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final wishlistCubit = GetIt.I.get<WishlistCubit>();
     return BlocBuilder<WishlistCubit, WishlistState>(
-      bloc: GetIt.I.get<WishlistCubit>(),
+      bloc: wishlistCubit,
       builder: (context, state) {
-        Widget child = const WishlistEntrySectionLoading(key: ValueKey("wishlistLoading"), length: 5);
+        Widget child = const WishlistEntrySectionLoading(
+          key: ValueKey("wishlistLoading"),
+          lengths: [2, 4],
+        );
 
         if (state is WishlistLoadInProgress && state.wishlistModels != null) {
           child = WishlistEntrySection(key: const ValueKey("wishlistContent"), wishlistModels: state.wishlistModels!);
         } else if (state is WishlistLoadSuccess) {
           child = WishlistEntrySection(key: const ValueKey("wishlistContent"), wishlistModels: state.wishlistModels);
+        } else if (state is WishlistLoadFailure) {
+          final isNoNetworkError = state.loadState.isNoNetworkError;
+          child = LmuEmptyState(
+            key: ValueKey("sports${isNoNetworkError ? 'NoNetwork' : 'GenericError'}"),
+            type: isNoNetworkError ? EmptyStateType.noInternet : EmptyStateType.generic,
+            hasVerticalPadding: true,
+            onRetry: () => wishlistCubit.loadWishlistEntries(),
+          );
         }
 
-        return LmuPageAnimationWrapper(
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: child,
-          ),
-        );
+        return child;
       },
     );
   }

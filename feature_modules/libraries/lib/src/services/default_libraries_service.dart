@@ -65,6 +65,7 @@ class DefaultLibrariesService implements LibrariesService {
           child: LibraryDetailsPage(
             library: libraryModel,
             withAppBar: false,
+            withMapButton: false,
           ),
         ),
       ];

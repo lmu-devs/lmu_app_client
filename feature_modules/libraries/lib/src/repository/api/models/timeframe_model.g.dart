@@ -6,14 +6,12 @@ part of 'timeframe_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-TimeframeModel _$TimeframeModelFromJson(Map<String, dynamic> json) =>
-    TimeframeModel(
+TimeframeModel _$TimeframeModelFromJson(Map<String, dynamic> json) => TimeframeModel(
       start: json['start'] as String,
       end: json['end'] as String,
     );
 
-Map<String, dynamic> _$TimeframeModelToJson(TimeframeModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$TimeframeModelToJson(TimeframeModel instance) => <String, dynamic>{
       'start': instance.start,
       'end': instance.end,
     };

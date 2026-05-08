@@ -11,8 +11,7 @@ ServiceModel _$ServiceModelFromJson(Map<String, dynamic> json) => ServiceModel(
       url: json['url'] as String?,
     );
 
-Map<String, dynamic> _$ServiceModelToJson(ServiceModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ServiceModelToJson(ServiceModel instance) => <String, dynamic>{
       'title': instance.title,
       'url': instance.url,
     };

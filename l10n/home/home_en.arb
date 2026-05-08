@@ -134,12 +134,20 @@
   "@linksFilterExternal": {
     "description": "Filter for external links"
   },
-  "linkCopiedToClipboard": "Link copied to clipboard",
+  "linkCopiedToClipboard": "Link copied",
   "@linkCopiedToClipboard": {
     "description": "Toast message for copying a link to clipboard"
   },
   "linkSuggestion": "Suggest a link",
   "@linkSuggestion": {
     "description": "Suggest a link"
+  },
+  "linkSuggestionDescription": "Is there a website you find helpful for your study that other students here should know about?",
+  "@linkSuggestionDescription": {
+    "description": "Description for the link suggestion modal"
+  },
+  "linkSuggestionHint": "Paste a link or describe your suggestion ...",
+  "@linkSuggestionHint": {
+    "description": "Hint for the link suggestion modal"
   }
 }

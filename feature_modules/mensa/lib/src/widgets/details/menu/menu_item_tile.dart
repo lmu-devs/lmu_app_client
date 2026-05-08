@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:core/api.dart';
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
@@ -35,6 +36,18 @@ class MenuItemTile extends StatelessWidget {
       padding: EdgeInsets.only(bottom: hasDivider ? LmuSizes.size_12 : LmuSizes.none),
       child: GestureDetector(
         onTap: () {
+          final AnalyticsClient analytics = GetIt.I<AnalyticsClient>();
+          analytics.logClick(
+            eventName: "dish_details_page_opened",
+            parameters: {
+              "dish_id": menuItemModel.id,
+              "dish_name": menuItemModel.title,
+              "dish_category": menuItemModel.dishCategory.name,
+              "dish_type": menuItemModel.dishType,
+              "dish_price_simple": menuItemModel.priceSimple,
+              "dish_likes": menuItemModel.ratingModel.likeCount.toString(),
+            },
+          );
           LmuBottomSheet.showExtended(
             context,
             content: DishDetailsPage(menuItemModel: menuItemModel),

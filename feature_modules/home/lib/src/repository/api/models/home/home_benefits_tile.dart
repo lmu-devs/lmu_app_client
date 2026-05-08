@@ -14,9 +14,9 @@ class HomeBenefitsTile extends HomeTile {
     this.data,
   }) : super(type: HomeTileType.benefits);
 
-  final String? data;
-
   factory HomeBenefitsTile.fromJson(Map<String, dynamic> json) => _$HomeBenefitsTileFromJson(json);
+
+  final String? data;
 
   @override
   Map<String, dynamic> toJson() => _$HomeBenefitsTileToJson(this);

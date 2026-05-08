@@ -1,3 +1,4 @@
+import 'package:core/utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
@@ -15,11 +16,19 @@ class SportsCubit extends Cubit<SportsState> {
     final cachedData = await _repository.getCachedSports();
     emit(SportsLoadInProgress(sports: cachedData));
 
-    final sports = await _repository.getSports();
-    if (sports == null && cachedData == null) {
-      emit(const SportsLoadFailure());
-      return;
+    try {
+      final sports = await _repository.getSports();
+      emit(SportsLoadSuccess(sports: sports));
+    } catch (e) {
+      if (cachedData != null) {
+        emit(SportsLoadSuccess(sports: cachedData));
+      } else {
+        if (e is NoNetworkException) {
+          emit(const SportsLoadFailure(loadState: LoadState.noNetworkError));
+        } else {
+          emit(const SportsLoadFailure(loadState: LoadState.genericError));
+        }
+      }
     }
-    emit(SportsLoadSuccess(sports: sports ?? cachedData!));
   }
 }

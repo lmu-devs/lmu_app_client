@@ -1,0 +1,19 @@
+{
+  "@@locale": "en",
+  "@@context": "People",
+  "peopleTitle": "People",
+  "contacts": "Contacts",
+  "loading": "Loading...",
+  "personNotFound": "Person not found",
+  "contact": "Contact",
+  "email": "Email",
+  "phone": "Phone",
+  "room": "Room",
+  "consultationHours": "Office Hours",
+  "favoritesA": "Tap the ",
+  "favoritesB": " icon to add favorites here",
+  "copiedEmail": "Email copied to clipboard",
+  "copiedWebsite":"Website copied to clipboard",
+  "allPeople": "All People",
+  "professorFilter": "Professor"
+}

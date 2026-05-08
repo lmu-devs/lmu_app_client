@@ -20,7 +20,10 @@ class SettingsDebugPage extends StatelessWidget {
         trailingWidgets: [
           GestureDetector(
             onTap: () {
-              Share.shareXFiles([XFile(appLogger.logFilePath)]);
+              final params = ShareParams(
+                files: [XFile(appLogger.logFilePath)],
+              );
+              SharePlus.instance.share(params);
             },
             child: const LmuIcon(
               icon: LucideIcons.share,
@@ -29,13 +32,9 @@ class SettingsDebugPage extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () async {
-              appLogger.clearLogs().then(
-                    (value) => LmuToast.show(
-                      context: context,
-                      message: "Logs cleared",
-                      type: ToastType.success,
-                    ),
-                  );
+              final lmuToast = LmuToast.of(context);
+              await appLogger.clearLogs();
+              lmuToast.showToast(message: "Logs cleared");
               LmuVibrations.success();
             },
             child: LmuIcon(

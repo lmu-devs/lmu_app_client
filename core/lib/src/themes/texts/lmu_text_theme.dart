@@ -22,6 +22,7 @@ class LmuTextTheme extends TextTheme {
 
   final TextStyle body;
   @override
+  // ignore: overridden_fields
   final TextStyle bodySmall;
   final TextStyle bodyXSmall;
   final TextStyle h0;

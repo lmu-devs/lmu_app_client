@@ -1,7 +1,8 @@
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
-import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
+
+import '../../../constants.dart';
+import '../../../themes.dart';
+import '../../../utils.dart';
 
 class LmuMapImageButton extends StatelessWidget {
   const LmuMapImageButton({super.key, required this.onTap});

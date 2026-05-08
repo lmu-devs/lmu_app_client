@@ -1,0 +1,1 @@
+class LinksGenericException implements Exception {}

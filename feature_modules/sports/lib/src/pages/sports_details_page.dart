@@ -68,15 +68,13 @@ class SportsDetailsPage extends StatelessWidget {
                             ? formattedStartDate
                             : "${startDate.formattedDate} - ${endDate.formattedDate}",
                       ),
-                      ...courses
-                          .mapIndexed(
-                            (index, course) => SportsCourseTile(
-                              course: course,
-                              hasDivider: index != courses.length - 1,
-                              sportType: sport.title,
-                            ),
-                          )
-                          .toList(),
+                      ...courses.mapIndexed(
+                        (index, course) => SportsCourseTile(
+                          course: course,
+                          hasDivider: index != courses.length - 1,
+                          sportType: sport.title,
+                        ),
+                      ),
                       const SizedBox(height: LmuSizes.size_32),
                     ],
                   );

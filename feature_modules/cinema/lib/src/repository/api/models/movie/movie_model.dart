@@ -24,6 +24,8 @@ class MovieModel extends Equatable {
     required this.trailers,
   });
 
+  factory MovieModel.fromJson(Map<String, dynamic> json) => _$MovieModelFromJson(json);
+
   final String id;
   final String title;
   final String? tagline;
@@ -53,8 +55,6 @@ class MovieModel extends Equatable {
         ratings,
         trailers,
       ];
-
-  factory MovieModel.fromJson(Map<String, dynamic> json) => _$MovieModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$MovieModelToJson(this);
 }

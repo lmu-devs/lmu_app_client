@@ -25,6 +25,8 @@ class LibraryModel extends RLibraryModel {
     this.reservationUrl,
   });
 
+  factory LibraryModel.fromJson(Map<String, dynamic> json) => _$LibraryModelFromJson(json);
+
   final String id;
   final String name;
   final String hash;
@@ -42,8 +44,6 @@ class LibraryModel extends RLibraryModel {
   @JsonKey(name: 'subject_areas')
   final List<String> subjects;
   final RatingModel rating;
-
-  factory LibraryModel.fromJson(Map<String, dynamic> json) => _$LibraryModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$LibraryModelToJson(this);
 

@@ -1,0 +1,19 @@
+{
+  "@@locale": "de",
+  "@@context": "People",
+  "peopleTitle": "Kontakte",
+  "contacts": "Kontakte",
+  "loading": "Lädt...",
+  "personNotFound": "Person nicht gefunden",
+  "contact": "Kontakt",
+  "email": "E-Mail",
+  "phone": "Telefon",
+  "room": "Raum",
+  "consultationHours": "Sprechstunde",
+  "favoritesA": "Füge Favoriten mit dem ",
+  "favoritesB": " Symbol hinzu",
+  "copiedEmail": "E-Mail kopiert",
+  "copiedWebsite": "Website kopiert",
+  "allPeople": "Alle Personen",
+  "professorFilter": "Professor:in"
+}

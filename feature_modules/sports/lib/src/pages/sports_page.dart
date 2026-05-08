@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -16,13 +17,14 @@ class SportsPage extends StatefulWidget {
 }
 
 class _SportsPageState extends State<SportsPage> {
+  late final SportsCubit _sportsCubit;
   @override
   void initState() {
     super.initState();
+    _sportsCubit = GetIt.I.get<SportsCubit>();
 
-    final sportsCubit = GetIt.I.get<SportsCubit>();
-    if (sportsCubit.state is! SportsLoadSuccess) {
-      sportsCubit.loadSports();
+    if (_sportsCubit.state is! SportsLoadSuccess) {
+      _sportsCubit.loadSports();
     } else {
       final stateService = GetIt.I.get<SportsStateService>();
       stateService.resetFilter();
@@ -40,17 +42,22 @@ class _SportsPageState extends State<SportsPage> {
         bloc: GetIt.I.get<SportsCubit>(),
         builder: (context, state) {
           Widget child = const SportsLoadingView(key: ValueKey("sportsLoading"));
-
           if (state is SportsLoadInProgress && state.sports != null) {
             child = SportsContentView(key: const ValueKey("sportsContent"), sports: state.sports!);
           } else if (state is SportsLoadSuccess) {
             child = SportsContentView(key: const ValueKey("sportsContent"), sports: state.sports);
+          } else if (state is SportsLoadFailure) {
+            final isNoNetworkError = state.loadState.isNoNetworkError;
+
+            child = LmuEmptyState(
+              key: ValueKey("sports${isNoNetworkError ? 'NoNetwork' : 'GenericError'}"),
+              type: isNoNetworkError ? EmptyStateType.noInternet : EmptyStateType.generic,
+              hasVerticalPadding: true,
+              onRetry: () => _sportsCubit.loadSports(),
+            );
           }
 
-          return Align(
-            alignment: Alignment.topCenter,
-            child: LmuPageAnimationWrapper(child: child),
-          );
+          return child;
         },
       ),
     );

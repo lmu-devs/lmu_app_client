@@ -1,4 +1,4 @@
-import 'package:core/localizations.dart';
+import '../../localizations.dart';
 
 class CountdownUtil {
   static String getRemainingTime(

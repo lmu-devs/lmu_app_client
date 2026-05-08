@@ -1,0 +1,1 @@
+class BenefitsGenericException implements Exception {}

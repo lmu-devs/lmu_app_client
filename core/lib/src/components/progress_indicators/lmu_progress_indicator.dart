@@ -1,6 +1,7 @@
-import 'package:core/src/constants/lmu_icon_sizes.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+
+import '../../../themes.dart';
+import '../../constants/lmu_icon_sizes.dart';
 
 enum ProgressIndicatorColor {
   weak,

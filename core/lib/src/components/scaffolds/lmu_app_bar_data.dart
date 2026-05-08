@@ -4,28 +4,6 @@ import 'package:flutter/material.dart';
 import 'leading_action.dart';
 
 class LmuAppBarData {
-  LmuAppBarData._({
-    this.largeTitle,
-    this.customLargeTitleWidget,
-    this.collapsedTitle,
-    this.leadingAction,
-    this.onLeadingActionTap,
-    this.trailingWidgets,
-    this.imageUrls,
-    this.largeTitleTrailingWidget,
-    this.largeTitleTrailingWidgetAlignment = MainAxisAlignment.spaceBetween,
-  });
-
-  final String? largeTitle;
-  final Widget? customLargeTitleWidget;
-  final String? collapsedTitle;
-  final LeadingAction? leadingAction;
-  final void Function()? onLeadingActionTap;
-  final List<Widget>? trailingWidgets;
-  final Widget? largeTitleTrailingWidget;
-  final MainAxisAlignment largeTitleTrailingWidgetAlignment;
-  final List<String>? imageUrls;
-
   factory LmuAppBarData({
     required String largeTitle,
     Widget? customLargeTitleWidget,
@@ -87,4 +65,25 @@ class LmuAppBarData {
       trailingWidgets: trailingWidgets,
     );
   }
+  LmuAppBarData._({
+    this.largeTitle,
+    this.customLargeTitleWidget,
+    this.collapsedTitle,
+    this.leadingAction,
+    this.onLeadingActionTap,
+    this.trailingWidgets,
+    this.imageUrls,
+    this.largeTitleTrailingWidget,
+    this.largeTitleTrailingWidgetAlignment = MainAxisAlignment.spaceBetween,
+  });
+
+  final String? largeTitle;
+  final Widget? customLargeTitleWidget;
+  final String? collapsedTitle;
+  final LeadingAction? leadingAction;
+  final void Function()? onLeadingActionTap;
+  final List<Widget>? trailingWidgets;
+  final Widget? largeTitleTrailingWidget;
+  final MainAxisAlignment largeTitleTrailingWidgetAlignment;
+  final List<String>? imageUrls;
 }

@@ -10,10 +10,10 @@ class ServiceModel extends Equatable {
     this.url,
   });
 
+  factory ServiceModel.fromJson(Map<String, dynamic> json) => _$ServiceModelFromJson(json);
+
   final String title;
   final String? url;
-
-  factory ServiceModel.fromJson(Map<String, dynamic> json) => _$ServiceModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ServiceModelToJson(this);
 

@@ -1,5 +1,6 @@
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
+
+import '../../../themes.dart';
 
 LmuTextTheme getBaseTextTheme(
   String fontFamily,
@@ -58,7 +59,7 @@ LmuTextTheme getBaseTextTheme(
       letterSpacing: -0.52,
     ),
     h3: TextStyle(
-      fontSize: 18,
+      fontSize: 20,
       decoration: TextDecoration.none,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w700,

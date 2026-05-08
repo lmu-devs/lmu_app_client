@@ -14,6 +14,8 @@ class MenuDayModel extends Equatable {
     required this.isClosed,
   });
 
+  factory MenuDayModel.fromJson(Map<String, dynamic> json) => _$MenuDayModelFromJson(json);
+
   @JsonKey(name: 'canteen_id')
   final String canteenId;
   final String date;
@@ -21,8 +23,6 @@ class MenuDayModel extends Equatable {
   final List<MenuItemModel> menuItems;
   @JsonKey(name: 'is_closed')
   final bool isClosed;
-
-  factory MenuDayModel.fromJson(Map<String, dynamic> json) => _$MenuDayModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$MenuDayModelToJson(this);
 

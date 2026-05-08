@@ -1,6 +1,5 @@
 import 'package:core/api.dart';
 import 'package:core/components.dart';
-import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -22,14 +21,16 @@ LmuListItem buildLibraryStatusItem({
         '$start - $end',
         textAlign: TextAlign.end,
         weight: isToday ? FontWeight.w600 : FontWeight.w400,
-        color: context.colors.neutralColors.textColors.mediumColors.base,
+        color: isToday
+            ? context.colors.neutralColors.textColors.strongColors.base
+            : context.colors.neutralColors.textColors.mediumColors.base,
       );
     }).toList(),
   );
 
   return LmuListItem.base(
-    title: isToday ? openingHours.day.localizedWeekday(context.locals.app) : null,
-    subtitle: !isToday ? openingHours.day.localizedWeekday(context.locals.app) : null,
+    title: isToday ? openingHours.day.name : null,
+    subtitle: !isToday ? openingHours.day.name : null,
     trailingArea: timesColumn,
     hasHorizontalPadding: false,
     hasVerticalPadding: false,

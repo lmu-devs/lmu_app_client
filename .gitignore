@@ -36,6 +36,7 @@ core/lib/src/localizations/generated
 /build/
 .mason/
 pubspec.lock
+/devtools_options.yaml
 
 # Symbolication related
 app.*.symbols
@@ -47,3 +48,18 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Android
+**/android/app/.cxx/
+**/build/
+**/.cmake/
+
+# FVM Version Cache
+.fvm/
+
+# Firebase
+/firebase.json
+/lib/firebase_options.dart
+
+# Launch JSON
+.vscode/launch.json

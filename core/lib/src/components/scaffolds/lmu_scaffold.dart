@@ -1,29 +1,34 @@
 import 'dart:math';
 
-import 'package:core/constants.dart';
-import 'package:core/src/components/components.dart';
-import 'package:core/src/components/scaffolds/sliver_app_bar_delegate.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../../../constants.dart';
+import '../../../themes.dart';
+import '../components.dart';
+import 'sliver_app_bar_delegate.dart';
 
 class LmuScaffold extends StatefulWidget {
   const LmuScaffold({
     super.key,
     required this.appBar,
     this.body,
+    this.floatingActionButton,
     this.slivers,
     this.customScrollController,
     this.onPopInvoked,
     this.isBottomSheet = false,
+    this.bottomNavigationBar,
   });
 
   final LmuAppBarData appBar;
   final Widget? body;
+  final Widget? floatingActionButton;
   final List<Widget>? slivers;
   final ScrollController? customScrollController;
   final Future<bool> Function()? onPopInvoked;
   final bool isBottomSheet;
+  final Widget? bottomNavigationBar;
 
   @override
   State<LmuScaffold> createState() => _LmuScaffoldState();
@@ -64,7 +69,7 @@ class _LmuScaffoldState extends State<LmuScaffold> {
     final backgroundColor = context.colors.neutralColors.backgroundColors.base;
     final textTheme = context.textTheme;
     final largeTitleTextTheme = textTheme.h0;
-    final collapsedTitleTextStyle = textTheme.h3;
+    final collapsedTitleTextStyle = textTheme.h3.copyWith(fontSize: 18);
     final largeTitleMaxLines = _calculateTitleMaxLines(_largeTitle, largeTitleTextTheme, mediaQuery.size.width);
     final calculatedLargeTitleHeight = largeTitleMaxLines * _largeTitleLineHeight + LmuSizes.size_16;
 
@@ -72,11 +77,9 @@ class _LmuScaffoldState extends State<LmuScaffold> {
       child: WillPopScope(
         onWillPop: widget.onPopInvoked,
         child: Scaffold(
+          bottomNavigationBar: widget.bottomNavigationBar,
           backgroundColor: backgroundColor,
           body: CupertinoScrollbar(
-            thickness: 0, // Scrollbar temporary disabled
-            thicknessWhileDragging: 0,
-            thumbVisibility: false,
             controller: _scrollController,
             mainAxisMargin: widget.isBottomSheet ? _bottomeSheetCollapsedTitleHeight : 3,
             child: CustomScrollView(
@@ -110,6 +113,7 @@ class _LmuScaffoldState extends State<LmuScaffold> {
               ],
             ),
           ),
+          floatingActionButton: widget.floatingActionButton,
         ),
       ),
     );
@@ -118,7 +122,7 @@ class _LmuScaffoldState extends State<LmuScaffold> {
   int _calculateTitleMaxLines(String largeTitleText, TextStyle largeTitleTextStyle, double maxWidth) {
     final span = TextSpan(text: largeTitleText, style: largeTitleTextStyle);
     final tp = TextPainter(text: span, textDirection: TextDirection.ltr, maxLines: 4);
-    tp.layout(maxWidth: maxWidth - LmuSizes.size_32);
+    tp.layout(maxWidth: maxWidth - 33);
     return min(tp.computeLineMetrics().length, 4);
   }
 }

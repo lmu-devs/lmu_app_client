@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:core/logging.dart';
+import 'package:core/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/mensa_api_client.dart';
@@ -9,9 +11,11 @@ import 'api/models/menu/menu_day_model.dart';
 import 'api/models/menu/price_category.dart';
 import 'api/models/taste_profile/taste_profile.dart';
 import 'api/models/user_preferences/sort_option.dart';
+import 'error/mensa_generic_exception.dart';
+import 'error/menu_generic_exception.dart';
 
 abstract class MensaRepository {
-  Future<List<MensaModel>?> getMensaModels();
+  Future<List<MensaModel>> getMensaModels();
 
   Future<List<MensaModel>?> getCachedMensaModels();
 
@@ -34,6 +38,8 @@ abstract class MensaRepository {
   Future<void> removeUnsyncedFavoriteDishId(String dishId);
 
   Future<List<MenuDayModel>> getMenuDayForMensa(String canteenId);
+
+  Future<List<MenuDayModel>?> getCachedMenuDayForMensa(String canteenId);
 
   Future<TasteProfileModel> getTasteProfileContent({bool forceRefresh = false});
 
@@ -87,7 +93,7 @@ class ConnectedMensaRepository implements MensaRepository {
   static const String _recentSearchesKey = 'mensa_recentSearches';
 
   @override
-  Future<List<MensaModel>?> getMensaModels() async {
+  Future<List<MensaModel>> getMensaModels() async {
     final prefs = await SharedPreferences.getInstance();
 
     try {
@@ -99,7 +105,8 @@ class ConnectedMensaRepository implements MensaRepository {
 
       return mensaModels;
     } catch (e) {
-      return null;
+      if (e is SocketException) throw NoNetworkException();
+      throw MensaGenericException();
     }
   }
 
@@ -207,6 +214,32 @@ class ConnectedMensaRepository implements MensaRepository {
   }
 
   @override
+  Future<List<MenuDayModel>?> getCachedMenuDayForMensa(String canteenId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final key = '$_menuBaseKey$canteenId';
+
+    final cachedMenu = prefs.getString(key);
+    if (cachedMenu != null) {
+      final jsonList = json.decode(cachedMenu) as List<dynamic>;
+      final menuModels = jsonList.map((json) => MenuDayModel.fromJson(json as Map<String, dynamic>)).toList();
+      final today = DateTime.now();
+      final filteredDays = menuModels.where((mensaDay) {
+        DateTime mensaDate = DateTime.parse(mensaDay.date.replaceAll('-', '-').padLeft(10, '0'));
+        return mensaDate.isSameDay(today) || mensaDate.isAfter(today);
+      }).toList();
+
+      if (filteredDays.isEmpty) {
+        await prefs.remove(key);
+        return null;
+      }
+
+      _appLogger.logMessage('[MensaRepository]: Using cached menu models for canteen: $canteenId');
+      return filteredDays;
+    }
+    return null;
+  }
+
+  @override
   Future<List<MenuDayModel>> getMenuDayForMensa(String canteenId) async {
     final prefs = await SharedPreferences.getInstance();
     final key = '$_menuBaseKey$canteenId';
@@ -216,25 +249,8 @@ class ConnectedMensaRepository implements MensaRepository {
       await prefs.setString(key, json.encode(mensaMenuModels.map((e) => e.toJson()).toList()));
       return mensaMenuModels;
     } catch (e) {
-      final cachedMenu = prefs.getString(key);
-      if (cachedMenu != null) {
-        final jsonList = json.decode(cachedMenu) as List<dynamic>;
-        final menuModels = jsonList.map((json) => MenuDayModel.fromJson(json as Map<String, dynamic>)).toList();
-        final today = DateTime.now();
-        final filteredDays = menuModels.where((mensaDay) {
-          DateTime mensaDate = DateTime.parse(mensaDay.date.replaceAll('-', '-').padLeft(10, '0'));
-          return mensaDate.isAfter(today) || mensaDate.isAtSameMomentAs(today);
-        }).toList();
-
-        if (filteredDays.isEmpty) {
-          await prefs.remove(key);
-          rethrow;
-        }
-
-        _appLogger.logMessage('[MensaRepository]: Using menu models from cache');
-        return filteredDays;
-      }
-      rethrow;
+      if (e is SocketException) throw NoNetworkException();
+      throw MenuGenericException();
     }
   }
 

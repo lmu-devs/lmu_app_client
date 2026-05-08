@@ -1,9 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 
-abstract class LaunchFlowApi {
+abstract class LaunchFlowApi extends ChangeNotifier {
   Future<void> init();
 
-  Future<void> showedWelcomePage();
+  String get initialLocation;
 
-  ValueNotifier<bool> get shouldShowWelcomePageNotifier;
+  void continueFlow(BuildContext context);
 }

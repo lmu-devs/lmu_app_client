@@ -1,3 +1,4 @@
+import 'package:core/utils.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../repository/api/models/menu/menu_day_model.dart';
@@ -10,14 +11,15 @@ class MenuInitial extends MenuState {
 }
 
 class MenuLoadInProgress extends MenuState {
+  MenuLoadInProgress({this.menuModels});
+
+  final List<MenuDayModel>? menuModels;
   @override
   List<Object?> get props => [];
 }
 
 class MenuLoadSuccess extends MenuState {
-  MenuLoadSuccess({
-    required this.menuModels,
-  });
+  MenuLoadSuccess({required this.menuModels});
 
   final List<MenuDayModel> menuModels;
 
@@ -26,6 +28,10 @@ class MenuLoadSuccess extends MenuState {
 }
 
 class MenuLoadFailure extends MenuState {
+  MenuLoadFailure({this.loadState = LoadState.genericError});
+
+  final LoadState loadState;
+
   @override
   List<Object?> get props => [];
 }

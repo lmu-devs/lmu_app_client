@@ -1,20 +1,23 @@
-import 'package:core/components.dart';
-import 'package:core/constants.dart';
 import 'package:flutter/widgets.dart';
+
+import '../../../constants.dart';
 
 class LmuButtonRow extends StatelessWidget {
   const LmuButtonRow({
     super.key,
     required this.buttons,
+    this.controller,
     this.hasHorizontalPadding = true,
   });
 
-  final List<LmuButton> buttons;
+  final List<Widget> buttons;
+  final ScrollController? controller;
   final bool hasHorizontalPadding;
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      controller: controller,
       scrollDirection: Axis.horizontal,
       child: Padding(
         padding: EdgeInsets.symmetric(

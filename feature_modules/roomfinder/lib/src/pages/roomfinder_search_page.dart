@@ -1,5 +1,4 @@
 import 'package:core/components.dart';
-import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core_routes/roomfinder.dart';
 import 'package:flutter/material.dart';
@@ -61,8 +60,6 @@ class _RoomfinderSearchPageState extends State<RoomfinderSearchPage> {
   Widget build(BuildContext context) {
     return LmuSearchPage<RoomfinderSearchEntry>(
       searchEntries: _searchEntries,
-      emptySearchEntriesTitle: context.locals.roomfinder.popular,
-      emptySearchEntries: [_searchEntries[0], _searchEntries[1]],
       recentSearchEntries: _recentSearchEntries,
       recentSearchController: _recentSearchController,
       onRecentSearchesUpdated: (recentSearchEntries) =>

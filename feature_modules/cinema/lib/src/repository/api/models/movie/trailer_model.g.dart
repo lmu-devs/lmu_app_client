@@ -11,13 +11,11 @@ TrailerModel _$TrailerModelFromJson(Map<String, dynamic> json) => TrailerModel(
       title: json['title'] as String,
       publishedAt: DateTime.parse(json['published_at'] as String),
       url: json['url'] as String,
-      thumbnail:
-          PosterModel.fromJson(json['thumbnail'] as Map<String, dynamic>),
+      thumbnail: PosterModel.fromJson(json['thumbnail'] as Map<String, dynamic>),
       site: json['site'] as String,
     );
 
-Map<String, dynamic> _$TrailerModelToJson(TrailerModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$TrailerModelToJson(TrailerModel instance) => <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'published_at': instance.publishedAt.toIso8601String(),

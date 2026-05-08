@@ -6,6 +6,20 @@
   "openUntil": "Geöffnet bis {time} Uhr",
   "openingSoon": "Öffnet um {time} Uhr",
   "closed": "Geschlossen",
+  "closedDescription": "Leider hat {canteenGender} {canteenName} heute geschlossen.",
+  "@closedDescription": {
+    "description": "Description when the canteen is closed",
+    "placeholders": {
+      "canteenName": {
+        "type": "String",
+        "example": "Mensa"
+      },
+      "canteenGender": {
+        "type": "String",
+        "example": "diese"
+      }
+    }
+  },
   "allCanteens": "Alle Mensen",
   "mensaTypeMensa": "Mensa",
   "mensaTypeStuBistro": "StuBistro",
@@ -22,12 +36,10 @@
   "myTaste": "My Taste",
   "myTasteDescription": "Passen Sie Ihr Geschmacksprofil an und aktivieren Sie es, um Gerichte nach Ihren Vorlieben und Allergien zu filtern.",
   "presets": "Vorlagen",
-  "reset": "Reset",
   "tastePreferences": "Ich esse und vertrage",
   "myTasteFooter": "Die Allergene und die übrigen Kennzeichnungen ändern sich möglicherweise durch kurzfristige Rezeptur- und Speiseplanänderungen, die nicht im Internetspeiseplan ersichtlich sein können. Bitte beachten Sie unbedingt die Angaben auf den tagesaktuellen Thekenaufstellern in der Betriebsstelle. Spurenhinweis für Allergiker: Spuren von Allergenen durch Kreuzkontaminationen während der Vor- und Zubereitung bzw. Ausgabe sowie durch technologisch unvermeidbare Verunreinigungen einzelner Zutaten können nicht ausgeschlossen werden und werden nicht gekennzeichnet.",
   "noConnection": "Keine Verbindung",
   "retry": "Neu laden",
-  "share": "Teilen",
   "openDetails": "Geöffnet von {openingTime}-{closingTime} Uhr",
   "closedDetailed": "Gerade geschlossen",
   "emptyFavoritesBefore": "Füge Favoriten mit dem ",
@@ -60,7 +72,6 @@
   "yourTasteFiltersAll": "Deine Food-Preferences sind literally so main character energy rn...",
   "cafeBarNotice": "Auswahl an Kaffeespezialitäten, Gebäck und Schmankerl für zwischendurch. Siehe Aushang vor Ort.",
   "menuNotAvailable": "Menu nicht verfügbar",
-  "unsavedChanges": "Nicht gespeicherte Änderungen",
-  "unsavedChangesDescription": "Möchtest du die Änderungen weiter bearbeiten",
+  "menuNotAvailableDescription": "Noch kein Menü verfügbar. Bitte schau später nochmal vorbei.",
   "canteens": "Mensen"
 }

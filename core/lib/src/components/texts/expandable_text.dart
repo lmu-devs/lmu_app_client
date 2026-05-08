@@ -1,9 +1,10 @@
-import 'package:core/components.dart';
-import 'package:core/constants.dart';
-import 'package:core/localizations.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../../../components.dart';
+import '../../../constants.dart';
+import '../../../localizations.dart';
+import '../../../themes.dart';
 
 class ExpandableText extends StatelessWidget {
   ExpandableText({

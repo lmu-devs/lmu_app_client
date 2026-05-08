@@ -73,7 +73,13 @@ class ExplorePage extends DrivableWidget<ExplorePageDriver> {
               ),
               const CurrentLocationLayer(),
               MarkerLayer(rotate: true, markers: driver.locations.map((location) => location.toMarker).toList()),
-              Positioned(bottom: 0, width: screenWidth, child: const ExploreMapOverlay()),
+              Positioned(
+                bottom: 0,
+                width: screenWidth,
+                child: ExploreMapOverlay(
+                  filterScrollController: driver.filterScrollController,
+                ),
+              ),
             ],
           ),
           const ExploreMapContentSheet(),

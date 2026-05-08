@@ -6,9 +6,8 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_api/feedback.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../../application/state/feedback_state.dart';
-import '../../application/usecases/request_app_review_usecase.dart';
-import '../../application/usecases/send_feedback_usecase.dart';
+import '../../domain/interfaces/app_review_repository_interface.dart';
+import '../../domain/interfaces/feedback_repository_interface.dart';
 import '../../domain/models/emoji_feedback.dart';
 import '../../domain/models/user_feedback.dart';
 
@@ -17,13 +16,17 @@ part 'feedback_page_driver.g.dart';
 typedef FeedbackModalString = ({String title, String description, String inputHint});
 
 @GenerateTestDriver()
-class FeedbackPageDriver extends WidgetDriver {
-  final _sendFeedbackUsecase = GetIt.I.get<SendFeedbackUsecase>();
-  final _requestAppReviewUsecase = GetIt.I.get<RequestAppReviewUseCase>();
+class FeedbackPageDriver extends WidgetDriver implements _$DriverProvidedProperties {
+  FeedbackPageDriver({
+    @driverProvidableProperty required FeedbackArgs args,
+  }) : _args = args;
+
+  final _feedbackRepository = GetIt.I.get<FeedbackRepositoryInterface>();
+  final _appReviewRepository = GetIt.I.get<AppReviewRepositoryInterface>();
 
   late final TextEditingController _textEditingController;
-  late final String _origin;
-  late final FeedbackType _type;
+  late final FeedbackArgs _args;
+
   late FeedbackLocalizations _localizations;
   late NavigatorState _navigatorState;
   late LmuToast _toast;
@@ -31,12 +34,14 @@ class FeedbackPageDriver extends WidgetDriver {
   bool _isLoading = false;
   EmojiFeedback? _selectedFeedback;
 
+  FeedbackType get _type => _args.type;
+
   @TestDriverDefaultValue(_TestTextEditingController())
   TextEditingController get textEditingController => _textEditingController;
 
-  String get largeTitle => _type.title(_localizations);
-  String get description => _type.description(_localizations);
-  String get inputHint => _type.inputHint(_localizations);
+  String get largeTitle => _args.title ?? _type.title(_localizations);
+  String get description => _args.description ?? _type.description(_localizations);
+  String get inputHint => _args.inputHint ?? _type.inputHint(_localizations);
 
   bool get showEmojiPicker => _type == FeedbackType.general;
   void onEmojiSelected(EmojiFeedback feedback) {
@@ -56,10 +61,10 @@ class FeedbackPageDriver extends WidgetDriver {
     notifyWidget();
 
     try {
-      await _sendFeedbackUsecase.call(
+      await _feedbackRepository.sendFeedback(
         UserFeedback(
           type: _type,
-          screen: _origin,
+          screen: _args.origin,
           rating: _selectedFeedback,
           message: _textEditingController.text,
         ),
@@ -69,7 +74,7 @@ class FeedbackPageDriver extends WidgetDriver {
       LmuVibrations.success();
       _navigatorState.pop();
       if (_selectedFeedback == EmojiFeedback.good) {
-        await _requestAppReviewUsecase.call();
+        await _appReviewRepository.requestReview();
       }
     } catch (e) {
       _toast.showToast(message: _type.error(_localizations), type: ToastType.error);
@@ -91,10 +96,13 @@ class FeedbackPageDriver extends WidgetDriver {
     super.didInitDriver();
     _textEditingController = TextEditingController();
     _textEditingController.addListener(_onTextEditingControllerChanged);
+  }
 
-    final feedbackState = GetIt.I.get<FeedbackState>();
-    _origin = feedbackState.origin!;
-    _type = feedbackState.type!;
+  @override
+  void didUpdateProvidedProperties({
+    required FeedbackArgs newArgs,
+  }) {
+    _args = newArgs;
   }
 
   @override

@@ -9,10 +9,10 @@ part 'home_data.g.dart';
 class HomeData {
   const HomeData({required this.featured, required this.tiles});
 
+  factory HomeData.fromJson(Map<String, dynamic> json) => _$HomeDataFromJson(json);
+
   final List<HomeFeatured> featured;
   final List<HomeTile> tiles;
-
-  factory HomeData.fromJson(Map<String, dynamic> json) => _$HomeDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$HomeDataToJson(this);
 }

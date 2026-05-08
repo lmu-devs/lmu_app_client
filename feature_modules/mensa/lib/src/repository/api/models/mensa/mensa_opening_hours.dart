@@ -12,17 +12,17 @@ class MensaOpeningHours extends Equatable {
     required this.servingHours,
   });
 
-  @JsonKey(name: 'opening_hours')
-  final List<MensaOpeningDetails> openingHours;
-  @JsonKey(name: 'serving_hours')
-  final List<MensaOpeningDetails>? servingHours;
-
   factory MensaOpeningHours.empty() => const MensaOpeningHours(
         openingHours: [],
         servingHours: [],
       );
 
   factory MensaOpeningHours.fromJson(Map<String, dynamic> json) => _$MensaOpeningHoursFromJson(json);
+
+  @JsonKey(name: 'opening_hours')
+  final List<MensaOpeningDetails> openingHours;
+  @JsonKey(name: 'serving_hours')
+  final List<MensaOpeningDetails>? servingHours;
 
   Map<String, dynamic> toJson() => _$MensaOpeningHoursToJson(this);
 

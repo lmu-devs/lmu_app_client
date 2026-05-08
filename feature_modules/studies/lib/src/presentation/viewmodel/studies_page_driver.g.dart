@@ -8,11 +8,14 @@ part of 'studies_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.3.3"
+// This file was generated with widget_driver_generator version "1.3.5"
 
 class _$TestStudiesPageDriver extends TestDriver implements StudiesPageDriver {
   @override
   String get pageTitle => ' ';
+
+  @override
+  void didUpdateBuildContext(BuildContext context) {}
 }
 
 class $StudiesPageDriverProvider extends WidgetDriverProvider<StudiesPageDriver> {

@@ -1,10 +1,11 @@
 import 'dart:async';
 
-import 'package:core/core_services.dart';
-import 'package:core/logging.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:rxdart/rxdart.dart';
+
+import '../../../core_services.dart';
+import '../../../logging.dart';
 
 class LocationService with ChangeNotifier {
   LocationService() {

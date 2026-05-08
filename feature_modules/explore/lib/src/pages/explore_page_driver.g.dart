@@ -8,9 +8,12 @@ part of 'explore_page_driver.dart';
 
 // coverage:ignore-file
 
-// This file was generated with widget_driver_generator version "1.3.3"
+// This file was generated with widget_driver_generator version "1.3.5"
 
 class _$TestExplorePageDriver extends TestDriver implements ExplorePageDriver {
+  @override
+  ScrollController filterScrollController = const _TestScrollController();
+
   @override
   MapController get mapController => const _TestMapController();
 

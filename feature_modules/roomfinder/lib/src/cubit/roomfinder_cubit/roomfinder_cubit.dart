@@ -18,7 +18,11 @@ class RoomfinderCubit extends Cubit<RoomfinderState> {
       final streets = await _repository.getRoomfinderData();
       emit(RoomfinderLoadSuccess(streets: streets));
     } catch (e) {
-      emit(const RoomfinderLoadFailure());
+      if (e is NoNetworkException) {
+        emit(const RoomfinderLoadFailure(loadState: LoadState.noNetworkError));
+      } else {
+        emit(const RoomfinderLoadFailure(loadState: LoadState.genericError));
+      }
     }
   }
 

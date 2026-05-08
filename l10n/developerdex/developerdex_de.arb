@@ -1,0 +1,15 @@
+{
+  "@@locale": "de",
+  "@@context": "Developerdex",
+  "developerdexTitle": "Developerdex",
+  "developerdexInfoDialogTitle": "Lern das Entwicklerteam kennen",
+  "developerdexInfoDialogDescription": "Hin und wieder taucht ein wilder Entwickler in der App auf! Halte bei bestimmten Interaktionen die Augen offen, tippe auf den Entwickler und füge ihn deinem Developerdex hinzu.",
+  "availableSoon": "Bald verfügbar",
+  "joinText": "Möchtest du Teil dieses Teams werden?",
+  "joinButton": "Mach mit",
+  "legendary": "Legendär",
+  "epic": "Episch",
+  "rare": "Selten",
+  "common": "Gewöhnlich",
+  "caught": "{developer} gefangen!"
+}

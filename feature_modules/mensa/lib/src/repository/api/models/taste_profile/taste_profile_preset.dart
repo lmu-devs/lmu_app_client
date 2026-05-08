@@ -5,13 +5,6 @@ part 'taste_profile_preset.g.dart';
 
 @JsonSerializable()
 class TasteProfilePreset extends Equatable {
-  @JsonKey(name: 'enum_name')
-  final String enumName;
-  final String text;
-  @JsonKey(name: 'emoji_abbreviation')
-  final String? emojiAbbreviation;
-  final List<String> exclude;
-
   const TasteProfilePreset({
     required this.enumName,
     required this.text,
@@ -20,6 +13,13 @@ class TasteProfilePreset extends Equatable {
   });
 
   factory TasteProfilePreset.fromJson(Map<String, dynamic> json) => _$TasteProfilePresetFromJson(json);
+
+  @JsonKey(name: 'enum_name')
+  final String enumName;
+  final String text;
+  @JsonKey(name: 'emoji_abbreviation')
+  final String? emojiAbbreviation;
+  final List<String> exclude;
 
   Map<String, dynamic> toJson() => _$TasteProfilePresetToJson(this);
 

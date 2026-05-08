@@ -61,6 +61,7 @@ class BorderColors {
     required this.seperatorDark,
     required this.iconOutline,
     required this.tile,
+    required this.highlight,
   });
 
   final Color seperatorLight;
@@ -69,4 +70,5 @@ class BorderColors {
   final Color seperatorDark;
   final Color iconOutline;
   final Color tile;
+  final Color highlight;
 }

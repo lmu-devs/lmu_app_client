@@ -5,5 +5,9 @@ abstract class HomeRouter {
 
   Widget buildLinks(BuildContext context);
 
-  Widget buildLinksSearch(BuildContext context);
+  Widget buildLinksFaculties(BuildContext context);
+
+  Widget buildLinksOverview(BuildContext context, {required int facultyId});
+
+  Widget buildLinksSearch(BuildContext context, {required int facultyId});
 }

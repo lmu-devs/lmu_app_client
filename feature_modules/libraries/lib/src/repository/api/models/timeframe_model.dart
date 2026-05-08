@@ -10,10 +10,10 @@ class TimeframeModel extends Equatable {
     required this.end,
   });
 
+  factory TimeframeModel.fromJson(Map<String, dynamic> json) => _$TimeframeModelFromJson(json);
+
   final String start;
   final String end;
-
-  factory TimeframeModel.fromJson(Map<String, dynamic> json) => _$TimeframeModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$TimeframeModelToJson(this);
 

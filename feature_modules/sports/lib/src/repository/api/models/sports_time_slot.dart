@@ -12,13 +12,13 @@ class SportsTimeSlot extends Equatable {
     required this.endTime,
   });
 
+  factory SportsTimeSlot.fromJson(Map<String, dynamic> json) => _$SportsTimeSlotFromJson(json);
+
   final Weekday day;
   @JsonKey(name: 'start_time')
   final String startTime;
   @JsonKey(name: 'end_time')
   final String endTime;
-
-  factory SportsTimeSlot.fromJson(Map<String, dynamic> json) => _$SportsTimeSlotFromJson(json);
 
   Map<String, dynamic> toJson() => _$SportsTimeSlotToJson(this);
 

@@ -8,9 +8,9 @@ import '../repository/api/api.dart';
 
 class TrailerCard extends StatelessWidget {
   const TrailerCard({
-    Key? key,
+    super.key,
     required this.trailer,
-  }) : super(key: key);
+  });
 
   final TrailerModel trailer;
 

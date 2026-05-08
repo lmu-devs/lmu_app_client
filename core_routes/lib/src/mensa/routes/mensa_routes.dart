@@ -14,7 +14,7 @@ class MensaData extends StatefulShellBranchData {
 class MensaMainRoute extends GoRouteData {
   const MensaMainRoute();
 
-  static const String path = '/mensa';
+  static const String path = '/app/mensa';
 
   @override
   Widget build(BuildContext context, GoRouterState state) => _router.buildMain(context);

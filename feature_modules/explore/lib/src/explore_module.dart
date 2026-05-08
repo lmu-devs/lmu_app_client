@@ -1,7 +1,9 @@
 import 'package:core/module.dart';
 import 'package:core_routes/explore.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/explore.dart';
 
+import 'public/explore_public_api.dart';
 import 'repository/explore_repository.dart';
 import 'routes/explore_router.dart';
 import 'services/services.dart';
@@ -13,6 +15,7 @@ class ExploreModule extends AppModule
 
   @override
   void providePublicApi() {
+    GetIt.I.registerSingleton<ExploreApi>(ExplorePublicApi());
     GetIt.I.registerSingleton<ExploreRouter>(ExploreRouterImpl());
   }
 

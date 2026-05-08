@@ -47,7 +47,7 @@ class SportsFavoritesCourseSection extends StatelessWidget {
                       child: StarIcon(isActive: false, size: LmuIconSizes.small, disabledColor: starColor),
                     ),
                     const SizedBox(height: LmuSizes.size_12),
-                    if (favoriteSports.isNotEmpty)
+                    if (favoriteSportTypes.isNotEmpty)
                       LmuContentTile(
                         contentList: favoriteSportTypes.map(
                           (sport) {
@@ -62,7 +62,7 @@ class SportsFavoritesCourseSection extends StatelessWidget {
                           },
                         ).toList(),
                       ),
-                    if (favoriteSports.isEmpty)
+                    if (favoriteSportTypes.isEmpty)
                       PlaceholderTile(
                         minHeight: 56,
                         content: [

@@ -13,7 +13,7 @@ class HomeRouteData extends StatefulShellBranchData {
 class HomeMainRoute extends GoRouteData {
   const HomeMainRoute();
 
-  static const String path = '/home';
+  static const String path = '/app/home';
 
   @override
   CustomTransitionPage<void> buildPage(
@@ -41,11 +41,33 @@ class LinksRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) => _router.buildLinks(context);
 }
 
+class LinksFacultiesRoute extends GoRouteData {
+  const LinksFacultiesRoute();
+
+  static const String path = 'links_faculties';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => _router.buildLinksFaculties(context);
+}
+
+class LinksOverviewRoute extends GoRouteData {
+  const LinksOverviewRoute({required this.facultyId});
+
+  final int facultyId;
+
+  static const String path = 'links_overview';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => _router.buildLinksOverview(context, facultyId: facultyId);
+}
+
 class LinksSearchRoute extends GoRouteData {
-  const LinksSearchRoute();
+  const LinksSearchRoute({required this.facultyId});
+
+  final int facultyId;
 
   static const String path = 'search';
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => _router.buildLinksSearch(context);
+  Widget build(BuildContext context, GoRouterState state) => _router.buildLinksSearch(context, facultyId: facultyId);
 }

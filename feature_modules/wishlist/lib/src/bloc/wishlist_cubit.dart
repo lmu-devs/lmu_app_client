@@ -14,13 +14,19 @@ class WishlistCubit extends Cubit<WishlistState> {
     final cachedWishlistEntries = await _wishlistRepository.getCachedWishlistEntries();
     emit(WishlistLoadInProgress(wishlistModels: cachedWishlistEntries));
 
-    final wishlistEntries = await _wishlistRepository.getWishlistEntries();
-    if (wishlistEntries == null && cachedWishlistEntries == null) {
-      emit(WishlistLoadFailure());
-      listenForConnectivityRestoration(loadWishlistEntries);
-      return;
+    try {
+      final wishlistModels = await _wishlistRepository.getWishlistEntries();
+      emit(WishlistLoadSuccess(wishlistModels: wishlistModels));
+    } catch (e) {
+      if (cachedWishlistEntries != null) {
+        emit(WishlistLoadSuccess(wishlistModels: cachedWishlistEntries));
+      } else {
+        if (e is NoNetworkException) {
+          emit(WishlistLoadFailure(loadState: LoadState.noNetworkError));
+        } else {
+          emit(WishlistLoadFailure(loadState: LoadState.genericError));
+        }
+      }
     }
-
-    emit(WishlistLoadSuccess(wishlistModels: wishlistEntries ?? cachedWishlistEntries!));
   }
 }

@@ -1,8 +1,9 @@
-import 'package:core/components.dart';
-import 'package:core/constants.dart';
-import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:fuzzywuzzy/fuzzywuzzy.dart';
+
+import '../../../components.dart';
+import '../../../constants.dart';
+import '../../../localizations.dart';
 
 abstract class SearchEntry {
   const SearchEntry({required this.title, this.tags});
@@ -147,8 +148,16 @@ class _LmuSearchPageState<T extends SearchEntry> extends State<LmuSearchPage<T>>
                           child: searchEntries.isEmpty && !isSearchActive
                               ? child!
                               : searchEntries.isEmpty
-                                  ? LmuIssueType(
-                                      key: const Key("search_empty"), message: appLocals.noResults, hasSpacing: false)
+                                  ? const Align(
+                                      alignment: Alignment.topCenter,
+                                      child: Padding(
+                                        key: Key("search_empty"),
+                                        padding: EdgeInsetsGeometry.only(
+                                          top: LmuSizes.size_12,
+                                        ),
+                                        child: LmuEmptyState(type: EmptyStateType.noSearchResults),
+                                      ),
+                                    )
                                   : Padding(
                                       padding: const EdgeInsets.only(top: LmuSizes.size_16, bottom: LmuSizes.size_96),
                                       child: Column(

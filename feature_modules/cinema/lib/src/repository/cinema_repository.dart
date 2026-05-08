@@ -1,15 +1,18 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:core/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/api.dart';
+import 'error/cinema_generic_exception.dart';
 
 abstract class CinemaRepository {
-  Future<List<CinemaModel>?> getCinemas();
+  Future<List<CinemaModel>> getCinemas();
 
   Future<List<CinemaModel>?> getCachedCinemas();
 
-  Future<List<ScreeningModel>?> getScreenings();
+  Future<List<ScreeningModel>> getScreenings();
 
   Future<List<ScreeningModel>?> getCachedScreenings();
 
@@ -34,7 +37,7 @@ class ConnectedCinemaRepository implements CinemaRepository {
   static const String _likedScreeningsIdsKey = 'liked_screenings_ids_key';
 
   @override
-  Future<List<CinemaModel>?> getCinemas({int? id}) async {
+  Future<List<CinemaModel>> getCinemas({int? id}) async {
     final prefs = await SharedPreferences.getInstance();
     try {
       final cinemas = await cinemaApiClient.getCinemas(id: id);
@@ -42,7 +45,11 @@ class ConnectedCinemaRepository implements CinemaRepository {
       await prefs.setInt(_cinemasCacheTimeStampKey, DateTime.now().millisecondsSinceEpoch);
       return cinemas;
     } catch (e) {
-      return null;
+      if (e is SocketException) {
+        throw NoNetworkException();
+      } else {
+        throw CinemaGenericException();
+      }
     }
   }
 
@@ -62,15 +69,20 @@ class ConnectedCinemaRepository implements CinemaRepository {
   }
 
   @override
-  Future<List<ScreeningModel>?> getScreenings() async {
+  Future<List<ScreeningModel>> getScreenings() async {
     final prefs = await SharedPreferences.getInstance();
+
     try {
       final screenings = await cinemaApiClient.getScreenings();
       await prefs.setString(_screeningKey, jsonEncode(screenings.map((e) => e.toJson()).toList()));
       await prefs.setInt(_screeningCacheTimeStampKey, DateTime.now().millisecondsSinceEpoch);
       return screenings;
     } catch (e) {
-      return null;
+      if (e is SocketException) {
+        throw NoNetworkException();
+      } else {
+        throw CinemaGenericException();
+      }
     }
   }
 

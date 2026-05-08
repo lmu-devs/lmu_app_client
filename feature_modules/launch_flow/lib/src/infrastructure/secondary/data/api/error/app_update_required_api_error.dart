@@ -1,0 +1,1 @@
+class AppUpdateRequiredApiError implements Exception {}

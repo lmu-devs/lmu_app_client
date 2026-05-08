@@ -4,48 +4,82 @@ class CustomColors {
   const CustomColors({
     required this.textColors,
     required this.backgroundColors,
+    required this.colorColors,
   });
 
   final CustomTextColors textColors;
   final CustomBackgroundColors backgroundColors;
+  final CustomColorColors colorColors;
 }
 
 class CustomTextColors {
   const CustomTextColors({
-    required this.mensa,
-    required this.stuBistro,
-    required this.stuCafe,
+    required this.green,
+    required this.pink,
+    required this.amber,
+    required this.red,
+    required this.blue,
+    required this.purple,
+    required this.teal,
+    required this.lime,
     required this.stuLounge,
-    required this.cinema,
-    required this.building,
-    required this.library,
   });
 
-  final Color mensa;
-  final Color stuBistro;
-  final Color stuCafe;
+  final Color green;
+  final Color pink;
+  final Color amber;
+  final Color red;
+  final Color blue;
+  final Color purple;
+  final Color teal;
+  final Color lime;
   final Color stuLounge;
-  final Color cinema;
-  final Color building;
-  final Color library;
 }
 
 class CustomBackgroundColors {
   const CustomBackgroundColors({
-    required this.mensa,
-    required this.stuBistro,
-    required this.stuCafe,
+    required this.green,
+    required this.pink,
+    required this.amber,
+    required this.red,
+    required this.blue,
+    required this.purple,
+    required this.teal,
+    required this.lime,
     required this.stuLounge,
-    required this.cinema,
-    required this.building,
-    required this.library,
   });
 
-  final Color mensa;
-  final Color stuBistro;
-  final Color stuCafe;
+  final Color green;
+  final Color pink;
+  final Color amber;
+  final Color red;
+  final Color blue;
+  final Color purple;
+  final Color teal;
+  final Color lime;
   final Color stuLounge;
-  final Color cinema;
-  final Color building;
-  final Color library;
+}
+
+class CustomColorColors {
+  const CustomColorColors({
+    required this.green,
+    required this.pink,
+    required this.amber,
+    required this.red,
+    required this.blue,
+    required this.purple,
+    required this.teal,
+    required this.lime,
+    required this.stuLounge,
+  });
+
+  final Color green;
+  final Color pink;
+  final Color amber;
+  final Color red;
+  final Color blue;
+  final Color purple;
+  final Color teal;
+  final Color lime;
+  final Color stuLounge;
 }

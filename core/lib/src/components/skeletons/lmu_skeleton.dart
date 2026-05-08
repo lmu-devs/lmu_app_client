@@ -1,6 +1,7 @@
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+
+import '../../../themes.dart';
 
 class LmuSkeleton extends StatelessWidget {
   const LmuSkeleton({

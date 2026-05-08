@@ -1,19 +1,24 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../calendar.dart';
+import '../../courses.dart';
+import '../../grades.dart';
 import '../../launch_flow.dart';
 import '../../libraries.dart';
 import '../../studies.dart';
-import '../benefits/routes/benefits_routes.dart';
+import '../benefits/benefits.dart';
 import '../cinema/cinema.dart';
+import '../clubs/clubs.dart';
+import '../developerdex/developerdex.dart';
 import '../explore/explore.dart';
 import '../home/home.dart';
 import '../mensa/mensa.dart';
+import '../people/people.dart';
 import '../roomfinder/roomfinder.dart';
 import '../settings/settings.dart';
 import '../sports/sports.dart';
+import '../studies/studies.dart';
 import '../timeline/timeline.dart';
 import '../wishlist/wishlist.dart';
 import 'scaffold_with_nav_bar.dart';
@@ -24,12 +29,15 @@ part 'shell_route_data.g.dart';
   routes: [
     TypedGoRoute<LaunchFlowWelcomeRoute>(path: LaunchFlowWelcomeRoute.path),
     TypedGoRoute<LaunchFlowAppUpdateRoute>(path: LaunchFlowAppUpdateRoute.path),
+    TypedGoRoute<LaunchFlowReleaseNotesRoute>(path: LaunchFlowReleaseNotesRoute.path),
+    TypedGoRoute<LaunchFlowFacultySelectionRoute>(path: LaunchFlowFacultySelectionRoute.path),
+    TypedGoRoute<LaunchFlowPermissionsOnboardingRoute>(path: LaunchFlowPermissionsOnboardingRoute.path),
   ],
 )
 class LaunchFlowShellRoute extends ShellRouteData {
   const LaunchFlowShellRoute();
 
-  static const String path = '/launch';
+  static const String path = '/app/launch';
 
   @override
   Widget builder(BuildContext context, GoRouterState state, Widget navigator) {
@@ -53,20 +61,40 @@ class LaunchFlowShellRoute extends ShellRouteData {
                 TypedGoRoute<SettingsLanguageRoute>(
                   path: SettingsLanguageRoute.path,
                 ),
+                TypedGoRoute<SettingsNotificationsRoute>(
+                  path: SettingsNotificationsRoute.path,
+                ),
                 TypedGoRoute<SettingsLicenceRoute>(
                   path: SettingsLicenceRoute.path,
                 ),
                 TypedGoRoute<SettingsAccountRoute>(
                   path: SettingsAccountRoute.path,
+                  routes: <TypedGoRoute<GoRouteData>>[
+                    TypedGoRoute<SettingsAnalyticsRoute>(
+                      path: SettingsAnalyticsRoute.path,
+                    ),
+                  ],
                 ),
                 TypedGoRoute<SettingsDebugRoute>(
                   path: SettingsDebugRoute.path,
+                ),
+                TypedGoRoute<DeveloperdexMainRoute>(
+                  path: DeveloperdexMainRoute.path,
+                ),
+                TypedGoRoute<FaculitesMainRoute>(
+                  path: FaculitesMainRoute.path,
                 ),
               ],
             ),
             TypedGoRoute<LinksRoute>(
               path: LinksRoute.path,
               routes: <TypedGoRoute<GoRouteData>>[
+                TypedGoRoute<LinksFacultiesRoute>(
+                  path: LinksFacultiesRoute.path,
+                ),
+                TypedGoRoute<LinksOverviewRoute>(
+                  path: LinksOverviewRoute.path,
+                ),
                 TypedGoRoute<LinksSearchRoute>(
                   path: LinksSearchRoute.path,
                 ),
@@ -77,6 +105,22 @@ class LaunchFlowShellRoute extends ShellRouteData {
               routes: [
                 TypedGoRoute<BenefitsDetailsRoute>(
                   path: BenefitsDetailsRoute.path,
+                ),
+              ],
+            ),
+            TypedGoRoute<ClubsMainRoute>(
+              path: ClubsMainRoute.path,
+              routes: [
+                TypedGoRoute<ClubsDetailsRoute>(
+                  path: ClubsDetailsRoute.path,
+                  routes: [
+                    TypedGoRoute<ClubDetailsDetailRoute>(
+                      path: ClubDetailsDetailRoute.path,
+                    ),
+                  ],
+                ),
+                TypedGoRoute<ClubDetailRoute>(
+                  path: ClubDetailRoute.path,
                 ),
               ],
             ),
@@ -187,6 +231,64 @@ class LaunchFlowShellRoute extends ShellRouteData {
       routes: <TypedRoute<RouteData>>[
         TypedGoRoute<StudiesMainRoute>(
           path: StudiesMainRoute.path,
+          routes: <TypedGoRoute<GoRouteData>>[
+            TypedGoRoute<CalendarMainRoute>(
+              path: CalendarMainRoute.path,
+              routes: [
+                TypedGoRoute<CalendarTestRoute>(
+                  path: CalendarTestRoute.path,
+                ),
+                TypedGoRoute<CalendarSearchRoute>(
+                  path: CalendarSearchRoute.path,
+                ),
+                TypedGoRoute<CalendarCreateRoute>(
+                  path: CalendarCreateRoute.path,
+                ),
+              ],
+            ),
+            TypedGoRoute<CoursesOverviewRoute>(
+              path: CoursesOverviewRoute.path,
+              routes: <TypedGoRoute<GoRouteData>>[
+                TypedGoRoute<CourseDetailsRoute>(
+                  path: CourseDetailsRoute.path,
+                  routes: <TypedGoRoute<GoRouteData>>[
+                    TypedGoRoute<CourseDetailsSessionsRoute>(
+                      path: CourseDetailsSessionsRoute.path,
+                    ),
+                    TypedGoRoute<CourseDetailsPersonsRoute>(
+                      path: CourseDetailsPersonsRoute.path,
+                    ),
+                    TypedGoRoute<CourseDetailsContentRoute>(
+                      path: CourseDetailsContentRoute.path,
+                    ),
+                  ],
+                ),
+                TypedGoRoute<CoursesSearchRoute>(
+                  path: CoursesSearchRoute.path,
+                ),
+              ],
+            ),
+            TypedGoRoute<CoursesFacultyOverviewRoute>(
+              path: CoursesFacultyOverviewRoute.path,
+            ),
+            TypedGoRoute<PeopleOverviewRoute>(
+              path: PeopleOverviewRoute.path,
+              routes: <TypedGoRoute<GoRouteData>>[
+                TypedGoRoute<PeopleDetailsRoute>(
+                  path: PeopleDetailsRoute.path,
+                ),
+                TypedGoRoute<PeopleSearchRoute>(
+                  path: PeopleSearchRoute.path,
+                ),
+              ],
+            ),
+            TypedGoRoute<PeopleFacultyOverviewRoute>(
+              path: PeopleFacultyOverviewRoute.path,
+            ),
+            TypedGoRoute<GradesMainRoute>(
+              path: GradesMainRoute.path,
+            ),
+          ],
         ),
       ],
     )

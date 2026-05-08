@@ -1,16 +1,10 @@
-import 'package:core/components.dart';
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 
-class LmuTileHeadline extends StatelessWidget {
-  final String title;
-  final String? trailingTitle;
-  final String? actionTitle;
-  final void Function()? onActionTap;
-  final Widget? bottomWidget;
-  final double? customBottomPadding;
+import '../../../components.dart';
+import '../../../constants.dart';
+import '../../../themes.dart';
 
+class LmuTileHeadline extends StatelessWidget {
   const LmuTileHeadline._internal({
     super.key,
     required this.title,
@@ -19,6 +13,7 @@ class LmuTileHeadline extends StatelessWidget {
     this.onActionTap,
     this.bottomWidget,
     this.customBottomPadding,
+    this.isButtonDisabled,
   });
 
   factory LmuTileHeadline.base({
@@ -43,6 +38,7 @@ class LmuTileHeadline extends StatelessWidget {
     required void Function() onActionTap,
     Widget? bottomWidget,
     double? customBottomPadding,
+    bool isButtonDisabled = false,
   }) =>
       LmuTileHeadline._internal(
         key: key,
@@ -51,7 +47,16 @@ class LmuTileHeadline extends StatelessWidget {
         onActionTap: onActionTap,
         bottomWidget: bottomWidget,
         customBottomPadding: customBottomPadding,
+        isButtonDisabled: isButtonDisabled,
       );
+
+  final String title;
+  final String? trailingTitle;
+  final String? actionTitle;
+  final void Function()? onActionTap;
+  final Widget? bottomWidget;
+  final double? customBottomPadding;
+  final bool? isButtonDisabled;
 
   @override
   Widget build(BuildContext context) {
@@ -60,21 +65,33 @@ class LmuTileHeadline extends StatelessWidget {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            LmuText.body(
-              title,
-              weight: FontWeight.w600,
-              color: textColors.mediumColors.base,
+            Flexible(
+              child: LmuText.body(
+                title,
+                weight: FontWeight.w600,
+                color: textColors.mediumColors.base,
+                maxLines: 3,
+                customOverFlow: TextOverflow.ellipsis,
+              ),
             ),
             if (trailingTitle != null)
-              LmuText.body(
-                trailingTitle,
-                weight: FontWeight.w600,
-                color: textColors.weakColors.base,
+              Flexible(
+                child: LmuText.body(
+                  trailingTitle,
+                  weight: FontWeight.w600,
+                  color: textColors.weakColors.base,
+                  maxLines: 2,
+                  customOverFlow: TextOverflow.ellipsis,
+                ),
               ),
             if (actionTitle != null)
               LmuButton(
                 title: actionTitle!,
+                state: isButtonDisabled!
+                    ? ButtonState.disabled
+                    : ButtonState.enabled,
                 onTap: onActionTap,
                 emphasis: ButtonEmphasis.link,
                 size: ButtonSize.large,

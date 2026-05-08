@@ -22,6 +22,8 @@ class ScreeningModel extends Equatable {
     required this.movie,
   });
 
+  factory ScreeningModel.fromJson(Map<String, dynamic> json) => _$ScreeningModelFromJson(json);
+
   final String id;
   @JsonKey(name: 'cinema_id')
   final String cinemaId;
@@ -57,8 +59,6 @@ class ScreeningModel extends Equatable {
         note,
         movie,
       ];
-
-  factory ScreeningModel.fromJson(Map<String, dynamic> json) => _$ScreeningModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ScreeningModelToJson(this);
 }

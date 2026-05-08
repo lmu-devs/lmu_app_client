@@ -50,7 +50,7 @@ class _RoomfinderBuildingDetailsPageState extends State<RoomfinderBuildingDetail
         largeTitleTrailingWidget: LmuInTextVisual.text(
           title: context.locals.roomfinder.building,
           textColor: buildingColor,
-          backgroundColor: buildingColor.withOpacity(0.14),
+          backgroundColor: buildingColor.withValues(alpha: 0.14),
         ),
       ),
       slivers: [

@@ -28,11 +28,7 @@ class AppLogger {
       await _logFile!.create();
     }
 
-    if (!kDebugMode) {
-      clearLogs();
-    } else {
-      _logsNotifier.value = await getLogs();
-    }
+    clearLogs();
   }
 
   void _setupLogging() {

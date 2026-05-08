@@ -14,9 +14,9 @@ class HomeDefaultTile extends HomeTile {
     required super.type,
   }) : super();
 
-  final List<dynamic>? data;
-
   factory HomeDefaultTile.fromJson(Map<String, dynamic> json) => _$HomeDefaultTileFromJson(json);
+
+  final List<dynamic>? data;
 
   @override
   Map<String, dynamic> toJson() => _$HomeDefaultTileToJson(this);

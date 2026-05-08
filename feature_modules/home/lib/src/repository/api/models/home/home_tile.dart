@@ -6,17 +6,17 @@ import 'home_tile_type.dart';
 
 @JsonSerializable()
 abstract class HomeTile extends Equatable {
-  final HomeTileType type;
-  final int size;
-  final String title;
-  final String? description;
-
   const HomeTile({
     required this.type,
     required this.size,
     required this.title,
     this.description,
   });
+
+  final HomeTileType type;
+  final int size;
+  final String title;
+  final String? description;
 
   static HomeTile fromJson(Map<String, dynamic> json) {
     final type = $enumDecode($HomeTileTypeEnumMap, json['type']);
@@ -35,6 +35,7 @@ abstract class HomeTile extends Equatable {
       HomeTileType.other => HomeDefaultTile.fromJson(json),
       HomeTileType.mensa => HomeDefaultTile.fromJson(json),
       HomeTileType.libraries => HomeDefaultTile.fromJson(json),
+      HomeTileType.clubs => HomeDefaultTile.fromJson(json),
     };
   }
 
@@ -57,5 +58,6 @@ const $HomeTileTypeEnumMap = {
   HomeTileType.events: 'EVENTS',
   HomeTileType.mensa: 'MENSA',
   HomeTileType.libraries: 'LIBRARY',
+  HomeTileType.clubs: 'CLUBS',
   HomeTileType.other: 'OTHER',
 };

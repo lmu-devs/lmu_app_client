@@ -21,20 +21,26 @@ class BenefitsPage extends DrivableWidget<BenefitsPageDriver> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-        child: LmuPageAnimationWrapper(
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: content,
-          ),
-        ),
+        child: content,
       ),
     );
   }
 
   Widget get content {
-    if (driver.isLoading) return const BenefitsPageLoading();
+    if (driver.isLoading) {
+      return const BenefitsPageLoading(
+        key: ValueKey("benefits_page_loading"),
+      );
+    }
+    if (driver.isGenericError) {
+      return LmuEmptyState(type: EmptyStateType.generic, onRetry: driver.onRetry);
+    }
+    if (driver.isNoNetworkError) {
+      return LmuEmptyState(type: EmptyStateType.noInternet, onRetry: driver.onRetry);
+    }
 
     return Column(
+      key: ValueKey("benefits_page_content"),
       children: [
         const SizedBox(height: LmuSizes.size_16),
         LmuContentTile(

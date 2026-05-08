@@ -1,0 +1,1 @@
+class MenuGenericException implements Exception {}

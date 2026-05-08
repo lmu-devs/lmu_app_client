@@ -16,6 +16,8 @@ class BenefitDto extends Equatable {
     this.image,
   });
 
+  factory BenefitDto.fromJson(Map<String, dynamic> json) => _$BenefitDtoFromJson(json);
+
   final String id;
   final String title;
   final String description;
@@ -23,8 +25,6 @@ class BenefitDto extends Equatable {
   @JsonKey(name: 'favicon_url')
   final String faviconUrl;
   final ImageDto? image;
-
-  factory BenefitDto.fromJson(Map<String, dynamic> json) => _$BenefitDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$BenefitDtoToJson(this);
 

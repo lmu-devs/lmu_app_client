@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:core/constants.dart';
-import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_svg/lucide_icons_svg.dart';
+
+import '../../../constants.dart';
+import '../../../themes.dart';
 
 class LmuCachedNetworkImage extends StatelessWidget {
   const LmuCachedNetworkImage({

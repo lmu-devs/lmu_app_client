@@ -22,6 +22,9 @@ class ExplorePageDriver extends WidgetDriver {
   final _mapService = GetIt.I<ExploreMapService>();
   final _locationService = GetIt.I<ExploreLocationService>();
 
+  @TestDriverDefaultValue(_TestScrollController())
+  late final ScrollController filterScrollController;
+
   late final ValueNotifier<List<ExploreLocation>> _filteredLocationsNotifier;
   late Brightness _brightness;
   TileProvider? _tileProvider;
@@ -44,7 +47,7 @@ class ExplorePageDriver extends WidgetDriver {
   CameraConstraint get cameraConstraint => CameraConstraint.contain(bounds: _mapService.mapBounds);
 
   @TestDriverDefaultValue(InteractionOptions())
-  InteractionOptions get interactionOptions => const InteractionOptions(rotationThreshold: 40);
+  InteractionOptions get interactionOptions => const InteractionOptions(rotationThreshold: 80, pinchMoveThreshold: 60);
 
   @TestDriverDefaultValue("")
   String get urlTemplate => _brightness == Brightness.light
@@ -82,15 +85,39 @@ class ExplorePageDriver extends WidgetDriver {
     );
   }
 
+  void _onScrollRequest() {
+    final filterToScrollTo = _locationService.initialScrollRequestNotifier.value;
+
+    if (filterToScrollTo == null) return;
+    if (filterToScrollTo == ExploreFilterType.library) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (filterScrollController.hasClients) {
+          final maxScroll = filterScrollController.position.maxScrollExtent;
+          filterScrollController.animateTo(
+            maxScroll,
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.easeInOut,
+          );
+        }
+      });
+    }
+
+    _locationService.clearScrollRequest();
+  }
+
   @override
   void didInitDriver() async {
     super.didInitDriver();
+    filterScrollController = ScrollController();
+
     _mapService.init();
     _locationService.init();
 
     _filteredLocationsNotifier = _locationService.filteredLocationsNotifier;
     _filteredLocationsNotifier.addListener(_onExploreLocationsChanged);
     _tileProvider = await _initTileProvider();
+
+    _locationService.initialScrollRequestNotifier.addListener(_onScrollRequest);
   }
 
   @override
@@ -101,9 +128,15 @@ class ExplorePageDriver extends WidgetDriver {
 
   @override
   void dispose() {
+    filterScrollController.dispose();
+    _locationService.initialScrollRequestNotifier.removeListener(_onScrollRequest);
     _filteredLocationsNotifier.removeListener(_onExploreLocationsChanged);
     super.dispose();
   }
+}
+
+class _TestScrollController extends EmptyDefault implements ScrollController {
+  const _TestScrollController();
 }
 
 class _TestMapController extends EmptyDefault implements MapController {

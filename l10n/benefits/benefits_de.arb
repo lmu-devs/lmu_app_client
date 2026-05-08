@@ -2,5 +2,7 @@
   "@@locale": "de",
   "@@context": "Benefits",
   "benefitsTitle": "Vorteile",
-  "benefitSuggestion": "Schlage einen Benefit vor"
+  "benefitSuggestion": "Schlage einen Benefit vor",
+  "benefitSuggestionDescription": "Kennst du ein Angebot oder einen Vorteil speziell für Studierende, den du besonders hilfreich findest und weiterempfehlen würdest?",
+  "benefitSuggestionHint": "Füge einen Link ein oder beschreibe deinen Vorschlag ..."
 }

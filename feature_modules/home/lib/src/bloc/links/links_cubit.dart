@@ -14,13 +14,19 @@ class LinksCubit extends Cubit<LinksState> {
     final cachedData = await _repository.getCachedLinks();
     emit(LinksLoadInProgress(links: cachedData));
 
-    final links = await _repository.getLinks();
-    if (links == null && cachedData == null) {
-      emit(const LinksLoadFailure());
-      listenForConnectivityRestoration(getLinks);
-      return;
+    try {
+      final links = await _repository.getLinks();
+      emit(LinksLoadSuccess(links: links));
+    } catch (e) {
+      if (cachedData != null) {
+        emit(LinksLoadSuccess(links: cachedData));
+      } else {
+        if (e is NoNetworkException) {
+          emit(const LinksLoadFailure(loadState: LoadState.noNetworkError));
+        } else {
+          emit(const LinksLoadFailure(loadState: LoadState.genericError));
+        }
+      }
     }
-
-    emit(LinksLoadSuccess(links: links ?? cachedData!));
   }
 }

@@ -8,7 +8,9 @@ import 'explore_action_row.dart';
 import 'explore_location_button.dart';
 
 class ExploreMapOverlay extends StatelessWidget {
-  const ExploreMapOverlay({super.key});
+  const ExploreMapOverlay({super.key, required this.filterScrollController});
+
+  final ScrollController filterScrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class ExploreMapOverlay extends StatelessWidget {
             ],
           ),
         ),
-        const ExploreActionRow(),
+        ExploreActionRow(filterScrollController: filterScrollController),
       ],
     );
   }

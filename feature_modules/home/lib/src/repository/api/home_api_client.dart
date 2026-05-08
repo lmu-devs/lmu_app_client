@@ -23,6 +23,16 @@ class HomeApiClient {
     final jsonList = json.decode(response.body) as List<dynamic>;
     return jsonList.map((json) => LinkModel.fromJson(json as Map<String, dynamic>)).toList();
   }
+
+  Future<bool> toggleFavoriteLink(String id) async {
+    final response = await _baseApiClient.post(HomeApiEndpoints.toggleFavoriteLink(id));
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to toggle favorite link - ${response.statusCode}');
+    }
+
+    return response.body == 'true';
+  }
 }
 
 const homeTestData = {
@@ -35,6 +45,7 @@ const homeTestData = {
     {"type": "LINKS", "size": 1, "title": "Links", "description": null, "data": null},
     {"type": "BENEFITS", "size": 1, "title": "Benefits", "description": null, "data": null},
     {"type": "TIMELINE", "size": 1, "title": "Timeline", "description": null, "data": null},
+    {"type": "CLUBS", "size": 1, "title": "Clubs", "description": null, "data": null},
     {"type": "FEEDBACK", "size": 1, "title": "Feedback", "description": null, "data": null}
   ]
 };

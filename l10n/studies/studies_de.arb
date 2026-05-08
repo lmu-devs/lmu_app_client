@@ -1,5 +1,10 @@
 {
   "@@locale": "de",
   "@@context": "Studies",
-  "studiesTitle": "Studium"
+  "studiesTitle": "Studium",
+  "facultiesTitle": "Fakultäten",
+  "myFaculties": "Meine Fakultäten",
+  "allFaculties": "Alle Fakultäten",
+  "showAllFaculties": "Alle Fakultäten anzeigen",
+  "facultiesSubtitle": "aus der {facultyName}"
 }

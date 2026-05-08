@@ -19,7 +19,7 @@ extension WishlistStatusExtension on WishlistStatus {
   String getValue(BuildContext context) {
     switch (this) {
       case WishlistStatus.none:
-        return '';
+        return context.locals.wishlist.wishlistStatusVoting;
       case WishlistStatus.hidden:
         return context.locals.wishlist.wishlistStatusHidden;
       case WishlistStatus.development:

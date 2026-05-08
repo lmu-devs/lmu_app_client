@@ -14,12 +14,12 @@ import '../util/screening_time.dart';
 
 class ScreeningCard extends StatelessWidget {
   const ScreeningCard({
-    Key? key,
+    super.key,
     required this.cinema,
     required this.screening,
     required this.cinemaScreenings,
     required this.isLastItem,
-  }) : super(key: key);
+  });
 
   final CinemaModel cinema;
   final ScreeningModel screening;
@@ -114,10 +114,13 @@ class ScreeningCard extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Flexible(
-                                  child: LmuText.body(
-                                    screening.movie.title,
-                                    maxLines: 2,
-                                    customOverFlow: TextOverflow.ellipsis,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: LmuSizes.size_4),
+                                    child: LmuText.body(
+                                      screening.movie.title,
+                                      maxLines: 2,
+                                      customOverFlow: TextOverflow.ellipsis,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(width: LmuSizes.size_8),
@@ -130,8 +133,8 @@ class ScreeningCard extends StatelessWidget {
                                   child: Padding(
                                     padding: const EdgeInsets.only(
                                       left: LmuSizes.size_8,
-                                      right: LmuSizes.size_8,
-                                      top: LmuSizes.size_8,
+                                      right: LmuSizes.size_6,
+                                      top: LmuSizes.size_6,
                                       bottom: LmuSizes.size_4,
                                     ),
                                     child: StarIcon(isActive: likedScreeningIds.contains(screening.id)),
@@ -141,6 +144,7 @@ class ScreeningCard extends StatelessWidget {
                             );
                           },
                         ),
+                        const SizedBox(height: LmuSizes.size_2),
                         LmuText.bodySmall(
                           getScreeningTime(context: context, time: screening.entryTime),
                           color: context.colors.neutralColors.textColors.mediumColors.base,
@@ -149,7 +153,7 @@ class ScreeningCard extends StatelessWidget {
                         LmuText.bodySmall(
                           screening.isOv == true
                               ? context.locals.cinema.ov
-                              : (screening.isOv == false ? context.locals.cinema.germanTranslation : '-'),
+                              : (screening.isOv == false ? context.locals.cinema.germanTranslation : ''),
                           color: context.colors.neutralColors.textColors.mediumColors.base,
                         ),
                       ],

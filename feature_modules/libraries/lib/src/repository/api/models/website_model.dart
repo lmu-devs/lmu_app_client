@@ -10,10 +10,10 @@ class WebsiteModel extends Equatable {
     required this.url,
   });
 
+  factory WebsiteModel.fromJson(Map<String, dynamic> json) => _$WebsiteModelFromJson(json);
+
   final String title;
   final String url;
-
-  factory WebsiteModel.fromJson(Map<String, dynamic> json) => _$WebsiteModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$WebsiteModelToJson(this);
 

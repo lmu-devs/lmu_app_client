@@ -33,6 +33,20 @@
   "@closed": {
     "description": "The state of being closed"
   },
+  "closedDescription": "Unfortunately {canteenGender} {canteenName} is closed today.",
+  "@closedDescription": {
+    "description": "The state of being closed with canteen name",
+    "placeholders": {
+      "canteenName": {
+        "type": "String",
+        "example": "Mensa"
+      },
+      "canteenGender": {
+        "type": "String",
+        "example": "this"
+      }
+    }
+  },
   "allCanteens": "All Canteens",
   "@allCanteens": {
     "description": "Display all canteens"
@@ -97,10 +111,6 @@
   "@presets": {
     "description": "Presets"
   },
-  "reset": "Reset",
-  "@reset": {
-    "description": "Reset"
-  },
   "tastePreferences": "I eat and tolerate",
   "@tastePreferences": {
     "description": "The user's taste preferences"
@@ -116,10 +126,6 @@
   "retry": "Retry",
   "@retry": {
     "description": "Retry"
-  },
-  "share": "Share",
-  "@share": {
-    "description": "Share button"
   },
   "openDetails": "Open from {openingTime}-{closingTime}",
   "@openDetails": {
@@ -287,13 +293,9 @@
   "@menuNotAvailable": {
     "description": "Menu not available"
   },
-  "unsavedChanges": "You Have Unsaved Changes",
-  "@unsavedChanges": {
-    "description": "Unsaved changes"
-  },
-  "unsavedChangesDescription": "Do you want to continue editing?",
-  "@unsavedChangesDescription": {
-    "description": "Unsaved changes description"
+  "menuNotAvailableDescription": "No menu available for this day yet. Please check back later.",
+  "@menuNotAvailableDescription": {
+    "description": "Description for menu not available"
   },
   "canteens": "Canteens",
   "@canteens": {

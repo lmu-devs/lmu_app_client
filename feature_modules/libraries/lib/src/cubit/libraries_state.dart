@@ -1,3 +1,4 @@
+import 'package:core/utils.dart';
 import 'package:equatable/equatable.dart';
 
 import '../repository/api/api.dart';
@@ -31,5 +32,10 @@ class LibrariesLoadSuccess extends LibrariesState {
 }
 
 class LibrariesLoadFailure extends LibrariesState {
-  const LibrariesLoadFailure();
+  const LibrariesLoadFailure({this.loadState = LoadState.genericError});
+
+  final LoadState loadState;
+
+  @override
+  List<Object> get props => [loadState];
 }

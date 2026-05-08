@@ -3,7 +3,6 @@
   "@@context": "Sports",
   "sportsTitle": "Sport",
   "sportOffers": "Sportangebote",
-  "sportsInfoEntry": "Wie funktioniert ZHS",
   "sportTypes": "Sportarten",
   "course": "Kurs",
   "courses": "Kurse",
@@ -14,6 +13,7 @@
   "past": "Abgelaufen",
   "fullyBooked": "Ausgebucht",
   "withTrainer": "bei",
+  "freeCourse": "Kostenlos",
   "yourTickets": "Deine Tickets",
-  "reccommendations": "Empfehlungen"
+  "recommendations": "Empfehlungen"
 }

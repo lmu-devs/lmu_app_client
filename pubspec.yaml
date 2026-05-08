@@ -1,7 +1,7 @@
 name: lmu_app
 description: "LMU Students - Your Companion for Study and Campus Life at LMU Munich"
 publish_to: "none"
-version: 1.1.0+14
+version: 2.0.0+20
 
 environment:
   sdk: ">=3.2.4 <4.0.0"
@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_dotenv: ^5.2.1
-  go_router: any
+  go_router: 15.1.3
   flutter_bloc: ^8.1.3
   core:
     path: ./core
@@ -46,6 +46,18 @@ dependencies:
     path: ./feature_modules/launch_flow
   studies:
     path: ./feature_modules/studies
+  calendar:
+    path: ./feature_modules/calendar
+  courses:
+    path: ./feature_modules/courses
+  people:
+    path: ./feature_modules/people
+  developerdex:
+    path: ./feature_modules/developerdex
+  clubs:
+    path: ./feature_modules/clubs
+  grades:
+    path: ./feature_modules/grades
   shared_api:
     path: ./shared_api
 
@@ -59,15 +71,14 @@ dependencies:
   flutter_svg: ^2.0.9
   fluttertoast: ^8.2.8
   flutter_native_splash: ^2.3.1
+  animated_reorderable_list: ^1.3.0
+  firebase_core: ^3.14.0
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
   flutter_lints: ^4.0.0
   go_router_builder: ^2.9.0
   json_serializable: ^6.6.2
   build_runner: any
-  build_verify: any
   husky: ^0.1.7
 
 flutter:

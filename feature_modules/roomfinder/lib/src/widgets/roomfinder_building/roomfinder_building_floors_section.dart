@@ -84,7 +84,11 @@ class _RoomfinderBuildingFloorsSectionState extends State<RoomfinderBuildingFloo
                       onTap: () {
                         final url =
                             "https://www.lmu.de/raumfinder/index.html#/building/${widget._building.id}/map?room=${room.id}";
-                        LmuUrlLauncher.launchWebsite(context: context, url: url);
+                        LmuUrlLauncher.launchWebsite(
+                          context: context,
+                          url: url,
+                          mode: LmuUrlLauncherMode.inAppWebView,
+                        );
                       },
                     );
                   },

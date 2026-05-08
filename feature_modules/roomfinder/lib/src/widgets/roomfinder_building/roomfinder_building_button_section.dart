@@ -5,6 +5,7 @@ import 'package:core_routes/roomfinder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_api/explore.dart';
 
 import '../../repository/api/models/models.dart';
 import '../../services/roomfinder_room_search_service.dart';
@@ -24,11 +25,15 @@ class RoomfinderBuildingButtonSection extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.only(bottom: LmuSizes.size_16),
-        child: Row(
-          children: [
-            const SizedBox(width: LmuSizes.size_16),
-            if (withMapButton) LmuMapImageButton(onTap: () => const ExploreMainRoute().go(context)),
-            if (withMapButton) const SizedBox(width: LmuSizes.size_8),
+        child: LmuButtonRow(
+          buttons: [
+            if (withMapButton)
+              LmuMapImageButton(
+                  onTap: () {
+                    const ExploreMainRoute().go(context);
+                    GetIt.I<ExploreApi>().selectLocation(building.buildingPartId);
+                  },
+              ),
             LmuIconButton(
               icon: LucideIcons.search,
               onPressed: () async {
@@ -47,7 +52,6 @@ class RoomfinderBuildingButtonSection extends StatelessWidget {
                 }
               },
             ),
-            const SizedBox(width: LmuSizes.size_16),
           ],
         ),
       ),

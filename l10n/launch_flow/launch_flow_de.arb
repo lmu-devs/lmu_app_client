@@ -9,5 +9,21 @@
   "developedByStudentsDescription": "Von eurer Hochschulgruppe LMU Developers gebaut",
   "moreToComeTitle": "Freut euch auf mehr",
   "moreToComeDescription": "Geh mit uns auf die Reise zur besten Uni-App der Welt",
-  "letsGo": "Los geht's"
+  "dataPrivacyIntro": "Mit dem Fortfahren akzeptierst du unsere ",
+  "dataPrivacyLabel": "Datenschutzerklärung",
+  "letsGo": "Los geht's",
+  "releaseNotesTitle": "Was ist neu?",
+  "version": "Version {appVersion}",
+  "facultySelectionTitle": "Wähle deine Fakultät",
+  "@facultySelectionTitle": {
+    "description": "Titel für den Fakultätsauswahl-Screen"
+  },
+  "facultySelectionDescription": "um personalisierte Inhalte zu sehen",
+  "@facultySelectionDescription": {
+    "description": "Beschreibung für den Fakultätsauswahl-Screen"
+  },
+  "permissionsOnboardingTitle": "Benachrichtigungen",
+  "permissionsOnboardingDescription": "Bleibe über aktuelle Informationen wie Fristen, Veranstaltungen und Neuigkeiten auf dem Laufenden",
+  "permissionsOnboardingButton": "Erlauben",
+  "permissionsOnboardingSkip": "Später festlegen"
 }

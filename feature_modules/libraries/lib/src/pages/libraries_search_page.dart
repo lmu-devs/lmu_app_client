@@ -43,7 +43,7 @@ class _LibrariesSearchPageState extends State<LibrariesSearchPage> {
   Widget build(BuildContext context) {
     return LmuSearchPage<LibrarySearchEntry>(
       searchEntries: _searchEntries,
-      emptySearchEntriesTitle: context.locals.roomfinder.popular,
+      emptySearchEntriesTitle: context.locals.app.popular,
       emptySearchEntries: _searchService.popularLibraries
           .map((library) => LibrarySearchEntry(title: library.name, id: library.id))
           .toList(),

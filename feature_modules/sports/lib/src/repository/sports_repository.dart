@@ -1,14 +1,17 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:core/logging.dart';
+import 'package:core/utils.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/api.dart';
 import 'api/models/sports_favorites.dart';
+import 'errors/sports_generic_exception.dart';
 
 abstract class SportsRepository {
-  Future<SportsModel?> getSports();
+  Future<SportsModel> getSports();
 
   Future<SportsModel?> getCachedSports();
 
@@ -32,7 +35,7 @@ class ConnectedSportsRepository implements SportsRepository {
   final _apiClient = GetIt.I.get<SportsApiClient>();
 
   @override
-  Future<SportsModel?> getSports() async {
+  Future<SportsModel> getSports() async {
     final prefs = await SharedPreferences.getInstance();
     try {
       final sportsData = await _apiClient.getSports();
@@ -41,7 +44,8 @@ class ConnectedSportsRepository implements SportsRepository {
 
       return sportsData;
     } catch (e) {
-      return null;
+      if (e is SocketException) throw NoNetworkException();
+      throw SportsGenericException();
     }
   }
 

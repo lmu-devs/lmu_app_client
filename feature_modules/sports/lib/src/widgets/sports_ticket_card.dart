@@ -177,7 +177,8 @@ class SportsTicketCard extends StatelessWidget {
 }
 
 class DashedLine extends StatelessWidget {
-  const DashedLine({Key? key, this.height = 1, this.color = Colors.black}) : super(key: key);
+  const DashedLine({super.key, this.height = 1, this.color = Colors.black});
+
   final double height;
   final Color color;
 

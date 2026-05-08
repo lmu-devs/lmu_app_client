@@ -40,32 +40,32 @@ class RoomfinderLoadingView extends StatelessWidget {
             ),
           ),
           const SizedBox(height: LmuSizes.size_16),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
-            child: Column(
-              children: [
-                const LmuTileHeadlineLoading(titleLength: 2),
-                Row(
-                  children: [
-                    LmuMapImageButton(onTap: () {}),
-                    const SizedBox(width: LmuSizes.size_8),
-                    LmuIconButton(
-                      icon: LucideIcons.search,
-                      isDisabled: true,
-                      onPressed: () {},
-                    ),
-                    const SizedBox(width: LmuSizes.size_8),
-                    LmuButton(
-                      title: context.locals.roomfinder.alphabetical,
-                      emphasis: ButtonEmphasis.secondary,
-                      state: ButtonState.disabled,
-                      trailingIcon: LucideIcons.chevron_down,
-                    ),
-                  ],
-                ),
-              ],
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
+                child: LmuTileHeadlineLoading(titleLength: 2),
+              ),
+              LmuButtonRow(
+                buttons: [
+                  LmuMapImageButton(onTap: () {}),
+                  LmuIconButton(
+                    icon: LucideIcons.search,
+                    isDisabled: true,
+                    onPressed: () {},
+                  ),
+                  LmuButton(
+                    title: context.locals.roomfinder.alphabetical,
+                    emphasis: ButtonEmphasis.secondary,
+                    state: ButtonState.disabled,
+                    trailingIcon: LucideIcons.chevron_down,
+                  ),
+                ],
+              ),
+            ],
           ),
+          const SizedBox(height: LmuSizes.size_8),
           Padding(
             padding: const EdgeInsets.all(LmuSizes.size_16),
             child: Column(

@@ -1,0 +1,1 @@
+class WishlistGenericException implements Exception {}

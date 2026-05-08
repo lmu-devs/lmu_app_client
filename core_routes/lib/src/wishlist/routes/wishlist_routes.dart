@@ -14,7 +14,7 @@ class WishlistData extends StatefulShellBranchData {
 class WishlistMainRoute extends GoRouteData {
   const WishlistMainRoute();
 
-  static const String path = '/wishlist';
+  static const String path = '/app/wishlist';
 
   @override
   Widget build(BuildContext context, GoRouterState state) => _router.buildMain(context);

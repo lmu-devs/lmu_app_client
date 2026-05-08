@@ -6,14 +6,12 @@ part of 'description_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-DescriptionModel _$DescriptionModelFromJson(Map<String, dynamic> json) =>
-    DescriptionModel(
+DescriptionModel _$DescriptionModelFromJson(Map<String, dynamic> json) => DescriptionModel(
       emoji: json['emoji'] as String,
       description: json['description'] as String,
     );
 
-Map<String, dynamic> _$DescriptionModelToJson(DescriptionModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$DescriptionModelToJson(DescriptionModel instance) => <String, dynamic>{
       'emoji': instance.emoji,
       'description': instance.description,
     };

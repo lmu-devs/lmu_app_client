@@ -8,9 +8,8 @@ extension LocalizationExtension on BuildContext {
 }
 
 class LmuLocalizations {
-  final BuildContext _context;
-
   const LmuLocalizations(this._context);
+  final BuildContext _context;
 
   AppLocalizations get app => AppLocalizations.of(_context)!;
   CanteenLocalizations get canteen => CanteenLocalizations.of(_context)!;
@@ -27,6 +26,11 @@ class LmuLocalizations {
   BenefitsLocatizations get benefits => BenefitsLocatizations.of(_context)!;
   LaunchFlowLocatizations get launchFlow => LaunchFlowLocatizations.of(_context)!;
   StudiesLocatizations get studies => StudiesLocatizations.of(_context)!;
+  CoursesLocatizations get courses => CoursesLocatizations.of(_context)!;
+  PeopleLocatizations get people => PeopleLocatizations.of(_context)!;
+  DeveloperdexLocatizations get developerdex => DeveloperdexLocatizations.of(_context)!;
+  GradesLocatizations get grades => GradesLocatizations.of(_context)!;
+  ClubsLocalizations get clubs => ClubsLocalizations.of(_context)!;
   // Add other localizations
 
   /// List of all supported localizations delegates
@@ -46,6 +50,11 @@ class LmuLocalizations {
         BenefitsLocatizations.delegate,
         LaunchFlowLocatizations.delegate,
         StudiesLocatizations.delegate,
+        CoursesLocatizations.delegate,
+        PeopleLocatizations.delegate,
+        DeveloperdexLocatizations.delegate,
+        GradesLocatizations.delegate,
+        ClubsLocalizations.delegate,
         // Add other localizations delegates
 
         GlobalMaterialLocalizations.delegate,

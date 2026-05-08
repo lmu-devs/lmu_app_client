@@ -1,3 +1,4 @@
+import 'package:core/utils.dart';
 import 'package:equatable/equatable.dart';
 
 import '../repository/api/api.dart';
@@ -37,5 +38,10 @@ class CinemaLoadSuccess extends CinemaState {
 }
 
 class CinemaLoadFailure extends CinemaState {
-  const CinemaLoadFailure();
+  const CinemaLoadFailure({this.loadState = LoadState.genericError});
+
+  final LoadState loadState;
+
+  @override
+  List<Object> get props => [loadState];
 }

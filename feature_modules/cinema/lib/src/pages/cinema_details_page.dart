@@ -2,9 +2,12 @@ import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
+import 'package:core_routes/explore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:get_it/get_it.dart';
+import 'package:shared_api/explore.dart';
 
 import '../repository/api/api.dart';
 import '../routes/cinema_details_data.dart';
@@ -16,10 +19,12 @@ class CinemaDetailsPage extends StatelessWidget {
     super.key,
     required this.cinemaDetailsData,
     this.withAppBar = true,
+    this.withMapButton = true,
   });
 
   final CinemaDetailsData cinemaDetailsData;
   final bool withAppBar;
+  final bool withMapButton;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +37,13 @@ class CinemaDetailsPage extends StatelessWidget {
         const SizedBox(height: LmuSizes.size_16),
         LmuButtonRow(
           buttons: [
+            if (withMapButton)
+              LmuMapImageButton(
+                onTap: () {
+                  const ExploreMainRoute().go(context);
+                  GetIt.I<ExploreApi>().selectLocation(cinema.id);
+                },
+            ),
             LmuButton(
               title: 'Instagram',
               emphasis: ButtonEmphasis.secondary,
@@ -68,7 +80,7 @@ class CinemaDetailsPage extends StatelessWidget {
                 hasDivider: true,
                 onTap: () => LmuBottomSheet.show(
                   context,
-                  content: NavigationSheet(location: cinema.location),
+                  content: NavigationSheet(id: cinema.id, location: cinema.location),
                 ),
               ),
               ...List.generate(

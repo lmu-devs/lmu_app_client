@@ -7,11 +7,6 @@ part 'taste_profile_label.g.dart';
 
 @JsonSerializable()
 class TasteProfileLabel extends Equatable {
-  @JsonKey(name: 'enum_category')
-  final String enumCategory;
-  final String name;
-  final List<TasteProfileLabelItem> items;
-
   const TasteProfileLabel({
     required this.enumCategory,
     required this.name,
@@ -19,6 +14,11 @@ class TasteProfileLabel extends Equatable {
   });
 
   factory TasteProfileLabel.fromJson(Map<String, dynamic> json) => _$TasteProfileLabelFromJson(json);
+
+  @JsonKey(name: 'enum_category')
+  final String enumCategory;
+  final String name;
+  final List<TasteProfileLabelItem> items;
   Map<String, dynamic> toJson() => _$TasteProfileLabelToJson(this);
 
   @override

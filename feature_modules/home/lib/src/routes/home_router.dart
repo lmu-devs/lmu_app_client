@@ -11,5 +11,11 @@ class HomeRouterImpl extends HomeRouter {
   Widget buildLinks(BuildContext context) => const LinksPage();
 
   @override
-  Widget buildLinksSearch(BuildContext context) => const LinksSearchPage();
+  Widget buildLinksFaculties(BuildContext context) => const LinksFacultiesPage();
+
+  @override
+  Widget buildLinksOverview(BuildContext context, {required int facultyId}) => LinksOverviewPage(facultyId: facultyId);
+
+  @override
+  Widget buildLinksSearch(BuildContext context, {required int facultyId}) => LinksSearchPage(facultyId: facultyId);
 }

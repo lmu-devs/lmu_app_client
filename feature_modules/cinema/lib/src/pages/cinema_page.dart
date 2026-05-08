@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/localizations.dart';
+import 'package:core/utils.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -15,10 +16,11 @@ class CinemaPage extends StatefulWidget {
 }
 
 class _CinemaPageState extends State<CinemaPage> {
+  late final CinemaCubit cinemaCubit;
   @override
   void initState() {
     super.initState();
-    final cinemaCubit = GetIt.I.get<CinemaCubit>();
+    cinemaCubit = GetIt.I.get<CinemaCubit>();
     if (cinemaCubit.state is! CinemaLoadSuccess) {
       cinemaCubit.loadCinemaData();
     }
@@ -32,7 +34,7 @@ class _CinemaPageState extends State<CinemaPage> {
         leadingAction: LeadingAction.back,
       ),
       body: BlocBuilder<CinemaCubit, CinemaState>(
-        bloc: GetIt.I.get<CinemaCubit>(),
+        bloc: cinemaCubit,
         builder: (context, state) {
           Widget child = const CinemaLoadingView(key: ValueKey("cinemaLoading"));
 
@@ -48,8 +50,17 @@ class _CinemaPageState extends State<CinemaPage> {
               cinemas: state.cinemas,
               screenings: state.screenings,
             );
+          } else if (state is CinemaLoadFailure) {
+            final isNoNetworkError = state.loadState.isNoNetworkError;
+
+            child = LmuEmptyState(
+              key: ValueKey("cinema${isNoNetworkError ? 'NoNetwork' : 'GenericError'}"),
+              type: isNoNetworkError ? EmptyStateType.noInternet : EmptyStateType.generic,
+              hasVerticalPadding: true,
+              onRetry: () => cinemaCubit.loadCinemaData(),
+            );
           }
-          return LmuPageAnimationWrapper(child: child);
+          return child;
         },
       ),
     );

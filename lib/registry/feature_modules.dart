@@ -1,11 +1,17 @@
 import 'package:benefits/benefits.dart';
+import 'package:calendar/calendar.dart';
 import 'package:cinema/cinema.dart';
+import 'package:clubs/clubs.dart';
+import 'package:courses/courses.dart';
+import 'package:developerdex/developerdex.dart';
 import 'package:explore/explore.dart';
 import 'package:feedback/feedback.dart';
+import 'package:grades/grades.dart';
 import 'package:home/home.dart';
 import 'package:launch_flow/launch_flow.dart';
 import 'package:libraries/libraries.dart';
 import 'package:mensa/mensa.dart';
+import 'package:people/people.dart';
 import 'package:roomfinder/roomfinder.dart';
 import 'package:settings/settings.dart';
 import 'package:sports/sports.dart';
@@ -28,6 +34,12 @@ final modules = [
   SportsModule(),
   TimelineModule(),
   BenefitsModule(),
-  LaunchFlowModule(),
+  ClubsModule(),
   StudiesModule(),
+  LaunchFlowModule(),
+  CalendarModule(),
+  CoursesModule(),
+  PeopleModule(),
+  DeveloperdexModule(),
+  GradesModule(),
 ];

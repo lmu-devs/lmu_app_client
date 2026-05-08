@@ -1,5 +1,6 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
+import 'package:core/core_services.dart';
 import 'package:core/localizations.dart';
 import 'package:core/themes.dart';
 import 'package:core/utils.dart';
@@ -313,11 +314,10 @@ class _TasteProfilePageState extends State<TasteProfilePage> {
     void Function()? onContinuePressed,
   }) async {
     final appLocals = context.locals.app;
-    final canteenLocals = context.locals.canteen;
     await LmuDialog.show(
       context: context,
-      title: canteenLocals.unsavedChanges,
-      description: canteenLocals.unsavedChangesDescription,
+      title: appLocals.unsavedChanges,
+      description: appLocals.unsavedChangesDescription,
       buttonActions: [
         LmuDialogAction(
           title: appLocals.discard,
@@ -370,12 +370,11 @@ class _LabelsHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = context.locals.canteen;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
       child: LmuTileHeadline.action(
-        title: localizations.tastePreferences,
-        actionTitle: localizations.reset,
+        title: context.locals.canteen.tastePreferences,
+        actionTitle: context.locals.app.reset,
         onActionTap: GetIt.I.get<TasteProfileService>().reset,
       ),
     );
@@ -425,12 +424,17 @@ class _SaveButtonState extends State<_SaveButton> {
               increaseTouchTarget: true,
               textScaleFactorEnabled: false,
               onTap: () {
+                final preferencePreset = tasteProfileService.selectedPreferencePresetNotifier.value;
                 tasteProfileService.saveTasteProfileState(
                   selectedAllergiesPresets: tasteProfileService.selectedAllergiesPresetsNotifier.value,
                   excludedLabels: _excludedLabelsNotifier.value,
                   isActive: _isActiveNotifier.value,
-                  selectedPreferencePreset: tasteProfileService.selectedPreferencePresetNotifier.value,
+                  selectedPreferencePreset: preferencePreset,
                 );
+                if (preferencePreset != null && preferencePreset.isNotEmpty) {
+                  final AnalyticsClient analytics = GetIt.I<AnalyticsClient>();
+                  analytics.logSelection(contentType: "taste_profile_preset", itemId: preferencePreset);
+                }
                 Navigator.of(context, rootNavigator: true).pop();
               },
             );
