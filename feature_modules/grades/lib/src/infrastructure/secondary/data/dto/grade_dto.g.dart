@@ -13,6 +13,7 @@ GradeDto _$GradeDtoFromJson(Map<String, dynamic> json) => GradeDto(
       grade: (json['grade'] as num?)?.toDouble(),
       semester: json['semester'] as String,
       isActive: json['isActive'] as bool? ?? true,
+      courseId: (json['courseId'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$GradeDtoToJson(GradeDto instance) => <String, dynamic>{
@@ -22,4 +23,5 @@ Map<String, dynamic> _$GradeDtoToJson(GradeDto instance) => <String, dynamic>{
       'grade': instance.grade,
       'semester': instance.semester,
       'isActive': instance.isActive,
+      'courseId': instance.courseId,
     };

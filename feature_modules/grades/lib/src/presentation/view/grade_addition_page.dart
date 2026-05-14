@@ -8,12 +8,26 @@ import '../component/grade_form_body.dart';
 import '../viewmodel/grade_addition_page_driver.dart';
 
 class GradeAdditionPage extends DrivableWidget<GradeAdditionPageDriver> {
-  GradeAdditionPage({super.key});
+  GradeAdditionPage({
+    super.key,
+    this.initialName,
+    this.courseId,
+  });
 
-  static void show(BuildContext context) {
+  final String? initialName;
+  final int? courseId;
+
+  static void show(
+    BuildContext context, {
+    String? initialName,
+    int? courseId,
+  }) {
     LmuBottomSheet.showExtended(
       context,
-      content: GradeAdditionPage(),
+      content: GradeAdditionPage(
+        initialName: initialName,
+        courseId: courseId,
+      ),
     );
   }
 
@@ -58,5 +72,9 @@ class GradeAdditionPage extends DrivableWidget<GradeAdditionPageDriver> {
   }
 
   @override
-  WidgetDriverProvider<GradeAdditionPageDriver> get driverProvider => $GradeAdditionPageDriverProvider();
+  WidgetDriverProvider<GradeAdditionPageDriver> get driverProvider =>
+      $GradeAdditionPageDriverProvider(
+        initialName: initialName,
+        courseId: courseId,
+      );
 }

@@ -15,6 +15,7 @@ class GradeDto extends Equatable {
     required this.grade,
     required this.semester,
     this.isActive = true,
+    this.courseId,
   });
 
   final String id;
@@ -23,6 +24,7 @@ class GradeDto extends Equatable {
   final double? grade;
   final String semester;
   final bool isActive;
+  final int? courseId;
 
   Grade toDomain() => Grade(
         id: id,
@@ -31,6 +33,7 @@ class GradeDto extends Equatable {
         grade: grade,
         semester: GradeSemesterExtension.fromJsonString(semester),
         isActive: isActive,
+        courseId: courseId,
       );
 
   factory GradeDto.fromDomain(Grade grade) => GradeDto(
@@ -40,6 +43,7 @@ class GradeDto extends Equatable {
         grade: grade.grade,
         semester: grade.semester.toJsonString(),
         isActive: grade.isActive,
+        courseId: grade.courseId,
       );
 
   factory GradeDto.fromJson(Map<String, dynamic> json) => _$GradeDtoFromJson(json);

@@ -64,6 +64,11 @@ class _$TestCourseDetailsPageDriver extends TestDriver
   String get quickfactText => ' ';
 
   @override
+  Widget buildGradeButton(BuildContext context) {
+    return SizedBox.shrink();
+  }
+
+  @override
   String lastUpdatedText() {
     return ' ';
   }

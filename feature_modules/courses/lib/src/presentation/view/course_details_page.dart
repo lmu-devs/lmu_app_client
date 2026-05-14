@@ -3,8 +3,8 @@ import 'package:core/constants.dart';
 import 'package:core/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:widget_driver/widget_driver.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:widget_driver/widget_driver.dart';
 
 import '../../domain/extension/person_model_extension.dart';
 import '../../domain/model/course_details_model.dart';
@@ -58,30 +58,27 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
             children: [
               LmuText(
                 driver.quickfactText,
-                color:
-                    context.colors.neutralColors.textColors.mediumColors.base,
+                color: context.colors.neutralColors.textColors.mediumColors.base,
               ),
               const SizedBox(height: LmuSizes.size_32),
               LmuButtonRow(
                 hasHorizontalPadding: false,
                 buttons: [
+                  driver.buildGradeButton(context),
                   LmuButton(
                     title: driver.shareButtonText,
                     emphasis: ButtonEmphasis.secondary,
                     onTap: pageNotReady
                         ? () => {}
                         : () {
-                            final params =
-                                ShareParams(uri: Uri.parse(driver.shareUrl));
+                            final params = ShareParams(uri: Uri.parse(driver.shareUrl));
                             SharePlus.instance.share(params);
                           },
                   ),
                 ],
               ),
               const SizedBox(height: LmuSizes.size_16),
-              pageNotReady
-                  ? const CourseDetailsLoading()
-                  : _buildCourseDetailsSection(context, courseDetails),
+              pageNotReady ? const CourseDetailsLoading() : _buildCourseDetailsSection(context, courseDetails),
               const SizedBox(height: LmuSizes.size_96),
             ],
           ),
@@ -101,12 +98,10 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
                 children: [
                   const SizedBox(height: LmuSizes.size_16),
                   driver.courseDetails!.sessions.length == 1
-                      ? SessionTile(
-                          session: driver.courseDetails!.sessions.first)
+                      ? SessionTile(session: driver.courseDetails!.sessions.first)
                       : LmuContentTile(
                           content: LmuListItem.action(
-                            subtitle:
-                                "${driver.courseDetails!.sessions.length} ${driver.sessionsText}",
+                            subtitle: "${driver.courseDetails!.sessions.length} ${driver.sessionsText}",
                             actionType: LmuListItemAction.chevron,
                             onTap: () => driver.onSessionsDetailsPressed(
                               context,
@@ -117,8 +112,7 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
                 ],
               )
             : const SizedBox.shrink(),
-        if (driver.courseDetails!.persons.isNotEmpty ||
-            driver.courseDetails!.additionalInformation.isNotEmpty) ...[
+        if (driver.courseDetails!.persons.isNotEmpty || driver.courseDetails!.additionalInformation.isNotEmpty) ...[
           const SizedBox(height: LmuSizes.size_8),
           LmuContentTile(
             contentList: [
@@ -126,8 +120,7 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
                   ? driver.courseDetails!.persons.length == 1
                       ? LmuListItem.base(
                           subtitle: driver.personText,
-                          trailingTitle:
-                              driver.courseDetails!.persons.first.getFullName(),
+                          trailingTitle: driver.courseDetails!.persons.first.getFullName(),
                           maximizeTrailingTitleArea: true,
                           mainContentAlignment: MainContentAlignment.top,
                         )
@@ -155,8 +148,7 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
         driver.courseDetails!.sessions.isEmpty &&
                 driver.courseDetails!.persons.isEmpty &&
                 driver.courseDetails!.additionalInformation.isEmpty
-            ? const CoursesEmptyState(
-                emptyStateType: CoursesEmptyStateType.noCourseData)
+            ? const CoursesEmptyState(emptyStateType: CoursesEmptyStateType.noCourseData)
             : const SizedBox(height: LmuSizes.size_32),
         Center(
           child: LmuText.bodyXSmall(
@@ -169,8 +161,7 @@ class CourseDetailsPage extends DrivableWidget<CourseDetailsPageDriver> {
   }
 
   @override
-  WidgetDriverProvider<CourseDetailsPageDriver> get driverProvider =>
-      $CourseDetailsPageDriverProvider(
+  WidgetDriverProvider<CourseDetailsPageDriver> get driverProvider => $CourseDetailsPageDriverProvider(
         facultyId: facultyId,
         courseId: courseId,
         name: name,

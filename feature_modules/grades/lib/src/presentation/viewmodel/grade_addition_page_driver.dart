@@ -12,7 +12,16 @@ import '../helpers/grade_form_constants.dart';
 part 'grade_addition_page_driver.g.dart';
 
 @GenerateTestDriver()
-class GradeAdditionPageDriver extends WidgetDriver {
+class GradeAdditionPageDriver extends WidgetDriver
+    implements _$DriverProvidedProperties {
+  GradeAdditionPageDriver({
+    @driverProvidableProperty this.initialName,
+    @driverProvidableProperty this.courseId,
+  });
+
+  final String? initialName;
+  final int? courseId;
+
   final _usecase = GetIt.I.get<GetGradesUsecase>();
   final _toastService = GetIt.I.get<GradesToastService>();
 
@@ -74,6 +83,7 @@ class GradeAdditionPageDriver extends WidgetDriver {
       grade: selectedGrade,
       ects: ects,
       semester: _selectedGradeSemester,
+      courseId: courseId,
     );
 
     _usecase.addGrade(newGrade);
@@ -93,10 +103,24 @@ class GradeAdditionPageDriver extends WidgetDriver {
   }
 
   @override
+  void didInitDriver() {
+    super.didInitDriver();
+    if (initialName != null) {
+      _nameController.text = initialName!;
+    }
+  }
+
+  @override
   void didUpdateBuildContext(BuildContext context) {
     super.didUpdateBuildContext(context);
     _gradesLocalizations = context.locals.grades;
   }
+
+  @override
+  void didUpdateProvidedProperties({
+    String? newInitialName,
+    int? newCourseId,
+  }) {}
 
   void onNoGradeReceivedChanged(bool value) {
     _noGradeReceived = value;

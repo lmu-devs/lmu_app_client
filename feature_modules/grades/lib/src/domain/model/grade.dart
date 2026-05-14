@@ -12,6 +12,7 @@ class Grade extends Equatable {
     required this.grade,
     required this.semester,
     this.isActive = true,
+    this.courseId,
   });
 
   final String id;
@@ -20,9 +21,10 @@ class Grade extends Equatable {
   final double? grade;
   final GradeSemester semester;
   final bool isActive;
+  final int? courseId;
 
   @override
-  List<Object?> get props => [id, name, ects, grade, semester, isActive];
+  List<Object?> get props => [id, name, ects, grade, semester, isActive, courseId];
 
   Grade copyWith({
     String? id,
@@ -31,6 +33,7 @@ class Grade extends Equatable {
     Object? grade = _sentinel,
     GradeSemester? semester,
     bool? isActive,
+    Object? courseId = _sentinel,
   }) {
     return Grade(
       id: id ?? this.id,
@@ -39,6 +42,7 @@ class Grade extends Equatable {
       grade: grade == _sentinel ? this.grade : grade as double?,
       semester: semester ?? this.semester,
       isActive: isActive ?? this.isActive,
+      courseId: courseId == _sentinel ? this.courseId : courseId as int?,
     );
   }
 }

@@ -1,13 +1,14 @@
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
 import 'package:core_routes/courses.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_api/grades.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../application/usecase/favorite_courses_usecase.dart';
 import '../../application/usecase/get_course_details_usecase.dart';
-import '../../application/usecase/get_courses_usecase.dart';
 import '../../domain/model/course_details_model.dart';
 import '../../domain/model/person_model.dart';
 import '../../domain/model/session_model.dart';
@@ -15,8 +16,7 @@ import '../../domain/model/session_model.dart';
 part 'course_details_page_driver.g.dart';
 
 @GenerateTestDriver()
-class CourseDetailsPageDriver extends WidgetDriver
-    implements _$DriverProvidedProperties {
+class CourseDetailsPageDriver extends WidgetDriver implements _$DriverProvidedProperties {
   CourseDetailsPageDriver({
     @driverProvidableProperty required int facultyId,
     @driverProvidableProperty required int courseId,
@@ -24,8 +24,7 @@ class CourseDetailsPageDriver extends WidgetDriver
     @driverProvidableProperty required this.language,
     @driverProvidableProperty this.degree,
     @driverProvidableProperty this.sws,
-  })
-      : _facultyId = facultyId,
+  })  : _facultyId = facultyId,
         _courseId = courseId;
 
   late final int _facultyId;
@@ -42,6 +41,7 @@ class CourseDetailsPageDriver extends WidgetDriver
 
   final _usecase = GetIt.I.get<GetCourseDetailsUsecase>();
   final _favoritesUsecase = GetIt.I.get<FavoriteCoursesUsecase>();
+  final _gradesApi = GetIt.I.get<GradesApi>();
 
   late LmuLocalizations _localizations;
 
@@ -57,6 +57,15 @@ class CourseDetailsPageDriver extends WidgetDriver
 
   String get contentText => _localizations.courses.content;
 
+  @TestDriverDefaultValue(SizedBox.shrink())
+  Widget buildGradeButton(BuildContext context) {
+    return _gradesApi.buildCourseGradeButton(
+      context,
+      courseId: _courseId,
+      courseName: name,
+    );
+  }
+
   String get shareUrl {
     final route = CourseDetailsRoute(
       facultyId: _facultyId,
@@ -67,8 +76,7 @@ class CourseDetailsPageDriver extends WidgetDriver
       sws: sws,
     );
 
-    final String host = LmuDevStrings.lmuDevWebsite.substring(
-        0, LmuDevStrings.lmuDevWebsite.length - 1);
+    final String host = LmuDevStrings.lmuDevWebsite.substring(0, LmuDevStrings.lmuDevWebsite.length - 1);
     return '$host${route.location}';
   }
 
@@ -84,8 +92,7 @@ class CourseDetailsPageDriver extends WidgetDriver
   CourseDetailsModel? get courseDetails => _usecase.data;
 
   bool get isLoading =>
-      _usecase.loadState == CoursesLoadState.loading ||
-          _usecase.loadState == CoursesLoadState.initial;
+      _usecase.loadState == CourseDetailsLoadState.loading || _usecase.loadState == CourseDetailsLoadState.initial;
 
   bool get isFavorite => _favoritesUsecase.isFavorite(courseId);
 
@@ -109,8 +116,7 @@ class CourseDetailsPageDriver extends WidgetDriver
     return parts.join(" • ");
   }
 
-  void onSessionsDetailsPressed(BuildContext context,
-      List<SessionModel> sessions) {
+  void onSessionsDetailsPressed(BuildContext context, List<SessionModel> sessions) {
     CourseDetailsSessionsRoute(
       facultyId: _facultyId,
       courseId: _courseId,
@@ -122,8 +128,7 @@ class CourseDetailsPageDriver extends WidgetDriver
     ).push(context);
   }
 
-  void onPersonsDetailsPressed(BuildContext context,
-      List<PersonModel> persons) {
+  void onPersonsDetailsPressed(BuildContext context, List<PersonModel> persons) {
     CourseDetailsPersonsRoute(
       facultyId: _facultyId,
       courseId: _courseId,
