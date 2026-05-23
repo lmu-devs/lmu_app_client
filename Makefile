@@ -22,6 +22,7 @@ localizations: check_fvm_info
 	$(FVM_FLUTTER) gen-l10n --arb-dir ./l10n/studies --output-dir ./core/lib/src/localizations/generated --template-arb-file studies_en.arb --output-localization-file studies_localizations.dart --output-class StudiesLocatizations --no-synthetic-package
 	$(FVM_FLUTTER) gen-l10n --arb-dir ./l10n/courses --output-dir ./core/lib/src/localizations/generated --template-arb-file courses_en.arb --output-localization-file courses_localizations.dart --output-class CoursesLocatizations --no-synthetic-package
 	$(FVM_FLUTTER) gen-l10n --arb-dir ./l10n/people --output-dir ./core/lib/src/localizations/generated --template-arb-file people_en.arb --output-localization-file people_localizations.dart --output-class PeopleLocatizations --no-synthetic-package
+	$(FVM_FLUTTER) gen-l10n --arb-dir ./l10n/calendar --output-dir ./core/lib/src/localizations/generated --template-arb-file calendar_en.arb --output-localization-file calendar_localizations.dart --output-class CalendarLocatizations --no-synthetic-package
 	$(FVM_FLUTTER) gen-l10n --arb-dir ./l10n/developerdex --output-dir ./core/lib/src/localizations/generated --template-arb-file developerdex_en.arb --output-localization-file developerdex_localizations.dart --output-class DeveloperdexLocatizations --no-synthetic-package
 	$(FVM_FLUTTER) gen-l10n --arb-dir ./l10n/grades --output-dir ./core/lib/src/localizations/generated --template-arb-file grades_en.arb --output-localization-file grades_localizations.dart --output-class GradesLocatizations --no-synthetic-package
 

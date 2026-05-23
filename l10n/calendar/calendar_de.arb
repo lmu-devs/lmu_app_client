@@ -1,0 +1,8 @@
+{
+  "@@locale": "de",
+  "@@context": "Calendar",
+  "calendarTitle": "Kalender",
+  "loading": "Lädt...",
+  "recentlyAddedEvents": "Neu hinzugefügte Einträge",
+  "eventNotFound": "Eintrag nicht gefunden"
+}
