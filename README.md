@@ -31,19 +31,23 @@ Supported Platforms: Android, iOS
 
 ## About
 
-The app is developed and managed by LMU Developers, an official student organization at Ludwig Maximilian University of Munich. If you have any inquiries, visit our [website](https://www.lmu-dev.org/) or contact us via [email](mailto:contact@lmu-dev.org).
+The app is designed, developed, and managed by LMU Developers, an official student organization at Ludwig Maximilian University of Munich. If you have any inquiries, visit our [website](https://www.lmu-dev.org/) or contact us via [email](mailto:contact@lmu-dev.org).
 
 </br>
 
 ## Features
 
 - [x] **Mensa**: Set favourite canteens, find current dishes, and filter for food preferences
+- [x] **Libraries**: Explore libraries close to you and set favourites
 - [x] **Roomfinder**: Locate buildings and rooms effortlessly
 - [x] **University Cinema**: Browse upcoming movies and add them to your watchlist
 - [x] **University Sport**: Explore available courses
 - [x] **Timeline**: Stay up to date on events and deadlines
 - [x] **Quicklinks**: Pin your most-used university services for instant access
 - [x] **Student Benefits**: Find discounts and offers
+- [x] **Student Clubs**: Explore student networks and clubs at LMU & TUM
+- [x] **Courses**: Browse available courses, get detials, and set favourites
+- [x] **Grades**: Manage your grades using the in-app grade calculator
 - [x] **Wishlist**: Vote on upcoming features, suggest ideas, and become a part of the development
 - [x] **Feedback**: Give in-app feedback that gets directly to the developers
 
