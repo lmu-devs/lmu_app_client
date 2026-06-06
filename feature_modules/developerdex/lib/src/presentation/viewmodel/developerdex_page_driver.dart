@@ -12,14 +12,14 @@ class DeveloperdexPageDriver extends WidgetDriver {
   late final GetDeveloperdexUsecase _getDeveloperdexUsecase;
   late final List<SemesterCourse> _semesterCourses;
   late List<String> _seenEntries;
-  late DeveloperdexLocatizations _developerdexLocatizations;
+  late DeveloperdexLocalizations _developerdexLocalizations;
 
-  String get appBarTitle => _developerdexLocatizations.developerdexTitle;
-  String get infoDialogTitle => _developerdexLocatizations.developerdexInfoDialogTitle;
-  String get infoDialogDescription => _developerdexLocatizations.developerdexInfoDialogDescription;
-  String get availableSoonText => _developerdexLocatizations.availableSoon;
-  String get joinText => _developerdexLocatizations.joinText;
-  String get joinButton => _developerdexLocatizations.joinButton;
+  String get appBarTitle => _developerdexLocalizations.developerdexTitle;
+  String get infoDialogTitle => _developerdexLocalizations.developerdexInfoDialogTitle;
+  String get infoDialogDescription => _developerdexLocalizations.developerdexInfoDialogDescription;
+  String get availableSoonText => _developerdexLocalizations.availableSoon;
+  String get joinText => _developerdexLocalizations.joinText;
+  String get joinButton => _developerdexLocalizations.joinButton;
 
   List<SemesterCourse> get semesterCourses => _semesterCourses;
 
@@ -42,6 +42,6 @@ class DeveloperdexPageDriver extends WidgetDriver {
   @override
   void didUpdateBuildContext(BuildContext context) {
     super.didUpdateBuildContext(context);
-    _developerdexLocatizations = context.locals.developerdex;
+    _developerdexLocalizations = context.locals.developerdex;
   }
 }

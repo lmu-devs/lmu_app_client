@@ -10,7 +10,7 @@ part 'faculty_selection_page_driver.g.dart';
 
 @GenerateTestDriver()
 class FacultySelectionPageDriver extends WidgetDriver {
-  late LaunchFlowLocatizations _flowLocalizations;
+  late LaunchFlowLocalizations _flowLocalizations;
   late AppLocalizations _appLocalizations;
   late BuildContext _navigatorContext;
   late final FacultiesApi _facultiesApi;

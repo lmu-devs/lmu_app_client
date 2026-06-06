@@ -18,7 +18,7 @@ class ClubsMapper {
         description: dto.description,
         category: dto.category,
         isFeatured: dto.id == _featuredClubId,
-        logoUrl: dto.logoUrl,
+        image: dto.image,
         content: dto.content,
         url: dto.url,
         email: dto.email,

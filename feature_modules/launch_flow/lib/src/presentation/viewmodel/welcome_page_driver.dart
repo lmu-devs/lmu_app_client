@@ -12,7 +12,7 @@ typedef WelcomePageEntry = ({String emoji, String title, String description});
 
 @GenerateTestDriver()
 class WelcomePageDriver extends WidgetDriver {
-  late LaunchFlowLocatizations _flowLocalizations;
+  late LaunchFlowLocalizations _flowLocalizations;
   late AppLocalizations _appLocalizations;
   late BuildContext _navigatorContext;
 

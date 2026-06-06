@@ -5,7 +5,7 @@ part 'studies_page_driver.g.dart';
 
 @GenerateTestDriver()
 class StudiesPageDriver extends WidgetDriver {
-  late StudiesLocatizations _locatizations;
+  late StudiesLocalizations _locatizations;
   String get pageTitle => _locatizations.studiesTitle;
 
   @override

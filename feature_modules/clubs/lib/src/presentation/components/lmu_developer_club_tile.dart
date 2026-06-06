@@ -16,7 +16,7 @@ class LmuDeveloperClubTile extends StatelessWidget {
         actionType: LmuListItemAction.chevron,
         title: club.title,
         subtitle: club.description,
-        leadingArea: club.logoUrl != null ? LmuInListImage(imageUrl: club.logoUrl!) : null,
+        leadingArea: club.image != null ? LmuInListImage(imageUrl: club.image!.url) : null,
         onTap: () => ClubDetailRoute(clubId: club.id).go(context),
       ),
     );

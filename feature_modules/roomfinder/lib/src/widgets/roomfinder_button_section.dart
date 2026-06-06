@@ -148,7 +148,7 @@ extension on RoomfinderSortOption {
     };
   }
 
-  String localizedName(RoomfinderLocatizations locals) {
+  String localizedName(RoomfinderLocalizations locals) {
     return switch (this) {
       RoomfinderSortOption.alphabetically => locals.alphabetical,
       RoomfinderSortOption.distance => locals.distance,

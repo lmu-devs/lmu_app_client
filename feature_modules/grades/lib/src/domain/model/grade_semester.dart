@@ -68,7 +68,7 @@ extension GradeSemesterExtension on GradeSemester {
     };
   }
 
-  String localizedName(GradesLocatizations locatizations) {
+  String localizedName(GradesLocalizations locatizations) {
     return switch (this) {
       GradeSemester.winter2020 => "${locatizations.winter} $semesterYears",
       GradeSemester.summer2021 => "${locatizations.summer} $semesterYears",

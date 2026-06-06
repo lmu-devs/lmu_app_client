@@ -13,7 +13,9 @@ ClubDto _$ClubDtoFromJson(Map<String, dynamic> json) => ClubDto(
       title: json['title'] as String,
       description: json['description'] as String,
       category: $enumDecode(_$ClubCategoryTypeEnumMap, json['category']),
-      logoUrl: json['logo_url'] as String?,
+      image: json['logo_url'] == null
+          ? null
+          : ImageModel.fromJson(json['logo_url'] as Map<String, dynamic>),
       content: json['content'] as String?,
       url: json['url'] as String?,
       email: json['email'] as String?,
@@ -28,7 +30,7 @@ Map<String, dynamic> _$ClubDtoToJson(ClubDto instance) => <String, dynamic>{
       'title': instance.title,
       'description': instance.description,
       'category': _$ClubCategoryTypeEnumMap[instance.category]!,
-      'logo_url': instance.logoUrl,
+      'logo_url': instance.image,
       'content': instance.content,
       'url': instance.url,
       'email': instance.email,
@@ -48,6 +50,6 @@ const _$ClubCategoryTypeEnumMap = {
   ClubCategoryType.artCulture: 'ART_CULTURE',
   ClubCategoryType.leisure: 'LEISURE',
   ClubCategoryType.sport: 'SPORT',
-  ClubCategoryType.careerNetworking: 'CAREER_NETWORKING',
+  ClubCategoryType.careerNetworking: 'CAREER',
   ClubCategoryType.international: 'INTERNATIONAL',
 };

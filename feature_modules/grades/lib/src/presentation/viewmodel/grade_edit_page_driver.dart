@@ -22,7 +22,7 @@ class GradeEditPageDriver extends WidgetDriver implements _$DriverProvidedProper
   final _toastService = GetIt.I.get<GradesToastService>();
 
   late final Grade _gradeToEdit;
-  late GradesLocatizations _gradesLocalizations;
+  late GradesLocalizations _gradesLocalizations;
 
   double _sliderGradeValue = 2.0;
   int _sliderIndex = 3;

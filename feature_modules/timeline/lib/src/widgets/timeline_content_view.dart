@@ -129,7 +129,7 @@ Map<String, Map<String, List<TimelineEvent>>> groupEventsBySemesterAndMonth(
 }
 
 extension on TimelineSemester {
-  String formatSemesterLabel(TimelineLocatizations locals) {
+  String formatSemesterLabel(TimelineLocalizations locals) {
     final year = timeframe.start.year;
     final nextYear = timeframe.start.month >= 10 ? year + 1 : year;
     final semesterStr = type == SemesterType.winter ? "${locals.winter} $year/$nextYear" : "${locals.summer} $nextYear";
@@ -138,7 +138,7 @@ extension on TimelineSemester {
 }
 
 extension on DateTime {
-  String localizedMonth(TimelineLocatizations locals) {
+  String localizedMonth(TimelineLocalizations locals) {
     final monthNames = [
       locals.january,
       locals.february,

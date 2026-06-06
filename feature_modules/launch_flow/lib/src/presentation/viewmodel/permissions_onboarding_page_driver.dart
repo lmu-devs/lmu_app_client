@@ -10,7 +10,7 @@ part 'permissions_onboarding_page_driver.g.dart';
 
 @GenerateTestDriver()
 class PermissionsOnboardingPageDriver extends WidgetDriver {
-  late LaunchFlowLocatizations _flowLocalizations;
+  late LaunchFlowLocalizations _flowLocalizations;
   late BuildContext _navigatorContext;
 
   String get permissionsTitle => _flowLocalizations.permissionsOnboardingTitle;

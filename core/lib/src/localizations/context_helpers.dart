@@ -19,17 +19,17 @@ class LmuLocalizations {
   FeedbackLocalizations get feedback => FeedbackLocalizations.of(_context)!;
   HomeLocalizations get home => HomeLocalizations.of(_context)!;
   CinemaLocalizations get cinema => CinemaLocalizations.of(_context)!;
-  SportsLocatizations get sports => SportsLocatizations.of(_context)!;
-  TimelineLocatizations get timeline => TimelineLocatizations.of(_context)!;
-  RoomfinderLocatizations get roomfinder => RoomfinderLocatizations.of(_context)!;
-  LibrariesLocatizations get libraries => LibrariesLocatizations.of(_context)!;
-  BenefitsLocatizations get benefits => BenefitsLocatizations.of(_context)!;
-  LaunchFlowLocatizations get launchFlow => LaunchFlowLocatizations.of(_context)!;
-  StudiesLocatizations get studies => StudiesLocatizations.of(_context)!;
-  CoursesLocatizations get courses => CoursesLocatizations.of(_context)!;
-  PeopleLocatizations get people => PeopleLocatizations.of(_context)!;
-  DeveloperdexLocatizations get developerdex => DeveloperdexLocatizations.of(_context)!;
-  GradesLocatizations get grades => GradesLocatizations.of(_context)!;
+  SportsLocalizations get sports => SportsLocalizations.of(_context)!;
+  TimelineLocalizations get timeline => TimelineLocalizations.of(_context)!;
+  RoomfinderLocalizations get roomfinder => RoomfinderLocalizations.of(_context)!;
+  LibrariesLocalizations get libraries => LibrariesLocalizations.of(_context)!;
+  BenefitsLocalizations get benefits => BenefitsLocalizations.of(_context)!;
+  LaunchFlowLocalizations get launchFlow => LaunchFlowLocalizations.of(_context)!;
+  StudiesLocalizations get studies => StudiesLocalizations.of(_context)!;
+  CoursesLocalizations get courses => CoursesLocalizations.of(_context)!;
+  PeopleLocalizations get people => PeopleLocalizations.of(_context)!;
+  DeveloperdexLocalizations get developerdex => DeveloperdexLocalizations.of(_context)!;
+  GradesLocalizations get grades => GradesLocalizations.of(_context)!;
   ClubsLocalizations get clubs => ClubsLocalizations.of(_context)!;
   // Add other localizations
 
@@ -43,17 +43,17 @@ class LmuLocalizations {
         FeedbackLocalizations.delegate,
         HomeLocalizations.delegate,
         CinemaLocalizations.delegate,
-        SportsLocatizations.delegate,
-        TimelineLocatizations.delegate,
-        RoomfinderLocatizations.delegate,
-        LibrariesLocatizations.delegate,
-        BenefitsLocatizations.delegate,
-        LaunchFlowLocatizations.delegate,
-        StudiesLocatizations.delegate,
-        CoursesLocatizations.delegate,
-        PeopleLocatizations.delegate,
-        DeveloperdexLocatizations.delegate,
-        GradesLocatizations.delegate,
+        SportsLocalizations.delegate,
+        TimelineLocalizations.delegate,
+        RoomfinderLocalizations.delegate,
+        LibrariesLocalizations.delegate,
+        BenefitsLocalizations.delegate,
+        LaunchFlowLocalizations.delegate,
+        StudiesLocalizations.delegate,
+        CoursesLocalizations.delegate,
+        PeopleLocalizations.delegate,
+        DeveloperdexLocalizations.delegate,
+        GradesLocalizations.delegate,
         ClubsLocalizations.delegate,
         // Add other localizations delegates
 

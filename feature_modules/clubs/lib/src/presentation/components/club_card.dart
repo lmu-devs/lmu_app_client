@@ -17,7 +17,7 @@ class ClubCard extends StatelessWidget {
         title: club.title,
         subtitle: club.description,
         mainContentAlignment: MainContentAlignment.top,
-        leadingArea: club.logoUrl != null ? LmuInListImage(imageUrl: club.logoUrl!) : null,
+        leadingArea: club.image != null ? LmuInListImage(imageUrl: club.image!.url) : null,
         onTap: onTap,
       ),
     );

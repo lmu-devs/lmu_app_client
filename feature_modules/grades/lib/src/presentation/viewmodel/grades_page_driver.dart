@@ -16,18 +16,18 @@ class GradesPageDriver extends WidgetDriver {
   final _usecase = GetIt.I.get<GetGradesUsecase>();
   final _totalECTS = 180.0;
 
-  late GradesLocatizations _gradesLocatizations;
+  late GradesLocalizations _gradesLocalizations;
 
   List<Grade> _grades = [];
 
   bool get isLoading => _usecase.loadState != GradesLoadState.success;
 
   // Titles
-  String get largeTitle => _gradesLocatizations.gradesTitle;
-  String get addGradeTitle => _gradesLocatizations.addGrade;
+  String get largeTitle => _gradesLocalizations.gradesTitle;
+  String get addGradeTitle => _gradesLocalizations.addGrade;
   String get gradesCountTitle {
     final count = _grades.length;
-    final label = count == 1 ? _gradesLocatizations.gradeSingular : _gradesLocatizations.gradesTitle;
+    final label = count == 1 ? _gradesLocalizations.gradeSingular : _gradesLocalizations.gradesTitle;
     return "$count $label";
   }
 
@@ -77,7 +77,7 @@ class GradesPageDriver extends WidgetDriver {
   @override
   void didUpdateBuildContext(BuildContext context) {
     super.didUpdateBuildContext(context);
-    _gradesLocatizations = context.locals.grades;
+    _gradesLocalizations = context.locals.grades;
   }
 
   @override

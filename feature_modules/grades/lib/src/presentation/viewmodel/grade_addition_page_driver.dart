@@ -16,7 +16,7 @@ class GradeAdditionPageDriver extends WidgetDriver {
   final _usecase = GetIt.I.get<GetGradesUsecase>();
   final _toastService = GetIt.I.get<GradesToastService>();
 
-  late GradesLocatizations _gradesLocalizations;
+  late GradesLocalizations _gradesLocalizations;
 
   double _sliderGradeValue = 1.0;
   int _sliderIndex = 0;

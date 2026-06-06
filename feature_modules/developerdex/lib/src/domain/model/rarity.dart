@@ -14,7 +14,7 @@ extension RarityEncouterProabilityExtension on Rarity {
     };
   }
 
-  String toLocalizedString(DeveloperdexLocatizations locatizations) => switch (this) {
+  String toLocalizedString(DeveloperdexLocalizations locatizations) => switch (this) {
         Rarity.common => locatizations.common,
         Rarity.rare => locatizations.rare,
         Rarity.epic => locatizations.epic,

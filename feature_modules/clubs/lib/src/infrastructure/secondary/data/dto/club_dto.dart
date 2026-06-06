@@ -1,3 +1,4 @@
+import 'package:core/api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -15,7 +16,7 @@ class ClubDto extends Equatable {
     required this.title,
     required this.description,
     required this.category,
-    this.logoUrl,
+    this.image,
     this.content,
     this.url,
     this.email,
@@ -33,7 +34,7 @@ class ClubDto extends Equatable {
   final String description;
   final ClubCategoryType category;
   @JsonKey(name: 'logo_url')
-  final String? logoUrl;
+  final ImageModel? image;
   final String? content;
   final String? url;
   final String? email;
@@ -46,5 +47,5 @@ class ClubDto extends Equatable {
 
   @override
   List<Object?> get props =>
-      [id, universityId, type, title, description, category, logoUrl, content, url, email, instagramUrl, linkedinUrl];
+      [id, universityId, type, title, description, category, image, content, url, email, instagramUrl, linkedinUrl];
 }

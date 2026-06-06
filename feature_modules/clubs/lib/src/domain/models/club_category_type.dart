@@ -9,7 +9,7 @@ enum ClubCategoryType {
   leisure,
   @JsonValue('SPORT')
   sport,
-  @JsonValue('CAREER_NETWORKING')
+  @JsonValue('CAREER')
   careerNetworking,
   @JsonValue('INTERNATIONAL')
   international,

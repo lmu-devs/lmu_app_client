@@ -24,7 +24,7 @@ class SportsDetailsPage extends StatelessWidget {
     );
   }
 
-  String _categoryTitle(SportsLocatizations locals, DateTime startDate, DateTime endDate) {
+  String _categoryTitle(SportsLocalizations locals, DateTime startDate, DateTime endDate) {
     final currentDate = DateTime.now();
     if (currentDate.isBefore(startDate)) {
       return locals.upcoming;

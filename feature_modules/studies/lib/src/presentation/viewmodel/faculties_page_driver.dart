@@ -9,7 +9,7 @@ part 'faculties_page_driver.g.dart';
 
 @GenerateTestDriver()
 class FacultiesPageDriver extends WidgetDriver {
-  late StudiesLocatizations _localizations;
+  late StudiesLocalizations _localizations;
   final _getFacultiesUseCase = GetIt.I.get<GetFacultiesUsecase>();
 
   List<Faculty> _allFaculties = [];

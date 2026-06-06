@@ -12,7 +12,7 @@ part 'release_notes_page_driver.g.dart';
 
 @GenerateTestDriver()
 class ReleaseNotesPageDriver extends WidgetDriver {
-  late LaunchFlowLocatizations _flowLocalizations;
+  late LaunchFlowLocalizations _flowLocalizations;
   late BuildContext _navigatorContext;
 
   final _getReleaseNotesUsecase = GetIt.I.get<GetReleaseNotesUsecase>();

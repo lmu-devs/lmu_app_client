@@ -21,6 +21,9 @@ class _$TestClubsPageDriver extends TestDriver implements ClubsPageDriver {
   bool get isNoNetworkError => false;
 
   @override
+  Club? get featuredClub => null;
+
+  @override
   String get allClubsTitle => ' ';
 
   @override
@@ -34,6 +37,9 @@ class _$TestClubsPageDriver extends TestDriver implements ClubsPageDriver {
 
   @override
   void onClubCategoryPressed(ClubCategory clubCategory) {}
+
+  @override
+  void onFeaturedClubPressed(BuildContext context, Club club) {}
 
   @override
   void onRetry() {}

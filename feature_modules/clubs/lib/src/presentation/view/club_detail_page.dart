@@ -41,9 +41,9 @@ class ClubDetailPage extends DrivableWidget<ClubDetailPageDriver> {
                   content: LmuListItem.base(
                     mainContentAlignment: MainContentAlignment.top,
                     subtitle: club.description,
-                    leadingArea: club.logoUrl != null
+                    leadingArea: club.image != null
                         ? LmuInListImage(
-                            imageUrl: club.logoUrl!,
+                            imageUrl: club.image!.url,
                           )
                         : null,
                   ),
