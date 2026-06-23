@@ -7,44 +7,33 @@ import 'package:skeletonizer/skeletonizer.dart';
 class CalendarCardLoading extends StatelessWidget {
   const CalendarCardLoading({
     super.key,
-    this.isHalfWidth = false,
     this.hasColorBar = true,
   });
 
-  final bool isHalfWidth;
-  final bool hasColorBar; // To simulate the color bar's presence
+  final bool hasColorBar;
 
   @override
   Widget build(BuildContext context) {
-    final cardWidth = isHalfWidth ? (MediaQuery.of(context).size.width - 40) / 2 : double.infinity;
-
     return LmuSkeleton(
       child: Container(
-        width: cardWidth,
         margin: const EdgeInsets.only(bottom: LmuSizes.size_12),
         decoration: BoxDecoration(
           color: context.colors.neutralColors.backgroundColors.tile,
-          borderRadius: BorderRadius.circular(LmuRadiusSizes.mediumLarge),
-          // border: Border.all(
-          //   color: context.colors.neutralColors.backgroundColors.tile,
-          //   width: 2,
-          //   strokeAlign: BorderSide.strokeAlignInside,
-          // ),
+          borderRadius: BorderRadius.circular(LmuSizes.size_8),
         ),
         child: IntrinsicHeight(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              /// Color bar placeholder
+              /// VerticalBar
               hasColorBar
                   ? Padding(
-                      padding: const EdgeInsets.only(
-                          left: LmuSizes.size_16, top: LmuSizes.size_16, bottom: LmuSizes.size_16),
+                      padding: const EdgeInsets.all(LmuSizes.size_8),
                       child: Container(
                         width: 4,
-                        decoration: const BoxDecoration(
-                          color: Color.fromARGB(32, 0, 0, 0), // Placeholder color
-                          borderRadius: BorderRadius.all(
+                        decoration: BoxDecoration(
+                          color: context.colors.neutralColors.borderColors.seperatorLight,
+                          borderRadius: const BorderRadius.all(
                             Radius.circular(LmuRadiusSizes.mediumLarge),
                           ),
                         ),
@@ -52,55 +41,47 @@ class CalendarCardLoading extends StatelessWidget {
                     )
                   : const SizedBox.shrink(),
 
-              /// Content placeholder
+              /// Content
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(LmuSizes.size_16),
+                  padding: const EdgeInsets.fromLTRB(0, LmuSizes.size_8, LmuSizes.size_8, LmuSizes.size_8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      /// Title and Tag row placeholder
+                      /// Title and Tag
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Flexible(
-                            fit: FlexFit.loose,
-                            child: LmuText.h3(
-                              BoneMock.title, // Placeholder for title
-                              maxLines: 1,
-                              customOverFlow: TextOverflow.ellipsis,
+                          Expanded(
+                            child: LmuText.body(
+                              BoneMock.title,
                             ),
                           ),
                           const SizedBox(width: LmuSizes.size_8),
                           LmuInTextVisual.text(
-                            title: BoneMock.words(1), // Placeholder for tag
+                            title: BoneMock.words(1),
                           ),
                         ],
                       ),
-                      const SizedBox(height: LmuSizes.size_4),
 
-                      /// Time placeholder
-                      LmuText.bodySmall(
-                        BoneMock.words(2), // Placeholder for time range
-                        color: context.colors.neutralColors.textColors.mediumColors.base,
-                      ),
-                      const SizedBox(height: LmuSizes.size_4),
+                      const SizedBox(height: LmuSizes.size_2),
 
-                      /// Date placeholder
+                      /// Time
                       LmuText.bodySmall(
-                        BoneMock.words(3), // Placeholder for short date
-                        color: context.colors.neutralColors.textColors.mediumColors.base,
-                        maxLines: 2,
-                        customOverFlow: TextOverflow.ellipsis,
+                        BoneMock.words(6),
+                        maxLines: 1,
                       ),
 
-                      /// Location placeholder
+                      const SizedBox(height: LmuSizes.size_2),
+
+                      /// Location
                       LmuText.bodySmall(
-                        BoneMock.words(4), // Placeholder for address
-                        color: context.colors.neutralColors.textColors.mediumColors.base,
-                        maxLines: 2,
-                        customOverFlow: TextOverflow.ellipsis,
+                        BoneMock.words(4),
+                        maxLines: 1,
                       ),
+
+                      const SizedBox(height: LmuSizes.size_2),
                     ],
                   ),
                 ),

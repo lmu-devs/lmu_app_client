@@ -1,3 +1,4 @@
+import '../../../domain/exception/calendar_events_generic_exception.dart';
 import '../../../domain/exception/calendar_generic_exception.dart';
 import '../../../domain/interface/calendar_repository_interface.dart';
 import '../../../domain/model/calendar.dart';
@@ -42,9 +43,9 @@ class CalendarRepository implements CalendarRepositoryInterface {
           fetchedEventDtos.map((dto) => CalendarEntryMapper.fromDto(dto)).toList();
       return fetchedEventData;
     } on FormatException catch (e) {
-      throw CalendarGenericException('Format error: ${e.message}');
+      throw CalendarEntriesGenericException('Format error: ${e.message}');
     } catch (e) {
-      throw CalendarGenericException(e.toString());
+      throw CalendarEntriesGenericException(e.toString());
     }
   }
 

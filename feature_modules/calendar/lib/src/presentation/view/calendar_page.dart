@@ -21,6 +21,8 @@ class CalendarPage extends DrivableWidget<CalendarPageDriver> {
         onChangeToTodayPressed: () => driver.onChangeToTodayPressed(),
         onSearchPressed: () => driver.onSearchPressed(context),
         onAddCalendarEntryPressed: () => driver.onCreatePressed(context),
+        isLoading: driver.isLoadingEvents,
+        hasError: driver.hasErrorLoadingEvents,
       ),
       body: Column(
         children: [
@@ -30,13 +32,16 @@ class CalendarPage extends DrivableWidget<CalendarPageDriver> {
             selectedDateTimeRange: driver.selectedDateTimeRange!,
             onDateSelected: (date) => driver.onDateTimeRangeSelected(date),
             entries: driver.calendarEntries,
+            isLoading: driver.isLoadingEvents,
+            hasError: driver.hasErrorLoadingEvents,
           ),
           Expanded(
             child: CalendarContent(
               entries: driver.calendarEntries,
               viewType: driver.viewType,
               isLoading: driver.isLoadingEvents,
-              hasError: false, // TODO: driver.hasErrorLoadingEvents state
+              hasError: driver.hasErrorLoadingEvents,
+              onRefresh: () => driver.loadEvents(),
               selectedDateTimeRange: driver.selectedDateTimeRange!,
               scrollToDateRequest: driver.scrollToDateRequest,
             ),

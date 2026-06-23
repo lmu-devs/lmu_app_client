@@ -225,4 +225,11 @@ extension DateTimeExtension on DateTime {
     final endOfMonth = DateTime(year, month + 1, 0).endOfDay;
     return DateTimeRange(start: startOfMonth, end: endOfMonth);
   }
+
+  DateTimeRange get yearRangeFromDateTime {
+    final startOfYear = DateTime(year, 1, 1).startOfDay;
+    // End of year can be different since there is a leap year every 4 years, so we take next years first day and subtract one day
+    final endOfYear = DateTime(year + 1, 1, 1).subtractDays(1).endOfDay;
+    return DateTimeRange(start: startOfYear, end: endOfYear);
+  }
 }
