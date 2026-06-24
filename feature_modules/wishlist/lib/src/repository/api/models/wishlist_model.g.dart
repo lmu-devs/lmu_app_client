@@ -17,7 +17,6 @@ WishlistModel _$WishlistModelFromJson(Map<String, dynamic> json) => WishlistMode
       ratingModel: RatingModel.fromJson(json['rating'] as Map<String, dynamic>),
       imageModels:
           (json['images'] as List<dynamic>).map((e) => ImageModel.fromJson(e as Map<String, dynamic>)).toList(),
-      updatedAt: json['date_updated'] as String,
     );
 
 Map<String, dynamic> _$WishlistModelToJson(WishlistModel instance) => <String, dynamic>{
@@ -30,7 +29,6 @@ Map<String, dynamic> _$WishlistModelToJson(WishlistModel instance) => <String, d
       'prototype_url': instance.prototypeUrl,
       'rating': instance.ratingModel,
       'images': instance.imageModels,
-      'date_updated': instance.updatedAt,
     };
 
 const _$WishlistStatusEnumMap = {

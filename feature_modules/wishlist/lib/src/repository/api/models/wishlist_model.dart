@@ -18,7 +18,6 @@ class WishlistModel extends RWishlistModel {
     this.prototypeUrl,
     required this.ratingModel,
     required this.imageModels,
-    required this.updatedAt,
   });
 
   factory WishlistModel.fromJson(Map<String, dynamic> json) => _$WishlistModelFromJson(json);
@@ -36,8 +35,6 @@ class WishlistModel extends RWishlistModel {
   final RatingModel ratingModel;
   @JsonKey(name: 'images')
   final List<ImageModel> imageModels;
-  @JsonKey(name: 'date_updated')
-  final String updatedAt;
 
   Map<String, dynamic> toJson() => _$WishlistModelToJson(this);
 
@@ -52,6 +49,5 @@ class WishlistModel extends RWishlistModel {
         prototypeUrl,
         ratingModel,
         imageModels,
-        updatedAt,
       ];
 }
