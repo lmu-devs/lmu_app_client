@@ -5,7 +5,6 @@ import 'package:core/localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:widget_driver/widget_driver.dart';
 
-import '../../domain/models/club_category_type.dart';
 import '../components/club_card.dart';
 import '../components/clubs_page_loading.dart';
 import '../components/clubs_suggestion_tile.dart';
@@ -65,10 +64,10 @@ class ClubsPage extends DrivableWidget<ClubsPageDriver> {
               .mapIndexed(
                 (index, category) => LmuListItem.action(
                   key: Key("club_category_${category.hashCode}"),
-                  title: category.type.localizedName(context.locals.clubs),
+                  title: category.title,
                   trailingTitle: category.clubs.length.toString(),
                   hasDivider: index != driver.clubCategories.length - 1,
-                  leadingArea: LmuInListBlurEmoji(emoji: "🐱"),
+                  leadingArea: LmuInListBlurEmoji(emoji: category.emoji),
                   actionType: LmuListItemAction.chevron,
                   onTap: () => driver.onClubCategoryPressed(category),
                 ),

@@ -35,7 +35,7 @@ class ClubsPageDriver extends WidgetDriver {
   void onAllClubsPressed() => const ClubsDetailsRoute().go(_navigatorContext);
 
   void onClubCategoryPressed(ClubCategory clubCategory) {
-    ClubsDetailsRoute(categoryId: clubCategory.type.name).go(_navigatorContext);
+    ClubsDetailsRoute(categoryId: clubCategory.id).go(_navigatorContext);
   }
 
   void onFeaturedClubPressed(BuildContext context, Club club) {

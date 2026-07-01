@@ -1,7 +1,6 @@
 import 'package:core/api.dart';
 import 'package:equatable/equatable.dart';
 
-import 'club_category_type.dart';
 import 'club_type.dart';
 
 class Club extends Equatable {
@@ -11,7 +10,6 @@ class Club extends Equatable {
     required this.type,
     required this.title,
     required this.description,
-    required this.category,
     this.isFeatured = false,
     this.image,
     this.content,
@@ -28,7 +26,6 @@ class Club extends Equatable {
   final ClubType type;
   final String title;
   final String description;
-  final ClubCategoryType category;
   final bool isFeatured;
   final ImageModel? image;
   final String? content;
@@ -46,7 +43,6 @@ class Club extends Equatable {
         type,
         title,
         description,
-        category,
         isFeatured,
         image,
         content,

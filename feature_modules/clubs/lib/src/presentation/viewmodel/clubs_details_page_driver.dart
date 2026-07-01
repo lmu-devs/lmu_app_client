@@ -6,7 +6,6 @@ import 'package:widget_driver/widget_driver.dart';
 import '../../application/usecases/get_clubs_usecase.dart';
 import '../../domain/models/club.dart';
 import '../../domain/models/club_category.dart';
-import '../../domain/models/club_category_type.dart';
 
 part 'clubs_details_page_driver.g.dart';
 
@@ -50,6 +49,6 @@ class ClubsDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPro
   void didUpdateBuildContext(BuildContext context) {
     super.didUpdateBuildContext(context);
     _allTitle = "${context.locals.app.all} ${context.locals.clubs.clubsTitle}";
-    _categoryTitle = _selectedCategory?.type.localizedName(context.locals.clubs);
+    _categoryTitle = _selectedCategory?.title;
   }
 }

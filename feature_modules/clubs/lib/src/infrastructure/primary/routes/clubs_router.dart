@@ -14,8 +14,7 @@ class ClubsRouterImpl extends ClubsRouter {
   @override
   Widget buildDetails(BuildContext context, {required String? categoryId}) {
     final usecase = GetIt.I.get<GetClubsUsecase>();
-    final category =
-        categoryId != null ? usecase.clubCategories.where((c) => c.type.name == categoryId).firstOrNull : null;
+    final category = categoryId != null ? usecase.clubCategories.where((c) => c.id == categoryId).firstOrNull : null;
     return ClubsDetailsPage(category: category);
   }
 

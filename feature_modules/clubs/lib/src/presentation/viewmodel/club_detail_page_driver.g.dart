@@ -10,7 +10,8 @@ part of 'club_detail_page_driver.dart';
 
 // This file was generated with widget_driver_generator version "1.3.6"
 
-class _$TestClubDetailPageDriver extends TestDriver implements ClubDetailPageDriver {
+class _$TestClubDetailPageDriver extends TestDriver
+    implements ClubDetailPageDriver {
   @override
   bool get hasExternalLink => false;
 
@@ -33,7 +34,8 @@ class _$TestClubDetailPageDriver extends TestDriver implements ClubDetailPageDri
   void didUpdateProvidedProperties({required Club newClub}) {}
 }
 
-class $ClubDetailPageDriverProvider extends WidgetDriverProvider<ClubDetailPageDriver> {
+class $ClubDetailPageDriverProvider
+    extends WidgetDriverProvider<ClubDetailPageDriver> {
   final Club _club;
 
   $ClubDetailPageDriverProvider({
