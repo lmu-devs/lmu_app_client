@@ -1,43 +1,46 @@
 import '../../../../domain/models/club.dart';
 import '../../../../domain/models/club_category.dart';
-import '../../../../domain/models/club_category_type.dart';
 import '../../../../domain/models/club_type.dart';
-import 'club_dto.dart';
+import 'clubs_dto.dart';
 
 class ClubsMapper {
   static const _featuredClubId = '4';
 
-  static List<ClubCategory> mapToDomain(List<ClubDto> dtos) {
-    final clubsByCategory = <ClubCategoryType, List<Club>>{};
+  static List<ClubCategory> mapToDomain(ClubsDto dto) {
+    final clubMap = {
+      for (final club in dto.clubs) club.id: club,
+    };
 
-    for (final dto in dtos) {
-      final club = Club(
-        id: dto.id,
-        universityId: dto.universityId,
-        type: _mapType(dto.type),
-        title: dto.title,
-        description: dto.description,
-        category: dto.category,
-        isFeatured: dto.id == _featuredClubId,
-        image: dto.image,
-        content: dto.content,
-        url: dto.url,
-        email: dto.email,
-        instagramUrl: dto.instagramUrl,
-        linkedinUrl: dto.linkedinUrl,
-        foundingYear: dto.foundingYear,
-        location: dto.location,
+    return dto.clubCategories.map((categoryDto) {
+      final clubs = categoryDto.clubIds
+          .map((id) => clubMap[id])
+          .where((club) => club != null)
+          .map((club) => Club(
+                id: club!.id,
+                universityId: club.universityId,
+                type: _mapType(club.type),
+                title: club.title,
+                description: club.description,
+                isFeatured: club.id == _featuredClubId,
+                image: club.image,
+                content: club.content,
+                url: club.url,
+                email: club.email,
+                instagramUrl: club.instagramUrl,
+                linkedinUrl: club.linkedinUrl,
+                foundingYear: club.foundingYear,
+                location: club.location,
+              ))
+          .toList();
+
+      return ClubCategory(
+        id: categoryDto.id,
+        title: categoryDto.title,
+        description: categoryDto.description,
+        emoji: categoryDto.emoji,
+        clubs: clubs,
       );
-
-      clubsByCategory.putIfAbsent(dto.category, () => []).add(club);
-    }
-
-    return clubsByCategory.entries
-        .map((entry) => ClubCategory(
-              type: entry.key,
-              clubs: entry.value,
-            ))
-        .toList();
+    }).toList();
   }
 
   static ClubType _mapType(String? type) {

@@ -2,8 +2,6 @@ import 'package:core/api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../../domain/models/club_category_type.dart';
-
 part 'club_dto.g.dart';
 
 @JsonSerializable()
@@ -14,7 +12,6 @@ class ClubDto extends Equatable {
     required this.type,
     required this.title,
     required this.description,
-    required this.category,
     this.image,
     this.content,
     this.url,
@@ -33,7 +30,6 @@ class ClubDto extends Equatable {
   final String type;
   final String title;
   final String description;
-  final ClubCategoryType category;
   final ImageModel? image;
   final String? content;
   final String? url;
@@ -55,7 +51,6 @@ class ClubDto extends Equatable {
         type,
         title,
         description,
-        category,
         image,
         content,
         url,
