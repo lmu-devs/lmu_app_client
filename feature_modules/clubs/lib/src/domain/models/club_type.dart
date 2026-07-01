@@ -1,12 +1,21 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:core/localizations.dart';
 
 enum ClubType {
-  @JsonValue('FS')
   fachschaft,
-  @JsonValue('HG')
   hochschulgruppe,
-  @JsonValue('RT')
   referat,
-  @JsonValue('VN')
   verein,
+  institution,
+}
+
+extension ClubTypeExtension on ClubType {
+  String localizedName(ClubsLocalizations localizations) {
+    return switch (this) {
+      ClubType.fachschaft => localizations.typeFachschaft,
+      ClubType.hochschulgruppe => localizations.typeHochschulgruppe,
+      ClubType.referat => localizations.typeReferat,
+      ClubType.verein => localizations.typeVerein,
+      ClubType.institution => localizations.typeInstitution,
+    };
+  }
 }

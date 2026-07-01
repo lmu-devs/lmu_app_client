@@ -1,12 +1,14 @@
 import 'package:core/components.dart';
 import 'package:core/constants.dart';
 import 'package:core/localizations.dart';
+import 'package:core/themes.dart';
 import 'package:core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../domain/models/club.dart';
+import '../../domain/models/club_type.dart';
 import '../viewmodel/club_detail_page_driver.dart';
 
 class ClubDetailPage extends DrivableWidget<ClubDetailPageDriver> {
@@ -14,83 +16,114 @@ class ClubDetailPage extends DrivableWidget<ClubDetailPageDriver> {
 
   final Club club;
 
-  bool get _hasExternalLink => club.instagramUrl != null || club.linkedinUrl != null || club.url != null;
-
   @override
   Widget build(BuildContext context) {
-    final club = driver.club;
-
     return LmuScaffold(
-      appBar: LmuAppBarData(
-        largeTitle: club.title,
+      appBar: LmuAppBarData.custom(
         leadingAction: LeadingAction.back,
+        collapsedTitle: club.title,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.only(
-          left: LmuSizes.size_16,
-          right: LmuSizes.size_16,
-          top: LmuSizes.size_16,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: LmuSizes.size_16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if (club.description.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.only(bottom: LmuSizes.size_24),
-                child: LmuContentTile(
-                  content: LmuListItem.base(
-                    mainContentAlignment: MainContentAlignment.top,
-                    subtitle: club.description,
-                    leadingArea: club.image != null
-                        ? LmuInListImage(
-                            imageUrl: club.image!.url,
-                          )
-                        : null,
+            if (driver.hasImage) ...[
+              Semantics(
+                label: club.image!.name,
+                child: Container(
+                  height: 150,
+                  width: 150,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(LmuRadiusSizes.mediumLarge),
+                    ),
+                    image: DecorationImage(
+                      fit: BoxFit.contain,
+                      image: LmuCachedNetworkImageProvider(
+                        club.image!.url,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            if (_hasExternalLink)
-              Padding(
-                padding: const EdgeInsets.only(bottom: LmuSizes.size_24),
-                child: LmuButtonRow(
-                  hasHorizontalPadding: false,
-                  buttons: [
-                    if (club.url != null)
-                      LmuButton(
-                        title: 'Website',
-                        emphasis: ButtonEmphasis.secondary,
-                        onTap: () => LmuUrlLauncher.launchWebsite(
-                          url: club.url!,
-                          context: context,
-                        ),
+              const SizedBox(height: LmuSizes.size_24),
+            ],
+            LmuText.h1(
+              club.title,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: LmuSizes.size_24),
+            LmuText.body(
+              club.type.localizedName(context.locals.clubs),
+              color: context.colors.neutralColors.textColors.mediumColors.base,
+            ),
+            if (driver.hasFoundingYear) ...[
+              const SizedBox(height: LmuSizes.size_8),
+              LmuText.body(
+                context.locals.clubs.since(club.foundingYear!.toString()),
+                color: context.colors.neutralColors.textColors.mediumColors.base,
+              ),
+            ],
+            const SizedBox(height: LmuSizes.size_24),
+            if (driver.hasExternalLink) ...[
+              LmuButtonRow(
+                hasHorizontalPadding: false,
+                buttons: [
+                  if (club.url != null)
+                    LmuButton(
+                      title: context.locals.clubs.website,
+                      emphasis: ButtonEmphasis.secondary,
+                      onTap: () => LmuUrlLauncher.launchWebsite(
+                        url: club.url!,
+                        context: context,
                       ),
-                    if (club.instagramUrl != null)
-                      LmuButton(
-                        title: 'Instagram',
-                        emphasis: ButtonEmphasis.secondary,
-                        onTap: () => LmuUrlLauncher.launchWebsite(
-                          url: club.instagramUrl!,
-                          context: context,
-                        ),
+                    ),
+                  if (club.instagramUrl != null)
+                    LmuButton(
+                      title: context.locals.clubs.instagram,
+                      emphasis: ButtonEmphasis.secondary,
+                      onTap: () => LmuUrlLauncher.launchWebsite(
+                        url: club.instagramUrl!,
+                        context: context,
                       ),
-                    if (club.linkedinUrl != null)
-                      LmuButton(
-                        title: 'LinkedIn',
-                        emphasis: ButtonEmphasis.secondary,
-                        onTap: () => LmuUrlLauncher.launchWebsite(
-                          url: club.linkedinUrl!,
-                          context: context,
-                        ),
+                    ),
+                  if (club.linkedinUrl != null)
+                    LmuButton(
+                      title: context.locals.clubs.linkedin,
+                      emphasis: ButtonEmphasis.secondary,
+                      onTap: () => LmuUrlLauncher.launchWebsite(
+                        url: club.linkedinUrl!,
+                        context: context,
                       ),
-                  ],
+                    ),
+                ],
+              ),
+              const SizedBox(height: LmuSizes.size_24),
+            ],
+            if (driver.hasLocation) ...[
+              LmuListItem.base(
+                subtitle: club.location?.address ?? '',
+                subtitleTextColor: context.colors.neutralColors.textColors.mediumColors.base,
+                hasHorizontalPadding: false,
+                hasDivider: true,
+                trailingArea: Icon(
+                  LucideIcons.map,
+                  size: LmuIconSizes.mediumSmall,
+                  color: context.colors.neutralColors.textColors.weakColors.base,
+                ),
+                onTap: () => LmuBottomSheet.show(
+                  context,
+                  content: NavigationSheet(id: club.id, location: club.location!, showInAppMap: false),
                 ),
               ),
-            if (club.content != null && club.content!.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.only(bottom: LmuSizes.size_24),
-                child: LmuHtmlViewer(data: club.content!),
-              ),
-            if (club.email != null && club.email!.isNotEmpty)
+              const SizedBox(height: LmuSizes.size_12),
+            ],
+            if (driver.hasContent) ...[
+              LmuHtmlViewer(data: club.content!),
+              const SizedBox(height: LmuSizes.size_32),
+            ],
+            if (driver.hasEmail)
               LmuContentTile(
                 content: LmuListItem.base(
                   title: context.locals.clubs.email,
@@ -101,7 +134,7 @@ class ClubDetailPage extends DrivableWidget<ClubDetailPageDriver> {
                     onPressed: () => CopyToClipboardUtil.copyToClipboard(
                       context: context,
                       copiedText: club.email!,
-                      message: "Copied email address",
+                      message: context.locals.clubs.copiedEmail,
                     ),
                   ),
                   onTap: () => LmuUrlLauncher.launchWebsite(

@@ -1,6 +1,7 @@
 import '../../../../domain/models/club.dart';
 import '../../../../domain/models/club_category.dart';
 import '../../../../domain/models/club_category_type.dart';
+import '../../../../domain/models/club_type.dart';
 import 'club_dto.dart';
 
 class ClubsMapper {
@@ -13,7 +14,7 @@ class ClubsMapper {
       final club = Club(
         id: dto.id,
         universityId: dto.universityId,
-        type: dto.type,
+        type: _mapType(dto.type),
         title: dto.title,
         description: dto.description,
         category: dto.category,
@@ -24,6 +25,8 @@ class ClubsMapper {
         email: dto.email,
         instagramUrl: dto.instagramUrl,
         linkedinUrl: dto.linkedinUrl,
+        foundingYear: dto.foundingYear,
+        location: dto.location,
       );
 
       clubsByCategory.putIfAbsent(dto.category, () => []).add(club);
@@ -35,5 +38,16 @@ class ClubsMapper {
               clubs: entry.value,
             ))
         .toList();
+  }
+
+  static ClubType _mapType(String? type) {
+    return switch (type) {
+      'FS' => ClubType.fachschaft,
+      'HG' => ClubType.hochschulgruppe,
+      'RT' => ClubType.referat,
+      'VN' => ClubType.verein,
+      'IN' => ClubType.institution,
+      _ => throw ArgumentError('Unknown club type: $type'),
+    };
   }
 }

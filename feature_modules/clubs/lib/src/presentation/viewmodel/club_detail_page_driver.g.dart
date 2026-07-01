@@ -10,23 +10,30 @@ part of 'club_detail_page_driver.dart';
 
 // This file was generated with widget_driver_generator version "1.3.6"
 
-class _$TestClubDetailPageDriver extends TestDriver
-    implements ClubDetailPageDriver {
+class _$TestClubDetailPageDriver extends TestDriver implements ClubDetailPageDriver {
   @override
-  Club get club => Club(
-      id: '',
-      universityId: '',
-      type: ClubType.fachschaft,
-      title: '',
-      description: '',
-      category: ClubCategoryType.academic);
+  bool get hasExternalLink => false;
+
+  @override
+  bool get hasEmail => false;
+
+  @override
+  bool get hasImage => false;
+
+  @override
+  bool get hasContent => false;
+
+  @override
+  bool get hasFoundingYear => false;
+
+  @override
+  bool get hasLocation => false;
 
   @override
   void didUpdateProvidedProperties({required Club newClub}) {}
 }
 
-class $ClubDetailPageDriverProvider
-    extends WidgetDriverProvider<ClubDetailPageDriver> {
+class $ClubDetailPageDriverProvider extends WidgetDriverProvider<ClubDetailPageDriver> {
   final Club _club;
 
   $ClubDetailPageDriverProvider({
