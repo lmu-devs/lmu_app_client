@@ -17,4 +17,15 @@ abstract class GradesRepositoryInterface {
 
   /// Deletes any cached Grades data.
   Future<void> deleteGrades();
+
+  /// Retrieves the user-configured total ECTS target.
+  ///
+  /// Returns `null` if the user has not configured a value yet.
+  Future<double?> getTotalEcts();
+
+  /// Persists the user-configured total ECTS target.
+  Future<void> saveTotalEcts(double totalEcts);
+
+  /// Deletes the stored total ECTS target.
+  Future<void> deleteTotalEcts();
 }

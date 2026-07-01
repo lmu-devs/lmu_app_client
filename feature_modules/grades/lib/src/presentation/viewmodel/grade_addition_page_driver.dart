@@ -22,7 +22,7 @@ class GradeAdditionPageDriver extends WidgetDriver {
   int _sliderIndex = 0;
   bool _noGradeReceived = false;
 
-  GradeSemester _selectedGradeSemester = GradeSemester.values.last;
+  GradeSemester _selectedGradeSemester = GradeSemesterExtension.availableSemesters().last;
 
   final _nameController = TextEditingController();
   final _ectsController = TextEditingController();
@@ -32,6 +32,9 @@ class GradeAdditionPageDriver extends WidgetDriver {
   String get addButtonTitle => _gradesLocalizations.addButton;
 
   GradeSemester get selectedGradeSemester => _selectedGradeSemester;
+
+  @TestDriverDefaultValue(<GradeSemester>[])
+  List<GradeSemester> get availableSemesters => GradeSemesterExtension.availableSemesters();
 
   @TestDriverDefaultValue(_TestTextEditingController())
   TextEditingController get nameController => _nameController;

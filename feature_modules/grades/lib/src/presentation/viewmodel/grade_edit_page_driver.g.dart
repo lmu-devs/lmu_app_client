@@ -25,6 +25,9 @@ class _$TestGradeEditPageDriver extends TestDriver
   GradeSemester get selectedGradeSemester => GradeSemester.values[0];
 
   @override
+  List<GradeSemester> get availableSemesters => <GradeSemester>[];
+
+  @override
   TextEditingController get nameController => _TestTextEditingController();
 
   @override

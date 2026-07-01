@@ -41,6 +41,16 @@ class GradeEditPageDriver extends WidgetDriver implements _$DriverProvidedProper
 
   GradeSemester get selectedGradeSemester => _selectedGradeSemester;
 
+  @TestDriverDefaultValue(<GradeSemester>[])
+  List<GradeSemester> get availableSemesters {
+    final semesters = GradeSemesterExtension.availableSemesters();
+    if (!semesters.contains(_gradeToEdit.semester)) {
+      semesters.add(_gradeToEdit.semester);
+      semesters.sort((a, b) => a.index.compareTo(b.index));
+    }
+    return semesters;
+  }
+
   @TestDriverDefaultValue(_TestTextEditingController())
   TextEditingController get nameController => _nameController;
 

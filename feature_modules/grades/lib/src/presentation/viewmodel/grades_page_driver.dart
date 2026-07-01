@@ -3,6 +3,7 @@ import 'package:core/localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:widget_driver/widget_driver.dart';
 
+import '../../application/usecase/ects_config_usecase.dart';
 import '../../application/usecase/get_grades_usecase.dart';
 import '../../domain/model/grade.dart';
 import '../../domain/model/grade_semester.dart';
@@ -14,7 +15,7 @@ part 'grades_page_driver.g.dart';
 @GenerateTestDriver()
 class GradesPageDriver extends WidgetDriver {
   final _usecase = GetIt.I.get<GetGradesUsecase>();
-  final _totalECTS = 180.0;
+  final _ectsConfigUsecase = GetIt.I.get<EctsConfigUsecase>();
 
   late GradesLocalizations _gradesLocalizations;
 
@@ -40,7 +41,8 @@ class GradesPageDriver extends WidgetDriver {
 
   // ECTS
   double get achievedEcts => _grades.activeGrades.totalEcts;
-  double get maxEcts => _totalECTS;
+  double get maxEcts => _ectsConfigUsecase.totalEcts ?? 0;
+  bool get isEctsConfigured => _ectsConfigUsecase.isConfigured;
 
   // Helpers
   List<Grade> getOrderedGrades(List<Grade> grades) {
@@ -66,12 +68,18 @@ class GradesPageDriver extends WidgetDriver {
     notifyWidget();
   }
 
+  void _onEctsConfigChanged() {
+    notifyWidget();
+  }
+
   @override
   void didInitDriver() {
     super.didInitDriver();
     _grades = _usecase.data;
     _usecase.addListener(_onStateChanged);
     _usecase.load();
+    _ectsConfigUsecase.addListener(_onEctsConfigChanged);
+    _ectsConfigUsecase.load();
   }
 
   @override
@@ -83,6 +91,7 @@ class GradesPageDriver extends WidgetDriver {
   @override
   void dispose() {
     _usecase.removeListener(_onStateChanged);
+    _ectsConfigUsecase.removeListener(_onEctsConfigChanged);
     super.dispose();
   }
 }

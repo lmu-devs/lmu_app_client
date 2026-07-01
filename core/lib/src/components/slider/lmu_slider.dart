@@ -70,7 +70,7 @@ class _LmuSliderState extends State<LmuSlider> {
         disabledActiveTickMarkColor: trackColor,
         disabledInactiveTickMarkColor: trackColor,
         overlayShape: SliderComponentShape.noOverlay,
-        thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 12),
+        thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 12, pressedElevation: 1),
         trackShape: const RoundedRectSliderTrackShape(),
       ),
       child: Padding(

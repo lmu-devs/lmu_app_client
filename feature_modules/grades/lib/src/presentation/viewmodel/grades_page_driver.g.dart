@@ -42,6 +42,9 @@ class _$TestGradesPageDriver extends TestDriver implements GradesPageDriver {
   double get maxEcts => 0.0;
 
   @override
+  bool get isEctsConfigured => false;
+
+  @override
   List<Grade> getOrderedGrades(List<Grade> grades) {
     return [];
   }

@@ -6,6 +6,7 @@ import '../dto/grade_dto.dart';
 
 class GradesStorage {
   final _gradesKey = 'grades_data_key';
+  final _totalEctsKey = 'grades_total_ects_key';
 
   Future<void> saveGrades(List<GradeDto> grades) async {
     final prefs = await SharedPreferences.getInstance();
@@ -24,5 +25,20 @@ class GradesStorage {
   Future<void> deleteGrades() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(_gradesKey);
+  }
+
+  Future<void> saveTotalEcts(double totalEcts) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setDouble(_totalEctsKey, totalEcts);
+  }
+
+  Future<double?> getTotalEcts() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getDouble(_totalEctsKey);
+  }
+
+  Future<void> deleteTotalEcts() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove(_totalEctsKey);
   }
 }

@@ -63,6 +63,7 @@ class GradeEditPage extends DrivableWidget<GradeEditPageDriver> {
       ),
       body: GradeFormBody(
         selectedGradeSemester: driver.selectedGradeSemester,
+        availableSemesters: driver.availableSemesters,
         onGradeSemesterSelected: driver.onGradeSemesterSelected,
         nameController: driver.nameController,
         onNameChanged: driver.onNameChanged,
