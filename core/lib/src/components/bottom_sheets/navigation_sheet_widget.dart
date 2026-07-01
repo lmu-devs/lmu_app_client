@@ -16,10 +16,12 @@ import '../../../utils.dart';
 import '../../constants/constants.dart';
 
 class NavigationSheet extends StatelessWidget {
-  const NavigationSheet({super.key, required this.id, required this.location});
+  const NavigationSheet({super.key, required this.id, required this.location, this.showInAppMap = true});
 
   final String id;
   final LocationModel location;
+
+  final bool showInAppMap;
 
   void _openExternalApplication({
     required BuildContext context,
@@ -71,7 +73,7 @@ class NavigationSheet extends StatelessWidget {
             color: context.colors.neutralColors.textColors.mediumColors.base,
           ),
         ),
-        if (!isAlreadyOnExplorePage)
+        if (showInAppMap && !isAlreadyOnExplorePage)
           LmuListItem.base(
             title: context.locals.explore.inAppMaps,
             leadingArea: Container(

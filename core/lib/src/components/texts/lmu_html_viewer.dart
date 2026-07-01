@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
+import '../../../constants.dart';
 import '../../../utils.dart';
 import '../../core.dart';
 
@@ -16,11 +17,16 @@ class LmuHtmlViewer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final textTheme = context.textTheme;
     final linkColor = context.colors.brandColors.textColors.strongColors.base;
 
-    Style styleFrom(TextStyle? base,
-        {Color? overrideColor, FontWeight? overrideFontWeight, FontStyle? overrideFontStyle, double? overrideOpacity}) {
+    Style styleFrom(
+      TextStyle? base, {
+      Color? overrideColor,
+      FontWeight? overrideFontWeight,
+      FontStyle? overrideFontStyle,
+      double? overrideOpacity,
+    }) {
       final baseColor = textColor ?? base?.color;
       final resolvedColor =
           overrideColor ?? (overrideOpacity != null ? baseColor?.withOpacity(overrideOpacity) : baseColor);
@@ -43,27 +49,37 @@ class LmuHtmlViewer extends StatelessWidget {
       },
       style: {
         'body': Style(margin: Margins.zero, padding: HtmlPaddings.zero),
-        'p': styleFrom(textTheme.bodyLarge),
-        'h1': styleFrom(textTheme.headlineMedium),
-        'h2': styleFrom(textTheme.headlineSmall),
-        'h3': styleFrom(textTheme.titleMedium),
-        'h4': styleFrom(textTheme.titleSmall),
-        'h5': styleFrom(textTheme.titleSmall),
-        'h6': styleFrom(textTheme.titleSmall),
-        'li': styleFrom(textTheme.bodyLarge),
+        'p': styleFrom(textTheme.body).copyWith(
+          margin: Margins.only(bottom: LmuSizes.size_8),
+        ),
+        'h1': styleFrom(textTheme.h0).copyWith(
+          margin: Margins.only(bottom: LmuSizes.size_8, top: 40),
+        ),
+        'h2': styleFrom(textTheme.h1).copyWith(
+          margin: Margins.only(bottom: LmuSizes.size_6, top: LmuSizes.size_32),
+        ),
+        'h3': styleFrom(textTheme.h2).copyWith(
+          margin: Margins.only(bottom: LmuSizes.size_6, top: LmuSizes.size_24),
+        ),
+        'h4': styleFrom(textTheme.h3).copyWith(
+          margin: Margins.only(bottom: LmuSizes.size_4, top: LmuSizes.size_16),
+        ),
+        'ul': styleFrom(textTheme.body).copyWith(
+          margin: Margins.only(left: LmuSizes.size_16),
+        ),
+        'ol': styleFrom(textTheme.body).copyWith(
+          margin: Margins.only(left: LmuSizes.size_24),
+        ),
+        'li': styleFrom(textTheme.body).copyWith(
+          margin: Margins.only(left: LmuSizes.size_4),
+        ),
         'a': styleFrom(
-          textTheme.bodyLarge,
+          textTheme.body,
           overrideColor: linkColor,
-          overrideFontWeight: null,
         ).copyWith(
           textDecoration: TextDecoration.underline,
           textDecorationColor: linkColor,
         ),
-        'strong': styleFrom(textTheme.bodyLarge, overrideFontWeight: FontWeight.bold),
-        'b': styleFrom(textTheme.bodyLarge, overrideFontWeight: FontWeight.bold),
-        'em': styleFrom(textTheme.bodyLarge, overrideFontStyle: FontStyle.italic),
-        'i': styleFrom(textTheme.bodyLarge, overrideFontStyle: FontStyle.italic),
-        'blockquote': styleFrom(textTheme.bodyLarge, overrideFontStyle: FontStyle.italic, overrideOpacity: 0.7),
       },
     );
   }
