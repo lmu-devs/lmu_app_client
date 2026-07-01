@@ -12,6 +12,7 @@ class GradeFormBody extends StatelessWidget {
   const GradeFormBody({
     super.key,
     required this.selectedGradeSemester,
+    required this.availableSemesters,
     required this.onGradeSemesterSelected,
     required this.nameController,
     required this.onNameChanged,
@@ -25,6 +26,7 @@ class GradeFormBody extends StatelessWidget {
   });
 
   final GradeSemester selectedGradeSemester;
+  final List<GradeSemester> availableSemesters;
   final ValueChanged<GradeSemester> onGradeSemesterSelected;
   final TextEditingController nameController;
   final ValueChanged<String> onNameChanged;
@@ -45,7 +47,7 @@ class GradeFormBody extends StatelessWidget {
       children: [
         const SizedBox(height: LmuSizes.size_16),
         LmuButtonRow(
-          buttons: GradeSemester.values.reversed.map((semester) {
+          buttons: availableSemesters.reversed.map((semester) {
             final isSelected = selectedGradeSemester == semester;
             return LmuButton(
               title: semester.localizedName(gradesL10n),
@@ -89,8 +91,14 @@ class GradeFormBody extends StatelessWidget {
               LmuContentTile(
                 contentList: [
                   const SizedBox(height: LmuSizes.size_12),
-                  LmuText.h1(
-                    noGradeReceived ? "‒,‒" : sliderGradeValue.asStringWithOneDecimal,
+                  TweenAnimationBuilder<double>(
+                    tween: Tween<double>(begin: 1.0, end: sliderGradeValue),
+                    duration: const Duration(milliseconds: 300),
+                    builder: (context, value, child) {
+                      return LmuText.h1(
+                        noGradeReceived ? "‒,‒" : value.asStringWithOneDecimal,
+                      );
+                    },
                   ),
                   const SizedBox(height: LmuSizes.size_8),
                   LmuSlider(

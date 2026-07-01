@@ -13,9 +13,29 @@ enum GradeSemester {
   summer2025,
   winter2025,
   summer2026,
+  winter2026,
+  summer2027,
 }
 
 extension GradeSemesterExtension on GradeSemester {
+  /// The date from which this semester becomes selectable.
+  ///
+  /// Semesters that started in the past are always available. Upcoming
+  /// semesters are only revealed once their reveal date has passed.
+  DateTime get availableFrom {
+    return switch (this) {
+      GradeSemester.winter2026 => DateTime(2026, 10, 1),
+      GradeSemester.summer2027 => DateTime(2027, 4, 1),
+      _ => DateTime(2000, 1, 1),
+    };
+  }
+
+  /// Returns the semesters that are currently selectable, based on [now].
+  static List<GradeSemester> availableSemesters([DateTime? now]) {
+    final referenceDate = now ?? DateTime.now();
+    return GradeSemester.values.where((semester) => !semester.availableFrom.isAfter(referenceDate)).toList();
+  }
+
   String toJsonString() {
     return switch (this) {
       GradeSemester.winter2020 => 'winter2020',
@@ -30,6 +50,8 @@ extension GradeSemesterExtension on GradeSemester {
       GradeSemester.summer2025 => 'summer2025',
       GradeSemester.winter2025 => 'winter2025',
       GradeSemester.summer2026 => 'summer2026',
+      GradeSemester.winter2026 => 'winter2026',
+      GradeSemester.summer2027 => 'summer2027',
     };
   }
 
@@ -47,6 +69,8 @@ extension GradeSemesterExtension on GradeSemester {
       'summer2025' => GradeSemester.summer2025,
       'winter2025' => GradeSemester.winter2025,
       'summer2026' => GradeSemester.summer2026,
+      'winter2026' => GradeSemester.winter2026,
+      'summer2027' => GradeSemester.summer2027,
       _ => throw Exception('Unknown semester string: $semester'),
     };
   }
@@ -65,6 +89,8 @@ extension GradeSemesterExtension on GradeSemester {
       GradeSemester.summer2025 => '25',
       GradeSemester.winter2025 => '25/26',
       GradeSemester.summer2026 => '26',
+      GradeSemester.winter2026 => '26/27',
+      GradeSemester.summer2027 => '27',
     };
   }
 
@@ -82,6 +108,8 @@ extension GradeSemesterExtension on GradeSemester {
       GradeSemester.summer2025 => "${locatizations.summer} $semesterYears",
       GradeSemester.winter2025 => "${locatizations.winter} $semesterYears",
       GradeSemester.summer2026 => "${locatizations.summer} $semesterYears",
+      GradeSemester.winter2026 => "${locatizations.winter} $semesterYears",
+      GradeSemester.summer2027 => "${locatizations.summer} $semesterYears",
     };
   }
 }

@@ -54,10 +54,14 @@ class LmuBottomSheet {
   static void showExtended(
     BuildContext context, {
     required Widget content,
+    bool isDismissible = true,
+    bool enableDrag = true,
   }) {
     showCupertinoModalBottomSheet(
       context: context,
       useRootNavigator: true,
+      isDismissible: isDismissible,
+      enableDrag: enableDrag,
       shape: const RoundedSuperellipseBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(LmuSizes.size_16),

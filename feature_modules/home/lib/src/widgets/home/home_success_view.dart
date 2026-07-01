@@ -8,6 +8,7 @@ import 'package:core/themes.dart';
 import 'package:core_routes/benefits.dart';
 import 'package:core_routes/cinema.dart';
 import 'package:core_routes/clubs.dart';
+import 'package:core_routes/grades.dart';
 import 'package:core_routes/home.dart';
 import 'package:core_routes/libraries.dart';
 import 'package:core_routes/mensa.dart';
@@ -100,6 +101,7 @@ extension HomeTileMapper on HomeTile {
       HomeTileType.mensa => () => const MensaMainRoute().go(context),
       HomeTileType.libraries => () => const LibrariesMainRoute().go(context),
       HomeTileType.clubs => () => const ClubsMainRoute().go(context),
+      HomeTileType.grades => () => const GradesMainRoute().go(context),
       HomeTileType.other => () => _notYetImplemented(context),
     };
 
@@ -129,6 +131,7 @@ extension HomeTileMapper on HomeTile {
       HomeTileType.mensa => locals.canteen.tabTitle,
       HomeTileType.libraries => locals.libraries.pageTitle,
       HomeTileType.clubs => locals.clubs.clubsTitle,
+      HomeTileType.grades => locals.grades.gradesTitle,
       HomeTileType.other => "",
     };
   }
@@ -147,7 +150,8 @@ extension HomeTileMapper on HomeTile {
       HomeTileType.events => const HomeEmojiTile(emoji: "🎉"),
       HomeTileType.mensa => const HomeEmojiTile(emoji: "🍽️"),
       HomeTileType.libraries => const HomeEmojiTile(emoji: "📚"),
-      HomeTileType.clubs => const HomeEmojiTile(emoji: "🤝"),
+      HomeTileType.clubs => const HomeEmojiTile(emoji: "👥"),
+      HomeTileType.grades => const HomeEmojiTile(emoji: "📊"),
       HomeTileType.other => Container(),
     };
   }

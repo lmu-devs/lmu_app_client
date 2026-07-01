@@ -100,6 +100,14 @@ class LaunchFlowShellRoute extends ShellRouteData {
                 ),
               ],
             ),
+            TypedGoRoute<GradesMainRoute>(
+              path: GradesMainRoute.path,
+              routes: <TypedGoRoute<GoRouteData>>[
+                TypedGoRoute<GradesSettingsRoute>(
+                  path: GradesSettingsRoute.path,
+                ),
+              ],
+            ),
             TypedGoRoute<BenefitsMainRoute>(
               path: BenefitsMainRoute.path,
               routes: [
@@ -284,9 +292,6 @@ class LaunchFlowShellRoute extends ShellRouteData {
             ),
             TypedGoRoute<PeopleFacultyOverviewRoute>(
               path: PeopleFacultyOverviewRoute.path,
-            ),
-            TypedGoRoute<GradesMainRoute>(
-              path: GradesMainRoute.path,
             ),
           ],
         ),

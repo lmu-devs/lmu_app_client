@@ -14,3 +14,12 @@ class GradesMainRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) => _router.buildMain(context);
 }
+
+class GradesSettingsRoute extends GoRouteData {
+  const GradesSettingsRoute();
+
+  static const String path = 'settings';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => _router.buildSettings(context);
+}

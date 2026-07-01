@@ -40,4 +40,19 @@ class GradesRepository implements GradesRepositoryInterface {
     final gradeDtos = grades.map((grade) => GradeDto.fromDomain(grade)).toList();
     return _storage.saveGrades(gradeDtos);
   }
+
+  @override
+  Future<double?> getTotalEcts() {
+    return _storage.getTotalEcts();
+  }
+
+  @override
+  Future<void> saveTotalEcts(double totalEcts) {
+    return _storage.saveTotalEcts(totalEcts);
+  }
+
+  @override
+  Future<void> deleteTotalEcts() {
+    return _storage.deleteTotalEcts();
+  }
 }
