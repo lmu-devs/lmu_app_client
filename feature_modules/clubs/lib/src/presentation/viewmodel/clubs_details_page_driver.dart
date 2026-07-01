@@ -22,7 +22,7 @@ class ClubsDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPro
 
   late String _allTitle;
   late final List<Club> _clubItems;
-  late final String? _categoryTitle;
+  String? _categoryTitle;
 
   List<Club>? get _selectedClubs => _selectedCategory?.clubs;
 
@@ -37,7 +37,6 @@ class ClubsDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPro
   void didInitDriver() {
     super.didInitDriver();
     _clubItems = _selectedClubs ?? _getClubsUsecase.clubCategories.expand((category) => category.clubs).toList();
-    _categoryTitle = _selectedCategory?.type.displayName;
   }
 
   @override
@@ -51,5 +50,6 @@ class ClubsDetailsPageDriver extends WidgetDriver implements _$DriverProvidedPro
   void didUpdateBuildContext(BuildContext context) {
     super.didUpdateBuildContext(context);
     _allTitle = "${context.locals.app.all} ${context.locals.clubs.clubsTitle}";
+    _categoryTitle = _selectedCategory?.type.localizedName(context.locals.clubs);
   }
 }

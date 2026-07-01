@@ -1,3 +1,4 @@
+import 'package:core/localizations.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 enum ClubCategoryType {
@@ -16,20 +17,14 @@ enum ClubCategoryType {
 }
 
 extension ClubCategoryTypeExtension on ClubCategoryType {
-  String get displayName {
-    switch (this) {
-      case ClubCategoryType.academic:
-        return 'Academic';
-      case ClubCategoryType.artCulture:
-        return 'Art & Culture';
-      case ClubCategoryType.leisure:
-        return 'Leisure';
-      case ClubCategoryType.sport:
-        return 'Sport';
-      case ClubCategoryType.careerNetworking:
-        return 'Career & Networking';
-      case ClubCategoryType.international:
-        return 'International';
-    }
+  String localizedName(ClubsLocalizations localizations) {
+    return switch (this) {
+      ClubCategoryType.academic => localizations.categoryAcademic,
+      ClubCategoryType.artCulture => localizations.categoryArtCulture,
+      ClubCategoryType.leisure => localizations.categoryLeisure,
+      ClubCategoryType.sport => localizations.categorySport,
+      ClubCategoryType.careerNetworking => localizations.categoryCareerNetworking,
+      ClubCategoryType.international => localizations.categoryInternational,
+    };
   }
 }

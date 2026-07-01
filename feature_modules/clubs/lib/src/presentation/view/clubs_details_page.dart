@@ -27,7 +27,7 @@ class ClubsDetailsPage extends DrivableWidget<ClubsDetailsPageDriver> {
           top: LmuSizes.size_16,
           bottom: LmuSizes.size_96,
         ),
-        separatorBuilder: (context, index) => const SizedBox(height: LmuSizes.size_12),
+        separatorBuilder: (context, index) => const SizedBox(height: LmuSizes.size_8),
         itemCount: driver.clubs.length,
         shrinkWrap: true,
         itemBuilder: (context, index) {

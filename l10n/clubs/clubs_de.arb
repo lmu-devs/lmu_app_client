@@ -3,5 +3,34 @@
   "@@context": "Clubs",
   "clubsTitle": "Clubs",
   "website": "Website",
-  "email": "E-Mail"
+  "email": "E-Mail",
+  "instagram": "Instagram",
+  "linkedin": "LinkedIn",
+  "becomePartOfApp": "Werde Teil der App",
+  "since": "Seit {year}",
+  "@since": {
+    "description": "Founding year of a club",
+    "placeholders": {
+      "year": {
+        "type": "String",
+        "example": "1998"
+      }
+    }
+  },
+  "copiedEmail": "E-Mail-Adresse kopiert",
+  "addClub": "Missing something?",
+  "suggestNewClub": "Neuen Club vorschlagen",
+  "suggestNewClubDescription": "Schlage einen neuen Club vor",
+  "suggestionInputHint": "Gib deinen Vorschlag ein",
+  "categoryAcademic": "Akademisch",
+  "categoryArtCulture": "Kunst & Kultur",
+  "categoryLeisure": "Freizeit",
+  "categorySport": "Sport",
+  "categoryCareerNetworking": "Karriere & Netzwerk",
+  "categoryInternational": "International",
+  "typeFachschaft": "Fachschaft",
+  "typeHochschulgruppe": "Hochschulgruppe",
+  "typeReferat": "Referat",
+  "typeVerein": "Club",
+  "typeInstitution": "Institution"
 }

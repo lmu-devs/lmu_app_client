@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../../domain/models/club_category_type.dart';
-import '../../../../domain/models/club_type.dart';
 
 part 'club_dto.g.dart';
 
@@ -22,6 +21,8 @@ class ClubDto extends Equatable {
     this.email,
     this.instagramUrl,
     this.linkedinUrl,
+    this.foundingYear,
+    this.location,
   });
 
   factory ClubDto.fromJson(Map<String, dynamic> json) => _$ClubDtoFromJson(json);
@@ -29,11 +30,10 @@ class ClubDto extends Equatable {
   final String id;
   @JsonKey(name: 'university_id')
   final String? universityId;
-  final ClubType type;
+  final String type;
   final String title;
   final String description;
   final ClubCategoryType category;
-  @JsonKey(name: 'logo_url')
   final ImageModel? image;
   final String? content;
   final String? url;
@@ -42,10 +42,27 @@ class ClubDto extends Equatable {
   final String? instagramUrl;
   @JsonKey(name: 'linkedin_url')
   final String? linkedinUrl;
+  @JsonKey(name: 'founding_year')
+  final int? foundingYear;
+  final LocationModel? location;
 
   Map<String, dynamic> toJson() => _$ClubDtoToJson(this);
 
   @override
-  List<Object?> get props =>
-      [id, universityId, type, title, description, category, image, content, url, email, instagramUrl, linkedinUrl];
+  List<Object?> get props => [
+        id,
+        universityId,
+        type,
+        title,
+        description,
+        category,
+        image,
+        content,
+        url,
+        email,
+        instagramUrl,
+        linkedinUrl,
+        foundingYear,
+        location,
+      ];
 }

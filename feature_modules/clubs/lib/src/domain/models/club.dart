@@ -19,6 +19,8 @@ class Club extends Equatable {
     this.email,
     this.instagramUrl,
     this.linkedinUrl,
+    this.foundingYear,
+    this.location,
   });
 
   final String id;
@@ -34,9 +36,27 @@ class Club extends Equatable {
   final String? email;
   final String? instagramUrl;
   final String? linkedinUrl;
+  final int? foundingYear;
+  final LocationModel? location;
 
   @override
-  List<Object?> get props => [id];
+  List<Object?> get props => [
+        id,
+        universityId,
+        type,
+        title,
+        description,
+        category,
+        isFeatured,
+        image,
+        content,
+        url,
+        email,
+        instagramUrl,
+        linkedinUrl,
+        foundingYear,
+        location,
+      ];
 
   @override
   bool? get stringify => true;

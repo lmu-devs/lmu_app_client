@@ -1,8 +1,6 @@
 import 'package:widget_driver/widget_driver.dart';
 
 import '../../domain/models/club.dart';
-import '../../domain/models/club_category_type.dart';
-import '../../domain/models/club_type.dart';
 
 part 'club_detail_page_driver.g.dart';
 
@@ -14,14 +12,17 @@ class ClubDetailPageDriver extends WidgetDriver implements _$DriverProvidedPrope
 
   late Club _club;
 
-  @TestDriverDefaultValue(Club(
-      id: '',
-      universityId: '',
-      type: ClubType.fachschaft,
-      title: '',
-      description: '',
-      category: ClubCategoryType.academic))
-  Club get club => _club;
+  bool get hasExternalLink => _club.instagramUrl != null || _club.linkedinUrl != null || _club.url != null;
+
+  bool get hasEmail => _club.email != null && _club.email!.isNotEmpty;
+
+  bool get hasImage => _club.image != null && _club.image!.url.isNotEmpty;
+
+  bool get hasContent => _club.content != null && _club.content!.isNotEmpty;
+
+  bool get hasFoundingYear => _club.foundingYear != null;
+
+  bool get hasLocation => _club.location != null && _club.location!.address.isNotEmpty;
 
   @override
   void didUpdateProvidedProperties({

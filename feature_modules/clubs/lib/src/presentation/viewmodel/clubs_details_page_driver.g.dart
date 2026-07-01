@@ -10,8 +10,7 @@ part of 'clubs_details_page_driver.dart';
 
 // This file was generated with widget_driver_generator version "1.3.6"
 
-class _$TestClubsDetailsPageDriver extends TestDriver
-    implements ClubsDetailsPageDriver {
+class _$TestClubsDetailsPageDriver extends TestDriver implements ClubsDetailsPageDriver {
   @override
   String get title => ' ';
 
@@ -25,15 +24,13 @@ class _$TestClubsDetailsPageDriver extends TestDriver
   void didInitDriver() {}
 
   @override
-  void didUpdateProvidedProperties(
-      {required ClubCategory? newSelectedCategory}) {}
+  void didUpdateProvidedProperties({required ClubCategory? newSelectedCategory}) {}
 
   @override
   void didUpdateBuildContext(BuildContext context) {}
 }
 
-class $ClubsDetailsPageDriverProvider
-    extends WidgetDriverProvider<ClubsDetailsPageDriver> {
+class $ClubsDetailsPageDriverProvider extends WidgetDriverProvider<ClubsDetailsPageDriver> {
   final ClubCategory? _selectedCategory;
 
   $ClubsDetailsPageDriverProvider({

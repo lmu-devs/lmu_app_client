@@ -46,10 +46,10 @@ class ClubsPage extends DrivableWidget<ClubsPageDriver> {
       children: [
         const SizedBox(height: LmuSizes.size_16),
         if (driver.featuredClub != null) ...[
-          LmuTileHeadline.base(title: "Join us"),
+          LmuTileHeadline.base(title: context.locals.clubs.becomePartOfApp),
           ClubCard(
               club: driver.featuredClub!, onTap: () => driver.onFeaturedClubPressed(context, driver.featuredClub!)),
-          const SizedBox(height: LmuSizes.size_24),
+          const SizedBox(height: LmuSizes.size_32),
         ],
         LmuContentTile(
           content: LmuListItem.action(
@@ -65,7 +65,7 @@ class ClubsPage extends DrivableWidget<ClubsPageDriver> {
               .mapIndexed(
                 (index, category) => LmuListItem.action(
                   key: Key("club_category_${category.hashCode}"),
-                  title: category.type.displayName,
+                  title: category.type.localizedName(context.locals.clubs),
                   trailingTitle: category.clubs.length.toString(),
                   hasDivider: index != driver.clubCategories.length - 1,
                   leadingArea: LmuInListBlurEmoji(emoji: "🐱"),
