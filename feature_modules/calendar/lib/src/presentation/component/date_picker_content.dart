@@ -14,15 +14,21 @@ class DatePickerSection extends StatelessWidget {
     required this.selectedDateTimeRange,
     required this.onDateSelected,
     required this.entries,
+    required this.isLoading,
+    required this.hasError,
   });
   final bool isExpanded;
   final CalendarViewType viewType;
   final DateTimeRange selectedDateTimeRange;
   final ValueChanged<DateTimeRange> onDateSelected;
   final List<CalendarEntry> entries;
+  final bool isLoading;
+  final bool hasError;
 
   @override
   Widget build(BuildContext context) {
+    var disabled = isLoading || hasError;
+
     return AnimatedSize(
       duration: const Duration(milliseconds: 400),
       curve: Curves.easeInOut,
@@ -35,7 +41,7 @@ class DatePickerSection extends StatelessWidget {
             ),
           ),
         ),
-        child: isExpanded ? _buildPicker(context) : const SizedBox.shrink(),
+        child: isExpanded && !disabled ? _buildPicker(context) : const SizedBox.shrink(),
       ),
     );
   }
