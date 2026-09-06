@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_cache/flutter_map_cache.dart';
 import 'package:get_it/get_it.dart';
@@ -50,9 +51,13 @@ class ExplorePageDriver extends WidgetDriver {
   InteractionOptions get interactionOptions => const InteractionOptions(rotationThreshold: 80, pinchMoveThreshold: 60);
 
   @TestDriverDefaultValue("")
-  String get urlTemplate => _brightness == Brightness.light
-      ? 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png'
-      : 'https://{s}.basemaps.cartocdn.com/rastertiles/dark_nolabels/{z}/{x}/{y}.png';
+  String get urlTemplate {
+    final baseUrl = _brightness == Brightness.light
+        ? 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}.png'
+        : 'https://{s}.basemaps.cartocdn.com/rastertiles/dark_nolabels/{z}/{x}/{y}.png';
+    final key = dotenv.env['CARTO_API_KEY'] ?? '';
+    return key.isEmpty ? baseUrl : '$baseUrl?key=$key';
+  }
 
   @TestDriverDefaultValue([])
   List<String> get subdomains => const ['a', 'b', 'c'];
@@ -81,7 +86,7 @@ class ExplorePageDriver extends WidgetDriver {
 
     return CachedTileProvider(
       maxStale: const Duration(days: 30),
-      store: HiveCacheStore(cacheDirectory, hiveBoxName: 'HiveCacheStore'),
+      store: HiveCacheStore(cacheDirectory, hiveBoxName: 'HiveCacheStoreV2'),
     );
   }
 
